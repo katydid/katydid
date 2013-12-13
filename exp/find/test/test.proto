@@ -1,0 +1,17 @@
+package test;
+
+message Person {
+	optional string Name = 1;
+	repeated Address Addresses = 2;
+	optional string Telephone = 3;
+}
+
+message Address {
+	optional int64 Number = 1;
+	optional string Street = 2;
+}
+
+message SrcTree {
+	optional string PackageName = 1;
+	repeated SrcTree Imports = 2;
+}
