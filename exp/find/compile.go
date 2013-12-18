@@ -24,13 +24,13 @@ import (
 	"strings"
 )
 
-type Compiled struct {
+type Interpreter struct {
 	desc     *descriptor.FileDescriptorSet
 	rules    *ast.Rules
 	transMap map[string]map[string]string
 }
 
-func Compile(desc *descriptor.FileDescriptorSet, rules *ast.Rules) (*Compiled, error) {
+func NewInterpreter(desc *descriptor.FileDescriptorSet, rules *ast.Rules) (*Interpreter, error) {
 	if rules.Root == nil {
 		return nil, errors.New("No Root Rule")
 	}
@@ -41,16 +41,16 @@ func Compile(desc *descriptor.FileDescriptorSet, rules *ast.Rules) (*Compiled, e
 		}
 		transMap[t.GetSrc()][t.GetInput()] = t.GetDst()
 	}
-	return &Compiled{desc, rules, transMap}, nil
+	return &Interpreter{desc, rules, transMap}, nil
 }
 
-func (this *Compiled) Match(buf []byte) (bool, error) {
+func (this *Interpreter) Match(buf []byte) (bool, error) {
 	currentState, err := this.interpret(this.rules.Root.GetState(), this.rules.Root.GetPackage(), this.rules.Root.GetMessage(), buf)
 	fmt.Printf("final state = %v %v\n", currentState, currentState == "accept")
 	return (currentState == "accept"), err
 }
 
-func (this *Compiled) transition(src, input string) (dst string) {
+func (this *Interpreter) transition(src, input string) (dst string) {
 	if d, ok := this.transMap[src][input]; ok {
 		return d
 	} else if d2, ok := this.transMap[src]["_"]; ok {
@@ -59,7 +59,7 @@ func (this *Compiled) transition(src, input string) (dst string) {
 	panic("no transition specified")
 }
 
-func (this *Compiled) interpret(currentState string, packageName string, messageName string, buf []byte) (string, error) {
+func (this *Interpreter) interpret(currentState string, packageName string, messageName string, buf []byte) (string, error) {
 	fmt.Printf("interpreting %v %v %v\n", currentState, packageName, messageName)
 	l := len(buf)
 	offset := 0
@@ -69,12 +69,19 @@ func (this *Compiled) interpret(currentState string, packageName string, message
 	}
 	for offset < l {
 		for _, r := range this.rules.GetInit() {
-			if r.GetPackage() != packageName || r.GetMessage() != messageName {
-				continue
+			var field *descriptor.FieldDescriptorProto
+			for _, f := range message.GetField() {
+				if !f.IsMessage() {
+					continue
+				}
+				fmt.Printf("TypeName = %v\n", f.GetTypeName())
+				if f.GetTypeName() == ("." + r.GetPackage() + "." + r.GetMessage()) {
+					field = f
+					break
+				}
 			}
-			field := message.GetFieldDescriptor(r.GetField())
 			if field == nil {
-				panic("unkonwn field: " + packageName + "." + messageName + "." + r.GetField())
+				continue
 			}
 			key := field.GetKey()
 			thisKey := true
@@ -151,7 +158,7 @@ func (this *Compiled) interpret(currentState string, packageName string, message
 	return currentState, nil
 }
 
-func (this *Compiled) ifExpr(ifExpr *ast.IfExpr, buf []byte) (string, error) {
+func (this *Interpreter) ifExpr(ifExpr *ast.IfExpr, buf []byte) (string, error) {
 	s, err := evalIf(this.desc, ifExpr, buf)
 	return string(s), err
 }

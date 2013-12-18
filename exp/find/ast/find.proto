@@ -28,8 +28,6 @@ message Rules {
 message Init {
 	optional string Package = 1;
 	optional string Message = 2;
-	//not set for the root
-	optional string Field = 3; 
 	optional string State = 4;
 }
 

@@ -55,10 +55,8 @@ func (m *Rules) GetIfExpr() []*IfExpr {
 }
 
 type Init struct {
-	Package *string `protobuf:"bytes,1,opt" json:"Package,omitempty"`
-	Message *string `protobuf:"bytes,2,opt" json:"Message,omitempty"`
-	// not set for the root
-	Field            *string `protobuf:"bytes,3,opt" json:"Field,omitempty"`
+	Package          *string `protobuf:"bytes,1,opt" json:"Package,omitempty"`
+	Message          *string `protobuf:"bytes,2,opt" json:"Message,omitempty"`
 	State            *string `protobuf:"bytes,4,opt" json:"State,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
@@ -76,13 +74,6 @@ func (m *Init) GetPackage() string {
 func (m *Init) GetMessage() string {
 	if m != nil && m.Message != nil {
 		return *m.Message
-	}
-	return ""
-}
-
-func (m *Init) GetField() string {
-	if m != nil && m.Field != nil {
-		return *m.Field
 	}
 	return ""
 }

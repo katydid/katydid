@@ -75,11 +75,11 @@ Rule
 	;
 
 Root
-	: id "." id "=" id << &ast.Init{Package: ast.IdToString($0), Message: ast.IdToString($2), State: ast.IdToString($4)}, nil >>
+	: "root" "=" id "." id << &ast.Init{Package: ast.IdToString($2), Message: ast.IdToString($4), State: proto.String("root")}, nil >>
 	;
 
 Init
-	: id "." id "." id "=" id << &ast.Init{Package: ast.IdToString($0), Message: ast.IdToString($2), Field: ast.IdToString($4), State: ast.IdToString($6)}, nil >>
+	: id "." id "=" id << &ast.Init{Package: ast.IdToString($0), Message: ast.IdToString($2), State: ast.IdToString($4)}, nil >>
 	;
 
 Transition

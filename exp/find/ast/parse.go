@@ -51,7 +51,7 @@ func ToUint64(v interface{}) *uint64 {
 func NewRule(r interface{}) (*Rules, error) {
 	switch rule := r.(type) {
 	case *Init:
-		if rule.Field == nil {
+		if rule.GetState() == "root" {
 			return &Rules{Root: rule}, nil
 		}
 		return &Rules{Init: []*Init{rule}}, nil
@@ -67,12 +67,28 @@ func AppendRule(rs, r interface{}) (*Rules, error) {
 	rules := rs.(*Rules)
 	switch rule := r.(type) {
 	case *Init:
-		if rule.Field == nil {
+		if rule.GetState() == "root" {
 			if rules.Root != nil {
 				return nil, errors.New("only one root is allowed")
 			}
 			rules.Root = rule
+			for _, i := range rules.GetInit() {
+				if i.GetPackage() == rules.GetRoot().GetPackage() &&
+					i.GetMessage() == rules.GetRoot().GetMessage() {
+					rules.Root.State = i.State
+				}
+			}
 			return rules, nil
+		} else {
+			if rules.Root != nil {
+				if rule.GetPackage() == rules.GetRoot().GetPackage() &&
+					rule.GetMessage() == rules.GetRoot().GetMessage() {
+					if rules.GetRoot().GetState() != "root" {
+						return nil, errors.New("root can only start in a single state")
+					}
+					rules.Root.State = rule.State
+				}
+			}
 		}
 		rules.Init = append(rules.Init, rule)
 		return rules, nil

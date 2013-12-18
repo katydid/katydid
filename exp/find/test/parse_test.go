@@ -122,7 +122,7 @@ func newTest(name string, t *testing.T, str string) test {
 
 func (this test) match(m proto.Message, positive bool) test {
 	fmt.Printf("======== Testing %v\n", m)
-	matcher, err := find.Compile(fileDescriptorSet, this.rules)
+	matcher, err := find.NewInterpreter(fileDescriptorSet, this.rules)
 	if err != nil {
 		panic(err)
 	}
@@ -166,11 +166,12 @@ var robert = &Person{
 
 func TestContextPerson(t *testing.T) {
 	//Does this Person live at 456 The Street
-	s := `test.Person = start
+	s := `root = test.Person
+test.Person = start
 start numberAndStreet = accept
 start _ = start
 
-test.Person.Addresses = address
+test.Address = address
 address number = number
 address street = street
 address _ = address
@@ -283,11 +284,11 @@ var syscall = &SrcTree{
 
 func TestRecursiveSrcTree(t *testing.T) {
 	//Does this SrcTree depend on io or is its packageName io
-	s := `test.SrcTree = start
+	s := `root = test.SrcTree
+test.SrcTree = start
 start accept = accept
 start _ = start
 accept _ = accept
-test.SrcTree.Imports = start
 
 if (decString(test.SrcTree.PackageName.value) == "io") 
   then accept 
@@ -361,7 +362,8 @@ var routine = &Person{
 func TestListIndexAddress(t *testing.T) {
 	//Is this Person's newest streetnumber 1 and second newest streetnumber 2.
 	//Assume that addresses are appended to the list, so the last address is the newest address.
-	s := `test.Person = start
+	s := `root = test.Person
+test.Person = start
 start numberTwo = topNumberTwo
 start _ = start
 topNumberTwo numberOne = accept
@@ -370,7 +372,7 @@ topNumberTwo _ = start
 accept numberTwo = topNumberTwo
 accept _ = start
 
-test.Person.Addresses = address
+test.Address = address
 address numberTwo = numberTwo
 address numberOne = numberOne
 address _ = address
@@ -425,7 +427,8 @@ var smith = &Person{
 
 func TestNilName(t *testing.T) {
 	//Is this Person's name missing
-	s := `test.Person = accept
+	s := `root = test.Person
+test.Person = accept
 accept name = reject
 accept _ = accept
 
@@ -437,7 +440,8 @@ if (decInt64(test.Person.Name.len) >= int64(0))
 
 func TestLenName(t *testing.T) {
 	//Is this Person's name an empty string
-	s := `test.Person = start
+	s := `root = test.Person
+test.Person = start
 start name = reject
 start noname = accept
 start _ = start
@@ -450,7 +454,8 @@ if (decInt64(test.Person.Name.len) == int64(0))
 
 func TestEmptyOrNil(t *testing.T) {
 	//Is this Person's name empty or an empty string
-	s := `test.Person = accept
+	s := `root = test.Person
+test.Person = accept
 accept name = reject
 accept _ = accept
 
@@ -461,7 +466,8 @@ if (decInt64(test.Person.Name.len) == int64(0))
 }
 
 func TestIncorrectNotName(t *testing.T) {
-	s := `test.Person = start
+	s := `root = test.Person
+test.Person = start
 start notname = accept
 start _ = start
 
@@ -473,7 +479,8 @@ if not((decString(test.Person.Name.value) == "David"))
 }
 
 func TestCorrectNotName(t *testing.T) {
-	s := `test.Person = accept
+	s := `root = test.Person
+test.Person = accept
 accept name = reject
 accept _ = accept
 
@@ -485,7 +492,8 @@ if (decString(test.Person.Name.value) == "David")
 }
 
 func TestAndNameTelephone(t *testing.T) {
-	s := `test.Person = start
+	s := `root = test.Person
+test.Person = start
 start name = name
 start tel = tel
 start _ = start
@@ -506,7 +514,8 @@ if (decString(test.Person.Telephone.value) == "0123456789")
 }
 
 func TestOrNameTelephone(t *testing.T) {
-	s := `test.Person = start
+	s := `root = test.Person
+test.Person = start
 start name = accept
 start tel = accept
 start _ = start

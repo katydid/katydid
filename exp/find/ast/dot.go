@@ -40,9 +40,6 @@ func (this *Rules) Dot() string {
 }
 
 func (this *Init) Dot() string {
-	if this.Field != nil {
-		return `"` + this.GetPackage() + "." + this.GetMessage() + "." + this.GetField() + `"` + " -> " + this.GetState()
-	}
 	return `"` + this.GetPackage() + "." + this.GetMessage() + `"` + " -> " + this.GetState()
 }
 
