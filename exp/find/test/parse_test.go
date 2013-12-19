@@ -15,18 +15,19 @@
 package test
 
 import (
+	"encoding/json"
+	"fmt"
+	"os"
+	"os/exec"
+	"testing"
+
 	protoparser "code.google.com/p/gogoprotobuf/parser"
 	"code.google.com/p/gogoprotobuf/proto"
 	descriptor "code.google.com/p/gogoprotobuf/protoc-gen-gogo/descriptor"
-	"encoding/json"
-	"fmt"
 	"github.com/awalterschulze/katydid/exp/find"
 	"github.com/awalterschulze/katydid/exp/find/ast"
 	"github.com/awalterschulze/katydid/exp/find/lexer"
 	"github.com/awalterschulze/katydid/exp/find/parser"
-	"os"
-	"os/exec"
-	"testing"
 )
 
 var (
