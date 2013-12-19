@@ -5,8 +5,8 @@ build:
 	go test -v ./...
 
 regenerate:
-	gocc find.bnf
-	(cd ast && protoc --gogo_out=. -I=.:../../../../../../ find.proto)
+	gocc readable.bnf
+	(cd ast && protoc --gogo_out=. -I=.:../../../../../../ readable.proto)
 	(cd test && make regenerate)
 
 clean:

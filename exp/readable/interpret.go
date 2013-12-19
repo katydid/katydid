@@ -12,16 +12,17 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package find
+package readable
 
 import (
-	"code.google.com/p/go.text/unicode/norm"
-	descriptor "code.google.com/p/gogoprotobuf/protoc-gen-gogo/descriptor"
 	"errors"
 	"fmt"
-	"github.com/awalterschulze/katydid/exp/find/ast"
 	"strconv"
 	"strings"
+
+	"code.google.com/p/go.text/unicode/norm"
+	descriptor "code.google.com/p/gogoprotobuf/protoc-gen-gogo/descriptor"
+	"github.com/awalterschulze/katydid/exp/readable/ast"
 )
 
 type Interpreter struct {

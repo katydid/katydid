@@ -57,7 +57,7 @@ string_lit : _raw_string | _interpreted_string ;
 
 << 
 import (
-	"github.com/awalterschulze/katydid/exp/find/ast"
+	"github.com/awalterschulze/katydid/exp/readable/ast"
 	"code.google.com/p/gogoprotobuf/proto"
 )
 >>

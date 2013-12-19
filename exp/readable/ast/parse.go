@@ -16,8 +16,9 @@ package ast
 
 import (
 	"errors"
-	"github.com/awalterschulze/katydid/exp/find/token"
-	"github.com/awalterschulze/katydid/exp/find/util"
+
+	"github.com/awalterschulze/katydid/exp/readable/token"
+	"github.com/awalterschulze/katydid/exp/readable/util"
 )
 
 func IdToString(v interface{}) *string {

@@ -24,10 +24,10 @@ import (
 	protoparser "code.google.com/p/gogoprotobuf/parser"
 	"code.google.com/p/gogoprotobuf/proto"
 	descriptor "code.google.com/p/gogoprotobuf/protoc-gen-gogo/descriptor"
-	"github.com/awalterschulze/katydid/exp/find"
-	"github.com/awalterschulze/katydid/exp/find/ast"
-	"github.com/awalterschulze/katydid/exp/find/lexer"
-	"github.com/awalterschulze/katydid/exp/find/parser"
+	"github.com/awalterschulze/katydid/exp/readable"
+	"github.com/awalterschulze/katydid/exp/readable/ast"
+	"github.com/awalterschulze/katydid/exp/readable/lexer"
+	"github.com/awalterschulze/katydid/exp/readable/parser"
 )
 
 var (
@@ -123,7 +123,7 @@ func newTest(name string, t *testing.T, str string) test {
 
 func (this test) match(m proto.Message, positive bool) test {
 	fmt.Printf("======== Testing %v\n", m)
-	matcher, err := find.NewInterpreter(fileDescriptorSet, this.rules)
+	matcher, err := readable.NewInterpreter(fileDescriptorSet, this.rules)
 	if err != nil {
 		panic(err)
 	}
