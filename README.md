@@ -39,9 +39,9 @@ http://arborist.katydid.ws
 Language
 --------
 
-The current language reflects the proposed inner workings of the final language.
+The current language reflects the proposed inner workings (assembler) of the final language.
 
-https://github.com/awalterschulze/katydid/blob/master/exp/readable/readable.bnf
+https://github.com/awalterschulze/katydid/blob/master/exp/asm/asm.bnf
 
 This will be useful for debugging in future.
 
@@ -59,6 +59,8 @@ I am still proving the concept and I only needed these functions for my examples
  - ge(int64, int64) bool
  - nfkc(string) string
  - not(bool) bool
+ - length(string) int
+ - exists([]byte) bool
 
 Next steps
 ----------
