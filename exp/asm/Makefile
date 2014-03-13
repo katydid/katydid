@@ -1,8 +1,12 @@
-all: nuke clean regenerate build
+.PHONY: nuke regenerate build test
+
+all: nuke regenerate build test
+
+test:
+	go test -v ./...
 
 build:
 	go build ./...
-	go test -v ./...
 
 regenerate:
 	gocc asm.bnf

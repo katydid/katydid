@@ -17,6 +17,7 @@ package protomap
 import (
 	descriptor "code.google.com/p/gogoprotobuf/protoc-gen-gogo/descriptor"
 	"fmt"
+	"github.com/awalterschulze/katydid/exp/asm/maps"
 	"strings"
 )
 
@@ -30,39 +31,26 @@ func (this *errUnknown) Error() string {
 	return "Could not find " + this.Package + "." + this.Message + "." + this.Field
 }
 
-type errUnknownState struct {
-	state int
-}
-
-func (this *errUnknownState) Error() string {
-	return fmt.Sprintf("Unknown state %d", this.state)
-}
-
-type errUnknownTrans struct {
-	src int
-	key uint64
-}
-
-func (this *errUnknownTrans) Error() string {
-	return fmt.Sprintf("Unknown trans from %d with %d", this.src, this.key)
-}
-
 type ProtoMap interface {
 	State(pkg, msg, field string) (int, error)
 	LenStates() int
-	Trans(src int, key uint64) (int, error)
+	Trans(src int, key uint64) (int, bool)
 	IsLeave(int) bool
 	Dot() string
 }
 
 type protoMap struct {
-	trans       []map[uint64]int
+	trans       []maps.Uint64ToInt
 	stateToName []string
 	nameToState map[string]int
 	leave       []bool
 }
 
 func New(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet) (ProtoMap, error) {
+	return NewZipped(srcPackage, srcMessage, desc, nil)
+}
+
+func NewZipped(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet, includes []string) (ProtoMap, error) {
 	builder := &mapBuilder{
 		trans:       make(map[int]map[uint64]int),
 		nameToState: make(map[string]int),
@@ -71,12 +59,14 @@ func New(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet) (Pro
 		leave:       make(map[int]bool),
 		srcPackage:  srcPackage,
 		srcMessage:  srcMessage,
+		includes:    includes,
 		desc:        desc,
 	}
 	if err := builder.build(); err != nil {
 		return nil, err
 	}
-	return builder.finalize(), nil
+	pm := builder.finalize()
+	return pm, nil
 }
 
 func (this *protoMap) State(pkg, msg, field string) (int, error) {
@@ -98,15 +88,11 @@ func (this *protoMap) IsLeave(state int) bool {
 	return this.leave[state]
 }
 
-func (this *protoMap) Trans(src int, key uint64) (int, error) {
+func (this *protoMap) Trans(src int, key uint64) (int, bool) {
 	if src >= len(this.trans) {
-		return 0, &errUnknownState{src}
+		return 0, false
 	}
-	dst, ok := this.trans[src][key]
-	if !ok {
-		return 0, &errUnknownTrans{src, key}
-	}
-	return dst, nil
+	return this.trans[src].Lookup(key)
 }
 
 func (this *protoMap) Dot() string {
@@ -116,7 +102,10 @@ func (this *protoMap) Dot() string {
 	}
 	transs := make([]string, 0, len(this.trans))
 	for src, trans := range this.trans {
-		for input, dst := range trans {
+		if trans == nil {
+			continue
+		}
+		for input, dst := range trans.ToMap() {
 			transs = append(transs, fmt.Sprintf("\tnode%d -> node%d [label=\"%d={wire=%d,field=%d}\"]\n", src, dst, input, int(input&0x7), int32(input>>3)))
 		}
 	}
@@ -139,20 +128,21 @@ type mapBuilder struct {
 	leave       map[int]bool
 	srcPackage  string
 	srcMessage  string
+	includes    []string
 	desc        *descriptor.FileDescriptorSet
 }
 
 func (this *mapBuilder) finalize() *protoMap {
 	numStates := len(this.stateToName)
 	m := &protoMap{
-		trans:       make([]map[uint64]int, numStates),
+		trans:       make([]maps.Uint64ToInt, numStates),
 		stateToName: make([]string, numStates),
 		nameToState: this.nameToState,
 		leave:       make([]bool, numStates),
 	}
 	for i := 0; i < numStates; i++ {
 		if len(this.trans[i]) > 0 {
-			m.trans[i] = this.trans[i]
+			m.trans[i] = maps.NewUint64ToInt(this.trans[i])
 		}
 		m.stateToName[i] = this.stateToName[i]
 		m.leave[i] = this.leave[i]
@@ -195,7 +185,33 @@ func (this *mapBuilder) addTrans(srcState int, input uint64, dstState int) {
 	this.trans[srcState][input] = dstState
 }
 
+func (this *mapBuilder) included(pkg string, msg string, field string) bool {
+	if this.includes == nil {
+		return true
+	}
+	for _, inc := range this.includes {
+		incs := strings.Split(inc, ".")
+		if incs[0] == pkg {
+			if incs[1] == msg {
+				if len(incs) > 2 {
+					if incs[2] == field {
+						return true
+					}
+				} else {
+					if len(field) == 0 {
+						return true
+					}
+				}
+			}
+		}
+	}
+	return false
+}
+
 func (this *mapBuilder) visit(srcPackage string, srcMessage string) error {
+	if !this.included(srcPackage, srcMessage, "") {
+		return nil
+	}
 	msg := this.desc.GetMessage(srcPackage, srcMessage)
 	if msg == nil {
 		return &errUnknown{srcPackage, srcMessage, ""}
@@ -216,6 +232,9 @@ func (this *mapBuilder) visit(srcPackage string, srcMessage string) error {
 				}
 			}
 		} else {
+			if !this.included(srcPackage, srcMessage, f.GetName()) {
+				continue
+			}
 			dstState := this.getState(srcPackage, srcMessage, f.GetName())
 			this.addTrans(currentState, f.GetKeyUint64(), dstState)
 		}

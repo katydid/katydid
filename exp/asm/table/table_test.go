@@ -44,6 +44,7 @@ func transTest(t *testing.T, table Table, src string, input string, dst string) 
 /*
 start numberAndStreet = accept
 start _ = start
+accept _ accept
 address number = number
 address street = street
 address _ = address
@@ -51,6 +52,7 @@ number street = numberAndStreet
 number _ = number
 street number = numberAndStreet
 street _ = street
+numberAndStreet _ = numberAndStreet
 */
 func TestTable(t *testing.T) {
 	transitions := []*ast.Transition{
@@ -63,6 +65,11 @@ func TestTable(t *testing.T) {
 			Src:   proto.String("start"),
 			Input: proto.String("_"),
 			Dst:   proto.String("start"),
+		},
+		&ast.Transition{
+			Src:   proto.String("accept"),
+			Input: proto.String("_"),
+			Dst:   proto.String("accept"),
 		},
 		&ast.Transition{
 			Src:   proto.String("address"),
@@ -99,6 +106,11 @@ func TestTable(t *testing.T) {
 			Input: proto.String("_"),
 			Dst:   proto.String("street"),
 		},
+		&ast.Transition{
+			Src:   proto.String("numberAndStreet"),
+			Input: proto.String("_"),
+			Dst:   proto.String("numberAndStreet"),
+		},
 	}
 	table := New(transitions, nil)
 	fmt.Printf("%v\n", table.Dot())
@@ -114,5 +126,26 @@ func TestTable(t *testing.T) {
 	})
 	for _, transition := range transitions {
 		transTest(t, table, transition.GetSrc(), transition.GetInput(), transition.GetDst())
+	}
+	acc, err := table.NameToState("accept")
+	if err != nil {
+		panic(err)
+	}
+	if !table.NoEscapeFrom(acc) {
+		t.Fatalf("excepted no escape from accept state")
+	}
+	numberAndStreet, err := table.NameToState("numberAndStreet")
+	if err != nil {
+		panic(err)
+	}
+	if !table.NoEscapeFrom(numberAndStreet) {
+		t.Fatalf("excepted no escape from numberAndStreet state")
+	}
+	street, err := table.NameToState("street")
+	if err != nil {
+		panic(err)
+	}
+	if table.NoEscapeFrom(street) {
+		t.Fatalf("expected escape from street to be possible")
 	}
 }

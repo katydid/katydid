@@ -49,7 +49,7 @@ Current Functions
 -----------------
 
 The idea is to make katydid easily extendable with other functions.
-I am still proving the concept and I only needed these functions for my examples.
+I am still proving the concept and I have only needed these functions for my examples:
 
  - decString([]byte) string
  - decInt64([]byte) string
@@ -61,11 +61,11 @@ I am still proving the concept and I only needed these functions for my examples
  - not(bool) bool
  - length(string) int
  - exists([]byte) bool
+ - decBool([]byte) bool
 
 Next steps
 ----------
 
- - Compilation and efficient execution
  - Create a usable language that translates to the current debugging/middle language
  - Boolean Logic Operators (Possibly using alternating tree automata)
  - Optimize for specific usecases like negative indices, without breaking the ideals

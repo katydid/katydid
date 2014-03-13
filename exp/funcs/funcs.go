@@ -4,7 +4,9 @@ import (
 	"code.google.com/p/go.text/unicode/norm"
 	"encoding/binary"
 	"fmt"
+	"reflect"
 	"strings"
+	"unsafe"
 )
 
 type decString struct {
@@ -12,7 +14,9 @@ type decString struct {
 }
 
 func (this *decString) Eval(buf []byte) string {
-	return string(buf)
+	header := (*reflect.SliceHeader)(unsafe.Pointer(&buf))
+	strHeader := reflect.StringHeader{header.Data, header.Len}
+	return *(*string)(unsafe.Pointer(&strHeader))
 }
 
 func init() {
@@ -134,4 +138,20 @@ func (this *lenString) Eval(buf []byte) int64 {
 
 func init() {
 	Register("length", new(lenString))
+}
+
+type decBool struct {
+	//TODO: add cache
+}
+
+func (this *decBool) Eval(buf []byte) bool {
+	v, n := binary.Uvarint(buf)
+	if n <= 0 {
+		panic(fmt.Sprintf("decodeVarint n = %d", n))
+	}
+	return v == 1
+}
+
+func init() {
+	Register("decBool", new(decBool))
 }

@@ -498,6 +498,7 @@ func TestIncorrectNotName(t *testing.T) {
 var correctNotName = `root = test.Person
 	test.Person = accept
 	accept name = reject
+	reject _ = reject
 	accept _ = accept
 
 	if (decString(test.Person.Name) == "David") 

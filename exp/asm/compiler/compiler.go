@@ -18,6 +18,7 @@ import (
 	descriptor "code.google.com/p/gogoprotobuf/protoc-gen-gogo/descriptor"
 	"github.com/awalterschulze/katydid/exp/asm/ast"
 	"github.com/awalterschulze/katydid/exp/asm/exec"
+	"github.com/awalterschulze/katydid/exp/asm/ifexpr"
 	"github.com/awalterschulze/katydid/exp/asm/protomap"
 	"github.com/awalterschulze/katydid/exp/asm/table"
 )
@@ -46,8 +47,28 @@ func findStartState(root *ast.Init, inits []*ast.Init, tab table.Table) (int, er
 	return 0, &errNoStartState{root.GetPackage(), root.GetMessage()}
 }
 
+func findIncludes(rules *ast.Rules) ([]string, error) {
+	s := make([]string, 0, 1+len(rules.GetInit())+len(rules.GetIfExpr()))
+	s = append(s, rules.GetRoot().GetPackage()+"."+rules.GetRoot().GetMessage())
+	for _, init := range rules.GetInit() {
+		s = append(s, init.GetPackage()+"."+init.GetMessage())
+	}
+	for _, ifExpr := range rules.GetIfExpr() {
+		v, err := ifexpr.GetVariable(ifExpr)
+		if err != nil {
+			return nil, err
+		}
+		s = append(s, v.GetPackage()+"."+v.GetMessage()+"."+v.GetField())
+	}
+	return s, nil
+}
+
 func Compile(rules *ast.Rules, desc *descriptor.FileDescriptorSet) (*exec.Exec, error) {
-	pmap, err := protomap.New(rules.GetRoot().GetPackage(), rules.GetRoot().GetMessage(), desc)
+	includes, err := findIncludes(rules)
+	if err != nil {
+		return nil, err
+	}
+	pmap, err := protomap.NewZipped(rules.GetRoot().GetPackage(), rules.GetRoot().GetMessage(), desc, includes)
 	if err != nil {
 		return nil, err
 	}

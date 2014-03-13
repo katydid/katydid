@@ -17,6 +17,7 @@ package table
 import (
 	"fmt"
 	"github.com/awalterschulze/katydid/exp/asm/ast"
+	"github.com/awalterschulze/katydid/exp/asm/maps"
 	"strings"
 )
 
@@ -46,18 +47,20 @@ func (this *errUnknownInput) Error() string {
 }
 
 type table struct {
-	nameToState map[string]int
-	stateToName []string
-	trans       []map[int]int
+	nameToState  map[string]int
+	stateToName  []string
+	transBuilder []map[int]int
+	trans        []maps.IntToInt
+	noescape     []bool
 }
 
 func (this *table) allocState(name string) int {
 	if s, ok := this.nameToState[name]; ok {
 		return s
 	}
-	s := len(this.trans)
+	s := len(this.transBuilder)
 	this.nameToState[name] = s
-	this.trans = append(this.trans, make(map[int]int))
+	this.transBuilder = append(this.transBuilder, make(map[int]int))
 	this.stateToName = append(this.stateToName, name)
 	return s
 }
@@ -71,7 +74,7 @@ func (this *table) allocTrans(src string, input string, dst string) {
 		i = this.allocState(input)
 	}
 	d := this.allocState(dst)
-	this.trans[s][i] = d
+	this.transBuilder[s][i] = d
 }
 
 func (this *table) allocIfStates(expr *ast.StateExpr) {
@@ -83,8 +86,22 @@ func (this *table) allocIfStates(expr *ast.StateExpr) {
 	this.allocIfStates(expr.GetIfExpr().GetElse())
 }
 
+func (this *table) finalize() {
+	this.trans = make([]maps.IntToInt, len(this.transBuilder))
+	this.noescape = make([]bool, len(this.transBuilder))
+	for i, m := range this.transBuilder {
+		this.trans[i] = maps.NewIntToInt(m)
+		if len(m) == 1 {
+			if v, ok := m[0]; ok {
+				this.noescape[i] = (v == i)
+			}
+		}
+	}
+	this.transBuilder = nil
+}
+
 func New(transitions []*ast.Transition, ifs []*ast.IfExpr) Table {
-	tab := &table{make(map[string]int), make([]string, 0), make([]map[int]int, 0)}
+	tab := &table{make(map[string]int), make([]string, 0), make([]map[int]int, 0), nil, nil}
 	tab.allocState("_") // making the default input "_" = 0
 	for _, trans := range transitions {
 		tab.allocTrans(trans.GetSrc(), trans.GetInput(), trans.GetDst())
@@ -93,12 +110,14 @@ func New(transitions []*ast.Transition, ifs []*ast.IfExpr) Table {
 		tab.allocIfStates(ifExpr.GetThen())
 		tab.allocIfStates(ifExpr.GetElse())
 	}
+	tab.finalize()
 	return tab
 }
 
 type Table interface {
 	NameToState(name string) (int, error)
 	Trans(src int, input int) (int, error)
+	NoEscapeFrom(src int) bool
 	Dot() string
 }
 
@@ -114,9 +133,9 @@ func (this *table) Trans(src int, input int) (int, error) {
 	if src >= len(this.trans) {
 		return 0, &errUnknownState{src}
 	}
-	d, ok := this.trans[src][input]
+	d, ok := this.trans[src].Lookup(input)
 	if !ok {
-		def, ok := this.trans[src][0]
+		def, ok := this.trans[src].Lookup(0)
 		if !ok {
 			return 0, &errUnknownInput{src, input}
 		}
@@ -125,13 +144,20 @@ func (this *table) Trans(src int, input int) (int, error) {
 	return d, nil
 }
 
+func (this *table) NoEscapeFrom(src int) bool {
+	if src >= len(this.noescape) {
+		return false
+	}
+	return this.noescape[src]
+}
+
 func (this *table) Dot() string {
 	lines := make([]string, 0, len(this.stateToName)*4)
 	for s, name := range this.stateToName {
 		lines = append(lines, fmt.Sprintf("\tnode%d [label=\"%v(%d)\"]\n", s, name, s))
 	}
-	for s, trans := range this.trans {
-		for i, d := range trans {
+	for s, m := range this.trans {
+		for i, d := range m.ToMap() {
 			lines = append(lines, fmt.Sprintf("\tnode%d -> node%d [label=\"%s(%d)\"]\n", s, d, this.stateToName[i], i))
 		}
 	}

@@ -37,12 +37,13 @@ var errBufferOverlow = fmt.Errorf("buffer overflow")
 var errUnknownWireType = fmt.Errorf("unknown wire type")
 
 type ProtoMap interface {
-	Trans(src int, key uint64) (int, error)
+	Trans(src int, key uint64) (int, bool)
 	IsLeave(int) bool
 }
 
 type Table interface {
 	Trans(src int, input int) (int, error)
+	NoEscapeFrom(src int) bool
 }
 
 type Link interface {
@@ -80,20 +81,18 @@ func (this *Exec) Eval(buf []byte) (bool, error) {
 
 func uvarint(buf []byte) (uint64, int, error) {
 	var uv uint64
-	var index int
-	l := len(buf)
-	for shift := uint(0); ; shift += 7 {
-		if index >= l {
-			return 0, 0, newErrVarint(buf)
-		}
-		b := buf[index]
-		index++
-		uv |= (uint64(b) & 0x7F) << shift
+	var shift uint
+	for i, b := range buf {
 		if b < 0x80 {
-			break
+			if i > 9 || i == 9 && b > 1 {
+				return 0, 0, newErrVarint(buf)
+			}
+			return uv | uint64(b)<<shift, i + 1, nil
 		}
+		uv |= (uint64(b) & 0x7F) << shift
+		shift += 7
 	}
-	return uv, index, nil
+	return 0, 0, newErrVarint(buf)
 }
 
 func length(wireType int, buf []byte) (prefix int, l int, err error) {
@@ -113,6 +112,9 @@ func length(wireType int, buf []byte) (prefix int, l int, err error) {
 }
 
 func (this *Exec) eval(mapState int, automataState int, buf []byte) (int, error) {
+	if this.table.NoEscapeFrom(automataState) {
+		return automataState, nil
+	}
 	i := 0
 	for i < len(buf) {
 		v, n, err := uvarint(buf[i:])
@@ -121,18 +123,18 @@ func (this *Exec) eval(mapState int, automataState int, buf []byte) (int, error)
 		}
 		i += n
 		wireType := int(v & 0x7)
-		newMapState, err := this.protomap.Trans(mapState, v)
+		p, n, err := length(wireType, buf[i:])
 		if err != nil {
 			return 0, err
 		}
+		i += p
+		newMapState, ok := this.protomap.Trans(mapState, v)
+		if !ok {
+			i += n
+			continue
+		}
 		var input int
 		if this.protomap.IsLeave(newMapState) {
-			var n int
-			p, n, err := length(wireType, buf[i:])
-			if err != nil {
-				return 0, err
-			}
-			i += p
 			var ok bool
 			input, ok = this.link.IfEval(newMapState, buf[i:i+n])
 			i += n
@@ -142,30 +144,22 @@ func (this *Exec) eval(mapState int, automataState int, buf []byte) (int, error)
 		} else {
 			newStartState, ok := this.link.ProtoToStart(newMapState)
 			if !ok {
-				p, n, err := length(wireType, buf[i:])
-				if err != nil {
-					return 0, err
-				}
-				i += p
 				i += n
 				continue
 			} else {
-				l, n, err := uvarint(buf[i:])
+				input, err = this.eval(newMapState, newStartState, buf[i:i+n])
 				if err != nil {
 					return 0, err
 				}
 				i += n
-				length := int(l)
-				input, err = this.eval(newMapState, newStartState, buf[i:i+length])
-				if err != nil {
-					return 0, err
-				}
-				i += length
 			}
 		}
 		automataState, err = this.table.Trans(automataState, input)
 		if err != nil {
 			return 0, err
+		}
+		if this.table.NoEscapeFrom(automataState) {
+			return automataState, nil
 		}
 	}
 	if i > len(buf) {
