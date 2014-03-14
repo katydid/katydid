@@ -24,6 +24,7 @@ import (
 type Link interface {
 	ProtoToStart(protoState int) (startState int, exists bool)
 	IfEval(protoState int, buf []byte) (state int, exists bool)
+	GetIfs() []ifexpr.StateExpr
 }
 
 type link struct {
@@ -83,4 +84,8 @@ func (this *link) IfEval(protoState int, buf []byte) (state int, exists bool) {
 		return 0, false
 	}
 	return ifExpr.Eval(buf), true
+}
+
+func (this *link) GetIfs() []ifexpr.StateExpr {
+	return this.protoToIf
 }

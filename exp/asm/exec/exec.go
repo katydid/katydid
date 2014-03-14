@@ -55,7 +55,7 @@ func NewExec(protomap ProtoMap, table Table, link Link, rootState int, startStat
 	return &Exec{
 		protomap:    protomap,
 		table:       table,
-		link:        link,
+		Link:        link,
 		rootState:   rootState,
 		startState:  startState,
 		acceptState: acceptState,
@@ -65,7 +65,7 @@ func NewExec(protomap ProtoMap, table Table, link Link, rootState int, startStat
 type Exec struct {
 	protomap    ProtoMap
 	table       Table
-	link        Link
+	Link        Link
 	rootState   int
 	startState  int
 	acceptState int
@@ -136,13 +136,13 @@ func (this *Exec) eval(mapState int, automataState int, buf []byte) (int, error)
 		var input int
 		if this.protomap.IsLeave(newMapState) {
 			var ok bool
-			input, ok = this.link.IfEval(newMapState, buf[i:i+n])
+			input, ok = this.Link.IfEval(newMapState, buf[i:i+n])
 			i += n
 			if !ok {
 				continue
 			}
 		} else {
-			newStartState, ok := this.link.ProtoToStart(newMapState)
+			newStartState, ok := this.Link.ProtoToStart(newMapState)
 			if !ok {
 				i += n
 				continue

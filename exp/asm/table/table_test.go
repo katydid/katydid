@@ -56,57 +56,57 @@ numberAndStreet _ = numberAndStreet
 */
 func TestTable(t *testing.T) {
 	transitions := []*ast.Transition{
-		&ast.Transition{
+		{
 			Src:   proto.String("start"),
 			Input: proto.String("numberAndStreet"),
 			Dst:   proto.String("accept"),
 		},
-		&ast.Transition{
+		{
 			Src:   proto.String("start"),
 			Input: proto.String("_"),
 			Dst:   proto.String("start"),
 		},
-		&ast.Transition{
+		{
 			Src:   proto.String("accept"),
 			Input: proto.String("_"),
 			Dst:   proto.String("accept"),
 		},
-		&ast.Transition{
+		{
 			Src:   proto.String("address"),
 			Input: proto.String("number"),
 			Dst:   proto.String("number"),
 		},
-		&ast.Transition{
+		{
 			Src:   proto.String("address"),
 			Input: proto.String("street"),
 			Dst:   proto.String("street"),
 		},
-		&ast.Transition{
+		{
 			Src:   proto.String("address"),
 			Input: proto.String("_"),
 			Dst:   proto.String("address"),
 		},
-		&ast.Transition{
+		{
 			Src:   proto.String("number"),
 			Input: proto.String("street"),
 			Dst:   proto.String("numberAndStreet"),
 		},
-		&ast.Transition{
+		{
 			Src:   proto.String("number"),
 			Input: proto.String("_"),
 			Dst:   proto.String("number"),
 		},
-		&ast.Transition{
+		{
 			Src:   proto.String("street"),
 			Input: proto.String("number"),
 			Dst:   proto.String("numberAndStreet"),
 		},
-		&ast.Transition{
+		{
 			Src:   proto.String("street"),
 			Input: proto.String("_"),
 			Dst:   proto.String("street"),
 		},
-		&ast.Transition{
+		{
 			Src:   proto.String("numberAndStreet"),
 			Input: proto.String("_"),
 			Dst:   proto.String("numberAndStreet"),

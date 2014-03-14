@@ -1,6 +1,6 @@
-.PHONY: nuke regenerate build test
+.PHONY: nuke regenerate gofmt build test
 
-all: nuke regenerate build test
+all: nuke regenerate gofmt build test
 
 test:
 	go test -v ./...
@@ -22,3 +22,6 @@ nuke: clean
 	rm -rf parser
 	rm -rf token
 	rm -rf util
+
+gofmt:
+	gofmt -l -s -w .

@@ -1,7 +1,6 @@
-
 package token
 
-import(
+import (
 	"fmt"
 )
 
@@ -13,14 +12,14 @@ type Token struct {
 
 type Type int
 
-const(
+const (
 	INVALID Type = iota
 	EOF
 )
 
 type Pos struct {
 	Offset int
-	Line int
+	Line   int
 	Column int
 }
 
@@ -29,8 +28,8 @@ func (this Pos) String() string {
 }
 
 type TokenMap struct {
-	typeMap  []string
-	idMap map[string]Type
+	typeMap []string
+	idMap   map[string]Type
 }
 
 func (this TokenMap) Id(tok Type) string {
@@ -91,38 +90,37 @@ var TokMap = TokenMap{
 		"False",
 	},
 
-	idMap: map[string]Type {
-		"INVALID": 0,
-		"$": 1,
-		"root": 2,
-		"=": 3,
-		"id": 4,
-		".": 5,
-		"if": 6,
-		"then": 7,
-		"else": 8,
-		"{": 9,
-		"}": 10,
-		"(": 11,
-		")": 12,
-		"==": 13,
-		"<": 14,
-		"<=": 15,
-		">": 16,
-		">=": 17,
-		"&&": 18,
-		"||": 19,
-		"or": 20,
-		"and": 21,
-		",": 22,
-		"int64": 23,
-		"int_lit": 24,
-		"uint64": 25,
+	idMap: map[string]Type{
+		"INVALID":    0,
+		"$":          1,
+		"root":       2,
+		"=":          3,
+		"id":         4,
+		".":          5,
+		"if":         6,
+		"then":       7,
+		"else":       8,
+		"{":          9,
+		"}":          10,
+		"(":          11,
+		")":          12,
+		"==":         13,
+		"<":          14,
+		"<=":         15,
+		">":          16,
+		">=":         17,
+		"&&":         18,
+		"||":         19,
+		"or":         20,
+		"and":        21,
+		",":          22,
+		"int64":      23,
+		"int_lit":    24,
+		"uint64":     25,
 		"string_lit": 26,
-		"true": 27,
-		"True": 28,
-		"false": 29,
-		"False": 30,
+		"true":       27,
+		"True":       28,
+		"false":      29,
+		"False":      30,
 	},
 }
-

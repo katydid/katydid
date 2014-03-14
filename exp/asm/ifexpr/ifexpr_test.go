@@ -36,7 +36,7 @@ func TestEasyIfExpr(t *testing.T) {
 		Function: &ast.Function{
 			Name: proto.String("not"),
 			Params: []*ast.Expr{
-				&ast.Expr{
+				{
 					Terminal: &ast.Terminal{
 						BoolValue: proto.Bool(false),
 					},
@@ -79,7 +79,7 @@ func TestNestedIfExpr(t *testing.T) {
 		Function: &ast.Function{
 			Name: proto.String("not"),
 			Params: []*ast.Expr{
-				&ast.Expr{
+				{
 					Terminal: &ast.Terminal{
 						BoolValue: proto.Bool(false),
 					},

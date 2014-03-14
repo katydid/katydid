@@ -25,7 +25,7 @@ func TestComposeNot(t *testing.T) {
 		Function: &ast.Function{
 			Name: proto.String("not"),
 			Params: []*ast.Expr{
-				&ast.Expr{
+				{
 					Terminal: &ast.Terminal{
 						BoolValue: proto.Bool(false),
 					},
@@ -49,11 +49,11 @@ func TestComposeContains(t *testing.T) {
 		Function: &ast.Function{
 			Name: proto.String("contains"),
 			Params: []*ast.Expr{
-				&ast.Expr{
+				{
 					Function: &ast.Function{
 						Name: proto.String("nfkc"),
 						Params: []*ast.Expr{
-							&ast.Expr{
+							{
 								Function: &ast.Function{
 									Name: proto.String("decString"),
 								},
@@ -61,11 +61,11 @@ func TestComposeContains(t *testing.T) {
 						},
 					},
 				},
-				&ast.Expr{
+				{
 					Function: &ast.Function{
 						Name: proto.String("nfkc"),
 						Params: []*ast.Expr{
-							&ast.Expr{
+							{
 								Terminal: &ast.Terminal{
 									StringValue: proto.String("TheStreet"),
 								},
@@ -93,11 +93,11 @@ func TestComposeStringEq(t *testing.T) {
 		Function: &ast.Function{
 			Name: proto.String("eq"),
 			Params: []*ast.Expr{
-				&ast.Expr{
+				{
 					Function: &ast.Function{
 						Name: proto.String("nfkc"),
 						Params: []*ast.Expr{
-							&ast.Expr{
+							{
 								Function: &ast.Function{
 									Name: proto.String("decString"),
 								},
@@ -105,11 +105,11 @@ func TestComposeStringEq(t *testing.T) {
 						},
 					},
 				},
-				&ast.Expr{
+				{
 					Function: &ast.Function{
 						Name: proto.String("nfkc"),
 						Params: []*ast.Expr{
-							&ast.Expr{
+							{
 								Terminal: &ast.Terminal{
 									StringValue: proto.String("TheStreet"),
 								},

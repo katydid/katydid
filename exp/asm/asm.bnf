@@ -97,6 +97,7 @@ StateExpr
 
 Function
 	: id "(" Params ")" << &ast.Function{Name: ast.IdToString($0), Params: $2.([]*ast.Expr)}, nil >>
+	| id "(" ")" << &ast.Function{Name: ast.IdToString($0), Params: nil}, nil >>
 	| "(" Expr Comparator Expr ")" << &ast.Function{Name: proto.String($2.(string)), Params: []*ast.Expr{$1.(*ast.Expr), $3.(*ast.Expr)}}, nil >>
 	;
 

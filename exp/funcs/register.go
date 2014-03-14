@@ -1,3 +1,17 @@
+//  Copyright 2013 Walter Schulze
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
 package funcs
 
 import (
@@ -90,7 +104,7 @@ type funk struct {
 	uniqName string
 	In       []descriptor.FieldDescriptorProto_Type
 	Out      descriptor.FieldDescriptorProto_Type
-	fnc      interface{}
+	newfnc   func() interface{}
 }
 
 func (this *funk) String() string {
@@ -129,7 +143,13 @@ func goTypeToProto(typ reflect.Type) descriptor.FieldDescriptorProto_Type {
 }
 
 func Register(name string, fnc interface{}) {
-	rfunc := reflect.ValueOf(fnc)
+	RegisterFactory(name, func() interface{} {
+		return reflect.New(reflect.TypeOf(fnc).Elem()).Interface()
+	})
+}
+
+func RegisterFactory(name string, newFunc func() interface{}) {
+	rfunc := reflect.ValueOf(newFunc())
 	returnType := rfunc.MethodByName("Eval").Type()
 	uniqName := rfunc.Elem().Type().Name()
 	lenFields := rfunc.Elem().NumField()
@@ -137,12 +157,12 @@ func Register(name string, fnc interface{}) {
 		name:     name,
 		uniqName: uniqName,
 		Out:      goTypeToProto(returnType.Out(0)),
-		fnc:      fnc,
+		newfnc:   newFunc,
 	}
 	for i := 0; i < lenFields; i++ {
 		meth, ok := rfunc.Elem().Field(i).Type().MethodByName("Eval")
 		if !ok {
-			panic("no Eval method")
+			continue
 		}
 		res.In = append(res.In, goTypeToProto(meth.Type.Out(0)))
 	}
@@ -154,8 +174,11 @@ func newFunc(uniq string, values ...interface{}) (interface{}, error) {
 	if !ok {
 		return nil, &errUnknownFunction{uniq, nil}
 	}
-	newf := reflect.New(reflect.TypeOf(f.fnc).Elem()).Elem()
+	newf := reflect.ValueOf(f.newfnc()).Elem()
 	for i := 0; i < newf.NumField(); i++ {
+		if _, ok := newf.Field(i).Type().MethodByName("Eval"); !ok {
+			continue
+		}
 		newf.Field(i).Set(reflect.ValueOf(values[i]))
 	}
 	return newf.Addr().Interface(), nil

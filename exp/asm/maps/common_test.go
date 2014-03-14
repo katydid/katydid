@@ -55,7 +55,7 @@ func newMapInt() MapInt {
 func (this mapIntToInt) benchkeys() [double]int {
 	var ks [double]int
 	i := 0
-	for k, _ := range this {
+	for k := range this {
 		ks[i] = k
 		i++
 		ks[i] = r.Int()
@@ -76,7 +76,7 @@ func newMapUint64() MapUint64 {
 func (this mapUint64ToInt) benchkeys() [double]uint64 {
 	var ks [double]uint64
 	i := 0
-	for k, _ := range this {
+	for k := range this {
 		ks[i] = k
 		i++
 		ks[i] = uint64(r.Uint32())

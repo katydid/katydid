@@ -44,17 +44,17 @@ type StateExpr interface {
 	Eval(buf []byte) int
 }
 
-type ifExpr struct {
-	cond funcs.Bool
-	succ StateExpr
-	fail StateExpr
+type IfExpr struct {
+	Cond funcs.Bool
+	Succ StateExpr
+	Fail StateExpr
 }
 
-func (this *ifExpr) Eval(buf []byte) int {
-	if this.cond.Eval(buf) {
-		return this.succ.Eval(buf)
+func (this *IfExpr) Eval(buf []byte) int {
+	if this.Cond.Eval(buf) {
+		return this.Succ.Eval(buf)
 	}
-	return this.fail.Eval(buf)
+	return this.Fail.Eval(buf)
 }
 
 func Compile(ifexpr *ast.IfExpr, nameToState NameToState) (StateExpr, error) {
@@ -70,7 +70,7 @@ func Compile(ifexpr *ast.IfExpr, nameToState NameToState) (StateExpr, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &ifExpr{cond, succ, fail}, nil
+	return &IfExpr{cond, succ, fail}, nil
 }
 
 func GetVariable(ifExpr *ast.IfExpr) (*ast.Variable, error) {

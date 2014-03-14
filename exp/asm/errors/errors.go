@@ -1,7 +1,6 @@
-
 package errors
 
-import(
+import (
 	"bytes"
 	"fmt"
 	"github.com/awalterschulze/katydid/exp/asm/token"
