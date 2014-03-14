@@ -2,6 +2,23 @@
 // source: asm.proto
 // DO NOT EDIT!
 
+/*
+Package ast is a generated protocol buffer package.
+
+It is generated from these files:
+	asm.proto
+
+It has these top-level messages:
+	Rules
+	Init
+	Transition
+	IfExpr
+	StateExpr
+	Expr
+	Function
+	Terminal
+	Variable
+*/
 package ast
 
 import proto "code.google.com/p/gogoprotobuf/proto"

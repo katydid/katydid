@@ -2,6 +2,17 @@
 // source: test.proto
 // DO NOT EDIT!
 
+/*
+Package test is a generated protocol buffer package.
+
+It is generated from these files:
+	test.proto
+
+It has these top-level messages:
+	Person
+	Address
+	SrcTree
+*/
 package test
 
 import proto "code.google.com/p/gogoprotobuf/proto"
