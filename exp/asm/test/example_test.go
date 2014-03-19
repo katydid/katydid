@@ -183,7 +183,9 @@ var robert = &main.Person{
 	Telephone: proto.String("0127897897"),
 }
 
-var contextPerson = `root = main.Person
+var contextPerson = `//Has this person ever lived at 456 TheStreet
+
+root = main.Person
 main.Person = start
 start numberAndStreet = accept
 start _ = start
@@ -203,12 +205,10 @@ if contains(nfkc(decString(main.Address.Street)), nfkc("TheStreet")) then street
 `
 
 func TestContextDavid(t *testing.T) {
-	//David has not lived at 456 The Street
 	example(t, "person.proto", david, contextPerson, false)
 }
 
 func TestContextRobert(t *testing.T) {
-	//Robert lives at at 456 The Street
 	example(t, "person.proto", robert, contextPerson, true)
 }
 
@@ -307,8 +307,9 @@ var syscall = &main.SrcTree{
 	},
 }
 
-//Does this SrcTree depend on io or is its packageName io
-var recursiveSrcTree = `root = main.SrcTree
+var recursiveSrcTree = `//Does this SrcTree depend on io or is its package name io
+
+root = main.SrcTree
 main.SrcTree = start
 start accept = accept
 start _ = start
@@ -397,10 +398,11 @@ var routine = &main.Person{
 	Telephone: proto.String("0124444444"),
 }
 
-//Is this Person's newest streetnumber 1 and second newest streetnumber 2.
+var listIndexAddress = `//Is this Person's newest street number 1 and second newest street number 2.
 //Assume that addresses are appended to the list, so the last address is the newest address.
 // find main.Person where { main.Person { Addresses[-2].Number == 2 && Addresses[-1].Number == 1 } }
-var listIndexAddress = `root = main.Person
+
+root = main.Person
 main.Person = start
 start numberTwo = topNumberTwo
 start _ = start
@@ -472,8 +474,9 @@ var smith = &main.Person{
 	Telephone: proto.String("0127897897"),
 }
 
-//Is this Person's name missing
-var nilName = `root = main.Person
+var nilName = `//Is this person's name missing
+
+root = main.Person
 main.Person = accept
 accept name = reject
 accept _ = accept
@@ -495,8 +498,9 @@ func TestNilNameSmith(t *testing.T) {
 	example(t, "person.proto", smith, nilName, false)
 }
 
-//Is this Person's name an empty string
-var lenName = `root = main.Person
+var lenName = `//Is this person's name an empty string
+
+root = main.Person
 main.Person = start
 start name = reject
 start noname = accept
@@ -519,8 +523,9 @@ func TestLenNameSmith(t *testing.T) {
 	example(t, "person.proto", smith, lenName, true)
 }
 
-//Is this Person's name empty or an empty string
-var emptyOrNil = `root = main.Person
+var emptyOrNil = `//Is this person's name empty or an empty string
+
+root = main.Person
 main.Person = accept
 accept name = reject
 accept _ = accept
@@ -595,7 +600,9 @@ func TestCorrectNotNameDavid(t *testing.T) {
 	example(t, "person.proto", david, correctNotName, false)
 }
 
-var andNameTelephone = `root = main.Person
+var andNameTelephone = `//Is this person's name David and telephone number 0123456789
+
+root = main.Person
 main.Person = start
 start name = name
 start tel = tel
@@ -630,7 +637,9 @@ func TestAndNameTelephoneSmith(t *testing.T) {
 	example(t, "person.proto", smith, andNameTelephone, false)
 }
 
-var orNameTelephone = `root = main.Person
+var orNameTelephone = `//Is this person's name David or telephone number 0123456789
+
+root = main.Person
 main.Person = start
 start name = accept
 start tel = accept
