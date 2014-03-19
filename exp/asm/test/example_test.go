@@ -58,7 +58,7 @@ func exampleName() string {
 	name := goruntime.FuncForPC(pc).Name()
 	names := strings.Split(name, ".")
 	name = names[len(names)-1]
-	return strings.Replace(name, "Test", "example", 1)
+	return strings.Replace(name, "Test", "", 1)
 }
 
 func exampleDir(name string) string {
@@ -131,20 +131,22 @@ func example(t *testing.T, protoFilename string, m proto.Message, katydidStr str
 	newtyp := strings.Replace(typ, "*", "&", -1)
 	popStr := `package main
 
-	import (
-		"encoding/json"
-	)
+import (
+	"encoding/json"
+)
 
-	func Populate() (` + typ + `, error) {
-		m := ` + newtyp + `{}
-		jsonValue := ` + "`" + string(jsonBytes) + "`" + `
-		if err := json.Unmarshal([]byte(jsonValue), m); err != nil {
-			panic(err)
-		}
-		return m, nil
+func Populate() (` + typ + `, error) {
+	m := ` + newtyp + `{}
+
+	jsonValue := ` + "`" + string(jsonBytes) + "`" + `
+
+	if err := json.Unmarshal([]byte(jsonValue), m); err != nil {
+		panic(err)
 	}
+	return m, nil
+}
 
-	`
+`
 	if err := ioutil.WriteFile(twoFilename, []byte(popStr), 0666); err != nil {
 		panic(err)
 	}
@@ -182,23 +184,23 @@ var robert = &main.Person{
 }
 
 var contextPerson = `root = main.Person
-	main.Person = start
-	start numberAndStreet = accept
-	start _ = start
+main.Person = start
+start numberAndStreet = accept
+start _ = start
 
-	main.Address = address
-	address number = number
-	address street = street
-	address _ = address
-	number street = numberAndStreet
-	number _ = number
-	street number = numberAndStreet
-	street _ = street
+main.Address = address
+address number = number
+address street = street
+address _ = address
+number street = numberAndStreet
+number _ = number
+street number = numberAndStreet
+street _ = street
 
-	if (decInt64(main.Address.Number) == int64(456)) then number else noNumber
+if (decInt64(main.Address.Number) == int64(456)) then number else noNumber
 
-	if contains(nfkc(decString(main.Address.Street)), nfkc("TheStreet")) then street else noStreet
-	`
+if contains(nfkc(decString(main.Address.Street)), nfkc("TheStreet")) then street else noStreet
+`
 
 func TestContextDavid(t *testing.T) {
 	//David has not lived at 456 The Street
@@ -307,16 +309,16 @@ var syscall = &main.SrcTree{
 
 //Does this SrcTree depend on io or is its packageName io
 var recursiveSrcTree = `root = main.SrcTree
-	main.SrcTree = start
-	start accept = accept
-	start _ = start
-	accept _ = accept
+main.SrcTree = start
+start accept = accept
+start _ = start
+accept _ = accept
 
-	if (decString(main.SrcTree.PackageName) == "io") 
-	  then accept 
-	  else packageName
+if (decString(main.SrcTree.PackageName) == "io") 
+  then accept 
+  else packageName
 
-	`
+`
 
 func TestRecursiveSrcTreeIoUtil(t *testing.T) {
 	example(t, "srctree.proto", ioUtil, recursiveSrcTree, true)
@@ -399,31 +401,31 @@ var routine = &main.Person{
 //Assume that addresses are appended to the list, so the last address is the newest address.
 // find main.Person where { main.Person { Addresses[-2].Number == 2 && Addresses[-1].Number == 1 } }
 var listIndexAddress = `root = main.Person
-	main.Person = start
-	start numberTwo = topNumberTwo
-	start _ = start
-	topNumberTwo numberOne = accept
-	topNumberTwo numberTwo = topNumberTwo
-	topNumberTwo _ = start
-	accept numberTwo = topNumberTwo
-	accept _ = start
+main.Person = start
+start numberTwo = topNumberTwo
+start _ = start
+topNumberTwo numberOne = accept
+topNumberTwo numberTwo = topNumberTwo
+topNumberTwo _ = start
+accept numberTwo = topNumberTwo
+accept _ = start
 
-	main.Address = address
-	address numberTwo = numberTwo
-	address numberOne = numberOne
-	address _ = address
-	numberTwo numberTwo = numberTwo
-	numberTwo numberOne = numberOne
-	numberOne numberTwo = numberTwo
-	numberOne numberOne = numberOne
+main.Address = address
+address numberTwo = numberTwo
+address numberOne = numberOne
+address _ = address
+numberTwo numberTwo = numberTwo
+numberTwo numberOne = numberOne
+numberOne numberTwo = numberTwo
+numberOne numberOne = numberOne
 
-	if (decInt64(main.Address.Number) == int64(1))
-	  then numberOne
-	  else {
-	    if (decInt64(main.Address.Number) == int64(2))
-	    then numberTwo
-	    else noNumber
-	  }
+if (decInt64(main.Address.Number) == int64(1))
+  then numberOne
+  else {
+    if (decInt64(main.Address.Number) == int64(2))
+    then numberTwo
+    else noNumber
+  }
 `
 
 func TestListIndexAddressMover(t *testing.T) {
@@ -472,14 +474,14 @@ var smith = &main.Person{
 
 //Is this Person's name missing
 var nilName = `root = main.Person
-	main.Person = accept
-	accept name = reject
-	accept _ = accept
+main.Person = accept
+accept name = reject
+accept _ = accept
 
-	if exists(main.Person.Name)
-	  then name
-	  else noname
-	`
+if exists(main.Person.Name)
+  then name
+  else noname
+`
 
 func TestNilNameNoName(t *testing.T) {
 	example(t, "person.proto", noname, nilName, true)
@@ -495,14 +497,15 @@ func TestNilNameSmith(t *testing.T) {
 
 //Is this Person's name an empty string
 var lenName = `root = main.Person
-	main.Person = start
-	start name = reject
-	start noname = accept
-	start _ = start
+main.Person = start
+start name = reject
+start noname = accept
+start _ = start
 
-	if (length(decString(main.Person.Name)) == int64(0))
-	  then noname
-	  else name`
+if (length(decString(main.Person.Name)) == int64(0))
+  then noname
+  else name
+`
 
 func TestLenNameNoName(t *testing.T) {
 	example(t, "person.proto", noname, lenName, false)
@@ -518,13 +521,14 @@ func TestLenNameSmith(t *testing.T) {
 
 //Is this Person's name empty or an empty string
 var emptyOrNil = `root = main.Person
-	main.Person = accept
-	accept name = reject
-	accept _ = accept
+main.Person = accept
+accept name = reject
+accept _ = accept
 
-	if (length(decString(main.Person.Name)) == int64(0))
-	  then noname
-	  else name`
+if (length(decString(main.Person.Name)) == int64(0))
+  then noname
+  else name
+`
 
 func TestEmptyOrNilNoName(t *testing.T) {
 	example(t, "person.proto", noname, emptyOrNil, true)
@@ -539,14 +543,14 @@ func TestEmptyOrNilSmith(t *testing.T) {
 }
 
 var incorrentNotName = `root = main.Person
-	main.Person = start
-	start notname = accept
-	start _ = start
+main.Person = start
+start notname = accept
+start _ = start
 
-	if not((decString(main.Person.Name) == "David")) 
-	  then notname 
-	  else name
-		`
+if not((decString(main.Person.Name) == "David")) 
+  then notname 
+  else name
+`
 
 func TestIncorrectNotNameNoName(t *testing.T) {
 	example(t, "person.proto", noname, incorrentNotName, false)
@@ -565,15 +569,15 @@ func TestIncorrectNotNameDavid(t *testing.T) {
 }
 
 var correctNotName = `root = main.Person
-	main.Person = accept
-	accept name = reject
-	reject _ = reject
-	accept _ = accept
+main.Person = accept
+accept name = reject
+reject _ = reject
+accept _ = accept
 
-	if (decString(main.Person.Name) == "David") 
-	  then name 
-	  else noname
-		`
+if (decString(main.Person.Name) == "David") 
+  then name 
+  else noname
+`
 
 func TestCorrectNotNameNoName(t *testing.T) {
 	example(t, "person.proto", noname, correctNotName, true)
@@ -592,23 +596,23 @@ func TestCorrectNotNameDavid(t *testing.T) {
 }
 
 var andNameTelephone = `root = main.Person
-	main.Person = start
-	start name = name
-	start tel = tel
-	start _ = start
-	name tel = accept
-	name _ = name
-	tel name = accept
-	tel _ = tel
+main.Person = start
+start name = name
+start tel = tel
+start _ = start
+name tel = accept
+name _ = name
+tel name = accept
+tel _ = tel
 
-	if (decString(main.Person.Name) == "David") 
-	  then name 
-	  else noname
+if (decString(main.Person.Name) == "David") 
+  then name 
+  else noname
 
-	if (decString(main.Person.Telephone) == "0123456789") 
-	  then tel 
-	  else notel
-		`
+if (decString(main.Person.Telephone) == "0123456789") 
+  then tel 
+  else notel
+`
 
 func TestAndNameTelephoneDavid(t *testing.T) {
 	example(t, "person.proto", david, andNameTelephone, true)
@@ -627,20 +631,20 @@ func TestAndNameTelephoneSmith(t *testing.T) {
 }
 
 var orNameTelephone = `root = main.Person
-	main.Person = start
-	start name = accept
-	start tel = accept
-	start _ = start
-	accept _ = accept
+main.Person = start
+start name = accept
+start tel = accept
+start _ = start
+accept _ = accept
 
-	if (decString(main.Person.Name) == "David") 
-	  then name 
-	  else noname
+if (decString(main.Person.Name) == "David") 
+  then name 
+  else noname
 
-	if (decString(main.Person.Telephone) == "0123456789") 
-	  then tel 
-	  else notel
-		`
+if (decString(main.Person.Telephone) == "0123456789") 
+  then tel 
+  else notel
+`
 
 func TestOrNameTelephoneDavid(t *testing.T) {
 	example(t, "person.proto", david, orNameTelephone, true)
