@@ -15,56 +15,23 @@
 package main_test
 
 import (
+	"testing"
+
 	protoparser "code.google.com/p/gogoprotobuf/parser"
 	"code.google.com/p/gogoprotobuf/proto"
 	"github.com/awalterschulze/katydid/exp/asm/ast"
 	"github.com/awalterschulze/katydid/exp/asm/compiler"
-	"github.com/awalterschulze/katydid/exp/asm/inject"
 	"github.com/awalterschulze/katydid/exp/asm/lexer"
 	"github.com/awalterschulze/katydid/exp/asm/parser"
-	"github.com/awalterschulze/katydid/exp/funcs"
-	"reflect"
-	"testing"
 )
 
-type injectableInt64 struct {
-	v int64
-}
-
-func (this *injectableInt64) Eval(buf []byte) int64 {
-	return this.v
-}
-
-func (this *injectableInt64) SetValue(v int64) {
-	this.v = v
-}
-
-func init() {
-	funcs.Register("inject", new(injectableInt64))
-}
-
-type InjectableInt64 interface {
-	SetValue(v int64)
-}
-
-var injectPerson = `root = main.Person
-	main.Person = start
-	start accept = accept
-	start _ = start
-	accept _ = accept
-
-	main.Address = start
-
-	if eq(decInt64(main.Address.Number), inject()) then accept else meh
-	`
-
-func TestInject(t *testing.T) {
-	fileDescriptorSet, err := protoparser.ParseFile("person.proto", ".", "../../../../../../")
+func test(t *testing.T, protoFilename string, m proto.Message, katydidStr string, positive bool) {
+	fileDescriptorSet, err := protoparser.ParseFile(protoFilename, ".", "../../../../../../")
 	if err != nil {
 		panic(err)
 	}
 	p := parser.NewParser()
-	r, err := p.Parse(lexer.NewLexer([]byte(injectPerson)))
+	r, err := p.Parse(lexer.NewLexer([]byte(katydidStr)))
 	if err != nil {
 		t.Fatalf(err.Error())
 	}
@@ -73,21 +40,13 @@ func TestInject(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	typ := reflect.TypeOf((*InjectableInt64)(nil)).Elem()
-	instances := inject.Implements(e, typ)
-	for _, instance := range instances {
-		instance.(InjectableInt64).SetValue(456)
-	}
-	m := robert
 	data, err := proto.Marshal(m)
 	if err != nil {
 		panic(err)
 	}
-	match, err := e.Eval(data)
-	if err != nil {
-		panic(err)
-	}
-	if !match {
-		t.Fatalf("expected match")
+	if match, err := e.Eval(data); err != nil {
+		t.Errorf("Error: %v", err)
+	} else if match != positive {
+		t.Errorf("Expected a %v match from \n%v \non \n%v", positive, katydidStr, m)
 	}
 }

@@ -8,10 +8,14 @@ test:
 build:
 	go build ./...
 
+bench:
+	go test -v -test.run=XXX -test.bench=. ./...
+
 regenerate:
 	(cd exp/asm && gocc asm.bnf)
 	(cd exp/asm/ast && protoc --gogo_out=. -I=.:../../../../../../ asm.proto)
-	(cd exp/asm/test && protoc --gogo_out=. -I=.:../../../../../../ test.proto)
+	(cd exp/asm/test && protoc --gogo_out=. -I=.:../../../../../../ person.proto)
+	(cd exp/asm/test && protoc --gogo_out=. -I=.:../../../../../../ srctree.proto)
 	make gofmt
 
 clean:

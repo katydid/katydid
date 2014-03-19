@@ -12,16 +12,56 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package test
+package main_test
 
 import (
+	protoparser "code.google.com/p/gogoprotobuf/parser"
 	"code.google.com/p/gogoprotobuf/proto"
+	"github.com/awalterschulze/katydid/exp/asm/ast"
+	"github.com/awalterschulze/katydid/exp/asm/compiler"
+	katyexec "github.com/awalterschulze/katydid/exp/asm/exec"
+	"github.com/awalterschulze/katydid/exp/asm/lexer"
+	"github.com/awalterschulze/katydid/exp/asm/parser"
+	main "github.com/awalterschulze/katydid/exp/asm/test"
 	"math/rand"
 	"testing"
 	"time"
 )
 
-func (this test) bench(b *testing.B, newPop func(r randyTest, easy bool) proto.Message) {
+type bench struct {
+	exec *katyexec.Exec
+}
+
+func newBench(protoFilename string, katydidStr string) bench {
+	fileDescriptorSet, err := protoparser.ParseFile(protoFilename, ".", "../../../../../../")
+	if err != nil {
+		panic(err)
+	}
+	p := parser.NewParser()
+	r, err := p.Parse(lexer.NewLexer([]byte(katydidStr)))
+	if err != nil {
+		panic(err)
+	}
+	rules := r.(*ast.Rules)
+	e, err := compiler.Compile(rules, fileDescriptorSet)
+	if err != nil {
+		panic(err)
+	}
+	return bench{
+		exec: e,
+	}
+}
+
+type randyTest interface {
+	Float32() float32
+	Float64() float64
+	Int63() int64
+	Int31() int32
+	Uint32() uint32
+	Intn(n int) int
+}
+
+func (this bench) bench(b *testing.B, newPop func(r randyTest, easy bool) proto.Message) {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	num := 1000
 	datas := make([][]byte, num)
@@ -42,62 +82,62 @@ func (this test) bench(b *testing.B, newPop func(r randyTest, easy bool) proto.M
 }
 
 func BenchmarkContextPerson(b *testing.B) {
-	newTest("`BenchContextPerson", b, contextPerson).bench(b, func(r randyTest, easy bool) proto.Message {
-		return NewPopulatedPerson(r, easy)
+	newBench("person.proto", contextPerson).bench(b, func(r randyTest, easy bool) proto.Message {
+		return main.NewPopulatedPerson(r, easy)
 	})
 }
 
 func BenchmarkRecursiveSrcTree(b *testing.B) {
-	pops := []*SrcTree{ioUtil, path, runtime, syscall}
-	newTest("TestRecursiveSrcTree", b, recursiveSrcTree).bench(b, func(r randyTest, easy bool) proto.Message {
+	pops := []*main.SrcTree{ioUtil, pathSrcTree, runtime, syscall}
+	newBench("srctree.proto", recursiveSrcTree).bench(b, func(r randyTest, easy bool) proto.Message {
 		return pops[r.Intn(4)]
 	})
 }
 
 func BenchmarkListIndexAddress(b *testing.B) {
-	newTest("`BenchmarkListIndexAddress", b, listIndexAddress).bench(b, func(r randyTest, easy bool) proto.Message {
-		return NewPopulatedPerson(r, easy)
+	newBench("person.proto", listIndexAddress).bench(b, func(r randyTest, easy bool) proto.Message {
+		return main.NewPopulatedPerson(r, easy)
 	})
 }
 
 func BenchmarkNilName(b *testing.B) {
-	newTest("`BenchmarkNilName", b, nilName).bench(b, func(r randyTest, easy bool) proto.Message {
-		return NewPopulatedPerson(r, easy)
+	newBench("person.proto", nilName).bench(b, func(r randyTest, easy bool) proto.Message {
+		return main.NewPopulatedPerson(r, easy)
 	})
 }
 
 func BenchmarkLenName(b *testing.B) {
-	newTest("`BenchmarkLenName", b, lenName).bench(b, func(r randyTest, easy bool) proto.Message {
-		return NewPopulatedPerson(r, easy)
+	newBench("person.proto", lenName).bench(b, func(r randyTest, easy bool) proto.Message {
+		return main.NewPopulatedPerson(r, easy)
 	})
 }
 
 func BenchmarkEmptyOrNil(b *testing.B) {
-	newTest("`BenchmarkEmptyOrNil", b, emptyOrNil).bench(b, func(r randyTest, easy bool) proto.Message {
-		return NewPopulatedPerson(r, easy)
+	newBench("person.proto", emptyOrNil).bench(b, func(r randyTest, easy bool) proto.Message {
+		return main.NewPopulatedPerson(r, easy)
 	})
 }
 
 func BenchmarkIncorrectNotName(b *testing.B) {
-	newTest("`BenchmarkIncorrectNotName", b, incorrentNotName).bench(b, func(r randyTest, easy bool) proto.Message {
-		return NewPopulatedPerson(r, easy)
+	newBench("person.proto", incorrentNotName).bench(b, func(r randyTest, easy bool) proto.Message {
+		return main.NewPopulatedPerson(r, easy)
 	})
 }
 
 func BenchmarkCorrectNotName(b *testing.B) {
-	newTest("`BenchmarkIncorrectNotName", b, correctNotName).bench(b, func(r randyTest, easy bool) proto.Message {
-		return NewPopulatedPerson(r, easy)
+	newBench("person.proto", correctNotName).bench(b, func(r randyTest, easy bool) proto.Message {
+		return main.NewPopulatedPerson(r, easy)
 	})
 }
 
 func BenchmarkAndNameTelephone(b *testing.B) {
-	newTest("`BenchmarkIncorrectNotName", b, andNameTelephone).bench(b, func(r randyTest, easy bool) proto.Message {
-		return NewPopulatedPerson(r, easy)
+	newBench("person.proto", andNameTelephone).bench(b, func(r randyTest, easy bool) proto.Message {
+		return main.NewPopulatedPerson(r, easy)
 	})
 }
 
 func BenchmarkOrNameTelephone(b *testing.B) {
-	newTest("`BenchmarkIncorrectNotName", b, orNameTelephone).bench(b, func(r randyTest, easy bool) proto.Message {
-		return NewPopulatedPerson(r, easy)
+	newBench("person.proto", orNameTelephone).bench(b, func(r randyTest, easy bool) proto.Message {
+		return main.NewPopulatedPerson(r, easy)
 	})
 }
