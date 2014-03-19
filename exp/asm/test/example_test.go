@@ -35,24 +35,6 @@ import (
 	"io/ioutil"
 )
 
-func newJsonFile(name string, m proto.Message) {
-	data, err := json.MarshalIndent(m, "", "  ")
-	if err != nil {
-		panic(err)
-	}
-	os.Remove(name + ".json")
-	jsonFile, err := os.Create(name + ".json")
-	if err != nil {
-		panic(err)
-	}
-	if _, err := jsonFile.Write(data); err != nil {
-		panic(err)
-	}
-	if err := jsonFile.Close(); err != nil {
-		panic(err)
-	}
-}
-
 func exampleName() string {
 	pc, _, _, _ := goruntime.Caller(2)
 	name := goruntime.FuncForPC(pc).Name()
@@ -93,6 +75,7 @@ func example(t *testing.T, protoFilename string, m proto.Message, katydidStr str
 	oneFilename := filepath.Join(dir, "one.box")
 	twoFilename := filepath.Join(dir, "two.box")
 	threeFilename := filepath.Join(dir, "three.box")
+	jsonFilename := filepath.Join(dir, name+".json")
 
 	if err := ioutil.WriteFile(txtFilename, []byte(katydidStr), 0666); err != nil {
 		panic(err)
@@ -122,8 +105,11 @@ func example(t *testing.T, protoFilename string, m proto.Message, katydidStr str
 		panic(err)
 	}
 
-	jsonBytes, err := json.MarshalIndent(m, "", "\t")
+	jsonBytes, err := json.MarshalIndent(m, "", "  ")
 	if err != nil {
+		panic(err)
+	}
+	if err := ioutil.WriteFile(jsonFilename, jsonBytes, 0666); err != nil {
 		panic(err)
 	}
 	fulltyp := fmt.Sprintf("%T", m)
