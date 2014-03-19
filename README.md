@@ -29,12 +29,26 @@ The encoded protocol buffers have a semi-unordered unranked tree structure.
 Tree Automata have been found to be very applicable to XML processing.
 Katydid tries to do the same by applying Tree Automata to Protocol Buffers.
 
-First Experiment
-----------------
+Examples
+--------
 
 Using a bottom up hedge (unranked tree) automata we can create pretty expressive queries.
 
 http://arborist.katydid.ws
+
+http://arborist.katydid.ws/example/ContextRobert
+http://arborist.katydid.ws/example/ContextDavid
+
+http://arborist.katydid.ws/example/AndNameTelephoneDavid
+http://arborist.katydid.ws/example/OrNameTelephoneDavid
+
+http://arborist.katydid.ws/example/EmptyOrNilNoName
+
+http://arborist.katydid.ws/example/ListIndexAddressMover
+http://arborist.katydid.ws/example/ListIndexAddressShaker
+
+http://arborist.katydid.ws/example/RecursiveSrcTreePath
+http://arborist.katydid.ws/example/RecursiveSrcTreeSyscall
 
 Language
 --------
