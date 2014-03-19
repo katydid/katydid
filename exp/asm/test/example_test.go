@@ -122,7 +122,7 @@ func example(t *testing.T, protoFilename string, m proto.Message, katydidStr str
 		panic(err)
 	}
 
-	jsonBytes, err := json.Marshal(m)
+	jsonBytes, err := json.MarshalIndent(m, "", "\t")
 	if err != nil {
 		panic(err)
 	}
