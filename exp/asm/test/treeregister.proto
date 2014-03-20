@@ -1,0 +1,152 @@
+//Created using information from http://www.treeregister.org/measuringform.php
+
+package main;
+
+message TreeRegister {
+	repeated Tree Trees = 1;
+}
+
+message Tree {
+	optional GeneralInformation GeneralInformation = 1;
+	optional OtherInformation OtherInformation = 2;
+	optional Measurements Measurements = 3;
+	optional Condition Condition = 4;
+	optional AdditionalInformation AdditionalInformation = 5;
+	optional Sender Sender = 6;
+}
+
+message GeneralInformation {
+	optional string TypeOfTree = 1;
+	optional string Ownership = 2;
+	optional string CountryState = 3;
+	optional string PostCodeZipCode = 4;
+	optional string Location = 5;
+	optional string FullAddress = 6;
+	optional string Country = 7;
+	optional string GridReference = 8;
+}
+
+message OtherInformation {
+	optional string PlantingDate = 1;
+	optional string SeedCollectionNo = 2;
+	optional string PlantedBy = 3;
+	optional string SeedCollector = 4;
+}
+
+message Measurements {
+	optional HeightMeasurement HeightMeasurement = 1;
+	optional bool WasHeightEstimated = 2;
+	optional Measurement Girth = 3;
+	optional Measurement HeightOfGirthMeasurement = 4;
+	optional bool GirthExaggerated = 5;
+	optional TreeGrowthCategory TreeGrowthCategory = 6;
+}
+
+enum TreeGrowthCategory {
+	A = 1;
+	B = 2;
+	C = 3; 
+}
+
+message HeightMeasurement {
+	optional double Metres = 1;
+	optional double Feet = 2;
+}
+
+message Measurement {
+	optional double Metres = 1;
+	optional int64 Feet = 2;
+	optional int64 Inches = 3;
+}
+
+message Condition {
+	optional GeneralAppearance GeneralAppearance = 1;
+	optional TrunkStemming TrunkStemming = 2;
+	optional Ground Ground = 3;
+	optional Lean Lead = 4;
+	optional DeadBranches DeadBranches = 5;
+	optional StormDamage StormDamage = 6;
+	optional PastManagement PastManagement = 7;
+	optional NotSureBool LocalOrNationalHistoricalInterest = 8;
+	optional NotSureBool LocalLandmark = 9;
+	optional bool RemarkableOrUnusual = 10;
+	optional NotSureBool Veteran = 11;
+}
+
+enum GeneralAppearance {
+	Excellent = 1;
+	Good = 2;
+	Fair = 3;
+	Poor = 4;
+	DyingOrDead = 5;
+	GeneralAppearance_NotSure = 6;
+}
+
+enum TrunkStemming {
+	GoodSingleStem = 1;
+	MultipleStemmed = 2;
+	TwinStemmed = 3;
+	TrunkStemming_NotSure = 4;
+}
+
+enum Ground {
+	Level = 1;
+	SlightSlope = 2;
+	SteepSlope = 3;
+}
+
+enum Lean {
+	Lean_No = 1;
+	SlightlyWindswept = 2;
+	SixtyDegreesOrLess = 3;
+	HorizontalOrCollapsed = 4;
+}
+
+enum DeadBranches {
+	NoneOrVeryLittle = 1;
+	Some = 2;
+	LotsAndOrExtensiveDieBack = 3;
+	DeadBranches_NotSure = 4;
+}
+
+enum StormDamage {
+	NoObviousDamage = 1;
+	SomeDamage = 2;
+	LossOfLargeLimbs = 3;
+	StormDamage_NotSure = 4;
+}
+
+enum PastManagement {
+	NothingObvious = 1;
+	SomePruning = 2;
+	LoppedOrReducedInHeight = 3;
+	OldPollard = 4;
+	RecentPollard = 5;
+	CoppiceStool = 6;
+	CableBraced = 7;
+	PastManagement_NotSure = 8;
+}
+
+enum NotSureBool {
+	NotSure = 1;
+	Yes = 2;
+	No = 3;
+}
+
+message AdditionalInformation {
+	optional string Comments = 1;
+	optional string Other = 2;
+	repeated Photo Photos = 3;
+}
+
+message Photo {
+	optional string Filename = 1;
+	optional bytes Data = 2;
+}
+
+message Sender {
+	optional string Name = 1;
+	optional string Address = 2;
+	optional string Email = 3;
+	optional string Telephone = 4;
+}

@@ -16,6 +16,10 @@ regenerate:
 	(cd exp/asm/ast && protoc --gogo_out=. -I=.:../../../../../../ asm.proto)
 	(cd exp/asm/test && protoc --gogo_out=. -I=.:../../../../../../ person.proto)
 	(cd exp/asm/test && protoc --gogo_out=. -I=.:../../../../../../ srctree.proto)
+	(cd exp/asm/test && protoc --gogo_out=. -I=.:../../../../../../ taxonomy.proto)
+	(cd exp/asm/test && protoc --gogo_out=. -I=.:../../../../../../ treeregister.proto)
+	(cd exp/asm/test && protoc --gogo_out=. -I=.:../../../../../../ typewriterprison.proto)
+	(cd exp/asm/test && protoc --gogo_out=. -I=.:../../../../../../ puddingmilkshake.proto)
 	make gofmt
 
 clean:
