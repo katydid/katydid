@@ -24,6 +24,7 @@ regenerate:
 
 clean:
 	(cd exp/asm && rm *.txt || true)
+	rm -rf exp/asm/test/example/*
 
 nuke: clean
 	rm -rf exp/asm/errors

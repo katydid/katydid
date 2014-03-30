@@ -48,15 +48,21 @@ func (this *Transition) Dot() string {
 }
 
 func (this *IfExpr) Dot() string {
-	return this.GetCondition().Dot() + " -> {" + this.GetThen().Dot() + `} [label="true"]` + "\n" +
-		this.GetCondition().Dot() + " -> {" + this.GetElse().Dot() + `} [label="false"]`
+	s := make([]string, 2)
+	s[0] = this.GetThen().Dot(this.GetCondition().Dot(), "true")
+	s[1] = this.GetElse().Dot(this.GetCondition().Dot(), "false")
+	return strings.Join(s, "\n")
 }
 
-func (this *StateExpr) Dot() string {
+func (this *StateExpr) Dot(src string, label string) string {
+	s := make([]string, 0, 2)
 	if this.State != nil {
-		return this.GetState()
+		s = append(s, src+" -> {"+this.GetState()+`} [label="`+label+`"]`)
+	} else {
+		s = append(s, src+" -> {"+this.GetIfExpr().GetCondition().Dot()+`} [label="`+label+`"]`)
+		s = append(s, this.GetIfExpr().Dot())
 	}
-	return this.GetIfExpr().Dot()
+	return strings.Join(s, "\n")
 }
 
 func (this *Expr) Dot() string {
