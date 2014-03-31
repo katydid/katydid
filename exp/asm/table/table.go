@@ -38,12 +38,12 @@ func (this *errUnknownState) Error() string {
 }
 
 type errUnknownInput struct {
-	src int
-	i   int
+	src   string
+	input string
 }
 
 func (this *errUnknownInput) Error() string {
-	return fmt.Sprintf("unknown input %d from %d and no default available", this.i, this.src)
+	return fmt.Sprintf("unknown transition from %s given input %v and no default transition available. One possible fix is to add `%s _ = %s` to your automaton", this.src, this.input, this.src, this.src)
 }
 
 type table struct {
@@ -137,7 +137,7 @@ func (this *table) Trans(src int, input int) (int, error) {
 	if !ok {
 		def, ok := this.trans[src].Lookup(0)
 		if !ok {
-			return 0, &errUnknownInput{src, input}
+			return 0, &errUnknownInput{this.stateToName[src], this.stateToName[input]}
 		}
 		return def, nil
 	}

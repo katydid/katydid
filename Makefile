@@ -25,6 +25,10 @@ regenerate:
 clean:
 	(cd exp/asm && rm *.txt || true)
 	rm -rf exp/asm/test/example/*
+	go clean ./...
+
+example:
+	(cd exp/asm/test && go test -c && ./test.test)
 
 nuke: clean
 	rm -rf exp/asm/errors
@@ -32,6 +36,7 @@ nuke: clean
 	rm -rf exp/asm/parser
 	rm -rf exp/asm/token
 	rm -rf exp/asm/util
+	go clean -i ./...
 
 gofmt:
 	gofmt -l -s -w .
