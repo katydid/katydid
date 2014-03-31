@@ -12,30 +12,30 @@ bench:
 	go test -v -test.run=XXX -test.bench=. ./...
 
 regenerate:
-	(cd exp/asm && gocc asm.bnf)
-	(cd exp/asm/ast && protoc --gogo_out=. -I=.:../../../../../../ asm.proto)
-	(cd exp/asm/test && protoc --gogo_out=. -I=.:../../../../../../ person.proto)
-	(cd exp/asm/test && protoc --gogo_out=. -I=.:../../../../../../ srctree.proto)
-	(cd exp/asm/test && protoc --gogo_out=. -I=.:../../../../../../ taxonomy.proto)
-	(cd exp/asm/test && protoc --gogo_out=. -I=.:../../../../../../ treeregister.proto)
-	(cd exp/asm/test && protoc --gogo_out=. -I=.:../../../../../../ typewriterprison.proto)
-	(cd exp/asm/test && protoc --gogo_out=. -I=.:../../../../../../ puddingmilkshake.proto)
+	(cd asm && gocc asm.bnf)
+	(cd asm/ast && protoc --gogo_out=. -I=.:../../../../../ asm.proto)
+	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../ person.proto)
+	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../ srctree.proto)
+	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../ taxonomy.proto)
+	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../ treeregister.proto)
+	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../ typewriterprison.proto)
+	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../ puddingmilkshake.proto)
 	make gofmt
 
 clean:
-	(cd exp/asm && rm *.txt || true)
-	rm -rf exp/asm/test/example/*
+	(cd asm && rm *.txt || true)
+	rm -rf asm/test/example/*
 	go clean ./...
 
 example:
-	(cd exp/asm/test && go test -c && ./test.test)
+	(cd asm/test && go test -c && ./test.test)
 
 nuke: clean
-	rm -rf exp/asm/errors
-	rm -rf exp/asm/lexer
-	rm -rf exp/asm/parser
-	rm -rf exp/asm/token
-	rm -rf exp/asm/util
+	rm -rf asm/errors
+	rm -rf asm/lexer
+	rm -rf asm/parser
+	rm -rf asm/token
+	rm -rf asm/util
 	go clean -i ./...
 
 gofmt:
