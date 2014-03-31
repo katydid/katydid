@@ -59,28 +59,16 @@ Language
 
 The current language reflects the proposed inner workings (assembler) of the final language.
 
-https://github.com/awalterschulze/katydid/blob/master/exp/asm/asm.bnf
+https://github.com/awalterschulze/katydid/blob/master/asm/asm.bnf
 
 This will be useful for debugging in future.
 
 Current Functions
 -----------------
 
-The idea is to make katydid easily extendable with other functions.
-I am still proving the concept and I have only needed these functions for my examples:
+Please see the [list of functions](https://github.com/awalterschulze/katydid/blob/master/functions.txt).
 
- - decString([]byte) string
- - decInt64([]byte) string
- - contains(string, string) bool
- - eq(int64, int64) bool
- - eq(string, string) bool
- - ge(int64, int64) bool
- - nfkc(string) string
- - not(bool) bool
- - length(string) int
- - exists([]byte) bool
- - decBool([]byte) bool
-
+This list can easily be extended with your own functions using the Register pattern.  See the funcs package for examples.
 
 Streaming
 ---------
@@ -105,4 +93,4 @@ Next steps
 
  - Create a usable language that translates to the current debugging/middle language
  - Boolean Logic Operators (Possibly using alternating tree automata)
- - Optimize for specific usecases like negative indices, without breaking the ideals
+

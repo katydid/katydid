@@ -59,6 +59,35 @@ func (this *compare) CType() string {
 	return capFirst(this.Type)
 }
 
+const newFuncStr = `
+func New{{.}}Func(uniq string, values ...interface{}) ({{.}}, error) {
+	f, err := newFunc(uniq, values...)
+	if err != nil {
+		return nil, err
+	}
+	return f.({{.}}), nil
+}
+`
+
+const constStr = `
+type const{{.CType}} struct {
+	v {{.GoType}}
+}
+
+func New{{.CType}}(v {{.GoType}}) {{.CType}} {
+	return &const{{.CType}}{v}
+}
+
+func (this *const{{.CType}}) Eval(buf []byte) {{.GoType}} {
+	return this.v
+}
+`
+
+type conster struct {
+	CType  string
+	GoType string
+}
+
 var (
 	dir = "."
 )
@@ -109,6 +138,28 @@ func main() {
 		&compare{"eq", "==", "string", ""},
 		&compare{"eq", "", "bytes", "return bytes.Equal(this.V1.Eval(buf), this.V2.Eval(buf))"},
 	}, "bytes")
+	gen(newFuncStr, "newfunc.gen.go", []interface{}{
+		"Float64",
+		"Float32",
+		"Int64",
+		"Uint64",
+		"Int32",
+		"Uint32",
+		"Bool",
+		"String",
+		"Bytes",
+	})
+	gen(constStr, "const.gen.go", []interface{}{
+		&conster{"Float64", "float64"},
+		&conster{"Float32", "float32"},
+		&conster{"Int64", "int64"},
+		&conster{"Uint64", "uint64"},
+		&conster{"Int32", "int32"},
+		&conster{"Uint32", "uint32"},
+		&conster{"Bool", "bool"},
+		&conster{"String", "string"},
+		&conster{"Bytes", "[]byte"},
+	})
 }
 
 func gen(tmp string, filename string, objects []interface{}, imports ...string) {
@@ -120,14 +171,17 @@ func gen(tmp string, filename string, objects []interface{}, imports ...string) 
 // DO NOT EDIT!
 
 package funcs
-
+`))
+	if len(imports) > 0 {
+		f.Write([]byte(`
 import (
 `))
-	f.Write([]byte(`"` + strings.Join(imports, "\n") + `"`))
-	f.Write([]byte(`
+		f.Write([]byte(`"` + strings.Join(imports, "\n") + `"`))
+		f.Write([]byte(`
 )
 
 	`))
+	}
 	t := template.Must(template.New("a").Parse(tmp))
 	for _, o := range objects {
 		err := t.Execute(f, o)

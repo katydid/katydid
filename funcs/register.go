@@ -184,30 +184,6 @@ func newFunc(uniq string, values ...interface{}) (interface{}, error) {
 	return newf.Addr().Interface(), nil
 }
 
-func NewBoolFunc(uniq string, values ...interface{}) (Bool, error) {
-	f, err := newFunc(uniq, values...)
-	if err != nil {
-		return nil, err
-	}
-	return f.(Bool), nil
-}
-
-func NewInt64Func(uniq string, values ...interface{}) (Int64, error) {
-	f, err := newFunc(uniq, values...)
-	if err != nil {
-		return nil, err
-	}
-	return f.(Int64), nil
-}
-
-func NewStringFunc(uniq string, values ...interface{}) (String, error) {
-	f, err := newFunc(uniq, values...)
-	if err != nil {
-		return nil, err
-	}
-	return f.(String), nil
-}
-
 func Which(name string, ins ...descriptor.FieldDescriptorProto_Type) (string, error) {
 	return funcsMap.which(name, ins...)
 }

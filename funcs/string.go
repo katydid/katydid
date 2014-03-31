@@ -46,37 +46,47 @@ func init() {
 	Register("nfkc", new(nfkc))
 }
 
-type not struct {
-	V1 Bool
-}
-
-func (this *not) Eval(buf []byte) bool {
-	return !this.V1.Eval(buf)
-}
-
-func init() {
-	Register("not", new(not))
-}
-
-type exists struct {
-}
-
-func (this *exists) Eval(buf []byte) bool {
-	return true
-}
-
-func init() {
-	Register("exists", new(exists))
-}
-
-type lenString struct {
+type equalFold struct {
 	V1 String
+	V2 String
 }
 
-func (this *lenString) Eval(buf []byte) int64 {
-	return int64(len(this.V1.Eval(buf)))
+func (this *equalFold) Eval(buf []byte) bool {
+	v1 := this.V1.Eval(buf)
+	v2 := this.V2.Eval(buf)
+	return strings.EqualFold(v1, v2)
 }
 
 func init() {
-	Register("length", new(lenString))
+	Register("eqFold", new(equalFold))
+}
+
+type prefix struct {
+	V1 String
+	V2 String
+}
+
+func (this *prefix) Eval(buf []byte) bool {
+	v1 := this.V1.Eval(buf)
+	v2 := this.V2.Eval(buf)
+	return strings.HasPrefix(v1, v2)
+}
+
+func init() {
+	Register("prefix", new(prefix))
+}
+
+type suffix struct {
+	V1 String
+	V2 String
+}
+
+func (this *suffix) Eval(buf []byte) bool {
+	v1 := this.V1.Eval(buf)
+	v2 := this.V2.Eval(buf)
+	return strings.HasSuffix(v1, v2)
+}
+
+func init() {
+	Register("suffix", new(suffix))
 }
