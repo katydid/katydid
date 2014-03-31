@@ -135,7 +135,7 @@ func goTypeToProto(typ reflect.Type) descriptor.FieldDescriptorProto_Type {
 	case reflect.String:
 		return descriptor.FieldDescriptorProto_TYPE_STRING
 	case reflect.Slice:
-		if typ.Elem().Kind() == reflect.Int8 {
+		if typ.Elem().Kind() == reflect.Uint8 {
 			return descriptor.FieldDescriptorProto_TYPE_BYTES
 		}
 	}

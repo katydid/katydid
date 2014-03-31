@@ -1,4 +1,42 @@
+//  Copyright 2013 Walter Schulze
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
 package funcs
+
+type Float64 interface {
+	Eval([]byte) float64
+}
+
+type Float32 interface {
+	Eval([]byte) float32
+}
+
+type Int64 interface {
+	Eval([]byte) int64
+}
+
+type Uint64 interface {
+	Eval([]byte) uint64
+}
+
+type Int32 interface {
+	Eval([]byte) int32
+}
+
+type Uint32 interface {
+	Eval([]byte) uint32
+}
 
 type Bool interface {
 	Eval([]byte) bool
@@ -8,42 +46,6 @@ type String interface {
 	Eval([]byte) string
 }
 
-type Int64 interface {
-	Eval([]byte) int64
-}
-
-type constBool struct {
-	v bool
-}
-
-func NewBool(v bool) Bool {
-	return &constBool{v}
-}
-
-func (this *constBool) Eval(buf []byte) bool {
-	return this.v
-}
-
-type constString struct {
-	v string
-}
-
-func NewString(v string) String {
-	return &constString{v}
-}
-
-func (this *constString) Eval(buf []byte) string {
-	return this.v
-}
-
-type constInt64 struct {
-	v int64
-}
-
-func NewInt64(v int64) Int64 {
-	return &constInt64{v}
-}
-
-func (this *constInt64) Eval(buf []byte) int64 {
-	return this.v
+type Bytes interface {
+	Eval([]byte) []byte
 }
