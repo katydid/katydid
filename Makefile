@@ -21,7 +21,7 @@ regenerate:
 	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../ typewriterprison.proto)
 	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../ puddingmilkshake.proto)
 	(cd funcs && protoc --gogo_out=. -I=.:../../../../ decode.proto)
-	go install github.com/awalterschulze/katydid/funcs-gen
+	go install github.com/awalterschulze/katydid/funcs/funcs-gen
 	funcs-gen ./funcs/
 	(cd funcs && go test -test.run=GenFuncList 2>../functions.txt)
 	make gofmt
