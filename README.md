@@ -66,7 +66,7 @@ This will be useful for debugging in future.
 Current Functions
 -----------------
 
-Please see the [list of functions](https://github.com/awalterschulze/katydid/blob/master/functions.txt).
+Please see the [list of functions](https://github.com/awalterschulze/katydid/blob/master/list_of_functions.txt).
 
 This list can easily be extended with your own functions using the Register pattern.  See the funcs package for examples.
 

@@ -23,7 +23,7 @@ regenerate:
 	(cd funcs && protoc --gogo_out=. -I=.:../../../../ decode.proto)
 	go install github.com/awalterschulze/katydid/funcs/funcs-gen
 	funcs-gen ./funcs/
-	(cd funcs && go test -test.run=GenFuncList 2>../functions.txt)
+	(cd funcs && go test -test.run=GenFuncList 2>../list_of_functions.txt)
 	make gofmt
 
 clean:
@@ -38,6 +38,7 @@ nuke: clean
 	rm -rf funcs/compare.gen.go
 	rm -rf funcs/newfunc.gen.go
 	rm -rf funcs/const.gen.go
+	rm list_of_functions.txt
 	rm -rf asm/errors
 	rm -rf asm/lexer
 	rm -rf asm/parser
