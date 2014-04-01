@@ -34,18 +34,6 @@ func init() {
 	Register("contains", new(contains))
 }
 
-type nfkc struct {
-	V1 String
-}
-
-func (this *nfkc) Eval(buf []byte) string {
-	return norm.NFKC.String(this.V1.Eval(buf))
-}
-
-func init() {
-	Register("nfkc", new(nfkc))
-}
-
 type equalFold struct {
 	V1 String
 	V2 String
@@ -89,4 +77,52 @@ func (this *suffix) Eval(buf []byte) bool {
 
 func init() {
 	Register("suffix", new(suffix))
+}
+
+type nfc struct {
+	V1 String
+}
+
+func (this *nfc) Eval(buf []byte) string {
+	return norm.NFC.String(this.V1.Eval(buf))
+}
+
+func init() {
+	Register("nfc", new(nfc))
+}
+
+type nfd struct {
+	V1 String
+}
+
+func (this *nfd) Eval(buf []byte) string {
+	return norm.NFD.String(this.V1.Eval(buf))
+}
+
+func init() {
+	Register("nfd", new(nfd))
+}
+
+type nfkc struct {
+	V1 String
+}
+
+func (this *nfkc) Eval(buf []byte) string {
+	return norm.NFKC.String(this.V1.Eval(buf))
+}
+
+func init() {
+	Register("nfkc", new(nfkc))
+}
+
+type nfkd struct {
+	V1 String
+}
+
+func (this *nfkd) Eval(buf []byte) string {
+	return norm.NFKD.String(this.V1.Eval(buf))
+}
+
+func init() {
+	Register("nfkd", new(nfkd))
 }
