@@ -22,19 +22,42 @@ _blockComment : '/' '*' {. | '*'} '*' '/' ;
 
 !whitespace : ' ' | '\t' | '\n' | '\r' ;
 
-_digit : '0'-'9' ;
+_ws : ' ' | '\t' | '\n' | '\r' ;
 
-int_lit : ['-'] _digit { _digit } ;
+_decimal_digit : '0' - '9' ;
+_octal_digit : '0' - '7' ;
+_hex_digit : '0' - '9' | 'A' - 'F' | 'a' - 'f';
+
+_int_lit     : _decimal_lit | _octal_lit | _hex_lit ;
+_decimal_lit : ( '1' - '9' ) { _decimal_digit } ;
+_octal_lit   : '0' { _octal_digit } ;
+_hex_lit     : '0' ( 'x' | 'X' ) _hex_digit { _hex_digit } ;
+
+_singed_int_lit : ['-'] _int_lit ;
+
+int64_lit: 'i' 'n' 't' '6' '4' '(' _singed_int_lit ')' ;
+int32_lit: 'i' 'n' 't' '3' '2' '(' _singed_int_lit ')' ;
+uint64_lit: 'u' 'i' 'n' 't' '6' '4' '(' _int_lit ')' ;
+uint32_lit: 'u' 'i' 'n' 't' '3' '2' '(' _int_lit ')' ;
+
+_decimals  : _decimal_digit { _decimal_digit } ;
+_exponent  : ( 'e' | 'E' ) [ '+' | '-' ] _decimals ;
+
+_float_lit : ( _decimals '.' _decimals _exponent )
+			| ( _decimals '.' ( _decimals | _exponent ) )
+          	| ( _decimals _exponent )
+          	| ( '.' _decimals [ _exponent ] ) 
+          	;
+
+double_lit: 'd' 'o' 'u' 'b' 'l' 'e' '(' ['-'] ( _float_lit | _int_lit ) ')' ;
+
+float_lit: 'f' 'l' 'o' 'a' 't' '(' ['-'] ( _float_lit | _int_lit ) ')' ;
 
 _upcase : 'A'-'Z' ;
 _lowcase : 'a'-'z' ;
-
-_id_char : _upcase | _lowcase | '_' | _digit ;
+_id_char : _upcase | _lowcase | '_' | _decimal_digit ;
 
 id : (_upcase | _lowcase | '_' ) {_id_char} ;
-
-_hex_digit : '0' - '9' | 'A' - 'F' | 'a' - 'f';
-_octal_digit : '0' - '7' ;
 
 _big_u_value      : '\\' 'U' _hex_digit _hex_digit _hex_digit _hex_digit
                             _hex_digit _hex_digit _hex_digit _hex_digit ;
@@ -45,19 +68,22 @@ _escaped_char     : '\\' ( 'a' | 'b' | 'f' | 'n' | 'r' | 't' | 'v' | '\\' | '\''
 _octal_byte_u_value : '\\' _octal_digit _octal_digit _octal_digit ;
 _byte_value       : _octal_byte_u_value | _hex_byte_u_value ;
 _unicode_value    : . | _little_u_value | _big_u_value | _escaped_char ;
-
-// char_lit	: '\'' (_unicode_value | _byte_value) '\'' ;
-
 _raw_string : '`' {.} '`' ;
 _interpreted_string : '"' { _unicode_value | _byte_value } '"' ;
 
 string_lit : _raw_string | _interpreted_string ;
+
+_char_lit	: '\'' (_unicode_value | _byte_value) '\'' ;
+_byte_elem : _int_lit | _char_lit ;
+
+bytes_lit : '[' ']' 'b' 'y' 't' 'e' '{' { _ws } [ _byte_elem { { _ws } ',' { _ws } _byte_elem } ] { _ws } '}' ;
 
 /* Syntax Part */
 
 << 
 import (
 	"github.com/awalterschulze/katydid/asm/ast"
+	"github.com/awalterschulze/katydid/types"
 	"code.google.com/p/gogoprotobuf/proto"
 )
 >>
@@ -65,6 +91,7 @@ import (
 Rules
 	: Rules Rule  << ast.AppendRule($0, $1) >>
 	| Rule << ast.NewRule($0) >>
+	| Expr
 	;
 
 Rule
@@ -75,7 +102,7 @@ Rule
 	;
 
 Root
-	: "root" "=" id "." id << &ast.Init{Package: ast.IdToString($2), Message: ast.IdToString($4), State: proto.String("root")}, nil >>
+	: "root" "=" id "." id << &ast.Init{Package: ast.IdToString($2), Message: ast.IdToString($4), State: "root"}, nil >>
 	;
 
 Init
@@ -92,13 +119,13 @@ IfExpr
 
 StateExpr
 	: "{" IfExpr "}" << &ast.StateExpr{IfExpr: $1.(*ast.IfExpr)}, nil >>
-	| id << &ast.StateExpr{State: ast.IdToString($0)}, nil >>
+	| id << &ast.StateExpr{State: proto.String(ast.IdToString($0))}, nil >>
 	;
 
 Function
 	: id "(" Params ")" << &ast.Function{Name: ast.IdToString($0), Params: $2.([]*ast.Expr)}, nil >>
 	| id "(" ")" << &ast.Function{Name: ast.IdToString($0), Params: nil}, nil >>
-	| "(" Expr Comparator Expr ")" << &ast.Function{Name: proto.String($2.(string)), Params: []*ast.Expr{$1.(*ast.Expr), $3.(*ast.Expr)}}, nil >>
+	| "(" Expr Comparator Expr ")" << &ast.Function{Name: $2.(string), Params: []*ast.Expr{$1.(*ast.Expr), $3.(*ast.Expr)}}, nil >>
 	;
 
 Comparator
@@ -109,8 +136,8 @@ Comparator
 	| ">="  << "ge", nil >>
 	| "&&"  << "and", nil >>
 	| "||"  << "or", nil >>
-	| "or"
-	| "and"
+	| "or"  << "or", nil >>
+	| "and" << "and", nil >>
 	;
 
 Params
@@ -121,25 +148,47 @@ Params
 Expr
 	: Terminal << &ast.Expr{Terminal: $0.(*ast.Terminal)}, nil >>
 	| Function << &ast.Expr{Function: $0.(*ast.Function)}, nil >>
+	| List << &ast.Expr{List: $0.(*ast.List)}, nil >>
+	;
+
+List
+	: "{" Exprs "}" << &ast.List{Elems: $1.([]*ast.Expr)}, nil >>
+	| ListType "{" Exprs "}" << &ast.List{Type: $0.(*types.Type), Elems: $2.([]*ast.Expr)}, nil >>
+	| ListType "{" "}" << &ast.List{Type: $0.(*types.Type)}, nil >>
+	;
+
+Exprs
+	: Expr << []*ast.Expr{$0.(*ast.Expr)}, nil >>
+	| Exprs "," Expr << append($0.([]*ast.Expr), $2.(*ast.Expr)), nil >>
+	;
+
+ListType
+	: "[]bool" << types.LIST_BOOL.Enum(), nil >>
+	| "[]int64" << types.LIST_INT64.Enum(), nil >>
+	| "[]int32" << types.LIST_INT32.Enum(), nil >>
+	| "[]uint64" << types.LIST_UINT64.Enum(), nil >>
+	| "[]uint32" << types.LIST_UINT32.Enum(), nil >>
+	| "[]double" << types.LIST_DOUBLE.Enum(), nil >>
+	| "[]float" << types.LIST_FLOAT.Enum(), nil >>
+	| "[]string" << types.LIST_STRING.Enum(), nil >>
+	| "[][]byte" << types.LIST_BYTES.Enum(), nil >>
 	;
 
 Terminal
 	: Bool << &ast.Terminal{BoolValue: proto.Bool($0.(bool))}, nil >>
-	| "int64" "(" int_lit ")" << &ast.Terminal{Int64Value: ast.ToInt64($2)}, nil >>
-	| "uint64" "(" int_lit ")" << &ast.Terminal{Uint64Value: ast.ToUint64($2)}, nil >>
-	| string_lit << &ast.Terminal{StringValue: ast.ToString($0)}, nil >>
+	| int64_lit << &ast.Terminal{Int64Value: ast.ToInt64(ast.Strip($0, "int64"))}, nil >>
+	| int32_lit << &ast.Terminal{Int32Value: ast.ToInt32(ast.Strip($0, "int32"))}, nil >>
+	| uint64_lit << &ast.Terminal{Uint64Value: ast.ToUint64(ast.Strip($0, "uint64"))}, nil >>
+	| uint32_lit << &ast.Terminal{Uint32Value: ast.ToUint32(ast.Strip($0, "uint32"))}, nil >>
+	| double_lit << &ast.Terminal{DoubleValue: ast.ToFloat64(ast.Strip($0, "double"))}, nil >>
+	| float_lit << &ast.Terminal{FloatValue: ast.ToFloat32(ast.Strip($0, "float"))}, nil >>
+	| string_lit << &ast.Terminal{StringValue: proto.String(ast.ToString($0))}, nil >>
+	| bytes_lit << ast.NewBytesTerminal($0) >>
 	| id "." id "." id << &ast.Terminal{Variable: &ast.Variable{Package: ast.IdToString($0), Message: ast.IdToString($2), Field: ast.IdToString($4)}}, nil >>
 	;
 
 Bool
 	: "true" << true, nil >>
-	| "True" << true, nil >>
 	| "false" << false, nil >>
-	| "False" << false, nil >>
 	;
-
-
-
-
-
 

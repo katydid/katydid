@@ -8,6 +8,10 @@ import (
 	"testing"
 )
 
+func toString(s string) string {
+	return strings.ToLower(strings.Replace(strings.Replace(s, "SINGLE_", "", 1), "LIST_", "[]", 1))
+}
+
 func TestGenFuncList(t *testing.T) {
 	decoders := map[string]bool{
 		"decDouble":   true,
@@ -34,12 +38,12 @@ func TestGenFuncList(t *testing.T) {
 			f := funcsMap.uniqToFunc[u]
 			ins := make([]string, len(f.In))
 			for i, in := range f.In {
-				ins[i] = strings.ToLower(strings.Replace(in.String(), "TYPE_", "", 1))
+				ins[i] = toString(in.String())
 			}
 			if decoders[name] {
 				ins = append(ins, "bytes")
 			}
-			funcs = append(funcs, fmt.Sprintf("func %v(%v) %v", name, strings.Join(ins, ","), strings.ToLower(strings.Replace(f.Out.String(), "TYPE_", "", 1))))
+			funcs = append(funcs, fmt.Sprintf("func %v(%v) %v", name, strings.Join(ins, ","), toString(f.Out.String())))
 		}
 	}
 	sort.Strings(funcs)

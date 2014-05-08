@@ -15,8 +15,10 @@
 package ast;
 
 import "code.google.com/p/gogoprotobuf/gogoproto/gogo.proto";
+import "github.com/awalterschulze/katydid/types/types.proto";
 
 option (gogoproto.goproto_stringer_all) = false;
+option (gogoproto.gostring_all) = true;
 
 message Rules {
 	optional Init Root = 1;
@@ -26,15 +28,15 @@ message Rules {
 }
 
 message Init {
-	optional string Package = 1;
-	optional string Message = 2;
-	optional string State = 4;
+	optional string Package = 1 [(gogoproto.nullable) = false];
+	optional string Message = 2 [(gogoproto.nullable) = false];
+	optional string State = 4 [(gogoproto.nullable) = false];
 }
 
 message Transition {
-	optional string Src = 1;
-	optional string Input = 2;
-	optional string Dst = 3;
+	optional string Src = 1 [(gogoproto.nullable) = false];
+	optional string Input = 2 [(gogoproto.nullable) = false];
+	optional string Dst = 3 [(gogoproto.nullable) = false];
 }
 
 message IfExpr {
@@ -43,38 +45,49 @@ message IfExpr {
 	optional StateExpr Else = 3;
 }
 
-//union
 message StateExpr {
+	option (gogoproto.union) = true;
 	optional string State = 1;
 	optional IfExpr IfExpr = 2;
 }
 
-//union
 message Expr {
+	option (gogoproto.union) = true;
 	optional Terminal Terminal = 1;
-	optional Function Function = 2;
+	optional List List = 2;
+	optional Function Function = 3;
+}
+
+message List {
+	optional types.Type Type = 1;
+	repeated Expr Elems = 2;
 }
 
 message Function {
-	optional string Name = 1;
+	optional string Name = 1 [(gogoproto.nullable) = false];
 	repeated Expr Params = 2;
 }
 
 message Terminal {
-	optional string Literal = 1;
-
-	optional bool BoolValue = 2;
+	option (gogoproto.union) = true;
+	optional double DoubleValue = 1;
+	optional float FloatValue = 2;
 	optional int64 Int64Value = 3;
 	optional uint64 Uint64Value = 4;
-	optional string StringValue = 5;
+	optional int32 Int32Value = 5;
 
-	optional Variable Variable = 6;
+	optional bool BoolValue = 8;
+	optional string StringValue = 9;
+
+	optional bytes BytesValue = 12;
+	optional uint32 Uint32Value = 13;
+
+	optional Variable Variable = 50;
 }
 
 message Variable {
-	optional string Package  = 1;
-	optional string Message = 2;
-	optional string Field = 3;
-	optional string Part = 4;
+	optional string Package  = 1 [(gogoproto.nullable) = false];
+	optional string Message = 2 [(gogoproto.nullable) = false];
+	optional string Field = 3 [(gogoproto.nullable) = false];
 }
 

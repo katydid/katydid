@@ -21,7 +21,6 @@ import (
 	"testing"
 
 	"code.google.com/p/gogoprotobuf/proto"
-	"github.com/awalterschulze/katydid/asm/ast"
 	"github.com/awalterschulze/katydid/asm/lexer"
 	"github.com/awalterschulze/katydid/asm/parser"
 	main "github.com/awalterschulze/katydid/asm/test"
@@ -82,11 +81,10 @@ func example(t *testing.T, protoFilename string, m proto.Message, katydidStr str
 	}
 
 	p := parser.NewParser()
-	r, err := p.Parse(lexer.NewLexer([]byte(katydidStr)))
+	rules, err := p.ParseRules(lexer.NewLexer([]byte(katydidStr)))
 	if err != nil {
 		t.Fatalf(err.Error())
 	}
-	rules := r.(*ast.Rules)
 	dotString := rules.Dot()
 	if err := ioutil.WriteFile(dotFilename, []byte(dotString), 0666); err != nil {
 		panic(err)
@@ -655,4 +653,34 @@ func TestOrNameTelephoneMover(t *testing.T) {
 
 func TestOrNameTelephoneSmith(t *testing.T) {
 	example(t, "person.proto", smith, orNameTelephone, false)
+}
+
+var listOfTelephones = `//Is this person's telephone number 0123456789 or 0127897897
+
+root = main.Person
+main.Person = start
+start tel = accept
+start _ = start
+accept _ = accept
+
+if (decString(main.Person.Telephone) == elem([]string{"0123456789", "0127897897"}, int64(0))) 
+  then tel
+  else {
+  	if (decString(main.Person.Telephone) == elem(range([]string{"0", "1", "0123456789", "0127897897"}, int64(2), int64(4)), int64(1)))
+  	then tel
+  	else notel
+  }
+
+`
+
+func TestListOfTelephonesDavid(t *testing.T) {
+	example(t, "person.proto", david, listOfTelephones, true)
+}
+
+func TestListOfTelephonesShaker(t *testing.T) {
+	example(t, "person.proto", shaker, listOfTelephones, true)
+}
+
+func TestListOfTelephonesRoutine(t *testing.T) {
+	example(t, "person.proto", routine, listOfTelephones, false)
 }

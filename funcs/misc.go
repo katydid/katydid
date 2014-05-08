@@ -24,27 +24,3 @@ func (this *exists) Eval(buf []byte) bool {
 func init() {
 	Register("exists", new(exists))
 }
-
-type lenBytes struct {
-	V1 Bytes
-}
-
-func (this *lenBytes) Eval(buf []byte) int64 {
-	return int64(len(this.V1.Eval(buf)))
-}
-
-func init() {
-	Register("length", new(lenBytes))
-}
-
-type lenString struct {
-	V1 String
-}
-
-func (this *lenString) Eval(buf []byte) int64 {
-	return int64(len(this.V1.Eval(buf)))
-}
-
-func init() {
-	Register("length", new(lenString))
-}

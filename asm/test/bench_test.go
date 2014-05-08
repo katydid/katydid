@@ -17,7 +17,6 @@ package main_test
 import (
 	protoparser "code.google.com/p/gogoprotobuf/parser"
 	"code.google.com/p/gogoprotobuf/proto"
-	"github.com/awalterschulze/katydid/asm/ast"
 	"github.com/awalterschulze/katydid/asm/compiler"
 	katyexec "github.com/awalterschulze/katydid/asm/exec"
 	"github.com/awalterschulze/katydid/asm/lexer"
@@ -38,11 +37,10 @@ func newBench(protoFilename string, katydidStr string) bench {
 		panic(err)
 	}
 	p := parser.NewParser()
-	r, err := p.Parse(lexer.NewLexer([]byte(katydidStr)))
+	rules, err := p.ParseRules(lexer.NewLexer([]byte(katydidStr)))
 	if err != nil {
 		panic(err)
 	}
-	rules := r.(*ast.Rules)
 	e, err := compiler.Compile(rules, fileDescriptorSet)
 	if err != nil {
 		panic(err)

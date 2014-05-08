@@ -15,10 +15,10 @@
 package compose
 
 import (
-	descriptor "code.google.com/p/gogoprotobuf/protoc-gen-gogo/descriptor"
 	"fmt"
 	"github.com/awalterschulze/katydid/asm/ast"
 	"github.com/awalterschulze/katydid/funcs"
+	"github.com/awalterschulze/katydid/types"
 )
 
 type errExpected struct {
@@ -38,113 +38,101 @@ func (this *errUnknownType) Error() string {
 	return "expr type is unknown: " + this.expr.String()
 }
 
-func prep(expr *ast.Expr, expType descriptor.FieldDescriptorProto_Type) (uniq string, err error) {
-	if expr.Terminal != nil {
-		typ, err := Which(expr)
+func prep(expr *ast.Expr, expType types.Type) (uniq string, err error) {
+	if expr.Function != nil {
+		fnc := expr.GetFunction()
+		uniq, err = WhichFunc(fnc)
+		if err != nil {
+			return "", err
+		}
+		typ, err := funcs.Out(uniq)
 		if err != nil {
 			return "", err
 		}
 		if typ != expType {
 			return "", &errExpected{expType.String(), expr.String()}
 		}
-		return "", nil
+		return uniq, err
 	}
-	fnc := expr.GetFunction()
-	uniq, err = WhichFunc(fnc)
-	if err != nil {
-		return "", err
+	if expr.List != nil {
+		if !types.IsList(expType) {
+			return "", &errExpected{expType.String(), expr.String()}
+		}
 	}
-	typ, err := funcs.Out(uniq)
+	typ, err := Which(expr)
 	if err != nil {
 		return "", err
 	}
 	if typ != expType {
 		return "", &errExpected{expType.String(), expr.String()}
 	}
-	return uniq, err
-}
-
-func ComposeBool(expr *ast.Expr) (funcs.Bool, error) {
-	uniq, err := prep(expr, descriptor.FieldDescriptorProto_TYPE_BOOL)
-	if err != nil {
-		return nil, err
-	}
-	if expr.Terminal != nil {
-		return funcs.NewBool(expr.GetTerminal().GetBoolValue()), nil
-	}
-	values, err := newValues(expr.GetFunction().GetParams())
-	if err != nil {
-		return nil, err
-	}
-	return funcs.NewBoolFunc(uniq, values...)
-}
-
-func ComposeInt64(expr *ast.Expr) (funcs.Int64, error) {
-	uniq, err := prep(expr, descriptor.FieldDescriptorProto_TYPE_INT64)
-	if err != nil {
-		return nil, err
-	}
-	if expr.Terminal != nil {
-		return funcs.NewInt64(expr.GetTerminal().GetInt64Value()), nil
-	}
-	values, err := newValues(expr.GetFunction().GetParams())
-	if err != nil {
-		return nil, err
-	}
-	return funcs.NewInt64Func(uniq, values...)
-}
-
-func ComposeString(expr *ast.Expr) (funcs.String, error) {
-	uniq, err := prep(expr, descriptor.FieldDescriptorProto_TYPE_STRING)
-	if err != nil {
-		return nil, err
-	}
-	if expr.Terminal != nil {
-		return funcs.NewString(expr.GetTerminal().GetStringValue()), nil
-	}
-	values, err := newValues(expr.GetFunction().GetParams())
-	if err != nil {
-		return nil, err
-	}
-	return funcs.NewStringFunc(uniq, values...)
+	return "", nil
 }
 
 func newValues(params []*ast.Expr) ([]interface{}, error) {
 	values := make([]interface{}, 0, len(params))
 	for _, p := range params {
-		typ, err := Which(p)
+		v, err := newValue(p)
 		if err != nil {
 			return nil, err
 		}
-		switch typ {
-		case 0:
-		case descriptor.FieldDescriptorProto_TYPE_BOOL:
-			f, err := ComposeBool(p)
-			if err != nil {
-				return nil, err
-			}
-			values = append(values, f)
-		case descriptor.FieldDescriptorProto_TYPE_INT64:
-			f, err := ComposeInt64(p)
-			if err != nil {
-				return nil, err
-			}
-			values = append(values, f)
-		case descriptor.FieldDescriptorProto_TYPE_STRING:
-			f, err := ComposeString(p)
-			if err != nil {
-				return nil, err
-			}
-			values = append(values, f)
-		default:
-			panic("not implemented")
+		if v != nil {
+			values = append(values, v)
 		}
 	}
 	return values, nil
 }
 
+func newValue(p *ast.Expr) (interface{}, error) {
+	typ, err := Which(p)
+	if err != nil {
+		return nil, err
+	}
+	switch typ {
+	case 0:
+		return nil, nil
+	case types.SINGLE_DOUBLE:
+		return ComposeFloat64(p)
+	case types.SINGLE_FLOAT:
+		return ComposeFloat32(p)
+	case types.SINGLE_INT64:
+		return ComposeInt64(p)
+	case types.SINGLE_UINT64:
+		return ComposeUint64(p)
+	case types.SINGLE_INT32:
+		return ComposeInt32(p)
+	case types.SINGLE_BOOL:
+		return ComposeBool(p)
+	case types.SINGLE_STRING:
+		return ComposeString(p)
+	case types.SINGLE_BYTES:
+		return ComposeBytes(p)
+	case types.SINGLE_UINT32:
+		return ComposeUint32(p)
+	case types.LIST_DOUBLE:
+		return ComposeFloat64s(p)
+	case types.LIST_FLOAT:
+		return ComposeFloat32s(p)
+	case types.LIST_INT64:
+		return ComposeInt64s(p)
+	case types.LIST_UINT64:
+		return ComposeUint64s(p)
+	case types.LIST_INT32:
+		return ComposeInt32s(p)
+	case types.LIST_BOOL:
+		return ComposeBools(p)
+	case types.LIST_STRING:
+		return ComposeStrings(p)
+	case types.LIST_BYTES:
+		return ComposeListOfBytes(p)
+	case types.LIST_UINT32:
+		return ComposeUint32s(p)
+	}
+	panic("not implemented")
+}
+
 func WhichFunc(fnc *ast.Function) (string, error) {
-	types := make([]descriptor.FieldDescriptorProto_Type, 0, len(fnc.GetParams()))
+	types := make([]types.Type, 0, len(fnc.GetParams()))
 	for _, p := range fnc.GetParams() {
 		typ, err := Which(p)
 		if err != nil {
@@ -157,24 +145,62 @@ func WhichFunc(fnc *ast.Function) (string, error) {
 	return funcs.Which(fnc.GetName(), types...)
 }
 
-func Which(expr *ast.Expr) (descriptor.FieldDescriptorProto_Type, error) {
+func Which(expr *ast.Expr) (types.Type, error) {
 	if expr.Terminal != nil {
 		term := expr.GetTerminal()
-		if term.BoolValue != nil {
-			return descriptor.FieldDescriptorProto_TYPE_BOOL, nil
+		if term.DoubleValue != nil {
+			return types.SINGLE_DOUBLE, nil
+		}
+		if term.FloatValue != nil {
+			return types.SINGLE_FLOAT, nil
 		}
 		if term.Int64Value != nil {
-			return descriptor.FieldDescriptorProto_TYPE_INT64, nil
+			return types.SINGLE_INT64, nil
 		}
 		if term.Uint64Value != nil {
-			return descriptor.FieldDescriptorProto_TYPE_UINT64, nil
+			return types.SINGLE_UINT64, nil
+		}
+		if term.Int32Value != nil {
+			return types.SINGLE_INT32, nil
+		}
+		if term.BoolValue != nil {
+			return types.SINGLE_BOOL, nil
 		}
 		if term.StringValue != nil {
-			return descriptor.FieldDescriptorProto_TYPE_STRING, nil
+			return types.SINGLE_STRING, nil
+		}
+		if term.BytesValue != nil {
+			return types.SINGLE_BYTES, nil
+		}
+		if term.Uint32Value != nil {
+			return types.SINGLE_UINT32, nil
 		}
 		if term.Variable != nil {
 			return 0, nil
 		}
+	}
+	if expr.List != nil {
+		if expr.GetList().Type != nil {
+			return expr.GetList().GetType(), nil
+		}
+		elems := expr.GetList().GetElems()
+		if len(elems) == 0 {
+			return 0, &errUnknownType{expr}
+		}
+		typ1, err := Which(elems[0])
+		if err != nil {
+			return 0, err
+		}
+		for i := range elems {
+			typ, err := Which(elems[i])
+			if err != nil {
+				return 0, err
+			}
+			if typ != typ1 {
+				return 0, &errExpected{typ.String(), typ1.String()}
+			}
+		}
+		return types.SingleToList(typ1), nil
 	}
 	if expr.Function != nil {
 		fnc := expr.GetFunction()

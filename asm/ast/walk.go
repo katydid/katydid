@@ -61,8 +61,18 @@ func (this *Expr) Walk(v Visitor) {
 	if this.Terminal != nil {
 		this.GetTerminal().Walk(v)
 	}
+	if this.List != nil {
+		this.GetList().Walk(v)
+	}
 	if this.Function != nil {
 		this.GetFunction().Walk(v)
+	}
+}
+
+func (this *List) Walk(v Visitor) {
+	v = v.Visit(this)
+	for _, e := range this.GetElems() {
+		e.Walk(v)
 	}
 }
 

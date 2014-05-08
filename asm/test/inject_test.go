@@ -17,7 +17,6 @@ package main_test
 import (
 	protoparser "code.google.com/p/gogoprotobuf/parser"
 	"code.google.com/p/gogoprotobuf/proto"
-	"github.com/awalterschulze/katydid/asm/ast"
 	"github.com/awalterschulze/katydid/asm/compiler"
 	"github.com/awalterschulze/katydid/asm/inject"
 	"github.com/awalterschulze/katydid/asm/lexer"
@@ -64,11 +63,10 @@ func TestInject(t *testing.T) {
 		panic(err)
 	}
 	p := parser.NewParser()
-	r, err := p.Parse(lexer.NewLexer([]byte(injectPerson)))
+	rules, err := p.ParseRules(lexer.NewLexer([]byte(injectPerson)))
 	if err != nil {
 		t.Fatalf(err.Error())
 	}
-	rules := r.(*ast.Rules)
 	e, err := compiler.Compile(rules, fileDescriptorSet)
 	if err != nil {
 		panic(err)

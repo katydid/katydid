@@ -17,13 +17,14 @@ package compose
 import (
 	"code.google.com/p/gogoprotobuf/proto"
 	"github.com/awalterschulze/katydid/asm/ast"
+	"github.com/awalterschulze/katydid/types"
 	"testing"
 )
 
 func TestComposeNot(t *testing.T) {
 	expr := &ast.Expr{
 		Function: &ast.Function{
-			Name: proto.String("not"),
+			Name: "not",
 			Params: []*ast.Expr{
 				{
 					Terminal: &ast.Terminal{
@@ -47,15 +48,15 @@ func TestComposeNot(t *testing.T) {
 func TestComposeContains(t *testing.T) {
 	expr := &ast.Expr{
 		Function: &ast.Function{
-			Name: proto.String("contains"),
+			Name: "contains",
 			Params: []*ast.Expr{
 				{
 					Function: &ast.Function{
-						Name: proto.String("nfkc"),
+						Name: "nfkc",
 						Params: []*ast.Expr{
 							{
 								Function: &ast.Function{
-									Name: proto.String("decString"),
+									Name: "decString",
 								},
 							},
 						},
@@ -63,7 +64,7 @@ func TestComposeContains(t *testing.T) {
 				},
 				{
 					Function: &ast.Function{
-						Name: proto.String("nfkc"),
+						Name: "nfkc",
 						Params: []*ast.Expr{
 							{
 								Terminal: &ast.Terminal{
@@ -91,15 +92,15 @@ func TestComposeContains(t *testing.T) {
 func TestComposeStringEq(t *testing.T) {
 	expr := &ast.Expr{
 		Function: &ast.Function{
-			Name: proto.String("eq"),
+			Name: "eq",
 			Params: []*ast.Expr{
 				{
 					Function: &ast.Function{
-						Name: proto.String("nfkc"),
+						Name: "nfkc",
 						Params: []*ast.Expr{
 							{
 								Function: &ast.Function{
-									Name: proto.String("decString"),
+									Name: "decString",
 								},
 							},
 						},
@@ -107,7 +108,7 @@ func TestComposeStringEq(t *testing.T) {
 				},
 				{
 					Function: &ast.Function{
-						Name: proto.String("nfkc"),
+						Name: "nfkc",
 						Params: []*ast.Expr{
 							{
 								Terminal: &ast.Terminal{
@@ -125,6 +126,116 @@ func TestComposeStringEq(t *testing.T) {
 		panic(err)
 	}
 	if b.Eval([]byte("TheStreet")) != true {
+		t.Fatalf("expected true")
+	}
+}
+
+func TestComposeListBool(t *testing.T) {
+	expr := &ast.Expr{
+		Function: &ast.Function{
+			Name: "eq",
+			Params: []*ast.Expr{
+				{
+					Function: &ast.Function{
+						Name: "length",
+						Params: []*ast.Expr{
+							{
+								Function: &ast.Function{
+									Name: "print",
+									Params: []*ast.Expr{
+										{
+											List: &ast.List{
+												Type: types.LIST_BOOL.Enum(),
+												Elems: []*ast.Expr{
+													{
+														Terminal: &ast.Terminal{
+															BoolValue: proto.Bool(true),
+														},
+													},
+													{
+														Terminal: &ast.Terminal{
+															BoolValue: proto.Bool(false),
+														},
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+				{
+					Terminal: &ast.Terminal{
+						Int64Value: proto.Int64(2),
+					},
+				},
+			},
+		},
+	}
+	b, err := ComposeBool(expr)
+	if err != nil {
+		panic(err)
+	}
+	if b.Eval(nil) != true {
+		t.Fatalf("expected true")
+	}
+}
+
+func TestComposeListInt64(t *testing.T) {
+	expr := &ast.Expr{
+		Function: &ast.Function{
+			Name: "eq",
+			Params: []*ast.Expr{
+				{
+					Function: &ast.Function{
+						Name: "elem",
+						Params: []*ast.Expr{
+							{
+								Function: &ast.Function{
+									Name: "print",
+									Params: []*ast.Expr{
+										{
+											List: &ast.List{
+												Elems: []*ast.Expr{
+													{
+														Terminal: &ast.Terminal{
+															Int64Value: proto.Int64(1),
+														},
+													},
+													{
+														Terminal: &ast.Terminal{
+															Int64Value: proto.Int64(2),
+														},
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+							{
+								Terminal: &ast.Terminal{
+									Int64Value: proto.Int64(1),
+								},
+							},
+						},
+					},
+				},
+				{
+					Terminal: &ast.Terminal{
+						Int64Value: proto.Int64(2),
+					},
+				},
+			},
+		},
+	}
+	b, err := ComposeBool(expr)
+	if err != nil {
+		panic(err)
+	}
+	if b.Eval(nil) != true {
 		t.Fatalf("expected true")
 	}
 }

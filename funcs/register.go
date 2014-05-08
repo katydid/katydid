@@ -15,8 +15,8 @@
 package funcs
 
 import (
-	descriptor "code.google.com/p/gogoprotobuf/protoc-gen-gogo/descriptor"
 	"fmt"
+	"github.com/awalterschulze/katydid/types"
 	"reflect"
 	"strings"
 )
@@ -26,7 +26,7 @@ type errUnknownFunction struct {
 	ins []string
 }
 
-func newErrUnknownFunction(name string, ins []descriptor.FieldDescriptorProto_Type) error {
+func newErrUnknownFunction(name string, ins []types.Type) error {
 	inss := make([]string, len(ins))
 	for i, in := range ins {
 		inss[i] = in.String()
@@ -63,7 +63,7 @@ func (this *funksMap) register(f *funk) {
 	this.uniqToFunc[f.uniqName] = f
 }
 
-func (this *funksMap) which(name string, ins ...descriptor.FieldDescriptorProto_Type) (string, error) {
+func (this *funksMap) which(name string, ins ...types.Type) (string, error) {
 	uniqs, ok := this.nameToUniq[name]
 	if !ok {
 		return "", newErrUnknownFunction(name, ins)
@@ -85,7 +85,6 @@ func (this *funksMap) which(name string, ins ...descriptor.FieldDescriptorProto_
 		}
 		return u.uniqName, nil
 	}
-	panic(newErrUnknownFunction(name, ins))
 	return "", newErrUnknownFunction(name, ins)
 }
 
@@ -102,8 +101,8 @@ func (this *funksMap) String() string {
 type funk struct {
 	name     string
 	uniqName string
-	In       []descriptor.FieldDescriptorProto_Type
-	Out      descriptor.FieldDescriptorProto_Type
+	In       []types.Type
+	Out      types.Type
 	newfnc   func() interface{}
 }
 
@@ -113,33 +112,6 @@ func (this *funk) String() string {
 		ins[i] = in.String()
 	}
 	return fmt.Sprintf("func %v as %v(%v) %v", this.uniqName, this.name, strings.Join(ins, ","), this.Out.String())
-}
-
-func goTypeToProto(typ reflect.Type) descriptor.FieldDescriptorProto_Type {
-	kind := typ.Kind()
-	switch kind {
-	case reflect.Float64:
-		return descriptor.FieldDescriptorProto_TYPE_DOUBLE
-	case reflect.Float32:
-		return descriptor.FieldDescriptorProto_TYPE_FLOAT
-	case reflect.Int64:
-		return descriptor.FieldDescriptorProto_TYPE_INT64
-	case reflect.Uint64:
-		return descriptor.FieldDescriptorProto_TYPE_UINT64
-	case reflect.Int32:
-		return descriptor.FieldDescriptorProto_TYPE_INT32
-	case reflect.Uint32:
-		return descriptor.FieldDescriptorProto_TYPE_UINT32
-	case reflect.Bool:
-		return descriptor.FieldDescriptorProto_TYPE_BOOL
-	case reflect.String:
-		return descriptor.FieldDescriptorProto_TYPE_STRING
-	case reflect.Slice:
-		if typ.Elem().Kind() == reflect.Uint8 {
-			return descriptor.FieldDescriptorProto_TYPE_BYTES
-		}
-	}
-	panic(fmt.Sprintf("go Type %v unsupported", typ))
 }
 
 func Register(name string, fnc interface{}) {
@@ -156,7 +128,7 @@ func RegisterFactory(name string, newFunc func() interface{}) {
 	res := &funk{
 		name:     name,
 		uniqName: uniqName,
-		Out:      goTypeToProto(returnType.Out(0)),
+		Out:      types.FromGo(returnType.Out(0)),
 		newfnc:   newFunc,
 	}
 	for i := 0; i < lenFields; i++ {
@@ -164,7 +136,7 @@ func RegisterFactory(name string, newFunc func() interface{}) {
 		if !ok {
 			continue
 		}
-		res.In = append(res.In, goTypeToProto(meth.Type.Out(0)))
+		res.In = append(res.In, types.FromGo(meth.Type.Out(0)))
 	}
 	funcsMap.register(res)
 }
@@ -184,11 +156,11 @@ func newFunc(uniq string, values ...interface{}) (interface{}, error) {
 	return newf.Addr().Interface(), nil
 }
 
-func Which(name string, ins ...descriptor.FieldDescriptorProto_Type) (string, error) {
+func Which(name string, ins ...types.Type) (string, error) {
 	return funcsMap.which(name, ins...)
 }
 
-func Out(uniq string) (descriptor.FieldDescriptorProto_Type, error) {
+func Out(uniq string) (types.Type, error) {
 	u, ok := funcsMap.uniqToFunc[uniq]
 	if !ok {
 		return 0, &errUnknownFunction{uniq, nil}

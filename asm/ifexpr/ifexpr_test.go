@@ -34,7 +34,7 @@ func (this nameToState) NameToState(name string) (int, error) {
 func TestEasyIfExpr(t *testing.T) {
 	expr := &ast.Expr{
 		Function: &ast.Function{
-			Name: proto.String("not"),
+			Name: "not",
 			Params: []*ast.Expr{
 				{
 					Terminal: &ast.Terminal{
@@ -77,7 +77,7 @@ func TestEasyIfExpr(t *testing.T) {
 func TestNestedIfExpr(t *testing.T) {
 	expr := &ast.Expr{
 		Function: &ast.Function{
-			Name: proto.String("not"),
+			Name: "not",
 			Params: []*ast.Expr{
 				{
 					Terminal: &ast.Terminal{

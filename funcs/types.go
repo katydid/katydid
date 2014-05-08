@@ -34,10 +34,6 @@ type Int32 interface {
 	Eval([]byte) int32
 }
 
-type Uint32 interface {
-	Eval([]byte) uint32
-}
-
 type Bool interface {
 	Eval([]byte) bool
 }
@@ -48,4 +44,44 @@ type String interface {
 
 type Bytes interface {
 	Eval([]byte) []byte
+}
+
+type Uint32 interface {
+	Eval([]byte) uint32
+}
+
+type Float64s interface {
+	Eval([]byte) []float64
+}
+
+type Float32s interface {
+	Eval([]byte) []float32
+}
+
+type Int64s interface {
+	Eval([]byte) []int64
+}
+
+type Uint64s interface {
+	Eval([]byte) []uint64
+}
+
+type Int32s interface {
+	Eval([]byte) []int32
+}
+
+type Bools interface {
+	Eval([]byte) []bool
+}
+
+type Strings interface {
+	Eval([]byte) []string
+}
+
+type ListOfBytes interface {
+	Eval([]byte) [][]byte
+}
+
+type Uint32s interface {
+	Eval([]byte) []uint32
 }

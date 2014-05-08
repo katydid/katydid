@@ -49,34 +49,34 @@ func init() {
 	Register("eqFold", new(equalFold))
 }
 
-type prefix struct {
+type hasPrefix struct {
 	V1 String
 	V2 String
 }
 
-func (this *prefix) Eval(buf []byte) bool {
+func (this *hasPrefix) Eval(buf []byte) bool {
 	v1 := this.V1.Eval(buf)
 	v2 := this.V2.Eval(buf)
 	return strings.HasPrefix(v1, v2)
 }
 
 func init() {
-	Register("prefix", new(prefix))
+	Register("hasPrefix", new(hasPrefix))
 }
 
-type suffix struct {
+type hasSuffix struct {
 	V1 String
 	V2 String
 }
 
-func (this *suffix) Eval(buf []byte) bool {
+func (this *hasSuffix) Eval(buf []byte) bool {
 	v1 := this.V1.Eval(buf)
 	v2 := this.V2.Eval(buf)
 	return strings.HasSuffix(v1, v2)
 }
 
 func init() {
-	Register("suffix", new(suffix))
+	Register("hasSuffix", new(hasSuffix))
 }
 
 type nfc struct {

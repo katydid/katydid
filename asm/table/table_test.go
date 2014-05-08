@@ -15,7 +15,6 @@
 package table
 
 import (
-	"code.google.com/p/gogoprotobuf/proto"
 	"fmt"
 	"github.com/awalterschulze/katydid/asm/ast"
 	"testing"
@@ -57,59 +56,59 @@ numberAndStreet _ = numberAndStreet
 func TestTable(t *testing.T) {
 	transitions := []*ast.Transition{
 		{
-			Src:   proto.String("start"),
-			Input: proto.String("numberAndStreet"),
-			Dst:   proto.String("accept"),
+			Src:   "start",
+			Input: "numberAndStreet",
+			Dst:   "accept",
 		},
 		{
-			Src:   proto.String("start"),
-			Input: proto.String("_"),
-			Dst:   proto.String("start"),
+			Src:   "start",
+			Input: "_",
+			Dst:   "start",
 		},
 		{
-			Src:   proto.String("accept"),
-			Input: proto.String("_"),
-			Dst:   proto.String("accept"),
+			Src:   "accept",
+			Input: "_",
+			Dst:   "accept",
 		},
 		{
-			Src:   proto.String("address"),
-			Input: proto.String("number"),
-			Dst:   proto.String("number"),
+			Src:   "address",
+			Input: "number",
+			Dst:   "number",
 		},
 		{
-			Src:   proto.String("address"),
-			Input: proto.String("street"),
-			Dst:   proto.String("street"),
+			Src:   "address",
+			Input: "street",
+			Dst:   "street",
 		},
 		{
-			Src:   proto.String("address"),
-			Input: proto.String("_"),
-			Dst:   proto.String("address"),
+			Src:   "address",
+			Input: "_",
+			Dst:   "address",
 		},
 		{
-			Src:   proto.String("number"),
-			Input: proto.String("street"),
-			Dst:   proto.String("numberAndStreet"),
+			Src:   "number",
+			Input: "street",
+			Dst:   "numberAndStreet",
 		},
 		{
-			Src:   proto.String("number"),
-			Input: proto.String("_"),
-			Dst:   proto.String("number"),
+			Src:   "number",
+			Input: "_",
+			Dst:   "number",
 		},
 		{
-			Src:   proto.String("street"),
-			Input: proto.String("number"),
-			Dst:   proto.String("numberAndStreet"),
+			Src:   "street",
+			Input: "number",
+			Dst:   "numberAndStreet",
 		},
 		{
-			Src:   proto.String("street"),
-			Input: proto.String("_"),
-			Dst:   proto.String("street"),
+			Src:   "street",
+			Input: "_",
+			Dst:   "street",
 		},
 		{
-			Src:   proto.String("numberAndStreet"),
-			Input: proto.String("_"),
-			Dst:   proto.String("numberAndStreet"),
+			Src:   "numberAndStreet",
+			Input: "_",
+			Dst:   "numberAndStreet",
 		},
 	}
 	table := New(transitions, nil)
@@ -120,9 +119,9 @@ func TestTable(t *testing.T) {
 		t.Fatalf("'_' should be state 0")
 	}
 	transitions = append(transitions, &ast.Transition{
-		Src:   proto.String("number"),
-		Input: proto.String("accept"),
-		Dst:   proto.String("number"),
+		Src:   "number",
+		Input: "accept",
+		Dst:   "number",
 	})
 	for _, transition := range transitions {
 		transTest(t, table, transition.GetSrc(), transition.GetInput(), transition.GetDst())

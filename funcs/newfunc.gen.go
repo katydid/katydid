@@ -74,3 +74,75 @@ func NewBytesFunc(uniq string, values ...interface{}) (Bytes, error) {
 	}
 	return f.(Bytes), nil
 }
+
+func NewFloat64sFunc(uniq string, values ...interface{}) (Float64s, error) {
+	f, err := newFunc(uniq, values...)
+	if err != nil {
+		return nil, err
+	}
+	return f.(Float64s), nil
+}
+
+func NewFloat32sFunc(uniq string, values ...interface{}) (Float32s, error) {
+	f, err := newFunc(uniq, values...)
+	if err != nil {
+		return nil, err
+	}
+	return f.(Float32s), nil
+}
+
+func NewInt64sFunc(uniq string, values ...interface{}) (Int64s, error) {
+	f, err := newFunc(uniq, values...)
+	if err != nil {
+		return nil, err
+	}
+	return f.(Int64s), nil
+}
+
+func NewUint64sFunc(uniq string, values ...interface{}) (Uint64s, error) {
+	f, err := newFunc(uniq, values...)
+	if err != nil {
+		return nil, err
+	}
+	return f.(Uint64s), nil
+}
+
+func NewInt32sFunc(uniq string, values ...interface{}) (Int32s, error) {
+	f, err := newFunc(uniq, values...)
+	if err != nil {
+		return nil, err
+	}
+	return f.(Int32s), nil
+}
+
+func NewUint32sFunc(uniq string, values ...interface{}) (Uint32s, error) {
+	f, err := newFunc(uniq, values...)
+	if err != nil {
+		return nil, err
+	}
+	return f.(Uint32s), nil
+}
+
+func NewBoolsFunc(uniq string, values ...interface{}) (Bools, error) {
+	f, err := newFunc(uniq, values...)
+	if err != nil {
+		return nil, err
+	}
+	return f.(Bools), nil
+}
+
+func NewStringsFunc(uniq string, values ...interface{}) (Strings, error) {
+	f, err := newFunc(uniq, values...)
+	if err != nil {
+		return nil, err
+	}
+	return f.(Strings), nil
+}
+
+func NewListOfBytesFunc(uniq string, values ...interface{}) (ListOfBytes, error) {
+	f, err := newFunc(uniq, values...)
+	if err != nil {
+		return nil, err
+	}
+	return f.(ListOfBytes), nil
+}

@@ -58,11 +58,11 @@ func (this *Function) String() string {
 }
 
 func (this *Terminal) String() string {
-	if this.Literal != nil {
-		return this.GetLiteral()
-	}
 	if this.BoolValue != nil {
-		return fmt.Sprintf("%b", this.GetBoolValue())
+		if this.GetBoolValue() {
+			return "true"
+		}
+		return "false"
 	}
 	if this.Int64Value != nil {
 		return fmt.Sprintf("%d", this.GetInt64Value())
@@ -76,9 +76,24 @@ func (this *Terminal) String() string {
 	if this.Variable != nil {
 		return this.GetVariable().String()
 	}
+	if this.BytesValue != nil {
+		return fmt.Sprintf("%#v", this.GetBytesValue())
+	}
+	if this.Int32Value != nil {
+		return fmt.Sprintf("%d", this.GetInt32Value())
+	}
+	if this.Uint32Value != nil {
+		return fmt.Sprintf("%d", this.GetUint32Value())
+	}
+	if this.DoubleValue != nil {
+		return fmt.Sprintf("%d", this.GetDoubleValue())
+	}
+	if this.FloatValue != nil {
+		return fmt.Sprintf("%d", this.GetFloatValue())
+	}
 	panic("unreachable")
 }
 
 func (this *Variable) String() string {
-	return this.GetPackage() + "." + this.GetMessage() + "." + this.GetField() + "." + this.GetPart()
+	return this.GetPackage() + "." + this.GetMessage() + "." + this.GetField()
 }

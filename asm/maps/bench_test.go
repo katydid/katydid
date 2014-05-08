@@ -90,6 +90,6 @@ func BenchmarkMapUint64(b *testing.B) {
 	benchUint64(b, newMapUint64())
 }
 
-func BenchmarkSingleUint64(b *testing.B) {
-	benchUint64(b, newSingleUint64())
+func BenchmarkUint64Value(b *testing.B) {
+	benchUint64(b, newUint64Value())
 }

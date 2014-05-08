@@ -125,7 +125,7 @@ func (this singleRefInt) Lookup(k int) (int, bool) {
 	return 0, false
 }
 
-func newSingleUint64() MapUint64 {
+func newUint64Value() MapUint64 {
 	reset()
 	return &singleUint64ToInt{uint64(r.Uint32()), r.Int()}
 }
