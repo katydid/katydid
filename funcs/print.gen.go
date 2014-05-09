@@ -11,8 +11,8 @@ type printFloat64 struct {
 	E Float64
 }
 
-func (this *printFloat64) Eval(buf []byte) float64 {
-	v := this.E.Eval(buf)
+func (this *printFloat64) Eval() float64 {
+	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
@@ -25,8 +25,8 @@ type printFloat32 struct {
 	E Float32
 }
 
-func (this *printFloat32) Eval(buf []byte) float32 {
-	v := this.E.Eval(buf)
+func (this *printFloat32) Eval() float32 {
+	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
@@ -39,8 +39,8 @@ type printInt64 struct {
 	E Int64
 }
 
-func (this *printInt64) Eval(buf []byte) int64 {
-	v := this.E.Eval(buf)
+func (this *printInt64) Eval() int64 {
+	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
@@ -53,8 +53,8 @@ type printUint64 struct {
 	E Uint64
 }
 
-func (this *printUint64) Eval(buf []byte) uint64 {
-	v := this.E.Eval(buf)
+func (this *printUint64) Eval() uint64 {
+	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
@@ -67,8 +67,8 @@ type printInt32 struct {
 	E Int32
 }
 
-func (this *printInt32) Eval(buf []byte) int32 {
-	v := this.E.Eval(buf)
+func (this *printInt32) Eval() int32 {
+	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
@@ -81,8 +81,8 @@ type printUint32 struct {
 	E Uint32
 }
 
-func (this *printUint32) Eval(buf []byte) uint32 {
-	v := this.E.Eval(buf)
+func (this *printUint32) Eval() uint32 {
+	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
@@ -95,8 +95,8 @@ type printBool struct {
 	E Bool
 }
 
-func (this *printBool) Eval(buf []byte) bool {
-	v := this.E.Eval(buf)
+func (this *printBool) Eval() bool {
+	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
@@ -109,8 +109,8 @@ type printString struct {
 	E String
 }
 
-func (this *printString) Eval(buf []byte) string {
-	v := this.E.Eval(buf)
+func (this *printString) Eval() string {
+	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
@@ -123,8 +123,8 @@ type printBytes struct {
 	E Bytes
 }
 
-func (this *printBytes) Eval(buf []byte) []byte {
-	v := this.E.Eval(buf)
+func (this *printBytes) Eval() []byte {
+	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
@@ -137,8 +137,8 @@ type printFloat64s struct {
 	E Float64s
 }
 
-func (this *printFloat64s) Eval(buf []byte) []float64 {
-	v := this.E.Eval(buf)
+func (this *printFloat64s) Eval() []float64 {
+	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
@@ -151,8 +151,8 @@ type printFloat32s struct {
 	E Float32s
 }
 
-func (this *printFloat32s) Eval(buf []byte) []float32 {
-	v := this.E.Eval(buf)
+func (this *printFloat32s) Eval() []float32 {
+	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
@@ -165,8 +165,8 @@ type printInt64s struct {
 	E Int64s
 }
 
-func (this *printInt64s) Eval(buf []byte) []int64 {
-	v := this.E.Eval(buf)
+func (this *printInt64s) Eval() []int64 {
+	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
@@ -179,8 +179,8 @@ type printUint64s struct {
 	E Uint64s
 }
 
-func (this *printUint64s) Eval(buf []byte) []uint64 {
-	v := this.E.Eval(buf)
+func (this *printUint64s) Eval() []uint64 {
+	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
@@ -193,8 +193,8 @@ type printInt32s struct {
 	E Int32s
 }
 
-func (this *printInt32s) Eval(buf []byte) []int32 {
-	v := this.E.Eval(buf)
+func (this *printInt32s) Eval() []int32 {
+	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
@@ -207,8 +207,8 @@ type printUint32s struct {
 	E Uint32s
 }
 
-func (this *printUint32s) Eval(buf []byte) []uint32 {
-	v := this.E.Eval(buf)
+func (this *printUint32s) Eval() []uint32 {
+	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
@@ -221,8 +221,8 @@ type printBools struct {
 	E Bools
 }
 
-func (this *printBools) Eval(buf []byte) []bool {
-	v := this.E.Eval(buf)
+func (this *printBools) Eval() []bool {
+	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
@@ -235,8 +235,8 @@ type printStrings struct {
 	E Strings
 }
 
-func (this *printStrings) Eval(buf []byte) []string {
-	v := this.E.Eval(buf)
+func (this *printStrings) Eval() []string {
+	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
@@ -249,8 +249,8 @@ type printListOfBytes struct {
 	E ListOfBytes
 }
 
-func (this *printListOfBytes) Eval(buf []byte) [][]byte {
-	v := this.E.Eval(buf)
+func (this *printListOfBytes) Eval() [][]byte {
+	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }

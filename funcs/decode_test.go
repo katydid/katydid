@@ -25,7 +25,7 @@ import (
 	"time"
 )
 
-func getField(m *DecodeFields) []byte {
+func getField(m *DecodeFields) *variable {
 	buf, err := proto.Marshal(m)
 	if err != nil {
 		panic(err)
@@ -34,7 +34,7 @@ func getField(m *DecodeFields) []byte {
 	if n <= 0 {
 		panic(fmt.Sprintf("decodeVarint n = %d", n))
 	}
-	return buf[n:]
+	return &variable{buf[n:]}
 }
 
 var (
@@ -47,7 +47,7 @@ func TestDouble(t *testing.T) {
 	m := &DecodeFields{
 		DoubleField: proto.Float64(v1),
 	}
-	v2 := (&(decDouble{})).Eval(getField(m))
+	v2 := (&(decDouble{getField(m)})).Eval()
 	if v1 != v2 {
 		t.Fatalf("expected %v got %v", v1, v2)
 	}
@@ -58,7 +58,7 @@ func TestFloat(t *testing.T) {
 	m := &DecodeFields{
 		FloatField: proto.Float32(v1),
 	}
-	v2 := (&(decFloat{})).Eval(getField(m))
+	v2 := (&(decFloat{getField(m)})).Eval()
 	if v1 != v2 {
 		t.Fatalf("expected %v got %v", v1, v2)
 	}
@@ -69,7 +69,7 @@ func TestInt64(t *testing.T) {
 	m := &DecodeFields{
 		Int64Field: proto.Int64(v1),
 	}
-	v2 := (&(decInt64{})).Eval(getField(m))
+	v2 := (&(decInt64{getField(m)})).Eval()
 	if v1 != v2 {
 		t.Fatalf("expected %v got %v", v1, v2)
 	}
@@ -80,7 +80,7 @@ func TestUint64(t *testing.T) {
 	m := &DecodeFields{
 		Uint64Field: proto.Uint64(v1),
 	}
-	v2 := (&(decUint64{})).Eval(getField(m))
+	v2 := (&(decUint64{getField(m)})).Eval()
 	if v1 != v2 {
 		t.Fatalf("expected %v got %v", v1, v2)
 	}
@@ -91,7 +91,7 @@ func TestInt32(t *testing.T) {
 	m := &DecodeFields{
 		Int32Field: proto.Int32(v1),
 	}
-	v2 := (&(decInt32{})).Eval(getField(m))
+	v2 := (&(decInt32{getField(m)})).Eval()
 	if v1 != v2 {
 		t.Fatalf("expected %v got %v", v1, v2)
 	}
@@ -102,7 +102,7 @@ func TestFixed64(t *testing.T) {
 	m := &DecodeFields{
 		Fixed64Field: proto.Uint64(v1),
 	}
-	v2 := (&(decFixed64{})).Eval(getField(m))
+	v2 := (&(decFixed64{getField(m)})).Eval()
 	if v1 != v2 {
 		t.Fatalf("expected %v got %v", v1, v2)
 	}
@@ -113,7 +113,7 @@ func TestFixed32(t *testing.T) {
 	m := &DecodeFields{
 		Fixed32Field: proto.Uint32(v1),
 	}
-	v2 := (&(decFixed32{})).Eval(getField(m))
+	v2 := (&(decFixed32{getField(m)})).Eval()
 	if v1 != v2 {
 		t.Fatalf("expected %v got %v", v1, v2)
 	}
@@ -124,7 +124,7 @@ func TestBool(t *testing.T) {
 	m := &DecodeFields{
 		BoolField: proto.Bool(v1),
 	}
-	v2 := (&(decBool{})).Eval(getField(m))
+	v2 := (&(decBool{getField(m)})).Eval()
 	if v1 != v2 {
 		t.Fatalf("expected %v got %v", v1, v2)
 	}
@@ -135,7 +135,7 @@ func TestString(t *testing.T) {
 	m := &DecodeFields{
 		StringField: proto.String(v1),
 	}
-	v2 := (&(decString{})).Eval(getField(m))
+	v2 := (&(decString{getField(m)})).Eval()
 	if bytes.Equal([]byte(v1), []byte(v2)) {
 		t.Fatalf("expected %v got %v", v1, v2)
 	}
@@ -146,7 +146,7 @@ func TestBytes(t *testing.T) {
 	m := &DecodeFields{
 		BytesField: v1,
 	}
-	v2 := (&(decBytes{})).Eval(getField(m))
+	v2 := (&(decBytes{getField(m)})).Eval()
 	if bytes.Equal(v1, v2) {
 		t.Fatalf("expected %v got %v", v1, v2)
 	}
@@ -157,7 +157,7 @@ func TestUint32(t *testing.T) {
 	m := &DecodeFields{
 		Uint32Field: proto.Uint32(v1),
 	}
-	v2 := (&(decUint32{})).Eval(getField(m))
+	v2 := (&(decUint32{getField(m)})).Eval()
 	if v1 != v2 {
 		t.Fatalf("expected %v got %v", v1, v2)
 	}
@@ -168,7 +168,7 @@ func TestEnum(t *testing.T) {
 	m := &DecodeFields{
 		EnumField: DecodeEnum(v1).Enum(),
 	}
-	v2 := (&(decEnum{})).Eval(getField(m))
+	v2 := (&(decEnum{getField(m)})).Eval()
 	if v1 != v2 {
 		t.Fatalf("expected %v got %v", v1, v2)
 	}
@@ -179,7 +179,7 @@ func TestSFixed32(t *testing.T) {
 	m := &DecodeFields{
 		SFixed32Field: proto.Int32(v1),
 	}
-	v2 := (&(decSFixed32{})).Eval(getField(m))
+	v2 := (&(decSFixed32{getField(m)})).Eval()
 	if v1 != v2 {
 		t.Fatalf("expected %v got %v", v1, v2)
 	}
@@ -190,7 +190,7 @@ func TestSFixed64(t *testing.T) {
 	m := &DecodeFields{
 		SFixed64Field: proto.Int64(v1),
 	}
-	v2 := (&(decSFixed64{})).Eval(getField(m))
+	v2 := (&(decSFixed64{getField(m)})).Eval()
 	if v1 != v2 {
 		t.Fatalf("expected %v got %v", v1, v2)
 	}
@@ -201,7 +201,7 @@ func TestSInt32(t *testing.T) {
 	m := &DecodeFields{
 		SInt32Field: proto.Int32(v1),
 	}
-	v2 := (&(decSInt32{})).Eval(getField(m))
+	v2 := (&(decSInt32{getField(m)})).Eval()
 	if v1 != v2 {
 		t.Fatalf("expected %v got %v", v1, v2)
 	}
@@ -212,7 +212,7 @@ func TestSInt64(t *testing.T) {
 	m := &DecodeFields{
 		SInt64Field: proto.Int64(v1),
 	}
-	v2 := (&(decSInt64{})).Eval(getField(m))
+	v2 := (&(decSInt64{getField(m)})).Eval()
 	if v1 != v2 {
 		t.Fatalf("expected %v got %v", v1, v2)
 	}

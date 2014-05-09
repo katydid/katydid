@@ -9,7 +9,7 @@ import (
 	"github.com/awalterschulze/katydid/types"
 )
 
-func ComposeFloat64(expr *ast.Expr) (funcs.Float64, error) {
+func composeFloat64(expr *ast.Expr) (funcs.Float64, error) {
 	uniq, err := prep(expr, types.SINGLE_DOUBLE)
 	if err != nil {
 		return nil, err
@@ -24,7 +24,7 @@ func ComposeFloat64(expr *ast.Expr) (funcs.Float64, error) {
 	return funcs.NewFloat64Func(uniq, values...)
 }
 
-func ComposeFloat64s(expr *ast.Expr) (funcs.Float64s, error) {
+func composeFloat64s(expr *ast.Expr) (funcs.Float64s, error) {
 	uniq, err := prep(expr, types.LIST_DOUBLE)
 	if err != nil {
 		return nil, err
@@ -51,7 +51,7 @@ func ComposeFloat64s(expr *ast.Expr) (funcs.Float64s, error) {
 	return funcs.NewFloat64sFunc(uniq, values...)
 }
 
-func ComposeFloat32(expr *ast.Expr) (funcs.Float32, error) {
+func composeFloat32(expr *ast.Expr) (funcs.Float32, error) {
 	uniq, err := prep(expr, types.SINGLE_FLOAT)
 	if err != nil {
 		return nil, err
@@ -66,7 +66,7 @@ func ComposeFloat32(expr *ast.Expr) (funcs.Float32, error) {
 	return funcs.NewFloat32Func(uniq, values...)
 }
 
-func ComposeFloat32s(expr *ast.Expr) (funcs.Float32s, error) {
+func composeFloat32s(expr *ast.Expr) (funcs.Float32s, error) {
 	uniq, err := prep(expr, types.LIST_FLOAT)
 	if err != nil {
 		return nil, err
@@ -93,7 +93,7 @@ func ComposeFloat32s(expr *ast.Expr) (funcs.Float32s, error) {
 	return funcs.NewFloat32sFunc(uniq, values...)
 }
 
-func ComposeInt64(expr *ast.Expr) (funcs.Int64, error) {
+func composeInt64(expr *ast.Expr) (funcs.Int64, error) {
 	uniq, err := prep(expr, types.SINGLE_INT64)
 	if err != nil {
 		return nil, err
@@ -108,7 +108,7 @@ func ComposeInt64(expr *ast.Expr) (funcs.Int64, error) {
 	return funcs.NewInt64Func(uniq, values...)
 }
 
-func ComposeInt64s(expr *ast.Expr) (funcs.Int64s, error) {
+func composeInt64s(expr *ast.Expr) (funcs.Int64s, error) {
 	uniq, err := prep(expr, types.LIST_INT64)
 	if err != nil {
 		return nil, err
@@ -135,7 +135,7 @@ func ComposeInt64s(expr *ast.Expr) (funcs.Int64s, error) {
 	return funcs.NewInt64sFunc(uniq, values...)
 }
 
-func ComposeUint64(expr *ast.Expr) (funcs.Uint64, error) {
+func composeUint64(expr *ast.Expr) (funcs.Uint64, error) {
 	uniq, err := prep(expr, types.SINGLE_UINT64)
 	if err != nil {
 		return nil, err
@@ -150,7 +150,7 @@ func ComposeUint64(expr *ast.Expr) (funcs.Uint64, error) {
 	return funcs.NewUint64Func(uniq, values...)
 }
 
-func ComposeUint64s(expr *ast.Expr) (funcs.Uint64s, error) {
+func composeUint64s(expr *ast.Expr) (funcs.Uint64s, error) {
 	uniq, err := prep(expr, types.LIST_UINT64)
 	if err != nil {
 		return nil, err
@@ -177,7 +177,7 @@ func ComposeUint64s(expr *ast.Expr) (funcs.Uint64s, error) {
 	return funcs.NewUint64sFunc(uniq, values...)
 }
 
-func ComposeInt32(expr *ast.Expr) (funcs.Int32, error) {
+func composeInt32(expr *ast.Expr) (funcs.Int32, error) {
 	uniq, err := prep(expr, types.SINGLE_INT32)
 	if err != nil {
 		return nil, err
@@ -192,7 +192,7 @@ func ComposeInt32(expr *ast.Expr) (funcs.Int32, error) {
 	return funcs.NewInt32Func(uniq, values...)
 }
 
-func ComposeInt32s(expr *ast.Expr) (funcs.Int32s, error) {
+func composeInt32s(expr *ast.Expr) (funcs.Int32s, error) {
 	uniq, err := prep(expr, types.LIST_INT32)
 	if err != nil {
 		return nil, err
@@ -219,7 +219,7 @@ func ComposeInt32s(expr *ast.Expr) (funcs.Int32s, error) {
 	return funcs.NewInt32sFunc(uniq, values...)
 }
 
-func ComposeUint32(expr *ast.Expr) (funcs.Uint32, error) {
+func composeUint32(expr *ast.Expr) (funcs.Uint32, error) {
 	uniq, err := prep(expr, types.SINGLE_UINT32)
 	if err != nil {
 		return nil, err
@@ -234,7 +234,7 @@ func ComposeUint32(expr *ast.Expr) (funcs.Uint32, error) {
 	return funcs.NewUint32Func(uniq, values...)
 }
 
-func ComposeUint32s(expr *ast.Expr) (funcs.Uint32s, error) {
+func composeUint32s(expr *ast.Expr) (funcs.Uint32s, error) {
 	uniq, err := prep(expr, types.LIST_UINT32)
 	if err != nil {
 		return nil, err
@@ -261,7 +261,7 @@ func ComposeUint32s(expr *ast.Expr) (funcs.Uint32s, error) {
 	return funcs.NewUint32sFunc(uniq, values...)
 }
 
-func ComposeBool(expr *ast.Expr) (funcs.Bool, error) {
+func composeBool(expr *ast.Expr) (funcs.Bool, error) {
 	uniq, err := prep(expr, types.SINGLE_BOOL)
 	if err != nil {
 		return nil, err
@@ -276,7 +276,7 @@ func ComposeBool(expr *ast.Expr) (funcs.Bool, error) {
 	return funcs.NewBoolFunc(uniq, values...)
 }
 
-func ComposeBools(expr *ast.Expr) (funcs.Bools, error) {
+func composeBools(expr *ast.Expr) (funcs.Bools, error) {
 	uniq, err := prep(expr, types.LIST_BOOL)
 	if err != nil {
 		return nil, err
@@ -303,7 +303,7 @@ func ComposeBools(expr *ast.Expr) (funcs.Bools, error) {
 	return funcs.NewBoolsFunc(uniq, values...)
 }
 
-func ComposeString(expr *ast.Expr) (funcs.String, error) {
+func composeString(expr *ast.Expr) (funcs.String, error) {
 	uniq, err := prep(expr, types.SINGLE_STRING)
 	if err != nil {
 		return nil, err
@@ -318,7 +318,7 @@ func ComposeString(expr *ast.Expr) (funcs.String, error) {
 	return funcs.NewStringFunc(uniq, values...)
 }
 
-func ComposeStrings(expr *ast.Expr) (funcs.Strings, error) {
+func composeStrings(expr *ast.Expr) (funcs.Strings, error) {
 	uniq, err := prep(expr, types.LIST_STRING)
 	if err != nil {
 		return nil, err
@@ -345,7 +345,7 @@ func ComposeStrings(expr *ast.Expr) (funcs.Strings, error) {
 	return funcs.NewStringsFunc(uniq, values...)
 }
 
-func ComposeBytes(expr *ast.Expr) (funcs.Bytes, error) {
+func composeBytes(expr *ast.Expr) (funcs.Bytes, error) {
 	uniq, err := prep(expr, types.SINGLE_BYTES)
 	if err != nil {
 		return nil, err
@@ -360,7 +360,7 @@ func ComposeBytes(expr *ast.Expr) (funcs.Bytes, error) {
 	return funcs.NewBytesFunc(uniq, values...)
 }
 
-func ComposeListOfBytes(expr *ast.Expr) (funcs.ListOfBytes, error) {
+func composeListOfBytes(expr *ast.Expr) (funcs.ListOfBytes, error) {
 	uniq, err := prep(expr, types.LIST_BYTES)
 	if err != nil {
 		return nil, err

@@ -14,40 +14,23 @@
 
 package funcs
 
-type not struct {
-	V1 Bool
+type Variable interface {
+	SetVariable(v []byte)
+	Bytes
 }
 
-func (this *not) Eval() bool {
-	return !this.V1.Eval()
+type variable struct {
+	Value []byte
 }
 
-func init() {
-	Register("not", new(not))
+func (this *variable) Eval() []byte {
+	return this.Value
 }
 
-type and struct {
-	V1 Bool
-	V2 Bool
+func (this *variable) SetVariable(v []byte) {
+	this.Value = v
 }
 
-func (this *and) Eval() bool {
-	return this.V1.Eval() && this.V2.Eval()
-}
-
-func init() {
-	Register("and", new(and))
-}
-
-type or struct {
-	V1 Bool
-	V2 Bool
-}
-
-func (this *or) Eval() bool {
-	return this.V1.Eval() || this.V2.Eval()
-}
-
-func init() {
-	Register("or", new(or))
+func NewVariable() Variable {
+	return &variable{}
 }

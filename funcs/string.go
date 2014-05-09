@@ -24,9 +24,9 @@ type contains struct {
 	V2 String
 }
 
-func (this *contains) Eval(buf []byte) bool {
-	v1 := this.V1.Eval(buf)
-	v2 := this.V2.Eval(buf)
+func (this *contains) Eval() bool {
+	v1 := this.V1.Eval()
+	v2 := this.V2.Eval()
 	return strings.Contains(v1, v2)
 }
 
@@ -39,9 +39,9 @@ type equalFold struct {
 	V2 String
 }
 
-func (this *equalFold) Eval(buf []byte) bool {
-	v1 := this.V1.Eval(buf)
-	v2 := this.V2.Eval(buf)
+func (this *equalFold) Eval() bool {
+	v1 := this.V1.Eval()
+	v2 := this.V2.Eval()
 	return strings.EqualFold(v1, v2)
 }
 
@@ -54,9 +54,9 @@ type hasPrefix struct {
 	V2 String
 }
 
-func (this *hasPrefix) Eval(buf []byte) bool {
-	v1 := this.V1.Eval(buf)
-	v2 := this.V2.Eval(buf)
+func (this *hasPrefix) Eval() bool {
+	v1 := this.V1.Eval()
+	v2 := this.V2.Eval()
 	return strings.HasPrefix(v1, v2)
 }
 
@@ -69,9 +69,9 @@ type hasSuffix struct {
 	V2 String
 }
 
-func (this *hasSuffix) Eval(buf []byte) bool {
-	v1 := this.V1.Eval(buf)
-	v2 := this.V2.Eval(buf)
+func (this *hasSuffix) Eval() bool {
+	v1 := this.V1.Eval()
+	v2 := this.V2.Eval()
 	return strings.HasSuffix(v1, v2)
 }
 
@@ -83,8 +83,8 @@ type nfc struct {
 	V1 String
 }
 
-func (this *nfc) Eval(buf []byte) string {
-	return norm.NFC.String(this.V1.Eval(buf))
+func (this *nfc) Eval() string {
+	return norm.NFC.String(this.V1.Eval())
 }
 
 func init() {
@@ -95,8 +95,8 @@ type nfd struct {
 	V1 String
 }
 
-func (this *nfd) Eval(buf []byte) string {
-	return norm.NFD.String(this.V1.Eval(buf))
+func (this *nfd) Eval() string {
+	return norm.NFD.String(this.V1.Eval())
 }
 
 func init() {
@@ -107,8 +107,8 @@ type nfkc struct {
 	V1 String
 }
 
-func (this *nfkc) Eval(buf []byte) string {
-	return norm.NFKC.String(this.V1.Eval(buf))
+func (this *nfkc) Eval() string {
+	return norm.NFKC.String(this.V1.Eval())
 }
 
 func init() {
@@ -119,8 +119,8 @@ type nfkd struct {
 	V1 String
 }
 
-func (this *nfkd) Eval(buf []byte) string {
-	return norm.NFKD.String(this.V1.Eval(buf))
+func (this *nfkd) Eval() string {
+	return norm.NFKD.String(this.V1.Eval())
 }
 
 func init() {

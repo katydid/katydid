@@ -9,10 +9,10 @@ type rangeFloat64s struct {
 	Last  Int64
 }
 
-func (this *rangeFloat64s) Eval(buf []byte) []float64 {
-	list := this.List.Eval(buf)
-	first := int(this.First.Eval(buf))
-	last := int(this.Last.Eval(buf))
+func (this *rangeFloat64s) Eval() []float64 {
+	list := this.List.Eval()
+	first := int(this.First.Eval())
+	last := int(this.Last.Eval())
 	first = first % len(list)
 	if last > len(list) {
 		last = last % len(list)
@@ -33,10 +33,10 @@ type rangeFloat32s struct {
 	Last  Int64
 }
 
-func (this *rangeFloat32s) Eval(buf []byte) []float32 {
-	list := this.List.Eval(buf)
-	first := int(this.First.Eval(buf))
-	last := int(this.Last.Eval(buf))
+func (this *rangeFloat32s) Eval() []float32 {
+	list := this.List.Eval()
+	first := int(this.First.Eval())
+	last := int(this.Last.Eval())
 	first = first % len(list)
 	if last > len(list) {
 		last = last % len(list)
@@ -57,10 +57,10 @@ type rangeInt64s struct {
 	Last  Int64
 }
 
-func (this *rangeInt64s) Eval(buf []byte) []int64 {
-	list := this.List.Eval(buf)
-	first := int(this.First.Eval(buf))
-	last := int(this.Last.Eval(buf))
+func (this *rangeInt64s) Eval() []int64 {
+	list := this.List.Eval()
+	first := int(this.First.Eval())
+	last := int(this.Last.Eval())
 	first = first % len(list)
 	if last > len(list) {
 		last = last % len(list)
@@ -81,10 +81,10 @@ type rangeUint64s struct {
 	Last  Int64
 }
 
-func (this *rangeUint64s) Eval(buf []byte) []uint64 {
-	list := this.List.Eval(buf)
-	first := int(this.First.Eval(buf))
-	last := int(this.Last.Eval(buf))
+func (this *rangeUint64s) Eval() []uint64 {
+	list := this.List.Eval()
+	first := int(this.First.Eval())
+	last := int(this.Last.Eval())
 	first = first % len(list)
 	if last > len(list) {
 		last = last % len(list)
@@ -105,10 +105,10 @@ type rangeInt32s struct {
 	Last  Int64
 }
 
-func (this *rangeInt32s) Eval(buf []byte) []int32 {
-	list := this.List.Eval(buf)
-	first := int(this.First.Eval(buf))
-	last := int(this.Last.Eval(buf))
+func (this *rangeInt32s) Eval() []int32 {
+	list := this.List.Eval()
+	first := int(this.First.Eval())
+	last := int(this.Last.Eval())
 	first = first % len(list)
 	if last > len(list) {
 		last = last % len(list)
@@ -129,10 +129,10 @@ type rangeUint32s struct {
 	Last  Int64
 }
 
-func (this *rangeUint32s) Eval(buf []byte) []uint32 {
-	list := this.List.Eval(buf)
-	first := int(this.First.Eval(buf))
-	last := int(this.Last.Eval(buf))
+func (this *rangeUint32s) Eval() []uint32 {
+	list := this.List.Eval()
+	first := int(this.First.Eval())
+	last := int(this.Last.Eval())
 	first = first % len(list)
 	if last > len(list) {
 		last = last % len(list)
@@ -153,10 +153,10 @@ type rangeBools struct {
 	Last  Int64
 }
 
-func (this *rangeBools) Eval(buf []byte) []bool {
-	list := this.List.Eval(buf)
-	first := int(this.First.Eval(buf))
-	last := int(this.Last.Eval(buf))
+func (this *rangeBools) Eval() []bool {
+	list := this.List.Eval()
+	first := int(this.First.Eval())
+	last := int(this.Last.Eval())
 	first = first % len(list)
 	if last > len(list) {
 		last = last % len(list)
@@ -177,10 +177,10 @@ type rangeStrings struct {
 	Last  Int64
 }
 
-func (this *rangeStrings) Eval(buf []byte) []string {
-	list := this.List.Eval(buf)
-	first := int(this.First.Eval(buf))
-	last := int(this.Last.Eval(buf))
+func (this *rangeStrings) Eval() []string {
+	list := this.List.Eval()
+	first := int(this.First.Eval())
+	last := int(this.Last.Eval())
 	first = first % len(list)
 	if last > len(list) {
 		last = last % len(list)
@@ -201,10 +201,10 @@ type rangeListOfBytes struct {
 	Last  Int64
 }
 
-func (this *rangeListOfBytes) Eval(buf []byte) [][]byte {
-	list := this.List.Eval(buf)
-	first := int(this.First.Eval(buf))
-	last := int(this.Last.Eval(buf))
+func (this *rangeListOfBytes) Eval() [][]byte {
+	list := this.List.Eval()
+	first := int(this.First.Eval())
+	last := int(this.Last.Eval())
 	first = first % len(list)
 	if last > len(list) {
 		last = last % len(list)

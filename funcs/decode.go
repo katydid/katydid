@@ -21,9 +21,12 @@ import (
 	"unsafe"
 )
 
-type decDouble struct{}
+type decDouble struct {
+	D Bytes
+}
 
-func (this *decDouble) Eval(buf []byte) float64 {
+func (this *decDouble) Eval() float64 {
+	buf := this.D.Eval()
 	if len(buf) < 8 {
 		panic(fmt.Sprintf("decodeDouble: buffer too short"))
 	}
@@ -34,9 +37,12 @@ func init() {
 	Register("decDouble", new(decDouble))
 }
 
-type decFloat struct{}
+type decFloat struct {
+	D Bytes
+}
 
-func (this *decFloat) Eval(buf []byte) float32 {
+func (this *decFloat) Eval() float32 {
+	buf := this.D.Eval()
 	if len(buf) < 4 {
 		panic(fmt.Sprintf("decodeFloat: buffer too short"))
 	}
@@ -47,9 +53,12 @@ func init() {
 	Register("decFloat", new(decFloat))
 }
 
-type decInt64 struct{}
+type decInt64 struct {
+	D Bytes
+}
 
-func (this *decInt64) Eval(buf []byte) int64 {
+func (this *decInt64) Eval() int64 {
+	buf := this.D.Eval()
 	v, n := binary.Uvarint(buf)
 	if n <= 0 {
 		panic(fmt.Sprintf("decodeVarint n = %d", n))
@@ -61,9 +70,12 @@ func init() {
 	Register("decInt64", new(decInt64))
 }
 
-type decUint64 struct{}
+type decUint64 struct {
+	D Bytes
+}
 
-func (this *decUint64) Eval(buf []byte) uint64 {
+func (this *decUint64) Eval() uint64 {
+	buf := this.D.Eval()
 	v, n := binary.Uvarint(buf)
 	if n <= 0 {
 		panic(fmt.Sprintf("decodeVarint n = %d", n))
@@ -75,9 +87,12 @@ func init() {
 	Register("decUint64", new(decUint64))
 }
 
-type decInt32 struct{}
+type decInt32 struct {
+	D Bytes
+}
 
-func (this *decInt32) Eval(buf []byte) int32 {
+func (this *decInt32) Eval() int32 {
+	buf := this.D.Eval()
 	v, n := binary.Uvarint(buf)
 	if n <= 0 {
 		panic(fmt.Sprintf("decodeVarint n = %d", n))
@@ -89,9 +104,12 @@ func init() {
 	Register("decInt32", new(decInt32))
 }
 
-type decFixed64 struct{}
+type decFixed64 struct {
+	D Bytes
+}
 
-func (this *decFixed64) Eval(buf []byte) uint64 {
+func (this *decFixed64) Eval() uint64 {
+	buf := this.D.Eval()
 	if len(buf) < 8 {
 		panic(fmt.Sprintf("decodeDouble: buffer too short"))
 	}
@@ -102,9 +120,12 @@ func init() {
 	Register("decFixed64", new(decFixed64))
 }
 
-type decFixed32 struct{}
+type decFixed32 struct {
+	D Bytes
+}
 
-func (this *decFixed32) Eval(buf []byte) uint32 {
+func (this *decFixed32) Eval() uint32 {
+	buf := this.D.Eval()
 	if len(buf) < 4 {
 		panic(fmt.Sprintf("decodeDouble: buffer too short"))
 	}
@@ -115,9 +136,12 @@ func init() {
 	Register("decFixed32", new(decFixed32))
 }
 
-type decBool struct{}
+type decBool struct {
+	D Bytes
+}
 
-func (this *decBool) Eval(buf []byte) bool {
+func (this *decBool) Eval() bool {
+	buf := this.D.Eval()
 	v, n := binary.Uvarint(buf)
 	if n <= 0 {
 		panic(fmt.Sprintf("decodeVarint n = %d", n))
@@ -129,9 +153,12 @@ func init() {
 	Register("decBool", new(decBool))
 }
 
-type decString struct{}
+type decString struct {
+	D Bytes
+}
 
-func (this *decString) Eval(buf []byte) string {
+func (this *decString) Eval() string {
+	buf := this.D.Eval()
 	header := (*reflect.SliceHeader)(unsafe.Pointer(&buf))
 	strHeader := reflect.StringHeader{header.Data, header.Len}
 	return *(*string)(unsafe.Pointer(&strHeader))
@@ -141,9 +168,12 @@ func init() {
 	Register("decString", new(decString))
 }
 
-type decBytes struct{}
+type decBytes struct {
+	D Bytes
+}
 
-func (this *decBytes) Eval(buf []byte) []byte {
+func (this *decBytes) Eval() []byte {
+	buf := this.D.Eval()
 	return buf
 }
 
@@ -151,9 +181,12 @@ func init() {
 	Register("decBytes", new(decBytes))
 }
 
-type decUint32 struct{}
+type decUint32 struct {
+	D Bytes
+}
 
-func (this *decUint32) Eval(buf []byte) uint32 {
+func (this *decUint32) Eval() uint32 {
+	buf := this.D.Eval()
 	v, n := binary.Uvarint(buf)
 	if n <= 0 {
 		panic(fmt.Sprintf("decodeVarint n = %d", n))
@@ -165,9 +198,12 @@ func init() {
 	Register("decUint32", new(decUint32))
 }
 
-type decEnum struct{}
+type decEnum struct {
+	D Bytes
+}
 
-func (this *decEnum) Eval(buf []byte) int32 {
+func (this *decEnum) Eval() int32 {
+	buf := this.D.Eval()
 	v, n := binary.Uvarint(buf)
 	if n <= 0 {
 		panic(fmt.Sprintf("decodeVarint n = %d", n))
@@ -179,9 +215,12 @@ func init() {
 	Register("decEnum", new(decEnum))
 }
 
-type decSFixed32 struct{}
+type decSFixed32 struct {
+	D Bytes
+}
 
-func (this *decSFixed32) Eval(buf []byte) int32 {
+func (this *decSFixed32) Eval() int32 {
+	buf := this.D.Eval()
 	if len(buf) < 4 {
 		panic(fmt.Sprintf("decodeDouble: buffer too short"))
 	}
@@ -192,9 +231,12 @@ func init() {
 	Register("decSFixed32", new(decSFixed32))
 }
 
-type decSFixed64 struct{}
+type decSFixed64 struct {
+	D Bytes
+}
 
-func (this *decSFixed64) Eval(buf []byte) int64 {
+func (this *decSFixed64) Eval() int64 {
+	buf := this.D.Eval()
 	if len(buf) < 8 {
 		panic(fmt.Sprintf("decodeDouble: buffer too short"))
 	}
@@ -205,9 +247,12 @@ func init() {
 	Register("decSFixed64", new(decSFixed64))
 }
 
-type decSInt32 struct{}
+type decSInt32 struct {
+	D Bytes
+}
 
-func (this *decSInt32) Eval(buf []byte) int32 {
+func (this *decSInt32) Eval() int32 {
+	buf := this.D.Eval()
 	v, n := binary.Uvarint(buf)
 	if n <= 0 {
 		panic(fmt.Sprintf("decodeVarint n = %d", n))
@@ -219,9 +264,12 @@ func init() {
 	Register("decSInt32", new(decSInt32))
 }
 
-type decSInt64 struct{}
+type decSInt64 struct {
+	D Bytes
+}
 
-func (this *decSInt64) Eval(buf []byte) int64 {
+func (this *decSInt64) Eval() int64 {
+	buf := this.D.Eval()
 	v, n := binary.Uvarint(buf)
 	if n <= 0 {
 		panic(fmt.Sprintf("decodeVarint n = %d", n))

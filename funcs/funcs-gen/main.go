@@ -24,8 +24,8 @@ type {{.Type}}{{.CName}} struct {
 	V2 {{.CType}}
 }
 
-func (this *{{.Type}}{{.CName}}) Eval(buf []byte) bool {
-	{{if .Eval}}{{.Eval}}{{else}}return this.V1.Eval(buf) {{.Operator}} this.V2.Eval(buf){{end}}
+func (this *{{.Type}}{{.CName}}) Eval() bool {
+	{{if .Eval}}{{.Eval}}{{else}}return this.V1.Eval() {{.Operator}} this.V2.Eval(){{end}}
 }
 
 func init() {
@@ -67,7 +67,7 @@ func New{{.CType}}(v {{.GoType}}) {{.CType}} {
 	return &const{{.CType}}{v}
 }
 
-func (this *const{{.CType}}) Eval(buf []byte) {{.GoType}} {
+func (this *const{{.CType}}) Eval() {{.GoType}} {
 	return this.v
 }
 `
@@ -86,10 +86,10 @@ func NewListOf{{.FuncType}}(v []{{.FuncType}}) {{.CType}} {
 	return &listOf{{.FuncType}}{v}
 }
 
-func (this *listOf{{.FuncType}}) Eval(buf []byte) []{{.GoType}} {
+func (this *listOf{{.FuncType}}) Eval() []{{.GoType}} {
 	res := make([]{{.GoType}}, len(this.List))
 	for i, e := range this.List {
-		res[i] = e.Eval(buf)
+		res[i] = e.Eval()
 	}
 	return res
 }
@@ -107,8 +107,8 @@ type print{{.Name}} struct {
 	E {{.Name}}
 }
 
-func (this *print{{.Name}}) Eval(buf []byte) {{.GoType}} {
-	v := this.E.Eval(buf)
+func (this *print{{.Name}}) Eval() {{.GoType}} {
+	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
@@ -128,8 +128,8 @@ type len{{.}} struct {
 	E {{.}}
 }
 
-func (this *len{{.}}) Eval(buf []byte) int64 {
-	return int64(len(this.E.Eval(buf)))
+func (this *len{{.}}) Eval() int64 {
+	return int64(len(this.E.Eval()))
 }
 
 func init() {
@@ -143,9 +143,9 @@ type elem{{.ListType}} struct {
 	Index Int64
 }
 
-func (this *elem{{.ListType}}) Eval(buf []byte) {{.ReturnType}} {
-	list := this.List.Eval(buf)
-	index := int(this.Index.Eval(buf))
+func (this *elem{{.ListType}}) Eval() {{.ReturnType}} {
+	list := this.List.Eval()
+	index := int(this.Index.Eval())
 	index = index % len(list)
 	return list[index]
 }
@@ -167,10 +167,10 @@ type range{{.ListType}} struct {
 	Last Int64
 }
 
-func (this *range{{.ListType}}) Eval(buf []byte) {{.ReturnType}} {
-	list := this.List.Eval(buf)
-	first := int(this.First.Eval(buf))
-	last := int(this.Last.Eval(buf))
+func (this *range{{.ListType}}) Eval() {{.ReturnType}} {
+	list := this.List.Eval()
+	first := int(this.First.Eval())
+	last := int(this.Last.Eval())
 	first = first % len(list)
 	if last > len(list) {
 		last = last % len(list)
@@ -195,28 +195,28 @@ func main() {
 		&compare{"ge", ">=", "uint64", ""},
 		&compare{"ge", ">=", "int32", ""},
 		&compare{"ge", ">=", "uint32", ""},
-		&compare{"ge", "", "bytes", "return bytes.Compare(this.V1.Eval(buf), this.V2.Eval(buf)) >= 0"},
+		&compare{"ge", "", "bytes", "return bytes.Compare(this.V1.Eval(), this.V2.Eval()) >= 0"},
 		&compare{"gt", ">", "float64", ""},
 		&compare{"gt", ">", "float32", ""},
 		&compare{"gt", ">", "int64", ""},
 		&compare{"gt", ">", "uint64", ""},
 		&compare{"gt", ">", "int32", ""},
 		&compare{"gt", ">", "uint32", ""},
-		&compare{"gt", "", "bytes", "return bytes.Compare(this.V1.Eval(buf), this.V2.Eval(buf)) > 0"},
+		&compare{"gt", "", "bytes", "return bytes.Compare(this.V1.Eval(), this.V2.Eval()) > 0"},
 		&compare{"le", "<=", "float64", ""},
 		&compare{"le", "<=", "float32", ""},
 		&compare{"le", "<=", "int64", ""},
 		&compare{"le", "<=", "uint64", ""},
 		&compare{"le", "<=", "int32", ""},
 		&compare{"le", "<=", "uint32", ""},
-		&compare{"le", "", "bytes", "return bytes.Compare(this.V1.Eval(buf), this.V2.Eval(buf)) <= 0"},
+		&compare{"le", "", "bytes", "return bytes.Compare(this.V1.Eval(), this.V2.Eval()) <= 0"},
 		&compare{"lt", "<", "float64", ""},
 		&compare{"lt", "<", "float32", ""},
 		&compare{"lt", "<", "int64", ""},
 		&compare{"lt", "<", "uint64", ""},
 		&compare{"lt", "<", "int32", ""},
 		&compare{"lt", "<", "uint32", ""},
-		&compare{"lt", "", "bytes", "return bytes.Compare(this.V1.Eval(buf), this.V2.Eval(buf)) < 0"},
+		&compare{"lt", "", "bytes", "return bytes.Compare(this.V1.Eval(), this.V2.Eval()) < 0"},
 		&compare{"eq", "==", "float64", ""},
 		&compare{"eq", "==", "float32", ""},
 		&compare{"eq", "==", "int64", ""},
@@ -225,7 +225,7 @@ func main() {
 		&compare{"eq", "==", "uint32", ""},
 		&compare{"eq", "==", "bool", ""},
 		&compare{"eq", "==", "string", ""},
-		&compare{"eq", "", "bytes", "return bytes.Equal(this.V1.Eval(buf), this.V2.Eval(buf))"},
+		&compare{"eq", "", "bytes", "return bytes.Equal(this.V1.Eval(), this.V2.Eval())"},
 	}, `"bytes"`)
 	gen(newFuncStr, "newfunc.gen.go", []interface{}{
 		"Float64",

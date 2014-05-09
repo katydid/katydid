@@ -16,6 +16,7 @@ package inject
 
 import (
 	"github.com/awalterschulze/katydid/asm/compiler"
+	"github.com/awalterschulze/katydid/asm/compose"
 	"github.com/awalterschulze/katydid/asm/exec"
 	"github.com/awalterschulze/katydid/asm/ifexpr"
 	"reflect"
@@ -26,34 +27,19 @@ func Implements(exec *exec.Exec, typ reflect.Type) []interface{} {
 	ifs := exec.Link.(compiler.Link).GetIfs()
 	var is []interface{}
 	for _, iffy := range ifs {
-		is = append(is, stateExprImplements(iffy, typ)...)
+		is = append(is, StateExprImplements(iffy, typ)...)
 	}
 	return is
 }
 
-func stateExprImplements(stateExpr ifexpr.StateExpr, typ reflect.Type) []interface{} {
+func StateExprImplements(stateExpr ifexpr.StateExpr, typ reflect.Type) []interface{} {
 	var is []interface{}
 	ifExpr, ok := stateExpr.(*ifexpr.IfExpr)
 	if !ok {
 		return nil
 	}
-	is = append(is, funcImplements(ifExpr.Cond, typ)...)
-	is = append(is, stateExprImplements(ifExpr.Succ, typ)...)
-	is = append(is, stateExprImplements(ifExpr.Fail, typ)...)
-	return is
-}
-
-func funcImplements(i interface{}, typ reflect.Type) []interface{} {
-	e := reflect.ValueOf(i).Elem()
-	var is []interface{}
-	for i := 0; i < e.NumField(); i++ {
-		if _, ok := e.Field(i).Type().MethodByName("Eval"); !ok {
-			continue
-		}
-		is = append(is, funcImplements(e.Field(i).Interface(), typ)...)
-	}
-	if reflect.ValueOf(i).Type().Implements(typ) {
-		is = append(is, i)
-	}
+	is = append(is, compose.FuncImplements(ifExpr.Cond, typ)...)
+	is = append(is, StateExprImplements(ifExpr.Succ, typ)...)
+	is = append(is, StateExprImplements(ifExpr.Fail, typ)...)
 	return is
 }

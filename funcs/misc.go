@@ -15,9 +15,11 @@
 package funcs
 
 type exists struct {
+	Field Bytes
 }
 
-func (this *exists) Eval(buf []byte) bool {
+func (this *exists) Eval() bool {
+	this.Field.Eval()
 	return true
 }
 

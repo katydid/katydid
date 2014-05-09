@@ -7,8 +7,8 @@ type lenFloat64s struct {
 	E Float64s
 }
 
-func (this *lenFloat64s) Eval(buf []byte) int64 {
-	return int64(len(this.E.Eval(buf)))
+func (this *lenFloat64s) Eval() int64 {
+	return int64(len(this.E.Eval()))
 }
 
 func init() {
@@ -19,8 +19,8 @@ type lenFloat32s struct {
 	E Float32s
 }
 
-func (this *lenFloat32s) Eval(buf []byte) int64 {
-	return int64(len(this.E.Eval(buf)))
+func (this *lenFloat32s) Eval() int64 {
+	return int64(len(this.E.Eval()))
 }
 
 func init() {
@@ -31,8 +31,8 @@ type lenInt64s struct {
 	E Int64s
 }
 
-func (this *lenInt64s) Eval(buf []byte) int64 {
-	return int64(len(this.E.Eval(buf)))
+func (this *lenInt64s) Eval() int64 {
+	return int64(len(this.E.Eval()))
 }
 
 func init() {
@@ -43,8 +43,8 @@ type lenUint64s struct {
 	E Uint64s
 }
 
-func (this *lenUint64s) Eval(buf []byte) int64 {
-	return int64(len(this.E.Eval(buf)))
+func (this *lenUint64s) Eval() int64 {
+	return int64(len(this.E.Eval()))
 }
 
 func init() {
@@ -55,8 +55,8 @@ type lenInt32s struct {
 	E Int32s
 }
 
-func (this *lenInt32s) Eval(buf []byte) int64 {
-	return int64(len(this.E.Eval(buf)))
+func (this *lenInt32s) Eval() int64 {
+	return int64(len(this.E.Eval()))
 }
 
 func init() {
@@ -67,8 +67,8 @@ type lenUint32s struct {
 	E Uint32s
 }
 
-func (this *lenUint32s) Eval(buf []byte) int64 {
-	return int64(len(this.E.Eval(buf)))
+func (this *lenUint32s) Eval() int64 {
+	return int64(len(this.E.Eval()))
 }
 
 func init() {
@@ -79,8 +79,8 @@ type lenBools struct {
 	E Bools
 }
 
-func (this *lenBools) Eval(buf []byte) int64 {
-	return int64(len(this.E.Eval(buf)))
+func (this *lenBools) Eval() int64 {
+	return int64(len(this.E.Eval()))
 }
 
 func init() {
@@ -91,8 +91,8 @@ type lenStrings struct {
 	E Strings
 }
 
-func (this *lenStrings) Eval(buf []byte) int64 {
-	return int64(len(this.E.Eval(buf)))
+func (this *lenStrings) Eval() int64 {
+	return int64(len(this.E.Eval()))
 }
 
 func init() {
@@ -103,8 +103,8 @@ type lenListOfBytes struct {
 	E ListOfBytes
 }
 
-func (this *lenListOfBytes) Eval(buf []byte) int64 {
-	return int64(len(this.E.Eval(buf)))
+func (this *lenListOfBytes) Eval() int64 {
+	return int64(len(this.E.Eval()))
 }
 
 func init() {
@@ -115,8 +115,8 @@ type lenString struct {
 	E String
 }
 
-func (this *lenString) Eval(buf []byte) int64 {
-	return int64(len(this.E.Eval(buf)))
+func (this *lenString) Eval() int64 {
+	return int64(len(this.E.Eval()))
 }
 
 func init() {
@@ -127,8 +127,8 @@ type lenBytes struct {
 	E Bytes
 }
 
-func (this *lenBytes) Eval(buf []byte) int64 {
-	return int64(len(this.E.Eval(buf)))
+func (this *lenBytes) Eval() int64 {
+	return int64(len(this.E.Eval()))
 }
 
 func init() {

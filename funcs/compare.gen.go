@@ -12,8 +12,8 @@ type float64Ge struct {
 	V2 Float64
 }
 
-func (this *float64Ge) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) >= this.V2.Eval(buf)
+func (this *float64Ge) Eval() bool {
+	return this.V1.Eval() >= this.V2.Eval()
 }
 
 func init() {
@@ -25,8 +25,8 @@ type float32Ge struct {
 	V2 Float32
 }
 
-func (this *float32Ge) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) >= this.V2.Eval(buf)
+func (this *float32Ge) Eval() bool {
+	return this.V1.Eval() >= this.V2.Eval()
 }
 
 func init() {
@@ -38,8 +38,8 @@ type int64Ge struct {
 	V2 Int64
 }
 
-func (this *int64Ge) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) >= this.V2.Eval(buf)
+func (this *int64Ge) Eval() bool {
+	return this.V1.Eval() >= this.V2.Eval()
 }
 
 func init() {
@@ -51,8 +51,8 @@ type uint64Ge struct {
 	V2 Uint64
 }
 
-func (this *uint64Ge) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) >= this.V2.Eval(buf)
+func (this *uint64Ge) Eval() bool {
+	return this.V1.Eval() >= this.V2.Eval()
 }
 
 func init() {
@@ -64,8 +64,8 @@ type int32Ge struct {
 	V2 Int32
 }
 
-func (this *int32Ge) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) >= this.V2.Eval(buf)
+func (this *int32Ge) Eval() bool {
+	return this.V1.Eval() >= this.V2.Eval()
 }
 
 func init() {
@@ -77,8 +77,8 @@ type uint32Ge struct {
 	V2 Uint32
 }
 
-func (this *uint32Ge) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) >= this.V2.Eval(buf)
+func (this *uint32Ge) Eval() bool {
+	return this.V1.Eval() >= this.V2.Eval()
 }
 
 func init() {
@@ -90,8 +90,8 @@ type bytesGe struct {
 	V2 Bytes
 }
 
-func (this *bytesGe) Eval(buf []byte) bool {
-	return bytes.Compare(this.V1.Eval(buf), this.V2.Eval(buf)) >= 0
+func (this *bytesGe) Eval() bool {
+	return bytes.Compare(this.V1.Eval(), this.V2.Eval()) >= 0
 }
 
 func init() {
@@ -103,8 +103,8 @@ type float64Gt struct {
 	V2 Float64
 }
 
-func (this *float64Gt) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) > this.V2.Eval(buf)
+func (this *float64Gt) Eval() bool {
+	return this.V1.Eval() > this.V2.Eval()
 }
 
 func init() {
@@ -116,8 +116,8 @@ type float32Gt struct {
 	V2 Float32
 }
 
-func (this *float32Gt) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) > this.V2.Eval(buf)
+func (this *float32Gt) Eval() bool {
+	return this.V1.Eval() > this.V2.Eval()
 }
 
 func init() {
@@ -129,8 +129,8 @@ type int64Gt struct {
 	V2 Int64
 }
 
-func (this *int64Gt) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) > this.V2.Eval(buf)
+func (this *int64Gt) Eval() bool {
+	return this.V1.Eval() > this.V2.Eval()
 }
 
 func init() {
@@ -142,8 +142,8 @@ type uint64Gt struct {
 	V2 Uint64
 }
 
-func (this *uint64Gt) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) > this.V2.Eval(buf)
+func (this *uint64Gt) Eval() bool {
+	return this.V1.Eval() > this.V2.Eval()
 }
 
 func init() {
@@ -155,8 +155,8 @@ type int32Gt struct {
 	V2 Int32
 }
 
-func (this *int32Gt) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) > this.V2.Eval(buf)
+func (this *int32Gt) Eval() bool {
+	return this.V1.Eval() > this.V2.Eval()
 }
 
 func init() {
@@ -168,8 +168,8 @@ type uint32Gt struct {
 	V2 Uint32
 }
 
-func (this *uint32Gt) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) > this.V2.Eval(buf)
+func (this *uint32Gt) Eval() bool {
+	return this.V1.Eval() > this.V2.Eval()
 }
 
 func init() {
@@ -181,8 +181,8 @@ type bytesGt struct {
 	V2 Bytes
 }
 
-func (this *bytesGt) Eval(buf []byte) bool {
-	return bytes.Compare(this.V1.Eval(buf), this.V2.Eval(buf)) > 0
+func (this *bytesGt) Eval() bool {
+	return bytes.Compare(this.V1.Eval(), this.V2.Eval()) > 0
 }
 
 func init() {
@@ -194,8 +194,8 @@ type float64Le struct {
 	V2 Float64
 }
 
-func (this *float64Le) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) <= this.V2.Eval(buf)
+func (this *float64Le) Eval() bool {
+	return this.V1.Eval() <= this.V2.Eval()
 }
 
 func init() {
@@ -207,8 +207,8 @@ type float32Le struct {
 	V2 Float32
 }
 
-func (this *float32Le) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) <= this.V2.Eval(buf)
+func (this *float32Le) Eval() bool {
+	return this.V1.Eval() <= this.V2.Eval()
 }
 
 func init() {
@@ -220,8 +220,8 @@ type int64Le struct {
 	V2 Int64
 }
 
-func (this *int64Le) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) <= this.V2.Eval(buf)
+func (this *int64Le) Eval() bool {
+	return this.V1.Eval() <= this.V2.Eval()
 }
 
 func init() {
@@ -233,8 +233,8 @@ type uint64Le struct {
 	V2 Uint64
 }
 
-func (this *uint64Le) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) <= this.V2.Eval(buf)
+func (this *uint64Le) Eval() bool {
+	return this.V1.Eval() <= this.V2.Eval()
 }
 
 func init() {
@@ -246,8 +246,8 @@ type int32Le struct {
 	V2 Int32
 }
 
-func (this *int32Le) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) <= this.V2.Eval(buf)
+func (this *int32Le) Eval() bool {
+	return this.V1.Eval() <= this.V2.Eval()
 }
 
 func init() {
@@ -259,8 +259,8 @@ type uint32Le struct {
 	V2 Uint32
 }
 
-func (this *uint32Le) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) <= this.V2.Eval(buf)
+func (this *uint32Le) Eval() bool {
+	return this.V1.Eval() <= this.V2.Eval()
 }
 
 func init() {
@@ -272,8 +272,8 @@ type bytesLe struct {
 	V2 Bytes
 }
 
-func (this *bytesLe) Eval(buf []byte) bool {
-	return bytes.Compare(this.V1.Eval(buf), this.V2.Eval(buf)) <= 0
+func (this *bytesLe) Eval() bool {
+	return bytes.Compare(this.V1.Eval(), this.V2.Eval()) <= 0
 }
 
 func init() {
@@ -285,8 +285,8 @@ type float64Lt struct {
 	V2 Float64
 }
 
-func (this *float64Lt) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) < this.V2.Eval(buf)
+func (this *float64Lt) Eval() bool {
+	return this.V1.Eval() < this.V2.Eval()
 }
 
 func init() {
@@ -298,8 +298,8 @@ type float32Lt struct {
 	V2 Float32
 }
 
-func (this *float32Lt) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) < this.V2.Eval(buf)
+func (this *float32Lt) Eval() bool {
+	return this.V1.Eval() < this.V2.Eval()
 }
 
 func init() {
@@ -311,8 +311,8 @@ type int64Lt struct {
 	V2 Int64
 }
 
-func (this *int64Lt) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) < this.V2.Eval(buf)
+func (this *int64Lt) Eval() bool {
+	return this.V1.Eval() < this.V2.Eval()
 }
 
 func init() {
@@ -324,8 +324,8 @@ type uint64Lt struct {
 	V2 Uint64
 }
 
-func (this *uint64Lt) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) < this.V2.Eval(buf)
+func (this *uint64Lt) Eval() bool {
+	return this.V1.Eval() < this.V2.Eval()
 }
 
 func init() {
@@ -337,8 +337,8 @@ type int32Lt struct {
 	V2 Int32
 }
 
-func (this *int32Lt) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) < this.V2.Eval(buf)
+func (this *int32Lt) Eval() bool {
+	return this.V1.Eval() < this.V2.Eval()
 }
 
 func init() {
@@ -350,8 +350,8 @@ type uint32Lt struct {
 	V2 Uint32
 }
 
-func (this *uint32Lt) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) < this.V2.Eval(buf)
+func (this *uint32Lt) Eval() bool {
+	return this.V1.Eval() < this.V2.Eval()
 }
 
 func init() {
@@ -363,8 +363,8 @@ type bytesLt struct {
 	V2 Bytes
 }
 
-func (this *bytesLt) Eval(buf []byte) bool {
-	return bytes.Compare(this.V1.Eval(buf), this.V2.Eval(buf)) < 0
+func (this *bytesLt) Eval() bool {
+	return bytes.Compare(this.V1.Eval(), this.V2.Eval()) < 0
 }
 
 func init() {
@@ -376,8 +376,8 @@ type float64Eq struct {
 	V2 Float64
 }
 
-func (this *float64Eq) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) == this.V2.Eval(buf)
+func (this *float64Eq) Eval() bool {
+	return this.V1.Eval() == this.V2.Eval()
 }
 
 func init() {
@@ -389,8 +389,8 @@ type float32Eq struct {
 	V2 Float32
 }
 
-func (this *float32Eq) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) == this.V2.Eval(buf)
+func (this *float32Eq) Eval() bool {
+	return this.V1.Eval() == this.V2.Eval()
 }
 
 func init() {
@@ -402,8 +402,8 @@ type int64Eq struct {
 	V2 Int64
 }
 
-func (this *int64Eq) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) == this.V2.Eval(buf)
+func (this *int64Eq) Eval() bool {
+	return this.V1.Eval() == this.V2.Eval()
 }
 
 func init() {
@@ -415,8 +415,8 @@ type uint64Eq struct {
 	V2 Uint64
 }
 
-func (this *uint64Eq) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) == this.V2.Eval(buf)
+func (this *uint64Eq) Eval() bool {
+	return this.V1.Eval() == this.V2.Eval()
 }
 
 func init() {
@@ -428,8 +428,8 @@ type int32Eq struct {
 	V2 Int32
 }
 
-func (this *int32Eq) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) == this.V2.Eval(buf)
+func (this *int32Eq) Eval() bool {
+	return this.V1.Eval() == this.V2.Eval()
 }
 
 func init() {
@@ -441,8 +441,8 @@ type uint32Eq struct {
 	V2 Uint32
 }
 
-func (this *uint32Eq) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) == this.V2.Eval(buf)
+func (this *uint32Eq) Eval() bool {
+	return this.V1.Eval() == this.V2.Eval()
 }
 
 func init() {
@@ -454,8 +454,8 @@ type boolEq struct {
 	V2 Bool
 }
 
-func (this *boolEq) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) == this.V2.Eval(buf)
+func (this *boolEq) Eval() bool {
+	return this.V1.Eval() == this.V2.Eval()
 }
 
 func init() {
@@ -467,8 +467,8 @@ type stringEq struct {
 	V2 String
 }
 
-func (this *stringEq) Eval(buf []byte) bool {
-	return this.V1.Eval(buf) == this.V2.Eval(buf)
+func (this *stringEq) Eval() bool {
+	return this.V1.Eval() == this.V2.Eval()
 }
 
 func init() {
@@ -480,8 +480,8 @@ type bytesEq struct {
 	V2 Bytes
 }
 
-func (this *bytesEq) Eval(buf []byte) bool {
-	return bytes.Equal(this.V1.Eval(buf), this.V2.Eval(buf))
+func (this *bytesEq) Eval() bool {
+	return bytes.Equal(this.V1.Eval(), this.V2.Eval())
 }
 
 func init() {

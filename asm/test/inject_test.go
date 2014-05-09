@@ -30,7 +30,7 @@ type injectableInt64 struct {
 	v int64
 }
 
-func (this *injectableInt64) Eval(buf []byte) int64 {
+func (this *injectableInt64) Eval() int64 {
 	return this.v
 }
 

@@ -83,50 +83,55 @@ func newValues(params []*ast.Expr) ([]interface{}, error) {
 	return values, nil
 }
 
+func composeVariable(p *ast.Expr) (funcs.Variable, error) {
+	return funcs.NewVariable(), nil
+}
+
 func newValue(p *ast.Expr) (interface{}, error) {
 	typ, err := Which(p)
 	if err != nil {
 		return nil, err
 	}
 	switch typ {
-	case 0:
-		return nil, nil
 	case types.SINGLE_DOUBLE:
-		return ComposeFloat64(p)
+		return composeFloat64(p)
 	case types.SINGLE_FLOAT:
-		return ComposeFloat32(p)
+		return composeFloat32(p)
 	case types.SINGLE_INT64:
-		return ComposeInt64(p)
+		return composeInt64(p)
 	case types.SINGLE_UINT64:
-		return ComposeUint64(p)
+		return composeUint64(p)
 	case types.SINGLE_INT32:
-		return ComposeInt32(p)
+		return composeInt32(p)
 	case types.SINGLE_BOOL:
-		return ComposeBool(p)
+		return composeBool(p)
 	case types.SINGLE_STRING:
-		return ComposeString(p)
+		return composeString(p)
 	case types.SINGLE_BYTES:
-		return ComposeBytes(p)
+		if p.Terminal != nil && p.GetTerminal().Variable != nil {
+			return composeVariable(p)
+		}
+		return composeBytes(p)
 	case types.SINGLE_UINT32:
-		return ComposeUint32(p)
+		return composeUint32(p)
 	case types.LIST_DOUBLE:
-		return ComposeFloat64s(p)
+		return composeFloat64s(p)
 	case types.LIST_FLOAT:
-		return ComposeFloat32s(p)
+		return composeFloat32s(p)
 	case types.LIST_INT64:
-		return ComposeInt64s(p)
+		return composeInt64s(p)
 	case types.LIST_UINT64:
-		return ComposeUint64s(p)
+		return composeUint64s(p)
 	case types.LIST_INT32:
-		return ComposeInt32s(p)
+		return composeInt32s(p)
 	case types.LIST_BOOL:
-		return ComposeBools(p)
+		return composeBools(p)
 	case types.LIST_STRING:
-		return ComposeStrings(p)
+		return composeStrings(p)
 	case types.LIST_BYTES:
-		return ComposeListOfBytes(p)
+		return composeListOfBytes(p)
 	case types.LIST_UINT32:
-		return ComposeUint32s(p)
+		return composeUint32s(p)
 	}
 	panic("not implemented")
 }
@@ -176,7 +181,7 @@ func Which(expr *ast.Expr) (types.Type, error) {
 			return types.SINGLE_UINT32, nil
 		}
 		if term.Variable != nil {
-			return 0, nil
+			return types.SINGLE_BYTES, nil
 		}
 	}
 	if expr.List != nil {

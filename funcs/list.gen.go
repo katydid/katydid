@@ -11,10 +11,10 @@ func NewListOfFloat64(v []Float64) Float64s {
 	return &listOfFloat64{v}
 }
 
-func (this *listOfFloat64) Eval(buf []byte) []float64 {
+func (this *listOfFloat64) Eval() []float64 {
 	res := make([]float64, len(this.List))
 	for i, e := range this.List {
-		res[i] = e.Eval(buf)
+		res[i] = e.Eval()
 	}
 	return res
 }
@@ -27,10 +27,10 @@ func NewListOfFloat32(v []Float32) Float32s {
 	return &listOfFloat32{v}
 }
 
-func (this *listOfFloat32) Eval(buf []byte) []float32 {
+func (this *listOfFloat32) Eval() []float32 {
 	res := make([]float32, len(this.List))
 	for i, e := range this.List {
-		res[i] = e.Eval(buf)
+		res[i] = e.Eval()
 	}
 	return res
 }
@@ -43,10 +43,10 @@ func NewListOfInt64(v []Int64) Int64s {
 	return &listOfInt64{v}
 }
 
-func (this *listOfInt64) Eval(buf []byte) []int64 {
+func (this *listOfInt64) Eval() []int64 {
 	res := make([]int64, len(this.List))
 	for i, e := range this.List {
-		res[i] = e.Eval(buf)
+		res[i] = e.Eval()
 	}
 	return res
 }
@@ -59,10 +59,10 @@ func NewListOfUint64(v []Uint64) Uint64s {
 	return &listOfUint64{v}
 }
 
-func (this *listOfUint64) Eval(buf []byte) []uint64 {
+func (this *listOfUint64) Eval() []uint64 {
 	res := make([]uint64, len(this.List))
 	for i, e := range this.List {
-		res[i] = e.Eval(buf)
+		res[i] = e.Eval()
 	}
 	return res
 }
@@ -75,10 +75,10 @@ func NewListOfInt32(v []Int32) Int32s {
 	return &listOfInt32{v}
 }
 
-func (this *listOfInt32) Eval(buf []byte) []int32 {
+func (this *listOfInt32) Eval() []int32 {
 	res := make([]int32, len(this.List))
 	for i, e := range this.List {
-		res[i] = e.Eval(buf)
+		res[i] = e.Eval()
 	}
 	return res
 }
@@ -91,10 +91,10 @@ func NewListOfBool(v []Bool) Bools {
 	return &listOfBool{v}
 }
 
-func (this *listOfBool) Eval(buf []byte) []bool {
+func (this *listOfBool) Eval() []bool {
 	res := make([]bool, len(this.List))
 	for i, e := range this.List {
-		res[i] = e.Eval(buf)
+		res[i] = e.Eval()
 	}
 	return res
 }
@@ -107,10 +107,10 @@ func NewListOfString(v []String) Strings {
 	return &listOfString{v}
 }
 
-func (this *listOfString) Eval(buf []byte) []string {
+func (this *listOfString) Eval() []string {
 	res := make([]string, len(this.List))
 	for i, e := range this.List {
-		res[i] = e.Eval(buf)
+		res[i] = e.Eval()
 	}
 	return res
 }
@@ -123,10 +123,10 @@ func NewListOfBytes(v []Bytes) ListOfBytes {
 	return &listOfBytes{v}
 }
 
-func (this *listOfBytes) Eval(buf []byte) [][]byte {
+func (this *listOfBytes) Eval() [][]byte {
 	res := make([][]byte, len(this.List))
 	for i, e := range this.List {
-		res[i] = e.Eval(buf)
+		res[i] = e.Eval()
 	}
 	return res
 }
@@ -139,10 +139,10 @@ func NewListOfUint32(v []Uint32) Uint32s {
 	return &listOfUint32{v}
 }
 
-func (this *listOfUint32) Eval(buf []byte) []uint32 {
+func (this *listOfUint32) Eval() []uint32 {
 	res := make([]uint32, len(this.List))
 	for i, e := range this.List {
-		res[i] = e.Eval(buf)
+		res[i] = e.Eval()
 	}
 	return res
 }

@@ -17,7 +17,6 @@ package ifexpr
 import (
 	"github.com/awalterschulze/katydid/asm/ast"
 	"github.com/awalterschulze/katydid/asm/compose"
-	"github.com/awalterschulze/katydid/funcs"
 )
 
 type errUnmatchedVariables struct {
@@ -45,7 +44,7 @@ type StateExpr interface {
 }
 
 type IfExpr struct {
-	Cond funcs.Bool
+	Cond compose.Bool
 	Succ StateExpr
 	Fail StateExpr
 }
@@ -58,7 +57,7 @@ func (this *IfExpr) Eval(buf []byte) int {
 }
 
 func Compile(ifexpr *ast.IfExpr, nameToState NameToState) (StateExpr, error) {
-	cond, err := compose.ComposeBool(ifexpr.Condition)
+	cond, err := compose.NewBool(ifexpr.Condition)
 	if err != nil {
 		return nil, err
 	}

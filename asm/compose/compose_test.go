@@ -34,7 +34,7 @@ func TestComposeNot(t *testing.T) {
 			},
 		},
 	}
-	b, err := ComposeBool(expr)
+	b, err := NewBool(expr)
 	if err != nil {
 		panic(err)
 	}
@@ -57,6 +57,17 @@ func TestComposeContains(t *testing.T) {
 							{
 								Function: &ast.Function{
 									Name: "decString",
+									Params: []*ast.Expr{
+										{
+											Terminal: &ast.Terminal{
+												Variable: &ast.Variable{
+													Package: "a",
+													Message: "a",
+													Field:   "a",
+												},
+											},
+										},
+									},
 								},
 							},
 						},
@@ -77,7 +88,7 @@ func TestComposeContains(t *testing.T) {
 			},
 		},
 	}
-	b, err := ComposeBool(expr)
+	b, err := NewBool(expr)
 	if err != nil {
 		panic(err)
 	}
@@ -101,6 +112,17 @@ func TestComposeStringEq(t *testing.T) {
 							{
 								Function: &ast.Function{
 									Name: "decString",
+									Params: []*ast.Expr{
+										{
+											Terminal: &ast.Terminal{
+												Variable: &ast.Variable{
+													Package: "a",
+													Message: "a",
+													Field:   "a",
+												},
+											},
+										},
+									},
 								},
 							},
 						},
@@ -121,7 +143,7 @@ func TestComposeStringEq(t *testing.T) {
 			},
 		},
 	}
-	b, err := ComposeBool(expr)
+	b, err := NewBool(expr)
 	if err != nil {
 		panic(err)
 	}
@@ -174,7 +196,7 @@ func TestComposeListBool(t *testing.T) {
 			},
 		},
 	}
-	b, err := ComposeBool(expr)
+	b, err := NewBool(expr)
 	if err != nil {
 		panic(err)
 	}
@@ -231,7 +253,7 @@ func TestComposeListInt64(t *testing.T) {
 			},
 		},
 	}
-	b, err := ComposeBool(expr)
+	b, err := NewBool(expr)
 	if err != nil {
 		panic(err)
 	}

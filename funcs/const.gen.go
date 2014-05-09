@@ -11,7 +11,7 @@ func NewFloat64(v float64) Float64 {
 	return &constFloat64{v}
 }
 
-func (this *constFloat64) Eval(buf []byte) float64 {
+func (this *constFloat64) Eval() float64 {
 	return this.v
 }
 
@@ -23,7 +23,7 @@ func NewFloat32(v float32) Float32 {
 	return &constFloat32{v}
 }
 
-func (this *constFloat32) Eval(buf []byte) float32 {
+func (this *constFloat32) Eval() float32 {
 	return this.v
 }
 
@@ -35,7 +35,7 @@ func NewInt64(v int64) Int64 {
 	return &constInt64{v}
 }
 
-func (this *constInt64) Eval(buf []byte) int64 {
+func (this *constInt64) Eval() int64 {
 	return this.v
 }
 
@@ -47,7 +47,7 @@ func NewUint64(v uint64) Uint64 {
 	return &constUint64{v}
 }
 
-func (this *constUint64) Eval(buf []byte) uint64 {
+func (this *constUint64) Eval() uint64 {
 	return this.v
 }
 
@@ -59,7 +59,7 @@ func NewInt32(v int32) Int32 {
 	return &constInt32{v}
 }
 
-func (this *constInt32) Eval(buf []byte) int32 {
+func (this *constInt32) Eval() int32 {
 	return this.v
 }
 
@@ -71,7 +71,7 @@ func NewUint32(v uint32) Uint32 {
 	return &constUint32{v}
 }
 
-func (this *constUint32) Eval(buf []byte) uint32 {
+func (this *constUint32) Eval() uint32 {
 	return this.v
 }
 
@@ -83,7 +83,7 @@ func NewBool(v bool) Bool {
 	return &constBool{v}
 }
 
-func (this *constBool) Eval(buf []byte) bool {
+func (this *constBool) Eval() bool {
 	return this.v
 }
 
@@ -95,7 +95,7 @@ func NewString(v string) String {
 	return &constString{v}
 }
 
-func (this *constString) Eval(buf []byte) string {
+func (this *constString) Eval() string {
 	return this.v
 }
 
@@ -107,6 +107,6 @@ func NewBytes(v []byte) Bytes {
 	return &constBytes{v}
 }
 
-func (this *constBytes) Eval(buf []byte) []byte {
+func (this *constBytes) Eval() []byte {
 	return this.v
 }

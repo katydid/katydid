@@ -8,9 +8,9 @@ type elemFloat64s struct {
 	Index Int64
 }
 
-func (this *elemFloat64s) Eval(buf []byte) float64 {
-	list := this.List.Eval(buf)
-	index := int(this.Index.Eval(buf))
+func (this *elemFloat64s) Eval() float64 {
+	list := this.List.Eval()
+	index := int(this.Index.Eval())
 	index = index % len(list)
 	return list[index]
 }
@@ -24,9 +24,9 @@ type elemFloat32s struct {
 	Index Int64
 }
 
-func (this *elemFloat32s) Eval(buf []byte) float32 {
-	list := this.List.Eval(buf)
-	index := int(this.Index.Eval(buf))
+func (this *elemFloat32s) Eval() float32 {
+	list := this.List.Eval()
+	index := int(this.Index.Eval())
 	index = index % len(list)
 	return list[index]
 }
@@ -40,9 +40,9 @@ type elemInt64s struct {
 	Index Int64
 }
 
-func (this *elemInt64s) Eval(buf []byte) int64 {
-	list := this.List.Eval(buf)
-	index := int(this.Index.Eval(buf))
+func (this *elemInt64s) Eval() int64 {
+	list := this.List.Eval()
+	index := int(this.Index.Eval())
 	index = index % len(list)
 	return list[index]
 }
@@ -56,9 +56,9 @@ type elemUint64s struct {
 	Index Int64
 }
 
-func (this *elemUint64s) Eval(buf []byte) uint64 {
-	list := this.List.Eval(buf)
-	index := int(this.Index.Eval(buf))
+func (this *elemUint64s) Eval() uint64 {
+	list := this.List.Eval()
+	index := int(this.Index.Eval())
 	index = index % len(list)
 	return list[index]
 }
@@ -72,9 +72,9 @@ type elemInt32s struct {
 	Index Int64
 }
 
-func (this *elemInt32s) Eval(buf []byte) int32 {
-	list := this.List.Eval(buf)
-	index := int(this.Index.Eval(buf))
+func (this *elemInt32s) Eval() int32 {
+	list := this.List.Eval()
+	index := int(this.Index.Eval())
 	index = index % len(list)
 	return list[index]
 }
@@ -88,9 +88,9 @@ type elemUint32s struct {
 	Index Int64
 }
 
-func (this *elemUint32s) Eval(buf []byte) uint32 {
-	list := this.List.Eval(buf)
-	index := int(this.Index.Eval(buf))
+func (this *elemUint32s) Eval() uint32 {
+	list := this.List.Eval()
+	index := int(this.Index.Eval())
 	index = index % len(list)
 	return list[index]
 }
@@ -104,9 +104,9 @@ type elemBools struct {
 	Index Int64
 }
 
-func (this *elemBools) Eval(buf []byte) bool {
-	list := this.List.Eval(buf)
-	index := int(this.Index.Eval(buf))
+func (this *elemBools) Eval() bool {
+	list := this.List.Eval()
+	index := int(this.Index.Eval())
 	index = index % len(list)
 	return list[index]
 }
@@ -120,9 +120,9 @@ type elemStrings struct {
 	Index Int64
 }
 
-func (this *elemStrings) Eval(buf []byte) string {
-	list := this.List.Eval(buf)
-	index := int(this.Index.Eval(buf))
+func (this *elemStrings) Eval() string {
+	list := this.List.Eval()
+	index := int(this.Index.Eval())
 	index = index % len(list)
 	return list[index]
 }
@@ -136,9 +136,9 @@ type elemListOfBytes struct {
 	Index Int64
 }
 
-func (this *elemListOfBytes) Eval(buf []byte) []byte {
-	list := this.List.Eval(buf)
-	index := int(this.Index.Eval(buf))
+func (this *elemListOfBytes) Eval() []byte {
+	list := this.List.Eval()
+	index := int(this.Index.Eval())
 	index = index % len(list)
 	return list[index]
 }
