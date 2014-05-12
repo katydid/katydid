@@ -11,7 +11,6 @@ import (
 
 type ConstFloat64 interface {
 	Float64
-	Const
 }
 
 var typConstFloat64 reflect.Type = reflect.TypeOf((*ConstFloat64)(nil)).Elem()
@@ -36,7 +35,6 @@ func (this *constFloat64) String() string {
 
 type ConstFloat32 interface {
 	Float32
-	Const
 }
 
 var typConstFloat32 reflect.Type = reflect.TypeOf((*ConstFloat32)(nil)).Elem()
@@ -61,7 +59,6 @@ func (this *constFloat32) String() string {
 
 type ConstInt64 interface {
 	Int64
-	Const
 }
 
 var typConstInt64 reflect.Type = reflect.TypeOf((*ConstInt64)(nil)).Elem()
@@ -86,7 +83,6 @@ func (this *constInt64) String() string {
 
 type ConstUint64 interface {
 	Uint64
-	Const
 }
 
 var typConstUint64 reflect.Type = reflect.TypeOf((*ConstUint64)(nil)).Elem()
@@ -111,7 +107,6 @@ func (this *constUint64) String() string {
 
 type ConstInt32 interface {
 	Int32
-	Const
 }
 
 var typConstInt32 reflect.Type = reflect.TypeOf((*ConstInt32)(nil)).Elem()
@@ -136,7 +131,6 @@ func (this *constInt32) String() string {
 
 type ConstUint32 interface {
 	Uint32
-	Const
 }
 
 var typConstUint32 reflect.Type = reflect.TypeOf((*ConstUint32)(nil)).Elem()
@@ -161,7 +155,6 @@ func (this *constUint32) String() string {
 
 type ConstBool interface {
 	Bool
-	Const
 }
 
 var typConstBool reflect.Type = reflect.TypeOf((*ConstBool)(nil)).Elem()
@@ -186,7 +179,6 @@ func (this *constBool) String() string {
 
 type ConstString interface {
 	String
-	Const
 }
 
 var typConstString reflect.Type = reflect.TypeOf((*ConstString)(nil)).Elem()
@@ -211,7 +203,6 @@ func (this *constString) String() string {
 
 type ConstBytes interface {
 	Bytes
-	Const
 }
 
 var typConstBytes reflect.Type = reflect.TypeOf((*ConstBytes)(nil)).Elem()
@@ -236,7 +227,6 @@ func (this *constBytes) String() string {
 
 type ConstFloat64s interface {
 	Float64s
-	Const
 }
 
 var typConstFloat64s reflect.Type = reflect.TypeOf((*ConstFloat64s)(nil)).Elem()
@@ -265,7 +255,6 @@ func (this *constFloat64s) String() string {
 
 type ConstFloat32s interface {
 	Float32s
-	Const
 }
 
 var typConstFloat32s reflect.Type = reflect.TypeOf((*ConstFloat32s)(nil)).Elem()
@@ -294,7 +283,6 @@ func (this *constFloat32s) String() string {
 
 type ConstInt64s interface {
 	Int64s
-	Const
 }
 
 var typConstInt64s reflect.Type = reflect.TypeOf((*ConstInt64s)(nil)).Elem()
@@ -323,7 +311,6 @@ func (this *constInt64s) String() string {
 
 type ConstUint64s interface {
 	Uint64s
-	Const
 }
 
 var typConstUint64s reflect.Type = reflect.TypeOf((*ConstUint64s)(nil)).Elem()
@@ -352,7 +339,6 @@ func (this *constUint64s) String() string {
 
 type ConstInt32s interface {
 	Int32s
-	Const
 }
 
 var typConstInt32s reflect.Type = reflect.TypeOf((*ConstInt32s)(nil)).Elem()
@@ -381,7 +367,6 @@ func (this *constInt32s) String() string {
 
 type ConstUint32s interface {
 	Uint32s
-	Const
 }
 
 var typConstUint32s reflect.Type = reflect.TypeOf((*ConstUint32s)(nil)).Elem()
@@ -410,7 +395,6 @@ func (this *constUint32s) String() string {
 
 type ConstBools interface {
 	Bools
-	Const
 }
 
 var typConstBools reflect.Type = reflect.TypeOf((*ConstBools)(nil)).Elem()
@@ -439,7 +423,6 @@ func (this *constBools) String() string {
 
 type ConstStrings interface {
 	Strings
-	Const
 }
 
 var typConstStrings reflect.Type = reflect.TypeOf((*ConstStrings)(nil)).Elem()
@@ -468,7 +451,6 @@ func (this *constStrings) String() string {
 
 type ConstListOfBytes interface {
 	ListOfBytes
-	Const
 }
 
 var typConstListOfBytes reflect.Type = reflect.TypeOf((*ConstListOfBytes)(nil)).Elem()

@@ -18,7 +18,7 @@ type Const interface {
 	IsConst()
 }
 
-func NewConst(value interface{}) Const {
+func NewConst(value interface{}) interface{} {
 	switch v := value.(type) {
 	case float64:
 		return NewConstFloat64(v)

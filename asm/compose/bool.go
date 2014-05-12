@@ -15,6 +15,7 @@
 package compose
 
 import (
+	"fmt"
 	"github.com/awalterschulze/katydid/asm/ast"
 	"github.com/awalterschulze/katydid/funcs"
 	"reflect"
@@ -33,14 +34,38 @@ type composedBool struct {
 	Func funcs.Bool
 }
 
+type errInit struct {
+	i   interface{}
+	err error
+}
+
+func (this *errInit) Error() string {
+	return fmt.Sprintf("%#v err: %s", this.i, this.err)
+}
+
+var (
+	varTyp   = reflect.TypeOf((*funcs.Variable)(nil)).Elem()
+	constTyp = reflect.TypeOf((*funcs.Const)(nil)).Elem()
+	initTyp  = reflect.TypeOf((*funcs.Init)(nil)).Elem()
+)
+
 func NewBool(expr *ast.Expr) (Bool, error) {
 	e, err := composeBool(expr)
 	if err != nil {
 		return nil, err
 	}
-	e = TrimBool(e)
-	typ := reflect.TypeOf((*Variable)(nil)).Elem()
-	impls := FuncImplements(e, typ)
+	e, err = TrimBool(e)
+	if err != nil {
+		return nil, err
+	}
+	initImpls := FuncImplements(e, initTyp)
+	for _, i := range initImpls {
+		err := i.(funcs.Init).Init()
+		if err != nil {
+			return nil, &errInit{i, err}
+		}
+	}
+	impls := FuncImplements(e, varTyp)
 	vars := make([]Variable, len(impls))
 	for i := range impls {
 		vars[i] = impls[i].(Variable)

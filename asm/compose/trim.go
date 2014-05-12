@@ -15,25 +15,34 @@
 package compose
 
 import (
+	"fmt"
 	"github.com/awalterschulze/katydid/funcs"
 	"reflect"
 )
 
-var (
-	varTyp   = reflect.TypeOf((*funcs.Variable)(nil)).Elem()
-	constTyp = reflect.TypeOf((*funcs.Const)(nil)).Elem()
-)
-
-func TrimBool(f funcs.Bool) funcs.Bool {
-	return trim(f).(funcs.Bool)
+type errNotConst struct {
+	f     interface{}
+	field reflect.Value
 }
 
-func trim(f interface{}) interface{} {
+func (this *errNotConst) Error() string {
+	return fmt.Sprintf("%s has constant %s which has a variable parameter", reflect.ValueOf(this.f).Elem().Type().Name(), this.field.Elem().Type())
+}
+
+func TrimBool(f funcs.Bool) (funcs.Bool, error) {
+	trimmed, err := trim(f)
+	if err != nil {
+		return nil, err
+	}
+	return trimmed.(funcs.Bool), nil
+}
+
+func trim(f interface{}) (interface{}, error) {
 	if reflect.TypeOf(f).Implements(varTyp) {
-		return f
+		return f, nil
 	}
 	if reflect.TypeOf(f).Implements(constTyp) {
-		return f
+		return f, nil
 	}
 	this := reflect.ValueOf(f).Elem()
 	trimable := true
@@ -45,13 +54,26 @@ func trim(f interface{}) interface{} {
 			trimable = false
 			continue
 		}
-		this.Field(i).Set(reflect.ValueOf(trim(this.Field(i).Interface())))
+		trimmed, err := trim(this.Field(i).Interface())
+		if err != nil {
+			return nil, err
+		}
+		this.Field(i).Set(reflect.ValueOf(trimmed))
 		if !this.Field(i).Elem().Type().Implements(constTyp) {
+			if funcs.IsConst(this.Field(i).Type()) {
+				return nil, &errNotConst{f, this.Field(i)}
+			}
 			trimable = false
 		}
 	}
 	if !trimable {
-		return f
+		return f, nil
 	}
-	return funcs.NewConst(reflect.ValueOf(f).MethodByName("Eval").Call(nil)[0].Interface())
+	if inits, ok := f.(funcs.Init); ok {
+		err := inits.Init()
+		if err != nil {
+			return nil, err
+		}
+	}
+	return funcs.NewConst(reflect.ValueOf(f).MethodByName("Eval").Call(nil)[0].Interface()), nil
 }

@@ -61,7 +61,6 @@ func New{{.}}Func(uniq string, values ...interface{}) ({{.}}, error) {
 const constStr = `
 type Const{{.CType}} interface {
 	{{.CType}}
-	Const
 }
 
 var typConst{{.CType}} reflect.Type = reflect.TypeOf((*Const{{.CType}})(nil)).Elem()

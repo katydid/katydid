@@ -138,14 +138,14 @@ func RegisterFactory(name string, newFunc func() interface{}) {
 		if !ok {
 			continue
 		}
-		res.InConst = append(res.InConst, isConstInterface(rfunc.Elem().Field(i).Type()))
+		res.InConst = append(res.InConst, IsConst(rfunc.Elem().Field(i).Type()))
 		res.In = append(res.In, types.FromGo(meth.Type.Out(0)))
 		res.InNames = append(res.InNames, rfunc.Elem().Type().Field(i).Name)
 	}
 	funcsMap.register(res)
 }
 
-func isConstInterface(typ reflect.Type) bool {
+func IsConst(typ reflect.Type) bool {
 	switch typ {
 	case typConstFloat64:
 	case typConstFloat32:
@@ -177,11 +177,13 @@ func newFunc(uniq string, values ...interface{}) (interface{}, error) {
 		return nil, &errUnknownFunction{uniq, nil}
 	}
 	newf := reflect.ValueOf(f.newfnc()).Elem()
+	j := 0
 	for i := 0; i < newf.NumField(); i++ {
 		if _, ok := newf.Field(i).Type().MethodByName("Eval"); !ok {
 			continue
 		}
-		newf.Field(i).Set(reflect.ValueOf(values[i]))
+		newf.Field(i).Set(reflect.ValueOf(values[j]))
+		j++
 	}
 	return newf.Addr().Interface(), nil
 }

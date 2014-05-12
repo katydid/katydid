@@ -268,3 +268,99 @@ func TestComposeListInt64(t *testing.T) {
 	}
 	t.Logf("%s", funcs.Sprint(b.(*composedBool).Func))
 }
+
+func TestComposeRegex(t *testing.T) {
+	expr := &ast.Expr{
+		Function: &ast.Function{
+			Name: "regex",
+			Params: []*ast.Expr{
+				{
+					Terminal: &ast.Terminal{
+						StringValue: proto.String("ab"),
+					},
+				},
+				{
+					Terminal: &ast.Terminal{
+						Variable: &ast.Variable{
+							Package: "a",
+							Message: "a",
+							Field:   "a",
+						},
+					},
+				},
+			},
+		},
+	}
+	b, err := NewBool(expr)
+	if err != nil {
+		panic(err)
+	}
+	if b.Eval(nil) != false {
+		t.Fatalf("expected false")
+	}
+}
+
+func TestConst(t *testing.T) {
+	expr := &ast.Expr{
+		Function: &ast.Function{
+			Name: "regex",
+			Params: []*ast.Expr{
+				{
+					Function: &ast.Function{
+						Name: "decString",
+						Params: []*ast.Expr{
+							{
+								Terminal: &ast.Terminal{
+									Variable: &ast.Variable{
+										Package: "a",
+										Message: "a",
+										Field:   "a",
+									},
+								},
+							},
+						},
+					},
+				},
+				{
+					Terminal: &ast.Terminal{
+						BytesValue: []byte{1, 2},
+					},
+				},
+			},
+		},
+	}
+	_, err := NewBool(expr)
+	if err == nil {
+		t.Fatalf("expected error")
+	}
+	if !strings.Contains(err.Error(), "regex has constant") || !strings.Contains(err.Error(), "has a variable parameter") {
+		t.Fatalf("expected more specific error", err.Error())
+	}
+}
+
+func TestTrimInit(t *testing.T) {
+	expr := &ast.Expr{
+		Function: &ast.Function{
+			Name: "regex",
+			Params: []*ast.Expr{
+				{
+					Terminal: &ast.Terminal{
+						StringValue: proto.String("ab"),
+					},
+				},
+				{
+					Terminal: &ast.Terminal{
+						BytesValue: []byte{'a', 'b'},
+					},
+				},
+			},
+		},
+	}
+	b, err := NewBool(expr)
+	if err != nil {
+		panic(err)
+	}
+	if b.Eval(nil) != true {
+		t.Fatalf("expected true")
+	}
+}
