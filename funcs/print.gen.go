@@ -17,6 +17,8 @@ func (this *printFloat64) Eval() float64 {
 	return v
 }
 
+func (this *printFloat64) SetVariable([]byte) {}
+
 func init() {
 	Register("print", new(printFloat64))
 }
@@ -30,6 +32,8 @@ func (this *printFloat32) Eval() float32 {
 	fmt.Printf("%#v\n", v)
 	return v
 }
+
+func (this *printFloat32) SetVariable([]byte) {}
 
 func init() {
 	Register("print", new(printFloat32))
@@ -45,6 +49,8 @@ func (this *printInt64) Eval() int64 {
 	return v
 }
 
+func (this *printInt64) SetVariable([]byte) {}
+
 func init() {
 	Register("print", new(printInt64))
 }
@@ -58,6 +64,8 @@ func (this *printUint64) Eval() uint64 {
 	fmt.Printf("%#v\n", v)
 	return v
 }
+
+func (this *printUint64) SetVariable([]byte) {}
 
 func init() {
 	Register("print", new(printUint64))
@@ -73,6 +81,8 @@ func (this *printInt32) Eval() int32 {
 	return v
 }
 
+func (this *printInt32) SetVariable([]byte) {}
+
 func init() {
 	Register("print", new(printInt32))
 }
@@ -86,6 +96,8 @@ func (this *printUint32) Eval() uint32 {
 	fmt.Printf("%#v\n", v)
 	return v
 }
+
+func (this *printUint32) SetVariable([]byte) {}
 
 func init() {
 	Register("print", new(printUint32))
@@ -101,6 +113,8 @@ func (this *printBool) Eval() bool {
 	return v
 }
 
+func (this *printBool) SetVariable([]byte) {}
+
 func init() {
 	Register("print", new(printBool))
 }
@@ -114,6 +128,8 @@ func (this *printString) Eval() string {
 	fmt.Printf("%#v\n", v)
 	return v
 }
+
+func (this *printString) SetVariable([]byte) {}
 
 func init() {
 	Register("print", new(printString))
@@ -129,6 +145,8 @@ func (this *printBytes) Eval() []byte {
 	return v
 }
 
+func (this *printBytes) SetVariable([]byte) {}
+
 func init() {
 	Register("print", new(printBytes))
 }
@@ -142,6 +160,8 @@ func (this *printFloat64s) Eval() []float64 {
 	fmt.Printf("%#v\n", v)
 	return v
 }
+
+func (this *printFloat64s) SetVariable([]byte) {}
 
 func init() {
 	Register("print", new(printFloat64s))
@@ -157,6 +177,8 @@ func (this *printFloat32s) Eval() []float32 {
 	return v
 }
 
+func (this *printFloat32s) SetVariable([]byte) {}
+
 func init() {
 	Register("print", new(printFloat32s))
 }
@@ -170,6 +192,8 @@ func (this *printInt64s) Eval() []int64 {
 	fmt.Printf("%#v\n", v)
 	return v
 }
+
+func (this *printInt64s) SetVariable([]byte) {}
 
 func init() {
 	Register("print", new(printInt64s))
@@ -185,6 +209,8 @@ func (this *printUint64s) Eval() []uint64 {
 	return v
 }
 
+func (this *printUint64s) SetVariable([]byte) {}
+
 func init() {
 	Register("print", new(printUint64s))
 }
@@ -198,6 +224,8 @@ func (this *printInt32s) Eval() []int32 {
 	fmt.Printf("%#v\n", v)
 	return v
 }
+
+func (this *printInt32s) SetVariable([]byte) {}
 
 func init() {
 	Register("print", new(printInt32s))
@@ -213,6 +241,8 @@ func (this *printUint32s) Eval() []uint32 {
 	return v
 }
 
+func (this *printUint32s) SetVariable([]byte) {}
+
 func init() {
 	Register("print", new(printUint32s))
 }
@@ -226,6 +256,8 @@ func (this *printBools) Eval() []bool {
 	fmt.Printf("%#v\n", v)
 	return v
 }
+
+func (this *printBools) SetVariable([]byte) {}
 
 func init() {
 	Register("print", new(printBools))
@@ -241,6 +273,8 @@ func (this *printStrings) Eval() []string {
 	return v
 }
 
+func (this *printStrings) SetVariable([]byte) {}
+
 func init() {
 	Register("print", new(printStrings))
 }
@@ -254,6 +288,8 @@ func (this *printListOfBytes) Eval() [][]byte {
 	fmt.Printf("%#v\n", v)
 	return v
 }
+
+func (this *printListOfBytes) SetVariable([]byte) {}
 
 func init() {
 	Register("print", new(printListOfBytes))

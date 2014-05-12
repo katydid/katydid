@@ -43,8 +43,9 @@ func TestComposeNot(t *testing.T) {
 	if b.Eval(nil) != true {
 		t.Fatalf("expected true")
 	}
-	if funcs.Sprint(b.(*composedBool).Func) != "true" {
-		t.Fatalf("trimming did not work")
+	str := funcs.Sprint(b.(*composedBool).Func)
+	if str != "true" {
+		t.Fatalf("trimming did not work: %s", str)
 	}
 }
 
@@ -170,24 +171,17 @@ func TestComposeListBool(t *testing.T) {
 						Name: "length",
 						Params: []*ast.Expr{
 							{
-								Function: &ast.Function{
-									Name: "print",
-									Params: []*ast.Expr{
+								List: &ast.List{
+									Type: types.LIST_BOOL.Enum(),
+									Elems: []*ast.Expr{
 										{
-											List: &ast.List{
-												Type: types.LIST_BOOL.Enum(),
-												Elems: []*ast.Expr{
-													{
-														Terminal: &ast.Terminal{
-															BoolValue: proto.Bool(true),
-														},
-													},
-													{
-														Terminal: &ast.Terminal{
-															BoolValue: proto.Bool(false),
-														},
-													},
-												},
+											Terminal: &ast.Terminal{
+												BoolValue: proto.Bool(true),
+											},
+										},
+										{
+											Terminal: &ast.Terminal{
+												BoolValue: proto.Bool(false),
 											},
 										},
 									},
@@ -211,8 +205,9 @@ func TestComposeListBool(t *testing.T) {
 	if b.Eval(nil) != true {
 		t.Fatalf("expected true")
 	}
-	if funcs.Sprint(b.(*composedBool).Func) != "true" {
-		t.Fatalf("trimming did not work")
+	str := funcs.Sprint(b.(*composedBool).Func)
+	if str != "true" {
+		t.Fatalf("trimming did not work: %s", str)
 	}
 }
 

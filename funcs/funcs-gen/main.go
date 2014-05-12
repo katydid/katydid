@@ -59,13 +59,22 @@ func New{{.}}Func(uniq string, values ...interface{}) ({{.}}, error) {
 `
 
 const constStr = `
+type Const{{.CType}} interface {
+	{{.CType}}
+	Const
+}
+
+var typConst{{.CType}} reflect.Type = reflect.TypeOf((*Const{{.CType}})(nil)).Elem()
+
 type const{{.CType}} struct {
 	v {{.GoType}}
 }
 
-func NewConst{{.CType}}(v {{.GoType}}) {{.CType}} {
+func NewConst{{.CType}}(v {{.GoType}}) Const{{.CType}} {
 	return &const{{.CType}}{v}
 }
+
+func (this *const{{.CType}}) IsConst() {}
 
 func (this *const{{.CType}}) Eval() {{.GoType}} {
 	return this.v
@@ -104,6 +113,13 @@ func (this *listOf{{.FuncType}}) Eval() []{{.GoType}} {
 	return res
 }
 
+func (this *listOf{{.FuncType}}) String() string {
+	ss := make([]string, len(this.List))
+	for i := range this.List {
+		ss[i] = Sprint(this.List[i])
+	}
+	return "[]{{.GoType}}{" + strings.Join(ss, ",") + "}"
+}
 `
 
 type list struct {
@@ -122,6 +138,8 @@ func (this *print{{.Name}}) Eval() {{.GoType}} {
 	fmt.Printf("%#v\n", v)
 	return v
 }
+
+func (this *print{{.Name}}) SetVariable([]byte) {}
 
 func init() {
 	Register("print", new(print{{.Name}}))
@@ -276,7 +294,7 @@ func main() {
 		&conster{"Bools", "[]bool", "%v", "bool"},
 		&conster{"Strings", "[]string", "`%s`", "string"},
 		&conster{"ListOfBytes", "[][]byte", "%#v", "[]byte"},
-	}, `"fmt"`, `"strings"`)
+	}, `"fmt"`, `"strings"`, `"reflect"`)
 	gen(listStr, "list.gen.go", []interface{}{
 		&list{"Float64s", "Float64", "float64"},
 		&list{"Float32s", "Float32", "float32"},
@@ -287,7 +305,7 @@ func main() {
 		&list{"Strings", "String", "string"},
 		&list{"ListOfBytes", "Bytes", "[]byte"},
 		&list{"Uint32s", "Uint32", "uint32"},
-	})
+	}, `"strings"`)
 	gen(printStr, "print.gen.go", []interface{}{
 		&printer{"Float64", "float64"},
 		&printer{"Float32", "float32"},

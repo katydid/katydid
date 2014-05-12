@@ -3,6 +3,10 @@
 
 package funcs
 
+import (
+	"strings"
+)
+
 type listOfFloat64 struct {
 	List []Float64
 }
@@ -17,6 +21,14 @@ func (this *listOfFloat64) Eval() []float64 {
 		res[i] = e.Eval()
 	}
 	return res
+}
+
+func (this *listOfFloat64) String() string {
+	ss := make([]string, len(this.List))
+	for i := range this.List {
+		ss[i] = Sprint(this.List[i])
+	}
+	return "[]float64{" + strings.Join(ss, ",") + "}"
 }
 
 type listOfFloat32 struct {
@@ -35,6 +47,14 @@ func (this *listOfFloat32) Eval() []float32 {
 	return res
 }
 
+func (this *listOfFloat32) String() string {
+	ss := make([]string, len(this.List))
+	for i := range this.List {
+		ss[i] = Sprint(this.List[i])
+	}
+	return "[]float32{" + strings.Join(ss, ",") + "}"
+}
+
 type listOfInt64 struct {
 	List []Int64
 }
@@ -49,6 +69,14 @@ func (this *listOfInt64) Eval() []int64 {
 		res[i] = e.Eval()
 	}
 	return res
+}
+
+func (this *listOfInt64) String() string {
+	ss := make([]string, len(this.List))
+	for i := range this.List {
+		ss[i] = Sprint(this.List[i])
+	}
+	return "[]int64{" + strings.Join(ss, ",") + "}"
 }
 
 type listOfUint64 struct {
@@ -67,6 +95,14 @@ func (this *listOfUint64) Eval() []uint64 {
 	return res
 }
 
+func (this *listOfUint64) String() string {
+	ss := make([]string, len(this.List))
+	for i := range this.List {
+		ss[i] = Sprint(this.List[i])
+	}
+	return "[]uint64{" + strings.Join(ss, ",") + "}"
+}
+
 type listOfInt32 struct {
 	List []Int32
 }
@@ -81,6 +117,14 @@ func (this *listOfInt32) Eval() []int32 {
 		res[i] = e.Eval()
 	}
 	return res
+}
+
+func (this *listOfInt32) String() string {
+	ss := make([]string, len(this.List))
+	for i := range this.List {
+		ss[i] = Sprint(this.List[i])
+	}
+	return "[]int32{" + strings.Join(ss, ",") + "}"
 }
 
 type listOfBool struct {
@@ -99,6 +143,14 @@ func (this *listOfBool) Eval() []bool {
 	return res
 }
 
+func (this *listOfBool) String() string {
+	ss := make([]string, len(this.List))
+	for i := range this.List {
+		ss[i] = Sprint(this.List[i])
+	}
+	return "[]bool{" + strings.Join(ss, ",") + "}"
+}
+
 type listOfString struct {
 	List []String
 }
@@ -113,6 +165,14 @@ func (this *listOfString) Eval() []string {
 		res[i] = e.Eval()
 	}
 	return res
+}
+
+func (this *listOfString) String() string {
+	ss := make([]string, len(this.List))
+	for i := range this.List {
+		ss[i] = Sprint(this.List[i])
+	}
+	return "[]string{" + strings.Join(ss, ",") + "}"
 }
 
 type listOfBytes struct {
@@ -131,6 +191,14 @@ func (this *listOfBytes) Eval() [][]byte {
 	return res
 }
 
+func (this *listOfBytes) String() string {
+	ss := make([]string, len(this.List))
+	for i := range this.List {
+		ss[i] = Sprint(this.List[i])
+	}
+	return "[][]byte{" + strings.Join(ss, ",") + "}"
+}
+
 type listOfUint32 struct {
 	List []Uint32
 }
@@ -145,4 +213,12 @@ func (this *listOfUint32) Eval() []uint32 {
 		res[i] = e.Eval()
 	}
 	return res
+}
+
+func (this *listOfUint32) String() string {
+	ss := make([]string, len(this.List))
+	for i := range this.List {
+		ss[i] = Sprint(this.List[i])
+	}
+	return "[]uint32{" + strings.Join(ss, ",") + "}"
 }

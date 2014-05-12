@@ -102,6 +102,8 @@ type funk struct {
 	name     string
 	uniqName string
 	In       []types.Type
+	InNames  []string
+	InConst  []bool
 	Out      types.Type
 	newfnc   func() interface{}
 }
@@ -136,9 +138,37 @@ func RegisterFactory(name string, newFunc func() interface{}) {
 		if !ok {
 			continue
 		}
+		res.InConst = append(res.InConst, isConstInterface(rfunc.Elem().Field(i).Type()))
 		res.In = append(res.In, types.FromGo(meth.Type.Out(0)))
+		res.InNames = append(res.InNames, rfunc.Elem().Type().Field(i).Name)
 	}
 	funcsMap.register(res)
+}
+
+func isConstInterface(typ reflect.Type) bool {
+	switch typ {
+	case typConstFloat64:
+	case typConstFloat32:
+	case typConstInt64:
+	case typConstUint64:
+	case typConstInt32:
+	case typConstUint32:
+	case typConstBool:
+	case typConstString:
+	case typConstBytes:
+	case typConstFloat64s:
+	case typConstFloat32s:
+	case typConstInt64s:
+	case typConstUint64s:
+	case typConstInt32s:
+	case typConstUint32s:
+	case typConstBools:
+	case typConstStrings:
+	case typConstListOfBytes:
+	default:
+		return false
+	}
+	return true
 }
 
 func newFunc(uniq string, values ...interface{}) (interface{}, error) {

@@ -20,14 +20,12 @@ import (
 )
 
 type contains struct {
-	V1 String
-	V2 String
+	S      String
+	Substr String
 }
 
 func (this *contains) Eval() bool {
-	v1 := this.V1.Eval()
-	v2 := this.V2.Eval()
-	return strings.Contains(v1, v2)
+	return strings.Contains(this.S.Eval(), this.Substr.Eval())
 }
 
 func init() {

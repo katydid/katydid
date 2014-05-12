@@ -29,6 +29,12 @@ func CapFirst(s string) string {
 	return string(b)
 }
 
+func LowerFirst(s string) string {
+	b := []byte(s)
+	b[0] |= ('a' - 'A')
+	return string(b)
+}
+
 type gen struct {
 	name string
 	dir  string

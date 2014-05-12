@@ -16,7 +16,6 @@ package compose
 
 import (
 	"github.com/awalterschulze/katydid/asm/ast"
-	"github.com/awalterschulze/katydid/asm/trim"
 	"github.com/awalterschulze/katydid/funcs"
 	"reflect"
 )
@@ -39,7 +38,7 @@ func NewBool(expr *ast.Expr) (Bool, error) {
 	if err != nil {
 		return nil, err
 	}
-	e = trim.Bool(e)
+	e = TrimBool(e)
 	typ := reflect.TypeOf((*Variable)(nil)).Elem()
 	impls := FuncImplements(e, typ)
 	vars := make([]Variable, len(impls))

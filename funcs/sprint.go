@@ -39,10 +39,11 @@ func Sprint(i interface{}) string {
 	uniqName := e.Type().Name()
 	name := reverse(uniqName)
 	if len(name) == 0 {
-		if !strings.HasPrefix(uniqName, "const") && uniqName != "variable" {
-			panic("unknown func " + uniqName)
+		strer, ok := i.(stringer)
+		if !ok {
+			panic("unknown function without String() string method")
 		}
-		name = i.(stringer).String()
+		name = strer.String()
 	}
 	numFields := e.NumField()
 	ss := make([]string, 0, numFields)

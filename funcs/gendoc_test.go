@@ -2,6 +2,7 @@ package funcs
 
 import (
 	"fmt"
+	"github.com/awalterschulze/katydid/gen"
 	"os"
 	"sort"
 	"strings"
@@ -19,7 +20,11 @@ func TestGenFuncList(t *testing.T) {
 			f := funcsMap.uniqToFunc[u]
 			ins := make([]string, len(f.In))
 			for i, in := range f.In {
-				ins[i] = toString(in.String())
+				if f.InConst[i] {
+					ins[i] = gen.LowerFirst(f.InNames[i]) + " const " + toString(in.String())
+				} else {
+					ins[i] = gen.LowerFirst(f.InNames[i]) + " " + toString(in.String())
+				}
 			}
 			funcs = append(funcs, fmt.Sprintf("func %v(%v) %v", name, strings.Join(ins, ","), toString(f.Out.String())))
 		}

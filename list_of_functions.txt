@@ -1,112 +1,113 @@
-func and(bool,bool) bool
-func contains(string,string) bool
-func decBool([]byte) bool
-func decBytes([]byte) []byte
-func decDouble([]byte) double
-func decEnum([]byte) int32
-func decFixed32([]byte) uint32
-func decFixed64([]byte) uint64
-func decFloat([]byte) float
-func decInt32([]byte) int32
-func decInt64([]byte) int64
-func decSFixed32([]byte) int32
-func decSFixed64([]byte) int64
-func decSInt32([]byte) int32
-func decSInt64([]byte) int64
-func decString([]byte) string
-func decUint32([]byte) uint32
-func decUint64([]byte) uint64
-func elem([][]byte,int64) []byte
-func elem([]bool,int64) bool
-func elem([]double,int64) double
-func elem([]float,int64) float
-func elem([]int32,int64) int32
-func elem([]int64,int64) int64
-func elem([]string,int64) string
-func elem([]uint32,int64) uint32
-func elem([]uint64,int64) uint64
-func eq([]byte,[]byte) bool
-func eq(bool,bool) bool
-func eq(double,double) bool
-func eq(float,float) bool
-func eq(int32,int32) bool
-func eq(int64,int64) bool
-func eq(string,string) bool
-func eq(uint32,uint32) bool
-func eq(uint64,uint64) bool
-func eqFold(string,string) bool
-func exists([]byte) bool
-func ge([]byte,[]byte) bool
-func ge(double,double) bool
-func ge(float,float) bool
-func ge(int32,int32) bool
-func ge(int64,int64) bool
-func ge(uint32,uint32) bool
-func ge(uint64,uint64) bool
-func gt([]byte,[]byte) bool
-func gt(double,double) bool
-func gt(float,float) bool
-func gt(int32,int32) bool
-func gt(int64,int64) bool
-func gt(uint32,uint32) bool
-func gt(uint64,uint64) bool
-func hasPrefix(string,string) bool
-func hasSuffix(string,string) bool
-func le([]byte,[]byte) bool
-func le(double,double) bool
-func le(float,float) bool
-func le(int32,int32) bool
-func le(int64,int64) bool
-func le(uint32,uint32) bool
-func le(uint64,uint64) bool
-func length([][]byte) int64
-func length([]bool) int64
-func length([]byte) int64
-func length([]double) int64
-func length([]float) int64
-func length([]int32) int64
-func length([]int64) int64
-func length([]string) int64
-func length([]uint32) int64
-func length([]uint64) int64
-func length(string) int64
-func lt([]byte,[]byte) bool
-func lt(double,double) bool
-func lt(float,float) bool
-func lt(int32,int32) bool
-func lt(int64,int64) bool
-func lt(uint32,uint32) bool
-func lt(uint64,uint64) bool
-func nfc(string) string
-func nfd(string) string
-func nfkc(string) string
-func nfkd(string) string
-func not(bool) bool
-func or(bool,bool) bool
-func print([][]byte) [][]byte
-func print([]bool) []bool
-func print([]byte) []byte
-func print([]double) []double
-func print([]float) []float
-func print([]int32) []int32
-func print([]int64) []int64
-func print([]string) []string
-func print([]uint32) []uint32
-func print([]uint64) []uint64
-func print(bool) bool
-func print(double) double
-func print(float) float
-func print(int32) int32
-func print(int64) int64
-func print(string) string
-func print(uint32) uint32
-func print(uint64) uint64
-func range([][]byte,int64,int64) [][]byte
-func range([]bool,int64,int64) []bool
-func range([]double,int64,int64) []double
-func range([]float,int64,int64) []float
-func range([]int32,int64,int64) []int32
-func range([]int64,int64,int64) []int64
-func range([]string,int64,int64) []string
-func range([]uint32,int64,int64) []uint32
-func range([]uint64,int64,int64) []uint64
+func and(v1 bool,v2 bool) bool
+func contains(s string,substr string) bool
+func decBool(d []byte) bool
+func decBytes(d []byte) []byte
+func decDouble(d []byte) double
+func decEnum(d []byte) int32
+func decFixed32(d []byte) uint32
+func decFixed64(d []byte) uint64
+func decFloat(d []byte) float
+func decInt32(d []byte) int32
+func decInt64(d []byte) int64
+func decSFixed32(d []byte) int32
+func decSFixed64(d []byte) int64
+func decSInt32(d []byte) int32
+func decSInt64(d []byte) int64
+func decString(d []byte) string
+func decUint32(d []byte) uint32
+func decUint64(d []byte) uint64
+func elem(list [][]byte,index int64) []byte
+func elem(list []bool,index int64) bool
+func elem(list []double,index int64) double
+func elem(list []float,index int64) float
+func elem(list []int32,index int64) int32
+func elem(list []int64,index int64) int64
+func elem(list []string,index int64) string
+func elem(list []uint32,index int64) uint32
+func elem(list []uint64,index int64) uint64
+func eq(v1 []byte,v2 []byte) bool
+func eq(v1 bool,v2 bool) bool
+func eq(v1 double,v2 double) bool
+func eq(v1 float,v2 float) bool
+func eq(v1 int32,v2 int32) bool
+func eq(v1 int64,v2 int64) bool
+func eq(v1 string,v2 string) bool
+func eq(v1 uint32,v2 uint32) bool
+func eq(v1 uint64,v2 uint64) bool
+func eqFold(v1 string,v2 string) bool
+func exists(field []byte) bool
+func ge(v1 []byte,v2 []byte) bool
+func ge(v1 double,v2 double) bool
+func ge(v1 float,v2 float) bool
+func ge(v1 int32,v2 int32) bool
+func ge(v1 int64,v2 int64) bool
+func ge(v1 uint32,v2 uint32) bool
+func ge(v1 uint64,v2 uint64) bool
+func gt(v1 []byte,v2 []byte) bool
+func gt(v1 double,v2 double) bool
+func gt(v1 float,v2 float) bool
+func gt(v1 int32,v2 int32) bool
+func gt(v1 int64,v2 int64) bool
+func gt(v1 uint32,v2 uint32) bool
+func gt(v1 uint64,v2 uint64) bool
+func hasPrefix(v1 string,v2 string) bool
+func hasSuffix(v1 string,v2 string) bool
+func le(v1 []byte,v2 []byte) bool
+func le(v1 double,v2 double) bool
+func le(v1 float,v2 float) bool
+func le(v1 int32,v2 int32) bool
+func le(v1 int64,v2 int64) bool
+func le(v1 uint32,v2 uint32) bool
+func le(v1 uint64,v2 uint64) bool
+func length(e [][]byte) int64
+func length(e []bool) int64
+func length(e []byte) int64
+func length(e []double) int64
+func length(e []float) int64
+func length(e []int32) int64
+func length(e []int64) int64
+func length(e []string) int64
+func length(e []uint32) int64
+func length(e []uint64) int64
+func length(e string) int64
+func lt(v1 []byte,v2 []byte) bool
+func lt(v1 double,v2 double) bool
+func lt(v1 float,v2 float) bool
+func lt(v1 int32,v2 int32) bool
+func lt(v1 int64,v2 int64) bool
+func lt(v1 uint32,v2 uint32) bool
+func lt(v1 uint64,v2 uint64) bool
+func nfc(v1 string) string
+func nfd(v1 string) string
+func nfkc(v1 string) string
+func nfkd(v1 string) string
+func not(v1 bool) bool
+func or(v1 bool,v2 bool) bool
+func print(e [][]byte) [][]byte
+func print(e []bool) []bool
+func print(e []byte) []byte
+func print(e []double) []double
+func print(e []float) []float
+func print(e []int32) []int32
+func print(e []int64) []int64
+func print(e []string) []string
+func print(e []uint32) []uint32
+func print(e []uint64) []uint64
+func print(e bool) bool
+func print(e double) double
+func print(e float) float
+func print(e int32) int32
+func print(e int64) int64
+func print(e string) string
+func print(e uint32) uint32
+func print(e uint64) uint64
+func range(list [][]byte,first int64,last int64) [][]byte
+func range(list []bool,first int64,last int64) []bool
+func range(list []double,first int64,last int64) []double
+func range(list []float,first int64,last int64) []float
+func range(list []int32,first int64,last int64) []int32
+func range(list []int64,first int64,last int64) []int64
+func range(list []string,first int64,last int64) []string
+func range(list []uint32,first int64,last int64) []uint32
+func range(list []uint64,first int64,last int64) []uint64
+func regex(expr const string,b []byte) bool
