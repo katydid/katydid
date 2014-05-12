@@ -63,18 +63,28 @@ type const{{.CType}} struct {
 	v {{.GoType}}
 }
 
-func New{{.CType}}(v {{.GoType}}) {{.CType}} {
+func NewConst{{.CType}}(v {{.GoType}}) {{.CType}} {
 	return &const{{.CType}}{v}
 }
 
 func (this *const{{.CType}}) Eval() {{.GoType}} {
 	return this.v
 }
+
+func (this *const{{.CType}}) String() string {
+	{{if .ListType}}ss := make([]string, len(this.v))
+	for i := range this.v {
+		ss[i] = fmt.Sprintf("{{.String}}", this.v[i])
+	}
+	return "[]{{.ListType}}{" + strings.Join(ss, ",") + "}"{{else}}return fmt.Sprintf("{{.String}}", this.v){{end}}
+}
 `
 
 type conster struct {
-	CType  string
-	GoType string
+	CType    string
+	GoType   string
+	String   string
+	ListType string
 }
 
 const listStr = `
@@ -248,16 +258,25 @@ func main() {
 		"ListOfBytes",
 	})
 	gen(constStr, "const.gen.go", []interface{}{
-		&conster{"Float64", "float64"},
-		&conster{"Float32", "float32"},
-		&conster{"Int64", "int64"},
-		&conster{"Uint64", "uint64"},
-		&conster{"Int32", "int32"},
-		&conster{"Uint32", "uint32"},
-		&conster{"Bool", "bool"},
-		&conster{"String", "string"},
-		&conster{"Bytes", "[]byte"},
-	})
+		&conster{"Float64", "float64", "double(%f)", ""},
+		&conster{"Float32", "float32", "float(%f)", ""},
+		&conster{"Int64", "int64", "int64(%d)", ""},
+		&conster{"Uint64", "uint64", "uint64(%d)", ""},
+		&conster{"Int32", "int32", "int32(%d)", ""},
+		&conster{"Uint32", "uint32", "uint32(%d)", ""},
+		&conster{"Bool", "bool", "%v", ""},
+		&conster{"String", "string", "`%s`", ""},
+		&conster{"Bytes", "[]byte", "%#v", ""},
+		&conster{"Float64s", "[]float64", "double(%f)", "double"},
+		&conster{"Float32s", "[]float32", "float(%f)", "float"},
+		&conster{"Int64s", "[]int64", "int64(%d)", "int64"},
+		&conster{"Uint64s", "[]uint64", "uint64(%d)", "uint64"},
+		&conster{"Int32s", "[]int32", "int32(%d)", "int32"},
+		&conster{"Uint32s", "[]uint32", "uint32(%d)", "uint32"},
+		&conster{"Bools", "[]bool", "%v", "bool"},
+		&conster{"Strings", "[]string", "`%s`", "string"},
+		&conster{"ListOfBytes", "[][]byte", "%#v", "[]byte"},
+	}, `"fmt"`, `"strings"`)
 	gen(listStr, "list.gen.go", []interface{}{
 		&list{"Float64s", "Float64", "float64"},
 		&list{"Float32s", "Float32", "float32"},

@@ -38,6 +38,10 @@ func (this *injectableInt64) SetValue(v int64) {
 	this.v = v
 }
 
+func (this *injectableInt64) SetVariable(buf []byte) {
+	//If this method is not implemented this function will probably be trimmed
+}
+
 func init() {
 	funcs.Register("inject", new(injectableInt64))
 }

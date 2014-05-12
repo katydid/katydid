@@ -25,7 +25,7 @@ func compose{{.SingleName}}(expr *ast.Expr) (funcs.{{.SingleName}}, error) {
 		return nil, err
 	}
 	if expr.Terminal != nil {
-		return funcs.New{{.SingleName}}(expr.GetTerminal().Get{{.SingleValue}}Value()), nil
+		return funcs.NewConst{{.SingleName}}(expr.GetTerminal().Get{{.SingleValue}}Value()), nil
 	}
 	values, err := newValues(expr.GetFunction().GetParams())
 	if err != nil {

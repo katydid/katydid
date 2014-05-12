@@ -16,7 +16,6 @@ package funcs
 
 type Variable interface {
 	SetVariable(v []byte)
-	Bytes
 }
 
 type variable struct {
@@ -31,6 +30,10 @@ func (this *variable) SetVariable(v []byte) {
 	this.Value = v
 }
 
-func NewVariable() Variable {
+func (this *variable) String() string {
+	return "var"
+}
+
+func NewVariable() *variable {
 	return &variable{}
 }

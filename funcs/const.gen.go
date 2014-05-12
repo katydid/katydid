@@ -3,11 +3,16 @@
 
 package funcs
 
+import (
+	"fmt"
+	"strings"
+)
+
 type constFloat64 struct {
 	v float64
 }
 
-func NewFloat64(v float64) Float64 {
+func NewConstFloat64(v float64) Float64 {
 	return &constFloat64{v}
 }
 
@@ -15,11 +20,15 @@ func (this *constFloat64) Eval() float64 {
 	return this.v
 }
 
+func (this *constFloat64) String() string {
+	return fmt.Sprintf("double(%f)", this.v)
+}
+
 type constFloat32 struct {
 	v float32
 }
 
-func NewFloat32(v float32) Float32 {
+func NewConstFloat32(v float32) Float32 {
 	return &constFloat32{v}
 }
 
@@ -27,11 +36,15 @@ func (this *constFloat32) Eval() float32 {
 	return this.v
 }
 
+func (this *constFloat32) String() string {
+	return fmt.Sprintf("float(%f)", this.v)
+}
+
 type constInt64 struct {
 	v int64
 }
 
-func NewInt64(v int64) Int64 {
+func NewConstInt64(v int64) Int64 {
 	return &constInt64{v}
 }
 
@@ -39,11 +52,15 @@ func (this *constInt64) Eval() int64 {
 	return this.v
 }
 
+func (this *constInt64) String() string {
+	return fmt.Sprintf("int64(%d)", this.v)
+}
+
 type constUint64 struct {
 	v uint64
 }
 
-func NewUint64(v uint64) Uint64 {
+func NewConstUint64(v uint64) Uint64 {
 	return &constUint64{v}
 }
 
@@ -51,11 +68,15 @@ func (this *constUint64) Eval() uint64 {
 	return this.v
 }
 
+func (this *constUint64) String() string {
+	return fmt.Sprintf("uint64(%d)", this.v)
+}
+
 type constInt32 struct {
 	v int32
 }
 
-func NewInt32(v int32) Int32 {
+func NewConstInt32(v int32) Int32 {
 	return &constInt32{v}
 }
 
@@ -63,11 +84,15 @@ func (this *constInt32) Eval() int32 {
 	return this.v
 }
 
+func (this *constInt32) String() string {
+	return fmt.Sprintf("int32(%d)", this.v)
+}
+
 type constUint32 struct {
 	v uint32
 }
 
-func NewUint32(v uint32) Uint32 {
+func NewConstUint32(v uint32) Uint32 {
 	return &constUint32{v}
 }
 
@@ -75,11 +100,15 @@ func (this *constUint32) Eval() uint32 {
 	return this.v
 }
 
+func (this *constUint32) String() string {
+	return fmt.Sprintf("uint32(%d)", this.v)
+}
+
 type constBool struct {
 	v bool
 }
 
-func NewBool(v bool) Bool {
+func NewConstBool(v bool) Bool {
 	return &constBool{v}
 }
 
@@ -87,11 +116,15 @@ func (this *constBool) Eval() bool {
 	return this.v
 }
 
+func (this *constBool) String() string {
+	return fmt.Sprintf("%v", this.v)
+}
+
 type constString struct {
 	v string
 }
 
-func NewString(v string) String {
+func NewConstString(v string) String {
 	return &constString{v}
 }
 
@@ -99,14 +132,202 @@ func (this *constString) Eval() string {
 	return this.v
 }
 
+func (this *constString) String() string {
+	return fmt.Sprintf("`%s`", this.v)
+}
+
 type constBytes struct {
 	v []byte
 }
 
-func NewBytes(v []byte) Bytes {
+func NewConstBytes(v []byte) Bytes {
 	return &constBytes{v}
 }
 
 func (this *constBytes) Eval() []byte {
 	return this.v
+}
+
+func (this *constBytes) String() string {
+	return fmt.Sprintf("%#v", this.v)
+}
+
+type constFloat64s struct {
+	v []float64
+}
+
+func NewConstFloat64s(v []float64) Float64s {
+	return &constFloat64s{v}
+}
+
+func (this *constFloat64s) Eval() []float64 {
+	return this.v
+}
+
+func (this *constFloat64s) String() string {
+	ss := make([]string, len(this.v))
+	for i := range this.v {
+		ss[i] = fmt.Sprintf("double(%f)", this.v[i])
+	}
+	return "[]double{" + strings.Join(ss, ",") + "}"
+}
+
+type constFloat32s struct {
+	v []float32
+}
+
+func NewConstFloat32s(v []float32) Float32s {
+	return &constFloat32s{v}
+}
+
+func (this *constFloat32s) Eval() []float32 {
+	return this.v
+}
+
+func (this *constFloat32s) String() string {
+	ss := make([]string, len(this.v))
+	for i := range this.v {
+		ss[i] = fmt.Sprintf("float(%f)", this.v[i])
+	}
+	return "[]float{" + strings.Join(ss, ",") + "}"
+}
+
+type constInt64s struct {
+	v []int64
+}
+
+func NewConstInt64s(v []int64) Int64s {
+	return &constInt64s{v}
+}
+
+func (this *constInt64s) Eval() []int64 {
+	return this.v
+}
+
+func (this *constInt64s) String() string {
+	ss := make([]string, len(this.v))
+	for i := range this.v {
+		ss[i] = fmt.Sprintf("int64(%d)", this.v[i])
+	}
+	return "[]int64{" + strings.Join(ss, ",") + "}"
+}
+
+type constUint64s struct {
+	v []uint64
+}
+
+func NewConstUint64s(v []uint64) Uint64s {
+	return &constUint64s{v}
+}
+
+func (this *constUint64s) Eval() []uint64 {
+	return this.v
+}
+
+func (this *constUint64s) String() string {
+	ss := make([]string, len(this.v))
+	for i := range this.v {
+		ss[i] = fmt.Sprintf("uint64(%d)", this.v[i])
+	}
+	return "[]uint64{" + strings.Join(ss, ",") + "}"
+}
+
+type constInt32s struct {
+	v []int32
+}
+
+func NewConstInt32s(v []int32) Int32s {
+	return &constInt32s{v}
+}
+
+func (this *constInt32s) Eval() []int32 {
+	return this.v
+}
+
+func (this *constInt32s) String() string {
+	ss := make([]string, len(this.v))
+	for i := range this.v {
+		ss[i] = fmt.Sprintf("int32(%d)", this.v[i])
+	}
+	return "[]int32{" + strings.Join(ss, ",") + "}"
+}
+
+type constUint32s struct {
+	v []uint32
+}
+
+func NewConstUint32s(v []uint32) Uint32s {
+	return &constUint32s{v}
+}
+
+func (this *constUint32s) Eval() []uint32 {
+	return this.v
+}
+
+func (this *constUint32s) String() string {
+	ss := make([]string, len(this.v))
+	for i := range this.v {
+		ss[i] = fmt.Sprintf("uint32(%d)", this.v[i])
+	}
+	return "[]uint32{" + strings.Join(ss, ",") + "}"
+}
+
+type constBools struct {
+	v []bool
+}
+
+func NewConstBools(v []bool) Bools {
+	return &constBools{v}
+}
+
+func (this *constBools) Eval() []bool {
+	return this.v
+}
+
+func (this *constBools) String() string {
+	ss := make([]string, len(this.v))
+	for i := range this.v {
+		ss[i] = fmt.Sprintf("%v", this.v[i])
+	}
+	return "[]bool{" + strings.Join(ss, ",") + "}"
+}
+
+type constStrings struct {
+	v []string
+}
+
+func NewConstStrings(v []string) Strings {
+	return &constStrings{v}
+}
+
+func (this *constStrings) Eval() []string {
+	return this.v
+}
+
+func (this *constStrings) String() string {
+	ss := make([]string, len(this.v))
+	for i := range this.v {
+		ss[i] = fmt.Sprintf("`%s`", this.v[i])
+	}
+	return "[]string{" + strings.Join(ss, ",") + "}"
+}
+
+type constListOfBytes struct {
+	v [][]byte
+}
+
+func NewConstListOfBytes(v [][]byte) ListOfBytes {
+	return &constListOfBytes{v}
+}
+
+func (this *constListOfBytes) Eval() [][]byte {
+	return this.v
+}
+
+func (this *constListOfBytes) String() string {
+	ss := make([]string, len(this.v))
+	for i := range this.v {
+		ss[i] = fmt.Sprintf("%#v", this.v[i])
+	}
+	return "[][]byte{" + strings.Join(ss, ",") + "}"
 }

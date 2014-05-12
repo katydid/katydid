@@ -16,6 +16,7 @@ package compose
 
 import (
 	"github.com/awalterschulze/katydid/asm/ast"
+	"github.com/awalterschulze/katydid/asm/trim"
 	"github.com/awalterschulze/katydid/funcs"
 	"reflect"
 )
@@ -28,7 +29,7 @@ type Variable interface {
 	SetVariable([]byte)
 }
 
-type booler struct {
+type composedBool struct {
 	Vars []Variable
 	Func funcs.Bool
 }
@@ -38,16 +39,17 @@ func NewBool(expr *ast.Expr) (Bool, error) {
 	if err != nil {
 		return nil, err
 	}
+	e = trim.Bool(e)
 	typ := reflect.TypeOf((*Variable)(nil)).Elem()
 	impls := FuncImplements(e, typ)
 	vars := make([]Variable, len(impls))
 	for i := range impls {
 		vars[i] = impls[i].(Variable)
 	}
-	return &booler{vars, e}, nil
+	return &composedBool{vars, e}, nil
 }
 
-func (this *booler) Eval(buf []byte) bool {
+func (this *composedBool) Eval(buf []byte) bool {
 	for _, v := range this.Vars {
 		v.SetVariable(buf)
 	}

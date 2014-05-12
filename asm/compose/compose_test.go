@@ -17,7 +17,9 @@ package compose
 import (
 	"code.google.com/p/gogoprotobuf/proto"
 	"github.com/awalterschulze/katydid/asm/ast"
+	"github.com/awalterschulze/katydid/funcs"
 	"github.com/awalterschulze/katydid/types"
+	"strings"
 	"testing"
 )
 
@@ -40,6 +42,9 @@ func TestComposeNot(t *testing.T) {
 	}
 	if b.Eval(nil) != true {
 		t.Fatalf("expected true")
+	}
+	if funcs.Sprint(b.(*composedBool).Func) != "true" {
+		t.Fatalf("trimming did not work")
 	}
 }
 
@@ -97,6 +102,9 @@ func TestComposeContains(t *testing.T) {
 	}
 	if b.Eval([]byte("ThatStreet")) != false {
 		t.Fatalf("expected false")
+	}
+	if strings.Contains(funcs.Sprint(b.(*composedBool).Func), "nfkc(`TheStreet`)") {
+		t.Fatalf("trimming did not work")
 	}
 }
 
@@ -203,6 +211,9 @@ func TestComposeListBool(t *testing.T) {
 	if b.Eval(nil) != true {
 		t.Fatalf("expected true")
 	}
+	if funcs.Sprint(b.(*composedBool).Func) != "true" {
+		t.Fatalf("trimming did not work")
+	}
 }
 
 func TestComposeListInt64(t *testing.T) {
@@ -260,4 +271,5 @@ func TestComposeListInt64(t *testing.T) {
 	if b.Eval(nil) != true {
 		t.Fatalf("expected true")
 	}
+	t.Logf("%s", funcs.Sprint(b.(*composedBool).Func))
 }
