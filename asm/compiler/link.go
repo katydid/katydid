@@ -32,7 +32,7 @@ type link struct {
 	protoToIf    []ifexpr.StateExpr
 }
 
-func NewLink(rules *ast.Rules, pmap protomap.ProtoMap, tab table.Table) (Link, error) {
+func NewLink(rules *ast.Rules, pmap protomap.ProtoMap, tab table.Table, c ifexpr.Catcher) (Link, error) {
 	l := pmap.LenStates()
 	link := &link{
 		protoToStart: make([]int, l),
@@ -58,7 +58,7 @@ func NewLink(rules *ast.Rules, pmap protomap.ProtoMap, tab table.Table) (Link, e
 		if err != nil {
 			return nil, err
 		}
-		stateExpr, err := ifexpr.Compile(ifExpr, tab)
+		stateExpr, err := ifexpr.Compile(ifExpr, tab, c)
 		if err != nil {
 			return nil, err
 		}

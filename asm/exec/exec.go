@@ -51,11 +51,18 @@ type Link interface {
 	IfEval(protoState int, buf []byte) (state int, exists bool)
 }
 
-func NewExec(protomap ProtoMap, table Table, link Link, rootState int, startState int, acceptState int) *Exec {
+type Catcher interface {
+	Catch(error)
+	GetError() error
+	Clear()
+}
+
+func NewExec(protomap ProtoMap, table Table, link Link, catcher Catcher, rootState int, startState int, acceptState int) *Exec {
 	return &Exec{
 		protomap:    protomap,
 		table:       table,
 		Link:        link,
+		catcher:     catcher,
 		rootState:   rootState,
 		startState:  startState,
 		acceptState: acceptState,
@@ -66,17 +73,19 @@ type Exec struct {
 	protomap    ProtoMap
 	table       Table
 	Link        Link
+	catcher     Catcher
 	rootState   int
 	startState  int
 	acceptState int
 }
 
 func (this *Exec) Eval(buf []byte) (bool, error) {
+	this.catcher.Clear()
 	i, err := this.eval(this.rootState, this.startState, buf)
 	if err != nil {
 		return false, err
 	}
-	return i == this.acceptState, nil
+	return i == this.acceptState, this.catcher.GetError()
 }
 
 func uvarint(buf []byte) (uint64, int, error) {

@@ -119,6 +119,8 @@ func (this *listOf{{.FuncType}}) String() string {
 	}
 	return "[]{{.GoType}}{" + strings.Join(ss, ",") + "}"
 }
+
+func (this *listOf{{.FuncType}}) IsListOf() {}
 `
 
 type list struct {
@@ -168,12 +170,21 @@ const elemStr = `
 type elem{{.ListType}} struct {
 	List {{.ListType}}
 	Index Int64
+	Thrower
 }
 
 func (this *elem{{.ListType}}) Eval() {{.ReturnType}} {
 	list := this.List.Eval()
 	index := int(this.Index.Eval())
-	index = index % len(list)
+	if len(list) == 0 {
+		return this.Throw{{.ThrowType}}(NewRangeCheckErr(index, len(list)))
+	}
+	if index < 0 {
+		index = index % len(list)	
+	}
+	if len(list) <= index {
+		return this.Throw{{.ThrowType}}(NewRangeCheckErr(index, len(list)))
+	}
 	return list[index]
 }
 
@@ -185,6 +196,7 @@ func init() {
 type elemer struct {
 	ListType   string
 	ReturnType string
+	ThrowType  string
 }
 
 const rangeStr = `
@@ -192,18 +204,30 @@ type range{{.ListType}} struct {
 	List {{.ListType}}
 	First Int64
 	Last Int64
+	Thrower
 }
 
 func (this *range{{.ListType}}) Eval() {{.ReturnType}} {
 	list := this.List.Eval()
 	first := int(this.First.Eval())
+	if len(list) == 0 {
+		return this.Throw{{.ListType}}(NewRangeCheckErr(first, len(list)))
+	}
+	if first < 0 {
+		first = first % len(list)	
+	}
+	if first > len(list) {
+		return this.Throw{{.ListType}}(NewRangeCheckErr(first, len(list)))
+	}
 	last := int(this.Last.Eval())
-	first = first % len(list)
+	if last < 0 {
+		last = last % len(list)	
+	}
 	if last > len(list) {
-		last = last % len(list)
+		return this.Throw{{.ListType}}(NewRangeCheckErr(last, len(list)))
 	}
 	if first > last {
-		first = last
+		return this.Throw{{.ListType}}(NewRangeErr(first, last))	
 	}
 	return list[first:last]
 }
@@ -212,6 +236,11 @@ func init() {
 	Register("range", new(range{{.ListType}}))
 }
 `
+
+type ranger struct {
+	ListType   string
+	ReturnType string
+}
 
 func main() {
 	gen := gen.NewFunc("funcs")
@@ -339,25 +368,25 @@ func main() {
 		"Bytes",
 	})
 	gen(elemStr, "elem.gen.go", []interface{}{
-		&elemer{"Float64s", "float64"},
-		&elemer{"Float32s", "float32"},
-		&elemer{"Int64s", "int64"},
-		&elemer{"Uint64s", "uint64"},
-		&elemer{"Int32s", "int32"},
-		&elemer{"Uint32s", "uint32"},
-		&elemer{"Bools", "bool"},
-		&elemer{"Strings", "string"},
-		&elemer{"ListOfBytes", "[]byte"},
+		&elemer{"Float64s", "float64", "Float64"},
+		&elemer{"Float32s", "float32", "Float32"},
+		&elemer{"Int64s", "int64", "Int64"},
+		&elemer{"Uint64s", "uint64", "Uint64"},
+		&elemer{"Int32s", "int32", "Int32"},
+		&elemer{"Uint32s", "uint32", "Uint32"},
+		&elemer{"Bools", "bool", "Bool"},
+		&elemer{"Strings", "string", "String"},
+		&elemer{"ListOfBytes", "[]byte", "Bytes"},
 	})
 	gen(rangeStr, "range.gen.go", []interface{}{
-		&elemer{"Float64s", "[]float64"},
-		&elemer{"Float32s", "[]float32"},
-		&elemer{"Int64s", "[]int64"},
-		&elemer{"Uint64s", "[]uint64"},
-		&elemer{"Int32s", "[]int32"},
-		&elemer{"Uint32s", "[]uint32"},
-		&elemer{"Bools", "[]bool"},
-		&elemer{"Strings", "[]string"},
-		&elemer{"ListOfBytes", "[][]byte"},
+		&ranger{"Float64s", "[]float64"},
+		&ranger{"Float32s", "[]float32"},
+		&ranger{"Int64s", "[]int64"},
+		&ranger{"Uint64s", "[]uint64"},
+		&ranger{"Int32s", "[]int32"},
+		&ranger{"Uint32s", "[]uint32"},
+		&ranger{"Bools", "[]bool"},
+		&ranger{"Strings", "[]string"},
+		&ranger{"ListOfBytes", "[][]byte"},
 	})
 }

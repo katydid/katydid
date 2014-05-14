@@ -44,32 +44,43 @@ type StateExpr interface {
 }
 
 type IfExpr struct {
-	Cond compose.Bool
-	Succ StateExpr
-	Fail StateExpr
+	Cond    compose.Bool
+	Succ    StateExpr
+	Fail    StateExpr
+	Catcher Catcher
 }
 
 func (this *IfExpr) Eval(buf []byte) int {
-	if this.Cond.Eval(buf) {
+	cond, err := this.Cond.Eval(buf)
+	if err != nil {
+		this.Catcher.Catch(err)
+	}
+	if cond {
 		return this.Succ.Eval(buf)
 	}
 	return this.Fail.Eval(buf)
 }
 
-func Compile(ifexpr *ast.IfExpr, nameToState NameToState) (StateExpr, error) {
+type Catcher interface {
+	Catch(error)
+	GetError() error
+	Clear()
+}
+
+func Compile(ifexpr *ast.IfExpr, nameToState NameToState, c Catcher) (StateExpr, error) {
 	cond, err := compose.NewBool(ifexpr.Condition)
 	if err != nil {
 		return nil, err
 	}
-	succ, err := compile(ifexpr.GetThen(), nameToState)
+	succ, err := compile(ifexpr.GetThen(), nameToState, c)
 	if err != nil {
 		return nil, err
 	}
-	fail, err := compile(ifexpr.GetElse(), nameToState)
+	fail, err := compile(ifexpr.GetElse(), nameToState, c)
 	if err != nil {
 		return nil, err
 	}
-	return &IfExpr{cond, succ, fail}, nil
+	return &IfExpr{cond, succ, fail, c}, nil
 }
 
 func GetVariable(ifExpr *ast.IfExpr) (*ast.Variable, error) {
@@ -114,9 +125,16 @@ func getVariable(expr *ast.Expr) (*ast.Variable, error) {
 	if expr.Terminal != nil {
 		return expr.GetTerminal().GetVariable(), nil
 	}
+	if expr.List != nil {
+		return getVariables(expr.GetList().GetElems())
+	}
+	return getVariables(expr.GetFunction().GetParams())
+}
+
+func getVariables(exprs []*ast.Expr) (*ast.Variable, error) {
 	var var1 *ast.Variable
-	for _, param := range expr.GetFunction().GetParams() {
-		var2, err := getVariable(param)
+	for _, expr := range exprs {
+		var2, err := getVariable(expr)
 		if err != nil {
 			return nil, err
 		}
@@ -141,7 +159,7 @@ func (this *constState) Eval(buf []byte) int {
 	return this.state
 }
 
-func compile(stateExpr *ast.StateExpr, nameToState NameToState) (StateExpr, error) {
+func compile(stateExpr *ast.StateExpr, nameToState NameToState, c Catcher) (StateExpr, error) {
 	if stateExpr.State != nil {
 		state, err := nameToState.NameToState(stateExpr.GetState())
 		if err != nil {
@@ -149,5 +167,5 @@ func compile(stateExpr *ast.StateExpr, nameToState NameToState) (StateExpr, erro
 		}
 		return &constState{state}, nil
 	}
-	return Compile(stateExpr.GetIfExpr(), nameToState)
+	return Compile(stateExpr.GetIfExpr(), nameToState, c)
 }

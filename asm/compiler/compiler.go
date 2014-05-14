@@ -21,6 +21,7 @@ import (
 	"github.com/awalterschulze/katydid/asm/ifexpr"
 	"github.com/awalterschulze/katydid/asm/protomap"
 	"github.com/awalterschulze/katydid/asm/table"
+	"github.com/awalterschulze/katydid/funcs"
 )
 
 type errNoStartState struct {
@@ -73,7 +74,8 @@ func Compile(rules *ast.Rules, desc *descriptor.FileDescriptorSet) (*exec.Exec, 
 		return nil, err
 	}
 	tab := table.New(rules.GetTransition(), rules.GetIfExpr())
-	link, err := NewLink(rules, pmap, tab)
+	catcher := funcs.NewCatcher(false)
+	link, err := NewLink(rules, pmap, tab, catcher)
 	if err != nil {
 		return nil, err
 	}
@@ -89,5 +91,5 @@ func Compile(rules *ast.Rules, desc *descriptor.FileDescriptorSet) (*exec.Exec, 
 	if err != nil {
 		return nil, err
 	}
-	return exec.NewExec(pmap, tab, link, rootState, startState, acceptState), nil
+	return exec.NewExec(pmap, tab, link, catcher, rootState, startState, acceptState), nil
 }

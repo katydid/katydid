@@ -18,6 +18,7 @@ import (
 	"code.google.com/p/gogoprotobuf/proto"
 	"fmt"
 	"github.com/awalterschulze/katydid/asm/ast"
+	"github.com/awalterschulze/katydid/funcs"
 	"testing"
 )
 
@@ -61,7 +62,9 @@ func TestEasyIfExpr(t *testing.T) {
 	})
 	t.Logf("states = %v", states)
 
-	stateExpr, err := Compile(ifexpr, states)
+	c := funcs.NewCatcher(false)
+
+	stateExpr, err := Compile(ifexpr, states, c)
 
 	if err != nil {
 		panic(err)
@@ -70,6 +73,10 @@ func TestEasyIfExpr(t *testing.T) {
 	res := stateExpr.Eval(nil)
 	if res != 1 {
 		t.Fatalf("Expected true state, but got %d", res)
+	}
+
+	if err := c.GetError(); err != nil {
+		panic(err)
 	}
 
 }
@@ -113,7 +120,9 @@ func TestNestedIfExpr(t *testing.T) {
 	})
 	t.Logf("states = %v", states)
 
-	stateExpr, err := Compile(ifexpr, states)
+	c := funcs.NewCatcher(false)
+
+	stateExpr, err := Compile(ifexpr, states, c)
 
 	if err != nil {
 		panic(err)
@@ -122,6 +131,10 @@ func TestNestedIfExpr(t *testing.T) {
 	res := stateExpr.Eval(nil)
 	if res != 1 {
 		t.Fatalf("Expected true state, but got %d", res)
+	}
+
+	if err := c.GetError(); err != nil {
+		panic(err)
 	}
 
 }

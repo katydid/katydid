@@ -40,10 +40,14 @@ func TestComposeNot(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	if b.Eval(nil) != true {
+	r, err := b.Eval(nil)
+	if err != nil {
+		panic(err)
+	}
+	if r != true {
 		t.Fatalf("expected true")
 	}
-	str := funcs.Sprint(b.(*composedBool).Func)
+	str := funcs.Sprint(b.Func)
 	if str != "true" {
 		t.Fatalf("trimming did not work: %s", str)
 	}
@@ -98,13 +102,21 @@ func TestComposeContains(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	if b.Eval([]byte("TheStreet")) != true {
+	r, err := b.Eval([]byte("TheStreet"))
+	if err != nil {
+		panic(err)
+	}
+	if r != true {
 		t.Fatalf("expected true")
 	}
-	if b.Eval([]byte("ThatStreet")) != false {
+	r, err = b.Eval([]byte("ThatStreet"))
+	if err != nil {
+		panic(err)
+	}
+	if r != false {
 		t.Fatalf("expected false")
 	}
-	if strings.Contains(funcs.Sprint(b.(*composedBool).Func), "nfkc(`TheStreet`)") {
+	if strings.Contains(funcs.Sprint(b.Func), "nfkc(`TheStreet`)") {
 		t.Fatalf("trimming did not work")
 	}
 }
@@ -156,7 +168,11 @@ func TestComposeStringEq(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	if b.Eval([]byte("TheStreet")) != true {
+	r, err := b.Eval([]byte("TheStreet"))
+	if err != nil {
+		panic(err)
+	}
+	if r != true {
 		t.Fatalf("expected true")
 	}
 }
@@ -202,10 +218,14 @@ func TestComposeListBool(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	if b.Eval(nil) != true {
+	r, err := b.Eval(nil)
+	if err != nil {
+		panic(err)
+	}
+	if r != true {
 		t.Fatalf("expected true")
 	}
-	str := funcs.Sprint(b.(*composedBool).Func)
+	str := funcs.Sprint(b.Func)
 	if str != "true" {
 		t.Fatalf("trimming did not work: %s", str)
 	}
@@ -263,10 +283,14 @@ func TestComposeListInt64(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	if b.Eval(nil) != true {
+	r, err := b.Eval(nil)
+	if err != nil {
+		panic(err)
+	}
+	if r != true {
 		t.Fatalf("expected true")
 	}
-	t.Logf("%s", funcs.Sprint(b.(*composedBool).Func))
+	t.Logf("%s", funcs.Sprint(b.Func))
 }
 
 func TestComposeRegex(t *testing.T) {
@@ -295,7 +319,11 @@ func TestComposeRegex(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	if b.Eval(nil) != false {
+	r, err := b.Eval(nil)
+	if err != nil {
+		panic(err)
+	}
+	if r != false {
 		t.Fatalf("expected false")
 	}
 }
@@ -360,7 +388,136 @@ func TestTrimInit(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	if b.Eval(nil) != true {
+	r, err := b.Eval(nil)
+	if err != nil {
+		panic(err)
+	}
+	if r != true {
+		t.Fatalf("expected true")
+	}
+}
+
+func TestNoTrim(t *testing.T) {
+	expr := &ast.Expr{
+		Function: &ast.Function{
+			Name: "eq",
+			Params: []*ast.Expr{
+				{
+					Function: &ast.Function{
+						Name: "elem",
+						Params: []*ast.Expr{
+							{
+								List: &ast.List{
+									Elems: []*ast.Expr{
+										{
+											Function: &ast.Function{
+												Name: "print",
+												Params: []*ast.Expr{
+													{
+														Function: &ast.Function{
+															Name: "decString",
+															Params: []*ast.Expr{
+																{
+																	Terminal: &ast.Terminal{
+																		Variable: &ast.Variable{
+																			Package: "a",
+																			Message: "a",
+																			Field:   "a",
+																		},
+																	},
+																},
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+							{
+								Terminal: &ast.Terminal{
+									Int64Value: proto.Int64(0),
+								},
+							},
+						},
+					},
+				},
+				{
+					Terminal: &ast.Terminal{
+						StringValue: proto.String("abc"),
+					},
+				},
+			},
+		},
+	}
+	b, err := NewBool(expr)
+	if err != nil {
+		panic(err)
+	}
+	str := funcs.Sprint(b.Func)
+	if str == "false" {
+		t.Fatalf("too much trimming")
+	}
+	t.Logf("trimmed = %s", str)
+	r, err := b.Eval([]byte("abc"))
+	if err != nil {
+		panic(err)
+	}
+	if r != true {
+		t.Fatalf("expected true")
+	}
+}
+
+func TestList(t *testing.T) {
+	expr := &ast.Expr{
+		Function: &ast.Function{
+			Name: "eq",
+			Params: []*ast.Expr{
+				{
+					Function: &ast.Function{
+						Name: "elem",
+						Params: []*ast.Expr{
+							{
+								List: &ast.List{
+									Elems: []*ast.Expr{
+										{
+											Terminal: &ast.Terminal{
+												StringValue: proto.String("abc"),
+											},
+										},
+									},
+								},
+							},
+							{
+								Terminal: &ast.Terminal{
+									Int64Value: proto.Int64(0),
+								},
+							},
+						},
+					},
+				},
+				{
+					Terminal: &ast.Terminal{
+						StringValue: proto.String("abc"),
+					},
+				},
+			},
+		},
+	}
+	b, err := NewBool(expr)
+	if err != nil {
+		panic(err)
+	}
+	str := funcs.Sprint(b.Func)
+	if str != "true" {
+		t.Fatalf("not enough trimming on %s", str)
+	}
+	r, err := b.Eval(nil)
+	if err != nil {
+		panic(err)
+	}
+	if r != true {
 		t.Fatalf("expected true")
 	}
 }

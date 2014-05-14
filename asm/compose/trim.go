@@ -37,6 +37,29 @@ func TrimBool(f funcs.Bool) (funcs.Bool, error) {
 	return trimmed.(funcs.Bool), nil
 }
 
+func trimList(f interface{}) (interface{}, error) {
+	this := reflect.ValueOf(f).Elem()
+	list := this.Field(0)
+	newList := reflect.MakeSlice(list.Type(), list.Len(), list.Len())
+	trimable := true
+	for i := 0; i < list.Len(); i++ {
+		trimmed, err := trim(list.Index(i).Interface())
+		if err != nil {
+			return nil, err
+		}
+		trimmedValue := reflect.ValueOf(trimmed)
+		newList.Index(i).Set(trimmedValue)
+		if !trimmedValue.Type().Implements(constTyp) {
+			trimable = false
+		}
+	}
+	this.Field(0).Set(newList)
+	if !trimable {
+		return f, nil
+	}
+	return funcs.NewConst(reflect.ValueOf(f).MethodByName("Eval").Call(nil)[0].Interface()), nil
+}
+
 func trim(f interface{}) (interface{}, error) {
 	if reflect.TypeOf(f).Implements(varTyp) {
 		return f, nil
@@ -47,6 +70,13 @@ func trim(f interface{}) (interface{}, error) {
 	this := reflect.ValueOf(f).Elem()
 	trimable := true
 	for i := 0; i < this.NumField(); i++ {
+		var trimmed interface{}
+		var err error
+		if this.Field(i).Type().Kind() == reflect.Slice {
+			if _, ok := this.Field(i).Type().Elem().MethodByName("Eval"); ok {
+				trimable = false
+			}
+		}
 		if _, ok := this.Field(i).Type().MethodByName("Eval"); !ok {
 			continue
 		}
@@ -54,7 +84,11 @@ func trim(f interface{}) (interface{}, error) {
 			trimable = false
 			continue
 		}
-		trimmed, err := trim(this.Field(i).Interface())
+		if this.Field(i).Elem().Type().Implements(listOfTyp) {
+			trimmed, err = trimList(this.Field(i).Interface())
+		} else {
+			trimmed, err = trim(this.Field(i).Interface())
+		}
 		if err != nil {
 			return nil, err
 		}

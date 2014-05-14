@@ -22,7 +22,7 @@ import (
 )
 
 type Bool interface {
-	Eval([]byte) bool
+	Eval([]byte) (bool, error)
 }
 
 type Variable interface {
@@ -30,8 +30,9 @@ type Variable interface {
 }
 
 type composedBool struct {
-	Vars []Variable
-	Func funcs.Bool
+	Vars    []Variable
+	Catcher funcs.Catcher
+	Func    funcs.Bool
 }
 
 type errInit struct {
@@ -44,18 +45,33 @@ func (this *errInit) Error() string {
 }
 
 var (
-	varTyp   = reflect.TypeOf((*funcs.Variable)(nil)).Elem()
-	constTyp = reflect.TypeOf((*funcs.Const)(nil)).Elem()
-	initTyp  = reflect.TypeOf((*funcs.Init)(nil)).Elem()
+	varTyp        = reflect.TypeOf((*funcs.Variable)(nil)).Elem()
+	constTyp      = reflect.TypeOf((*funcs.Const)(nil)).Elem()
+	initTyp       = reflect.TypeOf((*funcs.Init)(nil)).Elem()
+	setCatcherTyp = reflect.TypeOf((*funcs.SetCatcher)(nil)).Elem()
+	listOfTyp     = reflect.TypeOf((*funcs.ListOf)(nil)).Elem()
 )
 
-func NewBool(expr *ast.Expr) (Bool, error) {
+var (
+	debug = true
+)
+
+func NewBool(expr *ast.Expr) (*composedBool, error) {
 	e, err := composeBool(expr)
 	if err != nil {
 		return nil, err
 	}
+	c := funcs.NewCatcher(debug)
+	setCatcherImpls := FuncImplements(e, setCatcherTyp)
+	for _, t := range setCatcherImpls {
+		t.(funcs.SetCatcher).SetCatcher(c)
+	}
+	c.Clear()
 	e, err = TrimBool(e)
 	if err != nil {
+		return nil, err
+	}
+	if err := c.GetError(); err != nil {
 		return nil, err
 	}
 	initImpls := FuncImplements(e, initTyp)
@@ -70,14 +86,15 @@ func NewBool(expr *ast.Expr) (Bool, error) {
 	for i := range impls {
 		vars[i] = impls[i].(Variable)
 	}
-	return &composedBool{vars, e}, nil
+	return &composedBool{vars, c, e}, nil
 }
 
-func (this *composedBool) Eval(buf []byte) bool {
+func (this *composedBool) Eval(buf []byte) (bool, error) {
+	this.Catcher.Clear()
 	for _, v := range this.Vars {
 		v.SetVariable(buf)
 	}
-	return this.Func.Eval()
+	return this.Func.Eval(), this.Catcher.GetError()
 }
 
 func FuncImplements(i interface{}, typ reflect.Type) []interface{} {
@@ -87,10 +104,24 @@ func FuncImplements(i interface{}, typ reflect.Type) []interface{} {
 		if _, ok := e.Field(i).Type().MethodByName("Eval"); !ok {
 			continue
 		}
-		is = append(is, FuncImplements(e.Field(i).Interface(), typ)...)
+		if e.Field(i).Elem().Type().Implements(listOfTyp) {
+			is = append(is, ListImplements(e.Field(i).Interface(), typ)...)
+		} else {
+			is = append(is, FuncImplements(e.Field(i).Interface(), typ)...)
+		}
 	}
 	if reflect.ValueOf(i).Type().Implements(typ) {
 		is = append(is, i)
+	}
+	return is
+}
+
+func ListImplements(i interface{}, typ reflect.Type) []interface{} {
+	e := reflect.ValueOf(i).Elem()
+	var is []interface{}
+	list := e.Field(0)
+	for i := 0; i < list.Len(); i++ {
+		is = append(is, FuncImplements(list.Index(i).Interface(), typ)...)
 	}
 	return is
 }

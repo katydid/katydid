@@ -31,6 +31,8 @@ func (this *listOfFloat64) String() string {
 	return "[]float64{" + strings.Join(ss, ",") + "}"
 }
 
+func (this *listOfFloat64) IsListOf() {}
+
 type listOfFloat32 struct {
 	List []Float32
 }
@@ -54,6 +56,8 @@ func (this *listOfFloat32) String() string {
 	}
 	return "[]float32{" + strings.Join(ss, ",") + "}"
 }
+
+func (this *listOfFloat32) IsListOf() {}
 
 type listOfInt64 struct {
 	List []Int64
@@ -79,6 +83,8 @@ func (this *listOfInt64) String() string {
 	return "[]int64{" + strings.Join(ss, ",") + "}"
 }
 
+func (this *listOfInt64) IsListOf() {}
+
 type listOfUint64 struct {
 	List []Uint64
 }
@@ -102,6 +108,8 @@ func (this *listOfUint64) String() string {
 	}
 	return "[]uint64{" + strings.Join(ss, ",") + "}"
 }
+
+func (this *listOfUint64) IsListOf() {}
 
 type listOfInt32 struct {
 	List []Int32
@@ -127,6 +135,8 @@ func (this *listOfInt32) String() string {
 	return "[]int32{" + strings.Join(ss, ",") + "}"
 }
 
+func (this *listOfInt32) IsListOf() {}
+
 type listOfBool struct {
 	List []Bool
 }
@@ -150,6 +160,8 @@ func (this *listOfBool) String() string {
 	}
 	return "[]bool{" + strings.Join(ss, ",") + "}"
 }
+
+func (this *listOfBool) IsListOf() {}
 
 type listOfString struct {
 	List []String
@@ -175,6 +187,8 @@ func (this *listOfString) String() string {
 	return "[]string{" + strings.Join(ss, ",") + "}"
 }
 
+func (this *listOfString) IsListOf() {}
+
 type listOfBytes struct {
 	List []Bytes
 }
@@ -199,6 +213,8 @@ func (this *listOfBytes) String() string {
 	return "[][]byte{" + strings.Join(ss, ",") + "}"
 }
 
+func (this *listOfBytes) IsListOf() {}
+
 type listOfUint32 struct {
 	List []Uint32
 }
@@ -222,3 +238,5 @@ func (this *listOfUint32) String() string {
 	}
 	return "[]uint32{" + strings.Join(ss, ",") + "}"
 }
+
+func (this *listOfUint32) IsListOf() {}
