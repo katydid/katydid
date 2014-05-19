@@ -82,6 +82,7 @@ func nfd(v1 string) string
 func nfkc(v1 string) string
 func nfkd(v1 string) string
 func not(v1 bool) bool
+func now() int64
 func or(v1 bool,v2 bool) bool
 func print(e [][]byte) [][]byte
 func print(e []bool) []bool
