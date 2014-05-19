@@ -7,6 +7,8 @@ katydid
 
 Katydid is still in an experimental phase.
 
+Documentation is a work in progress http://awalterschulze.github.io/katydid
+
 Name
 ----
 
@@ -32,27 +34,7 @@ Katydid tries to do the same by applying Tree Automata to Protocol Buffers.
 Examples
 --------
 
-Using a bottom up hedge (unranked tree) automata we can create pretty expressive queries.
-
-http://arborist.katydid.ws
-
-http://arborist.katydid.ws/example/ContextRobert
-
-http://arborist.katydid.ws/example/ContextDavid
-
-http://arborist.katydid.ws/example/AndNameTelephoneDavid
-
-http://arborist.katydid.ws/example/OrNameTelephoneDavid
-
-http://arborist.katydid.ws/example/EmptyOrNilNoName
-
-http://arborist.katydid.ws/example/ListIndexAddressMover
-
-http://arborist.katydid.ws/example/ListIndexAddressShaker
-
-http://arborist.katydid.ws/example/RecursiveSrcTreePath
-
-http://arborist.katydid.ws/example/RecursiveSrcTreeSyscall
+http://awalterschulze.github.io/katydid/examples/
 
 Language
 --------
@@ -68,7 +50,9 @@ Current Functions
 
 Please see the [list of functions](https://github.com/awalterschulze/katydid/blob/master/list_of_functions.txt).
 
-This list can easily be extended with your own functions using the Register pattern.  See the funcs package for examples.
+This list can easily be extended with your own functions using the Register pattern.
+
+http://awalterschulze.github.io/katydid/addingfunctions/
 
 Streaming
 ---------
