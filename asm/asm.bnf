@@ -18,11 +18,11 @@ _lineComment : '/' '/' {.} '\n' ;
 
 _blockComment : '/' '*' {. | '*'} '*' '/' ;
 
-!comment : _lineComment | _blockComment ;
+_comment : _lineComment | _blockComment ;
 
-!whitespace : ' ' | '\t' | '\n' | '\r' ;
+_ws : ' ' | '\t' | '\n' | '\r' ; //whitespace
 
-_ws : ' ' | '\t' | '\n' | '\r' ;
+space : _comment | _ws ;
 
 _decimal_digit : '0' - '9' ;
 _octal_digit : '0' - '7' ;
@@ -88,6 +88,11 @@ import (
 )
 >>
 
+AllRules
+	: Rules Space << $0.(*ast.Rules).SetSpace($1.(*ast.Space)), nil >>
+	| Rules << $0, nil >>
+	;
+
 Rules
 	: Rules Rule  << ast.AppendRule($0, $1) >>
 	| Rule << ast.NewRule($0) >>
@@ -102,89 +107,111 @@ Rule
 	;
 
 Root
-	: "root" "=" id "." id << &ast.Init{Package: ast.IdToString($2), Message: ast.IdToString($4), State: "root"}, nil >>
+	: Space "root" Equal Space id "." id << &ast.Root{Before: $0.(*ast.Space), Equal: $2.(*ast.Keyword), BeforeQualId: $3.(*ast.Space), Package: ast.NewString($4), Message: ast.NewString($6), State: "root"}, nil >>
+	| "root" Equal Space id "." id << &ast.Root{Equal: $1.(*ast.Keyword), BeforeQualId: $2.(*ast.Space), Package: ast.NewString($3), Message: ast.NewString($5), State: "root"}, nil >>
+	| Space "root" Equal id "." id << &ast.Root{Before: $0.(*ast.Space), Equal: $2.(*ast.Keyword), Package: ast.NewString($3), Message: ast.NewString($5), State: "root"}, nil >>
+	| "root" Equal id "." id << &ast.Root{Equal: $1.(*ast.Keyword), Package: ast.NewString($2), Message: ast.NewString($4), State: "root"}, nil >>
 	;
 
 Init
-	: id "." id "=" id << &ast.Init{Package: ast.IdToString($0), Message: ast.IdToString($2), State: ast.IdToString($4)}, nil >>
+	: Space id "." id Equal Space id << &ast.Init{
+		Before: $0.(*ast.Space),
+		Package: ast.NewString($1),
+		Message: ast.NewString($3),
+		Equal: $4.(*ast.Keyword),
+		BeforeState: $5.(*ast.Space),
+		State: ast.NewString($6)}, nil >>
+	| id "." id Equal Space id << &ast.Init{
+		Package: ast.NewString($0),
+		Message: ast.NewString($2),
+		Equal: $3.(*ast.Keyword),
+		BeforeState: $4.(*ast.Space),
+		State: ast.NewString($5)}, nil >>
+	| Space id "." id Equal id << &ast.Init{
+		Before: $0.(*ast.Space),
+		Package: ast.NewString($1),
+		Message: ast.NewString($3),
+		Equal: $4.(*ast.Keyword),
+		State: ast.NewString($5)}, nil >>
+	| id "." id Equal id << &ast.Init{
+		Package: ast.NewString($0),
+		Message: ast.NewString($2),
+		Equal: $3.(*ast.Keyword),
+		State: ast.NewString($4)}, nil >>
 	;
 
 Transition
-	: id id "=" id << &ast.Transition{Src: ast.IdToString($0), Input: ast.IdToString($1), Dst: ast.IdToString($3)}, nil >>
+	: Space id Space id Equal Space id << &ast.Transition{Before: $0.(*ast.Space), Src: ast.NewString($1), BeforeInput: $2.(*ast.Space), Input: ast.NewString($3), Equal: $4.(*ast.Keyword), BeforeDst: $5.(*ast.Space), Dst: ast.NewString($6)}, nil >>
+	| id Space id Equal Space id << &ast.Transition{Src: ast.NewString($1), BeforeInput: $2.(*ast.Space), Input: ast.NewString($3), Equal: $4.(*ast.Keyword), BeforeDst: $5.(*ast.Space), Dst: ast.NewString($6)}, nil >>
+	| Space id Space id Equal id << &ast.Transition{Before: $0.(*ast.Space), Src: ast.NewString($1), BeforeInput: $2.(*ast.Space), Input: ast.NewString($3), Equal: $4.(*ast.Keyword), Dst: ast.NewString($6)}, nil >>
+	| id Space id Equal id << &ast.Transition{Src: ast.NewString($1), BeforeInput: $2.(*ast.Space), Input: ast.NewString($3), Equal: $4.(*ast.Keyword), Dst: ast.NewString($6)}, nil >>
 	;
 
 IfExpr
-	: "if" Expr "then" StateExpr "else" StateExpr << &ast.IfExpr{Condition: $1.(*ast.Expr), Then: $3.(*ast.StateExpr), Else: $5.(*ast.StateExpr)}, nil >>
+	: Space "if" Expr Then StateExpr Else StateExpr << &ast.IfExpr{Before: $0.(*ast.Space), Condition: $2.(*ast.Expr), ThenWord: $3.(*ast.Keyword), ThenClause: $4.(*ast.StateExpr), ElseWord: $5.(*ast.Keyword), ElseClause: $6.(*ast.StateExpr)}, nil >>
+	| "if" Expr Then StateExpr Else StateExpr << &ast.IfExpr{Condition: $2.(*ast.Expr), ThenWord: $3.(*ast.Keyword), ThenClause: $4.(*ast.StateExpr), ElseWord: $5.(*ast.Keyword), ElseClause: $6.(*ast.StateExpr)}, nil >>
 	;
 
 StateExpr
-	: "{" IfExpr "}" << &ast.StateExpr{IfExpr: $1.(*ast.IfExpr)}, nil >>
-	| id << &ast.StateExpr{State: proto.String(ast.IdToString($0))}, nil >>
+	: Space "{" IfExpr CloseCurly << &ast.StateExpr{Before: $0.(*ast.Space), IfExpr: $2.(*ast.IfExpr), CloseCurly: $3.(*ast.Keyword)}, nil >>
+	| Space id << &ast.StateExpr{Before: $0.(*ast.Space), State: proto.String(ast.NewString($1))}, nil >>
+	| "{" IfExpr CloseCurly << &ast.StateExpr{IfExpr: $2.(*ast.IfExpr), CloseCurly: $3.(*ast.Keyword)}, nil >>
+	| id << &ast.StateExpr{State: proto.String(ast.NewString($1))}, nil >>
 	;
 
 Function
-	: id "(" Params ")" << &ast.Function{Name: ast.IdToString($0), Params: $2.([]*ast.Expr)}, nil >>
-	| id "(" ")" << &ast.Function{Name: ast.IdToString($0), Params: nil}, nil >>
-	| "(" Expr Comparator Expr ")" << &ast.Function{Name: $2.(string), Params: []*ast.Expr{$1.(*ast.Expr), $3.(*ast.Expr)}}, nil >>
-	;
-
-Comparator
-	: "=="  << "eq", nil >>
-	| "<"   << "lt", nil >>
-	| "<="  << "le", nil >>
-	| ">"   << "gt", nil >>
-	| ">="  << "ge", nil >>
-	| "&&"  << "and", nil >>
-	| "||"  << "or", nil >>
-	| "or"  << "or", nil >>
-	| "and" << "and", nil >>
-	;
-
-Params
-	: Params "," Expr << append($0.([]*ast.Expr), $2.(*ast.Expr)), nil >>
-	| Expr << []*ast.Expr{$0.(*ast.Expr)}, nil >>
-	;
-
-Expr
-	: Terminal << &ast.Expr{Terminal: $0.(*ast.Terminal)}, nil >>
-	| Function << &ast.Expr{Function: $0.(*ast.Function)}, nil >>
-	| List << &ast.Expr{List: $0.(*ast.List)}, nil >>
+	: Space id OpenParen Exprs CloseParen << &ast.Function{Before: $0.(*ast.Space), Name: ast.NewString($1), OpenParen: $2.(*ast.Keyword), Params: $3.([]*ast.Expr), CloseParen: $4.(*ast.Keyword)}, nil >>
+	| Space id OpenParen CloseParen << &ast.Function{Before: $0.(*ast.Space), Name: ast.NewString($1), OpenParen: $2.(*ast.Keyword), CloseParen: $3.(*ast.Keyword)}, nil >>
+	| id OpenParen Exprs CloseParen << &ast.Function{Name: ast.NewString($0), OpenParen: $1.(*ast.Keyword), Params: $2.([]*ast.Expr), CloseParen: $3.(*ast.Keyword)}, nil >>
+	| id OpenParen CloseParen << &ast.Function{Name: ast.NewString($0), OpenParen: $1.(*ast.Keyword), CloseParen: $2.(*ast.Keyword)}, nil >>
 	;
 
 List
-	: "{" Exprs "}" << &ast.List{Elems: $1.([]*ast.Expr)}, nil >>
-	| ListType "{" Exprs "}" << &ast.List{Type: $0.(*types.Type), Elems: $2.([]*ast.Expr)}, nil >>
-	| ListType "{" "}" << &ast.List{Type: $0.(*types.Type)}, nil >>
+	: Space ListType OpenCurly Exprs CloseCurly << &ast.List{Before: $0.(*ast.Space), Type: $1.(types.Type), OpenCurly: $2.(*ast.Keyword), Elems: $3.([]*ast.Expr), CloseCurly: $4.(*ast.Keyword)}, nil >>
+	| ListType OpenCurly Exprs CloseCurly << &ast.List{Type: $0.(types.Type), OpenCurly: $1.(*ast.Keyword), Elems: $2.([]*ast.Expr), CloseCurly: $3.(*ast.Keyword)}, nil >>
+	| Space ListType OpenCurly CloseCurly << &ast.List{Before: $0.(*ast.Space), Type: $1.(types.Type), OpenCurly: $2.(*ast.Keyword), CloseCurly: $3.(*ast.Keyword)}, nil >>
+	| ListType OpenCurly CloseCurly << &ast.List{Type: $0.(types.Type), OpenCurly: $1.(*ast.Keyword), CloseCurly: $2.(*ast.Keyword)}, nil >>
 	;
 
 Exprs
 	: Expr << []*ast.Expr{$0.(*ast.Expr)}, nil >>
-	| Exprs "," Expr << append($0.([]*ast.Expr), $2.(*ast.Expr)), nil >>
+	| Exprs Comma Expr << append($0.([]*ast.Expr), ast.SetExprComma($2, $1)), nil >>
+	;
+
+Expr
+	: SpaceTerminal << &ast.Expr{Terminal: $0.(*ast.Terminal)}, nil >>
+	| Function << &ast.Expr{Function: $0.(*ast.Function)}, nil >>
+	| List << &ast.Expr{List: $0.(*ast.List)}, nil >>
 	;
 
 ListType
-	: "[]bool" << types.LIST_BOOL.Enum(), nil >>
-	| "[]int64" << types.LIST_INT64.Enum(), nil >>
-	| "[]int32" << types.LIST_INT32.Enum(), nil >>
-	| "[]uint64" << types.LIST_UINT64.Enum(), nil >>
-	| "[]uint32" << types.LIST_UINT32.Enum(), nil >>
-	| "[]double" << types.LIST_DOUBLE.Enum(), nil >>
-	| "[]float" << types.LIST_FLOAT.Enum(), nil >>
-	| "[]string" << types.LIST_STRING.Enum(), nil >>
-	| "[][]byte" << types.LIST_BYTES.Enum(), nil >>
+	: "[]bool" << types.LIST_BOOL, nil >>
+	| "[]int64" << types.LIST_INT64, nil >>
+	| "[]int32" << types.LIST_INT32, nil >>
+	| "[]uint64" << types.LIST_UINT64, nil >>
+	| "[]uint32" << types.LIST_UINT32, nil >>
+	| "[]double" << types.LIST_DOUBLE, nil >>
+	| "[]float" << types.LIST_FLOAT, nil >>
+	| "[]string" << types.LIST_STRING, nil >>
+	| "[][]byte" << types.LIST_BYTES, nil >>
+	;
+
+SpaceTerminal
+	: Terminal << $0, nil >>
+	| Space Terminal << ast.SetTerminalSpace($1, $0), nil >>
 	;
 
 Terminal
-	: Bool << &ast.Terminal{BoolValue: proto.Bool($0.(bool))}, nil >>
-	| int64_lit << &ast.Terminal{Int64Value: ast.ToInt64(ast.Strip($0, "int64"))}, nil >>
-	| int32_lit << &ast.Terminal{Int32Value: ast.ToInt32(ast.Strip($0, "int32"))}, nil >>
-	| uint64_lit << &ast.Terminal{Uint64Value: ast.ToUint64(ast.Strip($0, "uint64"))}, nil >>
-	| uint32_lit << &ast.Terminal{Uint32Value: ast.ToUint32(ast.Strip($0, "uint32"))}, nil >>
-	| double_lit << &ast.Terminal{DoubleValue: ast.ToFloat64(ast.Strip($0, "double"))}, nil >>
-	| float_lit << &ast.Terminal{FloatValue: ast.ToFloat32(ast.Strip($0, "float"))}, nil >>
-	| string_lit << &ast.Terminal{StringValue: proto.String(ast.ToString($0))}, nil >>
+	: Bool << ast.NewBoolTerminal($0) >>
+	| int64_lit << ast.NewInt64Terminal($0) >>
+	| int32_lit << ast.NewInt32Terminal($0) >>
+	| uint64_lit << ast.NewUint64Terminal($0) >>
+	| uint32_lit << ast.NewUint32Terminal($0) >>
+	| double_lit << ast.NewDoubleTerminal($0) >>
+	| float_lit << ast.NewFloatTerminal($0) >>
+	| string_lit << ast.NewStringTerminal($0) >>
 	| bytes_lit << ast.NewBytesTerminal($0) >>
-	| id "." id "." id << &ast.Terminal{Variable: &ast.Variable{Package: ast.IdToString($0), Message: ast.IdToString($2), Field: ast.IdToString($4)}}, nil >>
+	| id "." id "." id << ast.NewVariableTerminal($0, $2, $4) >>
 	;
 
 Bool
@@ -192,3 +219,47 @@ Bool
 	| "false" << false, nil >>
 	;
 
+Equal
+	: "="  << ast.NewKeyword(nil, $0), nil >>
+	| Space "=" << ast.NewKeyword($0, $1), nil >>
+	;
+
+Then
+	: "then" << ast.NewKeyword(nil, $0), nil >>
+	| Space "then" << ast.NewKeyword($0, $1), nil >>
+	;
+
+Else
+	: "else" << ast.NewKeyword(nil, $0), nil >>
+	| Space "else" << ast.NewKeyword($0, $1), nil >>
+	;
+
+OpenParen
+	: "(" << ast.NewKeyword(nil, $0), nil >>
+	| Space "(" << ast.NewKeyword($0, $1), nil >>
+	;
+
+CloseParen
+	: ")" << ast.NewKeyword(nil, $0), nil >>
+	| Space ")" << ast.NewKeyword($0, $1), nil >>
+	;
+
+OpenCurly
+	: "{" << ast.NewKeyword(nil, $0), nil >>
+	| Space "{" << ast.NewKeyword($0, $1), nil >>
+	;
+
+CloseCurly
+	: "}" << ast.NewKeyword(nil, $0), nil >>
+	| Space "}" << ast.NewKeyword($0, $1), nil >>
+	;
+
+Comma
+	: "," << ast.NewKeyword(nil, $0), nil >>
+	| Space "," << ast.NewKeyword($0, $1), nil >>
+	;
+
+Space
+	: Space space << ast.AppendSpace($0, $1), nil >>
+	| space << ast.NewSpace($0), nil >>
+	;

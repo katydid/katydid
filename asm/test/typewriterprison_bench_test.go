@@ -59,7 +59,7 @@ reject _ = reject
 
 main.PocketRoses = start
 
-if (decInt64(main.PocketRoses.DaisySled) ==  int64(1)) then accept else reject
+if eq(decInt64(main.PocketRoses.DaisySled), int64(1)) then accept else reject
 `
 
 func TestTypewriterPrisonDaisySled(t *testing.T) {

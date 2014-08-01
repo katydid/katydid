@@ -20,18 +20,28 @@ type Visitor interface {
 
 func (this *Rules) Walk(v Visitor) {
 	v = v.Visit(this)
+	for i := range this.Rules {
+		this.Rules[i].Walk(v)
+	}
+}
+
+func (this *Rule) Walk(v Visitor) {
 	if this.Root != nil {
-		this.GetRoot().Walk(v)
+		this.Root.Walk(v)
 	}
-	for _, init := range this.GetInit() {
-		init.Walk(v)
+	if this.Init != nil {
+		this.Init.Walk(v)
 	}
-	for _, trans := range this.GetTransition() {
-		trans.Walk(v)
+	if this.Transition != nil {
+		this.Transition.Walk(v)
 	}
-	for _, ifexpr := range this.GetIfExpr() {
-		ifexpr.Walk(v)
+	if this.IfExpr != nil {
+		this.IfExpr.Walk(v)
 	}
+}
+
+func (this *Root) Walk(v Visitor) {
+	v.Visit(this)
 }
 
 func (this *Init) Walk(v Visitor) {
@@ -45,8 +55,8 @@ func (this *Transition) Walk(v Visitor) {
 func (this *IfExpr) Walk(v Visitor) {
 	v = v.Visit(this)
 	this.GetCondition().Walk(v)
-	this.GetThen().Walk(v)
-	this.GetElse().Walk(v)
+	this.GetThenClause().Walk(v)
+	this.GetElseClause().Walk(v)
 }
 
 func (this *StateExpr) Walk(v Visitor) {

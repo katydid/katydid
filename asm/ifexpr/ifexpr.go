@@ -72,11 +72,11 @@ func Compile(ifexpr *ast.IfExpr, nameToState NameToState, c Catcher) (StateExpr,
 	if err != nil {
 		return nil, err
 	}
-	succ, err := compile(ifexpr.GetThen(), nameToState, c)
+	succ, err := compile(ifexpr.GetThenClause(), nameToState, c)
 	if err != nil {
 		return nil, err
 	}
-	fail, err := compile(ifexpr.GetElse(), nameToState, c)
+	fail, err := compile(ifexpr.GetElseClause(), nameToState, c)
 	if err != nil {
 		return nil, err
 	}
@@ -88,8 +88,8 @@ func GetVariable(ifExpr *ast.IfExpr) (*ast.Variable, error) {
 	if err != nil {
 		return nil, err
 	}
-	if ifExpr.GetThen().IfExpr != nil {
-		var2, err := GetVariable(ifExpr.GetThen().GetIfExpr())
+	if ifExpr.GetThenClause().IfExpr != nil {
+		var2, err := GetVariable(ifExpr.GetThenClause().GetIfExpr())
 		if err != nil {
 			return nil, err
 		}
@@ -103,8 +103,8 @@ func GetVariable(ifExpr *ast.IfExpr) (*ast.Variable, error) {
 			}
 		}
 	}
-	if ifExpr.GetElse().IfExpr != nil {
-		var2, err := GetVariable(ifExpr.GetElse().GetIfExpr())
+	if ifExpr.GetElseClause().IfExpr != nil {
+		var2, err := GetVariable(ifExpr.GetElseClause().GetIfExpr())
 		if err != nil {
 			return nil, err
 		}

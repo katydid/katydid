@@ -14,7 +14,7 @@ Katydid tries to do the same by applying Tree Automata to Protocol Buffers.
 
 [![Build Status](https://drone.io/github.com/awalterschulze/katydid/status.png)](https://drone.io/github.com/awalterschulze/katydid/latest)
 
-Katydid is still in an experimental phase.
+Katydid is ready for use, but backwards compatibility is not yet guaranteed.
 
 Documentation is a work in progress http://awalterschulze.github.io/katydid
 

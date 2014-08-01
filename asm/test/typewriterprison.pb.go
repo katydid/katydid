@@ -558,14 +558,23 @@ func NewPopulatedPocketRoses(r randyTypewriterprison, easy bool) *PocketRoses {
 	}
 	if r.Intn(10) != 0 {
 		v4 := r.Int63()
+		if r.Intn(2) == 0 {
+			v4 *= -1
+		}
 		this.BadgeShopping = &v4
 	}
 	if r.Intn(10) != 0 {
 		v5 := r.Int63()
+		if r.Intn(2) == 0 {
+			v5 *= -1
+		}
 		this.DaisySled = &v5
 	}
 	if r.Intn(10) != 0 {
 		v6 := r.Int63()
+		if r.Intn(2) == 0 {
+			v6 *= -1
+		}
 		this.SubmarineSaw = &v6
 	}
 	if r.Intn(10) != 0 {
@@ -714,7 +723,11 @@ func randFieldTypewriterprison(data []byte, r randyTypewriterprison, fieldNumber
 	switch wire {
 	case 0:
 		data = encodeVarintPopulateTypewriterprison(data, uint64(key))
-		data = encodeVarintPopulateTypewriterprison(data, uint64(r.Int63()))
+		v26 := r.Int63()
+		if r.Intn(2) == 0 {
+			v26 *= -1
+		}
+		data = encodeVarintPopulateTypewriterprison(data, uint64(v26))
 	case 1:
 		data = encodeVarintPopulateTypewriterprison(data, uint64(key))
 		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))

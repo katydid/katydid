@@ -82,8 +82,8 @@ func (this *table) allocIfStates(expr *ast.StateExpr) {
 		this.allocState(expr.GetState())
 		return
 	}
-	this.allocIfStates(expr.GetIfExpr().GetThen())
-	this.allocIfStates(expr.GetIfExpr().GetElse())
+	this.allocIfStates(expr.GetIfExpr().GetThenClause())
+	this.allocIfStates(expr.GetIfExpr().GetElseClause())
 }
 
 func (this *table) finalize() {
@@ -107,8 +107,8 @@ func New(transitions []*ast.Transition, ifs []*ast.IfExpr) Table {
 		tab.allocTrans(trans.GetSrc(), trans.GetInput(), trans.GetDst())
 	}
 	for _, ifExpr := range ifs {
-		tab.allocIfStates(ifExpr.GetThen())
-		tab.allocIfStates(ifExpr.GetElse())
+		tab.allocIfStates(ifExpr.GetThenClause())
+		tab.allocIfStates(ifExpr.GetElseClause())
 	}
 	tab.finalize()
 	return tab
@@ -116,6 +116,7 @@ func New(transitions []*ast.Transition, ifs []*ast.IfExpr) Table {
 
 type Table interface {
 	NameToState(name string) (int, error)
+	StateToName(state int) string
 	Trans(src int, input int) (int, error)
 	NoEscapeFrom(src int) bool
 	Dot() string
@@ -127,6 +128,13 @@ func (this *table) NameToState(name string) (int, error) {
 		return 0, &errUnknownStateName{name}
 	}
 	return s, nil
+}
+
+func (this *table) StateToName(state int) string {
+	if state >= len(this.stateToName) {
+		return ""
+	}
+	return this.stateToName[state]
 }
 
 func (this *table) Trans(src int, input int) (int, error) {

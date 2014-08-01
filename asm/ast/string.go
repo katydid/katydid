@@ -15,38 +15,99 @@
 package ast
 
 import (
-	"fmt"
+	"github.com/awalterschulze/katydid/types"
 	"strings"
 )
 
 func (this *Rules) String() string {
-	return this.Dot()
+	lines := make([]string, len(this.Rules))
+	for _, r := range this.Rules {
+		lines = append(lines, r.String())
+	}
+	return strings.Join(lines, "") + this.Final.String()
+}
+
+func (this *Rule) String() string {
+	if this.Root != nil {
+		return this.Root.String()
+	}
+	if this.Init != nil {
+		return this.Init.String()
+	}
+	if this.Transition != nil {
+		return this.Transition.String()
+	}
+	if this.IfExpr != nil {
+		return this.IfExpr.String()
+	}
+	panic("unreachable")
+}
+
+func (this *Root) String() string {
+	return this.Before.String() + "root" + this.Equal.String() + this.BeforeQualId.String() + this.Package + "." + this.Message
 }
 
 func (this *Init) String() string {
-	return this.Dot()
+	return this.Before.String() + this.Package + "." + this.Message + this.Equal.String() + this.BeforeState.String() + this.State
 }
 
 func (this *Transition) String() string {
-	return this.Dot()
+	return this.Before.String() + this.Src + this.BeforeInput.String() + this.Input + this.Equal.String() + this.BeforeDst.String() + this.Dst
 }
 
 func (this *IfExpr) String() string {
-	return this.Dot()
+	return this.Before.String() + "if" + this.Condition.String() + this.ThenWord.String() + this.ThenClause.String() + this.ElseWord.String() + this.ElseClause.String()
 }
 
 func (this *StateExpr) String() string {
+	space := this.Before.String()
 	if this.State != nil {
-		return this.GetState()
+		return space + this.GetState()
 	}
-	return this.GetIfExpr().String()
+	return space + "{" + this.GetIfExpr().String() + this.CloseCurly.String()
 }
 
 func (this *Expr) String() string {
+	space := this.Comma.String()
 	if this.Terminal != nil {
-		return this.GetTerminal().String()
+		return space + this.GetTerminal().String()
 	}
-	return this.GetFunction().String()
+	if this.List != nil {
+		return space + this.GetList().String()
+	}
+	return space + this.GetFunction().String()
+}
+
+func (this *List) String() string {
+	es := make([]string, len(this.GetElems()))
+	for i, v := range this.GetElems() {
+		es[i] = v.String()
+	}
+	return this.Before.String() + listTypeToString(this.Type) + this.OpenCurly.String() + strings.Join(es, "") + this.CloseCurly.String()
+}
+
+func listTypeToString(typ types.Type) string {
+	switch typ {
+	case types.LIST_DOUBLE:
+		return "[]double"
+	case types.LIST_FLOAT:
+		return "[]float"
+	case types.LIST_INT64:
+		return "[]int64"
+	case types.LIST_UINT64:
+		return "[]uint64"
+	case types.LIST_INT32:
+		return "[]int32"
+	case types.LIST_BOOL:
+		return "[]bool"
+	case types.LIST_STRING:
+		return "[]string"
+	case types.LIST_BYTES:
+		return "[][]byte"
+	case types.LIST_UINT32:
+		return "[]uint32"
+	}
+	panic("unreachable")
 }
 
 func (this *Function) String() string {
@@ -54,46 +115,27 @@ func (this *Function) String() string {
 	for i, v := range this.GetParams() {
 		ps[i] = v.String()
 	}
-	return this.GetName() + "(" + strings.Join(ps, ",") + ")"
+	return this.Before.String() + this.GetName() + this.OpenParen.String() + strings.Join(ps, "") + this.CloseParen.String()
 }
 
 func (this *Terminal) String() string {
-	if this.BoolValue != nil {
-		if this.GetBoolValue() {
-			return "true"
-		}
-		return "false"
-	}
-	if this.Int64Value != nil {
-		return fmt.Sprintf("%d", this.GetInt64Value())
-	}
-	if this.Uint64Value != nil {
-		return fmt.Sprintf("%d", this.GetUint64Value())
-	}
-	if this.StringValue != nil {
-		return this.GetStringValue()
-	}
-	if this.Variable != nil {
-		return this.GetVariable().String()
-	}
-	if this.BytesValue != nil {
-		return fmt.Sprintf("%#v", this.GetBytesValue())
-	}
-	if this.Int32Value != nil {
-		return fmt.Sprintf("%d", this.GetInt32Value())
-	}
-	if this.Uint32Value != nil {
-		return fmt.Sprintf("%d", this.GetUint32Value())
-	}
-	if this.DoubleValue != nil {
-		return fmt.Sprintf("%d", this.GetDoubleValue())
-	}
-	if this.FloatValue != nil {
-		return fmt.Sprintf("%d", this.GetFloatValue())
-	}
-	panic("unreachable")
+	return this.Before.String() + this.Literal
 }
 
 func (this *Variable) String() string {
 	return this.GetPackage() + "." + this.GetMessage() + "." + this.GetField()
+}
+
+func (this *Keyword) String() string {
+	if this == nil {
+		return ""
+	}
+	return this.Before.String() + this.Value
+}
+
+func (this *Space) String() string {
+	if this == nil {
+		return ""
+	}
+	return strings.Join(this.Space, "")
 }

@@ -31,7 +31,7 @@ start tel = accept
 start _ = start
 accept _ = accept
 
-if (decString(main.Person.Telephone) == elem([]string{"0123456789"}, int64(3))) 
+if eq(decString(main.Person.Telephone), elem([]string{"0123456789"}, int64(3)))
   then tel
   else notel
 `
@@ -59,7 +59,7 @@ start tel = accept
 start _ = start
 accept _ = accept
 
-if (elem([]string{decString(main.Person.Telephone)}, int64(3)) == "0123456789") 
+if eq(elem([]string{decString(main.Person.Telephone)}, int64(3)), "0123456789") 
   then tel
   else notel
 `

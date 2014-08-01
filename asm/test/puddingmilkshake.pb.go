@@ -1221,10 +1221,16 @@ func NewPopulatedFinanceJudo(r randyPuddingmilkshake, easy bool) *FinanceJudo {
 	}
 	if r.Intn(10) != 0 {
 		v1 := r.Int63()
+		if r.Intn(2) == 0 {
+			v1 *= -1
+		}
 		this.RumourSpirit = &v1
 	}
 	if r.Intn(10) != 0 {
 		v2 := r.Int63()
+		if r.Intn(2) == 0 {
+			v2 *= -1
+		}
 		this.UserInterfaceSpanner = &v2
 	}
 	if !easy && r.Intn(10) != 0 {
@@ -1320,6 +1326,9 @@ func NewPopulatedKeyQueen(r randyPuddingmilkshake, easy bool) *KeyQueen {
 		this.SkyscraperUniversity = make([]int32, v15)
 		for i := 0; i < v15; i++ {
 			this.SkyscraperUniversity[i] = r.Int31()
+			if r.Intn(2) == 0 {
+				this.SkyscraperUniversity[i] *= -1
+			}
 		}
 	}
 	if r.Intn(10) != 0 {
@@ -1591,14 +1600,23 @@ func NewPopulatedXrayPilot(r randyPuddingmilkshake, easy bool) *XrayPilot {
 	this := &XrayPilot{}
 	if r.Intn(10) != 0 {
 		v46 := r.Int63()
+		if r.Intn(2) == 0 {
+			v46 *= -1
+		}
 		this.AnkleCoat = &v46
 	}
 	if r.Intn(10) != 0 {
 		v47 := r.Int63()
+		if r.Intn(2) == 0 {
+			v47 *= -1
+		}
 		this.ShelfSunglass = &v47
 	}
 	if r.Intn(10) != 0 {
 		v48 := r.Int63()
+		if r.Intn(2) == 0 {
+			v48 *= -1
+		}
 		this.BacteriaPaperclip = &v48
 	}
 	if !easy && r.Intn(10) != 0 {
@@ -1717,7 +1735,11 @@ func randFieldPuddingmilkshake(data []byte, r randyPuddingmilkshake, fieldNumber
 	switch wire {
 	case 0:
 		data = encodeVarintPopulatePuddingmilkshake(data, uint64(key))
-		data = encodeVarintPopulatePuddingmilkshake(data, uint64(r.Int63()))
+		v58 := r.Int63()
+		if r.Intn(2) == 0 {
+			v58 *= -1
+		}
+		data = encodeVarintPopulatePuddingmilkshake(data, uint64(v58))
 	case 1:
 		data = encodeVarintPopulatePuddingmilkshake(data, uint64(key))
 		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))

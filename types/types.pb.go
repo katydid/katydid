@@ -27,6 +27,7 @@ var _ = math.Inf
 type Type int32
 
 const (
+	UNKNOWN          Type = 0
 	ENCODED_DOUBLE   Type = 1
 	ENCODED_FLOAT    Type = 2
 	ENCODED_INT64    Type = 3
@@ -74,6 +75,7 @@ const (
 )
 
 var Type_name = map[int32]string{
+	0:   "UNKNOWN",
 	1:   "ENCODED_DOUBLE",
 	2:   "ENCODED_FLOAT",
 	3:   "ENCODED_INT64",
@@ -112,6 +114,7 @@ var Type_name = map[int32]string{
 	213: "LIST_UINT32",
 }
 var Type_value = map[string]int32{
+	"UNKNOWN":          0,
 	"ENCODED_DOUBLE":   1,
 	"ENCODED_FLOAT":    2,
 	"ENCODED_INT64":    3,

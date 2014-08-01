@@ -25,7 +25,7 @@ import (
 )
 
 var (
-	gogoprotoImportPath = "../../../../../"
+	gogoprotoImportPath = "../../../../../:../../../../../code.google.com/p/gogoprotobuf/protobuf"
 )
 
 func test(t *testing.T, protoFilename string, m proto.Message, katydidStr string, positive bool) {
@@ -37,6 +37,12 @@ func test(t *testing.T, protoFilename string, m proto.Message, katydidStr string
 	rules, err := p.ParseRules(lexer.NewLexer([]byte(katydidStr)))
 	if err != nil {
 		t.Fatalf(err.Error())
+	}
+	outputStr := rules.String()
+	if katydidStr != outputStr {
+		t.Logf("input = <<%s>>", katydidStr)
+		t.Logf("output = <<%s>>", outputStr)
+		t.Fatalf("Parsed string should output same string from ast")
 	}
 	e, err := compiler.Compile(rules, fileDescriptorSet)
 	if err != nil {

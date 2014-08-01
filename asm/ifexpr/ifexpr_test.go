@@ -48,10 +48,10 @@ func TestEasyIfExpr(t *testing.T) {
 
 	ifexpr := &ast.IfExpr{
 		Condition: expr,
-		Then: &ast.StateExpr{
+		ThenClause: &ast.StateExpr{
 			State: proto.String("true"),
 		},
-		Else: &ast.StateExpr{
+		ElseClause: &ast.StateExpr{
 			State: proto.String("false"),
 		},
 	}
@@ -97,18 +97,18 @@ func TestNestedIfExpr(t *testing.T) {
 
 	ifexpr := &ast.IfExpr{
 		Condition: expr,
-		Then: &ast.StateExpr{
+		ThenClause: &ast.StateExpr{
 			IfExpr: &ast.IfExpr{
 				Condition: expr,
-				Then: &ast.StateExpr{
+				ThenClause: &ast.StateExpr{
 					State: proto.String("true"),
 				},
-				Else: &ast.StateExpr{
+				ElseClause: &ast.StateExpr{
 					State: proto.String("falser"),
 				},
 			},
 		},
-		Else: &ast.StateExpr{
+		ElseClause: &ast.StateExpr{
 			State: proto.String("false"),
 		},
 	}

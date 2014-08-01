@@ -19,24 +19,33 @@ import (
 )
 
 func (this *Rules) Dot() string {
-	is := make([]string, len(this.GetInit()))
-	for i, v := range this.GetInit() {
-		is[i] = v.Dot()
-	}
-	ts := make([]string, len(this.GetTransition()))
-	for i, v := range this.GetTransition() {
-		ts[i] = v.Dot()
-	}
-	ifs := make([]string, len(this.GetIfExpr()))
-	for i, v := range this.GetIfExpr() {
-		ifs[i] = v.Dot()
+	ss := make([]string, len(this.Rules))
+	for i, rule := range this.Rules {
+		ss[i] = rule.Dot()
 	}
 	return "digraph {\n" +
-		this.GetRoot().String() + "\n" +
-		strings.Join(is, "\n") + "\n" +
-		strings.Join(ts, "\n") + "\n" +
-		strings.Join(ifs, "\n") + "\n" +
+		strings.Join(ss, "\n") + "\n" +
 		"}\n"
+}
+
+func (this *Rule) Dot() string {
+	if this.Root != nil {
+		return this.Root.Dot()
+	}
+	if this.Init != nil {
+		return this.Init.Dot()
+	}
+	if this.Transition != nil {
+		return this.Transition.Dot()
+	}
+	if this.IfExpr != nil {
+		return this.IfExpr.Dot()
+	}
+	panic("unreachable")
+}
+
+func (this *Root) Dot() string {
+	return "root -> " + `"` + this.GetPackage() + "." + this.GetMessage() + `"`
 }
 
 func (this *Init) Dot() string {
@@ -49,8 +58,8 @@ func (this *Transition) Dot() string {
 
 func (this *IfExpr) Dot() string {
 	s := make([]string, 2)
-	s[0] = this.GetThen().Dot(this.GetCondition().Dot(), "true")
-	s[1] = this.GetElse().Dot(this.GetCondition().Dot(), "false")
+	s[0] = this.GetThenClause().Dot(this.GetCondition().Dot(), "true")
+	s[1] = this.GetElseClause().Dot(this.GetCondition().Dot(), "false")
 	return strings.Join(s, "\n")
 }
 

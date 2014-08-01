@@ -19,6 +19,7 @@ import "code.google.com/p/gogoprotobuf/gogoproto/gogo.proto";
 //First numbers correspond with Protocol Buffer FieldDescriptorProto Type in descriptor.proto
 enum Type {
     option (gogoproto.goproto_enum_prefix) = false;
+    UNKNOWN = 0;
     ENCODED_DOUBLE         = 1;
     ENCODED_FLOAT          = 2;
     ENCODED_INT64          = 3;

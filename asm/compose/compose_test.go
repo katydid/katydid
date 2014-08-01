@@ -188,7 +188,7 @@ func TestComposeListBool(t *testing.T) {
 						Params: []*ast.Expr{
 							{
 								List: &ast.List{
-									Type: types.LIST_BOOL.Enum(),
+									Type: types.LIST_BOOL,
 									Elems: []*ast.Expr{
 										{
 											Terminal: &ast.Terminal{
@@ -246,6 +246,7 @@ func TestComposeListInt64(t *testing.T) {
 									Params: []*ast.Expr{
 										{
 											List: &ast.List{
+												Type: types.LIST_INT64,
 												Elems: []*ast.Expr{
 													{
 														Terminal: &ast.Terminal{
@@ -362,7 +363,7 @@ func TestConst(t *testing.T) {
 		t.Fatalf("expected error")
 	}
 	if !strings.Contains(err.Error(), "regex has constant") || !strings.Contains(err.Error(), "has a variable parameter") {
-		t.Fatalf("expected more specific error", err.Error())
+		t.Fatalf("expected more specific error %s", err.Error())
 	}
 }
 
@@ -408,6 +409,7 @@ func TestNoTrim(t *testing.T) {
 						Params: []*ast.Expr{
 							{
 								List: &ast.List{
+									Type: types.LIST_STRING,
 									Elems: []*ast.Expr{
 										{
 											Function: &ast.Function{
@@ -480,6 +482,7 @@ func TestList(t *testing.T) {
 						Params: []*ast.Expr{
 							{
 								List: &ast.List{
+									Type: types.LIST_STRING,
 									Elems: []*ast.Expr{
 										{
 											Terminal: &ast.Terminal{

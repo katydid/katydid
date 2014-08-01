@@ -15,16 +15,16 @@
 package inject
 
 import (
-	"github.com/awalterschulze/katydid/asm/compiler"
 	"github.com/awalterschulze/katydid/asm/compose"
 	"github.com/awalterschulze/katydid/asm/exec"
 	"github.com/awalterschulze/katydid/asm/ifexpr"
+	"github.com/awalterschulze/katydid/asm/link"
 	"reflect"
 )
 
 //Returns all the function structs instances that implements the given interface
 func Implements(exec *exec.Exec, typ reflect.Type) []interface{} {
-	ifs := exec.Link.(compiler.Link).GetIfs()
+	ifs := exec.Link.(link.Link).GetIfs()
 	var is []interface{}
 	for _, iffy := range ifs {
 		is = append(is, StateExprImplements(iffy, typ)...)

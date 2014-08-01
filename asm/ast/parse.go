@@ -15,6 +15,7 @@
 package ast
 
 import (
+	"code.google.com/p/gogoprotobuf/proto"
 	"errors"
 	"fmt"
 	"github.com/awalterschulze/katydid/asm/token"
@@ -23,9 +24,74 @@ import (
 	"strings"
 )
 
-func IdToString(v interface{}) string {
+func (this *Rules) SetSpace(s *Space) *Rules {
+	this.Final = s
+	return this
+}
+
+func NewString(v interface{}) string {
 	t := v.(*token.Token)
 	return string(t.Lit)
+}
+
+func NewKeyword(space interface{}, v interface{}) *Keyword {
+	t := v.(*token.Token)
+	k := &Keyword{
+		Value: string(t.Lit),
+	}
+	if space != nil {
+		k.Before = space.(*Space)
+	}
+	return k
+}
+
+func NewSpace(s interface{}) *Space {
+	t := s.(*token.Token)
+	return &Space{Space: []string{string(t.Lit)}}
+}
+
+func AppendSpace(ss interface{}, s interface{}) *Space {
+	space := ss.(*Space)
+	t := s.(*token.Token)
+	space.Space = append(space.Space, string(t.Lit))
+	return space
+}
+
+func SetTerminalSpace(term interface{}, s interface{}) *Terminal {
+	terminal := term.(*Terminal)
+	terminal.Before = s.(*Space)
+	return terminal
+}
+
+func SetExprComma(e interface{}, c interface{}) *Expr {
+	expr := e.(*Expr)
+	expr.Comma = c.(*Keyword)
+	return expr
+}
+
+func Strip(slit string, sub string) []byte {
+	slit = strings.Replace(slit, sub, "", -1)
+	return []byte(slit[1 : len(slit)-1])
+}
+
+func NewVariableTerminal(p, m, f interface{}) (*Terminal, error) {
+	pkg := string(p.(*token.Token).Lit)
+	msg := string(m.(*token.Token).Lit)
+	field := string(f.(*token.Token).Lit)
+	return &Terminal{Variable: &Variable{Package: pkg, Message: msg, Field: field}, Literal: pkg + "." + msg + "." + field}, nil
+}
+
+func NewBoolTerminal(v interface{}) (*Terminal, error) {
+	b := v.(bool)
+	if b {
+		return &Terminal{BoolValue: proto.Bool(b), Literal: "true"}, nil
+	}
+	return &Terminal{BoolValue: proto.Bool(b), Literal: "false"}, nil
+}
+
+func NewStringTerminal(v interface{}) (*Terminal, error) {
+	slit := string(v.(*token.Token).Lit)
+	return &Terminal{StringValue: proto.String(ToString(v)), Literal: slit}, nil
 }
 
 func ToString(v interface{}) string {
@@ -38,10 +104,9 @@ func ToString(v interface{}) string {
 	return s
 }
 
-func Strip(v interface{}, sub string) []byte {
+func NewInt64Terminal(v interface{}) (*Terminal, error) {
 	slit := string(v.(*token.Token).Lit)
-	slit = strings.Replace(slit, sub, "", -1)
-	return []byte(slit[1 : len(slit)-1])
+	return &Terminal{Int64Value: ToInt64(Strip(slit, "int64")), Literal: slit}, nil
 }
 
 func ToInt64(tok []byte) *int64 {
@@ -50,6 +115,11 @@ func ToInt64(tok []byte) *int64 {
 		panic(err)
 	}
 	return &i
+}
+
+func NewInt32Terminal(v interface{}) (*Terminal, error) {
+	slit := string(v.(*token.Token).Lit)
+	return &Terminal{Int32Value: ToInt32(Strip(slit, "int32")), Literal: slit}, nil
 }
 
 func ToInt32(tok []byte) *int32 {
@@ -61,12 +131,22 @@ func ToInt32(tok []byte) *int32 {
 	return &ii
 }
 
+func NewUint64Terminal(v interface{}) (*Terminal, error) {
+	slit := string(v.(*token.Token).Lit)
+	return &Terminal{Uint64Value: ToUint64(Strip(slit, "uint64")), Literal: slit}, nil
+}
+
 func ToUint64(tok []byte) *uint64 {
 	i, err := util.UintValue(tok)
 	if err != nil {
 		panic(err)
 	}
 	return &i
+}
+
+func NewUint32Terminal(v interface{}) (*Terminal, error) {
+	slit := string(v.(*token.Token).Lit)
+	return &Terminal{Uint32Value: ToUint32(Strip(slit, "uint32")), Literal: slit}, nil
 }
 
 func ToUint32(tok []byte) *uint32 {
@@ -78,12 +158,22 @@ func ToUint32(tok []byte) *uint32 {
 	return &ii
 }
 
+func NewDoubleTerminal(v interface{}) (*Terminal, error) {
+	slit := string(v.(*token.Token).Lit)
+	return &Terminal{DoubleValue: ToFloat64(Strip(slit, "double")), Literal: slit}, nil
+}
+
 func ToFloat64(tok []byte) *float64 {
 	f, err := strconv.ParseFloat(string(tok), 64)
 	if err != nil {
 		panic(err)
 	}
 	return &f
+}
+
+func NewFloatTerminal(v interface{}) (*Terminal, error) {
+	slit := string(v.(*token.Token).Lit)
+	return &Terminal{FloatValue: ToFloat32(Strip(slit, "float")), Literal: slit}, nil
 }
 
 func ToFloat32(tok []byte) *float32 {
@@ -97,11 +187,12 @@ func ToFloat32(tok []byte) *float32 {
 
 func NewBytesTerminal(v interface{}) (*Terminal, error) {
 	lit := v.(*token.Token).Lit
-	data, err := parseBytes(string(lit))
+	stringLit := string(lit)
+	data, err := parseBytes(stringLit)
 	if err != nil {
 		return nil, err
 	}
-	return &Terminal{BytesValue: data}, nil
+	return &Terminal{BytesValue: data, Literal: stringLit}, nil
 }
 
 func parseBytes(s string) ([]byte, error) {
@@ -169,30 +260,31 @@ func parseByte(s string) (byte, error) {
 			}
 			return 0, nil
 		}
-	} else {
-		i, err := strconv.Atoi(s)
-		if err != nil {
-			return 0, err
-		}
-		if i >= 0 && i <= 255 {
-			return byte(i), nil
-		}
-		return 0, fmt.Errorf("int too large %d", i)
 	}
-	panic("unreachable")
+	i, err := strconv.Atoi(s)
+	if err != nil {
+		return 0, err
+	}
+	if i >= 0 && i <= 255 {
+		return byte(i), nil
+	}
+	return 0, fmt.Errorf("int too large %d", i)
+}
+
+func newRules(r *Rule) *Rules {
+	return &Rules{Rules: []*Rule{r}}
 }
 
 func NewRule(r interface{}) (*Rules, error) {
 	switch rule := r.(type) {
+	case *Root:
+		return newRules(&Rule{Root: rule}), nil
 	case *Init:
-		if rule.GetState() == "root" {
-			return &Rules{Root: rule}, nil
-		}
-		return &Rules{Init: []*Init{rule}}, nil
+		return newRules(&Rule{Init: rule}), nil
 	case *Transition:
-		return &Rules{Transition: []*Transition{rule}}, nil
+		return newRules(&Rule{Transition: rule}), nil
 	case *IfExpr:
-		return &Rules{IfExpr: []*IfExpr{rule}}, nil
+		return newRules(&Rule{IfExpr: rule}), nil
 	}
 	panic("unreachable")
 }
@@ -200,37 +292,38 @@ func NewRule(r interface{}) (*Rules, error) {
 func AppendRule(rs, r interface{}) (*Rules, error) {
 	rules := rs.(*Rules)
 	switch rule := r.(type) {
-	case *Init:
-		if rule.GetState() == "root" {
-			if rules.Root != nil {
-				return nil, errors.New("only one root is allowed")
-			}
-			rules.Root = rule
-			for _, i := range rules.GetInit() {
-				if i.GetPackage() == rules.GetRoot().GetPackage() &&
-					i.GetMessage() == rules.GetRoot().GetMessage() {
-					rules.Root.State = i.State
-				}
-			}
-			return rules, nil
-		} else {
-			if rules.Root != nil {
-				if rule.GetPackage() == rules.GetRoot().GetPackage() &&
-					rule.GetMessage() == rules.GetRoot().GetMessage() {
-					if rules.GetRoot().GetState() != "root" {
-						return nil, errors.New("root can only start in a single state")
-					}
-					rules.Root.State = rule.State
+	case *Root:
+		if rules.HasRoot() {
+			return nil, errors.New("only one root is allowed")
+		}
+		root := &Rule{Root: rule}
+		for _, r := range rules.Rules {
+			if r.Init != nil {
+				if r.Init.Message == rule.Message &&
+					r.Init.Package == rule.Package {
+					root.Root.State = r.Init.State
 				}
 			}
 		}
-		rules.Init = append(rules.Init, rule)
+		rules.Rules = append(rules.Rules, root)
+		return rules, nil
+	case *Init:
+		if root := rules.GetRoot(); root != nil {
+			if rule.Package == root.Package &&
+				rule.Message == root.Message {
+				if root.State != "root" {
+					return nil, errors.New("root can only start in a single state")
+				}
+				root.State = rule.State
+			}
+		}
+		rules.Rules = append(rules.Rules, &Rule{Init: rule})
 		return rules, nil
 	case *Transition:
-		rules.Transition = append(rules.Transition, rule)
+		rules.Rules = append(rules.Rules, &Rule{Transition: rule})
 		return rules, nil
 	case *IfExpr:
-		rules.IfExpr = append(rules.IfExpr, rule)
+		rules.Rules = append(rules.Rules, &Rule{IfExpr: rule})
 		return rules, nil
 	}
 	panic("unreachable")

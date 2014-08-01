@@ -160,7 +160,7 @@ type decString struct {
 func (this *decString) Eval() string {
 	buf := this.D.Eval()
 	header := (*reflect.SliceHeader)(unsafe.Pointer(&buf))
-	strHeader := reflect.StringHeader{header.Data, header.Len}
+	strHeader := reflect.StringHeader{Data: header.Data, Len: header.Len}
 	return *(*string)(unsafe.Pointer(&strHeader))
 }
 

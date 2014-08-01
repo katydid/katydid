@@ -12,12 +12,11 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package compiler
+package link
 
 import (
 	"github.com/awalterschulze/katydid/asm/ast"
 	"github.com/awalterschulze/katydid/asm/ifexpr"
-	"github.com/awalterschulze/katydid/asm/protomap"
 	"github.com/awalterschulze/katydid/asm/table"
 )
 
@@ -27,42 +26,51 @@ type Link interface {
 	GetIfs() []ifexpr.StateExpr
 }
 
+type ProtoMap interface {
+	State(pkg, msg, field string) (int, error)
+	LenStates() int
+}
+
 type link struct {
 	protoToStart []int
 	protoToIf    []ifexpr.StateExpr
 }
 
-func NewLink(rules *ast.Rules, pmap protomap.ProtoMap, tab table.Table, c ifexpr.Catcher) (Link, error) {
+func NewLink(rules *ast.Rules, pmap ProtoMap, tab table.Table, c ifexpr.Catcher) (Link, error) {
 	l := pmap.LenStates()
 	link := &link{
 		protoToStart: make([]int, l),
 		protoToIf:    make([]ifexpr.StateExpr, l),
 	}
-	for _, init := range rules.GetInit() {
-		pstate, err := pmap.State(init.GetPackage(), init.GetMessage(), "")
-		if err != nil {
-			return nil, err
+	for _, rule := range rules.Rules {
+		if init := rule.Init; init != nil {
+			pstate, err := pmap.State(init.GetPackage(), init.GetMessage(), "")
+			if err != nil {
+				return nil, err
+			}
+			tstate, err := tab.NameToState(init.GetState())
+			if err != nil {
+				return nil, err
+			}
+			link.protoToStart[pstate] = tstate
 		}
-		tstate, err := tab.NameToState(init.GetState())
-		if err != nil {
-			return nil, err
-		}
-		link.protoToStart[pstate] = tstate
 	}
-	for _, ifExpr := range rules.GetIfExpr() {
-		var1, err := ifexpr.GetVariable(ifExpr)
-		if err != nil {
-			return nil, err
+	for _, rule := range rules.Rules {
+		if ifExpr := rule.IfExpr; ifExpr != nil {
+			var1, err := ifexpr.GetVariable(ifExpr)
+			if err != nil {
+				return nil, err
+			}
+			pstate, err := pmap.State(var1.GetPackage(), var1.GetMessage(), var1.GetField())
+			if err != nil {
+				return nil, err
+			}
+			stateExpr, err := ifexpr.Compile(ifExpr, tab, c)
+			if err != nil {
+				return nil, err
+			}
+			link.protoToIf[pstate] = stateExpr
 		}
-		pstate, err := pmap.State(var1.GetPackage(), var1.GetMessage(), var1.GetField())
-		if err != nil {
-			return nil, err
-		}
-		stateExpr, err := ifexpr.Compile(ifExpr, tab, c)
-		if err != nil {
-			return nil, err
-		}
-		link.protoToIf[pstate] = stateExpr
 	}
 	return link, nil
 }

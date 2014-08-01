@@ -44,6 +44,7 @@ type ProtoMap interface {
 type Table interface {
 	Trans(src int, input int) (int, error)
 	NoEscapeFrom(src int) bool
+	StateToName(state int) string
 }
 
 type Link interface {
@@ -163,7 +164,9 @@ func (this *Exec) eval(mapState int, automataState int, buf []byte) (int, error)
 				i += n
 			}
 		}
+		//debugging old := automataState
 		automataState, err = this.table.Trans(automataState, input)
+		//debugging fmt.Printf("transition: <%s> <%s> = <%s>\n", this.table.StateToName(old), this.table.StateToName(input), this.table.StateToName(automataState))
 		if err != nil {
 			return 0, err
 		}

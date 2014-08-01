@@ -12,16 +12,16 @@ bench:
 	go test -v -test.run=XXX -test.bench=. ./...
 
 regenerate:
-	(cd types && protoc --gogo_out=. -I=.:../../../../ types.proto)
+	(cd types && protoc --gogo_out=. -I=.:../../../../:../../../../code.google.com/p/gogoprotobuf/protobuf types.proto)
 	(cd asm && gocc asm.bnf)
-	(cd asm/ast && protoc --gogo_out=. -I=.:../../../../../ asm.proto)
-	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../ person.proto)
-	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../ srctree.proto)
-	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../ taxonomy.proto)
-	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../ treeregister.proto)
-	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../ typewriterprison.proto)
-	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../ puddingmilkshake.proto)
-	(cd funcs && protoc --gogo_out=. -I=.:../../../../ decode.proto)
+	(cd asm/ast && protoc --gogo_out=. -I=.:../../../../../:../../../../../code.google.com/p/gogoprotobuf/protobuf asm.proto)
+	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../code.google.com/p/gogoprotobuf/protobuf person.proto)
+	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../code.google.com/p/gogoprotobuf/protobuf srctree.proto)
+	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../code.google.com/p/gogoprotobuf/protobuf taxonomy.proto)
+	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../code.google.com/p/gogoprotobuf/protobuf treeregister.proto)
+	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../code.google.com/p/gogoprotobuf/protobuf typewriterprison.proto)
+	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../code.google.com/p/gogoprotobuf/protobuf puddingmilkshake.proto)
+	(cd funcs && protoc --gogo_out=. -I=.:../../../../:../../../../code.google.com/p/gogoprotobuf/protobuf decode.proto)
 	go install github.com/awalterschulze/katydid/funcs/funcs-gen
 	funcs-gen ./funcs/
 	go install github.com/awalterschulze/katydid/asm/compose/compose-gen

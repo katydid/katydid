@@ -185,27 +185,7 @@ func Which(expr *ast.Expr) (types.Type, error) {
 		}
 	}
 	if expr.List != nil {
-		if expr.GetList().Type != nil {
-			return expr.GetList().GetType(), nil
-		}
-		elems := expr.GetList().GetElems()
-		if len(elems) == 0 {
-			return 0, &errUnknownType{expr}
-		}
-		typ1, err := Which(elems[0])
-		if err != nil {
-			return 0, err
-		}
-		for i := range elems {
-			typ, err := Which(elems[i])
-			if err != nil {
-				return 0, err
-			}
-			if typ != typ1 {
-				return 0, &errExpected{typ.String(), typ1.String()}
-			}
-		}
-		return types.SingleToList(typ1), nil
+		return expr.GetList().GetType(), nil
 	}
 	if expr.Function != nil {
 		fnc := expr.GetFunction()

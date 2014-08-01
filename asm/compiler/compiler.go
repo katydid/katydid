@@ -19,6 +19,7 @@ import (
 	"github.com/awalterschulze/katydid/asm/ast"
 	"github.com/awalterschulze/katydid/asm/exec"
 	"github.com/awalterschulze/katydid/asm/ifexpr"
+	"github.com/awalterschulze/katydid/asm/link"
 	"github.com/awalterschulze/katydid/asm/protomap"
 	"github.com/awalterschulze/katydid/asm/table"
 	"github.com/awalterschulze/katydid/funcs"
@@ -33,7 +34,7 @@ func (this *errNoStartState) Error() string {
 	return "did not specify any start state for " + this.pkg + "." + this.msg
 }
 
-func findStartState(root *ast.Init, inits []*ast.Init, tab table.Table) (int, error) {
+func findStartState(root *ast.Root, inits []*ast.Init, tab table.Table) (int, error) {
 	for _, init := range inits {
 		if init.GetMessage() == root.GetMessage() {
 			if init.GetPackage() == root.GetPackage() {
@@ -49,17 +50,21 @@ func findStartState(root *ast.Init, inits []*ast.Init, tab table.Table) (int, er
 }
 
 func findIncludes(rules *ast.Rules) ([]string, error) {
-	s := make([]string, 0, 1+len(rules.GetInit())+len(rules.GetIfExpr()))
+	s := make([]string, 0, 1+len(rules.Rules))
 	s = append(s, rules.GetRoot().GetPackage()+"."+rules.GetRoot().GetMessage())
-	for _, init := range rules.GetInit() {
-		s = append(s, init.GetPackage()+"."+init.GetMessage())
-	}
-	for _, ifExpr := range rules.GetIfExpr() {
-		v, err := ifexpr.GetVariable(ifExpr)
-		if err != nil {
-			return nil, err
+	for _, rule := range rules.Rules {
+		if init := rule.Init; init != nil {
+			s = append(s, init.GetPackage()+"."+init.GetMessage())
 		}
-		s = append(s, v.GetPackage()+"."+v.GetMessage()+"."+v.GetField())
+	}
+	for _, rule := range rules.Rules {
+		if ifExpr := rule.IfExpr; ifExpr != nil {
+			v, err := ifexpr.GetVariable(ifExpr)
+			if err != nil {
+				return nil, err
+			}
+			s = append(s, v.GetPackage()+"."+v.GetMessage()+"."+v.GetField())
+		}
 	}
 	return s, nil
 }
@@ -73,9 +78,9 @@ func Compile(rules *ast.Rules, desc *descriptor.FileDescriptorSet) (*exec.Exec, 
 	if err != nil {
 		return nil, err
 	}
-	tab := table.New(rules.GetTransition(), rules.GetIfExpr())
+	tab := table.New(rules.GetTransitions(), rules.GetIfExprs())
 	catcher := funcs.NewCatcher(false)
-	link, err := NewLink(rules, pmap, tab, catcher)
+	link, err := link.NewLink(rules, pmap, tab, catcher)
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +88,7 @@ func Compile(rules *ast.Rules, desc *descriptor.FileDescriptorSet) (*exec.Exec, 
 	if err != nil {
 		return nil, err
 	}
-	startState, err := findStartState(rules.GetRoot(), rules.GetInit(), tab)
+	startState, err := findStartState(rules.GetRoot(), rules.GetInits(), tab)
 	if err != nil {
 		return nil, err
 	}
