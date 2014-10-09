@@ -7,8 +7,9 @@ In future a more intuitive language will be included that translates to this ass
 
 Katydid supports multiple types of trees:
  - [Protocol Buffers](http://code.google.com/p/protobuf/)
- - Json
- - Reflected structures in Go
+ - [Json](http://json.org/)
+ - [Reflected structures in Go](http://golang.org/pkg/reflect)
+
 Currently they all need to have a protocol buffer specification.
 
 Tree Automata have been found to be very applicable to XML processing.
