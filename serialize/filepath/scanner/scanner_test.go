@@ -12,35 +12,33 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package protomap
+package scanner
 
 import (
 	"fmt"
+	"io"
 	"testing"
-
-	protoparser "code.google.com/p/gogoprotobuf/parser"
 )
 
-func TestMapPerson(t *testing.T) {
-	fileDescriptorSet, err := protoparser.ParseFile("test.proto", ".")
+func print(s *scanner, tabs string) {
+	err := s.Next()
+	for err == nil {
+		fmt.Printf("%s%s\n", tabs, string(s.Value()))
+		if !s.IsLeaf() {
+			s.Down()
+			print(s, tabs+"\t")
+			s.Up()
+		}
+		err = s.Next()
+	}
+	if err == io.EOF {
+		return
+	}
 	if err != nil {
 		panic(err)
 	}
-	m, err := New("test", "Person", fileDescriptorSet)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf("%v\n", m.Dot())
 }
 
-func TestMapSrcTree(t *testing.T) {
-	fileDescriptorSet, err := protoparser.ParseFile("test.proto", ".")
-	if err != nil {
-		panic(err)
-	}
-	m, err := New("test", "SrcTree", fileDescriptorSet)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf("%v\n", m.Dot())
+func TestPrint(t *testing.T) {
+	print(NewScanner("."), "")
 }

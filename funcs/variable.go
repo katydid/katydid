@@ -14,26 +14,14 @@
 
 package funcs
 
+import (
+	"github.com/awalterschulze/katydid/serialize"
+)
+
 type Variable interface {
-	SetVariable(v []byte)
+	IsVariable()
 }
 
-type variable struct {
-	Value []byte
-}
-
-func (this *variable) Eval() []byte {
-	return this.Value
-}
-
-func (this *variable) SetVariable(v []byte) {
-	this.Value = v
-}
-
-func (this *variable) String() string {
-	return "var"
-}
-
-func NewVariable() *variable {
-	return &variable{}
+type Decoder interface {
+	SetDecoder(dec serialize.Decoder)
 }

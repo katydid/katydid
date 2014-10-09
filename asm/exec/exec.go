@@ -15,31 +15,9 @@
 package exec
 
 import (
-	"fmt"
+	"github.com/awalterschulze/katydid/serialize"
+	"io"
 )
-
-type errVarint struct {
-	buf []byte
-}
-
-func newErrVarint(buf []byte) error {
-	buffer := make([]byte, 10)
-	nn := copy(buffer, buf)
-	return &errVarint{buffer[:nn]}
-}
-
-func (this *errVarint) Error() string {
-	return fmt.Sprintf("error decoding varint from %#v", this.buf)
-}
-
-var errBufferOverlow = fmt.Errorf("buffer overflow")
-
-var errUnknownWireType = fmt.Errorf("unknown wire type")
-
-type ProtoMap interface {
-	Trans(src int, key uint64) (int, bool)
-	IsLeave(int) bool
-}
 
 type Table interface {
 	Trans(src int, input int) (int, error)
@@ -48,8 +26,9 @@ type Table interface {
 }
 
 type Link interface {
-	ProtoToStart(protoState int) (startState int, exists bool)
-	IfEval(protoState int, buf []byte) (state int, exists bool)
+	TokenToStart(token int) (startState int, exists bool)
+	GetIf(token int) bool
+	IfEval(serialize.Decoder) int
 }
 
 type Catcher interface {
@@ -58,124 +37,83 @@ type Catcher interface {
 	Clear()
 }
 
-func NewExec(protomap ProtoMap, table Table, link Link, catcher Catcher, rootState int, startState int, acceptState int) *Exec {
+type Scanner interface {
+	Next() error
+	IsLeaf() bool
+	Id() int
+	Up()
+	Down()
+	serialize.Decoder
+}
+
+func NewExec(table Table, link Link, catcher Catcher, startState int, acceptState int) *Exec {
 	return &Exec{
-		protomap:    protomap,
 		table:       table,
 		Link:        link,
 		catcher:     catcher,
-		rootState:   rootState,
 		startState:  startState,
 		acceptState: acceptState,
 	}
 }
 
 type Exec struct {
-	protomap    ProtoMap
 	table       Table
 	Link        Link
 	catcher     Catcher
-	rootState   int
 	startState  int
 	acceptState int
+	scanner     Scanner
 }
 
-func (this *Exec) Eval(buf []byte) (bool, error) {
+func (this *Exec) Eval(scanner Scanner) (bool, error) {
 	this.catcher.Clear()
-	i, err := this.eval(this.rootState, this.startState, buf)
-	if err != nil {
+	this.scanner = scanner
+	i, err := this.eval(this.startState)
+	if err != nil && err != io.EOF {
 		return false, err
 	}
 	return i == this.acceptState, this.catcher.GetError()
 }
 
-func uvarint(buf []byte) (uint64, int, error) {
-	var uv uint64
-	var shift uint
-	for i, b := range buf {
-		if b < 0x80 {
-			if i > 9 || i == 9 && b > 1 {
-				return 0, 0, newErrVarint(buf)
-			}
-			return uv | uint64(b)<<shift, i + 1, nil
-		}
-		uv |= (uint64(b) & 0x7F) << shift
-		shift += 7
+func (this *Exec) eval(state int) (int, error) {
+	if this.table.NoEscapeFrom(state) {
+		return state, nil
 	}
-	return 0, 0, newErrVarint(buf)
-}
-
-func length(wireType int, buf []byte) (prefix int, l int, err error) {
-	switch wireType {
-	case 0:
-		_, n2, err := uvarint(buf)
-		return 0, n2, err
-	case 1:
-		return 0, 8, nil
-	case 2:
-		l, n2, err := uvarint(buf)
-		return n2, int(l), err
-	case 5:
-		return 0, 4, nil
-	}
-	return 0, 0, errUnknownWireType
-}
-
-func (this *Exec) eval(mapState int, automataState int, buf []byte) (int, error) {
-	if this.table.NoEscapeFrom(automataState) {
-		return automataState, nil
-	}
-	i := 0
-	for i < len(buf) {
-		v, n, err := uvarint(buf[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n
-		wireType := int(v & 0x7)
-		p, n, err := length(wireType, buf[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += p
-		newMapState, ok := this.protomap.Trans(mapState, v)
-		if !ok {
-			i += n
-			continue
-		}
-		var input int
-		if this.protomap.IsLeave(newMapState) {
-			var ok bool
-			input, ok = this.Link.IfEval(newMapState, buf[i:i+n])
-			i += n
-			if !ok {
-				continue
-			}
-		} else {
-			newStartState, ok := this.Link.ProtoToStart(newMapState)
-			if !ok {
-				i += n
-				continue
-			} else {
-				input, err = this.eval(newMapState, newStartState, buf[i:i+n])
+	err := this.scanner.Next()
+	for err == nil {
+		if this.scanner.IsLeaf() {
+			if this.Link.GetIf(this.scanner.Id()) {
+				inputSymbol := this.Link.IfEval(this.scanner)
+				state, err = this.table.Trans(state, inputSymbol)
 				if err != nil {
 					return 0, err
 				}
-				i += n
+				if this.table.NoEscapeFrom(state) {
+					return state, nil
+				}
+			}
+		} else {
+			startState, ok := this.Link.TokenToStart(this.scanner.Id())
+			if ok {
+				this.scanner.Down()
+				inputSymbol, err := this.eval(startState)
+				if err != nil {
+					return 0, err
+				}
+				this.scanner.Up()
+				state, err = this.table.Trans(state, inputSymbol)
+				if err != nil {
+					return 0, err
+				}
+				if this.table.NoEscapeFrom(state) {
+					return state, nil
+				}
 			}
 		}
-		//debugging old := automataState
-		automataState, err = this.table.Trans(automataState, input)
-		//debugging fmt.Printf("transition: <%s> <%s> = <%s>\n", this.table.StateToName(old), this.table.StateToName(input), this.table.StateToName(automataState))
-		if err != nil {
-			return 0, err
-		}
-		if this.table.NoEscapeFrom(automataState) {
-			return automataState, nil
-		}
+		err = this.scanner.Next()
 	}
-	if i > len(buf) {
-		return 0, errBufferOverlow
+	if err != io.EOF {
+		return 0, err
 	}
-	return automataState, nil
+	return state, nil
 }

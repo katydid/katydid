@@ -19,9 +19,16 @@ import (
 
 	protoparser "code.google.com/p/gogoprotobuf/parser"
 	"code.google.com/p/gogoprotobuf/proto"
+	"encoding/json"
 	"github.com/awalterschulze/katydid/asm/compiler"
 	"github.com/awalterschulze/katydid/asm/lexer"
 	"github.com/awalterschulze/katydid/asm/parser"
+	jsonscanner "github.com/awalterschulze/katydid/serialize/json/scanner"
+	jsontokens "github.com/awalterschulze/katydid/serialize/json/tokens"
+	"github.com/awalterschulze/katydid/serialize/proto/scanner"
+	"github.com/awalterschulze/katydid/serialize/proto/tokens"
+	reflectscanner "github.com/awalterschulze/katydid/serialize/reflect/scanner"
+	"reflect"
 )
 
 var (
@@ -44,7 +51,13 @@ func test(t *testing.T, protoFilename string, m proto.Message, katydidStr string
 		t.Logf("output = <<%s>>", outputStr)
 		t.Fatalf("Parsed string should output same string from ast")
 	}
-	e, err := compiler.Compile(rules, fileDescriptorSet)
+
+	//Testing Query on Protocol Buffer Marshaled Structures
+	protoTokens, err := tokens.NewZipped(rules, fileDescriptorSet)
+	if err != nil {
+		panic(err)
+	}
+	e, rootToken, err := compiler.Compile(rules, protoTokens)
 	if err != nil {
 		panic(err)
 	}
@@ -52,7 +65,47 @@ func test(t *testing.T, protoFilename string, m proto.Message, katydidStr string
 	if err != nil {
 		panic(err)
 	}
-	if match, err := e.Eval(data); err != nil {
+	s := scanner.NewProtoScanner(protoTokens, rootToken)
+	err = s.Init(data)
+	if err != nil {
+		panic(err)
+	}
+	if match, err := e.Eval(s); err != nil {
+		t.Errorf("Error: %v", err)
+	} else if match != positive {
+		t.Errorf("Expected a %v match from \n%v \non \n%v", positive, katydidStr, m)
+	}
+
+	//Testing Query on Json Marshaled Structures
+	jsonTokens, err := jsontokens.NewZipped(rules, fileDescriptorSet)
+	if err != nil {
+		panic(err)
+	}
+	e, rootToken, err = compiler.Compile(rules, jsonTokens)
+	if err != nil {
+		panic(err)
+	}
+	jsonData, err := json.Marshal(m)
+	if err != nil {
+		panic(err)
+	}
+	jsonS := jsonscanner.NewScanner(jsonTokens, rootToken)
+	err = jsonS.Init(jsonData)
+	if err != nil {
+		panic(err)
+	}
+	if match, err := e.Eval(jsonS); err != nil {
+		t.Errorf("Error: %v", err)
+	} else if match != positive {
+		t.Errorf("Expected a %v match from \n%v \non \n%v", positive, katydidStr, m)
+	}
+
+	//Testing Query on Reflected Structures
+	e, rootToken, err = compiler.Compile(rules, jsonTokens)
+	if err != nil {
+		panic(err)
+	}
+	if match, err := e.Eval(reflectscanner.NewScanner(jsonTokens, rootToken).Init(reflect.ValueOf(m))); err != nil {
 		t.Errorf("Error: %v", err)
 	} else if match != positive {
 		t.Errorf("Expected a %v match from \n%v \non \n%v", positive, katydidStr, m)

@@ -81,6 +81,9 @@ func trim(f interface{}) (interface{}, error) {
 			continue
 		}
 		if this.Field(i).Elem().Type().Implements(varTyp) {
+			if funcs.IsConst(this.Field(i).Type()) {
+				return nil, &errNotConst{f, this.Field(i)}
+			}
 			trimable = false
 			continue
 		}

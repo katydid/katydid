@@ -15,15 +15,17 @@
 package compiler
 
 import (
-	descriptor "code.google.com/p/gogoprotobuf/protoc-gen-gogo/descriptor"
 	"github.com/awalterschulze/katydid/asm/ast"
 	"github.com/awalterschulze/katydid/asm/exec"
-	"github.com/awalterschulze/katydid/asm/ifexpr"
 	"github.com/awalterschulze/katydid/asm/link"
-	"github.com/awalterschulze/katydid/asm/protomap"
 	"github.com/awalterschulze/katydid/asm/table"
 	"github.com/awalterschulze/katydid/funcs"
 )
+
+type Tokens interface {
+	GetTokenId(tokenString string) (int, error)
+	Len() int
+}
 
 type errNoStartState struct {
 	pkg string
@@ -49,52 +51,25 @@ func findStartState(root *ast.Root, inits []*ast.Init, tab table.Table) (int, er
 	return 0, &errNoStartState{root.GetPackage(), root.GetMessage()}
 }
 
-func findIncludes(rules *ast.Rules) ([]string, error) {
-	s := make([]string, 0, 1+len(rules.Rules))
-	s = append(s, rules.GetRoot().GetPackage()+"."+rules.GetRoot().GetMessage())
-	for _, rule := range rules.Rules {
-		if init := rule.Init; init != nil {
-			s = append(s, init.GetPackage()+"."+init.GetMessage())
-		}
-	}
-	for _, rule := range rules.Rules {
-		if ifExpr := rule.IfExpr; ifExpr != nil {
-			v, err := ifexpr.GetVariable(ifExpr)
-			if err != nil {
-				return nil, err
-			}
-			s = append(s, v.GetPackage()+"."+v.GetMessage()+"."+v.GetField())
-		}
-	}
-	return s, nil
-}
-
-func Compile(rules *ast.Rules, desc *descriptor.FileDescriptorSet) (*exec.Exec, error) {
-	includes, err := findIncludes(rules)
-	if err != nil {
-		return nil, err
-	}
-	pmap, err := protomap.NewZipped(rules.GetRoot().GetPackage(), rules.GetRoot().GetMessage(), desc, includes)
-	if err != nil {
-		return nil, err
-	}
+func Compile(rules *ast.Rules, tokens Tokens) (eval *exec.Exec, rootToken int, err error) {
 	tab := table.New(rules.GetTransitions(), rules.GetIfExprs())
 	catcher := funcs.NewCatcher(false)
-	link, err := link.NewLink(rules, pmap, tab, catcher)
+	link, err := link.NewLink(rules, tokens, tab, catcher)
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
-	rootState, err := pmap.State(rules.GetRoot().GetPackage(), rules.GetRoot().GetMessage(), "")
+	rootToken, err = tokens.GetTokenId(rules.GetRoot().GetPackage() + "." + rules.GetRoot().GetMessage())
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
 	startState, err := findStartState(rules.GetRoot(), rules.GetInits(), tab)
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
 	acceptState, err := tab.NameToState("accept")
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
-	return exec.NewExec(pmap, tab, link, catcher, rootState, startState, acceptState), nil
+	eval = exec.NewExec(tab, link, catcher, startState, acceptState)
+	return eval, rootToken, nil
 }

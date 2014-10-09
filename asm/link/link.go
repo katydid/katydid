@@ -18,33 +18,36 @@ import (
 	"github.com/awalterschulze/katydid/asm/ast"
 	"github.com/awalterschulze/katydid/asm/ifexpr"
 	"github.com/awalterschulze/katydid/asm/table"
+	"github.com/awalterschulze/katydid/serialize"
 )
 
 type Link interface {
-	ProtoToStart(protoState int) (startState int, exists bool)
-	IfEval(protoState int, buf []byte) (state int, exists bool)
+	TokenToStart(token int) (startState int, exists bool)
+	GetIf(token int) bool
+	IfEval(serialize.Decoder) int
 	GetIfs() []ifexpr.StateExpr
 }
 
-type ProtoMap interface {
-	State(pkg, msg, field string) (int, error)
-	LenStates() int
+type Tokens interface {
+	GetTokenId(tokenString string) (int, error)
+	Len() int
 }
 
 type link struct {
-	protoToStart []int
-	protoToIf    []ifexpr.StateExpr
+	tokenToStart []int
+	tokenToIf    []ifexpr.StateExpr
+	currentIf    ifexpr.StateExpr
 }
 
-func NewLink(rules *ast.Rules, pmap ProtoMap, tab table.Table, c ifexpr.Catcher) (Link, error) {
-	l := pmap.LenStates()
+func NewLink(rules *ast.Rules, tokens Tokens, tab table.Table, c ifexpr.Catcher) (Link, error) {
+	l := tokens.Len()
 	link := &link{
-		protoToStart: make([]int, l),
-		protoToIf:    make([]ifexpr.StateExpr, l),
+		tokenToStart: make([]int, l),
+		tokenToIf:    make([]ifexpr.StateExpr, l),
 	}
 	for _, rule := range rules.Rules {
 		if init := rule.Init; init != nil {
-			pstate, err := pmap.State(init.GetPackage(), init.GetMessage(), "")
+			pstate, err := tokens.GetTokenId(init.GetPackage() + "." + init.GetMessage())
 			if err != nil {
 				return nil, err
 			}
@@ -52,16 +55,16 @@ func NewLink(rules *ast.Rules, pmap ProtoMap, tab table.Table, c ifexpr.Catcher)
 			if err != nil {
 				return nil, err
 			}
-			link.protoToStart[pstate] = tstate
+			link.tokenToStart[pstate] = tstate
 		}
 	}
 	for _, rule := range rules.Rules {
 		if ifExpr := rule.IfExpr; ifExpr != nil {
-			var1, err := ifexpr.GetVariable(ifExpr)
+			var1, err := ifExpr.GetVariable()
 			if err != nil {
 				return nil, err
 			}
-			pstate, err := pmap.State(var1.GetPackage(), var1.GetMessage(), var1.GetField())
+			pstate, err := tokens.GetTokenId(var1.Name)
 			if err != nil {
 				return nil, err
 			}
@@ -69,31 +72,36 @@ func NewLink(rules *ast.Rules, pmap ProtoMap, tab table.Table, c ifexpr.Catcher)
 			if err != nil {
 				return nil, err
 			}
-			link.protoToIf[pstate] = stateExpr
+			link.tokenToIf[pstate] = stateExpr
 		}
 	}
 	return link, nil
 }
 
-func (this *link) ProtoToStart(protoState int) (startState int, exists bool) {
-	if protoState < 0 || protoState >= len(this.protoToStart) {
+func (this *link) TokenToStart(token int) (startState int, exists bool) {
+	if token < 0 || token >= len(this.tokenToStart) {
 		return 0, false
 	}
-	s := this.protoToStart[protoState]
+	s := this.tokenToStart[token]
 	return s, (s != 0)
 }
 
-func (this *link) IfEval(protoState int, buf []byte) (state int, exists bool) {
-	if protoState < 0 || protoState >= len(this.protoToIf) {
-		return 0, false
+func (this *link) GetIf(token int) bool {
+	if token < 0 || token >= len(this.tokenToIf) {
+		return false
 	}
-	ifExpr := this.protoToIf[protoState]
+	ifExpr := this.tokenToIf[token]
 	if ifExpr == nil {
-		return 0, false
+		return false
 	}
-	return ifExpr.Eval(buf), true
+	this.currentIf = ifExpr
+	return true
+}
+
+func (this *link) IfEval(decoder serialize.Decoder) int {
+	return this.currentIf.Eval(decoder)
 }
 
 func (this *link) GetIfs() []ifexpr.StateExpr {
-	return this.protoToIf
+	return this.tokenToIf
 }

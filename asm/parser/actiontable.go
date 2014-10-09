@@ -36,8 +36,17 @@ var actionTab = actionTable{
 			shift(33), /* float_lit */
 			shift(34), /* string_lit */
 			shift(35), /* bytes_lit */
-			shift(36), /* true */
-			shift(37), /* false */
+			shift(36), /* bool_var */
+			shift(37), /* int64_var */
+			shift(38), /* int32_var */
+			shift(39), /* uint64_var */
+			shift(40), /* uint32_var */
+			shift(41), /* double_var */
+			shift(42), /* float_var */
+			shift(43), /* string_var */
+			shift(44), /* bytes_var */
+			shift(45), /* true */
+			shift(46), /* false */
 			nil,       /* = */
 			nil,       /* then */
 			nil,       /* else */
@@ -45,7 +54,7 @@ var actionTab = actionTable{
 			nil,       /* ) */
 			nil,       /* } */
 			nil,       /* , */
-			shift(38), /* space */
+			shift(47), /* space */
 
 		},
 	},
@@ -76,6 +85,15 @@ var actionTab = actionTable{
 			nil,          /* float_lit */
 			nil,          /* string_lit */
 			nil,          /* bytes_lit */
+			nil,          /* bool_var */
+			nil,          /* int64_var */
+			nil,          /* int32_var */
+			nil,          /* uint64_var */
+			nil,          /* uint32_var */
+			nil,          /* double_var */
+			nil,          /* float_var */
+			nil,          /* string_var */
+			nil,          /* bytes_var */
 			nil,          /* true */
 			nil,          /* false */
 			nil,          /* = */
@@ -95,7 +113,7 @@ var actionTab = actionTable{
 			nil,       /* INVALID */
 			reduce(2), /* $, reduce: AllRules */
 			shift(10), /* root */
-			shift(41), /* id */
+			shift(50), /* id */
 			nil,       /* . */
 			shift(12), /* if */
 			nil,       /* { */
@@ -116,6 +134,15 @@ var actionTab = actionTable{
 			nil,       /* float_lit */
 			nil,       /* string_lit */
 			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
 			nil,       /* true */
 			nil,       /* false */
 			nil,       /* = */
@@ -125,7 +152,7 @@ var actionTab = actionTable{
 			nil,       /* ) */
 			nil,       /* } */
 			nil,       /* , */
-			shift(42), /* space */
+			shift(51), /* space */
 
 		},
 	},
@@ -134,10 +161,10 @@ var actionTab = actionTable{
 		actions: [numSymbols]action{
 			nil,       /* INVALID */
 			nil,       /* $ */
-			shift(43), /* root */
-			shift(44), /* id */
+			shift(52), /* root */
+			shift(53), /* id */
 			nil,       /* . */
-			shift(45), /* if */
+			shift(54), /* if */
 			nil,       /* { */
 			shift(17), /* []bool */
 			shift(18), /* []int64 */
@@ -156,8 +183,17 @@ var actionTab = actionTable{
 			shift(33), /* float_lit */
 			shift(34), /* string_lit */
 			shift(35), /* bytes_lit */
-			shift(36), /* true */
-			shift(37), /* false */
+			shift(36), /* bool_var */
+			shift(37), /* int64_var */
+			shift(38), /* int32_var */
+			shift(39), /* uint64_var */
+			shift(40), /* uint32_var */
+			shift(41), /* double_var */
+			shift(42), /* float_var */
+			shift(43), /* string_var */
+			shift(44), /* bytes_var */
+			shift(45), /* true */
+			shift(46), /* false */
 			nil,       /* = */
 			nil,       /* then */
 			nil,       /* else */
@@ -165,7 +201,7 @@ var actionTab = actionTable{
 			nil,       /* ) */
 			nil,       /* } */
 			nil,       /* , */
-			shift(48), /* space */
+			shift(57), /* space */
 
 		},
 	},
@@ -196,6 +232,15 @@ var actionTab = actionTable{
 			nil,       /* float_lit */
 			nil,       /* string_lit */
 			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
 			nil,       /* true */
 			nil,       /* false */
 			nil,       /* = */
@@ -236,6 +281,15 @@ var actionTab = actionTable{
 			nil,       /* float_lit */
 			nil,       /* string_lit */
 			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
 			nil,       /* true */
 			nil,       /* false */
 			nil,       /* = */
@@ -276,6 +330,15 @@ var actionTab = actionTable{
 			nil,       /* float_lit */
 			nil,       /* string_lit */
 			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
 			nil,       /* true */
 			nil,       /* false */
 			nil,       /* = */
@@ -316,6 +379,15 @@ var actionTab = actionTable{
 			nil,       /* float_lit */
 			nil,       /* string_lit */
 			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
 			nil,       /* true */
 			nil,       /* false */
 			nil,       /* = */
@@ -356,6 +428,15 @@ var actionTab = actionTable{
 			nil,       /* float_lit */
 			nil,       /* string_lit */
 			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
 			nil,       /* true */
 			nil,       /* false */
 			nil,       /* = */
@@ -396,6 +477,15 @@ var actionTab = actionTable{
 			nil,       /* float_lit */
 			nil,       /* string_lit */
 			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
 			nil,       /* true */
 			nil,       /* false */
 			nil,       /* = */
@@ -436,16 +526,25 @@ var actionTab = actionTable{
 			nil,       /* float_lit */
 			nil,       /* string_lit */
 			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
 			nil,       /* true */
 			nil,       /* false */
-			shift(51), /* = */
+			shift(60), /* = */
 			nil,       /* then */
 			nil,       /* else */
 			nil,       /* ( */
 			nil,       /* ) */
 			nil,       /* } */
 			nil,       /* , */
-			shift(52), /* space */
+			shift(61), /* space */
 
 		},
 	},
@@ -456,7 +555,7 @@ var actionTab = actionTable{
 			nil,       /* $ */
 			nil,       /* root */
 			nil,       /* id */
-			shift(54), /* . */
+			shift(63), /* . */
 			nil,       /* if */
 			nil,       /* { */
 			nil,       /* []bool */
@@ -476,16 +575,25 @@ var actionTab = actionTable{
 			nil,       /* float_lit */
 			nil,       /* string_lit */
 			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
 			nil,       /* true */
 			nil,       /* false */
 			nil,       /* = */
 			nil,       /* then */
 			nil,       /* else */
-			shift(56), /* ( */
+			shift(65), /* ( */
 			nil,       /* ) */
 			nil,       /* } */
 			nil,       /* , */
-			shift(57), /* space */
+			shift(66), /* space */
 
 		},
 	},
@@ -495,7 +603,7 @@ var actionTab = actionTable{
 			nil,       /* INVALID */
 			nil,       /* $ */
 			nil,       /* root */
-			shift(60), /* id */
+			shift(69), /* id */
 			nil,       /* . */
 			nil,       /* if */
 			nil,       /* { */
@@ -508,16 +616,25 @@ var actionTab = actionTable{
 			shift(23), /* []float */
 			shift(24), /* []string */
 			shift(25), /* [][]byte */
-			shift(67), /* int64_lit */
-			shift(68), /* int32_lit */
-			shift(69), /* uint64_lit */
-			shift(70), /* uint32_lit */
-			shift(71), /* double_lit */
-			shift(72), /* float_lit */
-			shift(73), /* string_lit */
-			shift(74), /* bytes_lit */
-			shift(75), /* true */
-			shift(76), /* false */
+			shift(76), /* int64_lit */
+			shift(77), /* int32_lit */
+			shift(78), /* uint64_lit */
+			shift(79), /* uint32_lit */
+			shift(80), /* double_lit */
+			shift(81), /* float_lit */
+			shift(82), /* string_lit */
+			shift(83), /* bytes_lit */
+			shift(84), /* bool_var */
+			shift(85), /* int64_var */
+			shift(86), /* int32_var */
+			shift(87), /* uint64_var */
+			shift(88), /* uint32_var */
+			shift(89), /* double_var */
+			shift(90), /* float_var */
+			shift(91), /* string_var */
+			shift(92), /* bytes_var */
+			shift(93), /* true */
+			shift(94), /* false */
 			nil,       /* = */
 			nil,       /* then */
 			nil,       /* else */
@@ -525,7 +642,7 @@ var actionTab = actionTable{
 			nil,       /* ) */
 			nil,       /* } */
 			nil,       /* , */
-			shift(77), /* space */
+			shift(95), /* space */
 
 		},
 	},
@@ -556,6 +673,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -596,6 +722,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -618,7 +753,7 @@ var actionTab = actionTable{
 			nil,       /* id */
 			nil,       /* . */
 			nil,       /* if */
-			shift(79), /* { */
+			shift(97), /* { */
 			nil,       /* []bool */
 			nil,       /* []int64 */
 			nil,       /* []int32 */
@@ -636,6 +771,15 @@ var actionTab = actionTable{
 			nil,       /* float_lit */
 			nil,       /* string_lit */
 			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
 			nil,       /* true */
 			nil,       /* false */
 			nil,       /* = */
@@ -645,7 +789,7 @@ var actionTab = actionTable{
 			nil,       /* ) */
 			nil,       /* } */
 			nil,       /* , */
-			shift(81), /* space */
+			shift(99), /* space */
 
 		},
 	},
@@ -676,6 +820,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -716,6 +869,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -756,6 +918,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -796,6 +967,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -836,6 +1016,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -876,6 +1065,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -916,6 +1114,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -956,6 +1163,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -996,6 +1212,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -1036,6 +1261,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -1076,6 +1310,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -1116,6 +1359,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -1156,6 +1408,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -1196,6 +1457,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -1236,6 +1506,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -1276,6 +1555,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -1316,6 +1604,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -1356,6 +1653,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -1396,6 +1702,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -1436,6 +1751,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -1453,11 +1777,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(62), /* $, reduce: Bool */
-			reduce(62), /* root, reduce: Bool */
-			reduce(62), /* id, reduce: Bool */
+			reduce(61), /* $, reduce: Terminal */
+			reduce(61), /* root, reduce: Terminal */
+			reduce(61), /* id, reduce: Terminal */
 			nil,        /* . */
-			reduce(62), /* if, reduce: Bool */
+			reduce(61), /* if, reduce: Terminal */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -1476,6 +1800,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -1485,7 +1818,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(62), /* space, reduce: Bool */
+			reduce(61), /* space, reduce: Terminal */
 
 		},
 	},
@@ -1493,11 +1826,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(63), /* $, reduce: Bool */
-			reduce(63), /* root, reduce: Bool */
-			reduce(63), /* id, reduce: Bool */
+			reduce(62), /* $, reduce: Terminal */
+			reduce(62), /* root, reduce: Terminal */
+			reduce(62), /* id, reduce: Terminal */
 			nil,        /* . */
-			reduce(63), /* if, reduce: Bool */
+			reduce(62), /* if, reduce: Terminal */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -1516,6 +1849,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -1525,7 +1867,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(63), /* space, reduce: Bool */
+			reduce(62), /* space, reduce: Terminal */
 
 		},
 	},
@@ -1533,31 +1875,40 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(81), /* root, reduce: Space */
-			reduce(81), /* id, reduce: Space */
+			reduce(63), /* $, reduce: Terminal */
+			reduce(63), /* root, reduce: Terminal */
+			reduce(63), /* id, reduce: Terminal */
 			nil,        /* . */
-			reduce(81), /* if, reduce: Space */
+			reduce(63), /* if, reduce: Terminal */
 			nil,        /* { */
-			reduce(81), /* []bool, reduce: Space */
-			reduce(81), /* []int64, reduce: Space */
-			reduce(81), /* []int32, reduce: Space */
-			reduce(81), /* []uint64, reduce: Space */
-			reduce(81), /* []uint32, reduce: Space */
-			reduce(81), /* []double, reduce: Space */
-			reduce(81), /* []float, reduce: Space */
-			reduce(81), /* []string, reduce: Space */
-			reduce(81), /* [][]byte, reduce: Space */
-			reduce(81), /* int64_lit, reduce: Space */
-			reduce(81), /* int32_lit, reduce: Space */
-			reduce(81), /* uint64_lit, reduce: Space */
-			reduce(81), /* uint32_lit, reduce: Space */
-			reduce(81), /* double_lit, reduce: Space */
-			reduce(81), /* float_lit, reduce: Space */
-			reduce(81), /* string_lit, reduce: Space */
-			reduce(81), /* bytes_lit, reduce: Space */
-			reduce(81), /* true, reduce: Space */
-			reduce(81), /* false, reduce: Space */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
@@ -1565,51 +1916,501 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(81), /* space, reduce: Space */
+			reduce(63), /* space, reduce: Terminal */
 
 		},
 	},
 	actionRow{ // S39
 		canRecover: false,
 		actions: [numSymbols]action{
-			nil,       /* INVALID */
-			reduce(1), /* $, reduce: AllRules */
-			shift(43), /* root */
-			shift(82), /* id */
-			nil,       /* . */
-			shift(45), /* if */
-			nil,       /* { */
-			nil,       /* []bool */
-			nil,       /* []int64 */
-			nil,       /* []int32 */
-			nil,       /* []uint64 */
-			nil,       /* []uint32 */
-			nil,       /* []double */
-			nil,       /* []float */
-			nil,       /* []string */
-			nil,       /* [][]byte */
-			nil,       /* int64_lit */
-			nil,       /* int32_lit */
-			nil,       /* uint64_lit */
-			nil,       /* uint32_lit */
-			nil,       /* double_lit */
-			nil,       /* float_lit */
-			nil,       /* string_lit */
-			nil,       /* bytes_lit */
-			nil,       /* true */
-			nil,       /* false */
-			nil,       /* = */
-			nil,       /* then */
-			nil,       /* else */
-			nil,       /* ( */
-			nil,       /* ) */
-			nil,       /* } */
-			nil,       /* , */
-			shift(83), /* space */
+			nil,        /* INVALID */
+			reduce(64), /* $, reduce: Terminal */
+			reduce(64), /* root, reduce: Terminal */
+			reduce(64), /* id, reduce: Terminal */
+			nil,        /* . */
+			reduce(64), /* if, reduce: Terminal */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(64), /* space, reduce: Terminal */
 
 		},
 	},
 	actionRow{ // S40
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			reduce(65), /* $, reduce: Terminal */
+			reduce(65), /* root, reduce: Terminal */
+			reduce(65), /* id, reduce: Terminal */
+			nil,        /* . */
+			reduce(65), /* if, reduce: Terminal */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(65), /* space, reduce: Terminal */
+
+		},
+	},
+	actionRow{ // S41
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			reduce(66), /* $, reduce: Terminal */
+			reduce(66), /* root, reduce: Terminal */
+			reduce(66), /* id, reduce: Terminal */
+			nil,        /* . */
+			reduce(66), /* if, reduce: Terminal */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(66), /* space, reduce: Terminal */
+
+		},
+	},
+	actionRow{ // S42
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			reduce(67), /* $, reduce: Terminal */
+			reduce(67), /* root, reduce: Terminal */
+			reduce(67), /* id, reduce: Terminal */
+			nil,        /* . */
+			reduce(67), /* if, reduce: Terminal */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(67), /* space, reduce: Terminal */
+
+		},
+	},
+	actionRow{ // S43
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			reduce(68), /* $, reduce: Terminal */
+			reduce(68), /* root, reduce: Terminal */
+			reduce(68), /* id, reduce: Terminal */
+			nil,        /* . */
+			reduce(68), /* if, reduce: Terminal */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(68), /* space, reduce: Terminal */
+
+		},
+	},
+	actionRow{ // S44
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			reduce(69), /* $, reduce: Terminal */
+			reduce(69), /* root, reduce: Terminal */
+			reduce(69), /* id, reduce: Terminal */
+			nil,        /* . */
+			reduce(69), /* if, reduce: Terminal */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(69), /* space, reduce: Terminal */
+
+		},
+	},
+	actionRow{ // S45
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			reduce(70), /* $, reduce: Bool */
+			reduce(70), /* root, reduce: Bool */
+			reduce(70), /* id, reduce: Bool */
+			nil,        /* . */
+			reduce(70), /* if, reduce: Bool */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(70), /* space, reduce: Bool */
+
+		},
+	},
+	actionRow{ // S46
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			reduce(71), /* $, reduce: Bool */
+			reduce(71), /* root, reduce: Bool */
+			reduce(71), /* id, reduce: Bool */
+			nil,        /* . */
+			reduce(71), /* if, reduce: Bool */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(71), /* space, reduce: Bool */
+
+		},
+	},
+	actionRow{ // S47
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(89), /* root, reduce: Space */
+			reduce(89), /* id, reduce: Space */
+			nil,        /* . */
+			reduce(89), /* if, reduce: Space */
+			nil,        /* { */
+			reduce(89), /* []bool, reduce: Space */
+			reduce(89), /* []int64, reduce: Space */
+			reduce(89), /* []int32, reduce: Space */
+			reduce(89), /* []uint64, reduce: Space */
+			reduce(89), /* []uint32, reduce: Space */
+			reduce(89), /* []double, reduce: Space */
+			reduce(89), /* []float, reduce: Space */
+			reduce(89), /* []string, reduce: Space */
+			reduce(89), /* [][]byte, reduce: Space */
+			reduce(89), /* int64_lit, reduce: Space */
+			reduce(89), /* int32_lit, reduce: Space */
+			reduce(89), /* uint64_lit, reduce: Space */
+			reduce(89), /* uint32_lit, reduce: Space */
+			reduce(89), /* double_lit, reduce: Space */
+			reduce(89), /* float_lit, reduce: Space */
+			reduce(89), /* string_lit, reduce: Space */
+			reduce(89), /* bytes_lit, reduce: Space */
+			reduce(89), /* bool_var, reduce: Space */
+			reduce(89), /* int64_var, reduce: Space */
+			reduce(89), /* int32_var, reduce: Space */
+			reduce(89), /* uint64_var, reduce: Space */
+			reduce(89), /* uint32_var, reduce: Space */
+			reduce(89), /* double_var, reduce: Space */
+			reduce(89), /* float_var, reduce: Space */
+			reduce(89), /* string_var, reduce: Space */
+			reduce(89), /* bytes_var, reduce: Space */
+			reduce(89), /* true, reduce: Space */
+			reduce(89), /* false, reduce: Space */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(89), /* space, reduce: Space */
+
+		},
+	},
+	actionRow{ // S48
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			reduce(1),  /* $, reduce: AllRules */
+			shift(52),  /* root */
+			shift(100), /* id */
+			nil,        /* . */
+			shift(54),  /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			shift(101), /* space */
+
+		},
+	},
+	actionRow{ // S49
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,       /* INVALID */
@@ -1636,6 +2437,15 @@ var actionTab = actionTable{
 			nil,       /* float_lit */
 			nil,       /* string_lit */
 			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
 			nil,       /* true */
 			nil,       /* false */
 			nil,       /* = */
@@ -1649,55 +2459,15 @@ var actionTab = actionTable{
 
 		},
 	},
-	actionRow{ // S41
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,       /* INVALID */
-			nil,       /* $ */
-			nil,       /* root */
-			nil,       /* id */
-			shift(85), /* . */
-			nil,       /* if */
-			nil,       /* { */
-			nil,       /* []bool */
-			nil,       /* []int64 */
-			nil,       /* []int32 */
-			nil,       /* []uint64 */
-			nil,       /* []uint32 */
-			nil,       /* []double */
-			nil,       /* []float */
-			nil,       /* []string */
-			nil,       /* [][]byte */
-			nil,       /* int64_lit */
-			nil,       /* int32_lit */
-			nil,       /* uint64_lit */
-			nil,       /* uint32_lit */
-			nil,       /* double_lit */
-			nil,       /* float_lit */
-			nil,       /* string_lit */
-			nil,       /* bytes_lit */
-			nil,       /* true */
-			nil,       /* false */
-			nil,       /* = */
-			nil,       /* then */
-			nil,       /* else */
-			nil,       /* ( */
-			nil,       /* ) */
-			nil,       /* } */
-			nil,       /* , */
-			shift(86), /* space */
-
-		},
-	},
-	actionRow{ // S42
+	actionRow{ // S50
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(81), /* $, reduce: Space */
-			reduce(81), /* root, reduce: Space */
-			reduce(81), /* id, reduce: Space */
-			nil,        /* . */
-			reduce(81), /* if, reduce: Space */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			shift(63),  /* . */
+			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -1716,6 +2486,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -1725,11 +2504,60 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(81), /* space, reduce: Space */
+			shift(103), /* space */
 
 		},
 	},
-	actionRow{ // S43
+	actionRow{ // S51
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			reduce(89), /* $, reduce: Space */
+			reduce(89), /* root, reduce: Space */
+			reduce(89), /* id, reduce: Space */
+			nil,        /* . */
+			reduce(89), /* if, reduce: Space */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(89), /* space, reduce: Space */
+
+		},
+	},
+	actionRow{ // S52
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,       /* INVALID */
@@ -1756,66 +2584,84 @@ var actionTab = actionTable{
 			nil,       /* float_lit */
 			nil,       /* string_lit */
 			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
 			nil,       /* true */
 			nil,       /* false */
-			shift(51), /* = */
+			shift(60), /* = */
 			nil,       /* then */
 			nil,       /* else */
 			nil,       /* ( */
 			nil,       /* ) */
 			nil,       /* } */
 			nil,       /* , */
-			shift(52), /* space */
+			shift(61), /* space */
 
 		},
 	},
-	actionRow{ // S44
+	actionRow{ // S53
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			shift(106), /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			shift(65),  /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			shift(66),  /* space */
+
+		},
+	},
+	actionRow{ // S54
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,       /* INVALID */
 			nil,       /* $ */
 			nil,       /* root */
-			nil,       /* id */
-			shift(89), /* . */
-			nil,       /* if */
-			nil,       /* { */
-			nil,       /* []bool */
-			nil,       /* []int64 */
-			nil,       /* []int32 */
-			nil,       /* []uint64 */
-			nil,       /* []uint32 */
-			nil,       /* []double */
-			nil,       /* []float */
-			nil,       /* []string */
-			nil,       /* [][]byte */
-			nil,       /* int64_lit */
-			nil,       /* int32_lit */
-			nil,       /* uint64_lit */
-			nil,       /* uint32_lit */
-			nil,       /* double_lit */
-			nil,       /* float_lit */
-			nil,       /* string_lit */
-			nil,       /* bytes_lit */
-			nil,       /* true */
-			nil,       /* false */
-			nil,       /* = */
-			nil,       /* then */
-			nil,       /* else */
-			shift(56), /* ( */
-			nil,       /* ) */
-			nil,       /* } */
-			nil,       /* , */
-			shift(57), /* space */
-
-		},
-	},
-	actionRow{ // S45
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,       /* INVALID */
-			nil,       /* $ */
-			nil,       /* root */
-			shift(60), /* id */
+			shift(69), /* id */
 			nil,       /* . */
 			nil,       /* if */
 			nil,       /* { */
@@ -1828,16 +2674,25 @@ var actionTab = actionTable{
 			shift(23), /* []float */
 			shift(24), /* []string */
 			shift(25), /* [][]byte */
-			shift(67), /* int64_lit */
-			shift(68), /* int32_lit */
-			shift(69), /* uint64_lit */
-			shift(70), /* uint32_lit */
-			shift(71), /* double_lit */
-			shift(72), /* float_lit */
-			shift(73), /* string_lit */
-			shift(74), /* bytes_lit */
-			shift(75), /* true */
-			shift(76), /* false */
+			shift(76), /* int64_lit */
+			shift(77), /* int32_lit */
+			shift(78), /* uint64_lit */
+			shift(79), /* uint32_lit */
+			shift(80), /* double_lit */
+			shift(81), /* float_lit */
+			shift(82), /* string_lit */
+			shift(83), /* bytes_lit */
+			shift(84), /* bool_var */
+			shift(85), /* int64_var */
+			shift(86), /* int32_var */
+			shift(87), /* uint64_var */
+			shift(88), /* uint32_var */
+			shift(89), /* double_var */
+			shift(90), /* float_var */
+			shift(91), /* string_var */
+			shift(92), /* bytes_var */
+			shift(93), /* true */
+			shift(94), /* false */
 			nil,       /* = */
 			nil,       /* then */
 			nil,       /* else */
@@ -1845,11 +2700,11 @@ var actionTab = actionTable{
 			nil,       /* ) */
 			nil,       /* } */
 			nil,       /* , */
-			shift(77), /* space */
+			shift(95), /* space */
 
 		},
 	},
-	actionRow{ // S46
+	actionRow{ // S55
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,       /* INVALID */
@@ -1858,7 +2713,7 @@ var actionTab = actionTable{
 			nil,       /* id */
 			nil,       /* . */
 			nil,       /* if */
-			shift(79), /* { */
+			shift(97), /* { */
 			nil,       /* []bool */
 			nil,       /* []int64 */
 			nil,       /* []int32 */
@@ -1876,6 +2731,15 @@ var actionTab = actionTable{
 			nil,       /* float_lit */
 			nil,       /* string_lit */
 			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
 			nil,       /* true */
 			nil,       /* false */
 			nil,       /* = */
@@ -1885,11 +2749,11 @@ var actionTab = actionTable{
 			nil,       /* ) */
 			nil,       /* } */
 			nil,       /* , */
-			shift(81), /* space */
+			shift(99), /* space */
 
 		},
 	},
-	actionRow{ // S47
+	actionRow{ // S56
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -1916,6 +2780,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -1929,403 +2802,52 @@ var actionTab = actionTable{
 
 		},
 	},
-	actionRow{ // S48
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(80), /* root, reduce: Space */
-			reduce(80), /* id, reduce: Space */
-			nil,        /* . */
-			reduce(80), /* if, reduce: Space */
-			nil,        /* { */
-			reduce(80), /* []bool, reduce: Space */
-			reduce(80), /* []int64, reduce: Space */
-			reduce(80), /* []int32, reduce: Space */
-			reduce(80), /* []uint64, reduce: Space */
-			reduce(80), /* []uint32, reduce: Space */
-			reduce(80), /* []double, reduce: Space */
-			reduce(80), /* []float, reduce: Space */
-			reduce(80), /* []string, reduce: Space */
-			reduce(80), /* [][]byte, reduce: Space */
-			reduce(80), /* int64_lit, reduce: Space */
-			reduce(80), /* int32_lit, reduce: Space */
-			reduce(80), /* uint64_lit, reduce: Space */
-			reduce(80), /* uint32_lit, reduce: Space */
-			reduce(80), /* double_lit, reduce: Space */
-			reduce(80), /* float_lit, reduce: Space */
-			reduce(80), /* string_lit, reduce: Space */
-			reduce(80), /* bytes_lit, reduce: Space */
-			reduce(80), /* true, reduce: Space */
-			reduce(80), /* false, reduce: Space */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(80), /* space, reduce: Space */
-
-		},
-	},
-	actionRow{ // S49
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,       /* INVALID */
-			nil,       /* $ */
-			nil,       /* root */
-			nil,       /* id */
-			nil,       /* . */
-			nil,       /* if */
-			nil,       /* { */
-			nil,       /* []bool */
-			nil,       /* []int64 */
-			nil,       /* []int32 */
-			nil,       /* []uint64 */
-			nil,       /* []uint32 */
-			nil,       /* []double */
-			nil,       /* []float */
-			nil,       /* []string */
-			nil,       /* [][]byte */
-			nil,       /* int64_lit */
-			nil,       /* int32_lit */
-			nil,       /* uint64_lit */
-			nil,       /* uint32_lit */
-			nil,       /* double_lit */
-			nil,       /* float_lit */
-			nil,       /* string_lit */
-			nil,       /* bytes_lit */
-			nil,       /* true */
-			nil,       /* false */
-			shift(93), /* = */
-			nil,       /* then */
-			nil,       /* else */
-			nil,       /* ( */
-			nil,       /* ) */
-			nil,       /* } */
-			nil,       /* , */
-			shift(94), /* space */
-
-		},
-	},
-	actionRow{ // S50
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,       /* INVALID */
-			nil,       /* $ */
-			nil,       /* root */
-			shift(96), /* id */
-			nil,       /* . */
-			nil,       /* if */
-			nil,       /* { */
-			nil,       /* []bool */
-			nil,       /* []int64 */
-			nil,       /* []int32 */
-			nil,       /* []uint64 */
-			nil,       /* []uint32 */
-			nil,       /* []double */
-			nil,       /* []float */
-			nil,       /* []string */
-			nil,       /* [][]byte */
-			nil,       /* int64_lit */
-			nil,       /* int32_lit */
-			nil,       /* uint64_lit */
-			nil,       /* uint32_lit */
-			nil,       /* double_lit */
-			nil,       /* float_lit */
-			nil,       /* string_lit */
-			nil,       /* bytes_lit */
-			nil,       /* true */
-			nil,       /* false */
-			nil,       /* = */
-			nil,       /* then */
-			nil,       /* else */
-			nil,       /* ( */
-			nil,       /* ) */
-			nil,       /* } */
-			nil,       /* , */
-			shift(86), /* space */
-
-		},
-	},
-	actionRow{ // S51
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			reduce(64), /* id, reduce: Equal */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(64), /* space, reduce: Equal */
-
-		},
-	},
-	actionRow{ // S52
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			reduce(81), /* =, reduce: Space */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(81), /* space, reduce: Space */
-
-		},
-	},
-	actionRow{ // S53
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,       /* INVALID */
-			nil,       /* $ */
-			nil,       /* root */
-			shift(97), /* id */
-			nil,       /* . */
-			nil,       /* if */
-			nil,       /* { */
-			nil,       /* []bool */
-			nil,       /* []int64 */
-			nil,       /* []int32 */
-			nil,       /* []uint64 */
-			nil,       /* []uint32 */
-			nil,       /* []double */
-			nil,       /* []float */
-			nil,       /* []string */
-			nil,       /* [][]byte */
-			nil,       /* int64_lit */
-			nil,       /* int32_lit */
-			nil,       /* uint64_lit */
-			nil,       /* uint32_lit */
-			nil,       /* double_lit */
-			nil,       /* float_lit */
-			nil,       /* string_lit */
-			nil,       /* bytes_lit */
-			nil,       /* true */
-			nil,       /* false */
-			nil,       /* = */
-			nil,       /* then */
-			nil,       /* else */
-			shift(98), /* ( */
-			nil,       /* ) */
-			nil,       /* } */
-			nil,       /* , */
-			shift(99), /* space */
-
-		},
-	},
-	actionRow{ // S54
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			shift(100), /* id */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			nil,        /* space */
-
-		},
-	},
-	actionRow{ // S55
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			shift(103), /* id */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(112), /* int64_lit */
-			shift(113), /* int32_lit */
-			shift(114), /* uint64_lit */
-			shift(115), /* uint32_lit */
-			shift(116), /* double_lit */
-			shift(117), /* float_lit */
-			shift(118), /* string_lit */
-			shift(119), /* bytes_lit */
-			shift(120), /* true */
-			shift(121), /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			shift(122), /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(123), /* space */
-
-		},
-	},
-	actionRow{ // S56
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			reduce(70), /* id, reduce: OpenParen */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			reduce(70), /* []bool, reduce: OpenParen */
-			reduce(70), /* []int64, reduce: OpenParen */
-			reduce(70), /* []int32, reduce: OpenParen */
-			reduce(70), /* []uint64, reduce: OpenParen */
-			reduce(70), /* []uint32, reduce: OpenParen */
-			reduce(70), /* []double, reduce: OpenParen */
-			reduce(70), /* []float, reduce: OpenParen */
-			reduce(70), /* []string, reduce: OpenParen */
-			reduce(70), /* [][]byte, reduce: OpenParen */
-			reduce(70), /* int64_lit, reduce: OpenParen */
-			reduce(70), /* int32_lit, reduce: OpenParen */
-			reduce(70), /* uint64_lit, reduce: OpenParen */
-			reduce(70), /* uint32_lit, reduce: OpenParen */
-			reduce(70), /* double_lit, reduce: OpenParen */
-			reduce(70), /* float_lit, reduce: OpenParen */
-			reduce(70), /* string_lit, reduce: OpenParen */
-			reduce(70), /* bytes_lit, reduce: OpenParen */
-			reduce(70), /* true, reduce: OpenParen */
-			reduce(70), /* false, reduce: OpenParen */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			reduce(70), /* ), reduce: OpenParen */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(70), /* space, reduce: OpenParen */
-
-		},
-	},
 	actionRow{ // S57
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			nil,        /* root */
-			reduce(81), /* id, reduce: Space */
+			reduce(88), /* root, reduce: Space */
+			reduce(88), /* id, reduce: Space */
 			nil,        /* . */
-			nil,        /* if */
+			reduce(88), /* if, reduce: Space */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			reduce(88), /* []bool, reduce: Space */
+			reduce(88), /* []int64, reduce: Space */
+			reduce(88), /* []int32, reduce: Space */
+			reduce(88), /* []uint64, reduce: Space */
+			reduce(88), /* []uint32, reduce: Space */
+			reduce(88), /* []double, reduce: Space */
+			reduce(88), /* []float, reduce: Space */
+			reduce(88), /* []string, reduce: Space */
+			reduce(88), /* [][]byte, reduce: Space */
+			reduce(88), /* int64_lit, reduce: Space */
+			reduce(88), /* int32_lit, reduce: Space */
+			reduce(88), /* uint64_lit, reduce: Space */
+			reduce(88), /* uint32_lit, reduce: Space */
+			reduce(88), /* double_lit, reduce: Space */
+			reduce(88), /* float_lit, reduce: Space */
+			reduce(88), /* string_lit, reduce: Space */
+			reduce(88), /* bytes_lit, reduce: Space */
+			reduce(88), /* bool_var, reduce: Space */
+			reduce(88), /* int64_var, reduce: Space */
+			reduce(88), /* int32_var, reduce: Space */
+			reduce(88), /* uint64_var, reduce: Space */
+			reduce(88), /* uint32_var, reduce: Space */
+			reduce(88), /* double_var, reduce: Space */
+			reduce(88), /* float_var, reduce: Space */
+			reduce(88), /* string_var, reduce: Space */
+			reduce(88), /* bytes_var, reduce: Space */
+			reduce(88), /* true, reduce: Space */
+			reduce(88), /* false, reduce: Space */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
-			reduce(81), /* (, reduce: Space */
+			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(81), /* space, reduce: Space */
+			reduce(88), /* space, reduce: Space */
 
 		},
 	},
@@ -2335,37 +2857,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(124), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(67),  /* int64_lit */
-			shift(68),  /* int32_lit */
-			shift(69),  /* uint64_lit */
-			shift(70),  /* uint32_lit */
-			shift(71),  /* double_lit */
-			shift(72),  /* float_lit */
-			shift(73),  /* string_lit */
-			shift(74),  /* bytes_lit */
-			shift(75),  /* true */
-			shift(76),  /* false */
-			nil,        /* = */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			shift(110), /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(127), /* space */
+			shift(111), /* space */
 
 		},
 	},
@@ -2375,7 +2906,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(113), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -2396,16 +2927,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			shift(130), /* then */
+			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(131), /* space */
+			shift(103), /* space */
 
 		},
 	},
@@ -2415,8 +2955,8 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
-			shift(133), /* . */
+			reduce(72), /* id, reduce: Equal */
+			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
@@ -2436,16 +2976,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
-			shift(56),  /* ( */
+			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(135), /* space */
+			reduce(72), /* space, reduce: Equal */
 
 		},
 	},
@@ -2476,16 +3025,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
-			nil,        /* = */
-			reduce(39), /* then, reduce: Expr */
+			reduce(89), /* =, reduce: Space */
+			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(39), /* space, reduce: Expr */
+			reduce(89), /* space, reduce: Space */
 
 		},
 	},
@@ -2495,7 +3053,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(114), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -2516,56 +3074,74 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(40), /* then, reduce: Expr */
+			nil,        /* then */
 			nil,        /* else */
-			nil,        /* ( */
+			shift(115), /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(40), /* space, reduce: Expr */
+			shift(116), /* space */
 
 		},
 	},
 	actionRow{ // S63
 		canRecover: false,
 		actions: [numSymbols]action{
-			nil,       /* INVALID */
-			nil,       /* $ */
-			nil,       /* root */
-			nil,       /* id */
-			nil,       /* . */
-			nil,       /* if */
-			shift(79), /* { */
-			nil,       /* []bool */
-			nil,       /* []int64 */
-			nil,       /* []int32 */
-			nil,       /* []uint64 */
-			nil,       /* []uint32 */
-			nil,       /* []double */
-			nil,       /* []float */
-			nil,       /* []string */
-			nil,       /* [][]byte */
-			nil,       /* int64_lit */
-			nil,       /* int32_lit */
-			nil,       /* uint64_lit */
-			nil,       /* uint32_lit */
-			nil,       /* double_lit */
-			nil,       /* float_lit */
-			nil,       /* string_lit */
-			nil,       /* bytes_lit */
-			nil,       /* true */
-			nil,       /* false */
-			nil,       /* = */
-			nil,       /* then */
-			nil,       /* else */
-			nil,       /* ( */
-			nil,       /* ) */
-			nil,       /* } */
-			nil,       /* , */
-			shift(81), /* space */
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			shift(117), /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			nil,        /* space */
 
 		},
 	},
@@ -2575,37 +3151,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(120), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(129), /* int64_lit */
+			shift(130), /* int32_lit */
+			shift(131), /* uint64_lit */
+			shift(132), /* uint32_lit */
+			shift(133), /* double_lit */
+			shift(134), /* float_lit */
+			shift(135), /* string_lit */
+			shift(136), /* bytes_lit */
+			shift(137), /* bool_var */
+			shift(138), /* int64_var */
+			shift(139), /* int32_var */
+			shift(140), /* uint64_var */
+			shift(141), /* uint32_var */
+			shift(142), /* double_var */
+			shift(143), /* float_var */
+			shift(144), /* string_var */
+			shift(145), /* bytes_var */
+			shift(146), /* true */
+			shift(147), /* false */
 			nil,        /* = */
-			reduce(38), /* then, reduce: Expr */
+			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			shift(148), /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(38), /* space, reduce: Expr */
+			shift(149), /* space */
 
 		},
 	},
@@ -2615,37 +3200,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			reduce(78), /* id, reduce: OpenParen */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			reduce(78), /* []bool, reduce: OpenParen */
+			reduce(78), /* []int64, reduce: OpenParen */
+			reduce(78), /* []int32, reduce: OpenParen */
+			reduce(78), /* []uint64, reduce: OpenParen */
+			reduce(78), /* []uint32, reduce: OpenParen */
+			reduce(78), /* []double, reduce: OpenParen */
+			reduce(78), /* []float, reduce: OpenParen */
+			reduce(78), /* []string, reduce: OpenParen */
+			reduce(78), /* [][]byte, reduce: OpenParen */
+			reduce(78), /* int64_lit, reduce: OpenParen */
+			reduce(78), /* int32_lit, reduce: OpenParen */
+			reduce(78), /* uint64_lit, reduce: OpenParen */
+			reduce(78), /* uint32_lit, reduce: OpenParen */
+			reduce(78), /* double_lit, reduce: OpenParen */
+			reduce(78), /* float_lit, reduce: OpenParen */
+			reduce(78), /* string_lit, reduce: OpenParen */
+			reduce(78), /* bytes_lit, reduce: OpenParen */
+			reduce(78), /* bool_var, reduce: OpenParen */
+			reduce(78), /* int64_var, reduce: OpenParen */
+			reduce(78), /* int32_var, reduce: OpenParen */
+			reduce(78), /* uint64_var, reduce: OpenParen */
+			reduce(78), /* uint32_var, reduce: OpenParen */
+			reduce(78), /* double_var, reduce: OpenParen */
+			reduce(78), /* float_var, reduce: OpenParen */
+			reduce(78), /* string_var, reduce: OpenParen */
+			reduce(78), /* bytes_var, reduce: OpenParen */
+			reduce(78), /* true, reduce: OpenParen */
+			reduce(78), /* false, reduce: OpenParen */
 			nil,        /* = */
-			reduce(50), /* then, reduce: SpaceTerminal */
+			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			reduce(78), /* ), reduce: OpenParen */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(50), /* space, reduce: SpaceTerminal */
+			reduce(78), /* space, reduce: OpenParen */
 
 		},
 	},
@@ -2655,7 +3249,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			reduce(89), /* id, reduce: Space */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -2676,16 +3270,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(52), /* then, reduce: Terminal */
+			nil,        /* then */
 			nil,        /* else */
-			nil,        /* ( */
+			reduce(89), /* (, reduce: Space */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(52), /* space, reduce: Terminal */
+			reduce(89), /* space, reduce: Space */
 
 		},
 	},
@@ -2695,37 +3298,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(150), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(76),  /* int64_lit */
+			shift(77),  /* int32_lit */
+			shift(78),  /* uint64_lit */
+			shift(79),  /* uint32_lit */
+			shift(80),  /* double_lit */
+			shift(81),  /* float_lit */
+			shift(82),  /* string_lit */
+			shift(83),  /* bytes_lit */
+			shift(84),  /* bool_var */
+			shift(85),  /* int64_var */
+			shift(86),  /* int32_var */
+			shift(87),  /* uint64_var */
+			shift(88),  /* uint32_var */
+			shift(89),  /* double_var */
+			shift(90),  /* float_var */
+			shift(91),  /* string_var */
+			shift(92),  /* bytes_var */
+			shift(93),  /* true */
+			shift(94),  /* false */
 			nil,        /* = */
-			reduce(53), /* then, reduce: Terminal */
+			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(53), /* space, reduce: Terminal */
+			shift(153), /* space */
 
 		},
 	},
@@ -2756,16 +3368,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(54), /* then, reduce: Terminal */
+			shift(156), /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(54), /* space, reduce: Terminal */
+			shift(157), /* space */
 
 		},
 	},
@@ -2796,16 +3417,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(55), /* then, reduce: Terminal */
+			nil,        /* then */
 			nil,        /* else */
-			nil,        /* ( */
+			shift(65),  /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(55), /* space, reduce: Terminal */
+			shift(160), /* space */
 
 		},
 	},
@@ -2836,16 +3466,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(56), /* then, reduce: Terminal */
+			reduce(39), /* then, reduce: Expr */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(56), /* space, reduce: Terminal */
+			reduce(39), /* space, reduce: Expr */
 
 		},
 	},
@@ -2876,56 +3515,74 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(57), /* then, reduce: Terminal */
+			reduce(40), /* then, reduce: Expr */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(57), /* space, reduce: Terminal */
+			reduce(40), /* space, reduce: Expr */
 
 		},
 	},
 	actionRow{ // S72
 		canRecover: false,
 		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			reduce(58), /* then, reduce: Terminal */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(58), /* space, reduce: Terminal */
+			nil,       /* INVALID */
+			nil,       /* $ */
+			nil,       /* root */
+			nil,       /* id */
+			nil,       /* . */
+			nil,       /* if */
+			shift(97), /* { */
+			nil,       /* []bool */
+			nil,       /* []int64 */
+			nil,       /* []int32 */
+			nil,       /* []uint64 */
+			nil,       /* []uint32 */
+			nil,       /* []double */
+			nil,       /* []float */
+			nil,       /* []string */
+			nil,       /* [][]byte */
+			nil,       /* int64_lit */
+			nil,       /* int32_lit */
+			nil,       /* uint64_lit */
+			nil,       /* uint32_lit */
+			nil,       /* double_lit */
+			nil,       /* float_lit */
+			nil,       /* string_lit */
+			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
+			nil,       /* true */
+			nil,       /* false */
+			nil,       /* = */
+			nil,       /* then */
+			nil,       /* else */
+			nil,       /* ( */
+			nil,       /* ) */
+			nil,       /* } */
+			nil,       /* , */
+			shift(99), /* space */
 
 		},
 	},
@@ -2956,16 +3613,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(59), /* then, reduce: Terminal */
+			reduce(38), /* then, reduce: Expr */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(59), /* space, reduce: Terminal */
+			reduce(38), /* space, reduce: Expr */
 
 		},
 	},
@@ -2996,16 +3662,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(60), /* then, reduce: Terminal */
+			reduce(50), /* then, reduce: SpaceTerminal */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(60), /* space, reduce: Terminal */
+			reduce(50), /* space, reduce: SpaceTerminal */
 
 		},
 	},
@@ -3036,16 +3711,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(62), /* then, reduce: Bool */
+			reduce(52), /* then, reduce: Terminal */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(62), /* space, reduce: Bool */
+			reduce(52), /* space, reduce: Terminal */
 
 		},
 	},
@@ -3076,16 +3760,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(63), /* then, reduce: Bool */
+			reduce(53), /* then, reduce: Terminal */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(63), /* space, reduce: Bool */
+			reduce(53), /* space, reduce: Terminal */
 
 		},
 	},
@@ -3095,37 +3788,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			reduce(81), /* id, reduce: Space */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			reduce(81), /* []bool, reduce: Space */
-			reduce(81), /* []int64, reduce: Space */
-			reduce(81), /* []int32, reduce: Space */
-			reduce(81), /* []uint64, reduce: Space */
-			reduce(81), /* []uint32, reduce: Space */
-			reduce(81), /* []double, reduce: Space */
-			reduce(81), /* []float, reduce: Space */
-			reduce(81), /* []string, reduce: Space */
-			reduce(81), /* [][]byte, reduce: Space */
-			reduce(81), /* int64_lit, reduce: Space */
-			reduce(81), /* int32_lit, reduce: Space */
-			reduce(81), /* uint64_lit, reduce: Space */
-			reduce(81), /* uint32_lit, reduce: Space */
-			reduce(81), /* double_lit, reduce: Space */
-			reduce(81), /* float_lit, reduce: Space */
-			reduce(81), /* string_lit, reduce: Space */
-			reduce(81), /* bytes_lit, reduce: Space */
-			reduce(81), /* true, reduce: Space */
-			reduce(81), /* false, reduce: Space */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(54), /* then, reduce: Terminal */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(81), /* space, reduce: Space */
+			reduce(54), /* space, reduce: Terminal */
 
 		},
 	},
@@ -3138,7 +3840,7 @@ var actionTab = actionTable{
 			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
-			shift(137), /* { */
+			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -3156,16 +3858,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(55), /* then, reduce: Terminal */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(138), /* space */
+			reduce(55), /* space, reduce: Terminal */
 
 		},
 	},
@@ -3175,37 +3886,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			reduce(74), /* id, reduce: OpenCurly */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			reduce(74), /* []bool, reduce: OpenCurly */
-			reduce(74), /* []int64, reduce: OpenCurly */
-			reduce(74), /* []int32, reduce: OpenCurly */
-			reduce(74), /* []uint64, reduce: OpenCurly */
-			reduce(74), /* []uint32, reduce: OpenCurly */
-			reduce(74), /* []double, reduce: OpenCurly */
-			reduce(74), /* []float, reduce: OpenCurly */
-			reduce(74), /* []string, reduce: OpenCurly */
-			reduce(74), /* [][]byte, reduce: OpenCurly */
-			reduce(74), /* int64_lit, reduce: OpenCurly */
-			reduce(74), /* int32_lit, reduce: OpenCurly */
-			reduce(74), /* uint64_lit, reduce: OpenCurly */
-			reduce(74), /* uint32_lit, reduce: OpenCurly */
-			reduce(74), /* double_lit, reduce: OpenCurly */
-			reduce(74), /* float_lit, reduce: OpenCurly */
-			reduce(74), /* string_lit, reduce: OpenCurly */
-			reduce(74), /* bytes_lit, reduce: OpenCurly */
-			reduce(74), /* true, reduce: OpenCurly */
-			reduce(74), /* false, reduce: OpenCurly */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(56), /* then, reduce: Terminal */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(74), /* }, reduce: OpenCurly */
+			nil,        /* } */
 			nil,        /* , */
-			reduce(74), /* space, reduce: OpenCurly */
+			reduce(56), /* space, reduce: Terminal */
 
 		},
 	},
@@ -3215,37 +3935,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(141), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(150), /* int64_lit */
-			shift(151), /* int32_lit */
-			shift(152), /* uint64_lit */
-			shift(153), /* uint32_lit */
-			shift(154), /* double_lit */
-			shift(155), /* float_lit */
-			shift(156), /* string_lit */
-			shift(157), /* bytes_lit */
-			shift(158), /* true */
-			shift(159), /* false */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(57), /* then, reduce: Terminal */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(160), /* } */
+			nil,        /* } */
 			nil,        /* , */
-			shift(161), /* space */
+			reduce(57), /* space, reduce: Terminal */
 
 		},
 	},
@@ -3258,7 +3987,7 @@ var actionTab = actionTable{
 			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
-			reduce(81), /* {, reduce: Space */
+			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -3276,16 +4005,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(58), /* then, reduce: Terminal */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(81), /* space, reduce: Space */
+			reduce(58), /* space, reduce: Terminal */
 
 		},
 	},
@@ -3296,7 +4034,7 @@ var actionTab = actionTable{
 			nil,        /* $ */
 			nil,        /* root */
 			nil,        /* id */
-			shift(163), /* . */
+			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
@@ -3316,16 +4054,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(59), /* then, reduce: Terminal */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(86),  /* space */
+			reduce(59), /* space, reduce: Terminal */
 
 		},
 	},
@@ -3333,11 +4080,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(80), /* $, reduce: Space */
-			reduce(80), /* root, reduce: Space */
-			reduce(80), /* id, reduce: Space */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
 			nil,        /* . */
-			reduce(80), /* if, reduce: Space */
+			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -3356,16 +4103,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(60), /* then, reduce: Terminal */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(80), /* space, reduce: Space */
+			reduce(60), /* space, reduce: Terminal */
 
 		},
 	},
@@ -3375,7 +4131,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(97),  /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -3396,16 +4152,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(61), /* then, reduce: Terminal */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(164), /* space */
+			reduce(61), /* space, reduce: Terminal */
 
 		},
 	},
@@ -3415,7 +4180,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(165), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -3436,16 +4201,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(62), /* then, reduce: Terminal */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			nil,        /* space */
+			reduce(62), /* space, reduce: Terminal */
 
 		},
 	},
@@ -3455,7 +4229,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			reduce(81), /* id, reduce: Space */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -3476,16 +4250,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(63), /* then, reduce: Terminal */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(81), /* space, reduce: Space */
+			reduce(63), /* space, reduce: Terminal */
 
 		},
 	},
@@ -3495,7 +4278,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(167), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -3516,16 +4299,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(64), /* then, reduce: Terminal */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(86),  /* space */
+			reduce(64), /* space, reduce: Terminal */
 
 		},
 	},
@@ -3535,7 +4327,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(168), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -3556,16 +4348,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(65), /* then, reduce: Terminal */
 			nil,        /* else */
-			shift(98),  /* ( */
+			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(99),  /* space */
+			reduce(65), /* space, reduce: Terminal */
 
 		},
 	},
@@ -3575,7 +4376,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(169), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -3596,16 +4397,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(66), /* then, reduce: Terminal */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			nil,        /* space */
+			reduce(66), /* space, reduce: Terminal */
 
 		},
 	},
@@ -3615,37 +4425,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(103), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(112), /* int64_lit */
-			shift(113), /* int32_lit */
-			shift(114), /* uint64_lit */
-			shift(115), /* uint32_lit */
-			shift(116), /* double_lit */
-			shift(117), /* float_lit */
-			shift(118), /* string_lit */
-			shift(119), /* bytes_lit */
-			shift(120), /* true */
-			shift(121), /* false */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(67), /* then, reduce: Terminal */
 			nil,        /* else */
 			nil,        /* ( */
-			shift(122), /* ) */
+			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(123), /* space */
+			reduce(67), /* space, reduce: Terminal */
 
 		},
 	},
@@ -3676,16 +4495,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			shift(130), /* then */
+			reduce(68), /* then, reduce: Terminal */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(131), /* space */
+			reduce(68), /* space, reduce: Terminal */
 
 		},
 	},
@@ -3695,47 +4523,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(141), /* id */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(150), /* int64_lit */
-			shift(151), /* int32_lit */
-			shift(152), /* uint64_lit */
-			shift(153), /* uint32_lit */
-			shift(154), /* double_lit */
-			shift(155), /* float_lit */
-			shift(156), /* string_lit */
-			shift(157), /* bytes_lit */
-			shift(158), /* true */
-			shift(159), /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			shift(160), /* } */
-			nil,        /* , */
-			shift(161), /* space */
-
-		},
-	},
-	actionRow{ // S93
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			reduce(65), /* id, reduce: Equal */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -3756,16 +4544,74 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(69), /* then, reduce: Terminal */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(65), /* space, reduce: Equal */
+			reduce(69), /* space, reduce: Terminal */
+
+		},
+	},
+	actionRow{ // S93
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			reduce(70), /* then, reduce: Bool */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(70), /* space, reduce: Bool */
 
 		},
 	},
@@ -3796,16 +4642,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
-			reduce(80), /* =, reduce: Space */
-			nil,        /* then */
+			nil,        /* = */
+			reduce(71), /* then, reduce: Bool */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(80), /* space, reduce: Space */
+			reduce(71), /* space, reduce: Bool */
 
 		},
 	},
@@ -3815,7 +4670,350 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(175), /* id */
+			reduce(89), /* id, reduce: Space */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			reduce(89), /* []bool, reduce: Space */
+			reduce(89), /* []int64, reduce: Space */
+			reduce(89), /* []int32, reduce: Space */
+			reduce(89), /* []uint64, reduce: Space */
+			reduce(89), /* []uint32, reduce: Space */
+			reduce(89), /* []double, reduce: Space */
+			reduce(89), /* []float, reduce: Space */
+			reduce(89), /* []string, reduce: Space */
+			reduce(89), /* [][]byte, reduce: Space */
+			reduce(89), /* int64_lit, reduce: Space */
+			reduce(89), /* int32_lit, reduce: Space */
+			reduce(89), /* uint64_lit, reduce: Space */
+			reduce(89), /* uint32_lit, reduce: Space */
+			reduce(89), /* double_lit, reduce: Space */
+			reduce(89), /* float_lit, reduce: Space */
+			reduce(89), /* string_lit, reduce: Space */
+			reduce(89), /* bytes_lit, reduce: Space */
+			reduce(89), /* bool_var, reduce: Space */
+			reduce(89), /* int64_var, reduce: Space */
+			reduce(89), /* int32_var, reduce: Space */
+			reduce(89), /* uint64_var, reduce: Space */
+			reduce(89), /* uint32_var, reduce: Space */
+			reduce(89), /* double_var, reduce: Space */
+			reduce(89), /* float_var, reduce: Space */
+			reduce(89), /* string_var, reduce: Space */
+			reduce(89), /* bytes_var, reduce: Space */
+			reduce(89), /* true, reduce: Space */
+			reduce(89), /* false, reduce: Space */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(89), /* space, reduce: Space */
+
+		},
+	},
+	actionRow{ // S96
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			shift(162), /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			shift(163), /* space */
+
+		},
+	},
+	actionRow{ // S97
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			reduce(82), /* id, reduce: OpenCurly */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			reduce(82), /* []bool, reduce: OpenCurly */
+			reduce(82), /* []int64, reduce: OpenCurly */
+			reduce(82), /* []int32, reduce: OpenCurly */
+			reduce(82), /* []uint64, reduce: OpenCurly */
+			reduce(82), /* []uint32, reduce: OpenCurly */
+			reduce(82), /* []double, reduce: OpenCurly */
+			reduce(82), /* []float, reduce: OpenCurly */
+			reduce(82), /* []string, reduce: OpenCurly */
+			reduce(82), /* [][]byte, reduce: OpenCurly */
+			reduce(82), /* int64_lit, reduce: OpenCurly */
+			reduce(82), /* int32_lit, reduce: OpenCurly */
+			reduce(82), /* uint64_lit, reduce: OpenCurly */
+			reduce(82), /* uint32_lit, reduce: OpenCurly */
+			reduce(82), /* double_lit, reduce: OpenCurly */
+			reduce(82), /* float_lit, reduce: OpenCurly */
+			reduce(82), /* string_lit, reduce: OpenCurly */
+			reduce(82), /* bytes_lit, reduce: OpenCurly */
+			reduce(82), /* bool_var, reduce: OpenCurly */
+			reduce(82), /* int64_var, reduce: OpenCurly */
+			reduce(82), /* int32_var, reduce: OpenCurly */
+			reduce(82), /* uint64_var, reduce: OpenCurly */
+			reduce(82), /* uint32_var, reduce: OpenCurly */
+			reduce(82), /* double_var, reduce: OpenCurly */
+			reduce(82), /* float_var, reduce: OpenCurly */
+			reduce(82), /* string_var, reduce: OpenCurly */
+			reduce(82), /* bytes_var, reduce: OpenCurly */
+			reduce(82), /* true, reduce: OpenCurly */
+			reduce(82), /* false, reduce: OpenCurly */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			reduce(82), /* }, reduce: OpenCurly */
+			nil,        /* , */
+			reduce(82), /* space, reduce: OpenCurly */
+
+		},
+	},
+	actionRow{ // S98
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			shift(166), /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(175), /* int64_lit */
+			shift(176), /* int32_lit */
+			shift(177), /* uint64_lit */
+			shift(178), /* uint32_lit */
+			shift(179), /* double_lit */
+			shift(180), /* float_lit */
+			shift(181), /* string_lit */
+			shift(182), /* bytes_lit */
+			shift(183), /* bool_var */
+			shift(184), /* int64_var */
+			shift(185), /* int32_var */
+			shift(186), /* uint64_var */
+			shift(187), /* uint32_var */
+			shift(188), /* double_var */
+			shift(189), /* float_var */
+			shift(190), /* string_var */
+			shift(191), /* bytes_var */
+			shift(192), /* true */
+			shift(193), /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			shift(194), /* } */
+			nil,        /* , */
+			shift(195), /* space */
+
+		},
+	},
+	actionRow{ // S99
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			reduce(89), /* {, reduce: Space */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(89), /* space, reduce: Space */
+
+		},
+	},
+	actionRow{ // S100
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			shift(106), /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			shift(103), /* space */
+
+		},
+	},
+	actionRow{ // S101
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			reduce(88), /* $, reduce: Space */
+			reduce(88), /* root, reduce: Space */
+			reduce(88), /* id, reduce: Space */
+			nil,        /* . */
+			reduce(88), /* if, reduce: Space */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(88), /* space, reduce: Space */
+
+		},
+	},
+	actionRow{ // S102
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			shift(114), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -3836,6 +5034,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -3845,18 +5052,18 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(164), /* space */
+			shift(197), /* space */
 
 		},
 	},
-	actionRow{ // S96
+	actionRow{ // S103
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
-			shift(176), /* . */
+			reduce(89), /* id, reduce: Space */
+			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
@@ -3876,6 +5083,162 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(89), /* space, reduce: Space */
+
+		},
+	},
+	actionRow{ // S104
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			shift(199), /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			shift(103), /* space */
+
+		},
+	},
+	actionRow{ // S105
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			shift(200), /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			shift(115), /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			shift(116), /* space */
+
+		},
+	},
+	actionRow{ // S106
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			shift(201), /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -3889,173 +5252,13 @@ var actionTab = actionTable{
 
 		},
 	},
-	actionRow{ // S97
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,       /* INVALID */
-			nil,       /* $ */
-			nil,       /* root */
-			nil,       /* id */
-			nil,       /* . */
-			nil,       /* if */
-			nil,       /* { */
-			nil,       /* []bool */
-			nil,       /* []int64 */
-			nil,       /* []int32 */
-			nil,       /* []uint64 */
-			nil,       /* []uint32 */
-			nil,       /* []double */
-			nil,       /* []float */
-			nil,       /* []string */
-			nil,       /* [][]byte */
-			nil,       /* int64_lit */
-			nil,       /* int32_lit */
-			nil,       /* uint64_lit */
-			nil,       /* uint32_lit */
-			nil,       /* double_lit */
-			nil,       /* float_lit */
-			nil,       /* string_lit */
-			nil,       /* bytes_lit */
-			nil,       /* true */
-			nil,       /* false */
-			shift(51), /* = */
-			nil,       /* then */
-			nil,       /* else */
-			nil,       /* ( */
-			nil,       /* ) */
-			nil,       /* } */
-			nil,       /* , */
-			shift(52), /* space */
-
-		},
-	},
-	actionRow{ // S98
+	actionRow{ // S107
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			reduce(71), /* id, reduce: OpenParen */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			reduce(71), /* []bool, reduce: OpenParen */
-			reduce(71), /* []int64, reduce: OpenParen */
-			reduce(71), /* []int32, reduce: OpenParen */
-			reduce(71), /* []uint64, reduce: OpenParen */
-			reduce(71), /* []uint32, reduce: OpenParen */
-			reduce(71), /* []double, reduce: OpenParen */
-			reduce(71), /* []float, reduce: OpenParen */
-			reduce(71), /* []string, reduce: OpenParen */
-			reduce(71), /* [][]byte, reduce: OpenParen */
-			reduce(71), /* int64_lit, reduce: OpenParen */
-			reduce(71), /* int32_lit, reduce: OpenParen */
-			reduce(71), /* uint64_lit, reduce: OpenParen */
-			reduce(71), /* uint32_lit, reduce: OpenParen */
-			reduce(71), /* double_lit, reduce: OpenParen */
-			reduce(71), /* float_lit, reduce: OpenParen */
-			reduce(71), /* string_lit, reduce: OpenParen */
-			reduce(71), /* bytes_lit, reduce: OpenParen */
-			reduce(71), /* true, reduce: OpenParen */
-			reduce(71), /* false, reduce: OpenParen */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			reduce(71), /* ), reduce: OpenParen */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(71), /* space, reduce: OpenParen */
-
-		},
-	},
-	actionRow{ // S99
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			reduce(80), /* id, reduce: Space */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			reduce(80), /* (, reduce: Space */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(80), /* space, reduce: Space */
-
-		},
-	},
-	actionRow{ // S100
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
-			shift(179), /* . */
-			nil,        /* if */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			shift(51),  /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(52),  /* space */
-
-		},
-	},
-	actionRow{ // S101
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			shift(180), /* id */
+			shift(120), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -4068,304 +5271,82 @@ var actionTab = actionTable{
 			shift(23),  /* []float */
 			shift(24),  /* []string */
 			shift(25),  /* [][]byte */
-			shift(112), /* int64_lit */
-			shift(113), /* int32_lit */
-			shift(114), /* uint64_lit */
-			shift(115), /* uint32_lit */
-			shift(116), /* double_lit */
-			shift(117), /* float_lit */
-			shift(118), /* string_lit */
-			shift(119), /* bytes_lit */
-			shift(120), /* true */
-			shift(121), /* false */
+			shift(129), /* int64_lit */
+			shift(130), /* int32_lit */
+			shift(131), /* uint64_lit */
+			shift(132), /* uint32_lit */
+			shift(133), /* double_lit */
+			shift(134), /* float_lit */
+			shift(135), /* string_lit */
+			shift(136), /* bytes_lit */
+			shift(137), /* bool_var */
+			shift(138), /* int64_var */
+			shift(139), /* int32_var */
+			shift(140), /* uint64_var */
+			shift(141), /* uint32_var */
+			shift(142), /* double_var */
+			shift(143), /* float_var */
+			shift(144), /* string_var */
+			shift(145), /* bytes_var */
+			shift(146), /* true */
+			shift(147), /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			shift(183), /* ) */
+			shift(148), /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(184), /* space */
-
-		},
-	},
-	actionRow{ // S102
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			reduce(36), /* ), reduce: Exprs */
-			nil,        /* } */
-			reduce(36), /* ,, reduce: Exprs */
-			reduce(36), /* space, reduce: Exprs */
-
-		},
-	},
-	actionRow{ // S103
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
-			shift(185), /* . */
-			nil,        /* if */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			shift(56),  /* ( */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(135), /* space */
-
-		},
-	},
-	actionRow{ // S104
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			reduce(39), /* ), reduce: Expr */
-			nil,        /* } */
-			reduce(39), /* ,, reduce: Expr */
-			reduce(39), /* space, reduce: Expr */
-
-		},
-	},
-	actionRow{ // S105
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			shift(122), /* ) */
-			nil,        /* } */
-			shift(190), /* , */
-			shift(191), /* space */
-
-		},
-	},
-	actionRow{ // S106
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			reduce(31), /* $, reduce: Function */
-			reduce(31), /* root, reduce: Function */
-			reduce(31), /* id, reduce: Function */
-			nil,        /* . */
-			reduce(31), /* if, reduce: Function */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(31), /* space, reduce: Function */
-
-		},
-	},
-	actionRow{ // S107
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			reduce(40), /* ), reduce: Expr */
-			nil,        /* } */
-			reduce(40), /* ,, reduce: Expr */
-			reduce(40), /* space, reduce: Expr */
+			shift(149), /* space */
 
 		},
 	},
 	actionRow{ // S108
 		canRecover: false,
 		actions: [numSymbols]action{
-			nil,       /* INVALID */
-			nil,       /* $ */
-			nil,       /* root */
-			nil,       /* id */
-			nil,       /* . */
-			nil,       /* if */
-			shift(79), /* { */
-			nil,       /* []bool */
-			nil,       /* []int64 */
-			nil,       /* []int32 */
-			nil,       /* []uint64 */
-			nil,       /* []uint32 */
-			nil,       /* []double */
-			nil,       /* []float */
-			nil,       /* []string */
-			nil,       /* [][]byte */
-			nil,       /* int64_lit */
-			nil,       /* int32_lit */
-			nil,       /* uint64_lit */
-			nil,       /* uint32_lit */
-			nil,       /* double_lit */
-			nil,       /* float_lit */
-			nil,       /* string_lit */
-			nil,       /* bytes_lit */
-			nil,       /* true */
-			nil,       /* false */
-			nil,       /* = */
-			nil,       /* then */
-			nil,       /* else */
-			nil,       /* ( */
-			nil,       /* ) */
-			nil,       /* } */
-			nil,       /* , */
-			shift(81), /* space */
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			shift(156), /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			shift(157), /* space */
 
 		},
 	},
@@ -4375,37 +5356,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(166), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(175), /* int64_lit */
+			shift(176), /* int32_lit */
+			shift(177), /* uint64_lit */
+			shift(178), /* uint32_lit */
+			shift(179), /* double_lit */
+			shift(180), /* float_lit */
+			shift(181), /* string_lit */
+			shift(182), /* bytes_lit */
+			shift(183), /* bool_var */
+			shift(184), /* int64_var */
+			shift(185), /* int32_var */
+			shift(186), /* uint64_var */
+			shift(187), /* uint32_var */
+			shift(188), /* double_var */
+			shift(189), /* float_var */
+			shift(190), /* string_var */
+			shift(191), /* bytes_var */
+			shift(192), /* true */
+			shift(193), /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(38), /* ), reduce: Expr */
-			nil,        /* } */
-			reduce(38), /* ,, reduce: Expr */
-			reduce(38), /* space, reduce: Expr */
+			nil,        /* ) */
+			shift(194), /* } */
+			nil,        /* , */
+			shift(195), /* space */
 
 		},
 	},
@@ -4415,7 +5405,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			reduce(73), /* id, reduce: Equal */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -4436,16 +5426,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(50), /* ), reduce: SpaceTerminal */
+			nil,        /* ) */
 			nil,        /* } */
-			reduce(50), /* ,, reduce: SpaceTerminal */
-			reduce(50), /* space, reduce: SpaceTerminal */
+			nil,        /* , */
+			reduce(73), /* space, reduce: Equal */
 
 		},
 	},
@@ -4476,16 +5475,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
-			nil,        /* = */
+			reduce(88), /* =, reduce: Space */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(52), /* ), reduce: Terminal */
+			nil,        /* ) */
 			nil,        /* } */
-			reduce(52), /* ,, reduce: Terminal */
-			reduce(52), /* space, reduce: Terminal */
+			nil,        /* , */
+			reduce(88), /* space, reduce: Space */
 
 		},
 	},
@@ -4495,7 +5503,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(207), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -4516,16 +5524,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(53), /* ), reduce: Terminal */
+			nil,        /* ) */
 			nil,        /* } */
-			reduce(53), /* ,, reduce: Terminal */
-			reduce(53), /* space, reduce: Terminal */
+			nil,        /* , */
+			shift(197), /* space */
 
 		},
 	},
@@ -4536,7 +5553,7 @@ var actionTab = actionTable{
 			nil,        /* $ */
 			nil,        /* root */
 			nil,        /* id */
-			nil,        /* . */
+			shift(208), /* . */
 			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
@@ -4556,56 +5573,74 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(54), /* ), reduce: Terminal */
+			nil,        /* ) */
 			nil,        /* } */
-			reduce(54), /* ,, reduce: Terminal */
-			reduce(54), /* space, reduce: Terminal */
+			nil,        /* , */
+			nil,        /* space */
 
 		},
 	},
 	actionRow{ // S114
 		canRecover: false,
 		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			reduce(55), /* ), reduce: Terminal */
-			nil,        /* } */
-			reduce(55), /* ,, reduce: Terminal */
-			reduce(55), /* space, reduce: Terminal */
+			nil,       /* INVALID */
+			nil,       /* $ */
+			nil,       /* root */
+			nil,       /* id */
+			nil,       /* . */
+			nil,       /* if */
+			nil,       /* { */
+			nil,       /* []bool */
+			nil,       /* []int64 */
+			nil,       /* []int32 */
+			nil,       /* []uint64 */
+			nil,       /* []uint32 */
+			nil,       /* []double */
+			nil,       /* []float */
+			nil,       /* []string */
+			nil,       /* [][]byte */
+			nil,       /* int64_lit */
+			nil,       /* int32_lit */
+			nil,       /* uint64_lit */
+			nil,       /* uint32_lit */
+			nil,       /* double_lit */
+			nil,       /* float_lit */
+			nil,       /* string_lit */
+			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
+			nil,       /* true */
+			nil,       /* false */
+			shift(60), /* = */
+			nil,       /* then */
+			nil,       /* else */
+			nil,       /* ( */
+			nil,       /* ) */
+			nil,       /* } */
+			nil,       /* , */
+			shift(61), /* space */
 
 		},
 	},
@@ -4615,37 +5650,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			reduce(79), /* id, reduce: OpenParen */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			reduce(79), /* []bool, reduce: OpenParen */
+			reduce(79), /* []int64, reduce: OpenParen */
+			reduce(79), /* []int32, reduce: OpenParen */
+			reduce(79), /* []uint64, reduce: OpenParen */
+			reduce(79), /* []uint32, reduce: OpenParen */
+			reduce(79), /* []double, reduce: OpenParen */
+			reduce(79), /* []float, reduce: OpenParen */
+			reduce(79), /* []string, reduce: OpenParen */
+			reduce(79), /* [][]byte, reduce: OpenParen */
+			reduce(79), /* int64_lit, reduce: OpenParen */
+			reduce(79), /* int32_lit, reduce: OpenParen */
+			reduce(79), /* uint64_lit, reduce: OpenParen */
+			reduce(79), /* uint32_lit, reduce: OpenParen */
+			reduce(79), /* double_lit, reduce: OpenParen */
+			reduce(79), /* float_lit, reduce: OpenParen */
+			reduce(79), /* string_lit, reduce: OpenParen */
+			reduce(79), /* bytes_lit, reduce: OpenParen */
+			reduce(79), /* bool_var, reduce: OpenParen */
+			reduce(79), /* int64_var, reduce: OpenParen */
+			reduce(79), /* int32_var, reduce: OpenParen */
+			reduce(79), /* uint64_var, reduce: OpenParen */
+			reduce(79), /* uint32_var, reduce: OpenParen */
+			reduce(79), /* double_var, reduce: OpenParen */
+			reduce(79), /* float_var, reduce: OpenParen */
+			reduce(79), /* string_var, reduce: OpenParen */
+			reduce(79), /* bytes_var, reduce: OpenParen */
+			reduce(79), /* true, reduce: OpenParen */
+			reduce(79), /* false, reduce: OpenParen */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(56), /* ), reduce: Terminal */
+			reduce(79), /* ), reduce: OpenParen */
 			nil,        /* } */
-			reduce(56), /* ,, reduce: Terminal */
-			reduce(56), /* space, reduce: Terminal */
+			nil,        /* , */
+			reduce(79), /* space, reduce: OpenParen */
 
 		},
 	},
@@ -4655,7 +5699,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			reduce(88), /* id, reduce: Space */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -4676,56 +5720,74 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
-			nil,        /* ( */
-			reduce(57), /* ), reduce: Terminal */
+			reduce(88), /* (, reduce: Space */
+			nil,        /* ) */
 			nil,        /* } */
-			reduce(57), /* ,, reduce: Terminal */
-			reduce(57), /* space, reduce: Terminal */
+			nil,        /* , */
+			reduce(88), /* space, reduce: Space */
 
 		},
 	},
 	actionRow{ // S117
 		canRecover: false,
 		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			reduce(58), /* ), reduce: Terminal */
-			nil,        /* } */
-			reduce(58), /* ,, reduce: Terminal */
-			reduce(58), /* space, reduce: Terminal */
+			nil,       /* INVALID */
+			nil,       /* $ */
+			nil,       /* root */
+			nil,       /* id */
+			nil,       /* . */
+			nil,       /* if */
+			nil,       /* { */
+			nil,       /* []bool */
+			nil,       /* []int64 */
+			nil,       /* []int32 */
+			nil,       /* []uint64 */
+			nil,       /* []uint32 */
+			nil,       /* []double */
+			nil,       /* []float */
+			nil,       /* []string */
+			nil,       /* [][]byte */
+			nil,       /* int64_lit */
+			nil,       /* int32_lit */
+			nil,       /* uint64_lit */
+			nil,       /* uint32_lit */
+			nil,       /* double_lit */
+			nil,       /* float_lit */
+			nil,       /* string_lit */
+			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
+			nil,       /* true */
+			nil,       /* false */
+			shift(60), /* = */
+			nil,       /* then */
+			nil,       /* else */
+			nil,       /* ( */
+			nil,       /* ) */
+			nil,       /* } */
+			nil,       /* , */
+			shift(61), /* space */
 
 		},
 	},
@@ -4735,37 +5797,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(211), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(129), /* int64_lit */
+			shift(130), /* int32_lit */
+			shift(131), /* uint64_lit */
+			shift(132), /* uint32_lit */
+			shift(133), /* double_lit */
+			shift(134), /* float_lit */
+			shift(135), /* string_lit */
+			shift(136), /* bytes_lit */
+			shift(137), /* bool_var */
+			shift(138), /* int64_var */
+			shift(139), /* int32_var */
+			shift(140), /* uint64_var */
+			shift(141), /* uint32_var */
+			shift(142), /* double_var */
+			shift(143), /* float_var */
+			shift(144), /* string_var */
+			shift(145), /* bytes_var */
+			shift(146), /* true */
+			shift(147), /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(59), /* ), reduce: Terminal */
+			shift(214), /* ) */
 			nil,        /* } */
-			reduce(59), /* ,, reduce: Terminal */
-			reduce(59), /* space, reduce: Terminal */
+			nil,        /* , */
+			shift(215), /* space */
 
 		},
 	},
@@ -4796,16 +5867,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(60), /* ), reduce: Terminal */
+			reduce(36), /* ), reduce: Exprs */
 			nil,        /* } */
-			reduce(60), /* ,, reduce: Terminal */
-			reduce(60), /* space, reduce: Terminal */
+			reduce(36), /* ,, reduce: Exprs */
+			reduce(36), /* space, reduce: Exprs */
 
 		},
 	},
@@ -4836,16 +5916,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
-			nil,        /* ( */
-			reduce(62), /* ), reduce: Bool */
+			shift(65),  /* ( */
+			nil,        /* ) */
 			nil,        /* } */
-			reduce(62), /* ,, reduce: Bool */
-			reduce(62), /* space, reduce: Bool */
+			nil,        /* , */
+			shift(160), /* space */
 
 		},
 	},
@@ -4876,16 +5965,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(63), /* ), reduce: Bool */
+			reduce(39), /* ), reduce: Expr */
 			nil,        /* } */
-			reduce(63), /* ,, reduce: Bool */
-			reduce(63), /* space, reduce: Bool */
+			reduce(39), /* ,, reduce: Expr */
+			reduce(39), /* space, reduce: Expr */
 
 		},
 	},
@@ -4893,11 +5991,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(72), /* $, reduce: CloseParen */
-			reduce(72), /* root, reduce: CloseParen */
-			reduce(72), /* id, reduce: CloseParen */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
 			nil,        /* . */
-			reduce(72), /* if, reduce: CloseParen */
+			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -4916,6 +6014,64 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			shift(148), /* ) */
+			nil,        /* } */
+			shift(220), /* , */
+			shift(221), /* space */
+
+		},
+	},
+	actionRow{ // S123
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			reduce(31), /* $, reduce: Function */
+			reduce(31), /* root, reduce: Function */
+			reduce(31), /* id, reduce: Function */
+			nil,        /* . */
+			reduce(31), /* if, reduce: Function */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -4925,47 +6081,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(72), /* space, reduce: CloseParen */
-
-		},
-	},
-	actionRow{ // S123
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			reduce(81), /* id, reduce: Space */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			reduce(81), /* []bool, reduce: Space */
-			reduce(81), /* []int64, reduce: Space */
-			reduce(81), /* []int32, reduce: Space */
-			reduce(81), /* []uint64, reduce: Space */
-			reduce(81), /* []uint32, reduce: Space */
-			reduce(81), /* []double, reduce: Space */
-			reduce(81), /* []float, reduce: Space */
-			reduce(81), /* []string, reduce: Space */
-			reduce(81), /* [][]byte, reduce: Space */
-			reduce(81), /* int64_lit, reduce: Space */
-			reduce(81), /* int32_lit, reduce: Space */
-			reduce(81), /* uint64_lit, reduce: Space */
-			reduce(81), /* uint32_lit, reduce: Space */
-			reduce(81), /* double_lit, reduce: Space */
-			reduce(81), /* float_lit, reduce: Space */
-			reduce(81), /* string_lit, reduce: Space */
-			reduce(81), /* bytes_lit, reduce: Space */
-			reduce(81), /* true, reduce: Space */
-			reduce(81), /* false, reduce: Space */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			reduce(81), /* ), reduce: Space */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(81), /* space, reduce: Space */
+			reduce(31), /* space, reduce: Function */
 
 		},
 	},
@@ -4976,7 +6092,7 @@ var actionTab = actionTable{
 			nil,        /* $ */
 			nil,        /* root */
 			nil,        /* id */
-			shift(133), /* . */
+			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
@@ -4996,16 +6112,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
-			shift(56),  /* ( */
-			nil,        /* ) */
+			nil,        /* ( */
+			reduce(40), /* ), reduce: Expr */
 			nil,        /* } */
-			nil,        /* , */
-			shift(135), /* space */
+			reduce(40), /* ,, reduce: Expr */
+			reduce(40), /* space, reduce: Expr */
 
 		},
 	},
@@ -5018,7 +6143,7 @@ var actionTab = actionTable{
 			nil,       /* id */
 			nil,       /* . */
 			nil,       /* if */
-			shift(79), /* { */
+			shift(97), /* { */
 			nil,       /* []bool */
 			nil,       /* []int64 */
 			nil,       /* []int32 */
@@ -5036,6 +6161,15 @@ var actionTab = actionTable{
 			nil,       /* float_lit */
 			nil,       /* string_lit */
 			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
 			nil,       /* true */
 			nil,       /* false */
 			nil,       /* = */
@@ -5045,7 +6179,7 @@ var actionTab = actionTable{
 			nil,       /* ) */
 			nil,       /* } */
 			nil,       /* , */
-			shift(81), /* space */
+			shift(99), /* space */
 
 		},
 	},
@@ -5076,16 +6210,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(51), /* then, reduce: SpaceTerminal */
+			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			reduce(38), /* ), reduce: Expr */
 			nil,        /* } */
-			nil,        /* , */
-			reduce(51), /* space, reduce: SpaceTerminal */
+			reduce(38), /* ,, reduce: Expr */
+			reduce(38), /* space, reduce: Expr */
 
 		},
 	},
@@ -5095,37 +6238,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			reduce(80), /* id, reduce: Space */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			reduce(80), /* []bool, reduce: Space */
-			reduce(80), /* []int64, reduce: Space */
-			reduce(80), /* []int32, reduce: Space */
-			reduce(80), /* []uint64, reduce: Space */
-			reduce(80), /* []uint32, reduce: Space */
-			reduce(80), /* []double, reduce: Space */
-			reduce(80), /* []float, reduce: Space */
-			reduce(80), /* []string, reduce: Space */
-			reduce(80), /* [][]byte, reduce: Space */
-			reduce(80), /* int64_lit, reduce: Space */
-			reduce(80), /* int32_lit, reduce: Space */
-			reduce(80), /* uint64_lit, reduce: Space */
-			reduce(80), /* uint32_lit, reduce: Space */
-			reduce(80), /* double_lit, reduce: Space */
-			reduce(80), /* float_lit, reduce: Space */
-			reduce(80), /* string_lit, reduce: Space */
-			reduce(80), /* bytes_lit, reduce: Space */
-			reduce(80), /* true, reduce: Space */
-			reduce(80), /* false, reduce: Space */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			reduce(50), /* ), reduce: SpaceTerminal */
 			nil,        /* } */
-			nil,        /* , */
-			reduce(80), /* space, reduce: Space */
+			reduce(50), /* ,, reduce: SpaceTerminal */
+			reduce(50), /* space, reduce: SpaceTerminal */
 
 		},
 	},
@@ -5156,16 +6308,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			shift(195), /* then */
+			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			reduce(52), /* ), reduce: Terminal */
 			nil,        /* } */
-			nil,        /* , */
-			shift(196), /* space */
+			reduce(52), /* ,, reduce: Terminal */
+			reduce(52), /* space, reduce: Terminal */
 
 		},
 	},
@@ -5175,10 +6336,10 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(198), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
-			shift(200), /* { */
+			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -5196,16 +6357,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			reduce(53), /* ), reduce: Terminal */
 			nil,        /* } */
-			nil,        /* , */
-			shift(201), /* space */
+			reduce(53), /* ,, reduce: Terminal */
+			reduce(53), /* space, reduce: Terminal */
 
 		},
 	},
@@ -5215,10 +6385,10 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			reduce(66), /* id, reduce: Then */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
-			reduce(66), /* {, reduce: Then */
+			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -5236,16 +6406,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			reduce(54), /* ), reduce: Terminal */
 			nil,        /* } */
-			nil,        /* , */
-			reduce(66), /* space, reduce: Then */
+			reduce(54), /* ,, reduce: Terminal */
+			reduce(54), /* space, reduce: Terminal */
 
 		},
 	},
@@ -5276,16 +6455,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(81), /* then, reduce: Space */
+			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			reduce(55), /* ), reduce: Terminal */
 			nil,        /* } */
-			nil,        /* , */
-			reduce(81), /* space, reduce: Space */
+			reduce(55), /* ,, reduce: Terminal */
+			reduce(55), /* space, reduce: Terminal */
 
 		},
 	},
@@ -5316,16 +6504,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
-			shift(98),  /* ( */
-			nil,        /* ) */
+			nil,        /* ( */
+			reduce(56), /* ), reduce: Terminal */
 			nil,        /* } */
-			nil,        /* , */
-			shift(202), /* space */
+			reduce(56), /* ,, reduce: Terminal */
+			reduce(56), /* space, reduce: Terminal */
 
 		},
 	},
@@ -5335,7 +6532,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(203), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -5356,16 +6553,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			reduce(57), /* ), reduce: Terminal */
 			nil,        /* } */
-			nil,        /* , */
-			nil,        /* space */
+			reduce(57), /* ,, reduce: Terminal */
+			reduce(57), /* space, reduce: Terminal */
 
 		},
 	},
@@ -5375,37 +6581,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(103), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(112), /* int64_lit */
-			shift(113), /* int32_lit */
-			shift(114), /* uint64_lit */
-			shift(115), /* uint32_lit */
-			shift(116), /* double_lit */
-			shift(117), /* float_lit */
-			shift(118), /* string_lit */
-			shift(119), /* bytes_lit */
-			shift(120), /* true */
-			shift(121), /* false */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			shift(207), /* ) */
+			reduce(58), /* ), reduce: Terminal */
 			nil,        /* } */
-			nil,        /* , */
-			shift(123), /* space */
+			reduce(58), /* ,, reduce: Terminal */
+			reduce(58), /* space, reduce: Terminal */
 
 		},
 	},
@@ -5436,16 +6651,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
-			reduce(81), /* (, reduce: Space */
-			nil,        /* ) */
+			nil,        /* ( */
+			reduce(59), /* ), reduce: Terminal */
 			nil,        /* } */
-			nil,        /* , */
-			reduce(81), /* space, reduce: Space */
+			reduce(59), /* ,, reduce: Terminal */
+			reduce(59), /* space, reduce: Terminal */
 
 		},
 	},
@@ -5455,90 +6679,10 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(141), /* id */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(150), /* int64_lit */
-			shift(151), /* int32_lit */
-			shift(152), /* uint64_lit */
-			shift(153), /* uint32_lit */
-			shift(154), /* double_lit */
-			shift(155), /* float_lit */
-			shift(156), /* string_lit */
-			shift(157), /* bytes_lit */
-			shift(158), /* true */
-			shift(159), /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			shift(211), /* } */
-			nil,        /* , */
-			shift(161), /* space */
-
-		},
-	},
-	actionRow{ // S137
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			reduce(75), /* id, reduce: OpenCurly */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			reduce(75), /* []bool, reduce: OpenCurly */
-			reduce(75), /* []int64, reduce: OpenCurly */
-			reduce(75), /* []int32, reduce: OpenCurly */
-			reduce(75), /* []uint64, reduce: OpenCurly */
-			reduce(75), /* []uint32, reduce: OpenCurly */
-			reduce(75), /* []double, reduce: OpenCurly */
-			reduce(75), /* []float, reduce: OpenCurly */
-			reduce(75), /* []string, reduce: OpenCurly */
-			reduce(75), /* [][]byte, reduce: OpenCurly */
-			reduce(75), /* int64_lit, reduce: OpenCurly */
-			reduce(75), /* int32_lit, reduce: OpenCurly */
-			reduce(75), /* uint64_lit, reduce: OpenCurly */
-			reduce(75), /* uint32_lit, reduce: OpenCurly */
-			reduce(75), /* double_lit, reduce: OpenCurly */
-			reduce(75), /* float_lit, reduce: OpenCurly */
-			reduce(75), /* string_lit, reduce: OpenCurly */
-			reduce(75), /* bytes_lit, reduce: OpenCurly */
-			reduce(75), /* true, reduce: OpenCurly */
-			reduce(75), /* false, reduce: OpenCurly */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			reduce(75), /* }, reduce: OpenCurly */
-			nil,        /* , */
-			reduce(75), /* space, reduce: OpenCurly */
-
-		},
-	},
-	actionRow{ // S138
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
 			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
-			reduce(80), /* {, reduce: Space */
+			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -5556,16 +6700,123 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			reduce(60), /* ), reduce: Terminal */
 			nil,        /* } */
-			nil,        /* , */
-			reduce(80), /* space, reduce: Space */
+			reduce(60), /* ,, reduce: Terminal */
+			reduce(60), /* space, reduce: Terminal */
+
+		},
+	},
+	actionRow{ // S137
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			reduce(61), /* ), reduce: Terminal */
+			nil,        /* } */
+			reduce(61), /* ,, reduce: Terminal */
+			reduce(61), /* space, reduce: Terminal */
+
+		},
+	},
+	actionRow{ // S138
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			reduce(62), /* ), reduce: Terminal */
+			nil,        /* } */
+			reduce(62), /* ,, reduce: Terminal */
+			reduce(62), /* space, reduce: Terminal */
 
 		},
 	},
@@ -5575,37 +6826,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(212), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(150), /* int64_lit */
-			shift(151), /* int32_lit */
-			shift(152), /* uint64_lit */
-			shift(153), /* uint32_lit */
-			shift(154), /* double_lit */
-			shift(155), /* float_lit */
-			shift(156), /* string_lit */
-			shift(157), /* bytes_lit */
-			shift(158), /* true */
-			shift(159), /* false */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
-			shift(215), /* } */
-			nil,        /* , */
-			shift(216), /* space */
+			reduce(63), /* ), reduce: Terminal */
+			nil,        /* } */
+			reduce(63), /* ,, reduce: Terminal */
+			reduce(63), /* space, reduce: Terminal */
 
 		},
 	},
@@ -5636,16 +6896,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
-			reduce(36), /* }, reduce: Exprs */
-			reduce(36), /* ,, reduce: Exprs */
-			reduce(36), /* space, reduce: Exprs */
+			reduce(64), /* ), reduce: Terminal */
+			nil,        /* } */
+			reduce(64), /* ,, reduce: Terminal */
+			reduce(64), /* space, reduce: Terminal */
 
 		},
 	},
@@ -5656,7 +6925,7 @@ var actionTab = actionTable{
 			nil,        /* $ */
 			nil,        /* root */
 			nil,        /* id */
-			shift(217), /* . */
+			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
@@ -5676,16 +6945,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
-			shift(56),  /* ( */
-			nil,        /* ) */
+			nil,        /* ( */
+			reduce(65), /* ), reduce: Terminal */
 			nil,        /* } */
-			nil,        /* , */
-			shift(135), /* space */
+			reduce(65), /* ,, reduce: Terminal */
+			reduce(65), /* space, reduce: Terminal */
 
 		},
 	},
@@ -5693,11 +6971,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(35), /* $, reduce: List */
-			reduce(35), /* root, reduce: List */
-			reduce(35), /* id, reduce: List */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
 			nil,        /* . */
-			reduce(35), /* if, reduce: List */
+			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -5716,16 +6994,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			reduce(66), /* ), reduce: Terminal */
 			nil,        /* } */
-			nil,        /* , */
-			reduce(35), /* space, reduce: List */
+			reduce(66), /* ,, reduce: Terminal */
+			reduce(66), /* space, reduce: Terminal */
 
 		},
 	},
@@ -5756,16 +7043,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
-			reduce(39), /* }, reduce: Expr */
-			reduce(39), /* ,, reduce: Expr */
-			reduce(39), /* space, reduce: Expr */
+			reduce(67), /* ), reduce: Terminal */
+			nil,        /* } */
+			reduce(67), /* ,, reduce: Terminal */
+			reduce(67), /* space, reduce: Terminal */
 
 		},
 	},
@@ -5796,16 +7092,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
-			shift(160), /* } */
-			shift(190), /* , */
-			shift(222), /* space */
+			reduce(68), /* ), reduce: Terminal */
+			nil,        /* } */
+			reduce(68), /* ,, reduce: Terminal */
+			reduce(68), /* space, reduce: Terminal */
 
 		},
 	},
@@ -5836,56 +7141,74 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
-			reduce(40), /* }, reduce: Expr */
-			reduce(40), /* ,, reduce: Expr */
-			reduce(40), /* space, reduce: Expr */
+			reduce(69), /* ), reduce: Terminal */
+			nil,        /* } */
+			reduce(69), /* ,, reduce: Terminal */
+			reduce(69), /* space, reduce: Terminal */
 
 		},
 	},
 	actionRow{ // S146
 		canRecover: false,
 		actions: [numSymbols]action{
-			nil,       /* INVALID */
-			nil,       /* $ */
-			nil,       /* root */
-			nil,       /* id */
-			nil,       /* . */
-			nil,       /* if */
-			shift(79), /* { */
-			nil,       /* []bool */
-			nil,       /* []int64 */
-			nil,       /* []int32 */
-			nil,       /* []uint64 */
-			nil,       /* []uint32 */
-			nil,       /* []double */
-			nil,       /* []float */
-			nil,       /* []string */
-			nil,       /* [][]byte */
-			nil,       /* int64_lit */
-			nil,       /* int32_lit */
-			nil,       /* uint64_lit */
-			nil,       /* uint32_lit */
-			nil,       /* double_lit */
-			nil,       /* float_lit */
-			nil,       /* string_lit */
-			nil,       /* bytes_lit */
-			nil,       /* true */
-			nil,       /* false */
-			nil,       /* = */
-			nil,       /* then */
-			nil,       /* else */
-			nil,       /* ( */
-			nil,       /* ) */
-			nil,       /* } */
-			nil,       /* , */
-			shift(81), /* space */
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			reduce(70), /* ), reduce: Bool */
+			nil,        /* } */
+			reduce(70), /* ,, reduce: Bool */
+			reduce(70), /* space, reduce: Bool */
 
 		},
 	},
@@ -5916,16 +7239,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
-			reduce(38), /* }, reduce: Expr */
-			reduce(38), /* ,, reduce: Expr */
-			reduce(38), /* space, reduce: Expr */
+			reduce(71), /* ), reduce: Bool */
+			nil,        /* } */
+			reduce(71), /* ,, reduce: Bool */
+			reduce(71), /* space, reduce: Bool */
 
 		},
 	},
@@ -5933,11 +7265,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
+			reduce(80), /* $, reduce: CloseParen */
+			reduce(80), /* root, reduce: CloseParen */
+			reduce(80), /* id, reduce: CloseParen */
 			nil,        /* . */
-			nil,        /* if */
+			reduce(80), /* if, reduce: CloseParen */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -5956,6 +7288,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -5963,9 +7304,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(50), /* }, reduce: SpaceTerminal */
-			reduce(50), /* ,, reduce: SpaceTerminal */
-			reduce(50), /* space, reduce: SpaceTerminal */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(80), /* space, reduce: CloseParen */
 
 		},
 	},
@@ -5975,37 +7316,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			reduce(89), /* id, reduce: Space */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			reduce(89), /* []bool, reduce: Space */
+			reduce(89), /* []int64, reduce: Space */
+			reduce(89), /* []int32, reduce: Space */
+			reduce(89), /* []uint64, reduce: Space */
+			reduce(89), /* []uint32, reduce: Space */
+			reduce(89), /* []double, reduce: Space */
+			reduce(89), /* []float, reduce: Space */
+			reduce(89), /* []string, reduce: Space */
+			reduce(89), /* [][]byte, reduce: Space */
+			reduce(89), /* int64_lit, reduce: Space */
+			reduce(89), /* int32_lit, reduce: Space */
+			reduce(89), /* uint64_lit, reduce: Space */
+			reduce(89), /* uint32_lit, reduce: Space */
+			reduce(89), /* double_lit, reduce: Space */
+			reduce(89), /* float_lit, reduce: Space */
+			reduce(89), /* string_lit, reduce: Space */
+			reduce(89), /* bytes_lit, reduce: Space */
+			reduce(89), /* bool_var, reduce: Space */
+			reduce(89), /* int64_var, reduce: Space */
+			reduce(89), /* int32_var, reduce: Space */
+			reduce(89), /* uint64_var, reduce: Space */
+			reduce(89), /* uint32_var, reduce: Space */
+			reduce(89), /* double_var, reduce: Space */
+			reduce(89), /* float_var, reduce: Space */
+			reduce(89), /* string_var, reduce: Space */
+			reduce(89), /* bytes_var, reduce: Space */
+			reduce(89), /* true, reduce: Space */
+			reduce(89), /* false, reduce: Space */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
-			reduce(52), /* }, reduce: Terminal */
-			reduce(52), /* ,, reduce: Terminal */
-			reduce(52), /* space, reduce: Terminal */
+			reduce(89), /* ), reduce: Space */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(89), /* space, reduce: Space */
 
 		},
 	},
@@ -6036,56 +7386,74 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
-			nil,        /* ( */
+			shift(65),  /* ( */
 			nil,        /* ) */
-			reduce(53), /* }, reduce: Terminal */
-			reduce(53), /* ,, reduce: Terminal */
-			reduce(53), /* space, reduce: Terminal */
+			nil,        /* } */
+			nil,        /* , */
+			shift(160), /* space */
 
 		},
 	},
 	actionRow{ // S151
 		canRecover: false,
 		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			reduce(54), /* }, reduce: Terminal */
-			reduce(54), /* ,, reduce: Terminal */
-			reduce(54), /* space, reduce: Terminal */
+			nil,       /* INVALID */
+			nil,       /* $ */
+			nil,       /* root */
+			nil,       /* id */
+			nil,       /* . */
+			nil,       /* if */
+			shift(97), /* { */
+			nil,       /* []bool */
+			nil,       /* []int64 */
+			nil,       /* []int32 */
+			nil,       /* []uint64 */
+			nil,       /* []uint32 */
+			nil,       /* []double */
+			nil,       /* []float */
+			nil,       /* []string */
+			nil,       /* [][]byte */
+			nil,       /* int64_lit */
+			nil,       /* int32_lit */
+			nil,       /* uint64_lit */
+			nil,       /* uint32_lit */
+			nil,       /* double_lit */
+			nil,       /* float_lit */
+			nil,       /* string_lit */
+			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
+			nil,       /* true */
+			nil,       /* false */
+			nil,       /* = */
+			nil,       /* then */
+			nil,       /* else */
+			nil,       /* ( */
+			nil,       /* ) */
+			nil,       /* } */
+			nil,       /* , */
+			shift(99), /* space */
 
 		},
 	},
@@ -6116,16 +7484,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(51), /* then, reduce: SpaceTerminal */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(55), /* }, reduce: Terminal */
-			reduce(55), /* ,, reduce: Terminal */
-			reduce(55), /* space, reduce: Terminal */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(51), /* space, reduce: SpaceTerminal */
 
 		},
 	},
@@ -6135,37 +7512,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			reduce(88), /* id, reduce: Space */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			reduce(88), /* []bool, reduce: Space */
+			reduce(88), /* []int64, reduce: Space */
+			reduce(88), /* []int32, reduce: Space */
+			reduce(88), /* []uint64, reduce: Space */
+			reduce(88), /* []uint32, reduce: Space */
+			reduce(88), /* []double, reduce: Space */
+			reduce(88), /* []float, reduce: Space */
+			reduce(88), /* []string, reduce: Space */
+			reduce(88), /* [][]byte, reduce: Space */
+			reduce(88), /* int64_lit, reduce: Space */
+			reduce(88), /* int32_lit, reduce: Space */
+			reduce(88), /* uint64_lit, reduce: Space */
+			reduce(88), /* uint32_lit, reduce: Space */
+			reduce(88), /* double_lit, reduce: Space */
+			reduce(88), /* float_lit, reduce: Space */
+			reduce(88), /* string_lit, reduce: Space */
+			reduce(88), /* bytes_lit, reduce: Space */
+			reduce(88), /* bool_var, reduce: Space */
+			reduce(88), /* int64_var, reduce: Space */
+			reduce(88), /* int32_var, reduce: Space */
+			reduce(88), /* uint64_var, reduce: Space */
+			reduce(88), /* uint32_var, reduce: Space */
+			reduce(88), /* double_var, reduce: Space */
+			reduce(88), /* float_var, reduce: Space */
+			reduce(88), /* string_var, reduce: Space */
+			reduce(88), /* bytes_var, reduce: Space */
+			reduce(88), /* true, reduce: Space */
+			reduce(88), /* false, reduce: Space */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(56), /* }, reduce: Terminal */
-			reduce(56), /* ,, reduce: Terminal */
-			reduce(56), /* space, reduce: Terminal */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(88), /* space, reduce: Space */
 
 		},
 	},
@@ -6196,16 +7582,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			shift(225), /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(57), /* }, reduce: Terminal */
-			reduce(57), /* ,, reduce: Terminal */
-			reduce(57), /* space, reduce: Terminal */
+			nil,        /* } */
+			nil,        /* , */
+			shift(226), /* space */
 
 		},
 	},
@@ -6215,10 +7610,10 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(228), /* id */
 			nil,        /* . */
 			nil,        /* if */
-			nil,        /* { */
+			shift(230), /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -6236,6 +7631,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -6243,9 +7647,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(58), /* }, reduce: Terminal */
-			reduce(58), /* ,, reduce: Terminal */
-			reduce(58), /* space, reduce: Terminal */
+			nil,        /* } */
+			nil,        /* , */
+			shift(231), /* space */
 
 		},
 	},
@@ -6255,10 +7659,10 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			reduce(74), /* id, reduce: Then */
 			nil,        /* . */
 			nil,        /* if */
-			nil,        /* { */
+			reduce(74), /* {, reduce: Then */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -6276,6 +7680,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -6283,9 +7696,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(59), /* }, reduce: Terminal */
-			reduce(59), /* ,, reduce: Terminal */
-			reduce(59), /* space, reduce: Terminal */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(74), /* space, reduce: Then */
 
 		},
 	},
@@ -6316,16 +7729,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(89), /* then, reduce: Space */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(60), /* }, reduce: Terminal */
-			reduce(60), /* ,, reduce: Terminal */
-			reduce(60), /* space, reduce: Terminal */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(89), /* space, reduce: Space */
 
 		},
 	},
@@ -6356,16 +7778,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
-			nil,        /* ( */
+			shift(115), /* ( */
 			nil,        /* ) */
-			reduce(62), /* }, reduce: Bool */
-			reduce(62), /* ,, reduce: Bool */
-			reduce(62), /* space, reduce: Bool */
+			nil,        /* } */
+			nil,        /* , */
+			shift(232), /* space */
 
 		},
 	},
@@ -6375,6 +7806,55 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
+			shift(120), /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(129), /* int64_lit */
+			shift(130), /* int32_lit */
+			shift(131), /* uint64_lit */
+			shift(132), /* uint32_lit */
+			shift(133), /* double_lit */
+			shift(134), /* float_lit */
+			shift(135), /* string_lit */
+			shift(136), /* bytes_lit */
+			shift(137), /* bool_var */
+			shift(138), /* int64_var */
+			shift(139), /* int32_var */
+			shift(140), /* uint64_var */
+			shift(141), /* uint32_var */
+			shift(142), /* double_var */
+			shift(143), /* float_var */
+			shift(144), /* string_var */
+			shift(145), /* bytes_var */
+			shift(146), /* true */
+			shift(147), /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			shift(236), /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			shift(149), /* space */
+
+		},
+	},
+	actionRow{ // S160
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
 			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
@@ -6396,56 +7876,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			reduce(63), /* }, reduce: Bool */
-			reduce(63), /* ,, reduce: Bool */
-			reduce(63), /* space, reduce: Bool */
-
-		},
-	},
-	actionRow{ // S160
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			reduce(76), /* $, reduce: CloseCurly */
-			reduce(76), /* root, reduce: CloseCurly */
-			reduce(76), /* id, reduce: CloseCurly */
-			nil,        /* . */
-			reduce(76), /* if, reduce: CloseCurly */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
+			reduce(89), /* (, reduce: Space */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(76), /* space, reduce: CloseCurly */
+			reduce(89), /* space, reduce: Space */
 
 		},
 	},
@@ -6455,37 +7904,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			reduce(81), /* id, reduce: Space */
+			shift(166), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			reduce(81), /* []bool, reduce: Space */
-			reduce(81), /* []int64, reduce: Space */
-			reduce(81), /* []int32, reduce: Space */
-			reduce(81), /* []uint64, reduce: Space */
-			reduce(81), /* []uint32, reduce: Space */
-			reduce(81), /* []double, reduce: Space */
-			reduce(81), /* []float, reduce: Space */
-			reduce(81), /* []string, reduce: Space */
-			reduce(81), /* [][]byte, reduce: Space */
-			reduce(81), /* int64_lit, reduce: Space */
-			reduce(81), /* int32_lit, reduce: Space */
-			reduce(81), /* uint64_lit, reduce: Space */
-			reduce(81), /* uint32_lit, reduce: Space */
-			reduce(81), /* double_lit, reduce: Space */
-			reduce(81), /* float_lit, reduce: Space */
-			reduce(81), /* string_lit, reduce: Space */
-			reduce(81), /* bytes_lit, reduce: Space */
-			reduce(81), /* true, reduce: Space */
-			reduce(81), /* false, reduce: Space */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(175), /* int64_lit */
+			shift(176), /* int32_lit */
+			shift(177), /* uint64_lit */
+			shift(178), /* uint32_lit */
+			shift(179), /* double_lit */
+			shift(180), /* float_lit */
+			shift(181), /* string_lit */
+			shift(182), /* bytes_lit */
+			shift(183), /* bool_var */
+			shift(184), /* int64_var */
+			shift(185), /* int32_var */
+			shift(186), /* uint64_var */
+			shift(187), /* uint32_var */
+			shift(188), /* double_var */
+			shift(189), /* float_var */
+			shift(190), /* string_var */
+			shift(191), /* bytes_var */
+			shift(192), /* true */
+			shift(193), /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(81), /* }, reduce: Space */
+			shift(240), /* } */
 			nil,        /* , */
-			reduce(81), /* space, reduce: Space */
+			shift(195), /* space */
 
 		},
 	},
@@ -6495,37 +7953,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(168), /* id */
+			reduce(83), /* id, reduce: OpenCurly */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			reduce(83), /* []bool, reduce: OpenCurly */
+			reduce(83), /* []int64, reduce: OpenCurly */
+			reduce(83), /* []int32, reduce: OpenCurly */
+			reduce(83), /* []uint64, reduce: OpenCurly */
+			reduce(83), /* []uint32, reduce: OpenCurly */
+			reduce(83), /* []double, reduce: OpenCurly */
+			reduce(83), /* []float, reduce: OpenCurly */
+			reduce(83), /* []string, reduce: OpenCurly */
+			reduce(83), /* [][]byte, reduce: OpenCurly */
+			reduce(83), /* int64_lit, reduce: OpenCurly */
+			reduce(83), /* int32_lit, reduce: OpenCurly */
+			reduce(83), /* uint64_lit, reduce: OpenCurly */
+			reduce(83), /* uint32_lit, reduce: OpenCurly */
+			reduce(83), /* double_lit, reduce: OpenCurly */
+			reduce(83), /* float_lit, reduce: OpenCurly */
+			reduce(83), /* string_lit, reduce: OpenCurly */
+			reduce(83), /* bytes_lit, reduce: OpenCurly */
+			reduce(83), /* bool_var, reduce: OpenCurly */
+			reduce(83), /* int64_var, reduce: OpenCurly */
+			reduce(83), /* int32_var, reduce: OpenCurly */
+			reduce(83), /* uint64_var, reduce: OpenCurly */
+			reduce(83), /* uint32_var, reduce: OpenCurly */
+			reduce(83), /* double_var, reduce: OpenCurly */
+			reduce(83), /* float_var, reduce: OpenCurly */
+			reduce(83), /* string_var, reduce: OpenCurly */
+			reduce(83), /* bytes_var, reduce: OpenCurly */
+			reduce(83), /* true, reduce: OpenCurly */
+			reduce(83), /* false, reduce: OpenCurly */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
+			reduce(83), /* }, reduce: OpenCurly */
 			nil,        /* , */
-			shift(164), /* space */
+			reduce(83), /* space, reduce: OpenCurly */
 
 		},
 	},
@@ -6535,10 +8002,10 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(224), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
-			nil,        /* { */
+			reduce(88), /* {, reduce: Space */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -6556,6 +8023,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -6565,7 +8041,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			nil,        /* space */
+			reduce(88), /* space, reduce: Space */
 
 		},
 	},
@@ -6575,7 +8051,56 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			reduce(80), /* id, reduce: Space */
+			shift(241), /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(175), /* int64_lit */
+			shift(176), /* int32_lit */
+			shift(177), /* uint64_lit */
+			shift(178), /* uint32_lit */
+			shift(179), /* double_lit */
+			shift(180), /* float_lit */
+			shift(181), /* string_lit */
+			shift(182), /* bytes_lit */
+			shift(183), /* bool_var */
+			shift(184), /* int64_var */
+			shift(185), /* int32_var */
+			shift(186), /* uint64_var */
+			shift(187), /* uint32_var */
+			shift(188), /* double_var */
+			shift(189), /* float_var */
+			shift(190), /* string_var */
+			shift(191), /* bytes_var */
+			shift(192), /* true */
+			shift(193), /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			shift(244), /* } */
+			nil,        /* , */
+			shift(245), /* space */
+
+		},
+	},
+	actionRow{ // S165
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -6596,6 +8121,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -6603,49 +8137,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(80), /* space, reduce: Space */
-
-		},
-	},
-	actionRow{ // S165
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,       /* INVALID */
-			nil,       /* $ */
-			nil,       /* root */
-			nil,       /* id */
-			nil,       /* . */
-			nil,       /* if */
-			nil,       /* { */
-			nil,       /* []bool */
-			nil,       /* []int64 */
-			nil,       /* []int32 */
-			nil,       /* []uint64 */
-			nil,       /* []uint32 */
-			nil,       /* []double */
-			nil,       /* []float */
-			nil,       /* []string */
-			nil,       /* [][]byte */
-			nil,       /* int64_lit */
-			nil,       /* int32_lit */
-			nil,       /* uint64_lit */
-			nil,       /* uint32_lit */
-			nil,       /* double_lit */
-			nil,       /* float_lit */
-			nil,       /* string_lit */
-			nil,       /* bytes_lit */
-			nil,       /* true */
-			nil,       /* false */
-			shift(51), /* = */
-			nil,       /* then */
-			nil,       /* else */
-			nil,       /* ( */
-			nil,       /* ) */
-			nil,       /* } */
-			nil,       /* , */
-			shift(52), /* space */
+			reduce(36), /* }, reduce: Exprs */
+			reduce(36), /* ,, reduce: Exprs */
+			reduce(36), /* space, reduce: Exprs */
 
 		},
 	},
@@ -6655,7 +8149,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(225), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -6676,6 +8170,64 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			shift(65),  /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			shift(160), /* space */
+
+		},
+	},
+	actionRow{ // S167
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			reduce(35), /* $, reduce: List */
+			reduce(35), /* root, reduce: List */
+			reduce(35), /* id, reduce: List */
+			nil,        /* . */
+			reduce(35), /* if, reduce: List */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -6685,18 +8237,18 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(164), /* space */
+			reduce(35), /* space, reduce: List */
 
 		},
 	},
-	actionRow{ // S167
+	actionRow{ // S168
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
 			nil,        /* id */
-			shift(226), /* . */
+			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
@@ -6716,6 +8268,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -6723,49 +8284,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			nil,        /* space */
-
-		},
-	},
-	actionRow{ // S168
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,       /* INVALID */
-			nil,       /* $ */
-			nil,       /* root */
-			nil,       /* id */
-			nil,       /* . */
-			nil,       /* if */
-			nil,       /* { */
-			nil,       /* []bool */
-			nil,       /* []int64 */
-			nil,       /* []int32 */
-			nil,       /* []uint64 */
-			nil,       /* []uint32 */
-			nil,       /* []double */
-			nil,       /* []float */
-			nil,       /* []string */
-			nil,       /* [][]byte */
-			nil,       /* int64_lit */
-			nil,       /* int32_lit */
-			nil,       /* uint64_lit */
-			nil,       /* uint32_lit */
-			nil,       /* double_lit */
-			nil,       /* float_lit */
-			nil,       /* string_lit */
-			nil,       /* bytes_lit */
-			nil,       /* true */
-			nil,       /* false */
-			shift(51), /* = */
-			nil,       /* then */
-			nil,       /* else */
-			nil,       /* ( */
-			nil,       /* ) */
-			nil,       /* } */
-			nil,       /* , */
-			shift(52), /* space */
+			reduce(39), /* }, reduce: Expr */
+			reduce(39), /* ,, reduce: Expr */
+			reduce(39), /* space, reduce: Expr */
 
 		},
 	},
@@ -6776,7 +8297,7 @@ var actionTab = actionTable{
 			nil,        /* $ */
 			nil,        /* root */
 			nil,        /* id */
-			shift(179), /* . */
+			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
@@ -6796,16 +8317,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
-			shift(51),  /* = */
+			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(52),  /* space */
+			shift(194), /* } */
+			shift(220), /* , */
+			shift(250), /* space */
 
 		},
 	},
@@ -6836,46 +8366,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			shift(122), /* ) */
-			nil,        /* } */
-			shift(190), /* , */
-			shift(191), /* space */
-
-		},
-	},
-	actionRow{ // S171
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			reduce(29), /* $, reduce: Function */
-			reduce(29), /* root, reduce: Function */
-			reduce(29), /* id, reduce: Function */
-			nil,        /* . */
-			reduce(29), /* if, reduce: Function */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -6883,9 +8382,58 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(29), /* space, reduce: Function */
+			reduce(40), /* }, reduce: Expr */
+			reduce(40), /* ,, reduce: Expr */
+			reduce(40), /* space, reduce: Expr */
+
+		},
+	},
+	actionRow{ // S171
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,       /* INVALID */
+			nil,       /* $ */
+			nil,       /* root */
+			nil,       /* id */
+			nil,       /* . */
+			nil,       /* if */
+			shift(97), /* { */
+			nil,       /* []bool */
+			nil,       /* []int64 */
+			nil,       /* []int32 */
+			nil,       /* []uint64 */
+			nil,       /* []uint32 */
+			nil,       /* []double */
+			nil,       /* []float */
+			nil,       /* []string */
+			nil,       /* [][]byte */
+			nil,       /* int64_lit */
+			nil,       /* int32_lit */
+			nil,       /* uint64_lit */
+			nil,       /* uint32_lit */
+			nil,       /* double_lit */
+			nil,       /* float_lit */
+			nil,       /* string_lit */
+			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
+			nil,       /* true */
+			nil,       /* false */
+			nil,       /* = */
+			nil,       /* then */
+			nil,       /* else */
+			nil,       /* ( */
+			nil,       /* ) */
+			nil,       /* } */
+			nil,       /* , */
+			shift(99), /* space */
 
 		},
 	},
@@ -6895,49 +8443,9 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(198), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
-			shift(200), /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(201), /* space */
-
-		},
-	},
-	actionRow{ // S173
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			reduce(34), /* $, reduce: List */
-			reduce(34), /* root, reduce: List */
-			reduce(34), /* id, reduce: List */
-			nil,        /* . */
-			reduce(34), /* if, reduce: List */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -6956,6 +8464,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -6963,9 +8480,58 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(34), /* space, reduce: List */
+			reduce(38), /* }, reduce: Expr */
+			reduce(38), /* ,, reduce: Expr */
+			reduce(38), /* space, reduce: Expr */
+
+		},
+	},
+	actionRow{ // S173
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			reduce(50), /* }, reduce: SpaceTerminal */
+			reduce(50), /* ,, reduce: SpaceTerminal */
+			reduce(50), /* space, reduce: SpaceTerminal */
 
 		},
 	},
@@ -6996,6 +8562,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -7003,9 +8578,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(160), /* } */
-			shift(190), /* , */
-			shift(222), /* space */
+			reduce(52), /* }, reduce: Terminal */
+			reduce(52), /* ,, reduce: Terminal */
+			reduce(52), /* space, reduce: Terminal */
 
 		},
 	},
@@ -7016,7 +8591,7 @@ var actionTab = actionTable{
 			nil,        /* $ */
 			nil,        /* root */
 			nil,        /* id */
-			shift(232), /* . */
+			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
@@ -7036,6 +8611,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -7043,9 +8627,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			nil,        /* space */
+			reduce(53), /* }, reduce: Terminal */
+			reduce(53), /* ,, reduce: Terminal */
+			reduce(53), /* space, reduce: Terminal */
 
 		},
 	},
@@ -7055,7 +8639,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(233), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -7076,6 +8660,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -7083,9 +8676,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			nil,        /* space */
+			reduce(54), /* }, reduce: Terminal */
+			reduce(54), /* ,, reduce: Terminal */
+			reduce(54), /* space, reduce: Terminal */
 
 		},
 	},
@@ -7095,7 +8688,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(235), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -7116,6 +8709,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -7123,9 +8725,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(86),  /* space */
+			reduce(55), /* }, reduce: Terminal */
+			reduce(55), /* ,, reduce: Terminal */
+			reduce(55), /* space, reduce: Terminal */
 
 		},
 	},
@@ -7135,7 +8737,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(237), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -7156,6 +8758,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -7163,9 +8774,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(86),  /* space */
+			reduce(56), /* }, reduce: Terminal */
+			reduce(56), /* ,, reduce: Terminal */
+			reduce(56), /* space, reduce: Terminal */
 
 		},
 	},
@@ -7175,7 +8786,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(238), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -7196,6 +8807,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -7203,9 +8823,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			nil,        /* space */
+			reduce(57), /* }, reduce: Terminal */
+			reduce(57), /* ,, reduce: Terminal */
+			reduce(57), /* space, reduce: Terminal */
 
 		},
 	},
@@ -7216,7 +8836,7 @@ var actionTab = actionTable{
 			nil,        /* $ */
 			nil,        /* root */
 			nil,        /* id */
-			shift(185), /* . */
+			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
@@ -7236,56 +8856,74 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
-			shift(56),  /* ( */
+			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(135), /* space */
+			reduce(58), /* }, reduce: Terminal */
+			reduce(58), /* ,, reduce: Terminal */
+			reduce(58), /* space, reduce: Terminal */
 
 		},
 	},
 	actionRow{ // S181
 		canRecover: false,
 		actions: [numSymbols]action{
-			nil,       /* INVALID */
-			nil,       /* $ */
-			nil,       /* root */
-			nil,       /* id */
-			nil,       /* . */
-			nil,       /* if */
-			shift(79), /* { */
-			nil,       /* []bool */
-			nil,       /* []int64 */
-			nil,       /* []int32 */
-			nil,       /* []uint64 */
-			nil,       /* []uint32 */
-			nil,       /* []double */
-			nil,       /* []float */
-			nil,       /* []string */
-			nil,       /* [][]byte */
-			nil,       /* int64_lit */
-			nil,       /* int32_lit */
-			nil,       /* uint64_lit */
-			nil,       /* uint32_lit */
-			nil,       /* double_lit */
-			nil,       /* float_lit */
-			nil,       /* string_lit */
-			nil,       /* bytes_lit */
-			nil,       /* true */
-			nil,       /* false */
-			nil,       /* = */
-			nil,       /* then */
-			nil,       /* else */
-			nil,       /* ( */
-			nil,       /* ) */
-			nil,       /* } */
-			nil,       /* , */
-			shift(81), /* space */
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			reduce(59), /* }, reduce: Terminal */
+			reduce(59), /* ,, reduce: Terminal */
+			reduce(59), /* space, reduce: Terminal */
 
 		},
 	},
@@ -7316,16 +8954,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(51), /* ), reduce: SpaceTerminal */
-			nil,        /* } */
-			reduce(51), /* ,, reduce: SpaceTerminal */
-			reduce(51), /* space, reduce: SpaceTerminal */
+			nil,        /* ) */
+			reduce(60), /* }, reduce: Terminal */
+			reduce(60), /* ,, reduce: Terminal */
+			reduce(60), /* space, reduce: Terminal */
 
 		},
 	},
@@ -7333,11 +8980,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(73), /* $, reduce: CloseParen */
-			reduce(73), /* root, reduce: CloseParen */
-			reduce(73), /* id, reduce: CloseParen */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
 			nil,        /* . */
-			reduce(73), /* if, reduce: CloseParen */
+			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -7356,6 +9003,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -7363,9 +9019,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(73), /* space, reduce: CloseParen */
+			reduce(61), /* }, reduce: Terminal */
+			reduce(61), /* ,, reduce: Terminal */
+			reduce(61), /* space, reduce: Terminal */
 
 		},
 	},
@@ -7375,47 +9031,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			reduce(80), /* id, reduce: Space */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			reduce(80), /* []bool, reduce: Space */
-			reduce(80), /* []int64, reduce: Space */
-			reduce(80), /* []int32, reduce: Space */
-			reduce(80), /* []uint64, reduce: Space */
-			reduce(80), /* []uint32, reduce: Space */
-			reduce(80), /* []double, reduce: Space */
-			reduce(80), /* []float, reduce: Space */
-			reduce(80), /* []string, reduce: Space */
-			reduce(80), /* [][]byte, reduce: Space */
-			reduce(80), /* int64_lit, reduce: Space */
-			reduce(80), /* int32_lit, reduce: Space */
-			reduce(80), /* uint64_lit, reduce: Space */
-			reduce(80), /* uint32_lit, reduce: Space */
-			reduce(80), /* double_lit, reduce: Space */
-			reduce(80), /* float_lit, reduce: Space */
-			reduce(80), /* string_lit, reduce: Space */
-			reduce(80), /* bytes_lit, reduce: Space */
-			reduce(80), /* true, reduce: Space */
-			reduce(80), /* false, reduce: Space */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			reduce(80), /* ), reduce: Space */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(80), /* space, reduce: Space */
-
-		},
-	},
-	actionRow{ // S185
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			shift(241), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -7436,6 +9052,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -7443,9 +9068,58 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			nil,        /* space */
+			reduce(62), /* }, reduce: Terminal */
+			reduce(62), /* ,, reduce: Terminal */
+			reduce(62), /* space, reduce: Terminal */
+
+		},
+	},
+	actionRow{ // S185
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			reduce(63), /* }, reduce: Terminal */
+			reduce(63), /* ,, reduce: Terminal */
+			reduce(63), /* space, reduce: Terminal */
 
 		},
 	},
@@ -7455,37 +9129,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(103), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(112), /* int64_lit */
-			shift(113), /* int32_lit */
-			shift(114), /* uint64_lit */
-			shift(115), /* uint32_lit */
-			shift(116), /* double_lit */
-			shift(117), /* float_lit */
-			shift(118), /* string_lit */
-			shift(119), /* bytes_lit */
-			shift(120), /* true */
-			shift(121), /* false */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			shift(245), /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(123), /* space */
+			nil,        /* ) */
+			reduce(64), /* }, reduce: Terminal */
+			reduce(64), /* ,, reduce: Terminal */
+			reduce(64), /* space, reduce: Terminal */
 
 		},
 	},
@@ -7516,16 +9199,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			shift(183), /* ) */
-			nil,        /* } */
-			shift(246), /* , */
-			shift(247), /* space */
+			nil,        /* ) */
+			reduce(65), /* }, reduce: Terminal */
+			reduce(65), /* ,, reduce: Terminal */
+			reduce(65), /* space, reduce: Terminal */
 
 		},
 	},
@@ -7533,11 +9225,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(30), /* $, reduce: Function */
-			reduce(30), /* root, reduce: Function */
-			reduce(30), /* id, reduce: Function */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
 			nil,        /* . */
-			reduce(30), /* if, reduce: Function */
+			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -7556,6 +9248,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -7563,9 +9264,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(30), /* space, reduce: Function */
+			reduce(66), /* }, reduce: Terminal */
+			reduce(66), /* ,, reduce: Terminal */
+			reduce(66), /* space, reduce: Terminal */
 
 		},
 	},
@@ -7575,37 +9276,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(103), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(112), /* int64_lit */
-			shift(113), /* int32_lit */
-			shift(114), /* uint64_lit */
-			shift(115), /* uint32_lit */
-			shift(116), /* double_lit */
-			shift(117), /* float_lit */
-			shift(118), /* string_lit */
-			shift(119), /* bytes_lit */
-			shift(120), /* true */
-			shift(121), /* false */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(77),  /* space */
+			reduce(67), /* }, reduce: Terminal */
+			reduce(67), /* ,, reduce: Terminal */
+			reduce(67), /* space, reduce: Terminal */
 
 		},
 	},
@@ -7615,37 +9325,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			reduce(78), /* id, reduce: Comma */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			reduce(78), /* []bool, reduce: Comma */
-			reduce(78), /* []int64, reduce: Comma */
-			reduce(78), /* []int32, reduce: Comma */
-			reduce(78), /* []uint64, reduce: Comma */
-			reduce(78), /* []uint32, reduce: Comma */
-			reduce(78), /* []double, reduce: Comma */
-			reduce(78), /* []float, reduce: Comma */
-			reduce(78), /* []string, reduce: Comma */
-			reduce(78), /* [][]byte, reduce: Comma */
-			reduce(78), /* int64_lit, reduce: Comma */
-			reduce(78), /* int32_lit, reduce: Comma */
-			reduce(78), /* uint64_lit, reduce: Comma */
-			reduce(78), /* uint32_lit, reduce: Comma */
-			reduce(78), /* double_lit, reduce: Comma */
-			reduce(78), /* float_lit, reduce: Comma */
-			reduce(78), /* string_lit, reduce: Comma */
-			reduce(78), /* bytes_lit, reduce: Comma */
-			reduce(78), /* true, reduce: Comma */
-			reduce(78), /* false, reduce: Comma */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(78), /* space, reduce: Comma */
+			reduce(68), /* }, reduce: Terminal */
+			reduce(68), /* ,, reduce: Terminal */
+			reduce(68), /* space, reduce: Terminal */
 
 		},
 	},
@@ -7676,16 +9395,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(81), /* ), reduce: Space */
-			nil,        /* } */
-			reduce(81), /* ,, reduce: Space */
-			reduce(81), /* space, reduce: Space */
+			nil,        /* ) */
+			reduce(69), /* }, reduce: Terminal */
+			reduce(69), /* ,, reduce: Terminal */
+			reduce(69), /* space, reduce: Terminal */
 
 		},
 	},
@@ -7695,37 +9423,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(141), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(150), /* int64_lit */
-			shift(151), /* int32_lit */
-			shift(152), /* uint64_lit */
-			shift(153), /* uint32_lit */
-			shift(154), /* double_lit */
-			shift(155), /* float_lit */
-			shift(156), /* string_lit */
-			shift(157), /* bytes_lit */
-			shift(158), /* true */
-			shift(159), /* false */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(253), /* } */
-			nil,        /* , */
-			shift(161), /* space */
+			reduce(70), /* }, reduce: Bool */
+			reduce(70), /* ,, reduce: Bool */
+			reduce(70), /* space, reduce: Bool */
 
 		},
 	},
@@ -7735,37 +9472,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(103), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(112), /* int64_lit */
-			shift(113), /* int32_lit */
-			shift(114), /* uint64_lit */
-			shift(115), /* uint32_lit */
-			shift(116), /* double_lit */
-			shift(117), /* float_lit */
-			shift(118), /* string_lit */
-			shift(119), /* bytes_lit */
-			shift(120), /* true */
-			shift(121), /* false */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			shift(207), /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(123), /* space */
+			nil,        /* ) */
+			reduce(71), /* }, reduce: Bool */
+			reduce(71), /* ,, reduce: Bool */
+			reduce(71), /* space, reduce: Bool */
 
 		},
 	},
@@ -7773,39 +9519,48 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			shift(141), /* id */
+			reduce(84), /* $, reduce: CloseCurly */
+			reduce(84), /* root, reduce: CloseCurly */
+			reduce(84), /* id, reduce: CloseCurly */
 			nil,        /* . */
-			nil,        /* if */
+			reduce(84), /* if, reduce: CloseCurly */
 			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(150), /* int64_lit */
-			shift(151), /* int32_lit */
-			shift(152), /* uint64_lit */
-			shift(153), /* uint32_lit */
-			shift(154), /* double_lit */
-			shift(155), /* float_lit */
-			shift(156), /* string_lit */
-			shift(157), /* bytes_lit */
-			shift(158), /* true */
-			shift(159), /* false */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(211), /* } */
+			nil,        /* } */
 			nil,        /* , */
-			shift(161), /* space */
+			reduce(84), /* space, reduce: CloseCurly */
 
 		},
 	},
@@ -7815,37 +9570,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			reduce(67), /* id, reduce: Then */
+			reduce(89), /* id, reduce: Space */
 			nil,        /* . */
 			nil,        /* if */
-			reduce(67), /* {, reduce: Then */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			nil,        /* { */
+			reduce(89), /* []bool, reduce: Space */
+			reduce(89), /* []int64, reduce: Space */
+			reduce(89), /* []int32, reduce: Space */
+			reduce(89), /* []uint64, reduce: Space */
+			reduce(89), /* []uint32, reduce: Space */
+			reduce(89), /* []double, reduce: Space */
+			reduce(89), /* []float, reduce: Space */
+			reduce(89), /* []string, reduce: Space */
+			reduce(89), /* [][]byte, reduce: Space */
+			reduce(89), /* int64_lit, reduce: Space */
+			reduce(89), /* int32_lit, reduce: Space */
+			reduce(89), /* uint64_lit, reduce: Space */
+			reduce(89), /* uint32_lit, reduce: Space */
+			reduce(89), /* double_lit, reduce: Space */
+			reduce(89), /* float_lit, reduce: Space */
+			reduce(89), /* string_lit, reduce: Space */
+			reduce(89), /* bytes_lit, reduce: Space */
+			reduce(89), /* bool_var, reduce: Space */
+			reduce(89), /* int64_var, reduce: Space */
+			reduce(89), /* int32_var, reduce: Space */
+			reduce(89), /* uint64_var, reduce: Space */
+			reduce(89), /* uint32_var, reduce: Space */
+			reduce(89), /* double_var, reduce: Space */
+			reduce(89), /* float_var, reduce: Space */
+			reduce(89), /* string_var, reduce: Space */
+			reduce(89), /* bytes_var, reduce: Space */
+			reduce(89), /* true, reduce: Space */
+			reduce(89), /* false, reduce: Space */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
+			reduce(89), /* }, reduce: Space */
 			nil,        /* , */
-			reduce(67), /* space, reduce: Then */
+			reduce(89), /* space, reduce: Space */
 
 		},
 	},
@@ -7855,7 +9619,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(200), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -7876,16 +9640,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(80), /* then, reduce: Space */
+			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(80), /* space, reduce: Space */
+			shift(197), /* space */
 
 		},
 	},
@@ -7895,47 +9668,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(258), /* id */
-			nil,        /* . */
-			nil,        /* if */
-			shift(259), /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(260), /* space */
-
-		},
-	},
-	actionRow{ // S198
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
+			reduce(88), /* id, reduce: Space */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -7956,16 +9689,74 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
-			reduce(27), /* else, reduce: StateExpr */
+			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(27), /* space, reduce: StateExpr */
+			reduce(88), /* space, reduce: Space */
+
+		},
+	},
+	actionRow{ // S198
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			shift(252), /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			shift(197), /* space */
 
 		},
 	},
@@ -7976,7 +9767,7 @@ var actionTab = actionTable{
 			nil,        /* $ */
 			nil,        /* root */
 			nil,        /* id */
-			nil,        /* . */
+			shift(253), /* . */
 			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
@@ -7996,96 +9787,123 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
-			shift(263), /* else */
+			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(264), /* space */
+			nil,        /* space */
 
 		},
 	},
 	actionRow{ // S200
 		canRecover: false,
 		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
-			nil,        /* . */
-			shift(267), /* if */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(268), /* space */
+			nil,       /* INVALID */
+			nil,       /* $ */
+			nil,       /* root */
+			nil,       /* id */
+			nil,       /* . */
+			nil,       /* if */
+			nil,       /* { */
+			nil,       /* []bool */
+			nil,       /* []int64 */
+			nil,       /* []int32 */
+			nil,       /* []uint64 */
+			nil,       /* []uint32 */
+			nil,       /* []double */
+			nil,       /* []float */
+			nil,       /* []string */
+			nil,       /* [][]byte */
+			nil,       /* int64_lit */
+			nil,       /* int32_lit */
+			nil,       /* uint64_lit */
+			nil,       /* uint32_lit */
+			nil,       /* double_lit */
+			nil,       /* float_lit */
+			nil,       /* string_lit */
+			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
+			nil,       /* true */
+			nil,       /* false */
+			shift(60), /* = */
+			nil,       /* then */
+			nil,       /* else */
+			nil,       /* ( */
+			nil,       /* ) */
+			nil,       /* } */
+			nil,       /* , */
+			shift(61), /* space */
 
 		},
 	},
 	actionRow{ // S201
 		canRecover: false,
 		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			reduce(81), /* id, reduce: Space */
-			nil,        /* . */
-			nil,        /* if */
-			reduce(81), /* {, reduce: Space */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(81), /* space, reduce: Space */
+			nil,       /* INVALID */
+			nil,       /* $ */
+			nil,       /* root */
+			nil,       /* id */
+			nil,       /* . */
+			nil,       /* if */
+			nil,       /* { */
+			nil,       /* []bool */
+			nil,       /* []int64 */
+			nil,       /* []int32 */
+			nil,       /* []uint64 */
+			nil,       /* []uint32 */
+			nil,       /* []double */
+			nil,       /* []float */
+			nil,       /* []string */
+			nil,       /* [][]byte */
+			nil,       /* int64_lit */
+			nil,       /* int32_lit */
+			nil,       /* uint64_lit */
+			nil,       /* uint32_lit */
+			nil,       /* double_lit */
+			nil,       /* float_lit */
+			nil,       /* string_lit */
+			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
+			nil,       /* true */
+			nil,       /* false */
+			shift(60), /* = */
+			nil,       /* then */
+			nil,       /* else */
+			nil,       /* ( */
+			nil,       /* ) */
+			nil,       /* } */
+			nil,       /* , */
+			shift(61), /* space */
 
 		},
 	},
@@ -8116,16 +9934,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
-			reduce(80), /* (, reduce: Space */
-			nil,        /* ) */
+			nil,        /* ( */
+			shift(148), /* ) */
 			nil,        /* } */
-			nil,        /* , */
-			reduce(80), /* space, reduce: Space */
+			shift(220), /* , */
+			shift(221), /* space */
 
 		},
 	},
@@ -8133,11 +9960,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
-			shift(269), /* . */
-			nil,        /* if */
+			reduce(29), /* $, reduce: Function */
+			reduce(29), /* root, reduce: Function */
+			reduce(29), /* id, reduce: Function */
+			nil,        /* . */
+			reduce(29), /* if, reduce: Function */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -8156,6 +9983,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -8165,7 +10001,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			nil,        /* space */
+			reduce(29), /* space, reduce: Function */
 
 		},
 	},
@@ -8175,37 +10011,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(180), /* id */
+			shift(228), /* id */
 			nil,        /* . */
 			nil,        /* if */
-			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(112), /* int64_lit */
-			shift(113), /* int32_lit */
-			shift(114), /* uint64_lit */
-			shift(115), /* uint32_lit */
-			shift(116), /* double_lit */
-			shift(117), /* float_lit */
-			shift(118), /* string_lit */
-			shift(119), /* bytes_lit */
-			shift(120), /* true */
-			shift(121), /* false */
+			shift(230), /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			shift(270), /* ) */
+			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(184), /* space */
+			shift(231), /* space */
 
 		},
 	},
@@ -8213,11 +10058,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
+			reduce(34), /* $, reduce: List */
+			reduce(34), /* root, reduce: List */
+			reduce(34), /* id, reduce: List */
 			nil,        /* . */
-			nil,        /* if */
+			reduce(34), /* if, reduce: List */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -8236,16 +10081,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			shift(207), /* ) */
+			nil,        /* ) */
 			nil,        /* } */
-			shift(190), /* , */
-			shift(191), /* space */
+			nil,        /* , */
+			reduce(34), /* space, reduce: List */
 
 		},
 	},
@@ -8276,16 +10130,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(31), /* then, reduce: Function */
+			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(31), /* space, reduce: Function */
+			shift(194), /* } */
+			shift(220), /* , */
+			shift(250), /* space */
 
 		},
 	},
@@ -8296,7 +10159,7 @@ var actionTab = actionTable{
 			nil,        /* $ */
 			nil,        /* root */
 			nil,        /* id */
-			nil,        /* . */
+			shift(259), /* . */
 			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
@@ -8316,16 +10179,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(72), /* then, reduce: CloseParen */
+			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(72), /* space, reduce: CloseParen */
+			nil,        /* space */
 
 		},
 	},
@@ -8335,37 +10207,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(212), /* id */
+			shift(260), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(150), /* int64_lit */
-			shift(151), /* int32_lit */
-			shift(152), /* uint64_lit */
-			shift(153), /* uint32_lit */
-			shift(154), /* double_lit */
-			shift(155), /* float_lit */
-			shift(156), /* string_lit */
-			shift(157), /* bytes_lit */
-			shift(158), /* true */
-			shift(159), /* false */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(273), /* } */
+			nil,        /* } */
 			nil,        /* , */
-			shift(216), /* space */
+			nil,        /* space */
 
 		},
 	},
@@ -8375,7 +10256,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(262), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -8396,16 +10277,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(35), /* then, reduce: List */
+			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(35), /* space, reduce: List */
+			shift(103), /* space */
 
 		},
 	},
@@ -8415,7 +10305,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(264), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -8436,6 +10326,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -8443,9 +10342,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(211), /* } */
-			shift(190), /* , */
-			shift(222), /* space */
+			nil,        /* } */
+			nil,        /* , */
+			shift(103), /* space */
 
 		},
 	},
@@ -8476,60 +10375,29 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			reduce(76), /* then, reduce: CloseCurly */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(76), /* space, reduce: CloseCurly */
-
-		},
-	},
-	actionRow{ // S212
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
-			shift(217), /* . */
-			nil,        /* if */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
-			shift(56),  /* ( */
+			shift(65),  /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(135), /* space */
+			shift(160), /* space */
 
 		},
 	},
-	actionRow{ // S213
+	actionRow{ // S212
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,       /* INVALID */
@@ -8538,7 +10406,7 @@ var actionTab = actionTable{
 			nil,       /* id */
 			nil,       /* . */
 			nil,       /* if */
-			shift(79), /* { */
+			shift(97), /* { */
 			nil,       /* []bool */
 			nil,       /* []int64 */
 			nil,       /* []int32 */
@@ -8556,6 +10424,15 @@ var actionTab = actionTable{
 			nil,       /* float_lit */
 			nil,       /* string_lit */
 			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
 			nil,       /* true */
 			nil,       /* false */
 			nil,       /* = */
@@ -8565,11 +10442,11 @@ var actionTab = actionTable{
 			nil,       /* ) */
 			nil,       /* } */
 			nil,       /* , */
-			shift(81), /* space */
+			shift(99), /* space */
 
 		},
 	},
-	actionRow{ // S214
+	actionRow{ // S213
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8596,28 +10473,37 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
-			reduce(51), /* }, reduce: SpaceTerminal */
+			reduce(51), /* ), reduce: SpaceTerminal */
+			nil,        /* } */
 			reduce(51), /* ,, reduce: SpaceTerminal */
 			reduce(51), /* space, reduce: SpaceTerminal */
 
 		},
 	},
-	actionRow{ // S215
+	actionRow{ // S214
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(77), /* $, reduce: CloseCurly */
-			reduce(77), /* root, reduce: CloseCurly */
-			reduce(77), /* id, reduce: CloseCurly */
+			reduce(81), /* $, reduce: CloseParen */
+			reduce(81), /* root, reduce: CloseParen */
+			reduce(81), /* id, reduce: CloseParen */
 			nil,        /* . */
-			reduce(77), /* if, reduce: CloseCurly */
+			reduce(81), /* if, reduce: CloseParen */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -8636,6 +10522,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -8645,7 +10540,56 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(77), /* space, reduce: CloseCurly */
+			reduce(81), /* space, reduce: CloseParen */
+
+		},
+	},
+	actionRow{ // S215
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			reduce(88), /* id, reduce: Space */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			reduce(88), /* []bool, reduce: Space */
+			reduce(88), /* []int64, reduce: Space */
+			reduce(88), /* []int32, reduce: Space */
+			reduce(88), /* []uint64, reduce: Space */
+			reduce(88), /* []uint32, reduce: Space */
+			reduce(88), /* []double, reduce: Space */
+			reduce(88), /* []float, reduce: Space */
+			reduce(88), /* []string, reduce: Space */
+			reduce(88), /* [][]byte, reduce: Space */
+			reduce(88), /* int64_lit, reduce: Space */
+			reduce(88), /* int32_lit, reduce: Space */
+			reduce(88), /* uint64_lit, reduce: Space */
+			reduce(88), /* uint32_lit, reduce: Space */
+			reduce(88), /* double_lit, reduce: Space */
+			reduce(88), /* float_lit, reduce: Space */
+			reduce(88), /* string_lit, reduce: Space */
+			reduce(88), /* bytes_lit, reduce: Space */
+			reduce(88), /* bool_var, reduce: Space */
+			reduce(88), /* int64_var, reduce: Space */
+			reduce(88), /* int32_var, reduce: Space */
+			reduce(88), /* uint64_var, reduce: Space */
+			reduce(88), /* uint32_var, reduce: Space */
+			reduce(88), /* double_var, reduce: Space */
+			reduce(88), /* float_var, reduce: Space */
+			reduce(88), /* string_var, reduce: Space */
+			reduce(88), /* bytes_var, reduce: Space */
+			reduce(88), /* true, reduce: Space */
+			reduce(88), /* false, reduce: Space */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			reduce(88), /* ), reduce: Space */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(88), /* space, reduce: Space */
 
 		},
 	},
@@ -8655,37 +10599,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			reduce(80), /* id, reduce: Space */
+			shift(120), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			reduce(80), /* []bool, reduce: Space */
-			reduce(80), /* []int64, reduce: Space */
-			reduce(80), /* []int32, reduce: Space */
-			reduce(80), /* []uint64, reduce: Space */
-			reduce(80), /* []uint32, reduce: Space */
-			reduce(80), /* []double, reduce: Space */
-			reduce(80), /* []float, reduce: Space */
-			reduce(80), /* []string, reduce: Space */
-			reduce(80), /* [][]byte, reduce: Space */
-			reduce(80), /* int64_lit, reduce: Space */
-			reduce(80), /* int32_lit, reduce: Space */
-			reduce(80), /* uint64_lit, reduce: Space */
-			reduce(80), /* uint32_lit, reduce: Space */
-			reduce(80), /* double_lit, reduce: Space */
-			reduce(80), /* float_lit, reduce: Space */
-			reduce(80), /* string_lit, reduce: Space */
-			reduce(80), /* bytes_lit, reduce: Space */
-			reduce(80), /* true, reduce: Space */
-			reduce(80), /* false, reduce: Space */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(129), /* int64_lit */
+			shift(130), /* int32_lit */
+			shift(131), /* uint64_lit */
+			shift(132), /* uint32_lit */
+			shift(133), /* double_lit */
+			shift(134), /* float_lit */
+			shift(135), /* string_lit */
+			shift(136), /* bytes_lit */
+			shift(137), /* bool_var */
+			shift(138), /* int64_var */
+			shift(139), /* int32_var */
+			shift(140), /* uint64_var */
+			shift(141), /* uint32_var */
+			shift(142), /* double_var */
+			shift(143), /* float_var */
+			shift(144), /* string_var */
+			shift(145), /* bytes_var */
+			shift(146), /* true */
+			shift(147), /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
-			reduce(80), /* }, reduce: Space */
+			shift(270), /* ) */
+			nil,        /* } */
 			nil,        /* , */
-			reduce(80), /* space, reduce: Space */
+			shift(149), /* space */
 
 		},
 	},
@@ -8695,7 +10648,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(278), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -8716,6 +10669,64 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			shift(214), /* ) */
+			nil,        /* } */
+			shift(271), /* , */
+			shift(272), /* space */
+
+		},
+	},
+	actionRow{ // S218
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			reduce(30), /* $, reduce: Function */
+			reduce(30), /* root, reduce: Function */
+			reduce(30), /* id, reduce: Function */
+			nil,        /* . */
+			reduce(30), /* if, reduce: Function */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -8725,47 +10736,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			nil,        /* space */
-
-		},
-	},
-	actionRow{ // S218
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			shift(103), /* id */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(112), /* int64_lit */
-			shift(113), /* int32_lit */
-			shift(114), /* uint64_lit */
-			shift(115), /* uint32_lit */
-			shift(116), /* double_lit */
-			shift(117), /* float_lit */
-			shift(118), /* string_lit */
-			shift(119), /* bytes_lit */
-			shift(120), /* true */
-			shift(121), /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			shift(282), /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(123), /* space */
+			reduce(30), /* space, reduce: Function */
 
 		},
 	},
@@ -8775,69 +10746,38 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(120), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			shift(215), /* } */
-			shift(246), /* , */
-			shift(283), /* space */
-
-		},
-	},
-	actionRow{ // S220
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			reduce(33), /* $, reduce: List */
-			reduce(33), /* root, reduce: List */
-			reduce(33), /* id, reduce: List */
-			nil,        /* . */
-			reduce(33), /* if, reduce: List */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(129), /* int64_lit */
+			shift(130), /* int32_lit */
+			shift(131), /* uint64_lit */
+			shift(132), /* uint32_lit */
+			shift(133), /* double_lit */
+			shift(134), /* float_lit */
+			shift(135), /* string_lit */
+			shift(136), /* bytes_lit */
+			shift(137), /* bool_var */
+			shift(138), /* int64_var */
+			shift(139), /* int32_var */
+			shift(140), /* uint64_var */
+			shift(141), /* uint32_var */
+			shift(142), /* double_var */
+			shift(143), /* float_var */
+			shift(144), /* string_var */
+			shift(145), /* bytes_var */
+			shift(146), /* true */
+			shift(147), /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
@@ -8845,7 +10785,56 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(33), /* space, reduce: List */
+			shift(95),  /* space */
+
+		},
+	},
+	actionRow{ // S220
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			reduce(86), /* id, reduce: Comma */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			reduce(86), /* []bool, reduce: Comma */
+			reduce(86), /* []int64, reduce: Comma */
+			reduce(86), /* []int32, reduce: Comma */
+			reduce(86), /* []uint64, reduce: Comma */
+			reduce(86), /* []uint32, reduce: Comma */
+			reduce(86), /* []double, reduce: Comma */
+			reduce(86), /* []float, reduce: Comma */
+			reduce(86), /* []string, reduce: Comma */
+			reduce(86), /* [][]byte, reduce: Comma */
+			reduce(86), /* int64_lit, reduce: Comma */
+			reduce(86), /* int32_lit, reduce: Comma */
+			reduce(86), /* uint64_lit, reduce: Comma */
+			reduce(86), /* uint32_lit, reduce: Comma */
+			reduce(86), /* double_lit, reduce: Comma */
+			reduce(86), /* float_lit, reduce: Comma */
+			reduce(86), /* string_lit, reduce: Comma */
+			reduce(86), /* bytes_lit, reduce: Comma */
+			reduce(86), /* bool_var, reduce: Comma */
+			reduce(86), /* int64_var, reduce: Comma */
+			reduce(86), /* int32_var, reduce: Comma */
+			reduce(86), /* uint64_var, reduce: Comma */
+			reduce(86), /* uint32_var, reduce: Comma */
+			reduce(86), /* double_var, reduce: Comma */
+			reduce(86), /* float_var, reduce: Comma */
+			reduce(86), /* string_var, reduce: Comma */
+			reduce(86), /* bytes_var, reduce: Comma */
+			reduce(86), /* true, reduce: Comma */
+			reduce(86), /* false, reduce: Comma */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(86), /* space, reduce: Comma */
 
 		},
 	},
@@ -8855,37 +10844,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(141), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(150), /* int64_lit */
-			shift(151), /* int32_lit */
-			shift(152), /* uint64_lit */
-			shift(153), /* uint32_lit */
-			shift(154), /* double_lit */
-			shift(155), /* float_lit */
-			shift(156), /* string_lit */
-			shift(157), /* bytes_lit */
-			shift(158), /* true */
-			shift(159), /* false */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			reduce(89), /* ), reduce: Space */
 			nil,        /* } */
-			nil,        /* , */
-			shift(77),  /* space */
+			reduce(89), /* ,, reduce: Space */
+			reduce(89), /* space, reduce: Space */
 
 		},
 	},
@@ -8895,47 +10893,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			reduce(81), /* }, reduce: Space */
-			reduce(81), /* ,, reduce: Space */
-			reduce(81), /* space, reduce: Space */
-
-		},
-	},
-	actionRow{ // S223
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			shift(141), /* id */
+			shift(166), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -8948,64 +10906,131 @@ var actionTab = actionTable{
 			shift(23),  /* []float */
 			shift(24),  /* []string */
 			shift(25),  /* [][]byte */
-			shift(150), /* int64_lit */
-			shift(151), /* int32_lit */
-			shift(152), /* uint64_lit */
-			shift(153), /* uint32_lit */
-			shift(154), /* double_lit */
-			shift(155), /* float_lit */
-			shift(156), /* string_lit */
-			shift(157), /* bytes_lit */
-			shift(158), /* true */
-			shift(159), /* false */
+			shift(175), /* int64_lit */
+			shift(176), /* int32_lit */
+			shift(177), /* uint64_lit */
+			shift(178), /* uint32_lit */
+			shift(179), /* double_lit */
+			shift(180), /* float_lit */
+			shift(181), /* string_lit */
+			shift(182), /* bytes_lit */
+			shift(183), /* bool_var */
+			shift(184), /* int64_var */
+			shift(185), /* int32_var */
+			shift(186), /* uint64_var */
+			shift(187), /* uint32_var */
+			shift(188), /* double_var */
+			shift(189), /* float_var */
+			shift(190), /* string_var */
+			shift(191), /* bytes_var */
+			shift(192), /* true */
+			shift(193), /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(289), /* } */
+			shift(278), /* } */
 			nil,        /* , */
-			shift(161), /* space */
+			shift(195), /* space */
+
+		},
+	},
+	actionRow{ // S223
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			shift(120), /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(129), /* int64_lit */
+			shift(130), /* int32_lit */
+			shift(131), /* uint64_lit */
+			shift(132), /* uint32_lit */
+			shift(133), /* double_lit */
+			shift(134), /* float_lit */
+			shift(135), /* string_lit */
+			shift(136), /* bytes_lit */
+			shift(137), /* bool_var */
+			shift(138), /* int64_var */
+			shift(139), /* int32_var */
+			shift(140), /* uint64_var */
+			shift(141), /* uint32_var */
+			shift(142), /* double_var */
+			shift(143), /* float_var */
+			shift(144), /* string_var */
+			shift(145), /* bytes_var */
+			shift(146), /* true */
+			shift(147), /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			shift(236), /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			shift(149), /* space */
 
 		},
 	},
 	actionRow{ // S224
 		canRecover: false,
 		actions: [numSymbols]action{
-			nil,       /* INVALID */
-			nil,       /* $ */
-			nil,       /* root */
-			nil,       /* id */
-			nil,       /* . */
-			nil,       /* if */
-			nil,       /* { */
-			nil,       /* []bool */
-			nil,       /* []int64 */
-			nil,       /* []int32 */
-			nil,       /* []uint64 */
-			nil,       /* []uint32 */
-			nil,       /* []double */
-			nil,       /* []float */
-			nil,       /* []string */
-			nil,       /* [][]byte */
-			nil,       /* int64_lit */
-			nil,       /* int32_lit */
-			nil,       /* uint64_lit */
-			nil,       /* uint32_lit */
-			nil,       /* double_lit */
-			nil,       /* float_lit */
-			nil,       /* string_lit */
-			nil,       /* bytes_lit */
-			nil,       /* true */
-			nil,       /* false */
-			shift(51), /* = */
-			nil,       /* then */
-			nil,       /* else */
-			nil,       /* ( */
-			nil,       /* ) */
-			nil,       /* } */
-			nil,       /* , */
-			shift(52), /* space */
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			shift(166), /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(175), /* int64_lit */
+			shift(176), /* int32_lit */
+			shift(177), /* uint64_lit */
+			shift(178), /* uint32_lit */
+			shift(179), /* double_lit */
+			shift(180), /* float_lit */
+			shift(181), /* string_lit */
+			shift(182), /* bytes_lit */
+			shift(183), /* bool_var */
+			shift(184), /* int64_var */
+			shift(185), /* int32_var */
+			shift(186), /* uint64_var */
+			shift(187), /* uint32_var */
+			shift(188), /* double_var */
+			shift(189), /* float_var */
+			shift(190), /* string_var */
+			shift(191), /* bytes_var */
+			shift(192), /* true */
+			shift(193), /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			shift(240), /* } */
+			nil,        /* , */
+			shift(195), /* space */
 
 		},
 	},
@@ -9015,10 +11040,10 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
-			shift(290), /* . */
+			reduce(75), /* id, reduce: Then */
+			nil,        /* . */
 			nil,        /* if */
-			nil,        /* { */
+			reduce(75), /* {, reduce: Then */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -9036,6 +11061,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -9045,7 +11079,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			nil,        /* space */
+			reduce(75), /* space, reduce: Then */
 
 		},
 	},
@@ -9055,7 +11089,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(291), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -9076,16 +11110,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(88), /* then, reduce: Space */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			nil,        /* space */
+			reduce(88), /* space, reduce: Space */
 
 		},
 	},
@@ -9095,10 +11138,10 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(293), /* id */
+			shift(283), /* id */
 			nil,        /* . */
 			nil,        /* if */
-			nil,        /* { */
+			shift(284), /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -9116,6 +11159,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -9125,7 +11177,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(86),  /* space */
+			shift(285), /* space */
 
 		},
 	},
@@ -9135,7 +11187,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(295), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -9156,16 +11208,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
-			nil,        /* else */
+			reduce(27), /* else, reduce: StateExpr */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(86),  /* space */
+			reduce(27), /* space, reduce: StateExpr */
 
 		},
 	},
@@ -9173,11 +11234,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(28), /* $, reduce: Function */
-			reduce(28), /* root, reduce: Function */
-			reduce(28), /* id, reduce: Function */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
 			nil,        /* . */
-			reduce(28), /* if, reduce: Function */
+			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -9196,16 +11257,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
-			nil,        /* else */
+			shift(288), /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(28), /* space, reduce: Function */
+			shift(289), /* space */
 
 		},
 	},
@@ -9217,7 +11287,7 @@ var actionTab = actionTable{
 			nil,        /* root */
 			nil,        /* id */
 			nil,        /* . */
-			nil,        /* if */
+			shift(292), /* if */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -9236,46 +11306,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			shift(263), /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(264), /* space */
-
-		},
-	},
-	actionRow{ // S231
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			reduce(32), /* $, reduce: List */
-			reduce(32), /* root, reduce: List */
-			reduce(32), /* id, reduce: List */
-			nil,        /* . */
-			reduce(32), /* if, reduce: List */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -9285,7 +11324,56 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(32), /* space, reduce: List */
+			shift(293), /* space */
+
+		},
+	},
+	actionRow{ // S231
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			reduce(89), /* id, reduce: Space */
+			nil,        /* . */
+			nil,        /* if */
+			reduce(89), /* {, reduce: Space */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(89), /* space, reduce: Space */
 
 		},
 	},
@@ -9295,7 +11383,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(297), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -9316,16 +11404,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
-			nil,        /* ( */
+			reduce(88), /* (, reduce: Space */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			nil,        /* space */
+			reduce(88), /* space, reduce: Space */
 
 		},
 	},
@@ -9333,39 +11430,48 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(13), /* $, reduce: Root */
-			reduce(13), /* root, reduce: Root */
-			reduce(13), /* id, reduce: Root */
+			nil,        /* $ */
+			nil,        /* root */
+			shift(211), /* id */
 			nil,        /* . */
-			reduce(13), /* if, reduce: Root */
+			nil,        /* if */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(129), /* int64_lit */
+			shift(130), /* int32_lit */
+			shift(131), /* uint64_lit */
+			shift(132), /* uint32_lit */
+			shift(133), /* double_lit */
+			shift(134), /* float_lit */
+			shift(135), /* string_lit */
+			shift(136), /* bytes_lit */
+			shift(137), /* bool_var */
+			shift(138), /* int64_var */
+			shift(139), /* int32_var */
+			shift(140), /* uint64_var */
+			shift(141), /* uint32_var */
+			shift(142), /* double_var */
+			shift(143), /* float_var */
+			shift(144), /* string_var */
+			shift(145), /* bytes_var */
+			shift(146), /* true */
+			shift(147), /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			shift(294), /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(13), /* space, reduce: Root */
+			shift(215), /* space */
 
 		},
 	},
@@ -9375,7 +11481,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(298), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -9396,16 +11502,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			shift(236), /* ) */
 			nil,        /* } */
-			nil,        /* , */
-			shift(164), /* space */
+			shift(220), /* , */
+			shift(221), /* space */
 
 		},
 	},
@@ -9413,11 +11528,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(21), /* $, reduce: Transition */
-			reduce(21), /* root, reduce: Transition */
-			reduce(21), /* id, reduce: Transition */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
 			nil,        /* . */
-			reduce(21), /* if, reduce: Transition */
+			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -9436,16 +11551,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(31), /* then, reduce: Function */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(21), /* space, reduce: Transition */
+			reduce(31), /* space, reduce: Function */
 
 		},
 	},
@@ -9455,7 +11579,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(299), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -9476,16 +11600,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(80), /* then, reduce: CloseParen */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(164), /* space */
+			reduce(80), /* space, reduce: CloseParen */
 
 		},
 	},
@@ -9493,39 +11626,48 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(17), /* $, reduce: Init */
-			reduce(17), /* root, reduce: Init */
-			reduce(17), /* id, reduce: Init */
+			nil,        /* $ */
+			nil,        /* root */
+			shift(241), /* id */
 			nil,        /* . */
-			reduce(17), /* if, reduce: Init */
+			nil,        /* if */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(175), /* int64_lit */
+			shift(176), /* int32_lit */
+			shift(177), /* uint64_lit */
+			shift(178), /* uint32_lit */
+			shift(179), /* double_lit */
+			shift(180), /* float_lit */
+			shift(181), /* string_lit */
+			shift(182), /* bytes_lit */
+			shift(183), /* bool_var */
+			shift(184), /* int64_var */
+			shift(185), /* int32_var */
+			shift(186), /* uint64_var */
+			shift(187), /* uint32_var */
+			shift(188), /* double_var */
+			shift(189), /* float_var */
+			shift(190), /* string_var */
+			shift(191), /* bytes_var */
+			shift(192), /* true */
+			shift(193), /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
+			shift(297), /* } */
 			nil,        /* , */
-			reduce(17), /* space, reduce: Init */
+			shift(245), /* space */
 
 		},
 	},
@@ -9533,11 +11675,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(61), /* $, reduce: Terminal */
-			reduce(61), /* root, reduce: Terminal */
-			reduce(61), /* id, reduce: Terminal */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
 			nil,        /* . */
-			reduce(61), /* if, reduce: Terminal */
+			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -9556,16 +11698,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(35), /* then, reduce: List */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(61), /* space, reduce: Terminal */
+			reduce(35), /* space, reduce: List */
 
 		},
 	},
@@ -9575,37 +11726,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(103), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(112), /* int64_lit */
-			shift(113), /* int32_lit */
-			shift(114), /* uint64_lit */
-			shift(115), /* uint32_lit */
-			shift(116), /* double_lit */
-			shift(117), /* float_lit */
-			shift(118), /* string_lit */
-			shift(119), /* bytes_lit */
-			shift(120), /* true */
-			shift(121), /* false */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			shift(245), /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(123), /* space */
+			nil,        /* ) */
+			shift(240), /* } */
+			shift(220), /* , */
+			shift(250), /* space */
 
 		},
 	},
@@ -9615,37 +11775,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(141), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(150), /* int64_lit */
-			shift(151), /* int32_lit */
-			shift(152), /* uint64_lit */
-			shift(153), /* uint32_lit */
-			shift(154), /* double_lit */
-			shift(155), /* float_lit */
-			shift(156), /* string_lit */
-			shift(157), /* bytes_lit */
-			shift(158), /* true */
-			shift(159), /* false */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(84), /* then, reduce: CloseCurly */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(253), /* } */
+			nil,        /* } */
 			nil,        /* , */
-			shift(161), /* space */
+			reduce(84), /* space, reduce: CloseCurly */
 
 		},
 	},
@@ -9656,7 +11825,7 @@ var actionTab = actionTable{
 			nil,        /* $ */
 			nil,        /* root */
 			nil,        /* id */
-			shift(304), /* . */
+			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
@@ -9676,56 +11845,74 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
-			nil,        /* ( */
+			shift(65),  /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			nil,        /* space */
+			shift(160), /* space */
 
 		},
 	},
 	actionRow{ // S242
 		canRecover: false,
 		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			shift(180), /* id */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(112), /* int64_lit */
-			shift(113), /* int32_lit */
-			shift(114), /* uint64_lit */
-			shift(115), /* uint32_lit */
-			shift(116), /* double_lit */
-			shift(117), /* float_lit */
-			shift(118), /* string_lit */
-			shift(119), /* bytes_lit */
-			shift(120), /* true */
-			shift(121), /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			shift(305), /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(184), /* space */
+			nil,       /* INVALID */
+			nil,       /* $ */
+			nil,       /* root */
+			nil,       /* id */
+			nil,       /* . */
+			nil,       /* if */
+			shift(97), /* { */
+			nil,       /* []bool */
+			nil,       /* []int64 */
+			nil,       /* []int32 */
+			nil,       /* []uint64 */
+			nil,       /* []uint32 */
+			nil,       /* []double */
+			nil,       /* []float */
+			nil,       /* []string */
+			nil,       /* [][]byte */
+			nil,       /* int64_lit */
+			nil,       /* int32_lit */
+			nil,       /* uint64_lit */
+			nil,       /* uint32_lit */
+			nil,       /* double_lit */
+			nil,       /* float_lit */
+			nil,       /* string_lit */
+			nil,       /* bytes_lit */
+			nil,       /* bool_var */
+			nil,       /* int64_var */
+			nil,       /* int32_var */
+			nil,       /* uint64_var */
+			nil,       /* uint32_var */
+			nil,       /* double_var */
+			nil,       /* float_var */
+			nil,       /* string_var */
+			nil,       /* bytes_var */
+			nil,       /* true */
+			nil,       /* false */
+			nil,       /* = */
+			nil,       /* then */
+			nil,       /* else */
+			nil,       /* ( */
+			nil,       /* ) */
+			nil,       /* } */
+			nil,       /* , */
+			shift(99), /* space */
 
 		},
 	},
@@ -9756,16 +11943,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			shift(245), /* ) */
-			nil,        /* } */
-			shift(190), /* , */
-			shift(191), /* space */
+			nil,        /* ) */
+			reduce(51), /* }, reduce: SpaceTerminal */
+			reduce(51), /* ,, reduce: SpaceTerminal */
+			reduce(51), /* space, reduce: SpaceTerminal */
 
 		},
 	},
@@ -9773,11 +11969,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
+			reduce(85), /* $, reduce: CloseCurly */
+			reduce(85), /* root, reduce: CloseCurly */
+			reduce(85), /* id, reduce: CloseCurly */
 			nil,        /* . */
-			nil,        /* if */
+			reduce(85), /* if, reduce: CloseCurly */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -9796,16 +11992,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(31), /* ), reduce: Function */
+			nil,        /* ) */
 			nil,        /* } */
-			reduce(31), /* ,, reduce: Function */
-			reduce(31), /* space, reduce: Function */
+			nil,        /* , */
+			reduce(85), /* space, reduce: CloseCurly */
 
 		},
 	},
@@ -9815,37 +12020,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			reduce(88), /* id, reduce: Space */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			reduce(88), /* []bool, reduce: Space */
+			reduce(88), /* []int64, reduce: Space */
+			reduce(88), /* []int32, reduce: Space */
+			reduce(88), /* []uint64, reduce: Space */
+			reduce(88), /* []uint32, reduce: Space */
+			reduce(88), /* []double, reduce: Space */
+			reduce(88), /* []float, reduce: Space */
+			reduce(88), /* []string, reduce: Space */
+			reduce(88), /* [][]byte, reduce: Space */
+			reduce(88), /* int64_lit, reduce: Space */
+			reduce(88), /* int32_lit, reduce: Space */
+			reduce(88), /* uint64_lit, reduce: Space */
+			reduce(88), /* uint32_lit, reduce: Space */
+			reduce(88), /* double_lit, reduce: Space */
+			reduce(88), /* float_lit, reduce: Space */
+			reduce(88), /* string_lit, reduce: Space */
+			reduce(88), /* bytes_lit, reduce: Space */
+			reduce(88), /* bool_var, reduce: Space */
+			reduce(88), /* int64_var, reduce: Space */
+			reduce(88), /* int32_var, reduce: Space */
+			reduce(88), /* uint64_var, reduce: Space */
+			reduce(88), /* uint32_var, reduce: Space */
+			reduce(88), /* double_var, reduce: Space */
+			reduce(88), /* float_var, reduce: Space */
+			reduce(88), /* string_var, reduce: Space */
+			reduce(88), /* bytes_var, reduce: Space */
+			reduce(88), /* true, reduce: Space */
+			reduce(88), /* false, reduce: Space */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(72), /* ), reduce: CloseParen */
-			nil,        /* } */
-			reduce(72), /* ,, reduce: CloseParen */
-			reduce(72), /* space, reduce: CloseParen */
+			nil,        /* ) */
+			reduce(88), /* }, reduce: Space */
+			nil,        /* , */
+			reduce(88), /* space, reduce: Space */
 
 		},
 	},
@@ -9855,37 +12069,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			reduce(79), /* id, reduce: Comma */
+			shift(120), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			reduce(79), /* []bool, reduce: Comma */
-			reduce(79), /* []int64, reduce: Comma */
-			reduce(79), /* []int32, reduce: Comma */
-			reduce(79), /* []uint64, reduce: Comma */
-			reduce(79), /* []uint32, reduce: Comma */
-			reduce(79), /* []double, reduce: Comma */
-			reduce(79), /* []float, reduce: Comma */
-			reduce(79), /* []string, reduce: Comma */
-			reduce(79), /* [][]byte, reduce: Comma */
-			reduce(79), /* int64_lit, reduce: Comma */
-			reduce(79), /* int32_lit, reduce: Comma */
-			reduce(79), /* uint64_lit, reduce: Comma */
-			reduce(79), /* uint32_lit, reduce: Comma */
-			reduce(79), /* double_lit, reduce: Comma */
-			reduce(79), /* float_lit, reduce: Comma */
-			reduce(79), /* string_lit, reduce: Comma */
-			reduce(79), /* bytes_lit, reduce: Comma */
-			reduce(79), /* true, reduce: Comma */
-			reduce(79), /* false, reduce: Comma */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(129), /* int64_lit */
+			shift(130), /* int32_lit */
+			shift(131), /* uint64_lit */
+			shift(132), /* uint32_lit */
+			shift(133), /* double_lit */
+			shift(134), /* float_lit */
+			shift(135), /* string_lit */
+			shift(136), /* bytes_lit */
+			shift(137), /* bool_var */
+			shift(138), /* int64_var */
+			shift(139), /* int32_var */
+			shift(140), /* uint64_var */
+			shift(141), /* uint32_var */
+			shift(142), /* double_var */
+			shift(143), /* float_var */
+			shift(144), /* string_var */
+			shift(145), /* bytes_var */
+			shift(146), /* true */
+			shift(147), /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			shift(305), /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(79), /* space, reduce: Comma */
+			shift(149), /* space */
 
 		},
 	},
@@ -9916,16 +12139,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(80), /* ), reduce: Space */
-			nil,        /* } */
-			reduce(80), /* ,, reduce: Space */
-			reduce(80), /* space, reduce: Space */
+			nil,        /* ) */
+			shift(244), /* } */
+			shift(271), /* , */
+			shift(306), /* space */
 
 		},
 	},
@@ -9933,31 +12165,40 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			shift(180), /* id */
+			reduce(33), /* $, reduce: List */
+			reduce(33), /* root, reduce: List */
+			reduce(33), /* id, reduce: List */
 			nil,        /* . */
-			nil,        /* if */
+			reduce(33), /* if, reduce: List */
 			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(112), /* int64_lit */
-			shift(113), /* int32_lit */
-			shift(114), /* uint64_lit */
-			shift(115), /* uint32_lit */
-			shift(116), /* double_lit */
-			shift(117), /* float_lit */
-			shift(118), /* string_lit */
-			shift(119), /* bytes_lit */
-			shift(120), /* true */
-			shift(121), /* false */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
@@ -9965,7 +12206,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(127), /* space */
+			reduce(33), /* space, reduce: List */
 
 		},
 	},
@@ -9975,47 +12216,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			reduce(37), /* ), reduce: Exprs */
-			nil,        /* } */
-			reduce(37), /* ,, reduce: Exprs */
-			reduce(37), /* space, reduce: Exprs */
-
-		},
-	},
-	actionRow{ // S250
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			shift(212), /* id */
+			shift(166), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -10028,28 +12229,37 @@ var actionTab = actionTable{
 			shift(23),  /* []float */
 			shift(24),  /* []string */
 			shift(25),  /* [][]byte */
-			shift(150), /* int64_lit */
-			shift(151), /* int32_lit */
-			shift(152), /* uint64_lit */
-			shift(153), /* uint32_lit */
-			shift(154), /* double_lit */
-			shift(155), /* float_lit */
-			shift(156), /* string_lit */
-			shift(157), /* bytes_lit */
-			shift(158), /* true */
-			shift(159), /* false */
+			shift(175), /* int64_lit */
+			shift(176), /* int32_lit */
+			shift(177), /* uint64_lit */
+			shift(178), /* uint32_lit */
+			shift(179), /* double_lit */
+			shift(180), /* float_lit */
+			shift(181), /* string_lit */
+			shift(182), /* bytes_lit */
+			shift(183), /* bool_var */
+			shift(184), /* int64_var */
+			shift(185), /* int32_var */
+			shift(186), /* uint64_var */
+			shift(187), /* uint32_var */
+			shift(188), /* double_var */
+			shift(189), /* float_var */
+			shift(190), /* string_var */
+			shift(191), /* bytes_var */
+			shift(192), /* true */
+			shift(193), /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(308), /* } */
+			nil,        /* } */
 			nil,        /* , */
-			shift(216), /* space */
+			shift(95),  /* space */
 
 		},
 	},
-	actionRow{ // S251
+	actionRow{ // S250
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10076,16 +12286,74 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(35), /* ), reduce: List */
-			nil,        /* } */
-			reduce(35), /* ,, reduce: List */
-			reduce(35), /* space, reduce: List */
+			nil,        /* ) */
+			reduce(89), /* }, reduce: Space */
+			reduce(89), /* ,, reduce: Space */
+			reduce(89), /* space, reduce: Space */
+
+		},
+	},
+	actionRow{ // S251
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			shift(166), /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(175), /* int64_lit */
+			shift(176), /* int32_lit */
+			shift(177), /* uint64_lit */
+			shift(178), /* uint32_lit */
+			shift(179), /* double_lit */
+			shift(180), /* float_lit */
+			shift(181), /* string_lit */
+			shift(182), /* bytes_lit */
+			shift(183), /* bool_var */
+			shift(184), /* int64_var */
+			shift(185), /* int32_var */
+			shift(186), /* uint64_var */
+			shift(187), /* uint32_var */
+			shift(188), /* double_var */
+			shift(189), /* float_var */
+			shift(190), /* string_var */
+			shift(191), /* bytes_var */
+			shift(192), /* true */
+			shift(193), /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			shift(312), /* } */
+			nil,        /* , */
+			shift(195), /* space */
 
 		},
 	},
@@ -10096,7 +12364,7 @@ var actionTab = actionTable{
 			nil,        /* $ */
 			nil,        /* root */
 			nil,        /* id */
-			nil,        /* . */
+			shift(313), /* . */
 			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
@@ -10116,6 +12384,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -10123,9 +12400,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(253), /* } */
-			shift(190), /* , */
-			shift(222), /* space */
+			nil,        /* } */
+			nil,        /* , */
+			nil,        /* space */
 
 		},
 	},
@@ -10135,7 +12412,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(314), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -10156,16 +12433,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(76), /* ), reduce: CloseCurly */
+			nil,        /* ) */
 			nil,        /* } */
-			reduce(76), /* ,, reduce: CloseCurly */
-			reduce(76), /* space, reduce: CloseCurly */
+			nil,        /* , */
+			nil,        /* space */
 
 		},
 	},
@@ -10175,7 +12461,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(316), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -10196,16 +12482,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			shift(207), /* ) */
+			nil,        /* ) */
 			nil,        /* } */
-			shift(190), /* , */
-			shift(191), /* space */
+			nil,        /* , */
+			shift(103), /* space */
 
 		},
 	},
@@ -10215,7 +12510,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(318), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -10236,16 +12531,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(29), /* then, reduce: Function */
+			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(29), /* space, reduce: Function */
+			shift(103), /* space */
 
 		},
 	},
@@ -10253,11 +12557,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
+			reduce(28), /* $, reduce: Function */
+			reduce(28), /* root, reduce: Function */
+			reduce(28), /* id, reduce: Function */
 			nil,        /* . */
-			nil,        /* if */
+			reduce(28), /* if, reduce: Function */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -10276,16 +12580,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(34), /* then, reduce: List */
+			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(34), /* space, reduce: List */
+			reduce(28), /* space, reduce: Function */
 
 		},
 	},
@@ -10316,16 +12629,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
-			nil,        /* else */
+			shift(288), /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(211), /* } */
-			shift(190), /* , */
-			shift(222), /* space */
+			nil,        /* } */
+			nil,        /* , */
+			shift(289), /* space */
 
 		},
 	},
@@ -10333,11 +12655,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
+			reduce(32), /* $, reduce: List */
+			reduce(32), /* root, reduce: List */
+			reduce(32), /* id, reduce: List */
 			nil,        /* . */
-			nil,        /* if */
+			reduce(32), /* if, reduce: List */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -10356,16 +12678,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
-			reduce(25), /* else, reduce: StateExpr */
+			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(25), /* space, reduce: StateExpr */
+			reduce(32), /* space, reduce: List */
 
 		},
 	},
@@ -10375,9 +12706,9 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(320), /* id */
 			nil,        /* . */
-			shift(267), /* if */
+			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -10396,6 +12727,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -10405,7 +12745,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(268), /* space */
+			nil,        /* space */
 
 		},
 	},
@@ -10413,12 +12753,12 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			reduce(80), /* id, reduce: Space */
+			reduce(13), /* $, reduce: Root */
+			reduce(13), /* root, reduce: Root */
+			reduce(13), /* id, reduce: Root */
 			nil,        /* . */
-			nil,        /* if */
-			reduce(80), /* {, reduce: Space */
+			reduce(13), /* if, reduce: Root */
+			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -10436,6 +12776,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -10445,7 +12794,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(80), /* space, reduce: Space */
+			reduce(13), /* space, reduce: Root */
 
 		},
 	},
@@ -10455,7 +12804,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(321), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -10476,16 +12825,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
-			shift(314), /* else */
+			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(315), /* space */
+			shift(197), /* space */
 
 		},
 	},
@@ -10493,12 +12851,12 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			shift(317), /* id */
+			reduce(21), /* $, reduce: Transition */
+			reduce(21), /* root, reduce: Transition */
+			reduce(21), /* id, reduce: Transition */
 			nil,        /* . */
-			nil,        /* if */
-			shift(319), /* { */
+			reduce(21), /* if, reduce: Transition */
+			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -10516,6 +12874,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -10525,7 +12892,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(201), /* space */
+			reduce(21), /* space, reduce: Transition */
 
 		},
 	},
@@ -10535,47 +12902,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			reduce(68), /* id, reduce: Else */
-			nil,        /* . */
-			nil,        /* if */
-			reduce(68), /* {, reduce: Else */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(68), /* space, reduce: Else */
-
-		},
-	},
-	actionRow{ // S264
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
+			shift(322), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -10596,16 +12923,74 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
-			reduce(81), /* else, reduce: Space */
+			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(81), /* space, reduce: Space */
+			shift(197), /* space */
+
+		},
+	},
+	actionRow{ // S264
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			reduce(17), /* $, reduce: Init */
+			reduce(17), /* root, reduce: Init */
+			reduce(17), /* id, reduce: Init */
+			nil,        /* . */
+			reduce(17), /* if, reduce: Init */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(17), /* space, reduce: Init */
 
 		},
 	},
@@ -10615,37 +13000,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(120), /* id */
 			nil,        /* . */
-			shift(320), /* if */
+			nil,        /* if */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(129), /* int64_lit */
+			shift(130), /* int32_lit */
+			shift(131), /* uint64_lit */
+			shift(132), /* uint32_lit */
+			shift(133), /* double_lit */
+			shift(134), /* float_lit */
+			shift(135), /* string_lit */
+			shift(136), /* bytes_lit */
+			shift(137), /* bool_var */
+			shift(138), /* int64_var */
+			shift(139), /* int32_var */
+			shift(140), /* uint64_var */
+			shift(141), /* uint32_var */
+			shift(142), /* double_var */
+			shift(143), /* float_var */
+			shift(144), /* string_var */
+			shift(145), /* bytes_var */
+			shift(146), /* true */
+			shift(147), /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			shift(270), /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(321), /* space */
+			shift(149), /* space */
 
 		},
 	},
@@ -10655,77 +13049,95 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(166), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(175), /* int64_lit */
+			shift(176), /* int32_lit */
+			shift(177), /* uint64_lit */
+			shift(178), /* uint32_lit */
+			shift(179), /* double_lit */
+			shift(180), /* float_lit */
+			shift(181), /* string_lit */
+			shift(182), /* bytes_lit */
+			shift(183), /* bool_var */
+			shift(184), /* int64_var */
+			shift(185), /* int32_var */
+			shift(186), /* uint64_var */
+			shift(187), /* uint32_var */
+			shift(188), /* double_var */
+			shift(189), /* float_var */
+			shift(190), /* string_var */
+			shift(191), /* bytes_var */
+			shift(192), /* true */
+			shift(193), /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(324), /* } */
+			shift(278), /* } */
 			nil,        /* , */
-			shift(325), /* space */
+			shift(195), /* space */
 
 		},
 	},
 	actionRow{ // S267
 		canRecover: false,
 		actions: [numSymbols]action{
-			nil,       /* INVALID */
-			nil,       /* $ */
-			nil,       /* root */
-			shift(60), /* id */
-			nil,       /* . */
-			nil,       /* if */
-			nil,       /* { */
-			shift(17), /* []bool */
-			shift(18), /* []int64 */
-			shift(19), /* []int32 */
-			shift(20), /* []uint64 */
-			shift(21), /* []uint32 */
-			shift(22), /* []double */
-			shift(23), /* []float */
-			shift(24), /* []string */
-			shift(25), /* [][]byte */
-			shift(67), /* int64_lit */
-			shift(68), /* int32_lit */
-			shift(69), /* uint64_lit */
-			shift(70), /* uint32_lit */
-			shift(71), /* double_lit */
-			shift(72), /* float_lit */
-			shift(73), /* string_lit */
-			shift(74), /* bytes_lit */
-			shift(75), /* true */
-			shift(76), /* false */
-			nil,       /* = */
-			nil,       /* then */
-			nil,       /* else */
-			nil,       /* ( */
-			nil,       /* ) */
-			nil,       /* } */
-			nil,       /* , */
-			shift(77), /* space */
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			shift(211), /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(129), /* int64_lit */
+			shift(130), /* int32_lit */
+			shift(131), /* uint64_lit */
+			shift(132), /* uint32_lit */
+			shift(133), /* double_lit */
+			shift(134), /* float_lit */
+			shift(135), /* string_lit */
+			shift(136), /* bytes_lit */
+			shift(137), /* bool_var */
+			shift(138), /* int64_var */
+			shift(139), /* int32_var */
+			shift(140), /* uint64_var */
+			shift(141), /* uint32_var */
+			shift(142), /* double_var */
+			shift(143), /* float_var */
+			shift(144), /* string_var */
+			shift(145), /* bytes_var */
+			shift(146), /* true */
+			shift(147), /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			shift(327), /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			shift(215), /* space */
 
 		},
 	},
@@ -10737,7 +13149,7 @@ var actionTab = actionTable{
 			nil,        /* root */
 			nil,        /* id */
 			nil,        /* . */
-			reduce(81), /* if, reduce: Space */
+			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -10756,16 +13168,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			shift(270), /* ) */
 			nil,        /* } */
-			nil,        /* , */
-			reduce(81), /* space, reduce: Space */
+			shift(220), /* , */
+			shift(221), /* space */
 
 		},
 	},
@@ -10775,7 +13196,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(327), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -10796,16 +13217,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			reduce(31), /* ), reduce: Function */
 			nil,        /* } */
-			nil,        /* , */
-			nil,        /* space */
+			reduce(31), /* ,, reduce: Function */
+			reduce(31), /* space, reduce: Function */
 
 		},
 	},
@@ -10836,16 +13266,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(73), /* then, reduce: CloseParen */
+			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			reduce(80), /* ), reduce: CloseParen */
 			nil,        /* } */
-			nil,        /* , */
-			reduce(73), /* space, reduce: CloseParen */
+			reduce(80), /* ,, reduce: CloseParen */
+			reduce(80), /* space, reduce: CloseParen */
 
 		},
 	},
@@ -10855,37 +13294,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			reduce(87), /* id, reduce: Comma */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			reduce(87), /* []bool, reduce: Comma */
+			reduce(87), /* []int64, reduce: Comma */
+			reduce(87), /* []int32, reduce: Comma */
+			reduce(87), /* []uint64, reduce: Comma */
+			reduce(87), /* []uint32, reduce: Comma */
+			reduce(87), /* []double, reduce: Comma */
+			reduce(87), /* []float, reduce: Comma */
+			reduce(87), /* []string, reduce: Comma */
+			reduce(87), /* [][]byte, reduce: Comma */
+			reduce(87), /* int64_lit, reduce: Comma */
+			reduce(87), /* int32_lit, reduce: Comma */
+			reduce(87), /* uint64_lit, reduce: Comma */
+			reduce(87), /* uint32_lit, reduce: Comma */
+			reduce(87), /* double_lit, reduce: Comma */
+			reduce(87), /* float_lit, reduce: Comma */
+			reduce(87), /* string_lit, reduce: Comma */
+			reduce(87), /* bytes_lit, reduce: Comma */
+			reduce(87), /* bool_var, reduce: Comma */
+			reduce(87), /* int64_var, reduce: Comma */
+			reduce(87), /* int32_var, reduce: Comma */
+			reduce(87), /* uint64_var, reduce: Comma */
+			reduce(87), /* uint32_var, reduce: Comma */
+			reduce(87), /* double_var, reduce: Comma */
+			reduce(87), /* float_var, reduce: Comma */
+			reduce(87), /* string_var, reduce: Comma */
+			reduce(87), /* bytes_var, reduce: Comma */
+			reduce(87), /* true, reduce: Comma */
+			reduce(87), /* false, reduce: Comma */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			shift(270), /* ) */
+			nil,        /* ) */
 			nil,        /* } */
-			shift(246), /* , */
-			shift(247), /* space */
+			nil,        /* , */
+			reduce(87), /* space, reduce: Comma */
 
 		},
 	},
@@ -10916,16 +13364,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(30), /* then, reduce: Function */
+			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			reduce(88), /* ), reduce: Space */
 			nil,        /* } */
-			nil,        /* , */
-			reduce(30), /* space, reduce: Function */
+			reduce(88), /* ,, reduce: Space */
+			reduce(88), /* space, reduce: Space */
 
 		},
 	},
@@ -10935,37 +13392,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(211), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(129), /* int64_lit */
+			shift(130), /* int32_lit */
+			shift(131), /* uint64_lit */
+			shift(132), /* uint32_lit */
+			shift(133), /* double_lit */
+			shift(134), /* float_lit */
+			shift(135), /* string_lit */
+			shift(136), /* bytes_lit */
+			shift(137), /* bool_var */
+			shift(138), /* int64_var */
+			shift(139), /* int32_var */
+			shift(140), /* uint64_var */
+			shift(141), /* uint32_var */
+			shift(142), /* double_var */
+			shift(143), /* float_var */
+			shift(144), /* string_var */
+			shift(145), /* bytes_var */
+			shift(146), /* true */
+			shift(147), /* false */
 			nil,        /* = */
-			reduce(77), /* then, reduce: CloseCurly */
+			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(77), /* space, reduce: CloseCurly */
+			shift(153), /* space */
 
 		},
 	},
@@ -10996,20 +13462,78 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
-			shift(273), /* } */
-			shift(246), /* , */
-			shift(283), /* space */
+			reduce(37), /* ), reduce: Exprs */
+			nil,        /* } */
+			reduce(37), /* ,, reduce: Exprs */
+			reduce(37), /* space, reduce: Exprs */
 
 		},
 	},
 	actionRow{ // S275
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			shift(241), /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(175), /* int64_lit */
+			shift(176), /* int32_lit */
+			shift(177), /* uint64_lit */
+			shift(178), /* uint32_lit */
+			shift(179), /* double_lit */
+			shift(180), /* float_lit */
+			shift(181), /* string_lit */
+			shift(182), /* bytes_lit */
+			shift(183), /* bool_var */
+			shift(184), /* int64_var */
+			shift(185), /* int32_var */
+			shift(186), /* uint64_var */
+			shift(187), /* uint32_var */
+			shift(188), /* double_var */
+			shift(189), /* float_var */
+			shift(190), /* string_var */
+			shift(191), /* bytes_var */
+			shift(192), /* true */
+			shift(193), /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			shift(330), /* } */
+			nil,        /* , */
+			shift(245), /* space */
+
+		},
+	},
+	actionRow{ // S276
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -11036,56 +13560,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
-			nil,        /* = */
-			reduce(33), /* then, reduce: List */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(33), /* space, reduce: List */
-
-		},
-	},
-	actionRow{ // S276
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			shift(103), /* id */
-			nil,        /* . */
-			nil,        /* if */
-			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(112), /* int64_lit */
-			shift(113), /* int32_lit */
-			shift(114), /* uint64_lit */
-			shift(115), /* uint32_lit */
-			shift(116), /* double_lit */
-			shift(117), /* float_lit */
-			shift(118), /* string_lit */
-			shift(119), /* bytes_lit */
-			shift(120), /* true */
-			shift(121), /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			shift(282), /* ) */
+			reduce(35), /* ), reduce: List */
 			nil,        /* } */
-			nil,        /* , */
-			shift(123), /* space */
+			reduce(35), /* ,, reduce: List */
+			reduce(35), /* space, reduce: List */
 
 		},
 	},
@@ -11095,37 +13588,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(141), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(150), /* int64_lit */
-			shift(151), /* int32_lit */
-			shift(152), /* uint64_lit */
-			shift(153), /* uint32_lit */
-			shift(154), /* double_lit */
-			shift(155), /* float_lit */
-			shift(156), /* string_lit */
-			shift(157), /* bytes_lit */
-			shift(158), /* true */
-			shift(159), /* false */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(289), /* } */
-			nil,        /* , */
-			shift(161), /* space */
+			shift(278), /* } */
+			shift(220), /* , */
+			shift(250), /* space */
 
 		},
 	},
@@ -11136,7 +13638,7 @@ var actionTab = actionTable{
 			nil,        /* $ */
 			nil,        /* root */
 			nil,        /* id */
-			shift(332), /* . */
+			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
@@ -11156,16 +13658,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			reduce(84), /* ), reduce: CloseCurly */
 			nil,        /* } */
-			nil,        /* , */
-			nil,        /* space */
+			reduce(84), /* ,, reduce: CloseCurly */
+			reduce(84), /* space, reduce: CloseCurly */
 
 		},
 	},
@@ -11175,37 +13686,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(180), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(112), /* int64_lit */
-			shift(113), /* int32_lit */
-			shift(114), /* uint64_lit */
-			shift(115), /* uint32_lit */
-			shift(116), /* double_lit */
-			shift(117), /* float_lit */
-			shift(118), /* string_lit */
-			shift(119), /* bytes_lit */
-			shift(120), /* true */
-			shift(121), /* false */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			shift(333), /* ) */
+			shift(236), /* ) */
 			nil,        /* } */
-			nil,        /* , */
-			shift(184), /* space */
+			shift(220), /* , */
+			shift(221), /* space */
 
 		},
 	},
@@ -11236,16 +13756,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(29), /* then, reduce: Function */
 			nil,        /* else */
 			nil,        /* ( */
-			shift(282), /* ) */
+			nil,        /* ) */
 			nil,        /* } */
-			shift(190), /* , */
-			shift(191), /* space */
+			nil,        /* , */
+			reduce(29), /* space, reduce: Function */
 
 		},
 	},
@@ -11276,16 +13805,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(34), /* then, reduce: List */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(31), /* }, reduce: Function */
-			reduce(31), /* ,, reduce: Function */
-			reduce(31), /* space, reduce: Function */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(34), /* space, reduce: List */
 
 		},
 	},
@@ -11316,6 +13854,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -11323,9 +13870,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(72), /* }, reduce: CloseParen */
-			reduce(72), /* ,, reduce: CloseParen */
-			reduce(72), /* space, reduce: CloseParen */
+			shift(240), /* } */
+			shift(220), /* , */
+			shift(250), /* space */
 
 		},
 	},
@@ -11356,16 +13903,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
-			nil,        /* else */
+			reduce(25), /* else, reduce: StateExpr */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(80), /* }, reduce: Space */
-			reduce(80), /* ,, reduce: Space */
-			reduce(80), /* space, reduce: Space */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(25), /* space, reduce: StateExpr */
 
 		},
 	},
@@ -11375,29 +13931,38 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(212), /* id */
+			nil,        /* id */
 			nil,        /* . */
-			nil,        /* if */
+			shift(292), /* if */
 			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(150), /* int64_lit */
-			shift(151), /* int32_lit */
-			shift(152), /* uint64_lit */
-			shift(153), /* uint32_lit */
-			shift(154), /* double_lit */
-			shift(155), /* float_lit */
-			shift(156), /* string_lit */
-			shift(157), /* bytes_lit */
-			shift(158), /* true */
-			shift(159), /* false */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
@@ -11405,7 +13970,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(127), /* space */
+			shift(293), /* space */
 
 		},
 	},
@@ -11415,10 +13980,10 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			reduce(88), /* id, reduce: Space */
 			nil,        /* . */
 			nil,        /* if */
-			nil,        /* { */
+			reduce(88), /* {, reduce: Space */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -11436,6 +14001,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -11443,9 +14017,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(37), /* }, reduce: Exprs */
-			reduce(37), /* ,, reduce: Exprs */
-			reduce(37), /* space, reduce: Exprs */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(88), /* space, reduce: Space */
 
 		},
 	},
@@ -11455,37 +14029,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(212), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			shift(17),  /* []bool */
-			shift(18),  /* []int64 */
-			shift(19),  /* []int32 */
-			shift(20),  /* []uint64 */
-			shift(21),  /* []uint32 */
-			shift(22),  /* []double */
-			shift(23),  /* []float */
-			shift(24),  /* []string */
-			shift(25),  /* [][]byte */
-			shift(150), /* int64_lit */
-			shift(151), /* int32_lit */
-			shift(152), /* uint64_lit */
-			shift(153), /* uint32_lit */
-			shift(154), /* double_lit */
-			shift(155), /* float_lit */
-			shift(156), /* string_lit */
-			shift(157), /* bytes_lit */
-			shift(158), /* true */
-			shift(159), /* false */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
-			nil,        /* else */
+			shift(336), /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(336), /* } */
+			nil,        /* } */
 			nil,        /* , */
-			shift(216), /* space */
+			shift(337), /* space */
 
 		},
 	},
@@ -11495,10 +14078,10 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(339), /* id */
 			nil,        /* . */
 			nil,        /* if */
-			nil,        /* { */
+			shift(341), /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -11516,6 +14099,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -11523,9 +14115,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(35), /* }, reduce: List */
-			reduce(35), /* ,, reduce: List */
-			reduce(35), /* space, reduce: List */
+			nil,        /* } */
+			nil,        /* , */
+			shift(231), /* space */
 
 		},
 	},
@@ -11535,10 +14127,10 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			reduce(76), /* id, reduce: Else */
 			nil,        /* . */
 			nil,        /* if */
-			nil,        /* { */
+			reduce(76), /* {, reduce: Else */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -11556,6 +14148,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -11563,9 +14164,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(289), /* } */
-			shift(190), /* , */
-			shift(222), /* space */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(76), /* space, reduce: Else */
 
 		},
 	},
@@ -11596,16 +14197,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
-			nil,        /* else */
+			reduce(89), /* else, reduce: Space */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(76), /* }, reduce: CloseCurly */
-			reduce(76), /* ,, reduce: CloseCurly */
-			reduce(76), /* space, reduce: CloseCurly */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(89), /* space, reduce: Space */
 
 		},
 	},
@@ -11615,9 +14225,9 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(339), /* id */
+			nil,        /* id */
 			nil,        /* . */
-			nil,        /* if */
+			shift(342), /* if */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -11636,6 +14246,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -11645,7 +14264,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			nil,        /* space */
+			shift(343), /* space */
 
 		},
 	},
@@ -11653,49 +14272,9 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(12), /* $, reduce: Root */
-			reduce(12), /* root, reduce: Root */
-			reduce(12), /* id, reduce: Root */
-			nil,        /* . */
-			reduce(12), /* if, reduce: Root */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(12), /* space, reduce: Root */
-
-		},
-	},
-	actionRow{ // S292
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(340), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -11716,6 +14295,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -11723,9 +14311,58 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
+			shift(346), /* } */
 			nil,        /* , */
-			shift(164), /* space */
+			shift(347), /* space */
+
+		},
+	},
+	actionRow{ // S292
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,       /* INVALID */
+			nil,       /* $ */
+			nil,       /* root */
+			shift(69), /* id */
+			nil,       /* . */
+			nil,       /* if */
+			nil,       /* { */
+			shift(17), /* []bool */
+			shift(18), /* []int64 */
+			shift(19), /* []int32 */
+			shift(20), /* []uint64 */
+			shift(21), /* []uint32 */
+			shift(22), /* []double */
+			shift(23), /* []float */
+			shift(24), /* []string */
+			shift(25), /* [][]byte */
+			shift(76), /* int64_lit */
+			shift(77), /* int32_lit */
+			shift(78), /* uint64_lit */
+			shift(79), /* uint32_lit */
+			shift(80), /* double_lit */
+			shift(81), /* float_lit */
+			shift(82), /* string_lit */
+			shift(83), /* bytes_lit */
+			shift(84), /* bool_var */
+			shift(85), /* int64_var */
+			shift(86), /* int32_var */
+			shift(87), /* uint64_var */
+			shift(88), /* uint32_var */
+			shift(89), /* double_var */
+			shift(90), /* float_var */
+			shift(91), /* string_var */
+			shift(92), /* bytes_var */
+			shift(93), /* true */
+			shift(94), /* false */
+			nil,       /* = */
+			nil,       /* then */
+			nil,       /* else */
+			nil,       /* ( */
+			nil,       /* ) */
+			nil,       /* } */
+			nil,       /* , */
+			shift(95), /* space */
 
 		},
 	},
@@ -11733,11 +14370,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(20), /* $, reduce: Transition */
-			reduce(20), /* root, reduce: Transition */
-			reduce(20), /* id, reduce: Transition */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
 			nil,        /* . */
-			reduce(20), /* if, reduce: Transition */
+			reduce(89), /* if, reduce: Space */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -11756,6 +14393,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -11765,7 +14411,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(20), /* space, reduce: Transition */
+			reduce(89), /* space, reduce: Space */
 
 		},
 	},
@@ -11775,7 +14421,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(341), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -11796,16 +14442,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(81), /* then, reduce: CloseParen */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(164), /* space */
+			reduce(81), /* space, reduce: CloseParen */
 
 		},
 	},
@@ -11813,11 +14468,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(16), /* $, reduce: Init */
-			reduce(16), /* root, reduce: Init */
-			reduce(16), /* id, reduce: Init */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
 			nil,        /* . */
-			reduce(16), /* if, reduce: Init */
+			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -11836,16 +14491,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			shift(294), /* ) */
 			nil,        /* } */
-			nil,        /* , */
-			reduce(16), /* space, reduce: Init */
+			shift(271), /* , */
+			shift(272), /* space */
 
 		},
 	},
@@ -11855,10 +14519,10 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(317), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
-			shift(319), /* { */
+			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -11876,16 +14540,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(30), /* then, reduce: Function */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(201), /* space */
+			reduce(30), /* space, reduce: Function */
 
 		},
 	},
@@ -11893,11 +14566,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(11), /* $, reduce: Root */
-			reduce(11), /* root, reduce: Root */
-			reduce(11), /* id, reduce: Root */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
 			nil,        /* . */
-			reduce(11), /* if, reduce: Root */
+			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -11916,16 +14589,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(85), /* then, reduce: CloseCurly */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(11), /* space, reduce: Root */
+			reduce(85), /* space, reduce: CloseCurly */
 
 		},
 	},
@@ -11933,11 +14615,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(19), /* $, reduce: Transition */
-			reduce(19), /* root, reduce: Transition */
-			reduce(19), /* id, reduce: Transition */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
 			nil,        /* . */
-			reduce(19), /* if, reduce: Transition */
+			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -11956,6 +14638,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -11963,9 +14654,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(19), /* space, reduce: Transition */
+			shift(297), /* } */
+			shift(271), /* , */
+			shift(306), /* space */
 
 		},
 	},
@@ -11973,11 +14664,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(15), /* $, reduce: Init */
-			reduce(15), /* root, reduce: Init */
-			reduce(15), /* id, reduce: Init */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
 			nil,        /* . */
-			reduce(15), /* if, reduce: Init */
+			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -11996,16 +14687,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(33), /* then, reduce: List */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(15), /* space, reduce: Init */
+			reduce(33), /* space, reduce: List */
 
 		},
 	},
@@ -12015,37 +14715,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(120), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(129), /* int64_lit */
+			shift(130), /* int32_lit */
+			shift(131), /* uint64_lit */
+			shift(132), /* uint32_lit */
+			shift(133), /* double_lit */
+			shift(134), /* float_lit */
+			shift(135), /* string_lit */
+			shift(136), /* bytes_lit */
+			shift(137), /* bool_var */
+			shift(138), /* int64_var */
+			shift(139), /* int32_var */
+			shift(140), /* uint64_var */
+			shift(141), /* uint32_var */
+			shift(142), /* double_var */
+			shift(143), /* float_var */
+			shift(144), /* string_var */
+			shift(145), /* bytes_var */
+			shift(146), /* true */
+			shift(147), /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			shift(245), /* ) */
+			shift(305), /* ) */
 			nil,        /* } */
-			shift(190), /* , */
-			shift(191), /* space */
+			nil,        /* , */
+			shift(149), /* space */
 
 		},
 	},
@@ -12055,37 +14764,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(166), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(175), /* int64_lit */
+			shift(176), /* int32_lit */
+			shift(177), /* uint64_lit */
+			shift(178), /* uint32_lit */
+			shift(179), /* double_lit */
+			shift(180), /* float_lit */
+			shift(181), /* string_lit */
+			shift(182), /* bytes_lit */
+			shift(183), /* bool_var */
+			shift(184), /* int64_var */
+			shift(185), /* int32_var */
+			shift(186), /* uint64_var */
+			shift(187), /* uint32_var */
+			shift(188), /* double_var */
+			shift(189), /* float_var */
+			shift(190), /* string_var */
+			shift(191), /* bytes_var */
+			shift(192), /* true */
+			shift(193), /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(29), /* ), reduce: Function */
-			nil,        /* } */
-			reduce(29), /* ,, reduce: Function */
-			reduce(29), /* space, reduce: Function */
+			nil,        /* ) */
+			shift(312), /* } */
+			nil,        /* , */
+			shift(195), /* space */
 
 		},
 	},
@@ -12095,37 +14813,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(211), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(129), /* int64_lit */
+			shift(130), /* int32_lit */
+			shift(131), /* uint64_lit */
+			shift(132), /* uint32_lit */
+			shift(133), /* double_lit */
+			shift(134), /* float_lit */
+			shift(135), /* string_lit */
+			shift(136), /* bytes_lit */
+			shift(137), /* bool_var */
+			shift(138), /* int64_var */
+			shift(139), /* int32_var */
+			shift(140), /* uint64_var */
+			shift(141), /* uint32_var */
+			shift(142), /* double_var */
+			shift(143), /* float_var */
+			shift(144), /* string_var */
+			shift(145), /* bytes_var */
+			shift(146), /* true */
+			shift(147), /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(34), /* ), reduce: List */
+			shift(353), /* ) */
 			nil,        /* } */
-			reduce(34), /* ,, reduce: List */
-			reduce(34), /* space, reduce: List */
+			nil,        /* , */
+			shift(215), /* space */
 
 		},
 	},
@@ -12156,16 +14883,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
-			shift(253), /* } */
-			shift(190), /* , */
-			shift(222), /* space */
+			shift(305), /* ) */
+			nil,        /* } */
+			shift(220), /* , */
+			shift(221), /* space */
 
 		},
 	},
@@ -12175,7 +14911,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(345), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -12196,6 +14932,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -12203,9 +14948,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			nil,        /* space */
+			reduce(31), /* }, reduce: Function */
+			reduce(31), /* ,, reduce: Function */
+			reduce(31), /* space, reduce: Function */
 
 		},
 	},
@@ -12236,16 +14981,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(73), /* ), reduce: CloseParen */
-			nil,        /* } */
-			reduce(73), /* ,, reduce: CloseParen */
-			reduce(73), /* space, reduce: CloseParen */
+			nil,        /* ) */
+			reduce(80), /* }, reduce: CloseParen */
+			reduce(80), /* ,, reduce: CloseParen */
+			reduce(80), /* space, reduce: CloseParen */
 
 		},
 	},
@@ -12276,16 +15030,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			shift(305), /* ) */
-			nil,        /* } */
-			shift(246), /* , */
-			shift(247), /* space */
+			nil,        /* ) */
+			reduce(88), /* }, reduce: Space */
+			reduce(88), /* ,, reduce: Space */
+			reduce(88), /* space, reduce: Space */
 
 		},
 	},
@@ -12295,37 +15058,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(241), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(175), /* int64_lit */
+			shift(176), /* int32_lit */
+			shift(177), /* uint64_lit */
+			shift(178), /* uint32_lit */
+			shift(179), /* double_lit */
+			shift(180), /* float_lit */
+			shift(181), /* string_lit */
+			shift(182), /* bytes_lit */
+			shift(183), /* bool_var */
+			shift(184), /* int64_var */
+			shift(185), /* int32_var */
+			shift(186), /* uint64_var */
+			shift(187), /* uint32_var */
+			shift(188), /* double_var */
+			shift(189), /* float_var */
+			shift(190), /* string_var */
+			shift(191), /* bytes_var */
+			shift(192), /* true */
+			shift(193), /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(30), /* ), reduce: Function */
+			nil,        /* ) */
 			nil,        /* } */
-			reduce(30), /* ,, reduce: Function */
-			reduce(30), /* space, reduce: Function */
+			nil,        /* , */
+			shift(153), /* space */
 
 		},
 	},
@@ -12356,16 +15128,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(77), /* ), reduce: CloseCurly */
-			nil,        /* } */
-			reduce(77), /* ,, reduce: CloseCurly */
-			reduce(77), /* space, reduce: CloseCurly */
+			nil,        /* ) */
+			reduce(37), /* }, reduce: Exprs */
+			reduce(37), /* ,, reduce: Exprs */
+			reduce(37), /* space, reduce: Exprs */
 
 		},
 	},
@@ -12375,37 +15156,46 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(241), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
+			shift(17),  /* []bool */
+			shift(18),  /* []int64 */
+			shift(19),  /* []int32 */
+			shift(20),  /* []uint64 */
+			shift(21),  /* []uint32 */
+			shift(22),  /* []double */
+			shift(23),  /* []float */
+			shift(24),  /* []string */
+			shift(25),  /* [][]byte */
+			shift(175), /* int64_lit */
+			shift(176), /* int32_lit */
+			shift(177), /* uint64_lit */
+			shift(178), /* uint32_lit */
+			shift(179), /* double_lit */
+			shift(180), /* float_lit */
+			shift(181), /* string_lit */
+			shift(182), /* bytes_lit */
+			shift(183), /* bool_var */
+			shift(184), /* int64_var */
+			shift(185), /* int32_var */
+			shift(186), /* uint64_var */
+			shift(187), /* uint32_var */
+			shift(188), /* double_var */
+			shift(189), /* float_var */
+			shift(190), /* string_var */
+			shift(191), /* bytes_var */
+			shift(192), /* true */
+			shift(193), /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(308), /* } */
-			shift(246), /* , */
-			shift(283), /* space */
+			shift(356), /* } */
+			nil,        /* , */
+			shift(245), /* space */
 
 		},
 	},
@@ -12436,16 +15226,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(33), /* ), reduce: List */
-			nil,        /* } */
-			reduce(33), /* ,, reduce: List */
-			reduce(33), /* space, reduce: List */
+			nil,        /* ) */
+			reduce(35), /* }, reduce: List */
+			reduce(35), /* ,, reduce: List */
+			reduce(35), /* space, reduce: List */
 
 		},
 	},
@@ -12476,16 +15275,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(28), /* then, reduce: Function */
+			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(28), /* space, reduce: Function */
+			shift(312), /* } */
+			shift(220), /* , */
+			shift(250), /* space */
 
 		},
 	},
@@ -12516,16 +15324,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(32), /* then, reduce: List */
+			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(32), /* space, reduce: List */
+			reduce(84), /* }, reduce: CloseCurly */
+			reduce(84), /* ,, reduce: CloseCurly */
+			reduce(84), /* space, reduce: CloseCurly */
 
 		},
 	},
@@ -12535,7 +15352,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(359), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -12556,6 +15373,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -12563,9 +15389,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(324), /* } */
+			nil,        /* } */
 			nil,        /* , */
-			shift(325), /* space */
+			nil,        /* space */
 
 		},
 	},
@@ -12573,12 +15399,12 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			reduce(69), /* id, reduce: Else */
+			reduce(12), /* $, reduce: Root */
+			reduce(12), /* root, reduce: Root */
+			reduce(12), /* id, reduce: Root */
 			nil,        /* . */
-			nil,        /* if */
-			reduce(69), /* {, reduce: Else */
+			reduce(12), /* if, reduce: Root */
+			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -12596,6 +15422,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -12605,7 +15440,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(69), /* space, reduce: Else */
+			reduce(12), /* space, reduce: Root */
 
 		},
 	},
@@ -12615,7 +15450,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(360), /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -12636,16 +15471,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
-			reduce(80), /* else, reduce: Space */
+			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(80), /* space, reduce: Space */
+			shift(197), /* space */
 
 		},
 	},
@@ -12653,12 +15497,12 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			shift(347), /* id */
+			reduce(20), /* $, reduce: Transition */
+			reduce(20), /* root, reduce: Transition */
+			reduce(20), /* id, reduce: Transition */
 			nil,        /* . */
-			nil,        /* if */
-			shift(348), /* { */
+			reduce(20), /* if, reduce: Transition */
+			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -12676,6 +15520,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -12685,7 +15538,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(260), /* space */
+			reduce(20), /* space, reduce: Transition */
 
 		},
 	},
@@ -12693,11 +15546,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(27), /* $, reduce: StateExpr */
-			reduce(27), /* root, reduce: StateExpr */
-			reduce(27), /* id, reduce: StateExpr */
+			nil,        /* $ */
+			nil,        /* root */
+			shift(361), /* id */
 			nil,        /* . */
-			reduce(27), /* if, reduce: StateExpr */
+			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -12716,6 +15569,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -12725,7 +15587,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(27), /* space, reduce: StateExpr */
+			shift(197), /* space */
 
 		},
 	},
@@ -12733,11 +15595,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(23), /* $, reduce: IfExpr */
-			reduce(23), /* root, reduce: IfExpr */
-			reduce(23), /* id, reduce: IfExpr */
+			reduce(16), /* $, reduce: Init */
+			reduce(16), /* root, reduce: Init */
+			reduce(16), /* id, reduce: Init */
 			nil,        /* . */
-			reduce(23), /* if, reduce: IfExpr */
+			reduce(16), /* if, reduce: Init */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -12756,6 +15618,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -12765,7 +15636,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(23), /* space, reduce: IfExpr */
+			reduce(16), /* space, reduce: Init */
 
 		},
 	},
@@ -12775,9 +15646,58 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(339), /* id */
 			nil,        /* . */
-			shift(267), /* if */
+			nil,        /* if */
+			shift(341), /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			shift(231), /* space */
+
+		},
+	},
+	actionRow{ // S320
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			reduce(11), /* $, reduce: Root */
+			reduce(11), /* root, reduce: Root */
+			reduce(11), /* id, reduce: Root */
+			nil,        /* . */
+			reduce(11), /* if, reduce: Root */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -12796,6 +15716,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -12805,47 +15734,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(268), /* space */
-
-		},
-	},
-	actionRow{ // S320
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,       /* INVALID */
-			nil,       /* $ */
-			nil,       /* root */
-			shift(60), /* id */
-			nil,       /* . */
-			nil,       /* if */
-			nil,       /* { */
-			shift(17), /* []bool */
-			shift(18), /* []int64 */
-			shift(19), /* []int32 */
-			shift(20), /* []uint64 */
-			shift(21), /* []uint32 */
-			shift(22), /* []double */
-			shift(23), /* []float */
-			shift(24), /* []string */
-			shift(25), /* [][]byte */
-			shift(67), /* int64_lit */
-			shift(68), /* int32_lit */
-			shift(69), /* uint64_lit */
-			shift(70), /* uint32_lit */
-			shift(71), /* double_lit */
-			shift(72), /* float_lit */
-			shift(73), /* string_lit */
-			shift(74), /* bytes_lit */
-			shift(75), /* true */
-			shift(76), /* false */
-			nil,       /* = */
-			nil,       /* then */
-			nil,       /* else */
-			nil,       /* ( */
-			nil,       /* ) */
-			nil,       /* } */
-			nil,       /* , */
-			shift(77), /* space */
+			reduce(11), /* space, reduce: Root */
 
 		},
 	},
@@ -12853,11 +15742,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
+			reduce(19), /* $, reduce: Transition */
+			reduce(19), /* root, reduce: Transition */
+			reduce(19), /* id, reduce: Transition */
 			nil,        /* . */
-			reduce(80), /* if, reduce: Space */
+			reduce(19), /* if, reduce: Transition */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -12876,6 +15765,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -12885,7 +15783,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(80), /* space, reduce: Space */
+			reduce(19), /* space, reduce: Transition */
 
 		},
 	},
@@ -12893,11 +15791,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
+			reduce(15), /* $, reduce: Init */
+			reduce(15), /* root, reduce: Init */
+			reduce(15), /* id, reduce: Init */
 			nil,        /* . */
-			nil,        /* if */
+			reduce(15), /* if, reduce: Init */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -12916,6 +15814,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -12923,9 +15830,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(351), /* } */
+			nil,        /* } */
 			nil,        /* , */
-			shift(352), /* space */
+			reduce(15), /* space, reduce: Init */
 
 		},
 	},
@@ -12956,16 +15863,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
-			reduce(26), /* else, reduce: StateExpr */
+			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			shift(270), /* ) */
 			nil,        /* } */
-			nil,        /* , */
-			reduce(26), /* space, reduce: StateExpr */
+			shift(220), /* , */
+			shift(221), /* space */
 
 		},
 	},
@@ -12996,16 +15912,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
-			reduce(76), /* else, reduce: CloseCurly */
+			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			reduce(29), /* ), reduce: Function */
 			nil,        /* } */
-			nil,        /* , */
-			reduce(76), /* space, reduce: CloseCurly */
+			reduce(29), /* ,, reduce: Function */
+			reduce(29), /* space, reduce: Function */
 
 		},
 	},
@@ -13036,16 +15961,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
-			reduce(81), /* }, reduce: Space */
-			nil,        /* , */
-			reduce(81), /* space, reduce: Space */
+			reduce(34), /* ), reduce: List */
+			nil,        /* } */
+			reduce(34), /* ,, reduce: List */
+			reduce(34), /* space, reduce: List */
 
 		},
 	},
@@ -13076,16 +16010,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			shift(130), /* then */
+			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(131), /* space */
+			shift(278), /* } */
+			shift(220), /* , */
+			shift(250), /* space */
 
 		},
 	},
@@ -13116,16 +16059,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(61), /* then, reduce: Terminal */
+			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			reduce(81), /* ), reduce: CloseParen */
 			nil,        /* } */
-			nil,        /* , */
-			reduce(61), /* space, reduce: Terminal */
+			reduce(81), /* ,, reduce: CloseParen */
+			reduce(81), /* space, reduce: CloseParen */
 
 		},
 	},
@@ -13156,16 +16108,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			shift(282), /* ) */
+			shift(327), /* ) */
 			nil,        /* } */
-			shift(190), /* , */
-			shift(191), /* space */
+			shift(271), /* , */
+			shift(272), /* space */
 
 		},
 	},
@@ -13196,16 +16157,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
-			reduce(29), /* }, reduce: Function */
-			reduce(29), /* ,, reduce: Function */
-			reduce(29), /* space, reduce: Function */
+			reduce(30), /* ), reduce: Function */
+			nil,        /* } */
+			reduce(30), /* ,, reduce: Function */
+			reduce(30), /* space, reduce: Function */
 
 		},
 	},
@@ -13236,16 +16206,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
-			reduce(34), /* }, reduce: List */
-			reduce(34), /* ,, reduce: List */
-			reduce(34), /* space, reduce: List */
+			reduce(85), /* ), reduce: CloseCurly */
+			nil,        /* } */
+			reduce(85), /* ,, reduce: CloseCurly */
+			reduce(85), /* space, reduce: CloseCurly */
 
 		},
 	},
@@ -13276,6 +16255,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -13283,9 +16271,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(289), /* } */
-			shift(190), /* , */
-			shift(222), /* space */
+			shift(330), /* } */
+			shift(271), /* , */
+			shift(306), /* space */
 
 		},
 	},
@@ -13295,7 +16283,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(356), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
 			nil,        /* { */
@@ -13316,16 +16304,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			reduce(33), /* ), reduce: List */
 			nil,        /* } */
-			nil,        /* , */
-			nil,        /* space */
+			reduce(33), /* ,, reduce: List */
+			reduce(33), /* space, reduce: List */
 
 		},
 	},
@@ -13356,16 +16353,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(28), /* then, reduce: Function */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(73), /* }, reduce: CloseParen */
-			reduce(73), /* ,, reduce: CloseParen */
-			reduce(73), /* space, reduce: CloseParen */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(28), /* space, reduce: Function */
 
 		},
 	},
@@ -13396,16 +16402,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			reduce(32), /* then, reduce: List */
 			nil,        /* else */
 			nil,        /* ( */
-			shift(333), /* ) */
+			nil,        /* ) */
 			nil,        /* } */
-			shift(246), /* , */
-			shift(247), /* space */
+			nil,        /* , */
+			reduce(32), /* space, reduce: List */
 
 		},
 	},
@@ -13436,6 +16451,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -13443,9 +16467,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(30), /* }, reduce: Function */
-			reduce(30), /* ,, reduce: Function */
-			reduce(30), /* space, reduce: Function */
+			shift(346), /* } */
+			nil,        /* , */
+			shift(347), /* space */
 
 		},
 	},
@@ -13455,10 +16479,10 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			reduce(77), /* id, reduce: Else */
 			nil,        /* . */
 			nil,        /* if */
-			nil,        /* { */
+			reduce(77), /* {, reduce: Else */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -13476,6 +16500,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -13483,9 +16516,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(77), /* }, reduce: CloseCurly */
-			reduce(77), /* ,, reduce: CloseCurly */
-			reduce(77), /* space, reduce: CloseCurly */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(77), /* space, reduce: Else */
 
 		},
 	},
@@ -13516,16 +16549,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
-			nil,        /* else */
+			reduce(88), /* else, reduce: Space */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(336), /* } */
-			shift(246), /* , */
-			shift(283), /* space */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(88), /* space, reduce: Space */
 
 		},
 	},
@@ -13535,10 +16577,10 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(366), /* id */
 			nil,        /* . */
 			nil,        /* if */
-			nil,        /* { */
+			shift(367), /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -13556,6 +16598,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -13563,9 +16614,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(33), /* }, reduce: List */
-			reduce(33), /* ,, reduce: List */
-			reduce(33), /* space, reduce: List */
+			nil,        /* } */
+			nil,        /* , */
+			shift(285), /* space */
 
 		},
 	},
@@ -13573,11 +16624,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(10), /* $, reduce: Root */
-			reduce(10), /* root, reduce: Root */
-			reduce(10), /* id, reduce: Root */
+			reduce(27), /* $, reduce: StateExpr */
+			reduce(27), /* root, reduce: StateExpr */
+			reduce(27), /* id, reduce: StateExpr */
 			nil,        /* . */
-			reduce(10), /* if, reduce: Root */
+			reduce(27), /* if, reduce: StateExpr */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -13596,6 +16647,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -13605,7 +16665,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(10), /* space, reduce: Root */
+			reduce(27), /* space, reduce: StateExpr */
 
 		},
 	},
@@ -13613,11 +16673,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(18), /* $, reduce: Transition */
-			reduce(18), /* root, reduce: Transition */
-			reduce(18), /* id, reduce: Transition */
+			reduce(23), /* $, reduce: IfExpr */
+			reduce(23), /* root, reduce: IfExpr */
+			reduce(23), /* id, reduce: IfExpr */
 			nil,        /* . */
-			reduce(18), /* if, reduce: Transition */
+			reduce(23), /* if, reduce: IfExpr */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -13636,6 +16696,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -13645,7 +16714,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(18), /* space, reduce: Transition */
+			reduce(23), /* space, reduce: IfExpr */
 
 		},
 	},
@@ -13653,11 +16722,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(14), /* $, reduce: Init */
-			reduce(14), /* root, reduce: Init */
-			reduce(14), /* id, reduce: Init */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
 			nil,        /* . */
-			reduce(14), /* if, reduce: Init */
+			shift(292), /* if */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -13676,6 +16745,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -13685,47 +16763,56 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(14), /* space, reduce: Init */
+			shift(293), /* space */
 
 		},
 	},
 	actionRow{ // S342
 		canRecover: false,
 		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			reduce(22), /* $, reduce: IfExpr */
-			reduce(22), /* root, reduce: IfExpr */
-			reduce(22), /* id, reduce: IfExpr */
-			nil,        /* . */
-			reduce(22), /* if, reduce: IfExpr */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(22), /* space, reduce: IfExpr */
+			nil,       /* INVALID */
+			nil,       /* $ */
+			nil,       /* root */
+			shift(69), /* id */
+			nil,       /* . */
+			nil,       /* if */
+			nil,       /* { */
+			shift(17), /* []bool */
+			shift(18), /* []int64 */
+			shift(19), /* []int32 */
+			shift(20), /* []uint64 */
+			shift(21), /* []uint32 */
+			shift(22), /* []double */
+			shift(23), /* []float */
+			shift(24), /* []string */
+			shift(25), /* [][]byte */
+			shift(76), /* int64_lit */
+			shift(77), /* int32_lit */
+			shift(78), /* uint64_lit */
+			shift(79), /* uint32_lit */
+			shift(80), /* double_lit */
+			shift(81), /* float_lit */
+			shift(82), /* string_lit */
+			shift(83), /* bytes_lit */
+			shift(84), /* bool_var */
+			shift(85), /* int64_var */
+			shift(86), /* int32_var */
+			shift(87), /* uint64_var */
+			shift(88), /* uint32_var */
+			shift(89), /* double_var */
+			shift(90), /* float_var */
+			shift(91), /* string_var */
+			shift(92), /* bytes_var */
+			shift(93), /* true */
+			shift(94), /* false */
+			nil,       /* = */
+			nil,       /* then */
+			nil,       /* else */
+			nil,       /* ( */
+			nil,       /* ) */
+			nil,       /* } */
+			nil,       /* , */
+			shift(95), /* space */
 
 		},
 	},
@@ -13737,7 +16824,7 @@ var actionTab = actionTable{
 			nil,        /* root */
 			nil,        /* id */
 			nil,        /* . */
-			nil,        /* if */
+			reduce(88), /* if, reduce: Space */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -13756,16 +16843,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(28), /* ), reduce: Function */
+			nil,        /* ) */
 			nil,        /* } */
-			reduce(28), /* ,, reduce: Function */
-			reduce(28), /* space, reduce: Function */
+			nil,        /* , */
+			reduce(88), /* space, reduce: Space */
 
 		},
 	},
@@ -13796,16 +16892,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			reduce(32), /* ), reduce: List */
-			nil,        /* } */
-			reduce(32), /* ,, reduce: List */
-			reduce(32), /* space, reduce: List */
+			nil,        /* ) */
+			shift(370), /* } */
+			nil,        /* , */
+			shift(371), /* space */
 
 		},
 	},
@@ -13836,16 +16941,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
-			nil,        /* else */
+			reduce(26), /* else, reduce: StateExpr */
 			nil,        /* ( */
-			reduce(61), /* ), reduce: Terminal */
+			nil,        /* ) */
 			nil,        /* } */
-			reduce(61), /* ,, reduce: Terminal */
-			reduce(61), /* space, reduce: Terminal */
+			nil,        /* , */
+			reduce(26), /* space, reduce: StateExpr */
 
 		},
 	},
@@ -13876,16 +16990,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
-			reduce(24), /* else, reduce: StateExpr */
+			reduce(84), /* else, reduce: CloseCurly */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(24), /* space, reduce: StateExpr */
+			reduce(84), /* space, reduce: CloseCurly */
 
 		},
 	},
@@ -13893,11 +17016,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(25), /* $, reduce: StateExpr */
-			reduce(25), /* root, reduce: StateExpr */
-			reduce(25), /* id, reduce: StateExpr */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
 			nil,        /* . */
-			reduce(25), /* if, reduce: StateExpr */
+			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -13916,6 +17039,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -13923,9 +17055,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
+			reduce(89), /* }, reduce: Space */
 			nil,        /* , */
-			reduce(25), /* space, reduce: StateExpr */
+			reduce(89), /* space, reduce: Space */
 
 		},
 	},
@@ -13937,7 +17069,7 @@ var actionTab = actionTable{
 			nil,        /* root */
 			nil,        /* id */
 			nil,        /* . */
-			shift(267), /* if */
+			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -13956,16 +17088,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			shift(156), /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(268), /* space */
+			shift(157), /* space */
 
 		},
 	},
@@ -13996,16 +17137,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
-			shift(160), /* } */
-			nil,        /* , */
-			shift(325), /* space */
+			shift(305), /* ) */
+			nil,        /* } */
+			shift(220), /* , */
+			shift(221), /* space */
 
 		},
 	},
@@ -14036,16 +17186,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			shift(130), /* then */
+			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(131), /* space */
+			reduce(29), /* }, reduce: Function */
+			reduce(29), /* ,, reduce: Function */
+			reduce(29), /* space, reduce: Function */
 
 		},
 	},
@@ -14076,16 +17235,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
-			reduce(77), /* else, reduce: CloseCurly */
+			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			reduce(77), /* space, reduce: CloseCurly */
+			reduce(34), /* }, reduce: List */
+			reduce(34), /* ,, reduce: List */
+			reduce(34), /* space, reduce: List */
 
 		},
 	},
@@ -14116,6 +17284,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -14123,9 +17300,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(80), /* }, reduce: Space */
-			nil,        /* , */
-			reduce(80), /* space, reduce: Space */
+			shift(312), /* } */
+			shift(220), /* , */
+			shift(250), /* space */
 
 		},
 	},
@@ -14135,10 +17312,10 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			shift(198), /* id */
+			nil,        /* id */
 			nil,        /* . */
 			nil,        /* if */
-			shift(200), /* { */
+			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -14156,6 +17333,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -14163,9 +17349,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(201), /* space */
+			reduce(81), /* }, reduce: CloseParen */
+			reduce(81), /* ,, reduce: CloseParen */
+			reduce(81), /* space, reduce: CloseParen */
 
 		},
 	},
@@ -14196,16 +17382,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
 			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
-			reduce(28), /* }, reduce: Function */
-			reduce(28), /* ,, reduce: Function */
-			reduce(28), /* space, reduce: Function */
+			shift(353), /* ) */
+			nil,        /* } */
+			shift(271), /* , */
+			shift(272), /* space */
 
 		},
 	},
@@ -14236,6 +17431,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -14243,9 +17447,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(32), /* }, reduce: List */
-			reduce(32), /* ,, reduce: List */
-			reduce(32), /* space, reduce: List */
+			reduce(30), /* }, reduce: Function */
+			reduce(30), /* ,, reduce: Function */
+			reduce(30), /* space, reduce: Function */
 
 		},
 	},
@@ -14276,6 +17480,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -14283,9 +17496,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(61), /* }, reduce: Terminal */
-			reduce(61), /* ,, reduce: Terminal */
-			reduce(61), /* space, reduce: Terminal */
+			reduce(85), /* }, reduce: CloseCurly */
+			reduce(85), /* ,, reduce: CloseCurly */
+			reduce(85), /* space, reduce: CloseCurly */
 
 		},
 	},
@@ -14316,6 +17529,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -14323,9 +17545,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(160), /* } */
-			nil,        /* , */
-			shift(325), /* space */
+			shift(356), /* } */
+			shift(271), /* , */
+			shift(306), /* space */
 
 		},
 	},
@@ -14356,6 +17578,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -14363,9 +17594,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(215), /* } */
-			nil,        /* , */
-			shift(352), /* space */
+			reduce(33), /* }, reduce: List */
+			reduce(33), /* ,, reduce: List */
+			reduce(33), /* space, reduce: List */
 
 		},
 	},
@@ -14373,11 +17604,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			reduce(26), /* $, reduce: StateExpr */
-			reduce(26), /* root, reduce: StateExpr */
-			reduce(26), /* id, reduce: StateExpr */
+			reduce(10), /* $, reduce: Root */
+			reduce(10), /* root, reduce: Root */
+			reduce(10), /* id, reduce: Root */
 			nil,        /* . */
-			reduce(26), /* if, reduce: StateExpr */
+			reduce(10), /* if, reduce: Root */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -14396,6 +17627,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -14405,7 +17645,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(26), /* space, reduce: StateExpr */
+			reduce(10), /* space, reduce: Root */
 
 		},
 	},
@@ -14413,12 +17653,12 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			shift(198), /* id */
+			reduce(18), /* $, reduce: Transition */
+			reduce(18), /* root, reduce: Transition */
+			reduce(18), /* id, reduce: Transition */
 			nil,        /* . */
-			nil,        /* if */
-			shift(200), /* { */
+			reduce(18), /* if, reduce: Transition */
+			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -14436,6 +17676,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -14445,7 +17694,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(201), /* space */
+			reduce(18), /* space, reduce: Transition */
 
 		},
 	},
@@ -14453,11 +17702,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
+			reduce(14), /* $, reduce: Init */
+			reduce(14), /* root, reduce: Init */
+			reduce(14), /* id, reduce: Init */
 			nil,        /* . */
-			nil,        /* if */
+			reduce(14), /* if, reduce: Init */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -14476,46 +17725,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			shift(263), /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(264), /* space */
-
-		},
-	},
-	actionRow{ // S362
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			reduce(24), /* $, reduce: StateExpr */
-			reduce(24), /* root, reduce: StateExpr */
-			reduce(24), /* id, reduce: StateExpr */
-			nil,        /* . */
-			reduce(24), /* if, reduce: StateExpr */
-			nil,        /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -14525,7 +17743,56 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(24), /* space, reduce: StateExpr */
+			reduce(14), /* space, reduce: Init */
+
+		},
+	},
+	actionRow{ // S362
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			reduce(22), /* $, reduce: IfExpr */
+			reduce(22), /* root, reduce: IfExpr */
+			reduce(22), /* id, reduce: IfExpr */
+			nil,        /* . */
+			reduce(22), /* if, reduce: IfExpr */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(22), /* space, reduce: IfExpr */
 
 		},
 	},
@@ -14556,140 +17823,29 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
-			shift(263), /* else */
+			nil,        /* else */
 			nil,        /* ( */
-			nil,        /* ) */
+			reduce(28), /* ), reduce: Function */
 			nil,        /* } */
-			nil,        /* , */
-			shift(264), /* space */
+			reduce(28), /* ,, reduce: Function */
+			reduce(28), /* space, reduce: Function */
 
 		},
 	},
 	actionRow{ // S364
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			shift(367), /* id */
-			nil,        /* . */
-			nil,        /* if */
-			shift(369), /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(201), /* space */
-
-		},
-	},
-	actionRow{ // S365
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			shift(367), /* id */
-			nil,        /* . */
-			nil,        /* if */
-			shift(369), /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(201), /* space */
-
-		},
-	},
-	actionRow{ // S366
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			shift(371), /* id */
-			nil,        /* . */
-			nil,        /* if */
-			shift(372), /* { */
-			nil,        /* []bool */
-			nil,        /* []int64 */
-			nil,        /* []int32 */
-			nil,        /* []uint64 */
-			nil,        /* []uint32 */
-			nil,        /* []double */
-			nil,        /* []float */
-			nil,        /* []string */
-			nil,        /* [][]byte */
-			nil,        /* int64_lit */
-			nil,        /* int32_lit */
-			nil,        /* uint64_lit */
-			nil,        /* uint32_lit */
-			nil,        /* double_lit */
-			nil,        /* float_lit */
-			nil,        /* string_lit */
-			nil,        /* bytes_lit */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* = */
-			nil,        /* then */
-			nil,        /* else */
-			nil,        /* ( */
-			nil,        /* ) */
-			nil,        /* } */
-			nil,        /* , */
-			shift(260), /* space */
-
-		},
-	},
-	actionRow{ // S367
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -14716,6 +17872,113 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			reduce(32), /* ), reduce: List */
+			nil,        /* } */
+			reduce(32), /* ,, reduce: List */
+			reduce(32), /* space, reduce: List */
+
+		},
+	},
+	actionRow{ // S365
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			reduce(24), /* else, reduce: StateExpr */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			reduce(24), /* space, reduce: StateExpr */
+
+		},
+	},
+	actionRow{ // S366
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			reduce(25), /* $, reduce: StateExpr */
+			reduce(25), /* root, reduce: StateExpr */
+			reduce(25), /* id, reduce: StateExpr */
+			nil,        /* . */
+			reduce(25), /* if, reduce: StateExpr */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -14723,9 +17986,58 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(27), /* }, reduce: StateExpr */
+			nil,        /* } */
 			nil,        /* , */
-			reduce(27), /* space, reduce: StateExpr */
+			reduce(25), /* space, reduce: StateExpr */
+
+		},
+	},
+	actionRow{ // S367
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			shift(292), /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			shift(293), /* space */
 
 		},
 	},
@@ -14756,6 +18068,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -14763,9 +18084,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(23), /* }, reduce: IfExpr */
+			shift(194), /* } */
 			nil,        /* , */
-			reduce(23), /* space, reduce: IfExpr */
+			shift(347), /* space */
 
 		},
 	},
@@ -14777,7 +18098,7 @@ var actionTab = actionTable{
 			nil,        /* root */
 			nil,        /* id */
 			nil,        /* . */
-			shift(267), /* if */
+			nil,        /* if */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -14796,16 +18117,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			nil,        /* then */
+			shift(156), /* then */
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(268), /* space */
+			shift(157), /* space */
 
 		},
 	},
@@ -14836,16 +18166,25 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* then */
-			nil,        /* else */
+			reduce(85), /* else, reduce: CloseCurly */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(22), /* }, reduce: IfExpr */
+			nil,        /* } */
 			nil,        /* , */
-			reduce(22), /* space, reduce: IfExpr */
+			reduce(85), /* space, reduce: CloseCurly */
 
 		},
 	},
@@ -14876,6 +18215,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -14883,9 +18231,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(25), /* }, reduce: StateExpr */
+			reduce(88), /* }, reduce: Space */
 			nil,        /* , */
-			reduce(25), /* space, reduce: StateExpr */
+			reduce(88), /* space, reduce: Space */
 
 		},
 	},
@@ -14895,10 +18243,10 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(228), /* id */
 			nil,        /* . */
-			shift(267), /* if */
-			nil,        /* { */
+			nil,        /* if */
+			shift(230), /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -14916,6 +18264,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -14925,7 +18282,7 @@ var actionTab = actionTable{
 			nil,        /* ) */
 			nil,        /* } */
 			nil,        /* , */
-			shift(268), /* space */
+			shift(231), /* space */
 
 		},
 	},
@@ -14956,6 +18313,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -14963,9 +18329,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(377), /* } */
-			nil,        /* , */
-			shift(325), /* space */
+			reduce(28), /* }, reduce: Function */
+			reduce(28), /* ,, reduce: Function */
+			reduce(28), /* space, reduce: Function */
 
 		},
 	},
@@ -14996,6 +18362,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -15003,9 +18378,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(377), /* } */
-			nil,        /* , */
-			shift(325), /* space */
+			reduce(32), /* }, reduce: List */
+			reduce(32), /* ,, reduce: List */
+			reduce(32), /* space, reduce: List */
 
 		},
 	},
@@ -15036,6 +18411,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -15043,9 +18427,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			shift(379), /* } */
+			shift(194), /* } */
 			nil,        /* , */
-			shift(352), /* space */
+			shift(347), /* space */
 
 		},
 	},
@@ -15076,6 +18460,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -15083,9 +18476,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(26), /* }, reduce: StateExpr */
+			shift(244), /* } */
 			nil,        /* , */
-			reduce(26), /* space, reduce: StateExpr */
+			shift(371), /* space */
 
 		},
 	},
@@ -15093,11 +18486,11 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* root */
-			nil,        /* id */
+			reduce(26), /* $, reduce: StateExpr */
+			reduce(26), /* root, reduce: StateExpr */
+			reduce(26), /* id, reduce: StateExpr */
 			nil,        /* . */
-			nil,        /* if */
+			reduce(26), /* if, reduce: StateExpr */
 			nil,        /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
@@ -15116,6 +18509,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -15123,9 +18525,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(76), /* }, reduce: CloseCurly */
+			nil,        /* } */
 			nil,        /* , */
-			reduce(76), /* space, reduce: CloseCurly */
+			reduce(26), /* space, reduce: StateExpr */
 
 		},
 	},
@@ -15135,10 +18537,10 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			nil,        /* root */
-			nil,        /* id */
+			shift(228), /* id */
 			nil,        /* . */
 			nil,        /* if */
-			nil,        /* { */
+			shift(230), /* { */
 			nil,        /* []bool */
 			nil,        /* []int64 */
 			nil,        /* []int32 */
@@ -15156,6 +18558,15 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -15163,9 +18574,9 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(24), /* }, reduce: StateExpr */
+			nil,        /* } */
 			nil,        /* , */
-			reduce(24), /* space, reduce: StateExpr */
+			shift(231), /* space */
 
 		},
 	},
@@ -15196,6 +18607,64 @@ var actionTab = actionTable{
 			nil,        /* float_lit */
 			nil,        /* string_lit */
 			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			shift(288), /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			shift(289), /* space */
+
+		},
+	},
+	actionRow{ // S380
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			reduce(24), /* $, reduce: StateExpr */
+			reduce(24), /* root, reduce: StateExpr */
+			reduce(24), /* id, reduce: StateExpr */
+			nil,        /* . */
+			reduce(24), /* if, reduce: StateExpr */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
@@ -15203,9 +18672,842 @@ var actionTab = actionTable{
 			nil,        /* else */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(77), /* }, reduce: CloseCurly */
+			nil,        /* } */
 			nil,        /* , */
-			reduce(77), /* space, reduce: CloseCurly */
+			reduce(24), /* space, reduce: StateExpr */
+
+		},
+	},
+	actionRow{ // S381
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			shift(288), /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			shift(289), /* space */
+
+		},
+	},
+	actionRow{ // S382
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			shift(385), /* id */
+			nil,        /* . */
+			nil,        /* if */
+			shift(387), /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			shift(231), /* space */
+
+		},
+	},
+	actionRow{ // S383
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			shift(385), /* id */
+			nil,        /* . */
+			nil,        /* if */
+			shift(387), /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			shift(231), /* space */
+
+		},
+	},
+	actionRow{ // S384
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			shift(389), /* id */
+			nil,        /* . */
+			nil,        /* if */
+			shift(390), /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			shift(285), /* space */
+
+		},
+	},
+	actionRow{ // S385
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			reduce(27), /* }, reduce: StateExpr */
+			nil,        /* , */
+			reduce(27), /* space, reduce: StateExpr */
+
+		},
+	},
+	actionRow{ // S386
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			reduce(23), /* }, reduce: IfExpr */
+			nil,        /* , */
+			reduce(23), /* space, reduce: IfExpr */
+
+		},
+	},
+	actionRow{ // S387
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			shift(292), /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			shift(293), /* space */
+
+		},
+	},
+	actionRow{ // S388
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			reduce(22), /* }, reduce: IfExpr */
+			nil,        /* , */
+			reduce(22), /* space, reduce: IfExpr */
+
+		},
+	},
+	actionRow{ // S389
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			reduce(25), /* }, reduce: StateExpr */
+			nil,        /* , */
+			reduce(25), /* space, reduce: StateExpr */
+
+		},
+	},
+	actionRow{ // S390
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			shift(292), /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* } */
+			nil,        /* , */
+			shift(293), /* space */
+
+		},
+	},
+	actionRow{ // S391
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			shift(395), /* } */
+			nil,        /* , */
+			shift(347), /* space */
+
+		},
+	},
+	actionRow{ // S392
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			shift(395), /* } */
+			nil,        /* , */
+			shift(347), /* space */
+
+		},
+	},
+	actionRow{ // S393
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			shift(397), /* } */
+			nil,        /* , */
+			shift(371), /* space */
+
+		},
+	},
+	actionRow{ // S394
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			reduce(26), /* }, reduce: StateExpr */
+			nil,        /* , */
+			reduce(26), /* space, reduce: StateExpr */
+
+		},
+	},
+	actionRow{ // S395
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			reduce(84), /* }, reduce: CloseCurly */
+			nil,        /* , */
+			reduce(84), /* space, reduce: CloseCurly */
+
+		},
+	},
+	actionRow{ // S396
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			reduce(24), /* }, reduce: StateExpr */
+			nil,        /* , */
+			reduce(24), /* space, reduce: StateExpr */
+
+		},
+	},
+	actionRow{ // S397
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* root */
+			nil,        /* id */
+			nil,        /* . */
+			nil,        /* if */
+			nil,        /* { */
+			nil,        /* []bool */
+			nil,        /* []int64 */
+			nil,        /* []int32 */
+			nil,        /* []uint64 */
+			nil,        /* []uint32 */
+			nil,        /* []double */
+			nil,        /* []float */
+			nil,        /* []string */
+			nil,        /* [][]byte */
+			nil,        /* int64_lit */
+			nil,        /* int32_lit */
+			nil,        /* uint64_lit */
+			nil,        /* uint32_lit */
+			nil,        /* double_lit */
+			nil,        /* float_lit */
+			nil,        /* string_lit */
+			nil,        /* bytes_lit */
+			nil,        /* bool_var */
+			nil,        /* int64_var */
+			nil,        /* int32_var */
+			nil,        /* uint64_var */
+			nil,        /* uint32_var */
+			nil,        /* double_var */
+			nil,        /* float_var */
+			nil,        /* string_var */
+			nil,        /* bytes_var */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* = */
+			nil,        /* then */
+			nil,        /* else */
+			nil,        /* ( */
+			nil,        /* ) */
+			reduce(85), /* }, reduce: CloseCurly */
+			nil,        /* , */
+			reduce(85), /* space, reduce: CloseCurly */
 
 		},
 	},

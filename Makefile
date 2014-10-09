@@ -1,12 +1,33 @@
+# Copyright 2013 Walter Schulze
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 .PHONY: nuke regenerate gofmt build test
 
-all: nuke regenerate gofmt build test
+all: nuke regenerate gofmt build test checklicense
+
+checklicense:
+	go install ./cmd/checklicense
+	checklicense .
 
 test:
 	go test -v ./...
 
 build:
 	go build ./...
+
+install:
+	go install ./...
 
 bench:
 	go test -v -test.run=XXX -test.bench=. ./...
@@ -21,13 +42,14 @@ regenerate:
 	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../code.google.com/p/gogoprotobuf/protobuf treeregister.proto)
 	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../code.google.com/p/gogoprotobuf/protobuf typewriterprison.proto)
 	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../code.google.com/p/gogoprotobuf/protobuf puddingmilkshake.proto)
-	(cd funcs && protoc --gogo_out=. -I=.:../../../../:../../../../code.google.com/p/gogoprotobuf/protobuf decode.proto)
 	go install github.com/awalterschulze/katydid/funcs/funcs-gen
 	funcs-gen ./funcs/
 	go install github.com/awalterschulze/katydid/asm/compose/compose-gen
 	compose-gen ./asm/compose/
 	go install github.com/awalterschulze/katydid/asm/conv/conv-gen
 	conv-gen ./asm/conv/
+	go install github.com/awalterschulze/katydid/serialize/serialize-gen
+	serialize-gen ./serialize
 	(cd funcs && go test -test.run=GenFuncList 2>../list_of_functions.txt)
 	make gofmt
 

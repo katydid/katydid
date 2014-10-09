@@ -83,11 +83,34 @@ func newValues(params []*ast.Expr) ([]interface{}, error) {
 	return values, nil
 }
 
-func composeVariable(p *ast.Expr) (funcs.Variable, error) {
-	return funcs.NewVariable(), nil
+func composeVariable(v *ast.Variable) funcs.Variable {
+	switch v.Type {
+	case types.SINGLE_DOUBLE:
+		return funcs.NewFloat64Variable()
+	case types.SINGLE_FLOAT:
+		return funcs.NewFloat32Variable()
+	case types.SINGLE_INT64:
+		return funcs.NewInt64Variable()
+	case types.SINGLE_UINT64:
+		return funcs.NewUint64Variable()
+	case types.SINGLE_INT32:
+		return funcs.NewInt32Variable()
+	case types.SINGLE_BOOL:
+		return funcs.NewBoolVariable()
+	case types.SINGLE_STRING:
+		return funcs.NewStringVariable()
+	case types.SINGLE_BYTES:
+		return funcs.NewBytesVariable()
+	case types.SINGLE_UINT32:
+		return funcs.NewUint32Variable()
+	}
+	panic("unreachable")
 }
 
 func newValue(p *ast.Expr) (interface{}, error) {
+	if p.Terminal != nil && p.GetTerminal().Variable != nil {
+		return composeVariable(p.GetTerminal().Variable), nil
+	}
 	typ, err := Which(p)
 	if err != nil {
 		return nil, err
@@ -108,9 +131,6 @@ func newValue(p *ast.Expr) (interface{}, error) {
 	case types.SINGLE_STRING:
 		return composeString(p)
 	case types.SINGLE_BYTES:
-		if p.Terminal != nil && p.GetTerminal().Variable != nil {
-			return composeVariable(p)
-		}
 		return composeBytes(p)
 	case types.SINGLE_UINT32:
 		return composeUint32(p)
@@ -181,7 +201,7 @@ func Which(expr *ast.Expr) (types.Type, error) {
 			return types.SINGLE_UINT32, nil
 		}
 		if term.Variable != nil {
-			return types.SINGLE_BYTES, nil
+			return term.Variable.Type, nil
 		}
 	}
 	if expr.List != nil {

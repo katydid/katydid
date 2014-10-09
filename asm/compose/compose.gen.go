@@ -15,7 +15,11 @@ func composeFloat64(expr *ast.Expr) (funcs.Float64, error) {
 		return nil, err
 	}
 	if expr.Terminal != nil {
-		return funcs.NewConstFloat64(expr.GetTerminal().GetDoubleValue()), nil
+		if expr.GetTerminal().Variable != nil {
+			return funcs.NewFloat64Variable(), nil
+		} else {
+			return funcs.NewConstFloat64(expr.GetTerminal().GetDoubleValue()), nil
+		}
 	}
 	values, err := newValues(expr.GetFunction().GetParams())
 	if err != nil {
@@ -57,7 +61,11 @@ func composeFloat32(expr *ast.Expr) (funcs.Float32, error) {
 		return nil, err
 	}
 	if expr.Terminal != nil {
-		return funcs.NewConstFloat32(expr.GetTerminal().GetFloatValue()), nil
+		if expr.GetTerminal().Variable != nil {
+			return funcs.NewFloat32Variable(), nil
+		} else {
+			return funcs.NewConstFloat32(expr.GetTerminal().GetFloatValue()), nil
+		}
 	}
 	values, err := newValues(expr.GetFunction().GetParams())
 	if err != nil {
@@ -99,7 +107,11 @@ func composeInt64(expr *ast.Expr) (funcs.Int64, error) {
 		return nil, err
 	}
 	if expr.Terminal != nil {
-		return funcs.NewConstInt64(expr.GetTerminal().GetInt64Value()), nil
+		if expr.GetTerminal().Variable != nil {
+			return funcs.NewInt64Variable(), nil
+		} else {
+			return funcs.NewConstInt64(expr.GetTerminal().GetInt64Value()), nil
+		}
 	}
 	values, err := newValues(expr.GetFunction().GetParams())
 	if err != nil {
@@ -141,7 +153,11 @@ func composeUint64(expr *ast.Expr) (funcs.Uint64, error) {
 		return nil, err
 	}
 	if expr.Terminal != nil {
-		return funcs.NewConstUint64(expr.GetTerminal().GetUint64Value()), nil
+		if expr.GetTerminal().Variable != nil {
+			return funcs.NewUint64Variable(), nil
+		} else {
+			return funcs.NewConstUint64(expr.GetTerminal().GetUint64Value()), nil
+		}
 	}
 	values, err := newValues(expr.GetFunction().GetParams())
 	if err != nil {
@@ -183,7 +199,11 @@ func composeInt32(expr *ast.Expr) (funcs.Int32, error) {
 		return nil, err
 	}
 	if expr.Terminal != nil {
-		return funcs.NewConstInt32(expr.GetTerminal().GetInt32Value()), nil
+		if expr.GetTerminal().Variable != nil {
+			return funcs.NewInt32Variable(), nil
+		} else {
+			return funcs.NewConstInt32(expr.GetTerminal().GetInt32Value()), nil
+		}
 	}
 	values, err := newValues(expr.GetFunction().GetParams())
 	if err != nil {
@@ -225,7 +245,11 @@ func composeUint32(expr *ast.Expr) (funcs.Uint32, error) {
 		return nil, err
 	}
 	if expr.Terminal != nil {
-		return funcs.NewConstUint32(expr.GetTerminal().GetUint32Value()), nil
+		if expr.GetTerminal().Variable != nil {
+			return funcs.NewUint32Variable(), nil
+		} else {
+			return funcs.NewConstUint32(expr.GetTerminal().GetUint32Value()), nil
+		}
 	}
 	values, err := newValues(expr.GetFunction().GetParams())
 	if err != nil {
@@ -267,7 +291,11 @@ func composeBool(expr *ast.Expr) (funcs.Bool, error) {
 		return nil, err
 	}
 	if expr.Terminal != nil {
-		return funcs.NewConstBool(expr.GetTerminal().GetBoolValue()), nil
+		if expr.GetTerminal().Variable != nil {
+			return funcs.NewBoolVariable(), nil
+		} else {
+			return funcs.NewConstBool(expr.GetTerminal().GetBoolValue()), nil
+		}
 	}
 	values, err := newValues(expr.GetFunction().GetParams())
 	if err != nil {
@@ -309,7 +337,11 @@ func composeString(expr *ast.Expr) (funcs.String, error) {
 		return nil, err
 	}
 	if expr.Terminal != nil {
-		return funcs.NewConstString(expr.GetTerminal().GetStringValue()), nil
+		if expr.GetTerminal().Variable != nil {
+			return funcs.NewStringVariable(), nil
+		} else {
+			return funcs.NewConstString(expr.GetTerminal().GetStringValue()), nil
+		}
 	}
 	values, err := newValues(expr.GetFunction().GetParams())
 	if err != nil {
@@ -351,7 +383,11 @@ func composeBytes(expr *ast.Expr) (funcs.Bytes, error) {
 		return nil, err
 	}
 	if expr.Terminal != nil {
-		return funcs.NewConstBytes(expr.GetTerminal().GetBytesValue()), nil
+		if expr.GetTerminal().Variable != nil {
+			return funcs.NewBytesVariable(), nil
+		} else {
+			return funcs.NewConstBytes(expr.GetTerminal().GetBytesValue()), nil
+		}
 	}
 	values, err := newValues(expr.GetFunction().GetParams())
 	if err != nil {

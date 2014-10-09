@@ -22,6 +22,8 @@ import (
 	"github.com/awalterschulze/katydid/asm/lexer"
 	"github.com/awalterschulze/katydid/asm/parser"
 	"github.com/awalterschulze/katydid/funcs"
+	"github.com/awalterschulze/katydid/serialize/proto/scanner"
+	"github.com/awalterschulze/katydid/serialize/proto/tokens"
 	"reflect"
 	"testing"
 )
@@ -38,7 +40,7 @@ func (this *injectableInt64) SetValue(v int64) {
 	this.v = v
 }
 
-func (this *injectableInt64) SetVariable(buf []byte) {
+func (this *injectableInt64) IsVariable() {
 	//If this method is not implemented this function will probably be trimmed
 }
 
@@ -58,7 +60,7 @@ var injectPerson = `root = main.Person
 
 	main.Address = start
 
-	if eq(decInt64(main.Address.Number), inject()) then accept else meh
+	if eq($int64(main.Address.Number), inject()) then accept else meh
 	`
 
 func TestInject(t *testing.T) {
@@ -71,7 +73,11 @@ func TestInject(t *testing.T) {
 	if err != nil {
 		t.Fatalf(err.Error())
 	}
-	e, err := compiler.Compile(rules, fileDescriptorSet)
+	protoTokens, err := tokens.NewZipped(rules, fileDescriptorSet)
+	if err != nil {
+		panic(err)
+	}
+	e, rootToken, err := compiler.Compile(rules, protoTokens)
 	if err != nil {
 		panic(err)
 	}
@@ -85,7 +91,12 @@ func TestInject(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	match, err := e.Eval(data)
+	s := scanner.NewProtoScanner(protoTokens, rootToken)
+	err = s.Init(data)
+	if err != nil {
+		panic(err)
+	}
+	match, err := e.Eval(s)
 	if err != nil {
 		panic(err)
 	}

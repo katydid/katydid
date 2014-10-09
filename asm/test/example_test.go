@@ -183,9 +183,9 @@ number _ = number
 street number = numberAndStreet
 street _ = street
 
-if eq(decInt64(main.Address.Number), int64(456)) then number else noNumber
+if eq($int64(main.Address.Number), int64(456)) then number else noNumber
 
-if contains(nfkc(decString(main.Address.Street)), nfkc("TheStreet")) then street else noStreet
+if contains(nfkc($string(main.Address.Street)), nfkc("TheStreet")) then street else noStreet
 `
 
 func TestContextDavid(t *testing.T) {
@@ -299,7 +299,7 @@ start accept = accept
 start _ = start
 accept _ = accept
 
-if eq(decString(main.SrcTree.PackageName), "io") 
+if eq($string(main.SrcTree.PackageName), "io") 
   then accept 
   else packageName
 
@@ -405,10 +405,10 @@ numberTwo numberOne = numberOne
 numberOne numberTwo = numberTwo
 numberOne numberOne = numberOne
 
-if eq(decInt64(main.Address.Number), int64(1))
+if eq($int64(main.Address.Number), int64(1))
   then numberOne
   else {
-    if eq(decInt64(main.Address.Number), int64(2))
+    if eq($int64(main.Address.Number), int64(2))
     then numberTwo
     else noNumber
   }
@@ -465,7 +465,7 @@ main.Person = accept
 accept name = reject
 accept _ = accept
 
-if exists(main.Person.Name)
+if exists($string(main.Person.Name))
   then name
   else noname
 `
@@ -490,7 +490,7 @@ start name = reject
 start noname = accept
 start _ = start
 
-if eq(length(decString(main.Person.Name)), int64(0))
+if eq(length($string(main.Person.Name)), int64(0))
   then noname
   else name
 `
@@ -514,7 +514,7 @@ main.Person = accept
 accept name = reject
 accept _ = accept
 
-if eq(length(decString(main.Person.Name)), int64(0))
+if eq(length($string(main.Person.Name)), int64(0))
   then noname
   else name
 `
@@ -536,7 +536,7 @@ main.Person = start
 start notname = accept
 start _ = start
 
-if not(eq(decString(main.Person.Name), "David")) 
+if not(eq($string(main.Person.Name), "David")) 
   then notname 
   else name
 `
@@ -563,7 +563,7 @@ accept name = reject
 reject _ = reject
 accept _ = accept
 
-if eq(decString(main.Person.Name), "David") 
+if eq($string(main.Person.Name), "David") 
   then name 
   else noname
 `
@@ -596,11 +596,11 @@ name _ = name
 tel name = accept
 tel _ = tel
 
-if eq(decString(main.Person.Name), "David") 
+if eq($string(main.Person.Name), "David") 
   then name 
   else noname
 
-if eq(decString(main.Person.Telephone), "0123456789") 
+if eq($string(main.Person.Telephone), "0123456789") 
   then tel 
   else notel
 `
@@ -630,11 +630,11 @@ start tel = accept
 start _ = start
 accept _ = accept
 
-if eq(decString(main.Person.Name), "David") 
+if eq($string(main.Person.Name), "David") 
   then name 
   else noname
 
-if eq(decString(main.Person.Telephone), "0123456789") 
+if eq($string(main.Person.Telephone), "0123456789") 
   then tel 
   else notel
 `
@@ -663,10 +663,10 @@ start tel = accept
 start _ = start
 accept _ = accept
 
-if eq(decString(main.Person.Telephone), elem([]string{"0123456789", "0127897897"}, int64(0))) 
+if eq($string(main.Person.Telephone), elem([]string{"0123456789", "0127897897"}, int64(0))) 
   then tel
   else {
-  	if eq(decString(main.Person.Telephone), elem(range([]string{"0", "1", "0123456789", "0127897897"}, int64(2), int64(4)), int64(1)))
+  	if eq($string(main.Person.Telephone), elem(range([]string{"0", "1", "0123456789", "0127897897"}, int64(2), int64(4)), int64(1)))
   	then tel
   	else notel
   }

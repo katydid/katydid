@@ -18,6 +18,7 @@ import (
 	"code.google.com/p/gogoprotobuf/proto"
 	"github.com/awalterschulze/katydid/asm/ast"
 	"github.com/awalterschulze/katydid/funcs"
+	"github.com/awalterschulze/katydid/serialize"
 	"github.com/awalterschulze/katydid/types"
 	"strings"
 	"testing"
@@ -65,18 +66,10 @@ func TestComposeContains(t *testing.T) {
 						Name: "nfkc",
 						Params: []*ast.Expr{
 							{
-								Function: &ast.Function{
-									Name: "decString",
-									Params: []*ast.Expr{
-										{
-											Terminal: &ast.Terminal{
-												Variable: &ast.Variable{
-													Package: "a",
-													Message: "a",
-													Field:   "a",
-												},
-											},
-										},
+								Terminal: &ast.Terminal{
+									Variable: &ast.Variable{
+										Name: "a.a.a",
+										Type: types.SINGLE_STRING,
 									},
 								},
 							},
@@ -102,14 +95,14 @@ func TestComposeContains(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	r, err := b.Eval([]byte("TheStreet"))
+	r, err := b.Eval(serialize.NewStringValue("TheStreet"))
 	if err != nil {
 		panic(err)
 	}
 	if r != true {
 		t.Fatalf("expected true")
 	}
-	r, err = b.Eval([]byte("ThatStreet"))
+	r, err = b.Eval(serialize.NewStringValue("ThatStreet"))
 	if err != nil {
 		panic(err)
 	}
@@ -131,18 +124,10 @@ func TestComposeStringEq(t *testing.T) {
 						Name: "nfkc",
 						Params: []*ast.Expr{
 							{
-								Function: &ast.Function{
-									Name: "decString",
-									Params: []*ast.Expr{
-										{
-											Terminal: &ast.Terminal{
-												Variable: &ast.Variable{
-													Package: "a",
-													Message: "a",
-													Field:   "a",
-												},
-											},
-										},
+								Terminal: &ast.Terminal{
+									Variable: &ast.Variable{
+										Name: "a.a.a",
+										Type: types.SINGLE_STRING,
 									},
 								},
 							},
@@ -168,7 +153,7 @@ func TestComposeStringEq(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	r, err := b.Eval([]byte("TheStreet"))
+	r, err := b.Eval(serialize.NewStringValue("TheStreet"))
 	if err != nil {
 		panic(err)
 	}
@@ -307,9 +292,8 @@ func TestComposeRegex(t *testing.T) {
 				{
 					Terminal: &ast.Terminal{
 						Variable: &ast.Variable{
-							Package: "a",
-							Message: "a",
-							Field:   "a",
+							Name: "a.a.a",
+							Type: types.SINGLE_BYTES,
 						},
 					},
 				},
@@ -320,7 +304,7 @@ func TestComposeRegex(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	r, err := b.Eval(nil)
+	r, err := b.Eval(serialize.NewBytesValue([]byte("a")))
 	if err != nil {
 		panic(err)
 	}
@@ -335,18 +319,10 @@ func TestConst(t *testing.T) {
 			Name: "regex",
 			Params: []*ast.Expr{
 				{
-					Function: &ast.Function{
-						Name: "decString",
-						Params: []*ast.Expr{
-							{
-								Terminal: &ast.Terminal{
-									Variable: &ast.Variable{
-										Package: "a",
-										Message: "a",
-										Field:   "a",
-									},
-								},
-							},
+					Terminal: &ast.Terminal{
+						Variable: &ast.Variable{
+							Name: "a.a.a",
+							Type: types.SINGLE_STRING,
 						},
 					},
 				},
@@ -416,18 +392,10 @@ func TestNoTrim(t *testing.T) {
 												Name: "print",
 												Params: []*ast.Expr{
 													{
-														Function: &ast.Function{
-															Name: "decString",
-															Params: []*ast.Expr{
-																{
-																	Terminal: &ast.Terminal{
-																		Variable: &ast.Variable{
-																			Package: "a",
-																			Message: "a",
-																			Field:   "a",
-																		},
-																	},
-																},
+														Terminal: &ast.Terminal{
+															Variable: &ast.Variable{
+																Name: "a.a.a",
+																Type: types.SINGLE_STRING,
 															},
 														},
 													},
@@ -462,7 +430,7 @@ func TestNoTrim(t *testing.T) {
 		t.Fatalf("too much trimming")
 	}
 	t.Logf("trimmed = %s", str)
-	r, err := b.Eval([]byte("abc"))
+	r, err := b.Eval(serialize.NewStringValue("abc"))
 	if err != nil {
 		panic(err)
 	}

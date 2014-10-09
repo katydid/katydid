@@ -22,7 +22,7 @@ func (this *now) Eval() int64 {
 	return time.Now().UnixNano()
 }
 
-func (this *now) SetVariable([]byte) {}
+func (this *now) IsVariable() {}
 
 func init() {
 	Register("now", new(now))

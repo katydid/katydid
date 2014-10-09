@@ -33,7 +33,7 @@ main.FinanceJudo = notfound
 main.SaladWorry = notfound
 main.SpyCarpenter = notfound
 
-if contains(decString(main.SpyCarpenter.BridgePepper), "a") then accept else notfound
+if contains($string(main.SpyCarpenter.BridgePepper), "a") then accept else notfound
 `
 
 func TestBridgePepper(t *testing.T) {
@@ -68,8 +68,8 @@ foundContrib _ = foundContrib
 foundContrib foundOrigin = accept
 accept _ = accept
 
-if contains(decString(main.SpyCarpenter.BridgePepper), "a") then foundOrigin else notfound
-if contains(decString(main.SpyCarpenter.FountainTarget), "a") then foundContrib else notfound
+if contains($string(main.SpyCarpenter.BridgePepper), "a") then foundOrigin else notfound
+if contains($string(main.SpyCarpenter.FountainTarget), "a") then foundContrib else notfound
 `
 
 func TestBridgePepperAndFountainTarget(t *testing.T) {
@@ -100,8 +100,8 @@ start foundContrib = accept
 start _ = start
 accept _ = accept
 
-if contains(decString(main.SpyCarpenter.BridgePepper), "a") then foundOrigin else notfound
-if contains(decString(main.SpyCarpenter.FountainTarget), "a") then foundContrib else notfound
+if contains($string(main.SpyCarpenter.BridgePepper), "a") then foundOrigin else notfound
+if contains($string(main.SpyCarpenter.FountainTarget), "a") then foundContrib else notfound
 `
 
 func TestBridgePepperOrFountainTarget(t *testing.T) {

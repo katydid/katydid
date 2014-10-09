@@ -27,7 +27,6 @@ It has these top-level messages:
 package ast
 
 import proto "code.google.com/p/gogoprotobuf/proto"
-import json "encoding/json"
 import math "math"
 
 // discarding unused import gogoproto "code.google.com/p/gogoprotobuf/gogoproto/gogo.pb"
@@ -40,9 +39,8 @@ import sort "sort"
 import strconv "strconv"
 import reflect "reflect"
 
-// Reference proto, json, and math imports to suppress error if they are not otherwise used.
+// Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
-var _ = &json.SyntaxError{}
 var _ = math.Inf
 
 type Rules struct {
@@ -611,34 +609,26 @@ func (m *Terminal) GetVariable() *Variable {
 }
 
 type Variable struct {
-	Package          string `protobuf:"bytes,1,opt" json:"Package"`
-	Message          string `protobuf:"bytes,2,opt" json:"Message"`
-	Field            string `protobuf:"bytes,3,opt" json:"Field"`
-	XXX_unrecognized []byte `json:"-"`
+	Name             string     `protobuf:"bytes,1,opt" json:"Name"`
+	Type             types.Type `protobuf:"varint,2,opt,enum=types.Type" json:"Type"`
+	XXX_unrecognized []byte     `json:"-"`
 }
 
 func (m *Variable) Reset()      { *m = Variable{} }
 func (*Variable) ProtoMessage() {}
 
-func (m *Variable) GetPackage() string {
+func (m *Variable) GetName() string {
 	if m != nil {
-		return m.Package
+		return m.Name
 	}
 	return ""
 }
 
-func (m *Variable) GetMessage() string {
+func (m *Variable) GetType() types.Type {
 	if m != nil {
-		return m.Message
+		return m.Type
 	}
-	return ""
-}
-
-func (m *Variable) GetField() string {
-	if m != nil {
-		return m.Field
-	}
-	return ""
+	return types.UNKNOWN
 }
 
 type Keyword struct {
@@ -762,7 +752,7 @@ func (this *Variable) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.Variable{` + `Package:` + fmt.Sprintf("%#v", this.Package), `Message:` + fmt.Sprintf("%#v", this.Message), `Field:` + fmt.Sprintf("%#v", this.Field), `XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	s := strings.Join([]string{`&ast.Variable{` + `Name:` + fmt.Sprintf("%#v", this.Name), `Type:` + fmt.Sprintf("%#v", this.Type), `XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }
 func (this *Keyword) GoString() string {

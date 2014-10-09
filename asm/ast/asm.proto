@@ -119,9 +119,8 @@ message Terminal {
 }
 
 message Variable {
-	optional string Package  = 1 [(gogoproto.nullable) = false];
-	optional string Message = 2 [(gogoproto.nullable) = false];
-	optional string Field = 3 [(gogoproto.nullable) = false];
+	optional string Name  = 1 [(gogoproto.nullable) = false];
+	optional types.Type Type = 2 [(gogoproto.nullable) = false];
 }
 
 message Keyword {

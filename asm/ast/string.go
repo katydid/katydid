@@ -123,7 +123,7 @@ func (this *Terminal) String() string {
 }
 
 func (this *Variable) String() string {
-	return this.GetPackage() + "." + this.GetMessage() + "." + this.GetField()
+	return this.Name
 }
 
 func (this *Keyword) String() string {

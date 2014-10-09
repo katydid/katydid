@@ -20,6 +20,7 @@ import (
 	"fmt"
 	"github.com/awalterschulze/katydid/asm/token"
 	"github.com/awalterschulze/katydid/asm/util"
+	"github.com/awalterschulze/katydid/types"
 	"strconv"
 	"strings"
 )
@@ -74,11 +75,11 @@ func Strip(slit string, sub string) []byte {
 	return []byte(slit[1 : len(slit)-1])
 }
 
-func NewVariableTerminal(p, m, f interface{}) (*Terminal, error) {
-	pkg := string(p.(*token.Token).Lit)
-	msg := string(m.(*token.Token).Lit)
-	field := string(f.(*token.Token).Lit)
-	return &Terminal{Variable: &Variable{Package: pkg, Message: msg, Field: field}, Literal: pkg + "." + msg + "." + field}, nil
+func NewVariableTerminal(variable interface{}, typ types.Type) (*Terminal, error) {
+	varStr := string(variable.(*token.Token).Lit)
+	vars := strings.Split(varStr, "(")
+	name := vars[1][:len(vars[1])-1]
+	return &Terminal{Variable: &Variable{Name: name, Type: typ}, Literal: varStr}, nil
 }
 
 func NewBoolTerminal(v interface{}) (*Terminal, error) {

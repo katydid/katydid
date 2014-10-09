@@ -40,7 +40,7 @@ number
 street number = numberAndStreet
 street _ = street
 
-if eq(decInt64(main.Address.Number), int64(456)) 
+if eq($int64(main.Address.Number), int64(456)) 
 
 
 
@@ -49,7 +49,7 @@ if eq(decInt64(main.Address.Number), int64(456))
 
 then/*a*/number else //adsf
 noNumber
-if contains(nfkc(decString(main.Address.Street/*asdf*/)), nfkc("TheStreet"//asdf
+if contains(nfkc($string(main.Address.Street)/*asdf*/), nfkc("TheStreet"//asdf
 	)) then street else noStreet`
 
 func TestPreserve(t *testing.T) {

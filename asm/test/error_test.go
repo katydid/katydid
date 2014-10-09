@@ -20,6 +20,8 @@ import (
 	"github.com/awalterschulze/katydid/asm/compiler"
 	"github.com/awalterschulze/katydid/asm/lexer"
 	"github.com/awalterschulze/katydid/asm/parser"
+	"github.com/awalterschulze/katydid/serialize/proto/scanner"
+	"github.com/awalterschulze/katydid/serialize/proto/tokens"
 	"testing"
 )
 
@@ -31,7 +33,7 @@ start tel = accept
 start _ = start
 accept _ = accept
 
-if eq(decString(main.Person.Telephone), elem([]string{"0123456789"}, int64(3)))
+if eq($string(main.Person.Telephone), elem([]string{"0123456789"}, int64(3)))
   then tel
   else notel
 `
@@ -46,7 +48,11 @@ func TestCompileError(t *testing.T) {
 	if err != nil {
 		t.Fatalf(err.Error())
 	}
-	_, err = compiler.Compile(rules, fileDescriptorSet)
+	protoTokens, err := tokens.NewZipped(rules, fileDescriptorSet)
+	if err != nil {
+		panic(err)
+	}
+	_, _, err = compiler.Compile(rules, protoTokens)
 	if err == nil {
 		t.Fatalf("expected error")
 	}
@@ -59,7 +65,7 @@ start tel = accept
 start _ = start
 accept _ = accept
 
-if eq(elem([]string{decString(main.Person.Telephone)}, int64(3)), "0123456789") 
+if eq(elem([]string{$string(main.Person.Telephone)}, int64(3)), "0123456789") 
   then tel
   else notel
 `
@@ -74,7 +80,11 @@ func TestRuntimeError(t *testing.T) {
 	if err != nil {
 		t.Fatalf(err.Error())
 	}
-	e, err := compiler.Compile(rules, fileDescriptorSet)
+	protoTokens, err := tokens.NewZipped(rules, fileDescriptorSet)
+	if err != nil {
+		panic(err)
+	}
+	e, rootToken, err := compiler.Compile(rules, protoTokens)
 	if err != nil {
 		panic(err)
 	}
@@ -83,7 +93,12 @@ func TestRuntimeError(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	match, err := e.Eval(data)
+	s := scanner.NewProtoScanner(protoTokens, rootToken)
+	err = s.Init(data)
+	if err != nil {
+		panic(err)
+	}
+	match, err := e.Eval(s)
 	if err == nil {
 		t.Fatalf("expected error")
 	}

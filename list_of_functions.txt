@@ -1,21 +1,5 @@
 func and(v1 bool,v2 bool) bool
 func contains(s string,substr string) bool
-func decBool(d []byte) bool
-func decBytes(d []byte) []byte
-func decDouble(d []byte) double
-func decEnum(d []byte) int32
-func decFixed32(d []byte) uint32
-func decFixed64(d []byte) uint64
-func decFloat(d []byte) float
-func decInt32(d []byte) int32
-func decInt64(d []byte) int64
-func decSFixed32(d []byte) int32
-func decSFixed64(d []byte) int64
-func decSInt32(d []byte) int32
-func decSInt64(d []byte) int64
-func decString(d []byte) string
-func decUint32(d []byte) uint32
-func decUint64(d []byte) uint64
 func elem(list [][]byte,index int64) []byte
 func elem(list []bool,index int64) bool
 func elem(list []double,index int64) double
@@ -36,6 +20,14 @@ func eq(v1 uint32,v2 uint32) bool
 func eq(v1 uint64,v2 uint64) bool
 func eqFold(v1 string,v2 string) bool
 func exists(field []byte) bool
+func exists(field bool) bool
+func exists(field double) bool
+func exists(field float) bool
+func exists(field int32) bool
+func exists(field int64) bool
+func exists(field string) bool
+func exists(field uint32) bool
+func exists(field uint64) bool
 func ge(v1 []byte,v2 []byte) bool
 func ge(v1 double,v2 double) bool
 func ge(v1 float,v2 float) bool

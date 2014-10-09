@@ -140,7 +140,7 @@ func (this *print{{.Name}}) Eval() {{.GoType}} {
 	return v
 }
 
-func (this *print{{.Name}}) SetVariable([]byte) {}
+func (this *print{{.Name}}) IsVariable() {}
 
 func init() {
 	Register("print", new(print{{.Name}}))
@@ -241,6 +241,55 @@ type ranger struct {
 	ListType   string
 	ReturnType string
 }
+
+const variableStr = `
+type var{{.Name}} struct {
+	Dec serialize.Decoder
+	Thrower
+}
+
+var _ Decoder = &var{{.Name}}{}
+var _ Variable = &var{{.Name}}{}
+
+func (this *var{{.Name}}) Eval() {{.GoType}} {
+	v, err := this.Dec.{{.Name}}()
+	if err != nil {
+		return this.Throw{{.Name}}(err)
+	}
+	return v
+}
+
+func (this *var{{.Name}}) IsVariable() {}
+
+func (this *var{{.Name}}) SetDecoder(dec serialize.Decoder) {
+	this.Dec = dec
+}
+
+func (this *var{{.Name}}) String() string {
+	return "var{{.Name}}"
+}
+
+func New{{.Name}}Variable() *var{{.Name}} {
+	return &var{{.Name}}{}
+}
+
+`
+
+var existsStr = `
+type exists{{.Name}} struct {
+	Field {{.Name}}
+}
+
+func (this *exists{{.Name}}) Eval() bool {
+	this.Field.Eval()
+	return true
+}
+
+func init() {
+	Register("exists", new(exists{{.Name}}))
+}
+
+`
 
 func main() {
 	gen := gen.NewFunc("funcs")
@@ -388,5 +437,27 @@ func main() {
 		&ranger{"Bools", "[]bool"},
 		&ranger{"Strings", "[]string"},
 		&ranger{"ListOfBytes", "[][]byte"},
+	})
+	gen(variableStr, "variable.gen.go", []interface{}{
+		&printer{"Float64", "float64"},
+		&printer{"Float32", "float32"},
+		&printer{"Int64", "int64"},
+		&printer{"Uint64", "uint64"},
+		&printer{"Int32", "int32"},
+		&printer{"Uint32", "uint32"},
+		&printer{"Bool", "bool"},
+		&printer{"String", "string"},
+		&printer{"Bytes", "[]byte"},
+	}, `"github.com/awalterschulze/katydid/serialize"`)
+	gen(existsStr, "exists.gen.go", []interface{}{
+		&printer{"Float64", "float64"},
+		&printer{"Float32", "float32"},
+		&printer{"Int64", "int64"},
+		&printer{"Uint64", "uint64"},
+		&printer{"Int32", "int32"},
+		&printer{"Uint32", "uint32"},
+		&printer{"Bool", "bool"},
+		&printer{"String", "string"},
+		&printer{"Bytes", "[]byte"},
 	})
 }

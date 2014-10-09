@@ -22,13 +22,16 @@ import (
 	"github.com/awalterschulze/katydid/asm/lexer"
 	"github.com/awalterschulze/katydid/asm/parser"
 	main "github.com/awalterschulze/katydid/asm/test"
+	"github.com/awalterschulze/katydid/serialize/proto/scanner"
+	"github.com/awalterschulze/katydid/serialize/proto/tokens"
 	"math/rand"
 	"testing"
 	"time"
 )
 
 type bench struct {
-	exec *katyexec.Exec
+	exec    *katyexec.Exec
+	scanner scanner.BytesScanner
 }
 
 func newBench(protoFilename string, katydidStr string) bench {
@@ -41,12 +44,17 @@ func newBench(protoFilename string, katydidStr string) bench {
 	if err != nil {
 		panic(err)
 	}
-	e, err := compiler.Compile(rules, fileDescriptorSet)
+	protoTokens, err := tokens.NewZipped(rules, fileDescriptorSet)
+	if err != nil {
+		panic(err)
+	}
+	e, rootToken, err := compiler.Compile(rules, protoTokens)
 	if err != nil {
 		panic(err)
 	}
 	return bench{
-		exec: e,
+		exec:    e,
+		scanner: scanner.NewProtoScanner(protoTokens, rootToken),
 	}
 }
 
@@ -73,7 +81,11 @@ func (this bench) bench(b *testing.B, newPop func(r randyTest, easy bool) proto.
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		if _, err := this.exec.Eval(datas[i%num]); err != nil {
+		err := this.scanner.Init(datas[i%num])
+		if err != nil {
+			panic(err)
+		}
+		if _, err := this.exec.Eval(this.scanner); err != nil {
 			panic(err)
 		}
 	}

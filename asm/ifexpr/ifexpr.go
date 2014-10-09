@@ -17,30 +17,15 @@ package ifexpr
 import (
 	"github.com/awalterschulze/katydid/asm/ast"
 	"github.com/awalterschulze/katydid/asm/compose"
+	"github.com/awalterschulze/katydid/serialize"
 )
-
-type errUnmatchedVariables struct {
-	var1 string
-	var2 string
-}
-
-func newErrUnmatchedVariables(var1 *ast.Variable, var2 *ast.Variable) error {
-	return &errUnmatchedVariables{
-		var1: var1.GetPackage() + "." + var1.GetMessage() + "." + var1.GetField(),
-		var2: var2.GetPackage() + "." + var2.GetMessage() + "." + var2.GetField(),
-	}
-}
-
-func (this *errUnmatchedVariables) Error() string {
-	return "Variables in if expr do not match " + this.var1 + " != " + this.var2
-}
 
 type NameToState interface {
 	NameToState(name string) (state int, err error)
 }
 
 type StateExpr interface {
-	Eval(buf []byte) int
+	Eval(serialize.Decoder) int
 }
 
 type IfExpr struct {
@@ -50,15 +35,15 @@ type IfExpr struct {
 	Catcher Catcher
 }
 
-func (this *IfExpr) Eval(buf []byte) int {
-	cond, err := this.Cond.Eval(buf)
+func (this *IfExpr) Eval(dec serialize.Decoder) int {
+	cond, err := this.Cond.Eval(dec)
 	if err != nil {
 		this.Catcher.Catch(err)
 	}
 	if cond {
-		return this.Succ.Eval(buf)
+		return this.Succ.Eval(dec)
 	}
-	return this.Fail.Eval(buf)
+	return this.Fail.Eval(dec)
 }
 
 type Catcher interface {
@@ -83,79 +68,11 @@ func Compile(ifexpr *ast.IfExpr, nameToState NameToState, c Catcher) (StateExpr,
 	return &IfExpr{cond, succ, fail, c}, nil
 }
 
-func GetVariable(ifExpr *ast.IfExpr) (*ast.Variable, error) {
-	var1, err := getVariable(ifExpr.GetCondition())
-	if err != nil {
-		return nil, err
-	}
-	if ifExpr.GetThenClause().IfExpr != nil {
-		var2, err := GetVariable(ifExpr.GetThenClause().GetIfExpr())
-		if err != nil {
-			return nil, err
-		}
-		if var1 == nil {
-			var1 = var2
-		} else if var2 != nil {
-			if var1.GetPackage() != var2.GetPackage() ||
-				var1.GetMessage() != var2.GetMessage() ||
-				var1.GetField() != var2.GetField() {
-				return nil, newErrUnmatchedVariables(var1, var2)
-			}
-		}
-	}
-	if ifExpr.GetElseClause().IfExpr != nil {
-		var2, err := GetVariable(ifExpr.GetElseClause().GetIfExpr())
-		if err != nil {
-			return nil, err
-		}
-		if var1 == nil {
-			var1 = var2
-		} else if var2 != nil {
-			if var1.GetPackage() != var2.GetPackage() ||
-				var1.GetMessage() != var2.GetMessage() ||
-				var1.GetField() != var2.GetField() {
-				return nil, newErrUnmatchedVariables(var1, var2)
-			}
-		}
-	}
-	return var1, nil
-}
-
-func getVariable(expr *ast.Expr) (*ast.Variable, error) {
-	if expr.Terminal != nil {
-		return expr.GetTerminal().GetVariable(), nil
-	}
-	if expr.List != nil {
-		return getVariables(expr.GetList().GetElems())
-	}
-	return getVariables(expr.GetFunction().GetParams())
-}
-
-func getVariables(exprs []*ast.Expr) (*ast.Variable, error) {
-	var var1 *ast.Variable
-	for _, expr := range exprs {
-		var2, err := getVariable(expr)
-		if err != nil {
-			return nil, err
-		}
-		if var1 == nil {
-			var1 = var2
-		} else if var2 != nil {
-			if var1.GetPackage() != var2.GetPackage() ||
-				var1.GetMessage() != var2.GetMessage() ||
-				var1.GetField() != var2.GetField() {
-				return nil, newErrUnmatchedVariables(var1, var2)
-			}
-		}
-	}
-	return var1, nil
-}
-
 type constState struct {
 	state int
 }
 
-func (this *constState) Eval(buf []byte) int {
+func (this *constState) Eval(serialize.Decoder) int {
 	return this.state
 }
 

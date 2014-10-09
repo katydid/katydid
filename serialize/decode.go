@@ -12,17 +12,18 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package funcs
+package serialize
 
-type exists struct {
-	Field Bytes
+type Decoder interface {
+	Float64() (float64, error)
+	Float32() (float32, error)
+	Int64() (int64, error)
+	Uint64() (uint64, error)
+	Int32() (int32, error)
+	Bool() (bool, error)
+	String() (string, error)
+	Bytes() ([]byte, error)
+	Uint32() (uint32, error)
 }
 
-func (this *exists) Eval() bool {
-	this.Field.Eval()
-	return true
-}
-
-func init() {
-	Register("exists", new(exists))
-}
+type errValue struct{}

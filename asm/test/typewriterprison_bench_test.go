@@ -32,7 +32,7 @@ reject _ = reject
 
 main.PocketRoses = start
 
-if contains(decString(main.PocketRoses.ScarBusStop), "a") then accept else reject
+if contains($string(main.PocketRoses.ScarBusStop), "a") then accept else reject
 `
 
 func TestTypewriterPrisonScarBusStop(t *testing.T) {
@@ -59,7 +59,7 @@ reject _ = reject
 
 main.PocketRoses = start
 
-if eq(decInt64(main.PocketRoses.DaisySled), int64(1)) then accept else reject
+if eq($int64(main.PocketRoses.DaisySled), int64(1)) then accept else reject
 `
 
 func TestTypewriterPrisonDaisySled(t *testing.T) {
@@ -85,7 +85,7 @@ reject _ = reject
 
 main.PocketRoses = start
 
-if decBool(main.PocketRoses.SmileLetter) then accept else reject`
+if $bool(main.PocketRoses.SmileLetter) then accept else reject`
 
 func TestTypewriterPrisonSmileLetter(t *testing.T) {
 	m := &main.TypewriterPrison{PocketRoses: &main.PocketRoses{SmileLetter: proto.Bool(true)}}
@@ -109,7 +109,7 @@ notfound accept = accept
 notfound _ = notfound
 accept _ = accept
 
-if contains(decString(main.PocketRoses.MenuPaperclip), "a") then accept else notfound`
+if contains($string(main.PocketRoses.MenuPaperclip), "a") then accept else notfound`
 
 func TestTypewriterPrisonMenuPaperclip(t *testing.T) {
 	m := &main.TypewriterPrison{PocketRoses: &main.PocketRoses{MenuPaperclip: []string{"a"}}}
@@ -134,7 +134,7 @@ reject _ = reject
 
 main.PocketRoses = start
 
-if contains(decString(main.PocketRoses.MapShark), "a") then accept else reject
+if contains($string(main.PocketRoses.MapShark), "a") then accept else reject
 `
 
 func TestTypewriterPrisonMapShark(t *testing.T) {

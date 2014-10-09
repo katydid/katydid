@@ -18,21 +18,22 @@ import (
 	"fmt"
 	"github.com/awalterschulze/katydid/asm/ast"
 	"github.com/awalterschulze/katydid/funcs"
+	"github.com/awalterschulze/katydid/serialize"
 	"reflect"
 )
 
 type Bool interface {
-	Eval([]byte) (bool, error)
+	Eval(serialize.Decoder) (bool, error)
 }
 
-type Variable interface {
-	SetVariable([]byte)
+type Decoder interface {
+	SetDecoder(serialize.Decoder)
 }
 
 type composedBool struct {
-	Vars    []Variable
-	Catcher funcs.Catcher
-	Func    funcs.Bool
+	Decoders []Decoder
+	Catcher  funcs.Catcher
+	Func     funcs.Bool
 }
 
 type errInit struct {
@@ -46,6 +47,7 @@ func (this *errInit) Error() string {
 
 var (
 	varTyp        = reflect.TypeOf((*funcs.Variable)(nil)).Elem()
+	decoderTyp    = reflect.TypeOf((*funcs.Decoder)(nil)).Elem()
 	constTyp      = reflect.TypeOf((*funcs.Const)(nil)).Elem()
 	initTyp       = reflect.TypeOf((*funcs.Init)(nil)).Elem()
 	setCatcherTyp = reflect.TypeOf((*funcs.SetCatcher)(nil)).Elem()
@@ -81,18 +83,18 @@ func NewBool(expr *ast.Expr) (*composedBool, error) {
 			return nil, &errInit{i, err}
 		}
 	}
-	impls := FuncImplements(e, varTyp)
-	vars := make([]Variable, len(impls))
+	impls := FuncImplements(e, decoderTyp)
+	decs := make([]Decoder, len(impls))
 	for i := range impls {
-		vars[i] = impls[i].(Variable)
+		decs[i] = impls[i].(Decoder)
 	}
-	return &composedBool{vars, c, e}, nil
+	return &composedBool{decs, c, e}, nil
 }
 
-func (this *composedBool) Eval(buf []byte) (bool, error) {
+func (this *composedBool) Eval(dec serialize.Decoder) (bool, error) {
 	this.Catcher.Clear()
-	for _, v := range this.Vars {
-		v.SetVariable(buf)
+	for _, v := range this.Decoders {
+		v.SetDecoder(dec)
 	}
 	return this.Func.Eval(), this.Catcher.GetError()
 }
