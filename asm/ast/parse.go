@@ -18,9 +18,9 @@ import (
 	"code.google.com/p/gogoprotobuf/proto"
 	"errors"
 	"fmt"
-	"github.com/awalterschulze/katydid/asm/token"
-	"github.com/awalterschulze/katydid/asm/util"
-	"github.com/awalterschulze/katydid/types"
+	"github.com/katydid/katydid/asm/token"
+	"github.com/katydid/katydid/asm/util"
+	"github.com/katydid/katydid/types"
 	"strconv"
 	"strings"
 )

@@ -5,10 +5,10 @@ package conv
 
 import (
 	"fmt"
-	"github.com/awalterschulze/katydid/asm/ast"
-	"github.com/awalterschulze/katydid/asm/lexer"
-	"github.com/awalterschulze/katydid/asm/parser"
-	"github.com/awalterschulze/katydid/types"
+	"github.com/katydid/katydid/asm/ast"
+	"github.com/katydid/katydid/asm/lexer"
+	"github.com/katydid/katydid/asm/parser"
+	"github.com/katydid/katydid/types"
 	"strings"
 )
 

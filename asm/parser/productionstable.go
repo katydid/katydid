@@ -2,8 +2,8 @@ package parser
 
 import (
 	"code.google.com/p/gogoprotobuf/proto"
-	"github.com/awalterschulze/katydid/asm/ast"
-	"github.com/awalterschulze/katydid/types"
+	"github.com/katydid/katydid/asm/ast"
+	"github.com/katydid/katydid/types"
 )
 
 type (

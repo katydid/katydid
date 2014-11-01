@@ -16,7 +16,7 @@ package main_test
 
 import (
 	"code.google.com/p/gogoprotobuf/proto"
-	main "github.com/awalterschulze/katydid/asm/test"
+	main "github.com/katydid/katydid/asm/test"
 	"testing"
 )
 

@@ -4,9 +4,9 @@
 package compose
 
 import (
-	"github.com/awalterschulze/katydid/asm/ast"
-	"github.com/awalterschulze/katydid/funcs"
-	"github.com/awalterschulze/katydid/types"
+	"github.com/katydid/katydid/asm/ast"
+	"github.com/katydid/katydid/funcs"
+	"github.com/katydid/katydid/types"
 )
 
 func composeFloat64(expr *ast.Expr) (funcs.Float64, error) {

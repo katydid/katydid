@@ -16,9 +16,9 @@ package compose
 
 import (
 	"fmt"
-	"github.com/awalterschulze/katydid/asm/ast"
-	"github.com/awalterschulze/katydid/funcs"
-	"github.com/awalterschulze/katydid/serialize"
+	"github.com/katydid/katydid/asm/ast"
+	"github.com/katydid/katydid/funcs"
+	"github.com/katydid/katydid/serialize"
 	"reflect"
 )
 

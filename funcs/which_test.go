@@ -15,7 +15,7 @@
 package funcs
 
 import (
-	"github.com/awalterschulze/katydid/types"
+	"github.com/katydid/katydid/types"
 	"testing"
 )
 

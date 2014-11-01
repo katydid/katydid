@@ -15,7 +15,7 @@
 package main
 
 import (
-	"github.com/awalterschulze/katydid/gen"
+	"github.com/katydid/katydid/gen"
 )
 
 const compareStr = `
@@ -448,7 +448,7 @@ func main() {
 		&printer{"Bool", "bool"},
 		&printer{"String", "string"},
 		&printer{"Bytes", "[]byte"},
-	}, `"github.com/awalterschulze/katydid/serialize"`)
+	}, `"github.com/katydid/katydid/serialize"`)
 	gen(existsStr, "exists.gen.go", []interface{}{
 		&printer{"Float64", "float64"},
 		&printer{"Float32", "float32"},

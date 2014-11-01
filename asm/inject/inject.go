@@ -15,10 +15,10 @@
 package inject
 
 import (
-	"github.com/awalterschulze/katydid/asm/compose"
-	"github.com/awalterschulze/katydid/asm/exec"
-	"github.com/awalterschulze/katydid/asm/ifexpr"
-	"github.com/awalterschulze/katydid/asm/link"
+	"github.com/katydid/katydid/asm/compose"
+	"github.com/katydid/katydid/asm/exec"
+	"github.com/katydid/katydid/asm/ifexpr"
+	"github.com/katydid/katydid/asm/link"
 	"reflect"
 )
 

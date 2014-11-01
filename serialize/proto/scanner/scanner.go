@@ -18,7 +18,7 @@ import (
 	descriptor "code.google.com/p/gogoprotobuf/protoc-gen-gogo/descriptor"
 	"encoding/binary"
 	"fmt"
-	"github.com/awalterschulze/katydid/serialize"
+	"github.com/katydid/katydid/serialize"
 	"io"
 	"reflect"
 	"unsafe"

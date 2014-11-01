@@ -16,7 +16,7 @@ package parser
 
 import (
 	"fmt"
-	"github.com/awalterschulze/katydid/asm/ast"
+	"github.com/katydid/katydid/asm/ast"
 )
 
 type ErrWrongType struct {

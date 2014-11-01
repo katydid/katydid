@@ -21,9 +21,9 @@ import (
 	"testing"
 
 	"code.google.com/p/gogoprotobuf/proto"
-	"github.com/awalterschulze/katydid/asm/lexer"
-	"github.com/awalterschulze/katydid/asm/parser"
-	main "github.com/awalterschulze/katydid/asm/test"
+	"github.com/katydid/katydid/asm/lexer"
+	"github.com/katydid/katydid/asm/parser"
+	main "github.com/katydid/katydid/asm/test"
 
 	"fmt"
 	"path"

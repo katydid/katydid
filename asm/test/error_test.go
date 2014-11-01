@@ -17,11 +17,11 @@ package main_test
 import (
 	protoparser "code.google.com/p/gogoprotobuf/parser"
 	"code.google.com/p/gogoprotobuf/proto"
-	"github.com/awalterschulze/katydid/asm/compiler"
-	"github.com/awalterschulze/katydid/asm/lexer"
-	"github.com/awalterschulze/katydid/asm/parser"
-	"github.com/awalterschulze/katydid/serialize/proto/scanner"
-	"github.com/awalterschulze/katydid/serialize/proto/tokens"
+	"github.com/katydid/katydid/asm/compiler"
+	"github.com/katydid/katydid/asm/lexer"
+	"github.com/katydid/katydid/asm/parser"
+	"github.com/katydid/katydid/serialize/proto/scanner"
+	"github.com/katydid/katydid/serialize/proto/tokens"
 	"testing"
 )
 

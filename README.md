@@ -15,11 +15,11 @@ Currently they all need to have a protocol buffer specification.
 Tree Automata have been found to be very applicable to XML processing.
 Katydid tries to apply Tree Automata to different types of trees.
 
-[![Build Status](https://drone.io/github.com/awalterschulze/katydid/status.png)](https://drone.io/github.com/awalterschulze/katydid/latest)
+[![Build Status](https://drone.io/github.com/katydid/katydid/status.png)](https://drone.io/github.com/katydid/katydid/latest)
 
 Katydid is ready for use, but backwards compatibility is not yet guaranteed.
 
-Documentation is a work in progress http://awalterschulze.github.io/katydid
+Documentation is a work in progress http://katydid.github.io
 
 Ideals
 ------
@@ -33,5 +33,5 @@ Ideals
 Examples
 --------
 
-http://awalterschulze.github.io/katydid/examples/
+http://katydid.github.io/examples/
 

@@ -15,7 +15,7 @@
 package scanner
 
 import (
-	"github.com/awalterschulze/katydid/serialize"
+	"github.com/katydid/katydid/serialize"
 	"io"
 	"reflect"
 )

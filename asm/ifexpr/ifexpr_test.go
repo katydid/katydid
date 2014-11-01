@@ -17,8 +17,8 @@ package ifexpr
 import (
 	"code.google.com/p/gogoprotobuf/proto"
 	"fmt"
-	"github.com/awalterschulze/katydid/asm/ast"
-	"github.com/awalterschulze/katydid/funcs"
+	"github.com/katydid/katydid/asm/ast"
+	"github.com/katydid/katydid/funcs"
 	"testing"
 )
 

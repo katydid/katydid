@@ -3,9 +3,9 @@ package lexer
 import (
 
 	// "fmt"
-	// "github.com/awalterschulze/katydid/asm/util"
+	// "github.com/katydid/katydid/asm/util"
 
-	"github.com/awalterschulze/katydid/asm/token"
+	"github.com/katydid/katydid/asm/token"
 	"io/ioutil"
 	"unicode/utf8"
 )

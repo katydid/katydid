@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	parseError "github.com/awalterschulze/katydid/asm/errors"
-	"github.com/awalterschulze/katydid/asm/token"
+	parseError "github.com/katydid/katydid/asm/errors"
+	"github.com/katydid/katydid/asm/token"
 )
 
 const (

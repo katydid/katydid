@@ -15,7 +15,7 @@
 package main
 
 import (
-	"github.com/awalterschulze/katydid/gen"
+	"github.com/katydid/katydid/gen"
 	"strings"
 )
 

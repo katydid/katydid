@@ -15,7 +15,7 @@
 package ast
 
 import (
-	"github.com/awalterschulze/katydid/types"
+	"github.com/katydid/katydid/types"
 	"strings"
 )
 

@@ -15,7 +15,7 @@
 package funcs
 
 import (
-	"github.com/awalterschulze/katydid/serialize"
+	"github.com/katydid/katydid/serialize"
 )
 
 type Variable interface {

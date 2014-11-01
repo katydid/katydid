@@ -16,7 +16,7 @@ package tokens
 
 import (
 	descriptor "code.google.com/p/gogoprotobuf/protoc-gen-gogo/descriptor"
-	"github.com/awalterschulze/katydid/asm/maps"
+	"github.com/katydid/katydid/asm/maps"
 	"strings"
 )
 

@@ -16,8 +16,8 @@ package tokens
 
 import (
 	descriptor "code.google.com/p/gogoprotobuf/protoc-gen-gogo/descriptor"
-	"github.com/awalterschulze/katydid/asm/ast"
-	prototokens "github.com/awalterschulze/katydid/serialize/proto/tokens"
+	"github.com/katydid/katydid/asm/ast"
+	prototokens "github.com/katydid/katydid/serialize/proto/tokens"
 )
 
 type errUnknown struct {

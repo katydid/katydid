@@ -3,7 +3,7 @@ package errors
 import (
 	"bytes"
 	"fmt"
-	"github.com/awalterschulze/katydid/asm/token"
+	"github.com/katydid/katydid/asm/token"
 )
 
 type ErrorSymbol interface {

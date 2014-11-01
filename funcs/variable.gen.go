@@ -4,7 +4,7 @@
 package funcs
 
 import (
-	"github.com/awalterschulze/katydid/serialize"
+	"github.com/katydid/katydid/serialize"
 )
 
 type varFloat64 struct {

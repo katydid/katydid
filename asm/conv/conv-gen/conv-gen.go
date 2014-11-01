@@ -15,7 +15,7 @@
 package main
 
 import (
-	"github.com/awalterschulze/katydid/gen"
+	"github.com/katydid/katydid/gen"
 )
 
 const convStr = `
@@ -129,9 +129,9 @@ func main() {
 		&conver{"uint32", "uint32", "UINT32", "uint32(%d)", "0"},
 	},
 		`"fmt"`,
-		`"github.com/awalterschulze/katydid/asm/lexer"`,
-		`"github.com/awalterschulze/katydid/asm/parser"`,
-		`"github.com/awalterschulze/katydid/asm/ast"`,
-		`"github.com/awalterschulze/katydid/types"`,
+		`"github.com/katydid/katydid/asm/lexer"`,
+		`"github.com/katydid/katydid/asm/parser"`,
+		`"github.com/katydid/katydid/asm/ast"`,
+		`"github.com/katydid/katydid/types"`,
 		`"strings"`)
 }

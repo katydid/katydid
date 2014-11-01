@@ -15,7 +15,7 @@
 package main
 
 import (
-	"github.com/awalterschulze/katydid/gen"
+	"github.com/katydid/katydid/gen"
 )
 
 const composeStr = `
@@ -87,7 +87,7 @@ func main() {
 		&composer{"String", "SINGLE_STRING", "String", "Strings", "LIST_STRING"},
 		&composer{"Bytes", "SINGLE_BYTES", "Bytes", "ListOfBytes", "LIST_BYTES"},
 	},
-		`"github.com/awalterschulze/katydid/asm/ast"`,
-		`"github.com/awalterschulze/katydid/funcs"`,
-		`"github.com/awalterschulze/katydid/types"`)
+		`"github.com/katydid/katydid/asm/ast"`,
+		`"github.com/katydid/katydid/funcs"`,
+		`"github.com/katydid/katydid/types"`)
 }

@@ -16,7 +16,7 @@ package funcs
 
 import (
 	"fmt"
-	"github.com/awalterschulze/katydid/gen"
+	"github.com/katydid/katydid/gen"
 	"os"
 	"sort"
 	"strings"

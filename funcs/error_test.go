@@ -16,7 +16,7 @@ package funcs_test
 
 import (
 	"errors"
-	"github.com/awalterschulze/katydid/funcs"
+	"github.com/katydid/katydid/funcs"
 	"testing"
 )
 

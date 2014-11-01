@@ -15,11 +15,11 @@
 package compiler
 
 import (
-	"github.com/awalterschulze/katydid/asm/ast"
-	"github.com/awalterschulze/katydid/asm/exec"
-	"github.com/awalterschulze/katydid/asm/link"
-	"github.com/awalterschulze/katydid/asm/table"
-	"github.com/awalterschulze/katydid/funcs"
+	"github.com/katydid/katydid/asm/ast"
+	"github.com/katydid/katydid/asm/exec"
+	"github.com/katydid/katydid/asm/link"
+	"github.com/katydid/katydid/asm/table"
+	"github.com/katydid/katydid/funcs"
 )
 
 type Tokens interface {

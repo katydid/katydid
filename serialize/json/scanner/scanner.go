@@ -17,7 +17,7 @@ package scanner
 import (
 	"bytes"
 	"fmt"
-	"github.com/awalterschulze/katydid/serialize"
+	"github.com/katydid/katydid/serialize"
 	"io"
 	"strconv"
 )

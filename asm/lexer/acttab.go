@@ -2,7 +2,7 @@ package lexer
 
 import (
 	"fmt"
-	"github.com/awalterschulze/katydid/asm/token"
+	"github.com/katydid/katydid/asm/token"
 )
 
 type ActionTable [NumStates]ActionRow

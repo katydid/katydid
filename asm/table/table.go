@@ -16,8 +16,8 @@ package table
 
 import (
 	"fmt"
-	"github.com/awalterschulze/katydid/asm/ast"
-	"github.com/awalterschulze/katydid/asm/maps"
+	"github.com/katydid/katydid/asm/ast"
+	"github.com/katydid/katydid/asm/maps"
 	"strings"
 )
 

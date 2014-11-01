@@ -15,9 +15,9 @@
 package ifexpr
 
 import (
-	"github.com/awalterschulze/katydid/asm/ast"
-	"github.com/awalterschulze/katydid/asm/compose"
-	"github.com/awalterschulze/katydid/serialize"
+	"github.com/katydid/katydid/asm/ast"
+	"github.com/katydid/katydid/asm/compose"
+	"github.com/katydid/katydid/serialize"
 )
 
 type NameToState interface {

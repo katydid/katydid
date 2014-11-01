@@ -15,10 +15,10 @@
 package link
 
 import (
-	"github.com/awalterschulze/katydid/asm/ast"
-	"github.com/awalterschulze/katydid/asm/ifexpr"
-	"github.com/awalterschulze/katydid/asm/table"
-	"github.com/awalterschulze/katydid/serialize"
+	"github.com/katydid/katydid/asm/ast"
+	"github.com/katydid/katydid/asm/ifexpr"
+	"github.com/katydid/katydid/asm/table"
+	"github.com/katydid/katydid/serialize"
 )
 
 type Link interface {

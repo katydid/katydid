@@ -16,10 +16,10 @@ package compose
 
 import (
 	"code.google.com/p/gogoprotobuf/proto"
-	"github.com/awalterschulze/katydid/asm/ast"
-	"github.com/awalterschulze/katydid/funcs"
-	"github.com/awalterschulze/katydid/serialize"
-	"github.com/awalterschulze/katydid/types"
+	"github.com/katydid/katydid/asm/ast"
+	"github.com/katydid/katydid/funcs"
+	"github.com/katydid/katydid/serialize"
+	"github.com/katydid/katydid/types"
 	"strings"
 	"testing"
 )

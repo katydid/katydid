@@ -42,13 +42,13 @@ regenerate:
 	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../code.google.com/p/gogoprotobuf/protobuf treeregister.proto)
 	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../code.google.com/p/gogoprotobuf/protobuf typewriterprison.proto)
 	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../code.google.com/p/gogoprotobuf/protobuf puddingmilkshake.proto)
-	go install github.com/awalterschulze/katydid/funcs/funcs-gen
+	go install github.com/katydid/katydid/funcs/funcs-gen
 	funcs-gen ./funcs/
-	go install github.com/awalterschulze/katydid/asm/compose/compose-gen
+	go install github.com/katydid/katydid/asm/compose/compose-gen
 	compose-gen ./asm/compose/
-	go install github.com/awalterschulze/katydid/asm/conv/conv-gen
+	go install github.com/katydid/katydid/asm/conv/conv-gen
 	conv-gen ./asm/conv/
-	go install github.com/awalterschulze/katydid/serialize/serialize-gen
+	go install github.com/katydid/katydid/serialize/serialize-gen
 	serialize-gen ./serialize
 	(cd funcs && go test -test.run=GenFuncList 2>../list_of_functions.txt)
 	make gofmt

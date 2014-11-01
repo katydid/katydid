@@ -30,7 +30,7 @@ import proto "code.google.com/p/gogoprotobuf/proto"
 import math "math"
 
 // discarding unused import gogoproto "code.google.com/p/gogoprotobuf/gogoproto/gogo.pb"
-import types "github.com/awalterschulze/katydid/types"
+import types "github.com/katydid/katydid/types"
 
 import fmt "fmt"
 import strings "strings"
