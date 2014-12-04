@@ -17,9 +17,9 @@ package main_test
 import (
 	"testing"
 
-	protoparser "code.google.com/p/gogoprotobuf/parser"
-	"code.google.com/p/gogoprotobuf/proto"
 	"encoding/json"
+	protoparser "github.com/gogo/protobuf/parser"
+	"github.com/gogo/protobuf/proto"
 	"github.com/katydid/katydid/asm/compiler"
 	"github.com/katydid/katydid/asm/lexer"
 	"github.com/katydid/katydid/asm/parser"
@@ -32,7 +32,7 @@ import (
 )
 
 var (
-	gogoprotoImportPath = "../../../../../:../../../../../code.google.com/p/gogoprotobuf/protobuf"
+	gogoprotoImportPath = "../../../../../:../../../../../github.com/gogo/protobuf/protobuf"
 )
 
 func test(t *testing.T, protoFilename string, m proto.Message, katydidStr string, positive bool) {

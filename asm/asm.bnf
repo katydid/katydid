@@ -108,7 +108,7 @@ bytes_lit : _bytes '{' { _ws } [ _byte_elem { { _ws } ',' { _ws } _byte_elem } ]
 import (
 	"github.com/katydid/katydid/asm/ast"
 	"github.com/katydid/katydid/types"
-	"code.google.com/p/gogoprotobuf/proto"
+	"github.com/gogo/protobuf/proto"
 )
 >>
 

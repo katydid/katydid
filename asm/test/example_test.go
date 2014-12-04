@@ -20,7 +20,7 @@ import (
 	"os/exec"
 	"testing"
 
-	"code.google.com/p/gogoprotobuf/proto"
+	"github.com/gogo/protobuf/proto"
 	"github.com/katydid/katydid/asm/lexer"
 	"github.com/katydid/katydid/asm/parser"
 	main "github.com/katydid/katydid/asm/test"

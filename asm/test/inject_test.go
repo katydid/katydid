@@ -15,8 +15,8 @@
 package main_test
 
 import (
-	protoparser "code.google.com/p/gogoprotobuf/parser"
-	"code.google.com/p/gogoprotobuf/proto"
+	protoparser "github.com/gogo/protobuf/parser"
+	"github.com/gogo/protobuf/proto"
 	"github.com/katydid/katydid/asm/compiler"
 	"github.com/katydid/katydid/asm/inject"
 	"github.com/katydid/katydid/asm/lexer"

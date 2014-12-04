@@ -33,15 +33,15 @@ bench:
 	go test -v -test.run=XXX -test.bench=. ./...
 
 regenerate:
-	(cd types && protoc --gogo_out=. -I=.:../../../../:../../../../code.google.com/p/gogoprotobuf/protobuf types.proto)
+	(cd types && protoc --gogo_out=. -I=.:../../../../:../../../../github.com/gogo/protobuf/protobuf types.proto)
 	(cd asm && gocc asm.bnf)
-	(cd asm/ast && protoc --gogo_out=. -I=.:../../../../../:../../../../../code.google.com/p/gogoprotobuf/protobuf asm.proto)
-	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../code.google.com/p/gogoprotobuf/protobuf person.proto)
-	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../code.google.com/p/gogoprotobuf/protobuf srctree.proto)
-	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../code.google.com/p/gogoprotobuf/protobuf taxonomy.proto)
-	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../code.google.com/p/gogoprotobuf/protobuf treeregister.proto)
-	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../code.google.com/p/gogoprotobuf/protobuf typewriterprison.proto)
-	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../code.google.com/p/gogoprotobuf/protobuf puddingmilkshake.proto)
+	(cd asm/ast && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf asm.proto)
+	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf person.proto)
+	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf srctree.proto)
+	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf taxonomy.proto)
+	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf treeregister.proto)
+	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf typewriterprison.proto)
+	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf puddingmilkshake.proto)
 	go install github.com/katydid/katydid/funcs/funcs-gen
 	funcs-gen ./funcs/
 	go install github.com/katydid/katydid/asm/compose/compose-gen

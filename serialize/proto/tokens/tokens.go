@@ -15,8 +15,8 @@
 package tokens
 
 import (
-	descriptor "code.google.com/p/gogoprotobuf/protoc-gen-gogo/descriptor"
 	"fmt"
+	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 	"github.com/katydid/katydid/asm/ast"
 	"github.com/katydid/katydid/asm/maps"
 	"strings"

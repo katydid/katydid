@@ -15,9 +15,9 @@
 package ast
 
 import (
-	"code.google.com/p/gogoprotobuf/proto"
 	"errors"
 	"fmt"
+	"github.com/gogo/protobuf/proto"
 	"github.com/katydid/katydid/asm/token"
 	"github.com/katydid/katydid/asm/util"
 	"github.com/katydid/katydid/types"

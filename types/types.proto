@@ -14,7 +14,7 @@
 
 package types;
 
-import "code.google.com/p/gogoprotobuf/gogoproto/gogo.proto";
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
 //First numbers correspond with Protocol Buffer FieldDescriptorProto Type in descriptor.proto
 enum Type {

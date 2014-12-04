@@ -1,7 +1,7 @@
 package parser
 
 import (
-	"code.google.com/p/gogoprotobuf/proto"
+	"github.com/gogo/protobuf/proto"
 	"github.com/katydid/katydid/asm/ast"
 	"github.com/katydid/katydid/types"
 )

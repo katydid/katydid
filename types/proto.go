@@ -15,7 +15,7 @@
 package types
 
 import (
-	descriptor "code.google.com/p/gogoprotobuf/protoc-gen-gogo/descriptor"
+	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 )
 
 func ProtoToEncodedType(fieldType descriptor.FieldDescriptorProto_Type) Type {

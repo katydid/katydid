@@ -15,9 +15,9 @@
 package scanner
 
 import (
-	descriptor "code.google.com/p/gogoprotobuf/protoc-gen-gogo/descriptor"
 	"encoding/binary"
 	"fmt"
+	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 	"github.com/katydid/katydid/serialize"
 	"io"
 	"reflect"

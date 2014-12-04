@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"testing"
 
-	protoparser "code.google.com/p/gogoprotobuf/parser"
+	protoparser "github.com/gogo/protobuf/parser"
 )
 
 func TestTokensPerson(t *testing.T) {
