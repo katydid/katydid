@@ -85,3 +85,15 @@ nuke: clean
 
 gofmt:
 	gofmt -l -s -w .
+
+drone:
+	sudo apt-get install protobuf-compiler
+	sudo apt-get install graphviz
+	mkdir -p $(GOPATH)/src/github.com/gogo
+	mkdir -p $(GOPATH)/src/code.google.com/p
+	(cd $(GOPATH)/src/code.google.com/p && git clone https://code.google.com/p/gocc )
+	(cd $(GOPATH)/src/code.google.com/p/gocc && git checkout gocc2 && go install ./... )
+	(cd $(GOPATH)/src/github.com/gogo && git clone https://github.com/gogo/protobuf )
+	(cd $(GOPATH)/src/github.com/gogo/protobuf && make )
+	go get -v code.google.com/p/go.text/unicode/norm
+	(cd $(GOPATH)/src/github.com/katydid/katydid/ && make)
