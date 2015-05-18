@@ -690,11 +690,7 @@ type randyTypewriterprison interface {
 }
 
 func randUTF8RuneTypewriterprison(r randyTypewriterprison) rune {
-	res := rune(r.Uint32() % 1112064)
-	if 55296 <= res {
-		res += 2047
-	}
-	return res
+	return rune(r.Intn(126-43) + 43)
 }
 func randStringTypewriterprison(r randyTypewriterprison) string {
 	v25 := r.Intn(100)

@@ -74,6 +74,9 @@ func main() {
 		if strings.HasPrefix(strings.ToLower(base), "readme") {
 			return nil
 		}
+		if strings.HasPrefix(base, ".DS_Store") {
+			return nil
+		}
 		data, err := ioutil.ReadFile(path)
 		if err != nil {
 			return err

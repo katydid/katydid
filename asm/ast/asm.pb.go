@@ -675,98 +675,178 @@ func (this *Rules) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.Rules{` + `Rules:` + fmt.Sprintf("%#v", this.Rules), `Final:` + fmt.Sprintf("%#v", this.Final), `XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	s := strings.Join([]string{`&ast.Rules{` +
+		`Rules:` + fmt.Sprintf("%#v", this.Rules),
+		`Final:` + fmt.Sprintf("%#v", this.Final),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }
 func (this *Rule) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.Rule{` + `Root:` + fmt.Sprintf("%#v", this.Root), `Init:` + fmt.Sprintf("%#v", this.Init), `Transition:` + fmt.Sprintf("%#v", this.Transition), `IfExpr:` + fmt.Sprintf("%#v", this.IfExpr), `XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	s := strings.Join([]string{`&ast.Rule{` +
+		`Root:` + fmt.Sprintf("%#v", this.Root),
+		`Init:` + fmt.Sprintf("%#v", this.Init),
+		`Transition:` + fmt.Sprintf("%#v", this.Transition),
+		`IfExpr:` + fmt.Sprintf("%#v", this.IfExpr),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }
 func (this *Root) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.Root{` + `Before:` + fmt.Sprintf("%#v", this.Before), `Equal:` + fmt.Sprintf("%#v", this.Equal), `BeforeQualId:` + fmt.Sprintf("%#v", this.BeforeQualId), `Package:` + fmt.Sprintf("%#v", this.Package), `Message:` + fmt.Sprintf("%#v", this.Message), `State:` + fmt.Sprintf("%#v", this.State), `XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	s := strings.Join([]string{`&ast.Root{` +
+		`Before:` + fmt.Sprintf("%#v", this.Before),
+		`Equal:` + fmt.Sprintf("%#v", this.Equal),
+		`BeforeQualId:` + fmt.Sprintf("%#v", this.BeforeQualId),
+		`Package:` + fmt.Sprintf("%#v", this.Package),
+		`Message:` + fmt.Sprintf("%#v", this.Message),
+		`State:` + fmt.Sprintf("%#v", this.State),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }
 func (this *Init) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.Init{` + `Before:` + fmt.Sprintf("%#v", this.Before), `Package:` + fmt.Sprintf("%#v", this.Package), `Message:` + fmt.Sprintf("%#v", this.Message), `Equal:` + fmt.Sprintf("%#v", this.Equal), `BeforeState:` + fmt.Sprintf("%#v", this.BeforeState), `State:` + fmt.Sprintf("%#v", this.State), `XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	s := strings.Join([]string{`&ast.Init{` +
+		`Before:` + fmt.Sprintf("%#v", this.Before),
+		`Package:` + fmt.Sprintf("%#v", this.Package),
+		`Message:` + fmt.Sprintf("%#v", this.Message),
+		`Equal:` + fmt.Sprintf("%#v", this.Equal),
+		`BeforeState:` + fmt.Sprintf("%#v", this.BeforeState),
+		`State:` + fmt.Sprintf("%#v", this.State),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }
 func (this *Transition) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.Transition{` + `Before:` + fmt.Sprintf("%#v", this.Before), `Src:` + fmt.Sprintf("%#v", this.Src), `BeforeInput:` + fmt.Sprintf("%#v", this.BeforeInput), `Input:` + fmt.Sprintf("%#v", this.Input), `Equal:` + fmt.Sprintf("%#v", this.Equal), `BeforeDst:` + fmt.Sprintf("%#v", this.BeforeDst), `Dst:` + fmt.Sprintf("%#v", this.Dst), `XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	s := strings.Join([]string{`&ast.Transition{` +
+		`Before:` + fmt.Sprintf("%#v", this.Before),
+		`Src:` + fmt.Sprintf("%#v", this.Src),
+		`BeforeInput:` + fmt.Sprintf("%#v", this.BeforeInput),
+		`Input:` + fmt.Sprintf("%#v", this.Input),
+		`Equal:` + fmt.Sprintf("%#v", this.Equal),
+		`BeforeDst:` + fmt.Sprintf("%#v", this.BeforeDst),
+		`Dst:` + fmt.Sprintf("%#v", this.Dst),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }
 func (this *IfExpr) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.IfExpr{` + `Before:` + fmt.Sprintf("%#v", this.Before), `Condition:` + fmt.Sprintf("%#v", this.Condition), `ThenWord:` + fmt.Sprintf("%#v", this.ThenWord), `ThenClause:` + fmt.Sprintf("%#v", this.ThenClause), `ElseWord:` + fmt.Sprintf("%#v", this.ElseWord), `ElseClause:` + fmt.Sprintf("%#v", this.ElseClause), `XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	s := strings.Join([]string{`&ast.IfExpr{` +
+		`Before:` + fmt.Sprintf("%#v", this.Before),
+		`Condition:` + fmt.Sprintf("%#v", this.Condition),
+		`ThenWord:` + fmt.Sprintf("%#v", this.ThenWord),
+		`ThenClause:` + fmt.Sprintf("%#v", this.ThenClause),
+		`ElseWord:` + fmt.Sprintf("%#v", this.ElseWord),
+		`ElseClause:` + fmt.Sprintf("%#v", this.ElseClause),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }
 func (this *StateExpr) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.StateExpr{` + `Before:` + fmt.Sprintf("%#v", this.Before), `State:` + valueToGoStringAsm(this.State, "string"), `IfExpr:` + fmt.Sprintf("%#v", this.IfExpr), `CloseCurly:` + fmt.Sprintf("%#v", this.CloseCurly), `XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	s := strings.Join([]string{`&ast.StateExpr{` +
+		`Before:` + fmt.Sprintf("%#v", this.Before),
+		`State:` + valueToGoStringAsm(this.State, "string"),
+		`IfExpr:` + fmt.Sprintf("%#v", this.IfExpr),
+		`CloseCurly:` + fmt.Sprintf("%#v", this.CloseCurly),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }
 func (this *Expr) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.Expr{` + `Comma:` + fmt.Sprintf("%#v", this.Comma), `Terminal:` + fmt.Sprintf("%#v", this.Terminal), `List:` + fmt.Sprintf("%#v", this.List), `Function:` + fmt.Sprintf("%#v", this.Function), `XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	s := strings.Join([]string{`&ast.Expr{` +
+		`Comma:` + fmt.Sprintf("%#v", this.Comma),
+		`Terminal:` + fmt.Sprintf("%#v", this.Terminal),
+		`List:` + fmt.Sprintf("%#v", this.List),
+		`Function:` + fmt.Sprintf("%#v", this.Function),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }
 func (this *List) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.List{` + `Before:` + fmt.Sprintf("%#v", this.Before), `Type:` + fmt.Sprintf("%#v", this.Type), `OpenCurly:` + fmt.Sprintf("%#v", this.OpenCurly), `Elems:` + fmt.Sprintf("%#v", this.Elems), `CloseCurly:` + fmt.Sprintf("%#v", this.CloseCurly), `XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	s := strings.Join([]string{`&ast.List{` +
+		`Before:` + fmt.Sprintf("%#v", this.Before),
+		`Type:` + fmt.Sprintf("%#v", this.Type),
+		`OpenCurly:` + fmt.Sprintf("%#v", this.OpenCurly),
+		`Elems:` + fmt.Sprintf("%#v", this.Elems),
+		`CloseCurly:` + fmt.Sprintf("%#v", this.CloseCurly),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }
 func (this *Function) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.Function{` + `Before:` + fmt.Sprintf("%#v", this.Before), `Name:` + fmt.Sprintf("%#v", this.Name), `OpenParen:` + fmt.Sprintf("%#v", this.OpenParen), `Params:` + fmt.Sprintf("%#v", this.Params), `CloseParen:` + fmt.Sprintf("%#v", this.CloseParen), `XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	s := strings.Join([]string{`&ast.Function{` +
+		`Before:` + fmt.Sprintf("%#v", this.Before),
+		`Name:` + fmt.Sprintf("%#v", this.Name),
+		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
+		`Params:` + fmt.Sprintf("%#v", this.Params),
+		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }
 func (this *Terminal) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.Terminal{` + `Before:` + fmt.Sprintf("%#v", this.Before), `Literal:` + fmt.Sprintf("%#v", this.Literal), `DoubleValue:` + valueToGoStringAsm(this.DoubleValue, "float64"), `FloatValue:` + valueToGoStringAsm(this.FloatValue, "float32"), `Int64Value:` + valueToGoStringAsm(this.Int64Value, "int64"), `Uint64Value:` + valueToGoStringAsm(this.Uint64Value, "uint64"), `Int32Value:` + valueToGoStringAsm(this.Int32Value, "int32"), `BoolValue:` + valueToGoStringAsm(this.BoolValue, "bool"), `StringValue:` + valueToGoStringAsm(this.StringValue, "string"), `BytesValue:` + valueToGoStringAsm(this.BytesValue, "byte"), `Uint32Value:` + valueToGoStringAsm(this.Uint32Value, "uint32"), `Variable:` + fmt.Sprintf("%#v", this.Variable), `XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	s := strings.Join([]string{`&ast.Terminal{` +
+		`Before:` + fmt.Sprintf("%#v", this.Before),
+		`Literal:` + fmt.Sprintf("%#v", this.Literal),
+		`DoubleValue:` + valueToGoStringAsm(this.DoubleValue, "float64"),
+		`FloatValue:` + valueToGoStringAsm(this.FloatValue, "float32"),
+		`Int64Value:` + valueToGoStringAsm(this.Int64Value, "int64"),
+		`Uint64Value:` + valueToGoStringAsm(this.Uint64Value, "uint64"),
+		`Int32Value:` + valueToGoStringAsm(this.Int32Value, "int32"),
+		`BoolValue:` + valueToGoStringAsm(this.BoolValue, "bool"),
+		`StringValue:` + valueToGoStringAsm(this.StringValue, "string"),
+		`BytesValue:` + valueToGoStringAsm(this.BytesValue, "byte"),
+		`Uint32Value:` + valueToGoStringAsm(this.Uint32Value, "uint32"),
+		`Variable:` + fmt.Sprintf("%#v", this.Variable),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }
 func (this *Variable) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.Variable{` + `Name:` + fmt.Sprintf("%#v", this.Name), `Type:` + fmt.Sprintf("%#v", this.Type), `XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	s := strings.Join([]string{`&ast.Variable{` +
+		`Name:` + fmt.Sprintf("%#v", this.Name),
+		`Type:` + fmt.Sprintf("%#v", this.Type),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }
 func (this *Keyword) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.Keyword{` + `Before:` + fmt.Sprintf("%#v", this.Before), `Value:` + fmt.Sprintf("%#v", this.Value), `XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	s := strings.Join([]string{`&ast.Keyword{` +
+		`Before:` + fmt.Sprintf("%#v", this.Before),
+		`Value:` + fmt.Sprintf("%#v", this.Value),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }
 func (this *Space) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.Space{` + `Space:` + fmt.Sprintf("%#v", this.Space), `XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	s := strings.Join([]string{`&ast.Space{` +
+		`Space:` + fmt.Sprintf("%#v", this.Space),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }
 func valueToGoStringAsm(v interface{}, typ string) string {

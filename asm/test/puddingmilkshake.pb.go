@@ -1702,11 +1702,7 @@ type randyPuddingmilkshake interface {
 }
 
 func randUTF8RunePuddingmilkshake(r randyPuddingmilkshake) rune {
-	res := rune(r.Uint32() % 1112064)
-	if 55296 <= res {
-		res += 2047
-	}
-	return res
+	return rune(r.Intn(126-43) + 43)
 }
 func randStringPuddingmilkshake(r randyPuddingmilkshake) string {
 	v57 := r.Intn(100)

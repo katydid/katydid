@@ -1,5 +1,7 @@
 //Thank you to http://creativitygames.net/random-word-generator/randomwords/2 for helping me to anonymise this data.
 
+syntax = "proto2";
+
 package main;
 
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";

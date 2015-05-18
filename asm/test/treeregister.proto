@@ -1,5 +1,7 @@
 //Created using information from http://www.treeregister.org/measuringform.php
 
+syntax = "proto2";
+
 package main;
 
 message TreeRegister {

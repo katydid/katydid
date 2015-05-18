@@ -15,13 +15,13 @@
 package main_test
 
 import (
-	protoparser "github.com/gogo/protobuf/parser"
 	"github.com/gogo/protobuf/proto"
 	"github.com/katydid/katydid/asm/compiler"
 	katyexec "github.com/katydid/katydid/asm/exec"
 	"github.com/katydid/katydid/asm/lexer"
 	"github.com/katydid/katydid/asm/parser"
 	main "github.com/katydid/katydid/asm/test"
+	"github.com/katydid/katydid/protoparser"
 	"github.com/katydid/katydid/serialize/proto/scanner"
 	"github.com/katydid/katydid/serialize/proto/tokens"
 	"math/rand"

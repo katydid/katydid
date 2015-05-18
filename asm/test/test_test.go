@@ -18,11 +18,11 @@ import (
 	"testing"
 
 	"encoding/json"
-	protoparser "github.com/gogo/protobuf/parser"
 	"github.com/gogo/protobuf/proto"
 	"github.com/katydid/katydid/asm/compiler"
 	"github.com/katydid/katydid/asm/lexer"
 	"github.com/katydid/katydid/asm/parser"
+	"github.com/katydid/katydid/protoparser"
 	jsonscanner "github.com/katydid/katydid/serialize/json/scanner"
 	jsontokens "github.com/katydid/katydid/serialize/json/tokens"
 	"github.com/katydid/katydid/serialize/proto/scanner"
