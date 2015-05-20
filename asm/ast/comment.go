@@ -38,11 +38,14 @@ func (this *Rule) GetAttachedComment() Comment {
 	if this.Init != nil {
 		return this.Init.GetAttachedComment()
 	}
+	if this.Final != nil {
+		return this.Final.GetAttachedComment()
+	}
 	if this.Transition != nil {
 		return this.Transition.GetAttachedComment()
 	}
-	if this.IfExpr != nil {
-		return this.IfExpr.GetAttachedComment()
+	if this.FunctionDecl != nil {
+		return this.FunctionDecl.GetAttachedComment()
 	}
 	panic("unreachable")
 }
@@ -59,7 +62,11 @@ func (this *Transition) GetAttachedComment() Comment {
 	return this.Before.GetAttachedComment()
 }
 
-func (this *IfExpr) GetAttachedComment() Comment {
+func (this *FunctionDecl) GetAttachedComment() Comment {
+	return this.Before.GetAttachedComment()
+}
+
+func (this *Final) GetAttachedComment() Comment {
 	return this.Before.GetAttachedComment()
 }
 

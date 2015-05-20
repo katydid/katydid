@@ -75,11 +75,8 @@ func Strip(slit string, sub string) []byte {
 	return []byte(slit[1 : len(slit)-1])
 }
 
-func NewVariableTerminal(variable interface{}, typ types.Type) (*Terminal, error) {
-	varStr := string(variable.(*token.Token).Lit)
-	vars := strings.Split(varStr, "(")
-	name := vars[1][:len(vars[1])-1]
-	return &Terminal{Variable: &Variable{Name: name, Type: typ}, Literal: varStr}, nil
+func NewVariableTerminal(typ types.Type) (*Terminal, error) {
+	return &Terminal{Variable: &Variable{Type: typ}}, nil
 }
 
 func NewBoolTerminal(v interface{}) (*Terminal, error) {
@@ -282,10 +279,12 @@ func NewRule(r interface{}) (*Rules, error) {
 		return newRules(&Rule{Root: rule}), nil
 	case *Init:
 		return newRules(&Rule{Init: rule}), nil
+	case *Final:
+		return newRules(&Rule{Final: rule}), nil
 	case *Transition:
 		return newRules(&Rule{Transition: rule}), nil
-	case *IfExpr:
-		return newRules(&Rule{IfExpr: rule}), nil
+	case *FunctionDecl:
+		return newRules(&Rule{FunctionDecl: rule}), nil
 	}
 	panic("unreachable")
 }
@@ -297,34 +296,24 @@ func AppendRule(rs, r interface{}) (*Rules, error) {
 		if rules.HasRoot() {
 			return nil, errors.New("only one root is allowed")
 		}
-		root := &Rule{Root: rule}
-		for _, r := range rules.Rules {
-			if r.Init != nil {
-				if r.Init.Message == rule.Message &&
-					r.Init.Package == rule.Package {
-					root.Root.State = r.Init.State
-				}
-			}
-		}
-		rules.Rules = append(rules.Rules, root)
+		rules.Rules = append(rules.Rules, &Rule{Root: rule})
 		return rules, nil
 	case *Init:
-		if root := rules.GetRoot(); root != nil {
-			if rule.Package == root.Package &&
-				rule.Message == root.Message {
-				if root.State != "root" {
-					return nil, errors.New("root can only start in a single state")
-				}
-				root.State = rule.State
+		for _, r := range rules.Rules {
+			if r.Init != nil {
+				return nil, errors.New("only one init is allowed")
 			}
 		}
 		rules.Rules = append(rules.Rules, &Rule{Init: rule})
 		return rules, nil
+	case *Final:
+		rules.Rules = append(rules.Rules, &Rule{Final: rule})
+		return rules, nil
 	case *Transition:
 		rules.Rules = append(rules.Rules, &Rule{Transition: rule})
 		return rules, nil
-	case *IfExpr:
-		rules.Rules = append(rules.Rules, &Rule{IfExpr: rule})
+	case *FunctionDecl:
+		rules.Rules = append(rules.Rules, &Rule{FunctionDecl: rule})
 		return rules, nil
 	}
 	panic("unreachable")

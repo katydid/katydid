@@ -13,9 +13,10 @@ It has these top-level messages:
 	Rule
 	Root
 	Init
+	Final
 	Transition
-	IfExpr
-	StateExpr
+	Destination
+	FunctionDecl
 	Expr
 	List
 	Function
@@ -67,11 +68,12 @@ func (m *Rules) GetFinal() *Space {
 }
 
 type Rule struct {
-	Root             *Root       `protobuf:"bytes,1,opt" json:"Root,omitempty"`
-	Init             *Init       `protobuf:"bytes,2,opt" json:"Init,omitempty"`
-	Transition       *Transition `protobuf:"bytes,3,opt" json:"Transition,omitempty"`
-	IfExpr           *IfExpr     `protobuf:"bytes,4,opt" json:"IfExpr,omitempty"`
-	XXX_unrecognized []byte      `json:"-"`
+	Root             *Root         `protobuf:"bytes,1,opt" json:"Root,omitempty"`
+	Init             *Init         `protobuf:"bytes,2,opt" json:"Init,omitempty"`
+	Final            *Final        `protobuf:"bytes,3,opt" json:"Final,omitempty"`
+	Transition       *Transition   `protobuf:"bytes,4,opt" json:"Transition,omitempty"`
+	FunctionDecl     *FunctionDecl `protobuf:"bytes,5,opt" json:"FunctionDecl,omitempty"`
+	XXX_unrecognized []byte        `json:"-"`
 }
 
 func (m *Rule) Reset()      { *m = Rule{} }
@@ -91,6 +93,13 @@ func (m *Rule) GetInit() *Init {
 	return nil
 }
 
+func (m *Rule) GetFinal() *Final {
+	if m != nil {
+		return m.Final
+	}
+	return nil
+}
+
 func (m *Rule) GetTransition() *Transition {
 	if m != nil {
 		return m.Transition
@@ -98,9 +107,9 @@ func (m *Rule) GetTransition() *Transition {
 	return nil
 }
 
-func (m *Rule) GetIfExpr() *IfExpr {
+func (m *Rule) GetFunctionDecl() *FunctionDecl {
 	if m != nil {
-		return m.IfExpr
+		return m.FunctionDecl
 	}
 	return nil
 }
@@ -111,7 +120,6 @@ type Root struct {
 	BeforeQualId     *Space   `protobuf:"bytes,3,opt" json:"BeforeQualId,omitempty"`
 	Package          string   `protobuf:"bytes,4,opt" json:"Package"`
 	Message          string   `protobuf:"bytes,5,opt" json:"Message"`
-	State            string   `protobuf:"bytes,6,opt" json:"State"`
 	XXX_unrecognized []byte   `json:"-"`
 }
 
@@ -153,20 +161,11 @@ func (m *Root) GetMessage() string {
 	return ""
 }
 
-func (m *Root) GetState() string {
-	if m != nil {
-		return m.State
-	}
-	return ""
-}
-
 type Init struct {
 	Before           *Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Package          string   `protobuf:"bytes,2,opt" json:"Package"`
-	Message          string   `protobuf:"bytes,3,opt" json:"Message"`
-	Equal            *Keyword `protobuf:"bytes,4,opt" json:"Equal,omitempty"`
-	BeforeState      *Space   `protobuf:"bytes,5,opt" json:"BeforeState,omitempty"`
-	State            string   `protobuf:"bytes,6,opt" json:"State"`
+	Equal            *Keyword `protobuf:"bytes,2,opt" json:"Equal,omitempty"`
+	BeforeState      *Space   `protobuf:"bytes,3,opt" json:"BeforeState,omitempty"`
+	State            string   `protobuf:"bytes,4,opt" json:"State"`
 	XXX_unrecognized []byte   `json:"-"`
 }
 
@@ -178,20 +177,6 @@ func (m *Init) GetBefore() *Space {
 		return m.Before
 	}
 	return nil
-}
-
-func (m *Init) GetPackage() string {
-	if m != nil {
-		return m.Package
-	}
-	return ""
-}
-
-func (m *Init) GetMessage() string {
-	if m != nil {
-		return m.Message
-	}
-	return ""
 }
 
 func (m *Init) GetEqual() *Keyword {
@@ -215,15 +200,53 @@ func (m *Init) GetState() string {
 	return ""
 }
 
-type Transition struct {
+type Final struct {
 	Before           *Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Src              string   `protobuf:"bytes,2,opt" json:"Src"`
-	BeforeInput      *Space   `protobuf:"bytes,3,opt" json:"BeforeInput,omitempty"`
-	Input            string   `protobuf:"bytes,4,opt" json:"Input"`
-	Equal            *Keyword `protobuf:"bytes,5,opt" json:"Equal,omitempty"`
-	BeforeDst        *Space   `protobuf:"bytes,6,opt" json:"BeforeDst,omitempty"`
-	Dst              string   `protobuf:"bytes,7,opt" json:"Dst"`
+	Equal            *Keyword `protobuf:"bytes,2,opt" json:"Equal,omitempty"`
+	BeforeState      *Space   `protobuf:"bytes,3,opt" json:"BeforeState,omitempty"`
+	State            string   `protobuf:"bytes,4,opt" json:"State"`
 	XXX_unrecognized []byte   `json:"-"`
+}
+
+func (m *Final) Reset()      { *m = Final{} }
+func (*Final) ProtoMessage() {}
+
+func (m *Final) GetBefore() *Space {
+	if m != nil {
+		return m.Before
+	}
+	return nil
+}
+
+func (m *Final) GetEqual() *Keyword {
+	if m != nil {
+		return m.Equal
+	}
+	return nil
+}
+
+func (m *Final) GetBeforeState() *Space {
+	if m != nil {
+		return m.BeforeState
+	}
+	return nil
+}
+
+func (m *Final) GetState() string {
+	if m != nil {
+		return m.State
+	}
+	return ""
+}
+
+type Transition struct {
+	Before           *Space       `protobuf:"bytes,1,opt" json:"Before,omitempty"`
+	Src              string       `protobuf:"bytes,2,opt" json:"Src"`
+	BeforeInput      *Space       `protobuf:"bytes,3,opt" json:"BeforeInput,omitempty"`
+	Input            string       `protobuf:"bytes,4,opt" json:"Input"`
+	Equal            *Keyword     `protobuf:"bytes,5,opt" json:"Equal,omitempty"`
+	Dst              *Destination `protobuf:"bytes,6,opt" json:"Dst,omitempty"`
+	XXX_unrecognized []byte       `json:"-"`
 }
 
 func (m *Transition) Reset()      { *m = Transition{} }
@@ -264,110 +287,151 @@ func (m *Transition) GetEqual() *Keyword {
 	return nil
 }
 
-func (m *Transition) GetBeforeDst() *Space {
-	if m != nil {
-		return m.BeforeDst
-	}
-	return nil
-}
-
-func (m *Transition) GetDst() string {
+func (m *Transition) GetDst() *Destination {
 	if m != nil {
 		return m.Dst
 	}
-	return ""
-}
-
-type IfExpr struct {
-	Before           *Space     `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Condition        *Expr      `protobuf:"bytes,2,opt" json:"Condition,omitempty"`
-	ThenWord         *Keyword   `protobuf:"bytes,3,opt" json:"ThenWord,omitempty"`
-	ThenClause       *StateExpr `protobuf:"bytes,4,opt" json:"ThenClause,omitempty"`
-	ElseWord         *Keyword   `protobuf:"bytes,5,opt" json:"ElseWord,omitempty"`
-	ElseClause       *StateExpr `protobuf:"bytes,6,opt" json:"ElseClause,omitempty"`
-	XXX_unrecognized []byte     `json:"-"`
-}
-
-func (m *IfExpr) Reset()      { *m = IfExpr{} }
-func (*IfExpr) ProtoMessage() {}
-
-func (m *IfExpr) GetBefore() *Space {
-	if m != nil {
-		return m.Before
-	}
 	return nil
 }
 
-func (m *IfExpr) GetCondition() *Expr {
-	if m != nil {
-		return m.Condition
-	}
-	return nil
-}
-
-func (m *IfExpr) GetThenWord() *Keyword {
-	if m != nil {
-		return m.ThenWord
-	}
-	return nil
-}
-
-func (m *IfExpr) GetThenClause() *StateExpr {
-	if m != nil {
-		return m.ThenClause
-	}
-	return nil
-}
-
-func (m *IfExpr) GetElseWord() *Keyword {
-	if m != nil {
-		return m.ElseWord
-	}
-	return nil
-}
-
-func (m *IfExpr) GetElseClause() *StateExpr {
-	if m != nil {
-		return m.ElseClause
-	}
-	return nil
-}
-
-type StateExpr struct {
-	Before           *Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	State            *string  `protobuf:"bytes,2,opt" json:"State,omitempty"`
-	IfExpr           *IfExpr  `protobuf:"bytes,3,opt" json:"IfExpr,omitempty"`
-	CloseCurly       *Keyword `protobuf:"bytes,4,opt" json:"CloseCurly,omitempty"`
+type Destination struct {
+	OpenParen        *Keyword `protobuf:"bytes,1,opt" json:"OpenParen,omitempty"`
+	BeforeChild      *Space   `protobuf:"bytes,2,opt" json:"BeforeChild,omitempty"`
+	Child            string   `protobuf:"bytes,3,opt" json:"Child"`
+	CommaOne         *Keyword `protobuf:"bytes,4,opt" json:"CommaOne,omitempty"`
+	BeforeSuccess    *Space   `protobuf:"bytes,5,opt" json:"BeforeSuccess,omitempty"`
+	Success          string   `protobuf:"bytes,6,opt" json:"Success"`
+	CommaTwo         *Keyword `protobuf:"bytes,7,opt" json:"CommaTwo,omitempty"`
+	BeforeFailure    *Space   `protobuf:"bytes,8,opt" json:"BeforeFailure,omitempty"`
+	Failure          string   `protobuf:"bytes,9,opt" json:"Failure"`
+	CloseParen       *Keyword `protobuf:"bytes,10,opt" json:"CloseParen,omitempty"`
 	XXX_unrecognized []byte   `json:"-"`
 }
 
-func (m *StateExpr) Reset()      { *m = StateExpr{} }
-func (*StateExpr) ProtoMessage() {}
+func (m *Destination) Reset()      { *m = Destination{} }
+func (*Destination) ProtoMessage() {}
 
-func (m *StateExpr) GetBefore() *Space {
+func (m *Destination) GetOpenParen() *Keyword {
+	if m != nil {
+		return m.OpenParen
+	}
+	return nil
+}
+
+func (m *Destination) GetBeforeChild() *Space {
+	if m != nil {
+		return m.BeforeChild
+	}
+	return nil
+}
+
+func (m *Destination) GetChild() string {
+	if m != nil {
+		return m.Child
+	}
+	return ""
+}
+
+func (m *Destination) GetCommaOne() *Keyword {
+	if m != nil {
+		return m.CommaOne
+	}
+	return nil
+}
+
+func (m *Destination) GetBeforeSuccess() *Space {
+	if m != nil {
+		return m.BeforeSuccess
+	}
+	return nil
+}
+
+func (m *Destination) GetSuccess() string {
+	if m != nil {
+		return m.Success
+	}
+	return ""
+}
+
+func (m *Destination) GetCommaTwo() *Keyword {
+	if m != nil {
+		return m.CommaTwo
+	}
+	return nil
+}
+
+func (m *Destination) GetBeforeFailure() *Space {
+	if m != nil {
+		return m.BeforeFailure
+	}
+	return nil
+}
+
+func (m *Destination) GetFailure() string {
+	if m != nil {
+		return m.Failure
+	}
+	return ""
+}
+
+func (m *Destination) GetCloseParen() *Keyword {
+	if m != nil {
+		return m.CloseParen
+	}
+	return nil
+}
+
+type FunctionDecl struct {
+	Before           *Space    `protobuf:"bytes,1,opt" json:"Before,omitempty"`
+	BeforeName       *Space    `protobuf:"bytes,2,opt" json:"BeforeName,omitempty"`
+	Name             string    `protobuf:"bytes,3,opt" json:"Name"`
+	Equal            *Keyword  `protobuf:"bytes,4,opt" json:"Equal,omitempty"`
+	BeforeFunc       *Space    `protobuf:"bytes,5,opt" json:"BeforeFunc,omitempty"`
+	Function         *Function `protobuf:"bytes,6,opt" json:"Function,omitempty"`
+	XXX_unrecognized []byte    `json:"-"`
+}
+
+func (m *FunctionDecl) Reset()      { *m = FunctionDecl{} }
+func (*FunctionDecl) ProtoMessage() {}
+
+func (m *FunctionDecl) GetBefore() *Space {
 	if m != nil {
 		return m.Before
 	}
 	return nil
 }
 
-func (m *StateExpr) GetState() string {
-	if m != nil && m.State != nil {
-		return *m.State
-	}
-	return ""
-}
-
-func (m *StateExpr) GetIfExpr() *IfExpr {
+func (m *FunctionDecl) GetBeforeName() *Space {
 	if m != nil {
-		return m.IfExpr
+		return m.BeforeName
 	}
 	return nil
 }
 
-func (m *StateExpr) GetCloseCurly() *Keyword {
+func (m *FunctionDecl) GetName() string {
 	if m != nil {
-		return m.CloseCurly
+		return m.Name
+	}
+	return ""
+}
+
+func (m *FunctionDecl) GetEqual() *Keyword {
+	if m != nil {
+		return m.Equal
+	}
+	return nil
+}
+
+func (m *FunctionDecl) GetBeforeFunc() *Space {
+	if m != nil {
+		return m.BeforeFunc
+	}
+	return nil
+}
+
+func (m *FunctionDecl) GetFunction() *Function {
+	if m != nil {
+		return m.Function
 	}
 	return nil
 }
@@ -609,20 +673,12 @@ func (m *Terminal) GetVariable() *Variable {
 }
 
 type Variable struct {
-	Name             string     `protobuf:"bytes,1,opt" json:"Name"`
 	Type             types.Type `protobuf:"varint,2,opt,enum=types.Type" json:"Type"`
 	XXX_unrecognized []byte     `json:"-"`
 }
 
 func (m *Variable) Reset()      { *m = Variable{} }
 func (*Variable) ProtoMessage() {}
-
-func (m *Variable) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
 
 func (m *Variable) GetType() types.Type {
 	if m != nil {
@@ -688,8 +744,9 @@ func (this *Rule) GoString() string {
 	s := strings.Join([]string{`&ast.Rule{` +
 		`Root:` + fmt.Sprintf("%#v", this.Root),
 		`Init:` + fmt.Sprintf("%#v", this.Init),
+		`Final:` + fmt.Sprintf("%#v", this.Final),
 		`Transition:` + fmt.Sprintf("%#v", this.Transition),
-		`IfExpr:` + fmt.Sprintf("%#v", this.IfExpr),
+		`FunctionDecl:` + fmt.Sprintf("%#v", this.FunctionDecl),
 		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }
@@ -703,7 +760,6 @@ func (this *Root) GoString() string {
 		`BeforeQualId:` + fmt.Sprintf("%#v", this.BeforeQualId),
 		`Package:` + fmt.Sprintf("%#v", this.Package),
 		`Message:` + fmt.Sprintf("%#v", this.Message),
-		`State:` + fmt.Sprintf("%#v", this.State),
 		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }
@@ -713,8 +769,18 @@ func (this *Init) GoString() string {
 	}
 	s := strings.Join([]string{`&ast.Init{` +
 		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Package:` + fmt.Sprintf("%#v", this.Package),
-		`Message:` + fmt.Sprintf("%#v", this.Message),
+		`Equal:` + fmt.Sprintf("%#v", this.Equal),
+		`BeforeState:` + fmt.Sprintf("%#v", this.BeforeState),
+		`State:` + fmt.Sprintf("%#v", this.State),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *Final) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&ast.Final{` +
+		`Before:` + fmt.Sprintf("%#v", this.Before),
 		`Equal:` + fmt.Sprintf("%#v", this.Equal),
 		`BeforeState:` + fmt.Sprintf("%#v", this.BeforeState),
 		`State:` + fmt.Sprintf("%#v", this.State),
@@ -731,34 +797,39 @@ func (this *Transition) GoString() string {
 		`BeforeInput:` + fmt.Sprintf("%#v", this.BeforeInput),
 		`Input:` + fmt.Sprintf("%#v", this.Input),
 		`Equal:` + fmt.Sprintf("%#v", this.Equal),
-		`BeforeDst:` + fmt.Sprintf("%#v", this.BeforeDst),
 		`Dst:` + fmt.Sprintf("%#v", this.Dst),
 		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }
-func (this *IfExpr) GoString() string {
+func (this *Destination) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.IfExpr{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Condition:` + fmt.Sprintf("%#v", this.Condition),
-		`ThenWord:` + fmt.Sprintf("%#v", this.ThenWord),
-		`ThenClause:` + fmt.Sprintf("%#v", this.ThenClause),
-		`ElseWord:` + fmt.Sprintf("%#v", this.ElseWord),
-		`ElseClause:` + fmt.Sprintf("%#v", this.ElseClause),
+	s := strings.Join([]string{`&ast.Destination{` +
+		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
+		`BeforeChild:` + fmt.Sprintf("%#v", this.BeforeChild),
+		`Child:` + fmt.Sprintf("%#v", this.Child),
+		`CommaOne:` + fmt.Sprintf("%#v", this.CommaOne),
+		`BeforeSuccess:` + fmt.Sprintf("%#v", this.BeforeSuccess),
+		`Success:` + fmt.Sprintf("%#v", this.Success),
+		`CommaTwo:` + fmt.Sprintf("%#v", this.CommaTwo),
+		`BeforeFailure:` + fmt.Sprintf("%#v", this.BeforeFailure),
+		`Failure:` + fmt.Sprintf("%#v", this.Failure),
+		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen),
 		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }
-func (this *StateExpr) GoString() string {
+func (this *FunctionDecl) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.StateExpr{` +
+	s := strings.Join([]string{`&ast.FunctionDecl{` +
 		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`State:` + valueToGoStringAsm(this.State, "string"),
-		`IfExpr:` + fmt.Sprintf("%#v", this.IfExpr),
-		`CloseCurly:` + fmt.Sprintf("%#v", this.CloseCurly),
+		`BeforeName:` + fmt.Sprintf("%#v", this.BeforeName),
+		`Name:` + fmt.Sprintf("%#v", this.Name),
+		`Equal:` + fmt.Sprintf("%#v", this.Equal),
+		`BeforeFunc:` + fmt.Sprintf("%#v", this.BeforeFunc),
+		`Function:` + fmt.Sprintf("%#v", this.Function),
 		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }
@@ -825,7 +896,6 @@ func (this *Variable) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&ast.Variable{` +
-		`Name:` + fmt.Sprintf("%#v", this.Name),
 		`Type:` + fmt.Sprintf("%#v", this.Type),
 		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s

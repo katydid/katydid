@@ -72,15 +72,15 @@ _bool : 'b' 'o' 'o' 'l' ;
 
 _qualid : _id { '.' _id } ;
 
-double_var : '$' _double '(' _qualid ')' ;
-float_var : '$' _float '(' _qualid ')' ;
-int64_var : '$' _int64 '(' _qualid ')' ;
-uint64_var : '$' _uint64 '(' _qualid ')' ;
-int32_var : '$' _int32 '(' _qualid ')' ;
-uint32_var : '$' _uint32 '(' _qualid ')' ;
-bytes_var : '$' _bytes '(' _qualid ')' ;
-string_var : '$' _string '(' _qualid ')' ;
-bool_var : '$' _bool '(' _qualid ')' ;
+double_var : '$' _double ;
+float_var : '$' _float ;
+int64_var : '$' _int64 ;
+uint64_var : '$' _uint64 ;
+int32_var : '$' _int32 ;
+uint32_var : '$' _uint32 ;
+bytes_var : '$' _bytes ;
+string_var : '$' _string ;
+bool_var : '$' _bool ;
 
 _big_u_value      : '\\' 'U' _hex_digit _hex_digit _hex_digit _hex_digit
                             _hex_digit _hex_digit _hex_digit _hex_digit ;
@@ -126,62 +126,229 @@ Rules
 Rule
 	: Root
 	| Init
+	| Final
 	| Transition
-	| IfExpr
+	| FunctionDecl
 	;
 
 Root
-	: Space "root" Equal Space id "." id << &ast.Root{Before: $0.(*ast.Space), Equal: $2.(*ast.Keyword), BeforeQualId: $3.(*ast.Space), Package: ast.NewString($4), Message: ast.NewString($6), State: "root"}, nil >>
-	| "root" Equal Space id "." id << &ast.Root{Equal: $1.(*ast.Keyword), BeforeQualId: $2.(*ast.Space), Package: ast.NewString($3), Message: ast.NewString($5), State: "root"}, nil >>
-	| Space "root" Equal id "." id << &ast.Root{Before: $0.(*ast.Space), Equal: $2.(*ast.Keyword), Package: ast.NewString($3), Message: ast.NewString($5), State: "root"}, nil >>
-	| "root" Equal id "." id << &ast.Root{Equal: $1.(*ast.Keyword), Package: ast.NewString($2), Message: ast.NewString($4), State: "root"}, nil >>
+	: Space "root" Equal Space id "." id << &ast.Root{Before: $0.(*ast.Space), Equal: $2.(*ast.Keyword), BeforeQualId: $3.(*ast.Space), Package: ast.NewString($4), Message: ast.NewString($6)}, nil >>
+	| "root" Equal Space id "." id << &ast.Root{Equal: $1.(*ast.Keyword), BeforeQualId: $2.(*ast.Space), Package: ast.NewString($3), Message: ast.NewString($5)}, nil >>
+	| Space "root" Equal id "." id << &ast.Root{Before: $0.(*ast.Space), Equal: $2.(*ast.Keyword), Package: ast.NewString($3), Message: ast.NewString($5)}, nil >>
+	| "root" Equal id "." id << &ast.Root{Equal: $1.(*ast.Keyword), Package: ast.NewString($2), Message: ast.NewString($4)}, nil >>
 	;
 
-Init
-	: Space id "." id Equal Space id << &ast.Init{
-		Before: $0.(*ast.Space),
-		Package: ast.NewString($1),
-		Message: ast.NewString($3),
-		Equal: $4.(*ast.Keyword),
-		BeforeState: $5.(*ast.Space),
-		State: ast.NewString($6)}, nil >>
-	| id "." id Equal Space id << &ast.Init{
-		Package: ast.NewString($0),
-		Message: ast.NewString($2),
-		Equal: $3.(*ast.Keyword),
-		BeforeState: $4.(*ast.Space),
-		State: ast.NewString($5)}, nil >>
-	| Space id "." id Equal id << &ast.Init{
-		Before: $0.(*ast.Space),
-		Package: ast.NewString($1),
-		Message: ast.NewString($3),
-		Equal: $4.(*ast.Keyword),
-		State: ast.NewString($5)}, nil >>
-	| id "." id Equal id << &ast.Init{
-		Package: ast.NewString($0),
-		Message: ast.NewString($2),
-		Equal: $3.(*ast.Keyword),
-		State: ast.NewString($4)}, nil >>
+Init : Space "init" Equal Space id << &ast.Init{
+		Before: $0.(*ast.Space), 
+		Equal: $2.(*ast.Keyword),
+		BeforeState: $3.(*ast.Space),
+		State: ast.NewString($4),
+	  }, nil >>
+	 | "init" Equal Space id << &ast.Init{
+		Equal: $1.(*ast.Keyword),
+		BeforeState: $2.(*ast.Space),
+		State: ast.NewString($3),
+	  }, nil >>
+	 | Space "init" Equal id << &ast.Init{
+		Before: $0.(*ast.Space), 
+		Equal: $2.(*ast.Keyword),
+		State: ast.NewString($3),
+	  }, nil >>
+	 | "init" Equal id << &ast.Init{
+		Equal: $1.(*ast.Keyword),
+		State: ast.NewString($2),
+	  }, nil >>
+	 ;
+
+Final : Space "final" Equal Space id << &ast.Final{
+		Before: $0.(*ast.Space), 
+		Equal: $2.(*ast.Keyword),
+		BeforeState: $3.(*ast.Space),
+		State: ast.NewString($4),
+	  }, nil >>
+	| "final" Equal Space id << &ast.Final{
+		Equal: $1.(*ast.Keyword),
+		BeforeState: $2.(*ast.Space),
+		State: ast.NewString($3),
+	  }, nil >>
+	| Space "final" Equal id << &ast.Final{
+		Before: $0.(*ast.Space), 
+		Equal: $2.(*ast.Keyword),
+		State: ast.NewString($3),
+	  }, nil >>
+	| "final" Equal id << &ast.Final{
+		Equal: $1.(*ast.Keyword),
+		State: ast.NewString($2),
+	  }, nil >>
 	;
 
 Transition
-	: Space id Space id Equal Space id << &ast.Transition{Before: $0.(*ast.Space), Src: ast.NewString($1), BeforeInput: $2.(*ast.Space), Input: ast.NewString($3), Equal: $4.(*ast.Keyword), BeforeDst: $5.(*ast.Space), Dst: ast.NewString($6)}, nil >>
-	| id Space id Equal Space id << &ast.Transition{Src: ast.NewString($1), BeforeInput: $2.(*ast.Space), Input: ast.NewString($3), Equal: $4.(*ast.Keyword), BeforeDst: $5.(*ast.Space), Dst: ast.NewString($6)}, nil >>
-	| Space id Space id Equal id << &ast.Transition{Before: $0.(*ast.Space), Src: ast.NewString($1), BeforeInput: $2.(*ast.Space), Input: ast.NewString($3), Equal: $4.(*ast.Keyword), Dst: ast.NewString($6)}, nil >>
-	| id Space id Equal id << &ast.Transition{Src: ast.NewString($1), BeforeInput: $2.(*ast.Space), Input: ast.NewString($3), Equal: $4.(*ast.Keyword), Dst: ast.NewString($6)}, nil >>
+	: Space id Space id Equal Destination
+	<< &ast.Transition{
+		Before: $0.(*ast.Space),
+		Src: ast.NewString($1),
+		BeforeInput: $2.(*ast.Space),
+		Input: ast.NewString($3),
+		Equal: $4.(*ast.Keyword),
+		Dst: $5.(*ast.Destination),
+	}, nil >>
+	| id Space id Equal Destination
+	<< &ast.Transition{
+		Src: ast.NewString($0),
+		BeforeInput: $1.(*ast.Space),
+		Input: ast.NewString($2),
+		Equal: $3.(*ast.Keyword),
+		Dst: $4.(*ast.Destination),
+	}, nil >>
+	| Space id id Equal Destination
+	<< &ast.Transition{
+		Before: $0.(*ast.Space),
+		Src: ast.NewString($1),
+		Input: ast.NewString($2),
+		Equal: $3.(*ast.Keyword),
+		Dst: $4.(*ast.Destination),
+	}, nil >>
+	| id id Equal Destination
+	<< &ast.Transition{
+		Src: ast.NewString($0),
+		Input: ast.NewString($1),
+		Equal: $2.(*ast.Keyword),
+		Dst: $3.(*ast.Destination),
+	}, nil >>
 	;
 
-IfExpr
-	: Space "if" Expr Then StateExpr Else StateExpr << &ast.IfExpr{Before: $0.(*ast.Space), Condition: $2.(*ast.Expr), ThenWord: $3.(*ast.Keyword), ThenClause: $4.(*ast.StateExpr), ElseWord: $5.(*ast.Keyword), ElseClause: $6.(*ast.StateExpr)}, nil >>
-	| "if" Expr Then StateExpr Else StateExpr << &ast.IfExpr{Condition: $2.(*ast.Expr), ThenWord: $3.(*ast.Keyword), ThenClause: $4.(*ast.StateExpr), ElseWord: $5.(*ast.Keyword), ElseClause: $6.(*ast.StateExpr)}, nil >>
+Destination
+	: OpenParen Space id Comma Space id Comma Space id CloseParen
+	<< &ast.Destination{
+		OpenParen: $0.(*ast.Keyword),
+		BeforeChild: $1.(*ast.Space),
+		Child: ast.NewString($2),
+		CommaOne: $3.(*ast.Keyword),
+		BeforeSuccess: $4.(*ast.Space),
+		Success: ast.NewString($5),
+		CommaTwo: $6.(*ast.Keyword),
+		BeforeFailure: $7.(*ast.Space),
+		Failure: ast.NewString($8),
+		CloseParen: $9.(*ast.Keyword),
+	}, nil >>
+	| OpenParen id Comma Space id Comma Space id CloseParen
+	<< &ast.Destination{
+		OpenParen: $0.(*ast.Keyword),
+		Child: ast.NewString($1),
+		CommaOne: $2.(*ast.Keyword),
+		BeforeSuccess: $3.(*ast.Space),
+		Success: ast.NewString($4),
+		CommaTwo: $5.(*ast.Keyword),
+		BeforeFailure: $6.(*ast.Space),
+		Failure: ast.NewString($7),
+		CloseParen: $8.(*ast.Keyword),
+	}, nil >>
+	| OpenParen Space id Comma id Comma Space id CloseParen
+	<< &ast.Destination{
+		OpenParen: $0.(*ast.Keyword),
+		BeforeChild: $1.(*ast.Space),
+		Child: ast.NewString($2),
+		CommaOne: $3.(*ast.Keyword),
+		Success: ast.NewString($4),
+		CommaTwo: $5.(*ast.Keyword),
+		BeforeFailure: $6.(*ast.Space),
+		Failure: ast.NewString($7),
+		CloseParen: $8.(*ast.Keyword),
+	}, nil >>
+	| OpenParen Space id Comma Space id Comma id CloseParen
+	<< &ast.Destination{
+		OpenParen: $0.(*ast.Keyword),
+		BeforeChild: $1.(*ast.Space),
+		Child: ast.NewString($2),
+		CommaOne: $3.(*ast.Keyword),
+		BeforeSuccess: $4.(*ast.Space),
+		Success: ast.NewString($5),
+		CommaTwo: $6.(*ast.Keyword),
+		Failure: ast.NewString($7),
+		CloseParen: $8.(*ast.Keyword),
+	}, nil >>
+	| OpenParen id Comma id Comma Space id CloseParen
+	<< &ast.Destination{
+		OpenParen: $0.(*ast.Keyword),
+		Child: ast.NewString($1),
+		CommaOne: $2.(*ast.Keyword),
+		Success: ast.NewString($3),
+		CommaTwo: $4.(*ast.Keyword),
+		BeforeFailure: $5.(*ast.Space),
+		Failure: ast.NewString($6),
+		CloseParen: $7.(*ast.Keyword),
+	}, nil >>
+	| OpenParen id Comma Space id Comma id CloseParen
+	<< &ast.Destination{
+		OpenParen: $0.(*ast.Keyword),
+		Child: ast.NewString($1),
+		CommaOne: $2.(*ast.Keyword),
+		BeforeSuccess: $3.(*ast.Space),
+		Success: ast.NewString($4),
+		CommaTwo: $5.(*ast.Keyword),
+		Failure: ast.NewString($6),
+		CloseParen: $7.(*ast.Keyword),
+	}, nil >>
+	| OpenParen id Comma id Comma id CloseParen
+	<< &ast.Destination{
+		OpenParen: $0.(*ast.Keyword),
+		Child: ast.NewString($1),
+		CommaOne: $2.(*ast.Keyword),
+		Success: ast.NewString($3),
+		CommaTwo: $4.(*ast.Keyword),
+		Failure: ast.NewString($5),
+		CloseParen: $6.(*ast.Keyword),
+	}, nil >>
+	| OpenParen id Comma id Comma Space id CloseParen
+	<< &ast.Destination{
+		OpenParen: $0.(*ast.Keyword),
+		Child: ast.NewString($1),
+		CommaOne: $2.(*ast.Keyword),
+		Success: ast.NewString($3),
+		CommaTwo: $4.(*ast.Keyword),
+		BeforeFailure: $5.(*ast.Space),
+		Failure: ast.NewString($6),
+		CloseParen: $7.(*ast.Keyword),
+	}, nil >>
+	| OpenParen Space id Comma id Comma id CloseParen
+	<< &ast.Destination{
+		OpenParen: $0.(*ast.Keyword),
+		BeforeChild: $1.(*ast.Space),
+		Child: ast.NewString($2),
+		CommaOne: $3.(*ast.Keyword),
+		Success: ast.NewString($4),
+		CommaTwo: $5.(*ast.Keyword),
+		Failure: ast.NewString($6),
+		CloseParen: $7.(*ast.Keyword),
+	}, nil >>
 	;
 
-StateExpr
-	: Space "{" IfExpr CloseCurly << &ast.StateExpr{Before: $0.(*ast.Space), IfExpr: $2.(*ast.IfExpr), CloseCurly: $3.(*ast.Keyword)}, nil >>
-	| Space id << &ast.StateExpr{Before: $0.(*ast.Space), State: proto.String(ast.NewString($1))}, nil >>
-	| "{" IfExpr CloseCurly << &ast.StateExpr{IfExpr: $2.(*ast.IfExpr), CloseCurly: $3.(*ast.Keyword)}, nil >>
-	| id << &ast.StateExpr{State: proto.String(ast.NewString($1))}, nil >>
-	;
+FunctionDecl
+	: Space "func" Space id Equal Function << &ast.FunctionDecl{
+		Before: $0.(*ast.Space),
+		BeforeName: $2.(*ast.Space),
+		Name: ast.NewString($3),
+		Equal: $4.(*ast.Keyword),
+		Function: $5.(*ast.Function),
+	}, nil >>
+	| "func" Space id Equal Function << &ast.FunctionDecl{
+		BeforeName: $1.(*ast.Space),
+		Name: ast.NewString($2),
+		Equal: $3.(*ast.Keyword),
+		Function: $4.(*ast.Function),
+	}, nil >>
+	| Space "func" id Equal Function << &ast.FunctionDecl{
+		Before: $0.(*ast.Space),
+		Name: ast.NewString($2),
+		Equal: $3.(*ast.Keyword),
+		Function: $4.(*ast.Function),
+	}, nil >>
+	| "func" id Equal Function << &ast.FunctionDecl{
+		Name: ast.NewString($1),
+		Equal: $2.(*ast.Keyword),
+		Function: $3.(*ast.Function),
+	}, nil >>
+	;	
 
 Function
 	: Space id OpenParen Exprs CloseParen << &ast.Function{Before: $0.(*ast.Space), Name: ast.NewString($1), OpenParen: $2.(*ast.Keyword), Params: $3.([]*ast.Expr), CloseParen: $4.(*ast.Keyword)}, nil >>
@@ -235,15 +402,15 @@ Terminal
 	| float_lit << ast.NewFloatTerminal($0) >>
 	| string_lit << ast.NewStringTerminal($0) >>
 	| bytes_lit << ast.NewBytesTerminal($0) >>
-	| bool_var << ast.NewVariableTerminal($0, types.SINGLE_BOOL) >>
-	| int64_var << ast.NewVariableTerminal($0, types.SINGLE_INT64) >>
-	| int32_var << ast.NewVariableTerminal($0, types.SINGLE_INT32) >>
-	| uint64_var << ast.NewVariableTerminal($0, types.SINGLE_UINT64) >>
-	| uint32_var << ast.NewVariableTerminal($0, types.SINGLE_UINT32) >>
-	| double_var << ast.NewVariableTerminal($0, types.SINGLE_DOUBLE) >>
-	| float_var << ast.NewVariableTerminal($0, types.SINGLE_FLOAT) >>
-	| string_var << ast.NewVariableTerminal($0, types.SINGLE_STRING) >>
-	| bytes_var << ast.NewVariableTerminal($0, types.SINGLE_BYTES) >>
+	| bool_var << ast.NewVariableTerminal(types.SINGLE_BOOL) >>
+	| int64_var << ast.NewVariableTerminal(types.SINGLE_INT64) >>
+	| int32_var << ast.NewVariableTerminal(types.SINGLE_INT32) >>
+	| uint64_var << ast.NewVariableTerminal(types.SINGLE_UINT64) >>
+	| uint32_var << ast.NewVariableTerminal(types.SINGLE_UINT32) >>
+	| double_var << ast.NewVariableTerminal(types.SINGLE_DOUBLE) >>
+	| float_var << ast.NewVariableTerminal(types.SINGLE_FLOAT) >>
+	| string_var << ast.NewVariableTerminal(types.SINGLE_STRING) >>
+	| bytes_var << ast.NewVariableTerminal(types.SINGLE_BYTES) >>
 	;
 
 Bool
@@ -254,16 +421,6 @@ Bool
 Equal
 	: "="  << ast.NewKeyword(nil, $0), nil >>
 	| Space "=" << ast.NewKeyword($0, $1), nil >>
-	;
-
-Then
-	: "then" << ast.NewKeyword(nil, $0), nil >>
-	| Space "then" << ast.NewKeyword($0, $1), nil >>
-	;
-
-Else
-	: "else" << ast.NewKeyword(nil, $0), nil >>
-	| Space "else" << ast.NewKeyword($0, $1), nil >>
 	;
 
 OpenParen

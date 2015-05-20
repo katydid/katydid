@@ -18,17 +18,6 @@ import (
 	"errors"
 )
 
-func (this *IfExpr) GetTerminalVariable() (*Variable, error) {
-	v, err := this.GetCondition().GetTerminalVariable()
-	if err != nil {
-		return nil, err
-	}
-	if v == nil {
-		return nil, errors.New("No Terminal Variable")
-	}
-	return v, nil
-}
-
 func (this *Expr) GetTerminalVariable() (*Variable, error) {
 	if this.Terminal != nil {
 		return this.GetTerminal().GetVariable(), nil

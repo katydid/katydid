@@ -103,7 +103,7 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Rule : Transition	<<  >>`,
+		String: `Rule : Final	<<  >>`,
 		Id:         "Rule",
 		NTType:     3,
 		Index:      8,
@@ -113,7 +113,7 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Rule : IfExpr	<<  >>`,
+		String: `Rule : Transition	<<  >>`,
 		Id:         "Rule",
 		NTType:     3,
 		Index:      9,
@@ -123,230 +123,632 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Root : Space "root" Equal Space id "." id	<< &ast.Root{Before: X[0].(*ast.Space), Equal: X[2].(*ast.Keyword), BeforeQualId: X[3].(*ast.Space), Package: ast.NewString(X[4]), Message: ast.NewString(X[6]), State: "root"}, nil >>`,
-		Id:         "Root",
-		NTType:     4,
+		String: `Rule : FunctionDecl	<<  >>`,
+		Id:         "Rule",
+		NTType:     3,
 		Index:      10,
-		NumSymbols: 7,
+		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.Root{Before: X[0].(*ast.Space), Equal: X[2].(*ast.Keyword), BeforeQualId: X[3].(*ast.Space), Package: ast.NewString(X[4]), Message: ast.NewString(X[6]), State: "root"}, nil
+			return X[0], nil
 		},
 	},
 	ProdTabEntry{
-		String: `Root : "root" Equal Space id "." id	<< &ast.Root{Equal: X[1].(*ast.Keyword), BeforeQualId: X[2].(*ast.Space), Package: ast.NewString(X[3]), Message: ast.NewString(X[5]), State: "root"}, nil >>`,
+		String: `Root : Space "root" Equal Space id "." id	<< &ast.Root{Before: X[0].(*ast.Space), Equal: X[2].(*ast.Keyword), BeforeQualId: X[3].(*ast.Space), Package: ast.NewString(X[4]), Message: ast.NewString(X[6])}, nil >>`,
 		Id:         "Root",
 		NTType:     4,
 		Index:      11,
-		NumSymbols: 6,
+		NumSymbols: 7,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.Root{Equal: X[1].(*ast.Keyword), BeforeQualId: X[2].(*ast.Space), Package: ast.NewString(X[3]), Message: ast.NewString(X[5]), State: "root"}, nil
+			return &ast.Root{Before: X[0].(*ast.Space), Equal: X[2].(*ast.Keyword), BeforeQualId: X[3].(*ast.Space), Package: ast.NewString(X[4]), Message: ast.NewString(X[6])}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `Root : Space "root" Equal id "." id	<< &ast.Root{Before: X[0].(*ast.Space), Equal: X[2].(*ast.Keyword), Package: ast.NewString(X[3]), Message: ast.NewString(X[5]), State: "root"}, nil >>`,
+		String: `Root : "root" Equal Space id "." id	<< &ast.Root{Equal: X[1].(*ast.Keyword), BeforeQualId: X[2].(*ast.Space), Package: ast.NewString(X[3]), Message: ast.NewString(X[5])}, nil >>`,
 		Id:         "Root",
 		NTType:     4,
 		Index:      12,
 		NumSymbols: 6,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.Root{Before: X[0].(*ast.Space), Equal: X[2].(*ast.Keyword), Package: ast.NewString(X[3]), Message: ast.NewString(X[5]), State: "root"}, nil
+			return &ast.Root{Equal: X[1].(*ast.Keyword), BeforeQualId: X[2].(*ast.Space), Package: ast.NewString(X[3]), Message: ast.NewString(X[5])}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `Root : "root" Equal id "." id	<< &ast.Root{Equal: X[1].(*ast.Keyword), Package: ast.NewString(X[2]), Message: ast.NewString(X[4]), State: "root"}, nil >>`,
+		String: `Root : Space "root" Equal id "." id	<< &ast.Root{Before: X[0].(*ast.Space), Equal: X[2].(*ast.Keyword), Package: ast.NewString(X[3]), Message: ast.NewString(X[5])}, nil >>`,
 		Id:         "Root",
 		NTType:     4,
 		Index:      13,
+		NumSymbols: 6,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &ast.Root{Before: X[0].(*ast.Space), Equal: X[2].(*ast.Keyword), Package: ast.NewString(X[3]), Message: ast.NewString(X[5])}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `Root : "root" Equal id "." id	<< &ast.Root{Equal: X[1].(*ast.Keyword), Package: ast.NewString(X[2]), Message: ast.NewString(X[4])}, nil >>`,
+		Id:         "Root",
+		NTType:     4,
+		Index:      14,
 		NumSymbols: 5,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.Root{Equal: X[1].(*ast.Keyword), Package: ast.NewString(X[2]), Message: ast.NewString(X[4]), State: "root"}, nil
+			return &ast.Root{Equal: X[1].(*ast.Keyword), Package: ast.NewString(X[2]), Message: ast.NewString(X[4])}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `Init : Space id "." id Equal Space id	<< &ast.Init{
-		Before: X[0].(*ast.Space),
-		Package: ast.NewString(X[1]),
-		Message: ast.NewString(X[3]),
-		Equal: X[4].(*ast.Keyword),
-		BeforeState: X[5].(*ast.Space),
-		State: ast.NewString(X[6])}, nil >>`,
-		Id:         "Init",
-		NTType:     5,
-		Index:      14,
-		NumSymbols: 7,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.Init{
-				Before:      X[0].(*ast.Space),
-				Package:     ast.NewString(X[1]),
-				Message:     ast.NewString(X[3]),
-				Equal:       X[4].(*ast.Keyword),
-				BeforeState: X[5].(*ast.Space),
-				State:       ast.NewString(X[6])}, nil
-		},
-	},
-	ProdTabEntry{
-		String: `Init : id "." id Equal Space id	<< &ast.Init{
-		Package: ast.NewString(X[0]),
-		Message: ast.NewString(X[2]),
-		Equal: X[3].(*ast.Keyword),
-		BeforeState: X[4].(*ast.Space),
-		State: ast.NewString(X[5])}, nil >>`,
+		String: `Init : Space "init" Equal Space id	<< &ast.Init{
+		Before: X[0].(*ast.Space), 
+		Equal: X[2].(*ast.Keyword),
+		BeforeState: X[3].(*ast.Space),
+		State: ast.NewString(X[4]),
+	  }, nil >>`,
 		Id:         "Init",
 		NTType:     5,
 		Index:      15,
-		NumSymbols: 6,
+		NumSymbols: 5,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &ast.Init{
-				Package:     ast.NewString(X[0]),
-				Message:     ast.NewString(X[2]),
-				Equal:       X[3].(*ast.Keyword),
-				BeforeState: X[4].(*ast.Space),
-				State:       ast.NewString(X[5])}, nil
+				Before:      X[0].(*ast.Space),
+				Equal:       X[2].(*ast.Keyword),
+				BeforeState: X[3].(*ast.Space),
+				State:       ast.NewString(X[4]),
+			}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `Init : Space id "." id Equal id	<< &ast.Init{
-		Before: X[0].(*ast.Space),
-		Package: ast.NewString(X[1]),
-		Message: ast.NewString(X[3]),
-		Equal: X[4].(*ast.Keyword),
-		State: ast.NewString(X[5])}, nil >>`,
+		String: `Init : "init" Equal Space id	<< &ast.Init{
+		Equal: X[1].(*ast.Keyword),
+		BeforeState: X[2].(*ast.Space),
+		State: ast.NewString(X[3]),
+	  }, nil >>`,
 		Id:         "Init",
 		NTType:     5,
 		Index:      16,
-		NumSymbols: 6,
+		NumSymbols: 4,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &ast.Init{
-				Before:  X[0].(*ast.Space),
-				Package: ast.NewString(X[1]),
-				Message: ast.NewString(X[3]),
-				Equal:   X[4].(*ast.Keyword),
-				State:   ast.NewString(X[5])}, nil
+				Equal:       X[1].(*ast.Keyword),
+				BeforeState: X[2].(*ast.Space),
+				State:       ast.NewString(X[3]),
+			}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `Init : id "." id Equal id	<< &ast.Init{
-		Package: ast.NewString(X[0]),
-		Message: ast.NewString(X[2]),
-		Equal: X[3].(*ast.Keyword),
-		State: ast.NewString(X[4])}, nil >>`,
+		String: `Init : Space "init" Equal id	<< &ast.Init{
+		Before: X[0].(*ast.Space), 
+		Equal: X[2].(*ast.Keyword),
+		State: ast.NewString(X[3]),
+	  }, nil >>`,
 		Id:         "Init",
 		NTType:     5,
 		Index:      17,
-		NumSymbols: 5,
+		NumSymbols: 4,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &ast.Init{
-				Package: ast.NewString(X[0]),
-				Message: ast.NewString(X[2]),
-				Equal:   X[3].(*ast.Keyword),
-				State:   ast.NewString(X[4])}, nil
+				Before: X[0].(*ast.Space),
+				Equal:  X[2].(*ast.Keyword),
+				State:  ast.NewString(X[3]),
+			}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `Transition : Space id Space id Equal Space id	<< &ast.Transition{Before: X[0].(*ast.Space), Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal: X[4].(*ast.Keyword), BeforeDst: X[5].(*ast.Space), Dst: ast.NewString(X[6])}, nil >>`,
-		Id:         "Transition",
-		NTType:     6,
+		String: `Init : "init" Equal id	<< &ast.Init{
+		Equal: X[1].(*ast.Keyword),
+		State: ast.NewString(X[2]),
+	  }, nil >>`,
+		Id:         "Init",
+		NTType:     5,
 		Index:      18,
-		NumSymbols: 7,
+		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.Transition{Before: X[0].(*ast.Space), Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal: X[4].(*ast.Keyword), BeforeDst: X[5].(*ast.Space), Dst: ast.NewString(X[6])}, nil
+			return &ast.Init{
+				Equal: X[1].(*ast.Keyword),
+				State: ast.NewString(X[2]),
+			}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `Transition : id Space id Equal Space id	<< &ast.Transition{Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal: X[4].(*ast.Keyword), BeforeDst: X[5].(*ast.Space), Dst: ast.NewString(X[6])}, nil >>`,
-		Id:         "Transition",
+		String: `Final : Space "final" Equal Space id	<< &ast.Final{
+		Before: X[0].(*ast.Space), 
+		Equal: X[2].(*ast.Keyword),
+		BeforeState: X[3].(*ast.Space),
+		State: ast.NewString(X[4]),
+	  }, nil >>`,
+		Id:         "Final",
 		NTType:     6,
 		Index:      19,
-		NumSymbols: 6,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.Transition{Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal: X[4].(*ast.Keyword), BeforeDst: X[5].(*ast.Space), Dst: ast.NewString(X[6])}, nil
-		},
-	},
-	ProdTabEntry{
-		String: `Transition : Space id Space id Equal id	<< &ast.Transition{Before: X[0].(*ast.Space), Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal: X[4].(*ast.Keyword), Dst: ast.NewString(X[6])}, nil >>`,
-		Id:         "Transition",
-		NTType:     6,
-		Index:      20,
-		NumSymbols: 6,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.Transition{Before: X[0].(*ast.Space), Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal: X[4].(*ast.Keyword), Dst: ast.NewString(X[6])}, nil
-		},
-	},
-	ProdTabEntry{
-		String: `Transition : id Space id Equal id	<< &ast.Transition{Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal: X[4].(*ast.Keyword), Dst: ast.NewString(X[6])}, nil >>`,
-		Id:         "Transition",
-		NTType:     6,
-		Index:      21,
 		NumSymbols: 5,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.Transition{Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal: X[4].(*ast.Keyword), Dst: ast.NewString(X[6])}, nil
+			return &ast.Final{
+				Before:      X[0].(*ast.Space),
+				Equal:       X[2].(*ast.Keyword),
+				BeforeState: X[3].(*ast.Space),
+				State:       ast.NewString(X[4]),
+			}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `IfExpr : Space "if" Expr Then StateExpr Else StateExpr	<< &ast.IfExpr{Before: X[0].(*ast.Space), Condition: X[2].(*ast.Expr), ThenWord: X[3].(*ast.Keyword), ThenClause: X[4].(*ast.StateExpr), ElseWord: X[5].(*ast.Keyword), ElseClause: X[6].(*ast.StateExpr)}, nil >>`,
-		Id:         "IfExpr",
-		NTType:     7,
-		Index:      22,
-		NumSymbols: 7,
+		String: `Final : "final" Equal Space id	<< &ast.Final{
+		Equal: X[1].(*ast.Keyword),
+		BeforeState: X[2].(*ast.Space),
+		State: ast.NewString(X[3]),
+	  }, nil >>`,
+		Id:         "Final",
+		NTType:     6,
+		Index:      20,
+		NumSymbols: 4,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.IfExpr{Before: X[0].(*ast.Space), Condition: X[2].(*ast.Expr), ThenWord: X[3].(*ast.Keyword), ThenClause: X[4].(*ast.StateExpr), ElseWord: X[5].(*ast.Keyword), ElseClause: X[6].(*ast.StateExpr)}, nil
+			return &ast.Final{
+				Equal:       X[1].(*ast.Keyword),
+				BeforeState: X[2].(*ast.Space),
+				State:       ast.NewString(X[3]),
+			}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `IfExpr : "if" Expr Then StateExpr Else StateExpr	<< &ast.IfExpr{Condition: X[2].(*ast.Expr), ThenWord: X[3].(*ast.Keyword), ThenClause: X[4].(*ast.StateExpr), ElseWord: X[5].(*ast.Keyword), ElseClause: X[6].(*ast.StateExpr)}, nil >>`,
-		Id:         "IfExpr",
+		String: `Final : Space "final" Equal id	<< &ast.Final{
+		Before: X[0].(*ast.Space), 
+		Equal: X[2].(*ast.Keyword),
+		State: ast.NewString(X[3]),
+	  }, nil >>`,
+		Id:         "Final",
+		NTType:     6,
+		Index:      21,
+		NumSymbols: 4,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &ast.Final{
+				Before: X[0].(*ast.Space),
+				Equal:  X[2].(*ast.Keyword),
+				State:  ast.NewString(X[3]),
+			}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `Final : "final" Equal id	<< &ast.Final{
+		Equal: X[1].(*ast.Keyword),
+		State: ast.NewString(X[2]),
+	  }, nil >>`,
+		Id:         "Final",
+		NTType:     6,
+		Index:      22,
+		NumSymbols: 3,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &ast.Final{
+				Equal: X[1].(*ast.Keyword),
+				State: ast.NewString(X[2]),
+			}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `Transition : Space id Space id Equal Destination	<< &ast.Transition{
+		Before: X[0].(*ast.Space),
+		Src: ast.NewString(X[1]),
+		BeforeInput: X[2].(*ast.Space),
+		Input: ast.NewString(X[3]),
+		Equal: X[4].(*ast.Keyword),
+		Dst: X[5].(*ast.Destination),
+	}, nil >>`,
+		Id:         "Transition",
 		NTType:     7,
 		Index:      23,
 		NumSymbols: 6,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.IfExpr{Condition: X[2].(*ast.Expr), ThenWord: X[3].(*ast.Keyword), ThenClause: X[4].(*ast.StateExpr), ElseWord: X[5].(*ast.Keyword), ElseClause: X[6].(*ast.StateExpr)}, nil
+			return &ast.Transition{
+				Before:      X[0].(*ast.Space),
+				Src:         ast.NewString(X[1]),
+				BeforeInput: X[2].(*ast.Space),
+				Input:       ast.NewString(X[3]),
+				Equal:       X[4].(*ast.Keyword),
+				Dst:         X[5].(*ast.Destination),
+			}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `StateExpr : Space "{" IfExpr CloseCurly	<< &ast.StateExpr{Before: X[0].(*ast.Space), IfExpr: X[2].(*ast.IfExpr), CloseCurly: X[3].(*ast.Keyword)}, nil >>`,
-		Id:         "StateExpr",
-		NTType:     8,
+		String: `Transition : id Space id Equal Destination	<< &ast.Transition{
+		Src: ast.NewString(X[0]),
+		BeforeInput: X[1].(*ast.Space),
+		Input: ast.NewString(X[2]),
+		Equal: X[3].(*ast.Keyword),
+		Dst: X[4].(*ast.Destination),
+	}, nil >>`,
+		Id:         "Transition",
+		NTType:     7,
 		Index:      24,
+		NumSymbols: 5,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &ast.Transition{
+				Src:         ast.NewString(X[0]),
+				BeforeInput: X[1].(*ast.Space),
+				Input:       ast.NewString(X[2]),
+				Equal:       X[3].(*ast.Keyword),
+				Dst:         X[4].(*ast.Destination),
+			}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `Transition : Space id id Equal Destination	<< &ast.Transition{
+		Before: X[0].(*ast.Space),
+		Src: ast.NewString(X[1]),
+		Input: ast.NewString(X[2]),
+		Equal: X[3].(*ast.Keyword),
+		Dst: X[4].(*ast.Destination),
+	}, nil >>`,
+		Id:         "Transition",
+		NTType:     7,
+		Index:      25,
+		NumSymbols: 5,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &ast.Transition{
+				Before: X[0].(*ast.Space),
+				Src:    ast.NewString(X[1]),
+				Input:  ast.NewString(X[2]),
+				Equal:  X[3].(*ast.Keyword),
+				Dst:    X[4].(*ast.Destination),
+			}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `Transition : id id Equal Destination	<< &ast.Transition{
+		Src: ast.NewString(X[0]),
+		Input: ast.NewString(X[1]),
+		Equal: X[2].(*ast.Keyword),
+		Dst: X[3].(*ast.Destination),
+	}, nil >>`,
+		Id:         "Transition",
+		NTType:     7,
+		Index:      26,
 		NumSymbols: 4,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.StateExpr{Before: X[0].(*ast.Space), IfExpr: X[2].(*ast.IfExpr), CloseCurly: X[3].(*ast.Keyword)}, nil
+			return &ast.Transition{
+				Src:   ast.NewString(X[0]),
+				Input: ast.NewString(X[1]),
+				Equal: X[2].(*ast.Keyword),
+				Dst:   X[3].(*ast.Destination),
+			}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `StateExpr : Space id	<< &ast.StateExpr{Before: X[0].(*ast.Space), State: proto.String(ast.NewString(X[1]))}, nil >>`,
-		Id:         "StateExpr",
-		NTType:     8,
-		Index:      25,
-		NumSymbols: 2,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.StateExpr{Before: X[0].(*ast.Space), State: proto.String(ast.NewString(X[1]))}, nil
-		},
-	},
-	ProdTabEntry{
-		String: `StateExpr : "{" IfExpr CloseCurly	<< &ast.StateExpr{IfExpr: X[2].(*ast.IfExpr), CloseCurly: X[3].(*ast.Keyword)}, nil >>`,
-		Id:         "StateExpr",
-		NTType:     8,
-		Index:      26,
-		NumSymbols: 3,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.StateExpr{IfExpr: X[2].(*ast.IfExpr), CloseCurly: X[3].(*ast.Keyword)}, nil
-		},
-	},
-	ProdTabEntry{
-		String: `StateExpr : id	<< &ast.StateExpr{State: proto.String(ast.NewString(X[1]))}, nil >>`,
-		Id:         "StateExpr",
+		String: `Destination : OpenParen Space id Comma Space id Comma Space id CloseParen	<< &ast.Destination{
+		OpenParen: X[0].(*ast.Keyword),
+		BeforeChild: X[1].(*ast.Space),
+		Child: ast.NewString(X[2]),
+		CommaOne: X[3].(*ast.Keyword),
+		BeforeSuccess: X[4].(*ast.Space),
+		Success: ast.NewString(X[5]),
+		CommaTwo: X[6].(*ast.Keyword),
+		BeforeFailure: X[7].(*ast.Space),
+		Failure: ast.NewString(X[8]),
+		CloseParen: X[9].(*ast.Keyword),
+	}, nil >>`,
+		Id:         "Destination",
 		NTType:     8,
 		Index:      27,
-		NumSymbols: 1,
+		NumSymbols: 10,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.StateExpr{State: proto.String(ast.NewString(X[1]))}, nil
+			return &ast.Destination{
+				OpenParen:     X[0].(*ast.Keyword),
+				BeforeChild:   X[1].(*ast.Space),
+				Child:         ast.NewString(X[2]),
+				CommaOne:      X[3].(*ast.Keyword),
+				BeforeSuccess: X[4].(*ast.Space),
+				Success:       ast.NewString(X[5]),
+				CommaTwo:      X[6].(*ast.Keyword),
+				BeforeFailure: X[7].(*ast.Space),
+				Failure:       ast.NewString(X[8]),
+				CloseParen:    X[9].(*ast.Keyword),
+			}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `Destination : OpenParen id Comma Space id Comma Space id CloseParen	<< &ast.Destination{
+		OpenParen: X[0].(*ast.Keyword),
+		Child: ast.NewString(X[1]),
+		CommaOne: X[2].(*ast.Keyword),
+		BeforeSuccess: X[3].(*ast.Space),
+		Success: ast.NewString(X[4]),
+		CommaTwo: X[5].(*ast.Keyword),
+		BeforeFailure: X[6].(*ast.Space),
+		Failure: ast.NewString(X[7]),
+		CloseParen: X[8].(*ast.Keyword),
+	}, nil >>`,
+		Id:         "Destination",
+		NTType:     8,
+		Index:      28,
+		NumSymbols: 9,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &ast.Destination{
+				OpenParen:     X[0].(*ast.Keyword),
+				Child:         ast.NewString(X[1]),
+				CommaOne:      X[2].(*ast.Keyword),
+				BeforeSuccess: X[3].(*ast.Space),
+				Success:       ast.NewString(X[4]),
+				CommaTwo:      X[5].(*ast.Keyword),
+				BeforeFailure: X[6].(*ast.Space),
+				Failure:       ast.NewString(X[7]),
+				CloseParen:    X[8].(*ast.Keyword),
+			}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `Destination : OpenParen Space id Comma id Comma Space id CloseParen	<< &ast.Destination{
+		OpenParen: X[0].(*ast.Keyword),
+		BeforeChild: X[1].(*ast.Space),
+		Child: ast.NewString(X[2]),
+		CommaOne: X[3].(*ast.Keyword),
+		Success: ast.NewString(X[4]),
+		CommaTwo: X[5].(*ast.Keyword),
+		BeforeFailure: X[6].(*ast.Space),
+		Failure: ast.NewString(X[7]),
+		CloseParen: X[8].(*ast.Keyword),
+	}, nil >>`,
+		Id:         "Destination",
+		NTType:     8,
+		Index:      29,
+		NumSymbols: 9,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &ast.Destination{
+				OpenParen:     X[0].(*ast.Keyword),
+				BeforeChild:   X[1].(*ast.Space),
+				Child:         ast.NewString(X[2]),
+				CommaOne:      X[3].(*ast.Keyword),
+				Success:       ast.NewString(X[4]),
+				CommaTwo:      X[5].(*ast.Keyword),
+				BeforeFailure: X[6].(*ast.Space),
+				Failure:       ast.NewString(X[7]),
+				CloseParen:    X[8].(*ast.Keyword),
+			}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `Destination : OpenParen Space id Comma Space id Comma id CloseParen	<< &ast.Destination{
+		OpenParen: X[0].(*ast.Keyword),
+		BeforeChild: X[1].(*ast.Space),
+		Child: ast.NewString(X[2]),
+		CommaOne: X[3].(*ast.Keyword),
+		BeforeSuccess: X[4].(*ast.Space),
+		Success: ast.NewString(X[5]),
+		CommaTwo: X[6].(*ast.Keyword),
+		Failure: ast.NewString(X[7]),
+		CloseParen: X[8].(*ast.Keyword),
+	}, nil >>`,
+		Id:         "Destination",
+		NTType:     8,
+		Index:      30,
+		NumSymbols: 9,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &ast.Destination{
+				OpenParen:     X[0].(*ast.Keyword),
+				BeforeChild:   X[1].(*ast.Space),
+				Child:         ast.NewString(X[2]),
+				CommaOne:      X[3].(*ast.Keyword),
+				BeforeSuccess: X[4].(*ast.Space),
+				Success:       ast.NewString(X[5]),
+				CommaTwo:      X[6].(*ast.Keyword),
+				Failure:       ast.NewString(X[7]),
+				CloseParen:    X[8].(*ast.Keyword),
+			}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `Destination : OpenParen id Comma id Comma Space id CloseParen	<< &ast.Destination{
+		OpenParen: X[0].(*ast.Keyword),
+		Child: ast.NewString(X[1]),
+		CommaOne: X[2].(*ast.Keyword),
+		Success: ast.NewString(X[3]),
+		CommaTwo: X[4].(*ast.Keyword),
+		BeforeFailure: X[5].(*ast.Space),
+		Failure: ast.NewString(X[6]),
+		CloseParen: X[7].(*ast.Keyword),
+	}, nil >>`,
+		Id:         "Destination",
+		NTType:     8,
+		Index:      31,
+		NumSymbols: 8,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &ast.Destination{
+				OpenParen:     X[0].(*ast.Keyword),
+				Child:         ast.NewString(X[1]),
+				CommaOne:      X[2].(*ast.Keyword),
+				Success:       ast.NewString(X[3]),
+				CommaTwo:      X[4].(*ast.Keyword),
+				BeforeFailure: X[5].(*ast.Space),
+				Failure:       ast.NewString(X[6]),
+				CloseParen:    X[7].(*ast.Keyword),
+			}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `Destination : OpenParen id Comma Space id Comma id CloseParen	<< &ast.Destination{
+		OpenParen: X[0].(*ast.Keyword),
+		Child: ast.NewString(X[1]),
+		CommaOne: X[2].(*ast.Keyword),
+		BeforeSuccess: X[3].(*ast.Space),
+		Success: ast.NewString(X[4]),
+		CommaTwo: X[5].(*ast.Keyword),
+		Failure: ast.NewString(X[6]),
+		CloseParen: X[7].(*ast.Keyword),
+	}, nil >>`,
+		Id:         "Destination",
+		NTType:     8,
+		Index:      32,
+		NumSymbols: 8,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &ast.Destination{
+				OpenParen:     X[0].(*ast.Keyword),
+				Child:         ast.NewString(X[1]),
+				CommaOne:      X[2].(*ast.Keyword),
+				BeforeSuccess: X[3].(*ast.Space),
+				Success:       ast.NewString(X[4]),
+				CommaTwo:      X[5].(*ast.Keyword),
+				Failure:       ast.NewString(X[6]),
+				CloseParen:    X[7].(*ast.Keyword),
+			}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `Destination : OpenParen id Comma id Comma id CloseParen	<< &ast.Destination{
+		OpenParen: X[0].(*ast.Keyword),
+		Child: ast.NewString(X[1]),
+		CommaOne: X[2].(*ast.Keyword),
+		Success: ast.NewString(X[3]),
+		CommaTwo: X[4].(*ast.Keyword),
+		Failure: ast.NewString(X[5]),
+		CloseParen: X[6].(*ast.Keyword),
+	}, nil >>`,
+		Id:         "Destination",
+		NTType:     8,
+		Index:      33,
+		NumSymbols: 7,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &ast.Destination{
+				OpenParen:  X[0].(*ast.Keyword),
+				Child:      ast.NewString(X[1]),
+				CommaOne:   X[2].(*ast.Keyword),
+				Success:    ast.NewString(X[3]),
+				CommaTwo:   X[4].(*ast.Keyword),
+				Failure:    ast.NewString(X[5]),
+				CloseParen: X[6].(*ast.Keyword),
+			}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `Destination : OpenParen id Comma id Comma Space id CloseParen	<< &ast.Destination{
+		OpenParen: X[0].(*ast.Keyword),
+		Child: ast.NewString(X[1]),
+		CommaOne: X[2].(*ast.Keyword),
+		Success: ast.NewString(X[3]),
+		CommaTwo: X[4].(*ast.Keyword),
+		BeforeFailure: X[5].(*ast.Space),
+		Failure: ast.NewString(X[6]),
+		CloseParen: X[7].(*ast.Keyword),
+	}, nil >>`,
+		Id:         "Destination",
+		NTType:     8,
+		Index:      34,
+		NumSymbols: 8,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &ast.Destination{
+				OpenParen:     X[0].(*ast.Keyword),
+				Child:         ast.NewString(X[1]),
+				CommaOne:      X[2].(*ast.Keyword),
+				Success:       ast.NewString(X[3]),
+				CommaTwo:      X[4].(*ast.Keyword),
+				BeforeFailure: X[5].(*ast.Space),
+				Failure:       ast.NewString(X[6]),
+				CloseParen:    X[7].(*ast.Keyword),
+			}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `Destination : OpenParen Space id Comma id Comma id CloseParen	<< &ast.Destination{
+		OpenParen: X[0].(*ast.Keyword),
+		BeforeChild: X[1].(*ast.Space),
+		Child: ast.NewString(X[2]),
+		CommaOne: X[3].(*ast.Keyword),
+		Success: ast.NewString(X[4]),
+		CommaTwo: X[5].(*ast.Keyword),
+		Failure: ast.NewString(X[6]),
+		CloseParen: X[7].(*ast.Keyword),
+	}, nil >>`,
+		Id:         "Destination",
+		NTType:     8,
+		Index:      35,
+		NumSymbols: 8,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &ast.Destination{
+				OpenParen:   X[0].(*ast.Keyword),
+				BeforeChild: X[1].(*ast.Space),
+				Child:       ast.NewString(X[2]),
+				CommaOne:    X[3].(*ast.Keyword),
+				Success:     ast.NewString(X[4]),
+				CommaTwo:    X[5].(*ast.Keyword),
+				Failure:     ast.NewString(X[6]),
+				CloseParen:  X[7].(*ast.Keyword),
+			}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `FunctionDecl : Space "func" Space id Equal Function	<< &ast.FunctionDecl{
+		Before: X[0].(*ast.Space),
+		BeforeName: X[2].(*ast.Space),
+		Name: ast.NewString(X[3]),
+		Equal: X[4].(*ast.Keyword),
+		Function: X[5].(*ast.Function),
+	}, nil >>`,
+		Id:         "FunctionDecl",
+		NTType:     9,
+		Index:      36,
+		NumSymbols: 6,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &ast.FunctionDecl{
+				Before:     X[0].(*ast.Space),
+				BeforeName: X[2].(*ast.Space),
+				Name:       ast.NewString(X[3]),
+				Equal:      X[4].(*ast.Keyword),
+				Function:   X[5].(*ast.Function),
+			}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `FunctionDecl : "func" Space id Equal Function	<< &ast.FunctionDecl{
+		BeforeName: X[1].(*ast.Space),
+		Name: ast.NewString(X[2]),
+		Equal: X[3].(*ast.Keyword),
+		Function: X[4].(*ast.Function),
+	}, nil >>`,
+		Id:         "FunctionDecl",
+		NTType:     9,
+		Index:      37,
+		NumSymbols: 5,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &ast.FunctionDecl{
+				BeforeName: X[1].(*ast.Space),
+				Name:       ast.NewString(X[2]),
+				Equal:      X[3].(*ast.Keyword),
+				Function:   X[4].(*ast.Function),
+			}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `FunctionDecl : Space "func" id Equal Function	<< &ast.FunctionDecl{
+		Before: X[0].(*ast.Space),
+		Name: ast.NewString(X[2]),
+		Equal: X[3].(*ast.Keyword),
+		Function: X[4].(*ast.Function),
+	}, nil >>`,
+		Id:         "FunctionDecl",
+		NTType:     9,
+		Index:      38,
+		NumSymbols: 5,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &ast.FunctionDecl{
+				Before:   X[0].(*ast.Space),
+				Name:     ast.NewString(X[2]),
+				Equal:    X[3].(*ast.Keyword),
+				Function: X[4].(*ast.Function),
+			}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `FunctionDecl : "func" id Equal Function	<< &ast.FunctionDecl{
+		Name: ast.NewString(X[1]),
+		Equal: X[2].(*ast.Keyword),
+		Function: X[3].(*ast.Function),
+	}, nil >>`,
+		Id:         "FunctionDecl",
+		NTType:     9,
+		Index:      39,
+		NumSymbols: 4,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &ast.FunctionDecl{
+				Name:     ast.NewString(X[1]),
+				Equal:    X[2].(*ast.Keyword),
+				Function: X[3].(*ast.Function),
+			}, nil
 		},
 	},
 	ProdTabEntry{
 		String: `Function : Space id OpenParen Exprs CloseParen	<< &ast.Function{Before: X[0].(*ast.Space), Name: ast.NewString(X[1]), OpenParen: X[2].(*ast.Keyword), Params: X[3].([]*ast.Expr), CloseParen: X[4].(*ast.Keyword)}, nil >>`,
 		Id:         "Function",
-		NTType:     9,
-		Index:      28,
+		NTType:     10,
+		Index:      40,
 		NumSymbols: 5,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &ast.Function{Before: X[0].(*ast.Space), Name: ast.NewString(X[1]), OpenParen: X[2].(*ast.Keyword), Params: X[3].([]*ast.Expr), CloseParen: X[4].(*ast.Keyword)}, nil
@@ -355,8 +757,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Function : Space id OpenParen CloseParen	<< &ast.Function{Before: X[0].(*ast.Space), Name: ast.NewString(X[1]), OpenParen: X[2].(*ast.Keyword), CloseParen: X[3].(*ast.Keyword)}, nil >>`,
 		Id:         "Function",
-		NTType:     9,
-		Index:      29,
+		NTType:     10,
+		Index:      41,
 		NumSymbols: 4,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &ast.Function{Before: X[0].(*ast.Space), Name: ast.NewString(X[1]), OpenParen: X[2].(*ast.Keyword), CloseParen: X[3].(*ast.Keyword)}, nil
@@ -365,8 +767,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Function : id OpenParen Exprs CloseParen	<< &ast.Function{Name: ast.NewString(X[0]), OpenParen: X[1].(*ast.Keyword), Params: X[2].([]*ast.Expr), CloseParen: X[3].(*ast.Keyword)}, nil >>`,
 		Id:         "Function",
-		NTType:     9,
-		Index:      30,
+		NTType:     10,
+		Index:      42,
 		NumSymbols: 4,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &ast.Function{Name: ast.NewString(X[0]), OpenParen: X[1].(*ast.Keyword), Params: X[2].([]*ast.Expr), CloseParen: X[3].(*ast.Keyword)}, nil
@@ -375,8 +777,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Function : id OpenParen CloseParen	<< &ast.Function{Name: ast.NewString(X[0]), OpenParen: X[1].(*ast.Keyword), CloseParen: X[2].(*ast.Keyword)}, nil >>`,
 		Id:         "Function",
-		NTType:     9,
-		Index:      31,
+		NTType:     10,
+		Index:      43,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &ast.Function{Name: ast.NewString(X[0]), OpenParen: X[1].(*ast.Keyword), CloseParen: X[2].(*ast.Keyword)}, nil
@@ -385,8 +787,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `List : Space ListType OpenCurly Exprs CloseCurly	<< &ast.List{Before: X[0].(*ast.Space), Type: X[1].(types.Type), OpenCurly: X[2].(*ast.Keyword), Elems: X[3].([]*ast.Expr), CloseCurly: X[4].(*ast.Keyword)}, nil >>`,
 		Id:         "List",
-		NTType:     10,
-		Index:      32,
+		NTType:     11,
+		Index:      44,
 		NumSymbols: 5,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &ast.List{Before: X[0].(*ast.Space), Type: X[1].(types.Type), OpenCurly: X[2].(*ast.Keyword), Elems: X[3].([]*ast.Expr), CloseCurly: X[4].(*ast.Keyword)}, nil
@@ -395,8 +797,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `List : ListType OpenCurly Exprs CloseCurly	<< &ast.List{Type: X[0].(types.Type), OpenCurly: X[1].(*ast.Keyword), Elems: X[2].([]*ast.Expr), CloseCurly: X[3].(*ast.Keyword)}, nil >>`,
 		Id:         "List",
-		NTType:     10,
-		Index:      33,
+		NTType:     11,
+		Index:      45,
 		NumSymbols: 4,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &ast.List{Type: X[0].(types.Type), OpenCurly: X[1].(*ast.Keyword), Elems: X[2].([]*ast.Expr), CloseCurly: X[3].(*ast.Keyword)}, nil
@@ -405,8 +807,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `List : Space ListType OpenCurly CloseCurly	<< &ast.List{Before: X[0].(*ast.Space), Type: X[1].(types.Type), OpenCurly: X[2].(*ast.Keyword), CloseCurly: X[3].(*ast.Keyword)}, nil >>`,
 		Id:         "List",
-		NTType:     10,
-		Index:      34,
+		NTType:     11,
+		Index:      46,
 		NumSymbols: 4,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &ast.List{Before: X[0].(*ast.Space), Type: X[1].(types.Type), OpenCurly: X[2].(*ast.Keyword), CloseCurly: X[3].(*ast.Keyword)}, nil
@@ -415,8 +817,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `List : ListType OpenCurly CloseCurly	<< &ast.List{Type: X[0].(types.Type), OpenCurly: X[1].(*ast.Keyword), CloseCurly: X[2].(*ast.Keyword)}, nil >>`,
 		Id:         "List",
-		NTType:     10,
-		Index:      35,
+		NTType:     11,
+		Index:      47,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &ast.List{Type: X[0].(types.Type), OpenCurly: X[1].(*ast.Keyword), CloseCurly: X[2].(*ast.Keyword)}, nil
@@ -425,8 +827,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Exprs : Expr	<< []*ast.Expr{X[0].(*ast.Expr)}, nil >>`,
 		Id:         "Exprs",
-		NTType:     11,
-		Index:      36,
+		NTType:     12,
+		Index:      48,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return []*ast.Expr{X[0].(*ast.Expr)}, nil
@@ -435,8 +837,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Exprs : Exprs Comma Expr	<< append(X[0].([]*ast.Expr), ast.SetExprComma(X[2], X[1])), nil >>`,
 		Id:         "Exprs",
-		NTType:     11,
-		Index:      37,
+		NTType:     12,
+		Index:      49,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return append(X[0].([]*ast.Expr), ast.SetExprComma(X[2], X[1])), nil
@@ -445,8 +847,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Expr : SpaceTerminal	<< &ast.Expr{Terminal: X[0].(*ast.Terminal)}, nil >>`,
 		Id:         "Expr",
-		NTType:     12,
-		Index:      38,
+		NTType:     13,
+		Index:      50,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &ast.Expr{Terminal: X[0].(*ast.Terminal)}, nil
@@ -455,8 +857,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Expr : Function	<< &ast.Expr{Function: X[0].(*ast.Function)}, nil >>`,
 		Id:         "Expr",
-		NTType:     12,
-		Index:      39,
+		NTType:     13,
+		Index:      51,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &ast.Expr{Function: X[0].(*ast.Function)}, nil
@@ -465,8 +867,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Expr : List	<< &ast.Expr{List: X[0].(*ast.List)}, nil >>`,
 		Id:         "Expr",
-		NTType:     12,
-		Index:      40,
+		NTType:     13,
+		Index:      52,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &ast.Expr{List: X[0].(*ast.List)}, nil
@@ -475,8 +877,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ListType : "[]bool"	<< types.LIST_BOOL, nil >>`,
 		Id:         "ListType",
-		NTType:     13,
-		Index:      41,
+		NTType:     14,
+		Index:      53,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return types.LIST_BOOL, nil
@@ -485,8 +887,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ListType : "[]int64"	<< types.LIST_INT64, nil >>`,
 		Id:         "ListType",
-		NTType:     13,
-		Index:      42,
+		NTType:     14,
+		Index:      54,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return types.LIST_INT64, nil
@@ -495,8 +897,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ListType : "[]int32"	<< types.LIST_INT32, nil >>`,
 		Id:         "ListType",
-		NTType:     13,
-		Index:      43,
+		NTType:     14,
+		Index:      55,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return types.LIST_INT32, nil
@@ -505,8 +907,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ListType : "[]uint64"	<< types.LIST_UINT64, nil >>`,
 		Id:         "ListType",
-		NTType:     13,
-		Index:      44,
+		NTType:     14,
+		Index:      56,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return types.LIST_UINT64, nil
@@ -515,8 +917,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ListType : "[]uint32"	<< types.LIST_UINT32, nil >>`,
 		Id:         "ListType",
-		NTType:     13,
-		Index:      45,
+		NTType:     14,
+		Index:      57,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return types.LIST_UINT32, nil
@@ -525,8 +927,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ListType : "[]double"	<< types.LIST_DOUBLE, nil >>`,
 		Id:         "ListType",
-		NTType:     13,
-		Index:      46,
+		NTType:     14,
+		Index:      58,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return types.LIST_DOUBLE, nil
@@ -535,8 +937,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ListType : "[]float"	<< types.LIST_FLOAT, nil >>`,
 		Id:         "ListType",
-		NTType:     13,
-		Index:      47,
+		NTType:     14,
+		Index:      59,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return types.LIST_FLOAT, nil
@@ -545,8 +947,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ListType : "[]string"	<< types.LIST_STRING, nil >>`,
 		Id:         "ListType",
-		NTType:     13,
-		Index:      48,
+		NTType:     14,
+		Index:      60,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return types.LIST_STRING, nil
@@ -555,8 +957,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ListType : "[][]byte"	<< types.LIST_BYTES, nil >>`,
 		Id:         "ListType",
-		NTType:     13,
-		Index:      49,
+		NTType:     14,
+		Index:      61,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return types.LIST_BYTES, nil
@@ -565,8 +967,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `SpaceTerminal : Terminal	<< X[0], nil >>`,
 		Id:         "SpaceTerminal",
-		NTType:     14,
-		Index:      50,
+		NTType:     15,
+		Index:      62,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return X[0], nil
@@ -575,8 +977,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `SpaceTerminal : Space Terminal	<< ast.SetTerminalSpace(X[1], X[0]), nil >>`,
 		Id:         "SpaceTerminal",
-		NTType:     14,
-		Index:      51,
+		NTType:     15,
+		Index:      63,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.SetTerminalSpace(X[1], X[0]), nil
@@ -585,8 +987,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Terminal : Bool	<< ast.NewBoolTerminal(X[0]) >>`,
 		Id:         "Terminal",
-		NTType:     15,
-		Index:      52,
+		NTType:     16,
+		Index:      64,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewBoolTerminal(X[0])
@@ -595,8 +997,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Terminal : int64_lit	<< ast.NewInt64Terminal(X[0]) >>`,
 		Id:         "Terminal",
-		NTType:     15,
-		Index:      53,
+		NTType:     16,
+		Index:      65,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewInt64Terminal(X[0])
@@ -605,8 +1007,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Terminal : int32_lit	<< ast.NewInt32Terminal(X[0]) >>`,
 		Id:         "Terminal",
-		NTType:     15,
-		Index:      54,
+		NTType:     16,
+		Index:      66,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewInt32Terminal(X[0])
@@ -615,8 +1017,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Terminal : uint64_lit	<< ast.NewUint64Terminal(X[0]) >>`,
 		Id:         "Terminal",
-		NTType:     15,
-		Index:      55,
+		NTType:     16,
+		Index:      67,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewUint64Terminal(X[0])
@@ -625,8 +1027,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Terminal : uint32_lit	<< ast.NewUint32Terminal(X[0]) >>`,
 		Id:         "Terminal",
-		NTType:     15,
-		Index:      56,
+		NTType:     16,
+		Index:      68,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewUint32Terminal(X[0])
@@ -635,8 +1037,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Terminal : double_lit	<< ast.NewDoubleTerminal(X[0]) >>`,
 		Id:         "Terminal",
-		NTType:     15,
-		Index:      57,
+		NTType:     16,
+		Index:      69,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewDoubleTerminal(X[0])
@@ -645,8 +1047,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Terminal : float_lit	<< ast.NewFloatTerminal(X[0]) >>`,
 		Id:         "Terminal",
-		NTType:     15,
-		Index:      58,
+		NTType:     16,
+		Index:      70,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewFloatTerminal(X[0])
@@ -655,8 +1057,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Terminal : string_lit	<< ast.NewStringTerminal(X[0]) >>`,
 		Id:         "Terminal",
-		NTType:     15,
-		Index:      59,
+		NTType:     16,
+		Index:      71,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewStringTerminal(X[0])
@@ -665,108 +1067,108 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Terminal : bytes_lit	<< ast.NewBytesTerminal(X[0]) >>`,
 		Id:         "Terminal",
-		NTType:     15,
-		Index:      60,
+		NTType:     16,
+		Index:      72,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewBytesTerminal(X[0])
 		},
 	},
 	ProdTabEntry{
-		String: `Terminal : bool_var	<< ast.NewVariableTerminal(X[0], types.SINGLE_BOOL) >>`,
+		String: `Terminal : bool_var	<< ast.NewVariableTerminal(types.SINGLE_BOOL) >>`,
 		Id:         "Terminal",
-		NTType:     15,
-		Index:      61,
+		NTType:     16,
+		Index:      73,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewVariableTerminal(X[0], types.SINGLE_BOOL)
+			return ast.NewVariableTerminal(types.SINGLE_BOOL)
 		},
 	},
 	ProdTabEntry{
-		String: `Terminal : int64_var	<< ast.NewVariableTerminal(X[0], types.SINGLE_INT64) >>`,
+		String: `Terminal : int64_var	<< ast.NewVariableTerminal(types.SINGLE_INT64) >>`,
 		Id:         "Terminal",
-		NTType:     15,
-		Index:      62,
+		NTType:     16,
+		Index:      74,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewVariableTerminal(X[0], types.SINGLE_INT64)
+			return ast.NewVariableTerminal(types.SINGLE_INT64)
 		},
 	},
 	ProdTabEntry{
-		String: `Terminal : int32_var	<< ast.NewVariableTerminal(X[0], types.SINGLE_INT32) >>`,
+		String: `Terminal : int32_var	<< ast.NewVariableTerminal(types.SINGLE_INT32) >>`,
 		Id:         "Terminal",
-		NTType:     15,
-		Index:      63,
+		NTType:     16,
+		Index:      75,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewVariableTerminal(X[0], types.SINGLE_INT32)
+			return ast.NewVariableTerminal(types.SINGLE_INT32)
 		},
 	},
 	ProdTabEntry{
-		String: `Terminal : uint64_var	<< ast.NewVariableTerminal(X[0], types.SINGLE_UINT64) >>`,
+		String: `Terminal : uint64_var	<< ast.NewVariableTerminal(types.SINGLE_UINT64) >>`,
 		Id:         "Terminal",
-		NTType:     15,
-		Index:      64,
+		NTType:     16,
+		Index:      76,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewVariableTerminal(X[0], types.SINGLE_UINT64)
+			return ast.NewVariableTerminal(types.SINGLE_UINT64)
 		},
 	},
 	ProdTabEntry{
-		String: `Terminal : uint32_var	<< ast.NewVariableTerminal(X[0], types.SINGLE_UINT32) >>`,
+		String: `Terminal : uint32_var	<< ast.NewVariableTerminal(types.SINGLE_UINT32) >>`,
 		Id:         "Terminal",
-		NTType:     15,
-		Index:      65,
+		NTType:     16,
+		Index:      77,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewVariableTerminal(X[0], types.SINGLE_UINT32)
+			return ast.NewVariableTerminal(types.SINGLE_UINT32)
 		},
 	},
 	ProdTabEntry{
-		String: `Terminal : double_var	<< ast.NewVariableTerminal(X[0], types.SINGLE_DOUBLE) >>`,
+		String: `Terminal : double_var	<< ast.NewVariableTerminal(types.SINGLE_DOUBLE) >>`,
 		Id:         "Terminal",
-		NTType:     15,
-		Index:      66,
+		NTType:     16,
+		Index:      78,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewVariableTerminal(X[0], types.SINGLE_DOUBLE)
+			return ast.NewVariableTerminal(types.SINGLE_DOUBLE)
 		},
 	},
 	ProdTabEntry{
-		String: `Terminal : float_var	<< ast.NewVariableTerminal(X[0], types.SINGLE_FLOAT) >>`,
+		String: `Terminal : float_var	<< ast.NewVariableTerminal(types.SINGLE_FLOAT) >>`,
 		Id:         "Terminal",
-		NTType:     15,
-		Index:      67,
+		NTType:     16,
+		Index:      79,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewVariableTerminal(X[0], types.SINGLE_FLOAT)
+			return ast.NewVariableTerminal(types.SINGLE_FLOAT)
 		},
 	},
 	ProdTabEntry{
-		String: `Terminal : string_var	<< ast.NewVariableTerminal(X[0], types.SINGLE_STRING) >>`,
+		String: `Terminal : string_var	<< ast.NewVariableTerminal(types.SINGLE_STRING) >>`,
 		Id:         "Terminal",
-		NTType:     15,
-		Index:      68,
+		NTType:     16,
+		Index:      80,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewVariableTerminal(X[0], types.SINGLE_STRING)
+			return ast.NewVariableTerminal(types.SINGLE_STRING)
 		},
 	},
 	ProdTabEntry{
-		String: `Terminal : bytes_var	<< ast.NewVariableTerminal(X[0], types.SINGLE_BYTES) >>`,
+		String: `Terminal : bytes_var	<< ast.NewVariableTerminal(types.SINGLE_BYTES) >>`,
 		Id:         "Terminal",
-		NTType:     15,
-		Index:      69,
+		NTType:     16,
+		Index:      81,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewVariableTerminal(X[0], types.SINGLE_BYTES)
+			return ast.NewVariableTerminal(types.SINGLE_BYTES)
 		},
 	},
 	ProdTabEntry{
 		String: `Bool : "true"	<< true, nil >>`,
 		Id:         "Bool",
-		NTType:     16,
-		Index:      70,
+		NTType:     17,
+		Index:      82,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return true, nil
@@ -775,8 +1177,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Bool : "false"	<< false, nil >>`,
 		Id:         "Bool",
-		NTType:     16,
-		Index:      71,
+		NTType:     17,
+		Index:      83,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return false, nil
@@ -785,8 +1187,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Equal : "="	<< ast.NewKeyword(nil, X[0]), nil >>`,
 		Id:         "Equal",
-		NTType:     17,
-		Index:      72,
+		NTType:     18,
+		Index:      84,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewKeyword(nil, X[0]), nil
@@ -795,48 +1197,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Equal : Space "="	<< ast.NewKeyword(X[0], X[1]), nil >>`,
 		Id:         "Equal",
-		NTType:     17,
-		Index:      73,
-		NumSymbols: 2,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewKeyword(X[0], X[1]), nil
-		},
-	},
-	ProdTabEntry{
-		String: `Then : "then"	<< ast.NewKeyword(nil, X[0]), nil >>`,
-		Id:         "Then",
 		NTType:     18,
-		Index:      74,
-		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewKeyword(nil, X[0]), nil
-		},
-	},
-	ProdTabEntry{
-		String: `Then : Space "then"	<< ast.NewKeyword(X[0], X[1]), nil >>`,
-		Id:         "Then",
-		NTType:     18,
-		Index:      75,
-		NumSymbols: 2,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewKeyword(X[0], X[1]), nil
-		},
-	},
-	ProdTabEntry{
-		String: `Else : "else"	<< ast.NewKeyword(nil, X[0]), nil >>`,
-		Id:         "Else",
-		NTType:     19,
-		Index:      76,
-		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewKeyword(nil, X[0]), nil
-		},
-	},
-	ProdTabEntry{
-		String: `Else : Space "else"	<< ast.NewKeyword(X[0], X[1]), nil >>`,
-		Id:         "Else",
-		NTType:     19,
-		Index:      77,
+		Index:      85,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewKeyword(X[0], X[1]), nil
@@ -845,8 +1207,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `OpenParen : "("	<< ast.NewKeyword(nil, X[0]), nil >>`,
 		Id:         "OpenParen",
-		NTType:     20,
-		Index:      78,
+		NTType:     19,
+		Index:      86,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewKeyword(nil, X[0]), nil
@@ -855,8 +1217,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `OpenParen : Space "("	<< ast.NewKeyword(X[0], X[1]), nil >>`,
 		Id:         "OpenParen",
-		NTType:     20,
-		Index:      79,
+		NTType:     19,
+		Index:      87,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewKeyword(X[0], X[1]), nil
@@ -865,8 +1227,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `CloseParen : ")"	<< ast.NewKeyword(nil, X[0]), nil >>`,
 		Id:         "CloseParen",
-		NTType:     21,
-		Index:      80,
+		NTType:     20,
+		Index:      88,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewKeyword(nil, X[0]), nil
@@ -875,8 +1237,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `CloseParen : Space ")"	<< ast.NewKeyword(X[0], X[1]), nil >>`,
 		Id:         "CloseParen",
-		NTType:     21,
-		Index:      81,
+		NTType:     20,
+		Index:      89,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewKeyword(X[0], X[1]), nil
@@ -885,8 +1247,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `OpenCurly : "{"	<< ast.NewKeyword(nil, X[0]), nil >>`,
 		Id:         "OpenCurly",
-		NTType:     22,
-		Index:      82,
+		NTType:     21,
+		Index:      90,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewKeyword(nil, X[0]), nil
@@ -895,8 +1257,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `OpenCurly : Space "{"	<< ast.NewKeyword(X[0], X[1]), nil >>`,
 		Id:         "OpenCurly",
-		NTType:     22,
-		Index:      83,
+		NTType:     21,
+		Index:      91,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewKeyword(X[0], X[1]), nil
@@ -905,8 +1267,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `CloseCurly : "}"	<< ast.NewKeyword(nil, X[0]), nil >>`,
 		Id:         "CloseCurly",
-		NTType:     23,
-		Index:      84,
+		NTType:     22,
+		Index:      92,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewKeyword(nil, X[0]), nil
@@ -915,8 +1277,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `CloseCurly : Space "}"	<< ast.NewKeyword(X[0], X[1]), nil >>`,
 		Id:         "CloseCurly",
-		NTType:     23,
-		Index:      85,
+		NTType:     22,
+		Index:      93,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewKeyword(X[0], X[1]), nil
@@ -925,8 +1287,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Comma : ","	<< ast.NewKeyword(nil, X[0]), nil >>`,
 		Id:         "Comma",
-		NTType:     24,
-		Index:      86,
+		NTType:     23,
+		Index:      94,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewKeyword(nil, X[0]), nil
@@ -935,8 +1297,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Comma : Space ","	<< ast.NewKeyword(X[0], X[1]), nil >>`,
 		Id:         "Comma",
-		NTType:     24,
-		Index:      87,
+		NTType:     23,
+		Index:      95,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewKeyword(X[0], X[1]), nil
@@ -945,8 +1307,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Space : Space space	<< ast.AppendSpace(X[0], X[1]), nil >>`,
 		Id:         "Space",
-		NTType:     25,
-		Index:      88,
+		NTType:     24,
+		Index:      96,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.AppendSpace(X[0], X[1]), nil
@@ -955,8 +1317,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Space : space	<< ast.NewSpace(X[0]), nil >>`,
 		Id:         "Space",
-		NTType:     25,
-		Index:      89,
+		NTType:     24,
+		Index:      97,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewSpace(X[0]), nil

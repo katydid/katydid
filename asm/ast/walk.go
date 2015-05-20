@@ -32,11 +32,14 @@ func (this *Rule) Walk(v Visitor) {
 	if this.Init != nil {
 		this.Init.Walk(v)
 	}
+	if this.Final != nil {
+		this.Final.Walk(v)
+	}
 	if this.Transition != nil {
 		this.Transition.Walk(v)
 	}
-	if this.IfExpr != nil {
-		this.IfExpr.Walk(v)
+	if this.FunctionDecl != nil {
+		this.FunctionDecl.Walk(v)
 	}
 }
 
@@ -48,22 +51,17 @@ func (this *Init) Walk(v Visitor) {
 	v.Visit(this)
 }
 
+func (this *Final) Walk(v Visitor) {
+	v.Visit(this)
+}
+
 func (this *Transition) Walk(v Visitor) {
 	v.Visit(this)
 }
 
-func (this *IfExpr) Walk(v Visitor) {
-	v = v.Visit(this)
-	this.GetCondition().Walk(v)
-	this.GetThenClause().Walk(v)
-	this.GetElseClause().Walk(v)
-}
-
-func (this *StateExpr) Walk(v Visitor) {
-	v = v.Visit(this)
-	if this.IfExpr != nil {
-		this.GetIfExpr().Walk(v)
-	}
+func (this *FunctionDecl) Walk(v Visitor) {
+	v.Visit(this)
+	this.GetFunction().Walk(v)
 }
 
 func (this *Expr) Walk(v Visitor) {

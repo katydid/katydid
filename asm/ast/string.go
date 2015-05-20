@@ -34,11 +34,14 @@ func (this *Rule) String() string {
 	if this.Init != nil {
 		return this.Init.String()
 	}
+	if this.Final != nil {
+		return this.Final.String()
+	}
 	if this.Transition != nil {
 		return this.Transition.String()
 	}
-	if this.IfExpr != nil {
-		return this.IfExpr.String()
+	if this.FunctionDecl != nil {
+		return this.FunctionDecl.String()
 	}
 	panic("unreachable")
 }
@@ -48,23 +51,28 @@ func (this *Root) String() string {
 }
 
 func (this *Init) String() string {
-	return this.Before.String() + this.Package + "." + this.Message + this.Equal.String() + this.BeforeState.String() + this.State
+	return this.Before.String() + "init" + this.Equal.String() + this.BeforeState.String() + this.State
+}
+
+func (this *Final) String() string {
+	return this.Before.String() + "final" + this.Equal.String() + this.BeforeState.String() + this.GetState()
 }
 
 func (this *Transition) String() string {
-	return this.Before.String() + this.Src + this.BeforeInput.String() + this.Input + this.Equal.String() + this.BeforeDst.String() + this.Dst
+	return this.Before.String() + this.Src + this.BeforeInput.String() +
+		this.Input + this.Equal.String() + this.Dst.String()
 }
 
-func (this *IfExpr) String() string {
-	return this.Before.String() + "if" + this.Condition.String() + this.ThenWord.String() + this.ThenClause.String() + this.ElseWord.String() + this.ElseClause.String()
+func (this *Destination) String() string {
+	return this.OpenParen.String() +
+		this.Child + this.CommaOne.String() + this.Success +
+		this.CommaTwo.String() + this.Failure + this.CloseParen.String()
 }
 
-func (this *StateExpr) String() string {
-	space := this.Before.String()
-	if this.State != nil {
-		return space + this.GetState()
-	}
-	return space + "{" + this.GetIfExpr().String() + this.CloseCurly.String()
+func (this *FunctionDecl) String() string {
+	return this.Before.String() + this.BeforeName.String() +
+		this.Name + this.Equal.String() + this.BeforeFunc.String() +
+		this.Function.String()
 }
 
 func (this *Expr) String() string {
@@ -123,7 +131,7 @@ func (this *Terminal) String() string {
 }
 
 func (this *Variable) String() string {
-	return this.Name
+	return this.Type.String()
 }
 
 func (this *Keyword) String() string {

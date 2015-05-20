@@ -35,11 +35,14 @@ func (this *Rule) Dot() string {
 	if this.Init != nil {
 		return this.Init.Dot()
 	}
+	if this.Final != nil {
+		return this.Final.Dot()
+	}
 	if this.Transition != nil {
 		return this.Transition.Dot()
 	}
-	if this.IfExpr != nil {
-		return this.IfExpr.Dot()
+	if this.FunctionDecl != nil {
+		return this.FunctionDecl.Dot()
 	}
 	panic("unreachable")
 }
@@ -49,29 +52,21 @@ func (this *Root) Dot() string {
 }
 
 func (this *Init) Dot() string {
-	return `"` + this.GetPackage() + "." + this.GetMessage() + `"` + " -> " + this.GetState()
+	return `"init"` + " -> " + this.GetState()
+}
+
+func (this *Final) Dot() string {
+	return `"final"` + " -> " + this.GetState()
 }
 
 func (this *Transition) Dot() string {
-	return this.GetSrc() + " -> " + this.GetDst() + ` [label="` + this.GetInput() + `"]`
+	return this.GetSrc() + " -> " + this.GetDst().GetChild() + ` [label="child_` + this.GetInput() + `"]
+	` + this.GetSrc() + " -> " + this.GetDst().GetSuccess() + ` [label="success_` + this.GetInput() + `"]
+	` + this.GetSrc() + " -> " + this.GetDst().GetFailure() + ` [label="failure_` + this.GetInput() + `"]`
 }
 
-func (this *IfExpr) Dot() string {
-	s := make([]string, 2)
-	s[0] = this.GetThenClause().Dot(this.GetCondition().Dot(), "true")
-	s[1] = this.GetElseClause().Dot(this.GetCondition().Dot(), "false")
-	return strings.Join(s, "\n")
-}
-
-func (this *StateExpr) Dot(src string, label string) string {
-	s := make([]string, 0, 2)
-	if this.State != nil {
-		s = append(s, src+" -> {"+this.GetState()+`} [label="`+label+`"]`)
-	} else {
-		s = append(s, src+" -> {"+this.GetIfExpr().GetCondition().Dot()+`} [label="`+label+`"]`)
-		s = append(s, this.GetIfExpr().Dot())
-	}
-	return strings.Join(s, "\n")
+func (this *FunctionDecl) Dot() string {
+	return `"` + this.GetName() + " = " + this.GetFunction().Dot() + `"`
 }
 
 func (this *Expr) Dot() string {

@@ -30,8 +30,9 @@ message Rules {
 message Rule {
 	optional Root Root = 1;
 	optional Init Init = 2;
-	optional Transition Transition = 3;
-	optional IfExpr IfExpr = 4;
+	optional Final Final = 3;
+	optional Transition Transition = 4;
+	optional FunctionDecl FunctionDecl = 5;
 }
 
 message Root {
@@ -40,16 +41,20 @@ message Root {
 	optional Space BeforeQualId = 3;
 	optional string Package = 4 [(gogoproto.nullable) = false];
 	optional string Message = 5 [(gogoproto.nullable) = false];
-	optional string State = 6 [(gogoproto.nullable) = false];
 }
 
 message Init {
 	optional Space Before = 1;
-	optional string Package = 2 [(gogoproto.nullable) = false];
-	optional string Message = 3 [(gogoproto.nullable) = false];
-	optional Keyword Equal = 4;
-	optional Space BeforeState = 5;
-	optional string State = 6 [(gogoproto.nullable) = false];
+	optional Keyword Equal = 2;
+	optional Space BeforeState = 3;
+	optional string State = 4 [(gogoproto.nullable) = false];
+}
+
+message Final {
+	optional Space Before = 1;
+	optional Keyword Equal = 2;
+	optional Space BeforeState = 3;
+	optional string State = 4 [(gogoproto.nullable) = false];
 }
 
 message Transition {
@@ -58,24 +63,29 @@ message Transition {
 	optional Space BeforeInput = 3;
 	optional string Input = 4 [(gogoproto.nullable) = false];
 	optional Keyword Equal = 5;
-	optional Space BeforeDst = 6;
-	optional string Dst = 7 [(gogoproto.nullable) = false];
+	optional Destination Dst = 6;
 }
 
-message IfExpr {
-	optional Space Before = 1;
-	optional Expr Condition = 2;
-	optional Keyword ThenWord = 3;
-	optional StateExpr ThenClause = 4;
-	optional Keyword ElseWord = 5;
-	optional StateExpr ElseClause = 6;
+message Destination {
+	optional Keyword OpenParen = 1;
+	optional Space BeforeChild = 2;
+	optional string Child = 3 [(gogoproto.nullable) = false];
+	optional Keyword CommaOne = 4;
+	optional Space BeforeSuccess = 5;
+	optional string Success = 6 [(gogoproto.nullable) = false];
+	optional Keyword CommaTwo = 7;
+	optional Space BeforeFailure = 8;
+	optional string Failure = 9 [(gogoproto.nullable) = false];
+	optional Keyword CloseParen = 10;
 }
 
-message StateExpr {
+message FunctionDecl {
 	optional Space Before = 1;
-	optional string State = 2;
-	optional IfExpr IfExpr = 3;
-	optional Keyword CloseCurly = 4;
+	optional Space BeforeName = 2;
+	optional string Name = 3  [(gogoproto.nullable) = false];
+	optional Keyword Equal = 4;
+	optional Space BeforeFunc = 5;
+	optional Function Function = 6;
 }
 
 message Expr {
@@ -121,7 +131,6 @@ message Terminal {
 }
 
 message Variable {
-	optional string Name  = 1 [(gogoproto.nullable) = false];
 	optional types.Type Type = 2 [(gogoproto.nullable) = false];
 }
 

@@ -77,15 +77,6 @@ func (this *table) allocTrans(src string, input string, dst string) {
 	this.transBuilder[s][i] = d
 }
 
-func (this *table) allocIfStates(expr *ast.StateExpr) {
-	if expr.State != nil {
-		this.allocState(expr.GetState())
-		return
-	}
-	this.allocIfStates(expr.GetIfExpr().GetThenClause())
-	this.allocIfStates(expr.GetIfExpr().GetElseClause())
-}
-
 func (this *table) finalize() {
 	this.trans = make([]maps.IntToInt, len(this.transBuilder))
 	this.noescape = make([]bool, len(this.transBuilder))
@@ -100,15 +91,11 @@ func (this *table) finalize() {
 	this.transBuilder = nil
 }
 
-func New(transitions []*ast.Transition, ifs []*ast.IfExpr) Table {
+func New(transitions []*ast.Transition) Table {
 	tab := &table{make(map[string]int), make([]string, 0), make([]map[int]int, 0), nil, nil}
 	tab.allocState("_") // making the default input "_" = 0
 	for _, trans := range transitions {
 		tab.allocTrans(trans.GetSrc(), trans.GetInput(), trans.GetDst())
-	}
-	for _, ifExpr := range ifs {
-		tab.allocIfStates(ifExpr.GetThenClause())
-		tab.allocIfStates(ifExpr.GetElseClause())
 	}
 	tab.finalize()
 	return tab

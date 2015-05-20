@@ -42,14 +42,14 @@ func (rs *Rules) GetTransitions() []*Transition {
 	return trans
 }
 
-func (rs *Rules) GetIfExprs() []*IfExpr {
-	ifs := make([]*IfExpr, 0, len(rs.Rules))
+func (rs *Rules) GetFinals() []*Final {
+	finals := make([]*Final, 0, len(rs.Rules))
 	for i, r := range rs.Rules {
-		if r.IfExpr != nil {
-			ifs = append(ifs, rs.Rules[i].IfExpr)
+		if r.Final != nil {
+			finals = append(finals, rs.Rules[i].Final)
 		}
 	}
-	return ifs
+	return finals
 }
 
 func (rs *Rules) GetInits() []*Init {
