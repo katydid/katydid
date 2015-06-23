@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package ast
+package asm
 
 import (
 	"strings"
@@ -66,24 +66,5 @@ func (this *Transition) Dot() string {
 }
 
 func (this *FunctionDecl) Dot() string {
-	return `"` + this.GetName() + " = " + this.GetFunction().Dot() + `"`
-}
-
-func (this *Expr) Dot() string {
-	if this.Terminal != nil {
-		return this.GetTerminal().Dot()
-	}
-	return this.GetFunction().Dot()
-}
-
-func (this *Function) Dot() string {
-	return `<` + this.String() + `>`
-}
-
-func (this *Terminal) Dot() string {
-	return `"` + this.String() + `"`
-}
-
-func (this *Variable) Dot() string {
-	return `"` + this.String() + `"`
+	return `"` + this.GetName() + " = " + this.GetFunction().String() + `"`
 }

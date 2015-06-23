@@ -28,26 +28,14 @@ func (this *ErrWrongType) Error() string {
 	return fmt.Sprintf("expected %s, but got %#v", this.typ, this.res)
 }
 
-func (this *Parser) ParseRules(scanner Scanner) (res *ast.Rules, err error) {
+func (this *Parser) ParseRules(scanner Scanner) (res *asm.Rules, err error) {
 	r, err := this.Parse(scanner)
 	if err != nil {
 		return nil, err
 	}
-	rules, ok := r.(*ast.Rules)
+	rules, ok := r.(*asm.Rules)
 	if !ok {
-		return nil, &ErrWrongType{"*ast.Rules", r}
+		return nil, &ErrWrongType{"*asm.Rules", r}
 	}
 	return rules, nil
-}
-
-func (this *Parser) ParseExpr(scanner Scanner) (res *ast.Expr, err error) {
-	e, err := this.Parse(scanner)
-	if err != nil {
-		return nil, err
-	}
-	expr, ok := e.(*ast.Expr)
-	if !ok {
-		return nil, &ErrWrongType{"*ast.Expr", e}
-	}
-	return expr, nil
 }

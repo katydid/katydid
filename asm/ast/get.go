@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package ast
+package asm
 
 func (rs *Rules) HasRoot() bool {
 	for _, r := range rs.Rules {
@@ -32,6 +32,24 @@ func (rs *Rules) GetRoot() *Root {
 	return nil
 }
 
+func (rs *Rules) HasInit() bool {
+	for _, r := range rs.Rules {
+		if r.Init != nil {
+			return true
+		}
+	}
+	return false
+}
+
+func (rs *Rules) GetInit() *Init {
+	for _, r := range rs.Rules {
+		if r.Init != nil {
+			return r.Init
+		}
+	}
+	return nil
+}
+
 func (rs *Rules) GetTransitions() []*Transition {
 	trans := make([]*Transition, 0, len(rs.Rules))
 	for i, r := range rs.Rules {
@@ -42,6 +60,16 @@ func (rs *Rules) GetTransitions() []*Transition {
 	return trans
 }
 
+func (rs *Rules) GetFunctionDecls() []*FunctionDecl {
+	fs := make([]*FunctionDecl, 0, len(rs.Rules))
+	for i, r := range rs.Rules {
+		if r.FunctionDecl != nil {
+			fs = append(fs, rs.Rules[i].FunctionDecl)
+		}
+	}
+	return fs
+}
+
 func (rs *Rules) GetFinals() []*Final {
 	finals := make([]*Final, 0, len(rs.Rules))
 	for i, r := range rs.Rules {
@@ -50,14 +78,4 @@ func (rs *Rules) GetFinals() []*Final {
 		}
 	}
 	return finals
-}
-
-func (rs *Rules) GetInits() []*Init {
-	inits := make([]*Init, 0, len(rs.Rules))
-	for i, r := range rs.Rules {
-		if r.Init != nil {
-			inits = append(inits, rs.Rules[i].Init)
-		}
-	}
-	return inits
 }

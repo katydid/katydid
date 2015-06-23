@@ -12,20 +12,20 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package ast
+package asm
 
-type Visitor interface {
-	Visit(node interface{}) Visitor
-}
+import (
+	"github.com/katydid/katydid/expr/ast"
+)
 
-func (this *Rules) Walk(v Visitor) {
+func (this *Rules) Walk(v expr.Visitor) {
 	v = v.Visit(this)
 	for i := range this.Rules {
 		this.Rules[i].Walk(v)
 	}
 }
 
-func (this *Rule) Walk(v Visitor) {
+func (this *Rule) Walk(v expr.Visitor) {
 	if this.Root != nil {
 		this.Root.Walk(v)
 	}
@@ -43,61 +43,23 @@ func (this *Rule) Walk(v Visitor) {
 	}
 }
 
-func (this *Root) Walk(v Visitor) {
+func (this *Root) Walk(v expr.Visitor) {
 	v.Visit(this)
 }
 
-func (this *Init) Walk(v Visitor) {
+func (this *Init) Walk(v expr.Visitor) {
 	v.Visit(this)
 }
 
-func (this *Final) Walk(v Visitor) {
+func (this *Final) Walk(v expr.Visitor) {
 	v.Visit(this)
 }
 
-func (this *Transition) Walk(v Visitor) {
+func (this *Transition) Walk(v expr.Visitor) {
 	v.Visit(this)
 }
 
-func (this *FunctionDecl) Walk(v Visitor) {
+func (this *FunctionDecl) Walk(v expr.Visitor) {
 	v.Visit(this)
 	this.GetFunction().Walk(v)
-}
-
-func (this *Expr) Walk(v Visitor) {
-	v = v.Visit(this)
-	if this.Terminal != nil {
-		this.GetTerminal().Walk(v)
-	}
-	if this.List != nil {
-		this.GetList().Walk(v)
-	}
-	if this.Function != nil {
-		this.GetFunction().Walk(v)
-	}
-}
-
-func (this *List) Walk(v Visitor) {
-	v = v.Visit(this)
-	for _, e := range this.GetElems() {
-		e.Walk(v)
-	}
-}
-
-func (this *Function) Walk(v Visitor) {
-	v = v.Visit(this)
-	for _, e := range this.GetParams() {
-		e.Walk(v)
-	}
-}
-
-func (this *Terminal) Walk(v Visitor) {
-	v = v.Visit(this)
-	if this.Variable != nil {
-		this.GetVariable().Walk(v)
-	}
-}
-
-func (this *Variable) Walk(v Visitor) {
-	v = v.Visit(this)
 }

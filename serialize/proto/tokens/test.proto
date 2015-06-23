@@ -4,6 +4,7 @@ message Person {
   optional string Name = 1;
   repeated Address Addresses = 2;
   optional string Telephone = 3;
+  optional Address ParentsAddress = 4;
 }
 
 message Address {

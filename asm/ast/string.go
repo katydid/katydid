@@ -12,10 +12,9 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package ast
+package asm
 
 import (
-	"github.com/katydid/katydid/types"
 	"strings"
 )
 
@@ -64,86 +63,14 @@ func (this *Transition) String() string {
 }
 
 func (this *Destination) String() string {
-	return this.OpenParen.String() +
-		this.Child + this.CommaOne.String() + this.Success +
-		this.CommaTwo.String() + this.Failure + this.CloseParen.String()
+	return this.OpenParen.String() + this.BeforeChild.String() +
+		this.Child + this.CommaOne.String() + this.BeforeSuccess.String() +
+		this.Success + this.CommaTwo.String() + this.BeforeFailure.String() +
+		this.Failure + this.CloseParen.String()
 }
 
 func (this *FunctionDecl) String() string {
-	return this.Before.String() + this.BeforeName.String() +
+	return this.Before.String() + "func" + this.BeforeName.String() +
 		this.Name + this.Equal.String() + this.BeforeFunc.String() +
 		this.Function.String()
-}
-
-func (this *Expr) String() string {
-	space := this.Comma.String()
-	if this.Terminal != nil {
-		return space + this.GetTerminal().String()
-	}
-	if this.List != nil {
-		return space + this.GetList().String()
-	}
-	return space + this.GetFunction().String()
-}
-
-func (this *List) String() string {
-	es := make([]string, len(this.GetElems()))
-	for i, v := range this.GetElems() {
-		es[i] = v.String()
-	}
-	return this.Before.String() + listTypeToString(this.Type) + this.OpenCurly.String() + strings.Join(es, "") + this.CloseCurly.String()
-}
-
-func listTypeToString(typ types.Type) string {
-	switch typ {
-	case types.LIST_DOUBLE:
-		return "[]double"
-	case types.LIST_FLOAT:
-		return "[]float"
-	case types.LIST_INT64:
-		return "[]int64"
-	case types.LIST_UINT64:
-		return "[]uint64"
-	case types.LIST_INT32:
-		return "[]int32"
-	case types.LIST_BOOL:
-		return "[]bool"
-	case types.LIST_STRING:
-		return "[]string"
-	case types.LIST_BYTES:
-		return "[][]byte"
-	case types.LIST_UINT32:
-		return "[]uint32"
-	}
-	panic("unreachable")
-}
-
-func (this *Function) String() string {
-	ps := make([]string, len(this.GetParams()))
-	for i, v := range this.GetParams() {
-		ps[i] = v.String()
-	}
-	return this.Before.String() + this.GetName() + this.OpenParen.String() + strings.Join(ps, "") + this.CloseParen.String()
-}
-
-func (this *Terminal) String() string {
-	return this.Before.String() + this.Literal
-}
-
-func (this *Variable) String() string {
-	return this.Type.String()
-}
-
-func (this *Keyword) String() string {
-	if this == nil {
-		return ""
-	}
-	return this.Before.String() + this.Value
-}
-
-func (this *Space) String() string {
-	if this == nil {
-		return ""
-	}
-	return strings.Join(this.Space, "")
 }

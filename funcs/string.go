@@ -15,9 +15,32 @@
 package funcs
 
 import (
-	"code.google.com/p/go.text/unicode/norm"
 	"strings"
 )
+
+type toLower struct {
+	S String
+}
+
+func (this *toLower) Eval() string {
+	return strings.ToLower(this.S.Eval())
+}
+
+func init() {
+	Register("toLower", new(toLower))
+}
+
+type toUpper struct {
+	S String
+}
+
+func (this *toUpper) Eval() string {
+	return strings.ToUpper(this.S.Eval())
+}
+
+func init() {
+	Register("toUpper", new(toUpper))
+}
 
 type contains struct {
 	S      String
@@ -75,52 +98,4 @@ func (this *hasSuffix) Eval() bool {
 
 func init() {
 	Register("hasSuffix", new(hasSuffix))
-}
-
-type nfc struct {
-	V1 String
-}
-
-func (this *nfc) Eval() string {
-	return norm.NFC.String(this.V1.Eval())
-}
-
-func init() {
-	Register("nfc", new(nfc))
-}
-
-type nfd struct {
-	V1 String
-}
-
-func (this *nfd) Eval() string {
-	return norm.NFD.String(this.V1.Eval())
-}
-
-func init() {
-	Register("nfd", new(nfd))
-}
-
-type nfkc struct {
-	V1 String
-}
-
-func (this *nfkc) Eval() string {
-	return norm.NFKC.String(this.V1.Eval())
-}
-
-func init() {
-	Register("nfkc", new(nfkc))
-}
-
-type nfkd struct {
-	V1 String
-}
-
-func (this *nfkd) Eval() string {
-	return norm.NFKD.String(this.V1.Eval())
-}
-
-func init() {
-	Register("nfkd", new(nfkd))
 }

@@ -48,7 +48,7 @@ func TestCompileError(t *testing.T) {
 	if err != nil {
 		t.Fatalf(err.Error())
 	}
-	protoTokens, err := tokens.NewZipped(rules, fileDescriptorSet)
+	protoTokens, err := tokens.New(rules, fileDescriptorSet)
 	if err != nil {
 		panic(err)
 	}
@@ -80,7 +80,7 @@ func TestRuntimeError(t *testing.T) {
 	if err != nil {
 		t.Fatalf(err.Error())
 	}
-	protoTokens, err := tokens.NewZipped(rules, fileDescriptorSet)
+	protoTokens, err := tokens.New(rules, fileDescriptorSet)
 	if err != nil {
 		panic(err)
 	}

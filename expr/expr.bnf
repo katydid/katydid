@@ -1,0 +1,68 @@
+
+Function
+  : Space id OpenParen Exprs CloseParen << &expr.Function{Before: $0.(*expr.Space), Name: newString($1), OpenParen: $2.(*expr.Keyword), Params: $3.([]*expr.Expr), CloseParen: $4.(*expr.Keyword)}, nil >>
+  | Space id OpenParen CloseParen << &expr.Function{Before: $0.(*expr.Space), Name: newString($1), OpenParen: $2.(*expr.Keyword), CloseParen: $3.(*expr.Keyword)}, nil >>
+  | id OpenParen Exprs CloseParen << &expr.Function{Name: newString($0), OpenParen: $1.(*expr.Keyword), Params: $2.([]*expr.Expr), CloseParen: $3.(*expr.Keyword)}, nil >>
+  | id OpenParen CloseParen << &expr.Function{Name: newString($0), OpenParen: $1.(*expr.Keyword), CloseParen: $2.(*expr.Keyword)}, nil >>
+  ;
+
+List
+  : Space ListType OpenCurly Exprs CloseCurly << &expr.List{Before: $0.(*expr.Space), Type: $1.(types.Type), OpenCurly: $2.(*expr.Keyword), Elems: $3.([]*expr.Expr), CloseCurly: $4.(*expr.Keyword)}, nil >>
+  | ListType OpenCurly Exprs CloseCurly << &expr.List{Type: $0.(types.Type), OpenCurly: $1.(*expr.Keyword), Elems: $2.([]*expr.Expr), CloseCurly: $3.(*expr.Keyword)}, nil >>
+  | Space ListType OpenCurly CloseCurly << &expr.List{Before: $0.(*expr.Space), Type: $1.(types.Type), OpenCurly: $2.(*expr.Keyword), CloseCurly: $3.(*expr.Keyword)}, nil >>
+  | ListType OpenCurly CloseCurly << &expr.List{Type: $0.(types.Type), OpenCurly: $1.(*expr.Keyword), CloseCurly: $2.(*expr.Keyword)}, nil >>
+  ;
+
+Exprs
+  : Expr << []*expr.Expr{$0.(*expr.Expr)}, nil >>
+  | Exprs Comma Expr << append($0.([]*expr.Expr), expr.SetExprComma($2, $1)), nil >>
+  ;
+
+Expr
+  : SpaceTerminal << &expr.Expr{Terminal: $0.(*expr.Terminal)}, nil >>
+  | Function << &expr.Expr{Function: $0.(*expr.Function)}, nil >>
+  | List << &expr.Expr{List: $0.(*expr.List)}, nil >>
+  ;
+
+ListType
+  : "[]bool" << types.LIST_BOOL, nil >>
+  | "[]int64" << types.LIST_INT64, nil >>
+  | "[]int32" << types.LIST_INT32, nil >>
+  | "[]uint64" << types.LIST_UINT64, nil >>
+  | "[]uint32" << types.LIST_UINT32, nil >>
+  | "[]double" << types.LIST_DOUBLE, nil >>
+  | "[]float" << types.LIST_FLOAT, nil >>
+  | "[]string" << types.LIST_STRING, nil >>
+  | "[][]byte" << types.LIST_BYTES, nil >>
+  ;
+
+SpaceTerminal
+  : Terminal << $0, nil >>
+  | Space Terminal << expr.SetTerminalSpace($1, $0), nil >>
+  ;
+
+Terminal
+  : Bool << expr.NewBoolTerminal(newString($0)) >>
+  | int64_lit << expr.NewInt64Terminal(newString($0)) >>
+  | int32_lit << expr.NewInt32Terminal(newString($0)) >>
+  | uint64_lit << expr.NewUint64Terminal(newString($0)) >>
+  | uint32_lit << expr.NewUint32Terminal(newString($0)) >>
+  | double_lit << expr.NewDoubleTerminal(newString($0)) >>
+  | float_lit << expr.NewFloatTerminal(newString($0)) >>
+  | string_lit << expr.NewStringTerminal(newString($0)) >>
+  | bytes_lit << expr.NewBytesTerminal(newString($0)) >>
+  | bool_var << expr.NewVariableTerminal(types.SINGLE_BOOL) >>
+  | int64_var << expr.NewVariableTerminal(types.SINGLE_INT64) >>
+  | int32_var << expr.NewVariableTerminal(types.SINGLE_INT32) >>
+  | uint64_var << expr.NewVariableTerminal(types.SINGLE_UINT64) >>
+  | uint32_var << expr.NewVariableTerminal(types.SINGLE_UINT32) >>
+  | double_var << expr.NewVariableTerminal(types.SINGLE_DOUBLE) >>
+  | float_var << expr.NewVariableTerminal(types.SINGLE_FLOAT) >>
+  | string_var << expr.NewVariableTerminal(types.SINGLE_STRING) >>
+  | bytes_var << expr.NewVariableTerminal(types.SINGLE_BYTES) >>
+  ;
+
+Bool
+  : "true" << true, nil >>
+  | "false" << false, nil >>
+  ;

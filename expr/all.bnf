@@ -1,0 +1,250 @@
+//  DO NOT EDIT
+//  This is generated file, see build.sh
+//  Sources: license.bnf lexer.bnf, expr.bnf, keyword.bnf
+
+//  Copyright 2013 Walter Schulze
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+_lineComment : '/' '/' {.} '\n' ;
+
+_blockComment : '/' '*' {. | '*'} '*' '/' ;
+
+_comment : _lineComment | _blockComment ;
+
+_ws : ' ' | '\t' | '\n' | '\r' ; //whitespace
+
+space : _comment | _ws ;
+
+_decimal_digit : '0' - '9' ;
+_octal_digit : '0' - '7' ;
+_hex_digit : '0' - '9' | 'A' - 'F' | 'a' - 'f';
+
+_int_lit     : _decimal_lit | _octal_lit | _hex_lit ;
+_decimal_lit : ( '1' - '9' ) { _decimal_digit } ;
+_octal_lit   : '0' { _octal_digit } ;
+_hex_lit     : '0' ( 'x' | 'X' ) _hex_digit { _hex_digit } ;
+
+_singed_int_lit : ['-'] _int_lit ;
+
+int64_lit: _int64 '(' _singed_int_lit ')' ;
+int32_lit: _int32 '(' _singed_int_lit ')' ;
+uint64_lit: _uint64 '(' _int_lit ')' ;
+uint32_lit: _uint32 '(' _int_lit ')' ;
+
+_decimals  : _decimal_digit { _decimal_digit } ;
+_exponent  : ( 'e' | 'E' ) [ '+' | '-' ] _decimals ;
+
+_float_lit : ( _decimals '.' _decimals _exponent )
+			| ( _decimals '.' ( _decimals | _exponent ) )
+          	| ( _decimals _exponent )
+          	| ( '.' _decimals [ _exponent ] ) 
+          	;
+
+double_lit: _double '(' ['-'] ( _float_lit | _int_lit ) ')' ;
+
+float_lit: _float '(' ['-'] ( _float_lit | _int_lit ) ')' ;
+
+_upcase : 'A'-'Z' ;
+_lowcase : 'a'-'z' ;
+_id_char : _upcase | _lowcase | '_' | _decimal_digit ;
+
+_id : (_upcase | _lowcase | '_' ) {_id_char} ;
+id : _id ;
+
+_double : 'd' 'o' 'u' 'b' 'l' 'e' ;
+_float : 'f' 'l' 'o' 'a' 't' ;
+_int64 : 'i' 'n' 't' '6' '4';
+_uint64 : 'u' 'i' 'n' 't' '6' '4';
+_int32 : 'i' 'n' 't' '3' '2';
+_uint32 : 'u' 'i' 'n' 't' '3' '2';
+_bytes : '[' ']' 'b' 'y' 't' 'e' ;
+_string : 's' 't' 'r' 'i' 'n' 'g' ;
+_bool : 'b' 'o' 'o' 'l' ;
+
+_qualid : _id { '.' _id } ;
+
+double_var : '$' _double ;
+float_var : '$' _float ;
+int64_var : '$' _int64 ;
+uint64_var : '$' _uint64 ;
+int32_var : '$' _int32 ;
+uint32_var : '$' _uint32 ;
+bytes_var : '$' _bytes ;
+string_var : '$' _string ;
+bool_var : '$' _bool ;
+
+_big_u_value      : '\\' 'U' _hex_digit _hex_digit _hex_digit _hex_digit
+                            _hex_digit _hex_digit _hex_digit _hex_digit ;
+_little_u_value   : '\\' 'u' _hex_digit _hex_digit _hex_digit _hex_digit ;
+_hex_byte_u_value   : '\\' 'x' _hex_digit _hex_digit ;
+
+_octal_byte_u_value : '\\' _octal_digit _octal_digit _octal_digit ;
+_byte_value       : _octal_byte_u_value | _hex_byte_u_value ;
+_raw_string : '`' {.} '`' ;
+_escaped_char     : '\\' ( 'a' | 'b' | 'f' | 'n' | 'r' | 't' | 'v' | '\\' | '\'' | '"' ) ;
+_unicode_value    : . | _little_u_value | _big_u_value | _escaped_char ;
+_interpreted_string : '"' { _unicode_value | _byte_value } '"' ;
+
+string_lit : _raw_string | _interpreted_string ;
+
+_char_lit	: '\'' (_unicode_value | _byte_value) '\'' ;
+
+_byte_elem : _int_lit | _char_lit ;
+
+bytes_lit : _bytes '{' { _ws } [ _byte_elem { { _ws } ',' { _ws } _byte_elem } ] { _ws } '}' ;
+
+<< 
+import (
+  "github.com/katydid/katydid/expr/ast"
+  "github.com/katydid/katydid/types"
+  "github.com/katydid/katydid/expr/token"
+)
+
+func newString(v interface{}) string {
+  t := v.(*token.Token)
+  return string(t.Lit)
+}
+
+>>
+Function
+  : Space id OpenParen Exprs CloseParen << &expr.Function{Before: $0.(*expr.Space), Name: newString($1), OpenParen: $2.(*expr.Keyword), Params: $3.([]*expr.Expr), CloseParen: $4.(*expr.Keyword)}, nil >>
+  | Space id OpenParen CloseParen << &expr.Function{Before: $0.(*expr.Space), Name: newString($1), OpenParen: $2.(*expr.Keyword), CloseParen: $3.(*expr.Keyword)}, nil >>
+  | id OpenParen Exprs CloseParen << &expr.Function{Name: newString($0), OpenParen: $1.(*expr.Keyword), Params: $2.([]*expr.Expr), CloseParen: $3.(*expr.Keyword)}, nil >>
+  | id OpenParen CloseParen << &expr.Function{Name: newString($0), OpenParen: $1.(*expr.Keyword), CloseParen: $2.(*expr.Keyword)}, nil >>
+  ;
+
+List
+  : Space ListType OpenCurly Exprs CloseCurly << &expr.List{Before: $0.(*expr.Space), Type: $1.(types.Type), OpenCurly: $2.(*expr.Keyword), Elems: $3.([]*expr.Expr), CloseCurly: $4.(*expr.Keyword)}, nil >>
+  | ListType OpenCurly Exprs CloseCurly << &expr.List{Type: $0.(types.Type), OpenCurly: $1.(*expr.Keyword), Elems: $2.([]*expr.Expr), CloseCurly: $3.(*expr.Keyword)}, nil >>
+  | Space ListType OpenCurly CloseCurly << &expr.List{Before: $0.(*expr.Space), Type: $1.(types.Type), OpenCurly: $2.(*expr.Keyword), CloseCurly: $3.(*expr.Keyword)}, nil >>
+  | ListType OpenCurly CloseCurly << &expr.List{Type: $0.(types.Type), OpenCurly: $1.(*expr.Keyword), CloseCurly: $2.(*expr.Keyword)}, nil >>
+  ;
+
+Exprs
+  : Expr << []*expr.Expr{$0.(*expr.Expr)}, nil >>
+  | Exprs Comma Expr << append($0.([]*expr.Expr), expr.SetExprComma($2, $1)), nil >>
+  ;
+
+Expr
+  : SpaceTerminal << &expr.Expr{Terminal: $0.(*expr.Terminal)}, nil >>
+  | Function << &expr.Expr{Function: $0.(*expr.Function)}, nil >>
+  | List << &expr.Expr{List: $0.(*expr.List)}, nil >>
+  ;
+
+ListType
+  : "[]bool" << types.LIST_BOOL, nil >>
+  | "[]int64" << types.LIST_INT64, nil >>
+  | "[]int32" << types.LIST_INT32, nil >>
+  | "[]uint64" << types.LIST_UINT64, nil >>
+  | "[]uint32" << types.LIST_UINT32, nil >>
+  | "[]double" << types.LIST_DOUBLE, nil >>
+  | "[]float" << types.LIST_FLOAT, nil >>
+  | "[]string" << types.LIST_STRING, nil >>
+  | "[][]byte" << types.LIST_BYTES, nil >>
+  ;
+
+SpaceTerminal
+  : Terminal << $0, nil >>
+  | Space Terminal << expr.SetTerminalSpace($1, $0), nil >>
+  ;
+
+Terminal
+  : Bool << expr.NewBoolTerminal(newString($0)) >>
+  | int64_lit << expr.NewInt64Terminal(newString($0)) >>
+  | int32_lit << expr.NewInt32Terminal(newString($0)) >>
+  | uint64_lit << expr.NewUint64Terminal(newString($0)) >>
+  | uint32_lit << expr.NewUint32Terminal(newString($0)) >>
+  | double_lit << expr.NewDoubleTerminal(newString($0)) >>
+  | float_lit << expr.NewFloatTerminal(newString($0)) >>
+  | string_lit << expr.NewStringTerminal(newString($0)) >>
+  | bytes_lit << expr.NewBytesTerminal(newString($0)) >>
+  | bool_var << expr.NewVariableTerminal(types.SINGLE_BOOL) >>
+  | int64_var << expr.NewVariableTerminal(types.SINGLE_INT64) >>
+  | int32_var << expr.NewVariableTerminal(types.SINGLE_INT32) >>
+  | uint64_var << expr.NewVariableTerminal(types.SINGLE_UINT64) >>
+  | uint32_var << expr.NewVariableTerminal(types.SINGLE_UINT32) >>
+  | double_var << expr.NewVariableTerminal(types.SINGLE_DOUBLE) >>
+  | float_var << expr.NewVariableTerminal(types.SINGLE_FLOAT) >>
+  | string_var << expr.NewVariableTerminal(types.SINGLE_STRING) >>
+  | bytes_var << expr.NewVariableTerminal(types.SINGLE_BYTES) >>
+  ;
+
+Bool
+  : "true" << true, nil >>
+  | "false" << false, nil >>
+  ;
+Equal
+  : "="  << &expr.Keyword{Value: "="}, nil >>
+  | Space "=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "=",
+    }, nil
+  >>
+  ;
+
+OpenParen
+  : "(" << &expr.Keyword{Value: "("}, nil >>
+  | Space "(" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "(",
+    }, nil
+  >>
+  ;
+
+CloseParen
+  : ")" << &expr.Keyword{Value: ")"}, nil >>
+  | Space ")" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: ")",
+    }, nil
+  >>
+  ;
+
+OpenCurly
+  : "{" << &expr.Keyword{Value: "{"}, nil >>
+  | Space "{" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "{",
+    }, nil
+  >>
+  ;
+
+CloseCurly
+  : "}" << &expr.Keyword{Value: "}"}, nil >>
+  | Space "}" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "}",
+    }, nil
+  >>
+  ;
+
+Comma
+  : "," << &expr.Keyword{Value: ","}, nil >>
+  | Space "," << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: ",",
+    }, nil
+  >>
+  ;
+
+Space
+  : Space space << expr.AppendSpace($0, newString($1)), nil >>
+  | space << &expr.Space{Space: []string{newString($0)}}, nil >>
+  ;

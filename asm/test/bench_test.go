@@ -44,7 +44,7 @@ func newBench(protoFilename string, katydidStr string) bench {
 	if err != nil {
 		panic(err)
 	}
-	protoTokens, err := tokens.NewZipped(rules, fileDescriptorSet)
+	protoTokens, err := tokens.New(rules, fileDescriptorSet)
 	if err != nil {
 		panic(err)
 	}

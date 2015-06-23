@@ -14,17 +14,17 @@
 
 syntax = "proto2";
 
-package ast;
+package asm;
 
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
-import "github.com/katydid/katydid/types/types.proto";
+import "github.com/katydid/katydid/expr/ast/expr.proto";
 
 option (gogoproto.goproto_stringer_all) = false;
 option (gogoproto.gostring_all) = true;
 
 message Rules {
 	repeated Rule Rules = 1;
-	optional Space Final = 2;
+	optional expr.Space Final = 2;
 }
 
 message Rule {
@@ -36,110 +36,56 @@ message Rule {
 }
 
 message Root {
-	optional Space Before = 1;
-	optional Keyword Equal = 2;
-	optional Space BeforeQualId = 3;
+	optional expr.Space Before = 1;
+	optional expr.Keyword Equal = 2;
+	optional expr.Space BeforeQualId = 3;
 	optional string Package = 4 [(gogoproto.nullable) = false];
 	optional string Message = 5 [(gogoproto.nullable) = false];
 }
 
 message Init {
-	optional Space Before = 1;
-	optional Keyword Equal = 2;
-	optional Space BeforeState = 3;
+	optional expr.Space Before = 1;
+	optional expr.Keyword Equal = 2;
+	optional expr.Space BeforeState = 3;
 	optional string State = 4 [(gogoproto.nullable) = false];
 }
 
 message Final {
-	optional Space Before = 1;
-	optional Keyword Equal = 2;
-	optional Space BeforeState = 3;
+	optional expr.Space Before = 1;
+	optional expr.Keyword Equal = 2;
+	optional expr.Space BeforeState = 3;
 	optional string State = 4 [(gogoproto.nullable) = false];
 }
 
 message Transition {
-	optional Space Before = 1;
+	optional expr.Space Before = 1;
 	optional string Src = 2 [(gogoproto.nullable) = false];
-	optional Space BeforeInput = 3;
+	optional expr.Space BeforeInput = 3;
 	optional string Input = 4 [(gogoproto.nullable) = false];
-	optional Keyword Equal = 5;
+	optional expr.Keyword Equal = 5;
 	optional Destination Dst = 6;
 }
 
 message Destination {
-	optional Keyword OpenParen = 1;
-	optional Space BeforeChild = 2;
+	optional expr.Keyword OpenParen = 1;
+	optional expr.Space BeforeChild = 2;
 	optional string Child = 3 [(gogoproto.nullable) = false];
-	optional Keyword CommaOne = 4;
-	optional Space BeforeSuccess = 5;
+	optional expr.Keyword CommaOne = 4;
+	optional expr.Space BeforeSuccess = 5;
 	optional string Success = 6 [(gogoproto.nullable) = false];
-	optional Keyword CommaTwo = 7;
-	optional Space BeforeFailure = 8;
+	optional expr.Keyword CommaTwo = 7;
+	optional expr.Space BeforeFailure = 8;
 	optional string Failure = 9 [(gogoproto.nullable) = false];
-	optional Keyword CloseParen = 10;
+	optional expr.Keyword CloseParen = 10;
 }
 
 message FunctionDecl {
-	optional Space Before = 1;
-	optional Space BeforeName = 2;
-	optional string Name = 3  [(gogoproto.nullable) = false];
-	optional Keyword Equal = 4;
-	optional Space BeforeFunc = 5;
-	optional Function Function = 6;
+	optional expr.Space Before = 1;
+	optional expr.Space BeforeName = 2;
+	optional string Name = 3 [(gogoproto.nullable) = false];
+	optional expr.Keyword Equal = 4;
+	optional expr.Space BeforeFunc = 5;
+	optional expr.Function Function = 6;
 }
 
-message Expr {
-	optional Keyword Comma = 1;
-	optional Terminal Terminal = 2;
-	optional List List = 3;
-	optional Function Function = 4;
-}
-
-message List {
-	optional Space Before = 1;
-	optional types.Type Type = 2 [(gogoproto.nullable) = false];
-	optional Keyword OpenCurly = 3;
-	repeated Expr Elems = 4;
-	optional Keyword CloseCurly = 5;
-}
-
-message Function {
-	optional Space Before = 1;
-	optional string Name = 2 [(gogoproto.nullable) = false];
-	optional Keyword OpenParen = 3;
-	repeated Expr Params = 4;
-	optional Keyword CloseParen = 5;
-}
-
-message Terminal {
-	optional Space Before = 1;
-	optional string Literal = 2 [(gogoproto.nullable) = false];
-
-	optional double DoubleValue = 3;
-	optional float FloatValue = 4;
-	optional int64 Int64Value = 5;
-	optional uint64 Uint64Value = 6;
-	optional int32 Int32Value = 7;
-
-	optional bool BoolValue = 8;
-	optional string StringValue = 9;
-
-	optional bytes BytesValue = 10;
-	optional uint32 Uint32Value = 11;
-
-	optional Variable Variable = 50;
-}
-
-message Variable {
-	optional types.Type Type = 2 [(gogoproto.nullable) = false];
-}
-
-message Keyword {
-	optional Space Before = 1;
-	optional string Value = 2 [(gogoproto.nullable) = false];
-}
-
-message Space {
-	repeated string Space = 1;
-}
 

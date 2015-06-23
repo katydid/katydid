@@ -17,18 +17,16 @@ package exec
 import (
 	"github.com/katydid/katydid/serialize"
 	"io"
+	"log"
+	"reflect"
 )
 
-type Table interface {
-	Trans(src int, input int) (int, error)
+type Machine interface {
+	Transition(src int, name string) (child int, success int, failure int, err error)
 	NoEscapeFrom(src int) bool
-	StateToName(state int) string
-}
-
-type Link interface {
-	TokenToStart(token int) (startState int, exists bool)
-	GetIf(token int) bool
-	IfEval(serialize.Decoder) int
+	SetFunc(id int) bool
+	EvalFunc(serialize.Decoder) bool
+	Implements(typ reflect.Type) []interface{}
 }
 
 type Catcher interface {
@@ -40,77 +38,124 @@ type Catcher interface {
 type Scanner interface {
 	Next() error
 	IsLeaf() bool
-	Id() int
+	Name() string
 	Up()
 	Down()
 	serialize.Decoder
 }
 
-func NewExec(table Table, link Link, catcher Catcher, startState int, acceptState int) *Exec {
+func NewExec(machine Machine, catcher Catcher, startState int, acceptStates []int) *Exec {
 	return &Exec{
-		table:       table,
-		Link:        link,
-		catcher:     catcher,
-		startState:  startState,
-		acceptState: acceptState,
+		machine:      machine,
+		catcher:      catcher,
+		startState:   startState,
+		acceptStates: acceptStates,
+		debug:        true,
 	}
 }
 
 type Exec struct {
-	table       Table
-	Link        Link
-	catcher     Catcher
-	startState  int
-	acceptState int
-	scanner     Scanner
+	machine      Machine
+	catcher      Catcher
+	startState   int
+	acceptStates []int
+	scanner      Scanner
+	debug        bool
 }
 
-func (this *Exec) Eval(scanner Scanner) (bool, error) {
-	this.catcher.Clear()
-	this.scanner = scanner
-	i, err := this.eval(this.startState)
+func elem(i int, js []int) bool {
+	for _, j := range js {
+		if j == i {
+			return true
+		}
+	}
+	return false
+}
+
+func (e *Exec) Implements(typ reflect.Type) []interface{} {
+	return e.machine.Implements(typ)
+}
+
+func (e *Exec) Eval(scanner Scanner) (bool, error) {
+	e.catcher.Clear()
+	e.scanner = scanner
+	i, err := e.eval(e.startState)
 	if err != nil && err != io.EOF {
 		return false, err
 	}
-	return i == this.acceptState, this.catcher.GetError()
+	return elem(i, e.acceptStates), e.catcher.GetError()
 }
 
-func (this *Exec) eval(state int) (int, error) {
-	if this.table.NoEscapeFrom(state) {
+func (e *Exec) eval(state int) (int, error) {
+	if e.machine.NoEscapeFrom(state) {
 		return state, nil
 	}
-	err := this.scanner.Next()
+	if e.debug {
+		log.Printf("eval -> Next")
+	}
+	err := e.scanner.Next()
+	var child, success, failure int
 	for err == nil {
-		if this.scanner.IsLeaf() {
-			if this.Link.GetIf(this.scanner.Id()) {
-				inputSymbol := this.Link.IfEval(this.scanner)
-				state, err = this.table.Trans(state, inputSymbol)
-				if err != nil {
-					return 0, err
+		child, success, failure, err = e.machine.Transition(state, e.scanner.Name())
+		if err != nil {
+			return -1, err
+		}
+		if e.scanner.IsLeaf() {
+			if ok := e.machine.SetFunc(child); ok {
+				if e.machine.EvalFunc(e.scanner) {
+					if e.debug {
+						log.Printf("Leaf -> success")
+					}
+					state = success
+				} else {
+					if e.debug {
+						log.Printf("Leaf -> failure")
+					}
+					state = failure
 				}
-				if this.table.NoEscapeFrom(state) {
-					return state, nil
+			} else {
+				if e.debug {
+					log.Printf("Leaf -> NoFunc")
 				}
+				state = failure
+			}
+			if e.machine.NoEscapeFrom(state) {
+				return state, nil
 			}
 		} else {
-			startState, ok := this.Link.TokenToStart(this.scanner.Id())
-			if ok {
-				this.scanner.Down()
-				inputSymbol, err := this.eval(startState)
-				if err != nil {
-					return 0, err
+			if e.debug {
+				log.Printf("Node -> Down")
+			}
+			e.scanner.Down()
+			final, err := e.eval(child)
+			if err != nil {
+				return 0, err
+			}
+			e.scanner.Up()
+			if elem(final, e.acceptStates) {
+				if e.debug {
+					log.Printf("Node -> Up -> success")
 				}
-				this.scanner.Up()
-				state, err = this.table.Trans(state, inputSymbol)
-				if err != nil {
-					return 0, err
+				state = success
+			} else {
+				if e.debug {
+					log.Printf("Node -> Up -> failure")
 				}
-				if this.table.NoEscapeFrom(state) {
-					return state, nil
-				}
+				state = failure
+			}
+			if e.machine.NoEscapeFrom(state) {
+				return state, nil
 			}
 		}
-		err = this.scanner.Next()
+		if e.debug {
+			log.Printf("loop -> Next")
+		}
+		err = e.scanner.Next()
+		if e.debug {
+			if err != nil {
+				log.Printf("loop err = %v", err)
+			}
+		}
 	}
 	if err != io.EOF {
 		return 0, err

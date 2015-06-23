@@ -17,32 +17,32 @@ package tokens
 import (
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 	"github.com/katydid/katydid/asm/maps"
-	"strings"
 )
 
 type Visitor interface {
 	GetToken(pkg, msg, field string) int
 	AddTrans(srcToken int, field *descriptor.FieldDescriptorProto, dstToken int)
-	StringTokens() []string
 }
 
 type visitor struct {
-	trans        map[int]map[uint64]int
-	nameToToken  map[string]int
-	tokenToName  map[int]string
-	leaf         map[int]bool
-	types        map[int]descriptor.FieldDescriptorProto_Type
-	stringTokens []string
+	transKey    map[int]map[uint64]int
+	trans       map[int]map[string]int
+	transName   map[int]map[uint64]string
+	nameToToken map[string]int
+	tokenToName map[int]string
+	leaf        map[int]bool
+	types       map[int]descriptor.FieldDescriptorProto_Type
 }
 
-func newVisitor(stringTokens []string) *visitor {
+func newVisitor() *visitor {
 	visitor := &visitor{
-		trans:        make(map[int]map[uint64]int),
-		nameToToken:  make(map[string]int),
-		tokenToName:  make(map[int]string),
-		leaf:         make(map[int]bool),
-		types:        make(map[int]descriptor.FieldDescriptorProto_Type),
-		stringTokens: stringTokens,
+		transKey:    make(map[int]map[uint64]int),
+		trans:       make(map[int]map[string]int),
+		transName:   make(map[int]map[uint64]string),
+		nameToToken: make(map[string]int),
+		tokenToName: make(map[int]string),
+		leaf:        make(map[int]bool),
+		types:       make(map[int]descriptor.FieldDescriptorProto_Type),
 	}
 	return visitor
 }
@@ -72,37 +72,56 @@ func (this *visitor) GetToken(pkg, msg, field string) int {
 
 func (this *visitor) AddTrans(srcToken int, field *descriptor.FieldDescriptorProto, dstToken int) {
 	input := field.GetKeyUint64()
-	if _, ok := this.trans[srcToken]; !ok {
-		this.trans[srcToken] = make(map[uint64]int)
+	if _, ok := this.transKey[srcToken]; !ok {
+		this.transKey[srcToken] = make(map[uint64]int)
 	}
-	if _, ok := this.trans[srcToken][input]; ok {
+	if _, ok := this.transKey[srcToken][input]; ok {
 		panic("transition already exists")
 	}
-	this.trans[srcToken][input] = dstToken
+	this.transKey[srcToken][input] = dstToken
 	this.types[dstToken] = *field.Type
-}
 
-func (this *visitor) StringTokens() []string {
-	return this.stringTokens
+	inputName := field.GetName()
+	if _, ok := this.trans[srcToken]; !ok {
+		this.trans[srcToken] = make(map[string]int)
+	}
+	if _, ok := this.trans[srcToken][inputName]; ok {
+		panic("transition already exists")
+	}
+	this.trans[srcToken][inputName] = dstToken
+
+	if _, ok := this.transName[srcToken]; !ok {
+		this.transName[srcToken] = make(map[uint64]string)
+	}
+	if _, ok := this.transName[srcToken][input]; ok {
+		panic("transition already exists")
+	}
+	this.transName[srcToken][input] = inputName
 }
 
 func (this *visitor) finalize() *protoTokens {
 	numStates := len(this.tokenToName)
 	m := &protoTokens{
-		trans:       make([]maps.Uint64ToInt, numStates),
-		tokenToName: make([]string, numStates),
+		transKey:    make([]maps.Uint64ToInt, numStates),
+		trans:       make(map[int]map[string]int),
+		tokenToName: make(map[int]string),
+		transName:   this.transName,
 		nameToToken: this.nameToToken,
 		leaf:        make([]bool, numStates),
 		types:       make([]descriptor.FieldDescriptorProto_Type, numStates),
 	}
 	for i := 0; i < numStates; i++ {
-		if len(this.trans[i]) > 0 {
-			m.trans[i] = maps.NewUint64ToInt(this.trans[i])
+		if len(this.transKey[i]) > 0 {
+			m.transKey[i] = maps.NewUint64ToInt(this.transKey[i])
 		}
 		m.tokenToName[i] = this.tokenToName[i]
 		m.leaf[i] = this.leaf[i]
 		if t, ok := this.types[i]; ok {
 			m.types[i] = t
+		}
+		m.trans[i] = make(map[string]int)
+		for k, v := range this.trans[i] {
+			m.trans[i][k] = v
 		}
 	}
 	return m
@@ -129,33 +148,7 @@ func (this *walker) isVisited(pkg, msg string) bool {
 	return ok
 }
 
-func included(stringTokens []string, pkg string, msg string, field string) bool {
-	if stringTokens == nil {
-		return true
-	}
-	for _, inc := range stringTokens {
-		incs := strings.Split(inc, ".")
-		if incs[0] == pkg {
-			if incs[1] == msg {
-				if len(incs) > 2 {
-					if incs[2] == field {
-						return true
-					}
-				} else {
-					if len(field) == 0 {
-						return true
-					}
-				}
-			}
-		}
-	}
-	return false
-}
-
 func (this *walker) visit(srcPackage string, srcMessage string) error {
-	if !included(this.visitor.StringTokens(), srcPackage, srcMessage, "") {
-		return nil
-	}
 	msg := this.desc.GetMessage(srcPackage, srcMessage)
 	if msg == nil {
 		return &errUnknown{srcPackage + "." + srcMessage}
@@ -176,9 +169,6 @@ func (this *walker) visit(srcPackage string, srcMessage string) error {
 			}
 			this.visitor.AddTrans(currentState, f, dstState)
 		} else {
-			if !included(this.visitor.StringTokens(), srcPackage, srcMessage, f.GetName()) {
-				continue
-			}
 			dstState := this.visitor.GetToken(srcPackage, srcMessage, f.GetName())
 			this.visitor.AddTrans(currentState, f, dstState)
 		}

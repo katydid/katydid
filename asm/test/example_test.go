@@ -170,22 +170,26 @@ var robert = &main.Person{
 var contextPerson = `//Has this person ever lived at 456 TheStreet
 
 root = main.Person
-main.Person = start
-start numberAndStreet = accept
-start _ = start
+init = start
+final = accept
 
-main.Address = address
-address number = number
-address street = street
-address _ = address
-number street = numberAndStreet
-number _ = number
-street number = numberAndStreet
-street _ = street
+accept _ = (accept, accept, accept)
+reject _ = (reject, reject, reject)
+ignore _ = (ignore, ignore, ignore)
 
-if eq($int64(main.Address.Number), int64(456)) then number else noNumber
+start Addresses = (address, accept, start)
+start _ = (ignore, start, start)
+address Number = (number, hasNumber, address)
+address Street = (street, hasStreet, address)
+address _ = (ignore, address, address)
+hasNumber Street = (street, accept, hasNumber)
+hasNumber _ = (ignore, hasNumber, hasNumber)
+hasStreet Number = (number, accept, hasStreet)
+hasStreet _ = (ignore, hasStreet, hasStreet)
 
-if contains(nfkc($string(main.Address.Street)), nfkc("TheStreet")) then street else noStreet
+func number = eq($int64, int64(456))
+func street = contains(toLower($string), toLower("TheStreet"))
+
 `
 
 func TestContextDavid(t *testing.T) {
@@ -294,14 +298,15 @@ var syscall = &main.SrcTree{
 var recursiveSrcTree = `//Does this SrcTree depend on io or is its package name io
 
 root = main.SrcTree
-main.SrcTree = start
-start accept = accept
-start _ = start
-accept _ = accept
+init = start
+final = accept
 
-if eq($string(main.SrcTree.PackageName), "io") 
-  then accept 
-  else packageName
+accept _ = (accept, accept, accept)
+
+start Imports = (start, accept, start)
+start PackageName = (packageName, accept, start)
+
+func packageName = eq($string, "io")
 
 `
 
@@ -364,6 +369,10 @@ var shaker = &main.Person{
 			Street: proto.String("SomeStreet"),
 		},
 		{
+			Number: proto.Int64(2),
+			Street: proto.String("SomeStreet"),
+		},
+		{
 			Number: proto.Int64(1),
 			Street: proto.String("SomeStreet"),
 		},
@@ -387,31 +396,51 @@ var listIndexAddress = `//Is this Person's newest street number 1 and second new
 // find main.Person where { main.Person { Addresses[-2].Number == 2 && Addresses[-1].Number == 1 } }
 
 root = main.Person
-main.Person = start
-start numberTwo = topNumberTwo
-start _ = start
-topNumberTwo numberOne = accept
-topNumberTwo numberTwo = topNumberTwo
-topNumberTwo _ = start
-accept numberTwo = topNumberTwo
-accept _ = start
+init = start
+final = accept
 
-main.Address = address
-address numberTwo = numberTwo
-address numberOne = numberOne
-address _ = address
-numberTwo numberTwo = numberTwo
-numberTwo numberOne = numberOne
-numberOne numberTwo = numberTwo
-numberOne numberOne = numberOne
+ignore _ = (ignore, ignore, ignore)
 
-if eq($int64(main.Address.Number), int64(1))
-  then numberOne
-  else {
-    if eq($int64(main.Address.Number), int64(2))
-    then numberTwo
-    else noNumber
-  }
+func numberOne = eq($int64, int64(1))
+func numberTwo = eq($int64, int64(2))
+
+start Addresses = (lookingForTwo, hasTwo, start)
+start _ = (ignore, start, start)
+
+lookingForTwo Number = (numberTwo, accept, ignore)
+lookingForTwo _ = (ignore, lookingForTwo, lookingForTwo)
+
+hasTwo Addresses = (lookingForOne, accept, start)
+hasTwo _ = (ignore, hasTwo, hasTwo)
+
+lookingForOne Number = (numberOne, accept, ignore)
+lookingForOne _ = (ignore, lookingForOne, lookingForOne)
+
+// main.Person = start
+// start numberTwo = topNumberTwo
+// start _ = start
+// topNumberTwo numberOne = accept
+// topNumberTwo numberTwo = topNumberTwo
+// topNumberTwo _ = start
+// accept numberTwo = topNumberTwo
+// accept _ = start
+
+// main.Address = address
+// address numberTwo = numberTwo
+// address numberOne = numberOne
+// address _ = address
+// numberTwo numberTwo = numberTwo
+// numberTwo numberOne = numberOne
+// numberOne numberTwo = numberTwo
+// numberOne numberOne = numberOne
+
+// if eq($int64(main.Address.Number), int64(1))
+//   then numberOne
+//   else {
+//     if eq($int64(main.Address.Number), int64(2))
+//     then numberTwo
+//     else noNumber
+//   }
 `
 
 func TestListIndexAddressMover(t *testing.T) {
@@ -461,13 +490,13 @@ var smith = &main.Person{
 var nilName = `//Is this person's name missing
 
 root = main.Person
-main.Person = accept
-accept name = reject
-accept _ = accept
+init = accept
+final = accept
 
-if exists($string(main.Person.Name))
-  then name
-  else noname
+accept Name = (accept, reject, reject)
+reject _ = (reject, reject, reject)
+accept _ = (accept, accept, accept)
+
 `
 
 func TestNilNameNoName(t *testing.T) {
@@ -485,14 +514,13 @@ func TestNilNameSmith(t *testing.T) {
 var lenName = `//Is this person's name an empty string
 
 root = main.Person
-main.Person = start
-start name = reject
-start noname = accept
-start _ = start
+init = start
+final = accept
+start Name = (zeroLength, accept, start)
+start _ = (accept, start, start)
+accept _ = (accept, accept, accept)
 
-if eq(length($string(main.Person.Name)), int64(0))
-  then noname
-  else name
+func zeroLength = eq(length($string), int64(0))
 `
 
 func TestLenNameNoName(t *testing.T) {
@@ -510,13 +538,15 @@ func TestLenNameSmith(t *testing.T) {
 var emptyOrNil = `//Is this person's name empty or an empty string
 
 root = main.Person
-main.Person = accept
-accept name = reject
-accept _ = accept
+init = accept
+final = accept
 
-if eq(length($string(main.Person.Name)), int64(0))
-  then noname
-  else name
+accept Name = (zeroLength, accept, reject)
+accept _ = (accept, accept, accept)
+reject _ = (reject, reject, reject)
+
+func zeroLength = eq(length($string), int64(0))
+
 `
 
 func TestEmptyOrNilNoName(t *testing.T) {
@@ -531,14 +561,18 @@ func TestEmptyOrNilSmith(t *testing.T) {
 	example(t, "person.proto", smith, emptyOrNil, true)
 }
 
-var incorrentNotName = `root = main.Person
-main.Person = start
-start notname = accept
-start _ = start
+var incorrentNotName = `
 
-if not(eq($string(main.Person.Name), "David")) 
-  then notname 
-  else name
+root = main.Person
+init = start
+final = accept
+
+start Name = (notDavid, accept, start)
+start _ = (accept, start, start)
+accept _ = (accept, accept, accept)
+
+func notDavid = not(eq($string, "David"))
+
 `
 
 func TestIncorrectNotNameNoName(t *testing.T) {
@@ -557,15 +591,18 @@ func TestIncorrectNotNameDavid(t *testing.T) {
 	example(t, "person.proto", david, incorrentNotName, false)
 }
 
-var correctNotName = `root = main.Person
-main.Person = accept
-accept name = reject
-reject _ = reject
-accept _ = accept
+var correctNotName = `
 
-if eq($string(main.Person.Name), "David") 
-  then name 
-  else noname
+root = main.Person
+init = accept
+final = accept
+
+accept Name = (david, reject, accept)
+accept _ = (accept, accept, accept)
+reject _ = (reject, reject, reject)
+
+func david = eq($string, "David") 
+
 `
 
 func TestCorrectNotNameNoName(t *testing.T) {
@@ -587,22 +624,23 @@ func TestCorrectNotNameDavid(t *testing.T) {
 var andNameTelephone = `//Is this person's name David and telephone number 0123456789
 
 root = main.Person
-main.Person = start
-start name = name
-start tel = tel
-start _ = start
-name tel = accept
-name _ = name
-tel name = accept
-tel _ = tel
+init = start
+final = accept
 
-if eq($string(main.Person.Name), "David") 
-  then name 
-  else noname
+start Name = (name, hasName, start)
+start Telephone = (tel, hasTel, start)
+hasName Telephone = (tel, accept, hasName)
+hasTel Name = (name, accept, hasTel)
 
-if eq($string(main.Person.Telephone), "0123456789") 
-  then tel 
-  else notel
+start _ = (accept, start, start)
+hasName _ = (accept, hasName, hasName)
+hasTel _ = (accept, hasTel, hasTel)
+accept _ = (accept, accept, accept)
+
+func name = eq($string, "David") 
+
+func tel = eq($string, "0123456789") 
+
 `
 
 func TestAndNameTelephoneDavid(t *testing.T) {
@@ -624,19 +662,16 @@ func TestAndNameTelephoneSmith(t *testing.T) {
 var orNameTelephone = `//Is this person's name David or telephone number 0123456789
 
 root = main.Person
-main.Person = start
-start name = accept
-start tel = accept
-start _ = start
-accept _ = accept
+init = start
+final = accept
 
-if eq($string(main.Person.Name), "David") 
-  then name 
-  else noname
+start Name = (number, accept, start)
+start Telephone = (tel, accept, start)
+start _ = (accept, start, start)
+accept _ = (accept, accept, accept)
 
-if eq($string(main.Person.Telephone), "0123456789") 
-  then tel 
-  else notel
+func name = eq($string, "David") 
+func tel = eq($string, "0123456789") 
 `
 
 func TestOrNameTelephoneDavid(t *testing.T) {
@@ -658,18 +693,14 @@ func TestOrNameTelephoneSmith(t *testing.T) {
 var listOfTelephones = `//Is this person's telephone number 0123456789 or 0127897897
 
 root = main.Person
-main.Person = start
-start tel = accept
-start _ = start
-accept _ = accept
+init = start
+final = accept
 
-if eq($string(main.Person.Telephone), elem([]string{"0123456789", "0127897897"}, int64(0))) 
-  then tel
-  else {
-  	if eq($string(main.Person.Telephone), elem(range([]string{"0", "1", "0123456789", "0127897897"}, int64(2), int64(4)), int64(1)))
-  	then tel
-  	else notel
-  }
+start Telephone = (tel, accept, start)
+start _ = (accept, start, start)
+accept _ = (accept, accept, accept)
+
+func tel = or(eq($string, "0123456789"), eq($string, "0127897897"))
 
 `
 

@@ -15,9 +15,11 @@
 package tokens
 
 import (
+	"fmt"
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 	"github.com/katydid/katydid/asm/ast"
 	prototokens "github.com/katydid/katydid/serialize/proto/tokens"
+	"strings"
 )
 
 type errUnknown struct {
@@ -32,6 +34,7 @@ type JsonTokens interface {
 	Len() int
 	GetTokenId(tokenString string) (int, error)
 	Lookup(parentToken int, name []byte) int
+	Dot() string
 }
 
 type Visitor interface {
@@ -42,17 +45,15 @@ type Visitor interface {
 
 type visitor struct {
 	*jsonTokens
-	stringTokens []string
 }
 
-func newVisitor(stringTokens []string) *visitor {
+func newVisitor() *visitor {
 	visitor := &visitor{
 		jsonTokens: &jsonTokens{
 			trans:       make(map[int]map[string]int),
 			nameToToken: make(map[string]int),
 			tokenToName: make(map[int]string),
 		},
-		stringTokens: stringTokens,
 	}
 	return visitor
 }
@@ -92,35 +93,19 @@ func (this *visitor) AddTrans(srcToken int, field *descriptor.FieldDescriptorPro
 	this.trans[srcToken][input] = dstToken
 }
 
-func (this *visitor) StringTokens() []string {
-	return this.stringTokens
-}
-
 type jsonTokens struct {
 	tokenToName map[int]string
 	nameToToken map[string]int
 	trans       map[int]map[string]int
 }
 
-func NewZipped(rules *ast.Rules, desc *descriptor.FileDescriptorSet) (JsonTokens, error) {
-	stringTokens, err := ast.GetStringTokens(rules)
-	if err != nil {
-		return nil, err
-	}
-	tokens, err := new(rules.GetRoot().GetPackage(), rules.GetRoot().GetMessage(), desc, stringTokens)
-	if err != nil {
-		return nil, err
-	}
-	return tokens, nil
-}
-
-func New(rules *ast.Rules, desc *descriptor.FileDescriptorSet) (JsonTokens, error) {
+func New(rules *asm.Rules, desc *descriptor.FileDescriptorSet) (JsonTokens, error) {
 	srcPackage, srcMessage := rules.GetRoot().GetPackage(), rules.GetRoot().GetMessage()
-	return new(srcPackage, srcMessage, desc, nil)
+	return new(srcPackage, srcMessage, desc)
 }
 
-func new(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet, stringTokens []string) (JsonTokens, error) {
-	visitor := newVisitor(stringTokens)
+func new(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet) (JsonTokens, error) {
+	visitor := newVisitor()
 	if err := prototokens.Walk(srcPackage, srcMessage, desc, visitor); err != nil {
 		return nil, err
 	}
@@ -153,4 +138,21 @@ func (this *jsonTokens) Lookup(parentToken int, name []byte) int {
 	newToken := this.getToken(fullName)
 	this.trans[parentToken][strName] = newToken
 	return newToken
+}
+
+func (this *jsonTokens) Dot() string {
+	nodes := make([]string, len(this.tokenToName))
+	for i, name := range this.tokenToName {
+		nodes[i] = fmt.Sprintf("\tnode%d [label=\"%v\"]\n", i, name)
+	}
+	transs := make([]string, 0, len(this.trans))
+	for src, trans := range this.trans {
+		if trans == nil {
+			continue
+		}
+		for input, dst := range trans {
+			transs = append(transs, fmt.Sprintf("\tnode%d -> node%d [label=\"%s\"]\n", src, dst, input))
+		}
+	}
+	return "digraph tokens {\n" + strings.Join(nodes, "") + "\n" + strings.Join(transs, "") + "}"
 }

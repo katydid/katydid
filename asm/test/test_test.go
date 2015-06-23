@@ -28,8 +28,13 @@ import (
 	"github.com/katydid/katydid/serialize/proto/scanner"
 	"github.com/katydid/katydid/serialize/proto/tokens"
 	reflectscanner "github.com/katydid/katydid/serialize/reflect/scanner"
+	"log"
 	"reflect"
 )
+
+func init() {
+	log.SetFlags(log.Lshortfile)
+}
 
 var (
 	gogoprotoImportPath = "../../../../../:../../../../../github.com/gogo/protobuf/protobuf"
@@ -53,7 +58,7 @@ func test(t *testing.T, protoFilename string, m proto.Message, katydidStr string
 	}
 
 	//Testing Query on Protocol Buffer Marshaled Structures
-	protoTokens, err := tokens.NewZipped(rules, fileDescriptorSet)
+	protoTokens, err := tokens.New(rules, fileDescriptorSet)
 	if err != nil {
 		panic(err)
 	}
@@ -77,7 +82,7 @@ func test(t *testing.T, protoFilename string, m proto.Message, katydidStr string
 	}
 
 	//Testing Query on Json Marshaled Structures
-	jsonTokens, err := jsontokens.NewZipped(rules, fileDescriptorSet)
+	jsonTokens, err := jsontokens.New(rules, fileDescriptorSet)
 	if err != nil {
 		panic(err)
 	}

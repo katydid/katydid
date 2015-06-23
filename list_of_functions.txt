@@ -69,10 +69,6 @@ func lt(v1 int32,v2 int32) bool
 func lt(v1 int64,v2 int64) bool
 func lt(v1 uint32,v2 uint32) bool
 func lt(v1 uint64,v2 uint64) bool
-func nfc(v1 string) string
-func nfd(v1 string) string
-func nfkc(v1 string) string
-func nfkd(v1 string) string
 func not(v1 bool) bool
 func now() int64
 func or(v1 bool,v2 bool) bool
@@ -104,3 +100,5 @@ func range(list []string,first int64,last int64) []string
 func range(list []uint32,first int64,last int64) []uint32
 func range(list []uint64,first int64,last int64) []uint64
 func regex(expr const string,b []byte) bool
+func toLower(s string) string
+func toUpper(s string) string

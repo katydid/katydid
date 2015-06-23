@@ -521,6 +521,10 @@ type state struct {
 	isValueObject    bool
 }
 
+func (s *jsonScanner) Name() string {
+	return string(s.name)
+}
+
 func (s *jsonScanner) Up() {
 	top := len(s.stack) - 1
 	s.state = s.stack[top]

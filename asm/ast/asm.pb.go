@@ -3,7 +3,7 @@
 // DO NOT EDIT!
 
 /*
-Package ast is a generated protocol buffer package.
+Package asm is a generated protocol buffer package.
 
 It is generated from these files:
 	asm.proto
@@ -17,21 +17,14 @@ It has these top-level messages:
 	Transition
 	Destination
 	FunctionDecl
-	Expr
-	List
-	Function
-	Terminal
-	Variable
-	Keyword
-	Space
 */
-package ast
+package asm
 
 import proto "github.com/gogo/protobuf/proto"
 import math "math"
 
 // discarding unused import gogoproto "github.com/gogo/protobuf/gogoproto/gogo.pb"
-import types "github.com/katydid/katydid/types"
+import expr "github.com/katydid/katydid/expr/ast"
 
 import fmt "fmt"
 import strings "strings"
@@ -45,9 +38,9 @@ var _ = proto.Marshal
 var _ = math.Inf
 
 type Rules struct {
-	Rules            []*Rule `protobuf:"bytes,1,rep" json:"Rules,omitempty"`
-	Final            *Space  `protobuf:"bytes,2,opt" json:"Final,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Rules            []*Rule     `protobuf:"bytes,1,rep" json:"Rules,omitempty"`
+	Final            *expr.Space `protobuf:"bytes,2,opt" json:"Final,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
 }
 
 func (m *Rules) Reset()      { *m = Rules{} }
@@ -60,7 +53,7 @@ func (m *Rules) GetRules() []*Rule {
 	return nil
 }
 
-func (m *Rules) GetFinal() *Space {
+func (m *Rules) GetFinal() *expr.Space {
 	if m != nil {
 		return m.Final
 	}
@@ -115,32 +108,32 @@ func (m *Rule) GetFunctionDecl() *FunctionDecl {
 }
 
 type Root struct {
-	Before           *Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Equal            *Keyword `protobuf:"bytes,2,opt" json:"Equal,omitempty"`
-	BeforeQualId     *Space   `protobuf:"bytes,3,opt" json:"BeforeQualId,omitempty"`
-	Package          string   `protobuf:"bytes,4,opt" json:"Package"`
-	Message          string   `protobuf:"bytes,5,opt" json:"Message"`
-	XXX_unrecognized []byte   `json:"-"`
+	Before           *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
+	Equal            *expr.Keyword `protobuf:"bytes,2,opt" json:"Equal,omitempty"`
+	BeforeQualId     *expr.Space   `protobuf:"bytes,3,opt" json:"BeforeQualId,omitempty"`
+	Package          string        `protobuf:"bytes,4,opt" json:"Package"`
+	Message          string        `protobuf:"bytes,5,opt" json:"Message"`
+	XXX_unrecognized []byte        `json:"-"`
 }
 
 func (m *Root) Reset()      { *m = Root{} }
 func (*Root) ProtoMessage() {}
 
-func (m *Root) GetBefore() *Space {
+func (m *Root) GetBefore() *expr.Space {
 	if m != nil {
 		return m.Before
 	}
 	return nil
 }
 
-func (m *Root) GetEqual() *Keyword {
+func (m *Root) GetEqual() *expr.Keyword {
 	if m != nil {
 		return m.Equal
 	}
 	return nil
 }
 
-func (m *Root) GetBeforeQualId() *Space {
+func (m *Root) GetBeforeQualId() *expr.Space {
 	if m != nil {
 		return m.BeforeQualId
 	}
@@ -162,31 +155,31 @@ func (m *Root) GetMessage() string {
 }
 
 type Init struct {
-	Before           *Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Equal            *Keyword `protobuf:"bytes,2,opt" json:"Equal,omitempty"`
-	BeforeState      *Space   `protobuf:"bytes,3,opt" json:"BeforeState,omitempty"`
-	State            string   `protobuf:"bytes,4,opt" json:"State"`
-	XXX_unrecognized []byte   `json:"-"`
+	Before           *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
+	Equal            *expr.Keyword `protobuf:"bytes,2,opt" json:"Equal,omitempty"`
+	BeforeState      *expr.Space   `protobuf:"bytes,3,opt" json:"BeforeState,omitempty"`
+	State            string        `protobuf:"bytes,4,opt" json:"State"`
+	XXX_unrecognized []byte        `json:"-"`
 }
 
 func (m *Init) Reset()      { *m = Init{} }
 func (*Init) ProtoMessage() {}
 
-func (m *Init) GetBefore() *Space {
+func (m *Init) GetBefore() *expr.Space {
 	if m != nil {
 		return m.Before
 	}
 	return nil
 }
 
-func (m *Init) GetEqual() *Keyword {
+func (m *Init) GetEqual() *expr.Keyword {
 	if m != nil {
 		return m.Equal
 	}
 	return nil
 }
 
-func (m *Init) GetBeforeState() *Space {
+func (m *Init) GetBeforeState() *expr.Space {
 	if m != nil {
 		return m.BeforeState
 	}
@@ -201,31 +194,31 @@ func (m *Init) GetState() string {
 }
 
 type Final struct {
-	Before           *Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Equal            *Keyword `protobuf:"bytes,2,opt" json:"Equal,omitempty"`
-	BeforeState      *Space   `protobuf:"bytes,3,opt" json:"BeforeState,omitempty"`
-	State            string   `protobuf:"bytes,4,opt" json:"State"`
-	XXX_unrecognized []byte   `json:"-"`
+	Before           *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
+	Equal            *expr.Keyword `protobuf:"bytes,2,opt" json:"Equal,omitempty"`
+	BeforeState      *expr.Space   `protobuf:"bytes,3,opt" json:"BeforeState,omitempty"`
+	State            string        `protobuf:"bytes,4,opt" json:"State"`
+	XXX_unrecognized []byte        `json:"-"`
 }
 
 func (m *Final) Reset()      { *m = Final{} }
 func (*Final) ProtoMessage() {}
 
-func (m *Final) GetBefore() *Space {
+func (m *Final) GetBefore() *expr.Space {
 	if m != nil {
 		return m.Before
 	}
 	return nil
 }
 
-func (m *Final) GetEqual() *Keyword {
+func (m *Final) GetEqual() *expr.Keyword {
 	if m != nil {
 		return m.Equal
 	}
 	return nil
 }
 
-func (m *Final) GetBeforeState() *Space {
+func (m *Final) GetBeforeState() *expr.Space {
 	if m != nil {
 		return m.BeforeState
 	}
@@ -240,19 +233,19 @@ func (m *Final) GetState() string {
 }
 
 type Transition struct {
-	Before           *Space       `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Src              string       `protobuf:"bytes,2,opt" json:"Src"`
-	BeforeInput      *Space       `protobuf:"bytes,3,opt" json:"BeforeInput,omitempty"`
-	Input            string       `protobuf:"bytes,4,opt" json:"Input"`
-	Equal            *Keyword     `protobuf:"bytes,5,opt" json:"Equal,omitempty"`
-	Dst              *Destination `protobuf:"bytes,6,opt" json:"Dst,omitempty"`
-	XXX_unrecognized []byte       `json:"-"`
+	Before           *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
+	Src              string        `protobuf:"bytes,2,opt" json:"Src"`
+	BeforeInput      *expr.Space   `protobuf:"bytes,3,opt" json:"BeforeInput,omitempty"`
+	Input            string        `protobuf:"bytes,4,opt" json:"Input"`
+	Equal            *expr.Keyword `protobuf:"bytes,5,opt" json:"Equal,omitempty"`
+	Dst              *Destination  `protobuf:"bytes,6,opt" json:"Dst,omitempty"`
+	XXX_unrecognized []byte        `json:"-"`
 }
 
 func (m *Transition) Reset()      { *m = Transition{} }
 func (*Transition) ProtoMessage() {}
 
-func (m *Transition) GetBefore() *Space {
+func (m *Transition) GetBefore() *expr.Space {
 	if m != nil {
 		return m.Before
 	}
@@ -266,7 +259,7 @@ func (m *Transition) GetSrc() string {
 	return ""
 }
 
-func (m *Transition) GetBeforeInput() *Space {
+func (m *Transition) GetBeforeInput() *expr.Space {
 	if m != nil {
 		return m.BeforeInput
 	}
@@ -280,7 +273,7 @@ func (m *Transition) GetInput() string {
 	return ""
 }
 
-func (m *Transition) GetEqual() *Keyword {
+func (m *Transition) GetEqual() *expr.Keyword {
 	if m != nil {
 		return m.Equal
 	}
@@ -295,30 +288,30 @@ func (m *Transition) GetDst() *Destination {
 }
 
 type Destination struct {
-	OpenParen        *Keyword `protobuf:"bytes,1,opt" json:"OpenParen,omitempty"`
-	BeforeChild      *Space   `protobuf:"bytes,2,opt" json:"BeforeChild,omitempty"`
-	Child            string   `protobuf:"bytes,3,opt" json:"Child"`
-	CommaOne         *Keyword `protobuf:"bytes,4,opt" json:"CommaOne,omitempty"`
-	BeforeSuccess    *Space   `protobuf:"bytes,5,opt" json:"BeforeSuccess,omitempty"`
-	Success          string   `protobuf:"bytes,6,opt" json:"Success"`
-	CommaTwo         *Keyword `protobuf:"bytes,7,opt" json:"CommaTwo,omitempty"`
-	BeforeFailure    *Space   `protobuf:"bytes,8,opt" json:"BeforeFailure,omitempty"`
-	Failure          string   `protobuf:"bytes,9,opt" json:"Failure"`
-	CloseParen       *Keyword `protobuf:"bytes,10,opt" json:"CloseParen,omitempty"`
-	XXX_unrecognized []byte   `json:"-"`
+	OpenParen        *expr.Keyword `protobuf:"bytes,1,opt" json:"OpenParen,omitempty"`
+	BeforeChild      *expr.Space   `protobuf:"bytes,2,opt" json:"BeforeChild,omitempty"`
+	Child            string        `protobuf:"bytes,3,opt" json:"Child"`
+	CommaOne         *expr.Keyword `protobuf:"bytes,4,opt" json:"CommaOne,omitempty"`
+	BeforeSuccess    *expr.Space   `protobuf:"bytes,5,opt" json:"BeforeSuccess,omitempty"`
+	Success          string        `protobuf:"bytes,6,opt" json:"Success"`
+	CommaTwo         *expr.Keyword `protobuf:"bytes,7,opt" json:"CommaTwo,omitempty"`
+	BeforeFailure    *expr.Space   `protobuf:"bytes,8,opt" json:"BeforeFailure,omitempty"`
+	Failure          string        `protobuf:"bytes,9,opt" json:"Failure"`
+	CloseParen       *expr.Keyword `protobuf:"bytes,10,opt" json:"CloseParen,omitempty"`
+	XXX_unrecognized []byte        `json:"-"`
 }
 
 func (m *Destination) Reset()      { *m = Destination{} }
 func (*Destination) ProtoMessage() {}
 
-func (m *Destination) GetOpenParen() *Keyword {
+func (m *Destination) GetOpenParen() *expr.Keyword {
 	if m != nil {
 		return m.OpenParen
 	}
 	return nil
 }
 
-func (m *Destination) GetBeforeChild() *Space {
+func (m *Destination) GetBeforeChild() *expr.Space {
 	if m != nil {
 		return m.BeforeChild
 	}
@@ -332,14 +325,14 @@ func (m *Destination) GetChild() string {
 	return ""
 }
 
-func (m *Destination) GetCommaOne() *Keyword {
+func (m *Destination) GetCommaOne() *expr.Keyword {
 	if m != nil {
 		return m.CommaOne
 	}
 	return nil
 }
 
-func (m *Destination) GetBeforeSuccess() *Space {
+func (m *Destination) GetBeforeSuccess() *expr.Space {
 	if m != nil {
 		return m.BeforeSuccess
 	}
@@ -353,14 +346,14 @@ func (m *Destination) GetSuccess() string {
 	return ""
 }
 
-func (m *Destination) GetCommaTwo() *Keyword {
+func (m *Destination) GetCommaTwo() *expr.Keyword {
 	if m != nil {
 		return m.CommaTwo
 	}
 	return nil
 }
 
-func (m *Destination) GetBeforeFailure() *Space {
+func (m *Destination) GetBeforeFailure() *expr.Space {
 	if m != nil {
 		return m.BeforeFailure
 	}
@@ -374,7 +367,7 @@ func (m *Destination) GetFailure() string {
 	return ""
 }
 
-func (m *Destination) GetCloseParen() *Keyword {
+func (m *Destination) GetCloseParen() *expr.Keyword {
 	if m != nil {
 		return m.CloseParen
 	}
@@ -382,26 +375,26 @@ func (m *Destination) GetCloseParen() *Keyword {
 }
 
 type FunctionDecl struct {
-	Before           *Space    `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	BeforeName       *Space    `protobuf:"bytes,2,opt" json:"BeforeName,omitempty"`
-	Name             string    `protobuf:"bytes,3,opt" json:"Name"`
-	Equal            *Keyword  `protobuf:"bytes,4,opt" json:"Equal,omitempty"`
-	BeforeFunc       *Space    `protobuf:"bytes,5,opt" json:"BeforeFunc,omitempty"`
-	Function         *Function `protobuf:"bytes,6,opt" json:"Function,omitempty"`
-	XXX_unrecognized []byte    `json:"-"`
+	Before           *expr.Space    `protobuf:"bytes,1,opt" json:"Before,omitempty"`
+	BeforeName       *expr.Space    `protobuf:"bytes,2,opt" json:"BeforeName,omitempty"`
+	Name             string         `protobuf:"bytes,3,opt" json:"Name"`
+	Equal            *expr.Keyword  `protobuf:"bytes,4,opt" json:"Equal,omitempty"`
+	BeforeFunc       *expr.Space    `protobuf:"bytes,5,opt" json:"BeforeFunc,omitempty"`
+	Function         *expr.Function `protobuf:"bytes,6,opt" json:"Function,omitempty"`
+	XXX_unrecognized []byte         `json:"-"`
 }
 
 func (m *FunctionDecl) Reset()      { *m = FunctionDecl{} }
 func (*FunctionDecl) ProtoMessage() {}
 
-func (m *FunctionDecl) GetBefore() *Space {
+func (m *FunctionDecl) GetBefore() *expr.Space {
 	if m != nil {
 		return m.Before
 	}
 	return nil
 }
 
-func (m *FunctionDecl) GetBeforeName() *Space {
+func (m *FunctionDecl) GetBeforeName() *expr.Space {
 	if m != nil {
 		return m.BeforeName
 	}
@@ -415,312 +408,23 @@ func (m *FunctionDecl) GetName() string {
 	return ""
 }
 
-func (m *FunctionDecl) GetEqual() *Keyword {
+func (m *FunctionDecl) GetEqual() *expr.Keyword {
 	if m != nil {
 		return m.Equal
 	}
 	return nil
 }
 
-func (m *FunctionDecl) GetBeforeFunc() *Space {
+func (m *FunctionDecl) GetBeforeFunc() *expr.Space {
 	if m != nil {
 		return m.BeforeFunc
 	}
 	return nil
 }
 
-func (m *FunctionDecl) GetFunction() *Function {
+func (m *FunctionDecl) GetFunction() *expr.Function {
 	if m != nil {
 		return m.Function
-	}
-	return nil
-}
-
-type Expr struct {
-	Comma            *Keyword  `protobuf:"bytes,1,opt" json:"Comma,omitempty"`
-	Terminal         *Terminal `protobuf:"bytes,2,opt" json:"Terminal,omitempty"`
-	List             *List     `protobuf:"bytes,3,opt" json:"List,omitempty"`
-	Function         *Function `protobuf:"bytes,4,opt" json:"Function,omitempty"`
-	XXX_unrecognized []byte    `json:"-"`
-}
-
-func (m *Expr) Reset()      { *m = Expr{} }
-func (*Expr) ProtoMessage() {}
-
-func (m *Expr) GetComma() *Keyword {
-	if m != nil {
-		return m.Comma
-	}
-	return nil
-}
-
-func (m *Expr) GetTerminal() *Terminal {
-	if m != nil {
-		return m.Terminal
-	}
-	return nil
-}
-
-func (m *Expr) GetList() *List {
-	if m != nil {
-		return m.List
-	}
-	return nil
-}
-
-func (m *Expr) GetFunction() *Function {
-	if m != nil {
-		return m.Function
-	}
-	return nil
-}
-
-type List struct {
-	Before           *Space     `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Type             types.Type `protobuf:"varint,2,opt,enum=types.Type" json:"Type"`
-	OpenCurly        *Keyword   `protobuf:"bytes,3,opt" json:"OpenCurly,omitempty"`
-	Elems            []*Expr    `protobuf:"bytes,4,rep" json:"Elems,omitempty"`
-	CloseCurly       *Keyword   `protobuf:"bytes,5,opt" json:"CloseCurly,omitempty"`
-	XXX_unrecognized []byte     `json:"-"`
-}
-
-func (m *List) Reset()      { *m = List{} }
-func (*List) ProtoMessage() {}
-
-func (m *List) GetBefore() *Space {
-	if m != nil {
-		return m.Before
-	}
-	return nil
-}
-
-func (m *List) GetType() types.Type {
-	if m != nil {
-		return m.Type
-	}
-	return types.UNKNOWN
-}
-
-func (m *List) GetOpenCurly() *Keyword {
-	if m != nil {
-		return m.OpenCurly
-	}
-	return nil
-}
-
-func (m *List) GetElems() []*Expr {
-	if m != nil {
-		return m.Elems
-	}
-	return nil
-}
-
-func (m *List) GetCloseCurly() *Keyword {
-	if m != nil {
-		return m.CloseCurly
-	}
-	return nil
-}
-
-type Function struct {
-	Before           *Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Name             string   `protobuf:"bytes,2,opt" json:"Name"`
-	OpenParen        *Keyword `protobuf:"bytes,3,opt" json:"OpenParen,omitempty"`
-	Params           []*Expr  `protobuf:"bytes,4,rep" json:"Params,omitempty"`
-	CloseParen       *Keyword `protobuf:"bytes,5,opt" json:"CloseParen,omitempty"`
-	XXX_unrecognized []byte   `json:"-"`
-}
-
-func (m *Function) Reset()      { *m = Function{} }
-func (*Function) ProtoMessage() {}
-
-func (m *Function) GetBefore() *Space {
-	if m != nil {
-		return m.Before
-	}
-	return nil
-}
-
-func (m *Function) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
-
-func (m *Function) GetOpenParen() *Keyword {
-	if m != nil {
-		return m.OpenParen
-	}
-	return nil
-}
-
-func (m *Function) GetParams() []*Expr {
-	if m != nil {
-		return m.Params
-	}
-	return nil
-}
-
-func (m *Function) GetCloseParen() *Keyword {
-	if m != nil {
-		return m.CloseParen
-	}
-	return nil
-}
-
-type Terminal struct {
-	Before           *Space    `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Literal          string    `protobuf:"bytes,2,opt" json:"Literal"`
-	DoubleValue      *float64  `protobuf:"fixed64,3,opt" json:"DoubleValue,omitempty"`
-	FloatValue       *float32  `protobuf:"fixed32,4,opt" json:"FloatValue,omitempty"`
-	Int64Value       *int64    `protobuf:"varint,5,opt" json:"Int64Value,omitempty"`
-	Uint64Value      *uint64   `protobuf:"varint,6,opt" json:"Uint64Value,omitempty"`
-	Int32Value       *int32    `protobuf:"varint,7,opt" json:"Int32Value,omitempty"`
-	BoolValue        *bool     `protobuf:"varint,8,opt" json:"BoolValue,omitempty"`
-	StringValue      *string   `protobuf:"bytes,9,opt" json:"StringValue,omitempty"`
-	BytesValue       []byte    `protobuf:"bytes,10,opt" json:"BytesValue,omitempty"`
-	Uint32Value      *uint32   `protobuf:"varint,11,opt" json:"Uint32Value,omitempty"`
-	Variable         *Variable `protobuf:"bytes,50,opt" json:"Variable,omitempty"`
-	XXX_unrecognized []byte    `json:"-"`
-}
-
-func (m *Terminal) Reset()      { *m = Terminal{} }
-func (*Terminal) ProtoMessage() {}
-
-func (m *Terminal) GetBefore() *Space {
-	if m != nil {
-		return m.Before
-	}
-	return nil
-}
-
-func (m *Terminal) GetLiteral() string {
-	if m != nil {
-		return m.Literal
-	}
-	return ""
-}
-
-func (m *Terminal) GetDoubleValue() float64 {
-	if m != nil && m.DoubleValue != nil {
-		return *m.DoubleValue
-	}
-	return 0
-}
-
-func (m *Terminal) GetFloatValue() float32 {
-	if m != nil && m.FloatValue != nil {
-		return *m.FloatValue
-	}
-	return 0
-}
-
-func (m *Terminal) GetInt64Value() int64 {
-	if m != nil && m.Int64Value != nil {
-		return *m.Int64Value
-	}
-	return 0
-}
-
-func (m *Terminal) GetUint64Value() uint64 {
-	if m != nil && m.Uint64Value != nil {
-		return *m.Uint64Value
-	}
-	return 0
-}
-
-func (m *Terminal) GetInt32Value() int32 {
-	if m != nil && m.Int32Value != nil {
-		return *m.Int32Value
-	}
-	return 0
-}
-
-func (m *Terminal) GetBoolValue() bool {
-	if m != nil && m.BoolValue != nil {
-		return *m.BoolValue
-	}
-	return false
-}
-
-func (m *Terminal) GetStringValue() string {
-	if m != nil && m.StringValue != nil {
-		return *m.StringValue
-	}
-	return ""
-}
-
-func (m *Terminal) GetBytesValue() []byte {
-	if m != nil {
-		return m.BytesValue
-	}
-	return nil
-}
-
-func (m *Terminal) GetUint32Value() uint32 {
-	if m != nil && m.Uint32Value != nil {
-		return *m.Uint32Value
-	}
-	return 0
-}
-
-func (m *Terminal) GetVariable() *Variable {
-	if m != nil {
-		return m.Variable
-	}
-	return nil
-}
-
-type Variable struct {
-	Type             types.Type `protobuf:"varint,2,opt,enum=types.Type" json:"Type"`
-	XXX_unrecognized []byte     `json:"-"`
-}
-
-func (m *Variable) Reset()      { *m = Variable{} }
-func (*Variable) ProtoMessage() {}
-
-func (m *Variable) GetType() types.Type {
-	if m != nil {
-		return m.Type
-	}
-	return types.UNKNOWN
-}
-
-type Keyword struct {
-	Before           *Space `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Value            string `protobuf:"bytes,2,opt" json:"Value"`
-	XXX_unrecognized []byte `json:"-"`
-}
-
-func (m *Keyword) Reset()      { *m = Keyword{} }
-func (*Keyword) ProtoMessage() {}
-
-func (m *Keyword) GetBefore() *Space {
-	if m != nil {
-		return m.Before
-	}
-	return nil
-}
-
-func (m *Keyword) GetValue() string {
-	if m != nil {
-		return m.Value
-	}
-	return ""
-}
-
-type Space struct {
-	Space            []string `protobuf:"bytes,1,rep" json:"Space,omitempty"`
-	XXX_unrecognized []byte   `json:"-"`
-}
-
-func (m *Space) Reset()      { *m = Space{} }
-func (*Space) ProtoMessage() {}
-
-func (m *Space) GetSpace() []string {
-	if m != nil {
-		return m.Space
 	}
 	return nil
 }
@@ -731,7 +435,7 @@ func (this *Rules) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.Rules{` +
+	s := strings.Join([]string{`&asm.Rules{` +
 		`Rules:` + fmt.Sprintf("%#v", this.Rules),
 		`Final:` + fmt.Sprintf("%#v", this.Final),
 		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
@@ -741,7 +445,7 @@ func (this *Rule) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.Rule{` +
+	s := strings.Join([]string{`&asm.Rule{` +
 		`Root:` + fmt.Sprintf("%#v", this.Root),
 		`Init:` + fmt.Sprintf("%#v", this.Init),
 		`Final:` + fmt.Sprintf("%#v", this.Final),
@@ -754,7 +458,7 @@ func (this *Root) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.Root{` +
+	s := strings.Join([]string{`&asm.Root{` +
 		`Before:` + fmt.Sprintf("%#v", this.Before),
 		`Equal:` + fmt.Sprintf("%#v", this.Equal),
 		`BeforeQualId:` + fmt.Sprintf("%#v", this.BeforeQualId),
@@ -767,7 +471,7 @@ func (this *Init) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.Init{` +
+	s := strings.Join([]string{`&asm.Init{` +
 		`Before:` + fmt.Sprintf("%#v", this.Before),
 		`Equal:` + fmt.Sprintf("%#v", this.Equal),
 		`BeforeState:` + fmt.Sprintf("%#v", this.BeforeState),
@@ -779,7 +483,7 @@ func (this *Final) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.Final{` +
+	s := strings.Join([]string{`&asm.Final{` +
 		`Before:` + fmt.Sprintf("%#v", this.Before),
 		`Equal:` + fmt.Sprintf("%#v", this.Equal),
 		`BeforeState:` + fmt.Sprintf("%#v", this.BeforeState),
@@ -791,7 +495,7 @@ func (this *Transition) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.Transition{` +
+	s := strings.Join([]string{`&asm.Transition{` +
 		`Before:` + fmt.Sprintf("%#v", this.Before),
 		`Src:` + fmt.Sprintf("%#v", this.Src),
 		`BeforeInput:` + fmt.Sprintf("%#v", this.BeforeInput),
@@ -805,7 +509,7 @@ func (this *Destination) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.Destination{` +
+	s := strings.Join([]string{`&asm.Destination{` +
 		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
 		`BeforeChild:` + fmt.Sprintf("%#v", this.BeforeChild),
 		`Child:` + fmt.Sprintf("%#v", this.Child),
@@ -823,99 +527,13 @@ func (this *FunctionDecl) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ast.FunctionDecl{` +
+	s := strings.Join([]string{`&asm.FunctionDecl{` +
 		`Before:` + fmt.Sprintf("%#v", this.Before),
 		`BeforeName:` + fmt.Sprintf("%#v", this.BeforeName),
 		`Name:` + fmt.Sprintf("%#v", this.Name),
 		`Equal:` + fmt.Sprintf("%#v", this.Equal),
 		`BeforeFunc:` + fmt.Sprintf("%#v", this.BeforeFunc),
 		`Function:` + fmt.Sprintf("%#v", this.Function),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *Expr) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ast.Expr{` +
-		`Comma:` + fmt.Sprintf("%#v", this.Comma),
-		`Terminal:` + fmt.Sprintf("%#v", this.Terminal),
-		`List:` + fmt.Sprintf("%#v", this.List),
-		`Function:` + fmt.Sprintf("%#v", this.Function),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *List) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ast.List{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Type:` + fmt.Sprintf("%#v", this.Type),
-		`OpenCurly:` + fmt.Sprintf("%#v", this.OpenCurly),
-		`Elems:` + fmt.Sprintf("%#v", this.Elems),
-		`CloseCurly:` + fmt.Sprintf("%#v", this.CloseCurly),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *Function) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ast.Function{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Name:` + fmt.Sprintf("%#v", this.Name),
-		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
-		`Params:` + fmt.Sprintf("%#v", this.Params),
-		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *Terminal) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ast.Terminal{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Literal:` + fmt.Sprintf("%#v", this.Literal),
-		`DoubleValue:` + valueToGoStringAsm(this.DoubleValue, "float64"),
-		`FloatValue:` + valueToGoStringAsm(this.FloatValue, "float32"),
-		`Int64Value:` + valueToGoStringAsm(this.Int64Value, "int64"),
-		`Uint64Value:` + valueToGoStringAsm(this.Uint64Value, "uint64"),
-		`Int32Value:` + valueToGoStringAsm(this.Int32Value, "int32"),
-		`BoolValue:` + valueToGoStringAsm(this.BoolValue, "bool"),
-		`StringValue:` + valueToGoStringAsm(this.StringValue, "string"),
-		`BytesValue:` + valueToGoStringAsm(this.BytesValue, "byte"),
-		`Uint32Value:` + valueToGoStringAsm(this.Uint32Value, "uint32"),
-		`Variable:` + fmt.Sprintf("%#v", this.Variable),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *Variable) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ast.Variable{` +
-		`Type:` + fmt.Sprintf("%#v", this.Type),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *Keyword) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ast.Keyword{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Value:` + fmt.Sprintf("%#v", this.Value),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *Space) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ast.Space{` +
-		`Space:` + fmt.Sprintf("%#v", this.Space),
 		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }

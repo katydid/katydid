@@ -20,6 +20,7 @@ import (
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 	"github.com/katydid/katydid/serialize"
 	"io"
+	//"log"
 	"reflect"
 	"unsafe"
 )
@@ -74,15 +75,11 @@ func length(wireType int, buf []byte) (prefix int, l int, err error) {
 	return 0, 0, errUnknownWireType
 }
 
-type Tokens interface {
-	GetTokenId(tokenString string) (int, error)
-}
-
 type ProtoTokens interface {
-	Tokens
-	Lookup(src int, key uint64) (int, bool)
+	LookupKey(src int, key uint64) (int, string, bool)
 	IsLeaf(int) bool
 	LookupType(src int) descriptor.FieldDescriptorProto_Type
+	LookupName(src int) string
 }
 
 type protoScanner struct {
@@ -97,15 +94,16 @@ type state struct {
 	offset      int
 	length      int
 	tokenId     int
+	name        string
 }
 
 type Scanner interface {
 	Next() error
 	IsLeaf() bool
-	Id() int
 	Value() []byte
 	Up()
 	Down()
+	Name() string
 }
 
 type Decoder interface {
@@ -146,6 +144,7 @@ func (s *protoScanner) Init(buf []byte) error {
 }
 
 func (s *protoScanner) Next() error {
+	//log.Printf("Next %d/%d", s.offset, len(s.buf))
 	s.offset += s.length
 	if s.offset >= len(s.buf) {
 		if s.offset == len(s.buf) {
@@ -165,9 +164,11 @@ func (s *protoScanner) Next() error {
 	}
 	s.offset += n
 	s.length = l
-	tokenId, ok := s.tokens.Lookup(s.parentToken, v)
+	tokenId, name, ok := s.tokens.LookupKey(s.parentToken, v)
 	if ok {
+		//log.Printf("Return %d", s.offset)
 		s.tokenId = tokenId
+		s.name = name
 		return nil
 	}
 	return s.Next()
@@ -183,6 +184,10 @@ func (s *protoScanner) IsLeaf() bool {
 
 func (s *protoScanner) Value() []byte {
 	return s.buf[s.offset : s.offset+s.length]
+}
+
+func (s *protoScanner) Name() string {
+	return s.name
 }
 
 func (s *protoScanner) Float64() (float64, error) {

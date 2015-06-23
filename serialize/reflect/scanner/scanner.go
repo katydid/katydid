@@ -130,6 +130,10 @@ func (s *scanner) IsLeaf() bool {
 	return isLeaf
 }
 
+func (s *scanner) Name() string {
+	return s.typ.Name
+}
+
 func (s *scanner) getValue() reflect.Value {
 	kind := s.value.Kind()
 	if kind == reflect.Slice {

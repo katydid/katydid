@@ -1,0 +1,64 @@
+Equal
+  : "="  << &expr.Keyword{Value: "="}, nil >>
+  | Space "=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "=",
+    }, nil
+  >>
+  ;
+
+OpenParen
+  : "(" << &expr.Keyword{Value: "("}, nil >>
+  | Space "(" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "(",
+    }, nil
+  >>
+  ;
+
+CloseParen
+  : ")" << &expr.Keyword{Value: ")"}, nil >>
+  | Space ")" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: ")",
+    }, nil
+  >>
+  ;
+
+OpenCurly
+  : "{" << &expr.Keyword{Value: "{"}, nil >>
+  | Space "{" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "{",
+    }, nil
+  >>
+  ;
+
+CloseCurly
+  : "}" << &expr.Keyword{Value: "}"}, nil >>
+  | Space "}" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "}",
+    }, nil
+  >>
+  ;
+
+Comma
+  : "," << &expr.Keyword{Value: ","}, nil >>
+  | Space "," << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: ",",
+    }, nil
+  >>
+  ;
+
+Space
+  : Space space << expr.AppendSpace($0, newString($1)), nil >>
+  | space << &expr.Space{Space: []string{newString($0)}}, nil >>
+  ;

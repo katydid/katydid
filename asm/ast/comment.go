@@ -12,26 +12,13 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package ast
+package asm
 
 import (
-	"strings"
+	"github.com/katydid/katydid/expr/ast"
 )
 
-type Comment string
-
-func (this Comment) GetContent() string {
-	if len(this) == 0 {
-		return ""
-	}
-	s := []byte(this)
-	if isLineComment(string(this)) {
-		return string(s[2 : len(s)-1])
-	}
-	return string(s[2 : len(s)-2])
-}
-
-func (this *Rule) GetAttachedComment() Comment {
+func (this *Rule) GetAttachedComment() expr.Comment {
 	if this.Root != nil {
 		return this.Root.GetAttachedComment()
 	}
@@ -50,80 +37,22 @@ func (this *Rule) GetAttachedComment() Comment {
 	panic("unreachable")
 }
 
-func (this *Root) GetAttachedComment() Comment {
+func (this *Root) GetAttachedComment() expr.Comment {
 	return this.Before.GetAttachedComment()
 }
 
-func (this *Init) GetAttachedComment() Comment {
+func (this *Init) GetAttachedComment() expr.Comment {
 	return this.Before.GetAttachedComment()
 }
 
-func (this *Transition) GetAttachedComment() Comment {
+func (this *Transition) GetAttachedComment() expr.Comment {
 	return this.Before.GetAttachedComment()
 }
 
-func (this *FunctionDecl) GetAttachedComment() Comment {
+func (this *FunctionDecl) GetAttachedComment() expr.Comment {
 	return this.Before.GetAttachedComment()
 }
 
-func (this *Final) GetAttachedComment() Comment {
+func (this *Final) GetAttachedComment() expr.Comment {
 	return this.Before.GetAttachedComment()
-}
-
-func isBlockComment(s string) bool {
-	return strings.HasPrefix(s, `/*`) && strings.HasSuffix(s, `*/`)
-}
-
-func isLineComment(s string) bool {
-	return strings.HasPrefix(s, `//`) && strings.HasSuffix(s, "\n")
-}
-
-func isComment(s string) bool {
-	return isBlockComment(s) || isLineComment(s)
-}
-
-func (this *Space) HasComment() bool {
-	for _, s := range this.Space {
-		if isComment(s) {
-			return true
-		}
-	}
-	return false
-}
-
-func (this *Space) GetComments() []Comment {
-	comments := []Comment{}
-	for i, s := range this.Space {
-		if isComment(s) {
-			comments = append(comments, Comment(this.Space[i]))
-		}
-	}
-	return comments
-}
-
-func (this *Space) HasAttachedComment() bool {
-	return len(this.GetAttachedComment()) > 0
-}
-
-func (this *Space) GetAttachedComment() Comment {
-	if this == nil {
-		return ""
-	}
-	newlines := 2
-	var comment Comment
-	for i, s := range this.Space {
-		if isLineComment(s) {
-			newlines = 1
-			comment = Comment(this.Space[i])
-		} else if isBlockComment(s) {
-			newlines = 0
-			comment = Comment(this.Space[i])
-		} else if strings.Contains(s, "\n") {
-			newlines++
-		}
-	}
-	if newlines < 2 {
-		return comment
-	}
-	return ""
 }

@@ -1,0 +1,88 @@
+
+_lineComment : '/' '/' {.} '\n' ;
+
+_blockComment : '/' '*' {. | '*'} '*' '/' ;
+
+_comment : _lineComment | _blockComment ;
+
+_ws : ' ' | '\t' | '\n' | '\r' ; //whitespace
+
+space : _comment | _ws ;
+
+_decimal_digit : '0' - '9' ;
+_octal_digit : '0' - '7' ;
+_hex_digit : '0' - '9' | 'A' - 'F' | 'a' - 'f';
+
+_int_lit     : _decimal_lit | _octal_lit | _hex_lit ;
+_decimal_lit : ( '1' - '9' ) { _decimal_digit } ;
+_octal_lit   : '0' { _octal_digit } ;
+_hex_lit     : '0' ( 'x' | 'X' ) _hex_digit { _hex_digit } ;
+
+_singed_int_lit : ['-'] _int_lit ;
+
+int64_lit: _int64 '(' _singed_int_lit ')' ;
+int32_lit: _int32 '(' _singed_int_lit ')' ;
+uint64_lit: _uint64 '(' _int_lit ')' ;
+uint32_lit: _uint32 '(' _int_lit ')' ;
+
+_decimals  : _decimal_digit { _decimal_digit } ;
+_exponent  : ( 'e' | 'E' ) [ '+' | '-' ] _decimals ;
+
+_float_lit : ( _decimals '.' _decimals _exponent )
+			| ( _decimals '.' ( _decimals | _exponent ) )
+          	| ( _decimals _exponent )
+          	| ( '.' _decimals [ _exponent ] ) 
+          	;
+
+double_lit: _double '(' ['-'] ( _float_lit | _int_lit ) ')' ;
+
+float_lit: _float '(' ['-'] ( _float_lit | _int_lit ) ')' ;
+
+_upcase : 'A'-'Z' ;
+_lowcase : 'a'-'z' ;
+_id_char : _upcase | _lowcase | '_' | _decimal_digit ;
+
+_id : (_upcase | _lowcase | '_' ) {_id_char} ;
+id : _id ;
+
+_double : 'd' 'o' 'u' 'b' 'l' 'e' ;
+_float : 'f' 'l' 'o' 'a' 't' ;
+_int64 : 'i' 'n' 't' '6' '4';
+_uint64 : 'u' 'i' 'n' 't' '6' '4';
+_int32 : 'i' 'n' 't' '3' '2';
+_uint32 : 'u' 'i' 'n' 't' '3' '2';
+_bytes : '[' ']' 'b' 'y' 't' 'e' ;
+_string : 's' 't' 'r' 'i' 'n' 'g' ;
+_bool : 'b' 'o' 'o' 'l' ;
+
+_qualid : _id { '.' _id } ;
+
+double_var : '$' _double ;
+float_var : '$' _float ;
+int64_var : '$' _int64 ;
+uint64_var : '$' _uint64 ;
+int32_var : '$' _int32 ;
+uint32_var : '$' _uint32 ;
+bytes_var : '$' _bytes ;
+string_var : '$' _string ;
+bool_var : '$' _bool ;
+
+_big_u_value      : '\\' 'U' _hex_digit _hex_digit _hex_digit _hex_digit
+                            _hex_digit _hex_digit _hex_digit _hex_digit ;
+_little_u_value   : '\\' 'u' _hex_digit _hex_digit _hex_digit _hex_digit ;
+_hex_byte_u_value   : '\\' 'x' _hex_digit _hex_digit ;
+
+_octal_byte_u_value : '\\' _octal_digit _octal_digit _octal_digit ;
+_byte_value       : _octal_byte_u_value | _hex_byte_u_value ;
+_raw_string : '`' {.} '`' ;
+_escaped_char     : '\\' ( 'a' | 'b' | 'f' | 'n' | 'r' | 't' | 'v' | '\\' | '\'' | '"' ) ;
+_unicode_value    : . | _little_u_value | _big_u_value | _escaped_char ;
+_interpreted_string : '"' { _unicode_value | _byte_value } '"' ;
+
+string_lit : _raw_string | _interpreted_string ;
+
+_char_lit	: '\'' (_unicode_value | _byte_value) '\'' ;
+
+_byte_elem : _int_lit | _char_lit ;
+
+bytes_lit : _bytes '{' { _ws } [ _byte_elem { { _ws } ',' { _ws } _byte_elem } ] { _ws } '}' ;

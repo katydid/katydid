@@ -14,7 +14,11 @@
 
 .PHONY: nuke regenerate gofmt build test
 
-all: nuke regenerate gofmt build test checklicense
+all: nuke dep regenerate gofmt build test checklicense
+
+dep:
+	go install github.com/gogo/protobuf/protoc-gen-gogo
+	go install -v code.google.com/p/gocc/...
 
 checklicense:
 	go install ./cmd/checklicense
@@ -34,8 +38,9 @@ bench:
 
 regenerate:
 	(cd types && protoc --gogo_out=. -I=.:../../../../:../../../../github.com/gogo/protobuf/protobuf types.proto)
-	(cd asm && gocc asm.bnf)
-	(cd asm/ast && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf asm.proto)
+	(cd expr && make regenerate)
+	(cd asm && make regenerate)
+	(cd lang && make regenerate)
 	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf person.proto)
 	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf srctree.proto)
 	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf taxonomy.proto)
@@ -44,10 +49,6 @@ regenerate:
 	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf puddingmilkshake.proto)
 	go install github.com/katydid/katydid/funcs/funcs-gen
 	funcs-gen ./funcs/
-	go install github.com/katydid/katydid/asm/compose/compose-gen
-	compose-gen ./asm/compose/
-	go install github.com/katydid/katydid/asm/conv/conv-gen
-	conv-gen ./asm/conv/
 	go install github.com/katydid/katydid/serialize/serialize-gen
 	serialize-gen ./serialize
 	(cd funcs && go test -test.run=GenFuncList 2>../list_of_functions.txt)

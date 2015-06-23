@@ -17,7 +17,6 @@ package main_test
 import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/katydid/katydid/asm/compiler"
-	"github.com/katydid/katydid/asm/inject"
 	"github.com/katydid/katydid/asm/lexer"
 	"github.com/katydid/katydid/asm/parser"
 	"github.com/katydid/katydid/funcs"
@@ -53,17 +52,18 @@ type InjectableInt64 interface {
 }
 
 var injectPerson = `root = main.Person
-	main.Person = start
-	start accept = accept
-	start _ = start
-	accept _ = accept
+	init = start
+	final = accept
+	start Addresses = (address, accept, start)
+	start _ = (accept, start, start)
+	accept _ = (accept, accept, accept)
+	reject _ = (reject, reject, reject)
+	address Number = (number, accept, reject)
+	address _ = (accept, address, reject)
+	func number = eq($int64, inject())
+`
 
-	main.Address = start
-
-	if eq($int64(main.Address.Number), inject()) then accept else meh
-	`
-
-func TestInject(t *testing.T) {
+func testInject(t *testing.T, num int64) bool {
 	fileDescriptorSet, err := protoparser.ParseFile("person.proto", ".", gogoprotoImportPath)
 	if err != nil {
 		panic(err)
@@ -73,7 +73,7 @@ func TestInject(t *testing.T) {
 	if err != nil {
 		t.Fatalf(err.Error())
 	}
-	protoTokens, err := tokens.NewZipped(rules, fileDescriptorSet)
+	protoTokens, err := tokens.New(rules, fileDescriptorSet)
 	if err != nil {
 		panic(err)
 	}
@@ -82,9 +82,9 @@ func TestInject(t *testing.T) {
 		panic(err)
 	}
 	typ := reflect.TypeOf((*InjectableInt64)(nil)).Elem()
-	instances := inject.Implements(e, typ)
+	instances := e.Implements(typ)
 	for _, instance := range instances {
-		instance.(InjectableInt64).SetValue(456)
+		instance.(InjectableInt64).SetValue(num)
 	}
 	m := robert
 	data, err := proto.Marshal(m)
@@ -100,7 +100,17 @@ func TestInject(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	if !match {
+	return match
+}
+
+func TestInjectPositive(t *testing.T) {
+	if !testInject(t, 456) {
 		t.Fatalf("expected match")
+	}
+}
+
+func TestInjectNegative(t *testing.T) {
+	if testInject(t, 123) {
+		t.Fatalf("expected non match")
 	}
 }

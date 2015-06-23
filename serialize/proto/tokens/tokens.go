@@ -35,39 +35,30 @@ type ProtoTokens interface {
 	Len() int
 	IsLeaf(int) bool
 
-	Lookup(src int, key uint64) (int, bool)
+	LookupKey(src int, key uint64) (int, string, bool)
 	LookupType(src int) descriptor.FieldDescriptorProto_Type
+	LookupName(src int) string
 
 	Dot() string
 }
 
 type protoTokens struct {
-	trans       []maps.Uint64ToInt
-	tokenToName []string
+	transKey    []maps.Uint64ToInt
+	transName   map[int]map[uint64]string
+	trans       map[int]map[string]int
+	tokenToName map[int]string
 	nameToToken map[string]int
 	leaf        []bool
 	types       []descriptor.FieldDescriptorProto_Type
 }
 
-func NewZipped(rules *ast.Rules, desc *descriptor.FileDescriptorSet) (ProtoTokens, error) {
-	stringTokens, err := ast.GetStringTokens(rules)
-	if err != nil {
-		return nil, err
-	}
-	tokens, err := new(rules.GetRoot().GetPackage(), rules.GetRoot().GetMessage(), desc, stringTokens)
-	if err != nil {
-		return nil, err
-	}
-	return tokens, nil
-}
-
-func New(rules *ast.Rules, desc *descriptor.FileDescriptorSet) (ProtoTokens, error) {
+func New(rules *asm.Rules, desc *descriptor.FileDescriptorSet) (ProtoTokens, error) {
 	srcPackage, srcMessage := rules.GetRoot().GetPackage(), rules.GetRoot().GetMessage()
-	return new(srcPackage, srcMessage, desc, nil)
+	return new(srcPackage, srcMessage, desc)
 }
 
-func new(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet, stringTokens []string) (ProtoTokens, error) {
-	visitor := newVisitor(stringTokens)
+func new(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet) (ProtoTokens, error) {
+	visitor := newVisitor()
 	if err := Walk(srcPackage, srcMessage, desc, visitor); err != nil {
 		return nil, err
 	}
@@ -94,11 +85,46 @@ func (this *protoTokens) IsLeaf(token int) bool {
 	return this.leaf[token]
 }
 
-func (this *protoTokens) Lookup(src int, key uint64) (int, bool) {
-	if src >= len(this.trans) {
-		return 0, false
+func (this *protoTokens) LookupName(src int) string {
+	return this.tokenToName[src]
+}
+
+func (this *protoTokens) LookupKey(src int, key uint64) (int, string, bool) {
+	if src >= len(this.transKey) {
+		return 0, "", false
 	}
-	return this.trans[src].Lookup(key)
+	i, ok := this.transKey[src].Lookup(key)
+	if !ok {
+		return i, "", ok
+	}
+	return i, this.transName[src][key], ok
+}
+
+func (this *protoTokens) getToken(tokenStr string) int {
+	s, ok := this.nameToToken[tokenStr]
+	if ok {
+		return s
+	}
+	s = len(this.nameToToken)
+	this.nameToToken[tokenStr] = s
+	this.tokenToName[s] = tokenStr
+	return s
+}
+
+func (this *protoTokens) Lookup(parentToken int, name []byte) int {
+	strName := string(name)
+	token, ok := this.trans[parentToken][strName]
+	if ok {
+		return token
+	}
+	parentName, ok := this.tokenToName[parentToken]
+	if !ok {
+		panic("no parent")
+	}
+	fullName := parentName + "." + strName
+	newToken := this.getToken(fullName)
+	this.trans[parentToken][strName] = newToken
+	return newToken
 }
 
 func (this *protoTokens) LookupType(src int) descriptor.FieldDescriptorProto_Type {
@@ -113,14 +139,14 @@ func (this *protoTokens) Dot() string {
 	for i, name := range this.tokenToName {
 		nodes[i] = fmt.Sprintf("\tnode%d [label=\"%v\"]\n", i, name)
 	}
-	transs := make([]string, 0, len(this.trans))
-	for src, trans := range this.trans {
-		if trans == nil {
+	transKeys := make([]string, 0, len(this.transKey))
+	for src, transKey := range this.transKey {
+		if transKey == nil {
 			continue
 		}
-		for input, dst := range trans.ToMap() {
-			transs = append(transs, fmt.Sprintf("\tnode%d -> node%d [label=\"%d={wire=%d,field=%d}\"]\n", src, dst, input, int(input&0x7), int32(input>>3)))
+		for input, dst := range transKey.ToMap() {
+			transKeys = append(transKeys, fmt.Sprintf("\tnode%d -> node%d [label=\"%d={wire=%d,field=%d}\"]\n", src, dst, input, int(input&0x7), int32(input>>3)))
 		}
 	}
-	return "digraph tokens {\n" + strings.Join(nodes, "") + "\n" + strings.Join(transs, "") + "}"
+	return "digraph tokens {\n" + strings.Join(nodes, "") + "\n" + strings.Join(transKeys, "") + "}"
 }

@@ -15,32 +15,46 @@
 package tokens
 
 import (
-	"fmt"
-	"testing"
-
+	"github.com/katydid/katydid/graphviz"
 	"github.com/katydid/katydid/protoparser"
+	"io/ioutil"
+	"testing"
 )
+
+func output(t *testing.T, dot string, filename string) {
+	t.Logf("%v\n", dot)
+	if graphviz.Installed() {
+		svg, err := graphviz.DrawSVG(dot)
+		if err != nil {
+			t.Fatal(err)
+		}
+		err = ioutil.WriteFile(filename, []byte(svg), 0666)
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+}
 
 func TestTokensPerson(t *testing.T) {
 	fileDescriptorSet, err := protoparser.ParseFile("test.proto", ".")
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
-	m, err := new("test", "Person", fileDescriptorSet, nil)
+	m, err := new("test", "Person", fileDescriptorSet)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
-	fmt.Printf("%v\n", m.Dot())
+	output(t, m.Dot(), "person.svg")
 }
 
 func TestTokensSrcTree(t *testing.T) {
 	fileDescriptorSet, err := protoparser.ParseFile("test.proto", ".")
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
-	m, err := new("test", "SrcTree", fileDescriptorSet, nil)
+	m, err := new("test", "SrcTree", fileDescriptorSet)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
-	fmt.Printf("%v\n", m.Dot())
+	output(t, m.Dot(), "srctree.svg")
 }
