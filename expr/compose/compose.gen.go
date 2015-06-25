@@ -55,54 +55,8 @@ func composeFloat64s(expr *expr.Expr) (funcs.Float64s, error) {
 	return funcs.NewFloat64sFunc(uniq, values...)
 }
 
-func composeFloat32(expr *expr.Expr) (funcs.Float32, error) {
-	uniq, err := prep(expr, types.SINGLE_FLOAT)
-	if err != nil {
-		return nil, err
-	}
-	if expr.Terminal != nil {
-		if expr.GetTerminal().Variable != nil {
-			return funcs.NewFloat32Variable(), nil
-		} else {
-			return funcs.NewConstFloat32(expr.GetTerminal().GetFloatValue()), nil
-		}
-	}
-	values, err := newValues(expr.GetFunction().GetParams())
-	if err != nil {
-		return nil, err
-	}
-	return funcs.NewFloat32Func(uniq, values...)
-}
-
-func composeFloat32s(expr *expr.Expr) (funcs.Float32s, error) {
-	uniq, err := prep(expr, types.LIST_FLOAT)
-	if err != nil {
-		return nil, err
-	}
-	if expr.List != nil {
-		vs, err := newValues(expr.GetList().GetElems())
-		if err != nil {
-			return nil, err
-		}
-		bs := make([]funcs.Float32, len(vs))
-		var ok bool
-		for i := range vs {
-			bs[i], ok = vs[i].(funcs.Float32)
-			if !ok {
-				return nil, &errExpected{types.SINGLE_FLOAT.String(), expr.String()}
-			}
-		}
-		return funcs.NewListOfFloat32(bs), nil
-	}
-	values, err := newValues(expr.GetFunction().GetParams())
-	if err != nil {
-		return nil, err
-	}
-	return funcs.NewFloat32sFunc(uniq, values...)
-}
-
 func composeInt64(expr *expr.Expr) (funcs.Int64, error) {
-	uniq, err := prep(expr, types.SINGLE_INT64)
+	uniq, err := prep(expr, types.SINGLE_INT)
 	if err != nil {
 		return nil, err
 	}
@@ -110,7 +64,7 @@ func composeInt64(expr *expr.Expr) (funcs.Int64, error) {
 		if expr.GetTerminal().Variable != nil {
 			return funcs.NewInt64Variable(), nil
 		} else {
-			return funcs.NewConstInt64(expr.GetTerminal().GetInt64Value()), nil
+			return funcs.NewConstInt64(expr.GetTerminal().GetIntValue()), nil
 		}
 	}
 	values, err := newValues(expr.GetFunction().GetParams())
@@ -121,7 +75,7 @@ func composeInt64(expr *expr.Expr) (funcs.Int64, error) {
 }
 
 func composeInt64s(expr *expr.Expr) (funcs.Int64s, error) {
-	uniq, err := prep(expr, types.LIST_INT64)
+	uniq, err := prep(expr, types.LIST_INT)
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +89,7 @@ func composeInt64s(expr *expr.Expr) (funcs.Int64s, error) {
 		for i := range vs {
 			bs[i], ok = vs[i].(funcs.Int64)
 			if !ok {
-				return nil, &errExpected{types.SINGLE_INT64.String(), expr.String()}
+				return nil, &errExpected{types.SINGLE_INT.String(), expr.String()}
 			}
 		}
 		return funcs.NewListOfInt64(bs), nil
@@ -148,7 +102,7 @@ func composeInt64s(expr *expr.Expr) (funcs.Int64s, error) {
 }
 
 func composeUint64(expr *expr.Expr) (funcs.Uint64, error) {
-	uniq, err := prep(expr, types.SINGLE_UINT64)
+	uniq, err := prep(expr, types.SINGLE_UINT)
 	if err != nil {
 		return nil, err
 	}
@@ -156,7 +110,7 @@ func composeUint64(expr *expr.Expr) (funcs.Uint64, error) {
 		if expr.GetTerminal().Variable != nil {
 			return funcs.NewUint64Variable(), nil
 		} else {
-			return funcs.NewConstUint64(expr.GetTerminal().GetUint64Value()), nil
+			return funcs.NewConstUint64(expr.GetTerminal().GetUintValue()), nil
 		}
 	}
 	values, err := newValues(expr.GetFunction().GetParams())
@@ -167,7 +121,7 @@ func composeUint64(expr *expr.Expr) (funcs.Uint64, error) {
 }
 
 func composeUint64s(expr *expr.Expr) (funcs.Uint64s, error) {
-	uniq, err := prep(expr, types.LIST_UINT64)
+	uniq, err := prep(expr, types.LIST_UINT)
 	if err != nil {
 		return nil, err
 	}
@@ -181,7 +135,7 @@ func composeUint64s(expr *expr.Expr) (funcs.Uint64s, error) {
 		for i := range vs {
 			bs[i], ok = vs[i].(funcs.Uint64)
 			if !ok {
-				return nil, &errExpected{types.SINGLE_UINT64.String(), expr.String()}
+				return nil, &errExpected{types.SINGLE_UINT.String(), expr.String()}
 			}
 		}
 		return funcs.NewListOfUint64(bs), nil
@@ -191,98 +145,6 @@ func composeUint64s(expr *expr.Expr) (funcs.Uint64s, error) {
 		return nil, err
 	}
 	return funcs.NewUint64sFunc(uniq, values...)
-}
-
-func composeInt32(expr *expr.Expr) (funcs.Int32, error) {
-	uniq, err := prep(expr, types.SINGLE_INT32)
-	if err != nil {
-		return nil, err
-	}
-	if expr.Terminal != nil {
-		if expr.GetTerminal().Variable != nil {
-			return funcs.NewInt32Variable(), nil
-		} else {
-			return funcs.NewConstInt32(expr.GetTerminal().GetInt32Value()), nil
-		}
-	}
-	values, err := newValues(expr.GetFunction().GetParams())
-	if err != nil {
-		return nil, err
-	}
-	return funcs.NewInt32Func(uniq, values...)
-}
-
-func composeInt32s(expr *expr.Expr) (funcs.Int32s, error) {
-	uniq, err := prep(expr, types.LIST_INT32)
-	if err != nil {
-		return nil, err
-	}
-	if expr.List != nil {
-		vs, err := newValues(expr.GetList().GetElems())
-		if err != nil {
-			return nil, err
-		}
-		bs := make([]funcs.Int32, len(vs))
-		var ok bool
-		for i := range vs {
-			bs[i], ok = vs[i].(funcs.Int32)
-			if !ok {
-				return nil, &errExpected{types.SINGLE_INT32.String(), expr.String()}
-			}
-		}
-		return funcs.NewListOfInt32(bs), nil
-	}
-	values, err := newValues(expr.GetFunction().GetParams())
-	if err != nil {
-		return nil, err
-	}
-	return funcs.NewInt32sFunc(uniq, values...)
-}
-
-func composeUint32(expr *expr.Expr) (funcs.Uint32, error) {
-	uniq, err := prep(expr, types.SINGLE_UINT32)
-	if err != nil {
-		return nil, err
-	}
-	if expr.Terminal != nil {
-		if expr.GetTerminal().Variable != nil {
-			return funcs.NewUint32Variable(), nil
-		} else {
-			return funcs.NewConstUint32(expr.GetTerminal().GetUint32Value()), nil
-		}
-	}
-	values, err := newValues(expr.GetFunction().GetParams())
-	if err != nil {
-		return nil, err
-	}
-	return funcs.NewUint32Func(uniq, values...)
-}
-
-func composeUint32s(expr *expr.Expr) (funcs.Uint32s, error) {
-	uniq, err := prep(expr, types.LIST_UINT32)
-	if err != nil {
-		return nil, err
-	}
-	if expr.List != nil {
-		vs, err := newValues(expr.GetList().GetElems())
-		if err != nil {
-			return nil, err
-		}
-		bs := make([]funcs.Uint32, len(vs))
-		var ok bool
-		for i := range vs {
-			bs[i], ok = vs[i].(funcs.Uint32)
-			if !ok {
-				return nil, &errExpected{types.SINGLE_UINT32.String(), expr.String()}
-			}
-		}
-		return funcs.NewListOfUint32(bs), nil
-	}
-	values, err := newValues(expr.GetFunction().GetParams())
-	if err != nil {
-		return nil, err
-	}
-	return funcs.NewUint32sFunc(uniq, values...)
 }
 
 func composeBool(expr *expr.Expr) (funcs.Bool, error) {

@@ -11,14 +11,6 @@ func NewFloat64Func(uniq string, values ...interface{}) (Float64, error) {
 	return f.(Float64), nil
 }
 
-func NewFloat32Func(uniq string, values ...interface{}) (Float32, error) {
-	f, err := newFunc(uniq, values...)
-	if err != nil {
-		return nil, err
-	}
-	return f.(Float32), nil
-}
-
 func NewInt64Func(uniq string, values ...interface{}) (Int64, error) {
 	f, err := newFunc(uniq, values...)
 	if err != nil {
@@ -33,22 +25,6 @@ func NewUint64Func(uniq string, values ...interface{}) (Uint64, error) {
 		return nil, err
 	}
 	return f.(Uint64), nil
-}
-
-func NewInt32Func(uniq string, values ...interface{}) (Int32, error) {
-	f, err := newFunc(uniq, values...)
-	if err != nil {
-		return nil, err
-	}
-	return f.(Int32), nil
-}
-
-func NewUint32Func(uniq string, values ...interface{}) (Uint32, error) {
-	f, err := newFunc(uniq, values...)
-	if err != nil {
-		return nil, err
-	}
-	return f.(Uint32), nil
 }
 
 func NewBoolFunc(uniq string, values ...interface{}) (Bool, error) {
@@ -83,14 +59,6 @@ func NewFloat64sFunc(uniq string, values ...interface{}) (Float64s, error) {
 	return f.(Float64s), nil
 }
 
-func NewFloat32sFunc(uniq string, values ...interface{}) (Float32s, error) {
-	f, err := newFunc(uniq, values...)
-	if err != nil {
-		return nil, err
-	}
-	return f.(Float32s), nil
-}
-
 func NewInt64sFunc(uniq string, values ...interface{}) (Int64s, error) {
 	f, err := newFunc(uniq, values...)
 	if err != nil {
@@ -105,22 +73,6 @@ func NewUint64sFunc(uniq string, values ...interface{}) (Uint64s, error) {
 		return nil, err
 	}
 	return f.(Uint64s), nil
-}
-
-func NewInt32sFunc(uniq string, values ...interface{}) (Int32s, error) {
-	f, err := newFunc(uniq, values...)
-	if err != nil {
-		return nil, err
-	}
-	return f.(Int32s), nil
-}
-
-func NewUint32sFunc(uniq string, values ...interface{}) (Uint32s, error) {
-	f, err := newFunc(uniq, values...)
-	if err != nil {
-		return nil, err
-	}
-	return f.(Uint32s), nil
 }
 
 func NewBoolsFunc(uniq string, values ...interface{}) (Bools, error) {

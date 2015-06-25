@@ -27,17 +27,17 @@ func Decoded(Encoded Type) Type {
 	case ENCODED_DOUBLE:
 		return SINGLE_DOUBLE
 	case ENCODED_FLOAT:
-		return SINGLE_FLOAT
+		return SINGLE_DOUBLE
 	case ENCODED_INT64:
-		return SINGLE_INT64
+		return SINGLE_INT
 	case ENCODED_UINT64:
-		return SINGLE_UINT64
+		return SINGLE_UINT
 	case ENCODED_INT32:
-		return SINGLE_INT32
+		return SINGLE_INT
 	case ENCODED_FIXED64:
-		return SINGLE_UINT64
+		return SINGLE_UINT
 	case ENCODED_FIXED32:
-		return SINGLE_UINT32
+		return SINGLE_UINT
 	case ENCODED_BOOL:
 		return SINGLE_BOOL
 	case ENCODED_STRING:
@@ -49,17 +49,17 @@ func Decoded(Encoded Type) Type {
 	case ENCODED_BYTES:
 		return SINGLE_BYTES
 	case ENCODED_UINT32:
-		return SINGLE_UINT32
+		return SINGLE_UINT
 	case ENCODED_ENUM:
-		return SINGLE_INT32
+		return SINGLE_INT
 	case ENCODED_SFIXED32:
-		return SINGLE_INT32
+		return SINGLE_INT
 	case ENCODED_SFIXED64:
-		return SINGLE_INT64
+		return SINGLE_INT
 	case ENCODED_SINT32:
-		return SINGLE_INT32
+		return SINGLE_INT
 	case ENCODED_SINT64:
-		return SINGLE_INT64
+		return SINGLE_INT
 	}
 	panic("unreachable")
 }

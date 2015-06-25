@@ -16,14 +16,21 @@ package serialize
 
 type Decoder interface {
 	Float64() (float64, error)
-	Float32() (float32, error)
 	Int64() (int64, error)
 	Uint64() (uint64, error)
-	Int32() (int32, error)
 	Bool() (bool, error)
 	String() (string, error)
 	Bytes() ([]byte, error)
-	Uint32() (uint32, error)
 }
 
 type errValue struct{}
+
+type Scanner interface {
+	Copy() Scanner
+	Next() error
+	IsLeaf() bool
+	Name() string
+	Up()
+	Down()
+	Decoder
+}

@@ -37,36 +37,6 @@ func NewFloat64Variable() *varFloat64 {
 	return &varFloat64{}
 }
 
-type varFloat32 struct {
-	Dec serialize.Decoder
-	Thrower
-}
-
-var _ Decoder = &varFloat32{}
-var _ Variable = &varFloat32{}
-
-func (this *varFloat32) Eval() float32 {
-	v, err := this.Dec.Float32()
-	if err != nil {
-		return this.ThrowFloat32(err)
-	}
-	return v
-}
-
-func (this *varFloat32) IsVariable() {}
-
-func (this *varFloat32) SetDecoder(dec serialize.Decoder) {
-	this.Dec = dec
-}
-
-func (this *varFloat32) String() string {
-	return "varFloat32"
-}
-
-func NewFloat32Variable() *varFloat32 {
-	return &varFloat32{}
-}
-
 type varInt64 struct {
 	Dec serialize.Decoder
 	Thrower
@@ -125,66 +95,6 @@ func (this *varUint64) String() string {
 
 func NewUint64Variable() *varUint64 {
 	return &varUint64{}
-}
-
-type varInt32 struct {
-	Dec serialize.Decoder
-	Thrower
-}
-
-var _ Decoder = &varInt32{}
-var _ Variable = &varInt32{}
-
-func (this *varInt32) Eval() int32 {
-	v, err := this.Dec.Int32()
-	if err != nil {
-		return this.ThrowInt32(err)
-	}
-	return v
-}
-
-func (this *varInt32) IsVariable() {}
-
-func (this *varInt32) SetDecoder(dec serialize.Decoder) {
-	this.Dec = dec
-}
-
-func (this *varInt32) String() string {
-	return "varInt32"
-}
-
-func NewInt32Variable() *varInt32 {
-	return &varInt32{}
-}
-
-type varUint32 struct {
-	Dec serialize.Decoder
-	Thrower
-}
-
-var _ Decoder = &varUint32{}
-var _ Variable = &varUint32{}
-
-func (this *varUint32) Eval() uint32 {
-	v, err := this.Dec.Uint32()
-	if err != nil {
-		return this.ThrowUint32(err)
-	}
-	return v
-}
-
-func (this *varUint32) IsVariable() {}
-
-func (this *varUint32) SetDecoder(dec serialize.Decoder) {
-	this.Dec = dec
-}
-
-func (this *varUint32) String() string {
-	return "varUint32"
-}
-
-func NewUint32Variable() *varUint32 {
-	return &varUint32{}
 }
 
 type varBool struct {

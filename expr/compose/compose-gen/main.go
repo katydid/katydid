@@ -78,11 +78,8 @@ func main() {
 	gen := gen.NewFunc("compose")
 	gen(composeStr, "compose.gen.go", []interface{}{
 		&composer{"Float64", "SINGLE_DOUBLE", "Double", "Float64s", "LIST_DOUBLE"},
-		&composer{"Float32", "SINGLE_FLOAT", "Float", "Float32s", "LIST_FLOAT"},
-		&composer{"Int64", "SINGLE_INT64", "Int64", "Int64s", "LIST_INT64"},
-		&composer{"Uint64", "SINGLE_UINT64", "Uint64", "Uint64s", "LIST_UINT64"},
-		&composer{"Int32", "SINGLE_INT32", "Int32", "Int32s", "LIST_INT32"},
-		&composer{"Uint32", "SINGLE_UINT32", "Uint32", "Uint32s", "LIST_UINT32"},
+		&composer{"Int64", "SINGLE_INT", "Int", "Int64s", "LIST_INT"},
+		&composer{"Uint64", "SINGLE_UINT", "Uint", "Uint64s", "LIST_UINT"},
 		&composer{"Bool", "SINGLE_BOOL", "Bool", "Bools", "LIST_BOOL"},
 		&composer{"String", "SINGLE_STRING", "String", "Strings", "LIST_STRING"},
 		&composer{"Bytes", "SINGLE_BYTES", "Bytes", "ListOfBytes", "LIST_BYTES"},

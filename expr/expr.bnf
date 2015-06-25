@@ -26,12 +26,9 @@ Expr
 
 ListType
   : "[]bool" << types.LIST_BOOL, nil >>
-  | "[]int64" << types.LIST_INT64, nil >>
-  | "[]int32" << types.LIST_INT32, nil >>
-  | "[]uint64" << types.LIST_UINT64, nil >>
-  | "[]uint32" << types.LIST_UINT32, nil >>
+  | "[]int" << types.LIST_INT, nil >>
+  | "[]uint" << types.LIST_UINT, nil >>
   | "[]double" << types.LIST_DOUBLE, nil >>
-  | "[]float" << types.LIST_FLOAT, nil >>
   | "[]string" << types.LIST_STRING, nil >>
   | "[][]byte" << types.LIST_BYTES, nil >>
   ;
@@ -43,21 +40,15 @@ SpaceTerminal
 
 Terminal
   : Bool << expr.NewBoolTerminal(newString($0)) >>
-  | int64_lit << expr.NewInt64Terminal(newString($0)) >>
-  | int32_lit << expr.NewInt32Terminal(newString($0)) >>
-  | uint64_lit << expr.NewUint64Terminal(newString($0)) >>
-  | uint32_lit << expr.NewUint32Terminal(newString($0)) >>
+  | int_lit << expr.NewIntTerminal(newString($0)) >>
+  | uint_lit << expr.NewUintTerminal(newString($0)) >>
   | double_lit << expr.NewDoubleTerminal(newString($0)) >>
-  | float_lit << expr.NewFloatTerminal(newString($0)) >>
   | string_lit << expr.NewStringTerminal(newString($0)) >>
   | bytes_lit << expr.NewBytesTerminal(newString($0)) >>
   | bool_var << expr.NewVariableTerminal(types.SINGLE_BOOL) >>
-  | int64_var << expr.NewVariableTerminal(types.SINGLE_INT64) >>
-  | int32_var << expr.NewVariableTerminal(types.SINGLE_INT32) >>
-  | uint64_var << expr.NewVariableTerminal(types.SINGLE_UINT64) >>
-  | uint32_var << expr.NewVariableTerminal(types.SINGLE_UINT32) >>
+  | int_var << expr.NewVariableTerminal(types.SINGLE_INT) >>
+  | uint_var << expr.NewVariableTerminal(types.SINGLE_UINT) >>
   | double_var << expr.NewVariableTerminal(types.SINGLE_DOUBLE) >>
-  | float_var << expr.NewVariableTerminal(types.SINGLE_FLOAT) >>
   | string_var << expr.NewVariableTerminal(types.SINGLE_STRING) >>
   | bytes_var << expr.NewVariableTerminal(types.SINGLE_BYTES) >>
   ;

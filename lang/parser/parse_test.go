@@ -12,10 +12,9 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package lang
+package parser_test
 
 import (
-	"github.com/katydid/katydid/lang/ast"
 	"github.com/katydid/katydid/lang/lexer"
 	"github.com/katydid/katydid/lang/parser"
 	"testing"
@@ -25,7 +24,7 @@ func TestParse(t *testing.T) {
 	patternDecls := []string{
 		`main = LeafNode("string_lit")`,
 		`main = Reference(ref1)
-		ref1 = LeafNode(eq($int64, int64(123)))
+		ref1 = LeafNode(eq($int, int(123)))
 		`,
 		`main = TreeNode("MyParent", Concat(
 			LeafNode(eq($string, "123")), 
@@ -33,7 +32,7 @@ func TestParse(t *testing.T) {
 		))`,
 		`main = TreeNode("A", Concat(
 			TreeNode("a", LeafNode(eq($string, "aa"))),
-			TreeNode("b", LeafNode(eq($int64, int64(123))))
+			TreeNode("b", LeafNode(eq($int, int(123))))
 		))`,
 		`main = TreeNode("A", Concat(
 			Not(EmptySet),
@@ -52,16 +51,16 @@ func TestParse(t *testing.T) {
 				)
 			)
 		))`,
-		`main = And(TreeNode("MyParent", LeafNode(int64(1))), TreeNode(  "MyParent", LeafNode(int64(2))))`,
+		`main = And(TreeNode("MyParent", LeafNode(int(1))), TreeNode(  "MyParent", LeafNode(int(2))))`,
 	}
 	p := parser.NewParser()
 	for _, patternDecl := range patternDecls {
 		scanner := lexer.NewLexer([]byte(patternDecl))
-		st, err := p.Parse(scanner)
+		st, err := p.ParseGrammar(scanner)
 		if err != nil {
 			t.Fatalf("err = %v, input = %s", err, patternDecl)
 		}
-		s := st.(*lang.Grammar).String()
+		s := st.String()
 		if s != patternDecl {
 			t.Fatalf("String function output = %s\n expected output = %s\n", s, patternDecl)
 		}

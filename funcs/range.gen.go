@@ -39,42 +39,6 @@ func init() {
 	Register("range", new(rangeFloat64s))
 }
 
-type rangeFloat32s struct {
-	List  Float32s
-	First Int64
-	Last  Int64
-	Thrower
-}
-
-func (this *rangeFloat32s) Eval() []float32 {
-	list := this.List.Eval()
-	first := int(this.First.Eval())
-	if len(list) == 0 {
-		return this.ThrowFloat32s(NewRangeCheckErr(first, len(list)))
-	}
-	if first < 0 {
-		first = first % len(list)
-	}
-	if first > len(list) {
-		return this.ThrowFloat32s(NewRangeCheckErr(first, len(list)))
-	}
-	last := int(this.Last.Eval())
-	if last < 0 {
-		last = last % len(list)
-	}
-	if last > len(list) {
-		return this.ThrowFloat32s(NewRangeCheckErr(last, len(list)))
-	}
-	if first > last {
-		return this.ThrowFloat32s(NewRangeErr(first, last))
-	}
-	return list[first:last]
-}
-
-func init() {
-	Register("range", new(rangeFloat32s))
-}
-
 type rangeInt64s struct {
 	List  Int64s
 	First Int64
@@ -145,78 +109,6 @@ func (this *rangeUint64s) Eval() []uint64 {
 
 func init() {
 	Register("range", new(rangeUint64s))
-}
-
-type rangeInt32s struct {
-	List  Int32s
-	First Int64
-	Last  Int64
-	Thrower
-}
-
-func (this *rangeInt32s) Eval() []int32 {
-	list := this.List.Eval()
-	first := int(this.First.Eval())
-	if len(list) == 0 {
-		return this.ThrowInt32s(NewRangeCheckErr(first, len(list)))
-	}
-	if first < 0 {
-		first = first % len(list)
-	}
-	if first > len(list) {
-		return this.ThrowInt32s(NewRangeCheckErr(first, len(list)))
-	}
-	last := int(this.Last.Eval())
-	if last < 0 {
-		last = last % len(list)
-	}
-	if last > len(list) {
-		return this.ThrowInt32s(NewRangeCheckErr(last, len(list)))
-	}
-	if first > last {
-		return this.ThrowInt32s(NewRangeErr(first, last))
-	}
-	return list[first:last]
-}
-
-func init() {
-	Register("range", new(rangeInt32s))
-}
-
-type rangeUint32s struct {
-	List  Uint32s
-	First Int64
-	Last  Int64
-	Thrower
-}
-
-func (this *rangeUint32s) Eval() []uint32 {
-	list := this.List.Eval()
-	first := int(this.First.Eval())
-	if len(list) == 0 {
-		return this.ThrowUint32s(NewRangeCheckErr(first, len(list)))
-	}
-	if first < 0 {
-		first = first % len(list)
-	}
-	if first > len(list) {
-		return this.ThrowUint32s(NewRangeCheckErr(first, len(list)))
-	}
-	last := int(this.Last.Eval())
-	if last < 0 {
-		last = last % len(list)
-	}
-	if last > len(list) {
-		return this.ThrowUint32s(NewRangeCheckErr(last, len(list)))
-	}
-	if first > last {
-		return this.ThrowUint32s(NewRangeErr(first, last))
-	}
-	return list[first:last]
-}
-
-func init() {
-	Register("range", new(rangeUint32s))
 }
 
 type rangeBools struct {

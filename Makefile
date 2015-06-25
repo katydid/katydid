@@ -41,6 +41,7 @@ regenerate:
 	(cd expr && make regenerate)
 	(cd asm && make regenerate)
 	(cd lang && make regenerate)
+	(cd tests && make regenerate)
 	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf person.proto)
 	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf srctree.proto)
 	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf taxonomy.proto)

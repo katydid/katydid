@@ -22,40 +22,28 @@ func NewConst(value interface{}) interface{} {
 	switch v := value.(type) {
 	case float64:
 		return NewConstFloat64(v)
-	case float32:
-		return NewConstFloat32(v)
 	case int64:
 		return NewConstInt64(v)
 	case uint64:
 		return NewConstUint64(v)
-	case int32:
-		return NewConstInt32(v)
 	case bool:
 		return NewConstBool(v)
 	case string:
 		return NewConstString(v)
 	case []byte:
 		return NewConstBytes(v)
-	case uint32:
-		return NewConstUint32(v)
 	case []float64:
 		return NewConstFloat64s(v)
-	case []float32:
-		return NewConstFloat32s(v)
 	case []int64:
 		return NewConstInt64s(v)
 	case []uint64:
 		return NewConstUint64s(v)
-	case []int32:
-		return NewConstInt32s(v)
 	case []bool:
 		return NewConstBools(v)
 	case []string:
 		return NewConstStrings(v)
 	case [][]byte:
 		return NewConstListOfBytes(v)
-	case []uint32:
-		return NewConstUint32s(v)
 	}
 	panic("unreachable")
 }

@@ -44,22 +44,16 @@ func listTypeToString(typ types.Type) string {
 	switch typ {
 	case types.LIST_DOUBLE:
 		return "[]double"
-	case types.LIST_FLOAT:
-		return "[]float"
-	case types.LIST_INT64:
-		return "[]int64"
-	case types.LIST_UINT64:
-		return "[]uint64"
-	case types.LIST_INT32:
-		return "[]int32"
+	case types.LIST_INT:
+		return "[]int"
+	case types.LIST_UINT:
+		return "[]uint"
 	case types.LIST_BOOL:
 		return "[]bool"
 	case types.LIST_STRING:
 		return "[]string"
 	case types.LIST_BYTES:
 		return "[][]byte"
-	case types.LIST_UINT32:
-		return "[]uint32"
 	}
 	panic("unreachable")
 }
@@ -76,17 +70,11 @@ func (this *Terminal) String() string {
 	if this.DoubleValue != nil {
 		return this.Before.String() + "double(" + strconv.FormatFloat(this.GetDoubleValue(), 'f', -1, 10) + ")"
 	}
-	if this.FloatValue != nil {
-		return this.Before.String() + "float(" + strconv.FormatFloat(float64(this.GetFloatValue()), 'f', -1, 10) + ")"
+	if this.IntValue != nil {
+		return this.Before.String() + "int(" + strconv.FormatInt(this.GetIntValue(), 10) + ")"
 	}
-	if this.Int64Value != nil {
-		return this.Before.String() + "int64(" + strconv.FormatInt(this.GetInt64Value(), 10) + ")"
-	}
-	if this.Uint64Value != nil {
-		return this.Before.String() + "uint64(" + strconv.FormatUint(this.GetUint64Value(), 10) + ")"
-	}
-	if this.Int32Value != nil {
-		return this.Before.String() + "int32(" + strconv.FormatInt(int64(this.GetInt32Value()), 10) + ")"
+	if this.UintValue != nil {
+		return this.Before.String() + "uint(" + strconv.FormatUint(this.GetUintValue(), 10) + ")"
 	}
 	if this.BoolValue != nil {
 		return this.Before.String() + "bool(" + strconv.FormatBool(this.GetBoolValue()) + ")"
@@ -96,9 +84,6 @@ func (this *Terminal) String() string {
 	}
 	if this.BytesValue != nil {
 		return this.Before.String() + fmt.Sprintf("%#v", this.GetBytesValue())
-	}
-	if this.Uint32Value != nil {
-		return this.Before.String() + "uint32(" + strconv.FormatUint(uint64(this.GetUint32Value()), 10) + ")"
 	}
 	if this.Variable != nil {
 		return this.Before.String() + this.Variable.String()
@@ -114,22 +99,16 @@ func (this *Variable) String() string {
 	switch typ {
 	case types.SINGLE_DOUBLE:
 		return "$double"
-	case types.SINGLE_FLOAT:
-		return "$float"
-	case types.SINGLE_INT64:
-		return "$int64"
-	case types.SINGLE_UINT64:
-		return "$uint64"
-	case types.SINGLE_INT32:
-		return "$int32"
+	case types.SINGLE_INT:
+		return "$int"
+	case types.SINGLE_UINT:
+		return "$uint"
 	case types.SINGLE_BOOL:
 		return "$bool"
 	case types.SINGLE_STRING:
 		return "$string"
 	case types.SINGLE_BYTES:
 		return "$[]byte"
-	case types.SINGLE_UINT32:
-		return "$uint32"
 	}
 	panic(fmt.Errorf("unknown type %s", this.GetType()))
 }

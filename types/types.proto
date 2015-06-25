@@ -42,10 +42,10 @@ enum Type {
     ENCODED_SINT64         = 18;
 
     SINGLE_DOUBLE         = 101;
-    SINGLE_FLOAT          = 102;
-    SINGLE_INT64          = 103;
-    SINGLE_UINT64         = 104;
-    SINGLE_INT32          = 105;
+    //SINGLE_FLOAT          = 102;
+    SINGLE_INT            = 103;
+    SINGLE_UINT           = 104;
+    //SINGLE_INT32          = 105;
     //SINGLE_FIXED64        = 106;
     //SINGLE_FIXED32        = 107;
     SINGLE_BOOL           = 108;
@@ -53,7 +53,7 @@ enum Type {
     //SINGLE_GROUP          = 110;
     //SINGLE_MESSAGE        = 111;
     SINGLE_BYTES          = 112;
-    SINGLE_UINT32         = 113;
+    //SINGLE_UINT32         = 113;
     //SINGLE_ENUM           = 114;
     //SINGLE_SFIXED32       = 115;
     //SINGLE_SFIXED64       = 116;
@@ -61,10 +61,10 @@ enum Type {
     //SINGLE_SINT64         = 118;
 
     LIST_DOUBLE         = 201;
-    LIST_FLOAT          = 202;
-    LIST_INT64          = 203;
-    LIST_UINT64         = 204;
-    LIST_INT32          = 205;
+    //LIST_FLOAT          = 202;
+    LIST_INT            = 203;
+    LIST_UINT           = 204;
+    //LIST_INT32          = 205;
     //LIST_FIXED64        = 206;
     //LIST_FIXED32        = 207;
     LIST_BOOL           = 208;
@@ -72,7 +72,7 @@ enum Type {
     //LIST_GROUP          = 210;
     //LIST_MESSAGE        = 211;
     LIST_BYTES          = 212;
-    LIST_UINT32         = 213;
+    //LIST_UINT32         = 213;
     //LIST_ENUM           = 214;
     //LIST_SFIXED32       = 215;
     //LIST_SFIXED64       = 216;

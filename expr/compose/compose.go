@@ -87,22 +87,16 @@ func composeVariable(v *expr.Variable) funcs.Variable {
 	switch v.Type {
 	case types.SINGLE_DOUBLE:
 		return funcs.NewFloat64Variable()
-	case types.SINGLE_FLOAT:
-		return funcs.NewFloat32Variable()
-	case types.SINGLE_INT64:
+	case types.SINGLE_INT:
 		return funcs.NewInt64Variable()
-	case types.SINGLE_UINT64:
+	case types.SINGLE_UINT:
 		return funcs.NewUint64Variable()
-	case types.SINGLE_INT32:
-		return funcs.NewInt32Variable()
 	case types.SINGLE_BOOL:
 		return funcs.NewBoolVariable()
 	case types.SINGLE_STRING:
 		return funcs.NewStringVariable()
 	case types.SINGLE_BYTES:
 		return funcs.NewBytesVariable()
-	case types.SINGLE_UINT32:
-		return funcs.NewUint32Variable()
 	}
 	panic("unreachable")
 }
@@ -118,40 +112,28 @@ func newValue(p *expr.Expr) (interface{}, error) {
 	switch typ {
 	case types.SINGLE_DOUBLE:
 		return composeFloat64(p)
-	case types.SINGLE_FLOAT:
-		return composeFloat32(p)
-	case types.SINGLE_INT64:
+	case types.SINGLE_INT:
 		return composeInt64(p)
-	case types.SINGLE_UINT64:
+	case types.SINGLE_UINT:
 		return composeUint64(p)
-	case types.SINGLE_INT32:
-		return composeInt32(p)
 	case types.SINGLE_BOOL:
 		return composeBool(p)
 	case types.SINGLE_STRING:
 		return composeString(p)
 	case types.SINGLE_BYTES:
 		return composeBytes(p)
-	case types.SINGLE_UINT32:
-		return composeUint32(p)
 	case types.LIST_DOUBLE:
 		return composeFloat64s(p)
-	case types.LIST_FLOAT:
-		return composeFloat32s(p)
-	case types.LIST_INT64:
+	case types.LIST_INT:
 		return composeInt64s(p)
-	case types.LIST_UINT64:
+	case types.LIST_UINT:
 		return composeUint64s(p)
-	case types.LIST_INT32:
-		return composeInt32s(p)
 	case types.LIST_BOOL:
 		return composeBools(p)
 	case types.LIST_STRING:
 		return composeStrings(p)
 	case types.LIST_BYTES:
 		return composeListOfBytes(p)
-	case types.LIST_UINT32:
-		return composeUint32s(p)
 	}
 	panic("not implemented")
 }
@@ -176,17 +158,11 @@ func Which(expr *expr.Expr) (types.Type, error) {
 		if term.DoubleValue != nil {
 			return types.SINGLE_DOUBLE, nil
 		}
-		if term.FloatValue != nil {
-			return types.SINGLE_FLOAT, nil
+		if term.IntValue != nil {
+			return types.SINGLE_INT, nil
 		}
-		if term.Int64Value != nil {
-			return types.SINGLE_INT64, nil
-		}
-		if term.Uint64Value != nil {
-			return types.SINGLE_UINT64, nil
-		}
-		if term.Int32Value != nil {
-			return types.SINGLE_INT32, nil
+		if term.UintValue != nil {
+			return types.SINGLE_UINT, nil
 		}
 		if term.BoolValue != nil {
 			return types.SINGLE_BOOL, nil
@@ -196,9 +172,6 @@ func Which(expr *expr.Expr) (types.Type, error) {
 		}
 		if term.BytesValue != nil {
 			return types.SINGLE_BYTES, nil
-		}
-		if term.Uint32Value != nil {
-			return types.SINGLE_UINT32, nil
 		}
 		if term.Variable != nil {
 			return term.Variable.Type, nil

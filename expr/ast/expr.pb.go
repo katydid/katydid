@@ -173,14 +173,11 @@ type Terminal struct {
 	Before           *Space    `protobuf:"bytes,1,opt" json:"Before,omitempty"`
 	Literal          string    `protobuf:"bytes,2,opt" json:"Literal"`
 	DoubleValue      *float64  `protobuf:"fixed64,3,opt" json:"DoubleValue,omitempty"`
-	FloatValue       *float32  `protobuf:"fixed32,4,opt" json:"FloatValue,omitempty"`
-	Int64Value       *int64    `protobuf:"varint,5,opt" json:"Int64Value,omitempty"`
-	Uint64Value      *uint64   `protobuf:"varint,6,opt" json:"Uint64Value,omitempty"`
-	Int32Value       *int32    `protobuf:"varint,7,opt" json:"Int32Value,omitempty"`
+	IntValue         *int64    `protobuf:"varint,5,opt" json:"IntValue,omitempty"`
+	UintValue        *uint64   `protobuf:"varint,6,opt" json:"UintValue,omitempty"`
 	BoolValue        *bool     `protobuf:"varint,8,opt" json:"BoolValue,omitempty"`
 	StringValue      *string   `protobuf:"bytes,9,opt" json:"StringValue,omitempty"`
 	BytesValue       []byte    `protobuf:"bytes,10,opt" json:"BytesValue,omitempty"`
-	Uint32Value      *uint32   `protobuf:"varint,11,opt" json:"Uint32Value,omitempty"`
 	Variable         *Variable `protobuf:"bytes,50,opt" json:"Variable,omitempty"`
 	XXX_unrecognized []byte    `json:"-"`
 }
@@ -209,30 +206,16 @@ func (m *Terminal) GetDoubleValue() float64 {
 	return 0
 }
 
-func (m *Terminal) GetFloatValue() float32 {
-	if m != nil && m.FloatValue != nil {
-		return *m.FloatValue
+func (m *Terminal) GetIntValue() int64 {
+	if m != nil && m.IntValue != nil {
+		return *m.IntValue
 	}
 	return 0
 }
 
-func (m *Terminal) GetInt64Value() int64 {
-	if m != nil && m.Int64Value != nil {
-		return *m.Int64Value
-	}
-	return 0
-}
-
-func (m *Terminal) GetUint64Value() uint64 {
-	if m != nil && m.Uint64Value != nil {
-		return *m.Uint64Value
-	}
-	return 0
-}
-
-func (m *Terminal) GetInt32Value() int32 {
-	if m != nil && m.Int32Value != nil {
-		return *m.Int32Value
+func (m *Terminal) GetUintValue() uint64 {
+	if m != nil && m.UintValue != nil {
+		return *m.UintValue
 	}
 	return 0
 }
@@ -256,13 +239,6 @@ func (m *Terminal) GetBytesValue() []byte {
 		return m.BytesValue
 	}
 	return nil
-}
-
-func (m *Terminal) GetUint32Value() uint32 {
-	if m != nil && m.Uint32Value != nil {
-		return *m.Uint32Value
-	}
-	return 0
 }
 
 func (m *Terminal) GetVariable() *Variable {
@@ -373,14 +349,11 @@ func (this *Terminal) GoString() string {
 		`Before:` + fmt.Sprintf("%#v", this.Before),
 		`Literal:` + fmt.Sprintf("%#v", this.Literal),
 		`DoubleValue:` + valueToGoStringExpr(this.DoubleValue, "float64"),
-		`FloatValue:` + valueToGoStringExpr(this.FloatValue, "float32"),
-		`Int64Value:` + valueToGoStringExpr(this.Int64Value, "int64"),
-		`Uint64Value:` + valueToGoStringExpr(this.Uint64Value, "uint64"),
-		`Int32Value:` + valueToGoStringExpr(this.Int32Value, "int32"),
+		`IntValue:` + valueToGoStringExpr(this.IntValue, "int64"),
+		`UintValue:` + valueToGoStringExpr(this.UintValue, "uint64"),
 		`BoolValue:` + valueToGoStringExpr(this.BoolValue, "bool"),
 		`StringValue:` + valueToGoStringExpr(this.StringValue, "string"),
 		`BytesValue:` + valueToGoStringExpr(this.BytesValue, "byte"),
-		`Uint32Value:` + valueToGoStringExpr(this.Uint32Value, "uint32"),
 		`Variable:` + fmt.Sprintf("%#v", this.Variable),
 		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s

@@ -191,7 +191,7 @@ func TestComposeListBool(t *testing.T) {
 				},
 				{
 					Terminal: &expr.Terminal{
-						Int64Value: proto.Int64(2),
+						IntValue: proto.Int64(2),
 					},
 				},
 			},
@@ -229,16 +229,16 @@ func TestComposeListInt64(t *testing.T) {
 									Params: []*expr.Expr{
 										{
 											List: &expr.List{
-												Type: types.LIST_INT64,
+												Type: types.LIST_INT,
 												Elems: []*expr.Expr{
 													{
 														Terminal: &expr.Terminal{
-															Int64Value: proto.Int64(1),
+															IntValue: proto.Int64(1),
 														},
 													},
 													{
 														Terminal: &expr.Terminal{
-															Int64Value: proto.Int64(2),
+															IntValue: proto.Int64(2),
 														},
 													},
 												},
@@ -249,7 +249,7 @@ func TestComposeListInt64(t *testing.T) {
 							},
 							{
 								Terminal: &expr.Terminal{
-									Int64Value: proto.Int64(1),
+									IntValue: proto.Int64(1),
 								},
 							},
 						},
@@ -257,7 +257,7 @@ func TestComposeListInt64(t *testing.T) {
 				},
 				{
 					Terminal: &expr.Terminal{
-						Int64Value: proto.Int64(2),
+						IntValue: proto.Int64(2),
 					},
 				},
 			},
@@ -402,7 +402,7 @@ func TestNoTrim(t *testing.T) {
 							},
 							{
 								Terminal: &expr.Terminal{
-									Int64Value: proto.Int64(0),
+									IntValue: proto.Int64(0),
 								},
 							},
 						},
@@ -457,7 +457,7 @@ func TestList(t *testing.T) {
 							},
 							{
 								Terminal: &expr.Terminal{
-									Int64Value: proto.Int64(0),
+									IntValue: proto.Int64(0),
 								},
 							},
 						},

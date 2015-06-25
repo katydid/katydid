@@ -33,32 +33,6 @@ func (this *listOfFloat64) String() string {
 
 func (this *listOfFloat64) IsListOf() {}
 
-type listOfFloat32 struct {
-	List []Float32
-}
-
-func NewListOfFloat32(v []Float32) Float32s {
-	return &listOfFloat32{v}
-}
-
-func (this *listOfFloat32) Eval() []float32 {
-	res := make([]float32, len(this.List))
-	for i, e := range this.List {
-		res[i] = e.Eval()
-	}
-	return res
-}
-
-func (this *listOfFloat32) String() string {
-	ss := make([]string, len(this.List))
-	for i := range this.List {
-		ss[i] = Sprint(this.List[i])
-	}
-	return "[]float32{" + strings.Join(ss, ",") + "}"
-}
-
-func (this *listOfFloat32) IsListOf() {}
-
 type listOfInt64 struct {
 	List []Int64
 }
@@ -110,32 +84,6 @@ func (this *listOfUint64) String() string {
 }
 
 func (this *listOfUint64) IsListOf() {}
-
-type listOfInt32 struct {
-	List []Int32
-}
-
-func NewListOfInt32(v []Int32) Int32s {
-	return &listOfInt32{v}
-}
-
-func (this *listOfInt32) Eval() []int32 {
-	res := make([]int32, len(this.List))
-	for i, e := range this.List {
-		res[i] = e.Eval()
-	}
-	return res
-}
-
-func (this *listOfInt32) String() string {
-	ss := make([]string, len(this.List))
-	for i := range this.List {
-		ss[i] = Sprint(this.List[i])
-	}
-	return "[]int32{" + strings.Join(ss, ",") + "}"
-}
-
-func (this *listOfInt32) IsListOf() {}
 
 type listOfBool struct {
 	List []Bool
@@ -214,29 +162,3 @@ func (this *listOfBytes) String() string {
 }
 
 func (this *listOfBytes) IsListOf() {}
-
-type listOfUint32 struct {
-	List []Uint32
-}
-
-func NewListOfUint32(v []Uint32) Uint32s {
-	return &listOfUint32{v}
-}
-
-func (this *listOfUint32) Eval() []uint32 {
-	res := make([]uint32, len(this.List))
-	for i, e := range this.List {
-		res[i] = e.Eval()
-	}
-	return res
-}
-
-func (this *listOfUint32) String() string {
-	ss := make([]string, len(this.List))
-	for i := range this.List {
-		ss[i] = Sprint(this.List[i])
-	}
-	return "[]uint32{" + strings.Join(ss, ",") + "}"
-}
-
-func (this *listOfUint32) IsListOf() {}

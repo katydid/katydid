@@ -22,11 +22,6 @@ import (
 	"strconv"
 )
 
-type JsonTokens interface {
-	GetTokenId(tokenString string) (int, error)
-	Lookup(parentToken int, name []byte) int
-}
-
 func errInString(buf []byte) error {
 	return fmt.Errorf("katydid/json/scanner error in json string: %s", string(buf))
 }
@@ -409,10 +404,6 @@ func (s *jsonScanner) Next() error {
 	return nil
 }
 
-func (s *jsonScanner) Id() int {
-	return s.tokens.Lookup(s.parentToken, s.name)
-}
-
 func (s *jsonScanner) IsLeaf() bool {
 	return !s.isValueObject
 }
@@ -427,12 +418,6 @@ func (s *jsonScanner) Float64() (float64, error) {
 	return i, err
 }
 
-func (s *jsonScanner) Float32() (float32, error) {
-	v := string(s.Value())
-	i, err := strconv.ParseFloat(v, 32)
-	return float32(i), err
-}
-
 func (s *jsonScanner) Int64() (int64, error) {
 	v := string(s.Value())
 	i, err := strconv.ParseInt(v, 10, 64)
@@ -445,18 +430,15 @@ func (s *jsonScanner) Uint64() (uint64, error) {
 	return uint64(i), err
 }
 
-func (s *jsonScanner) Int32() (int32, error) {
-	v := string(s.Value())
-	i, err := strconv.ParseInt(v, 10, 32)
-	return int32(i), err
-}
-
 func (s *jsonScanner) Bool() (bool, error) {
 	v := string(s.Value())
 	if v == "true" {
 		return true, nil
 	}
-	return false, nil
+	if v == "false" {
+		return false, nil
+	}
+	return false, serialize.ErrNotBool
 }
 
 func (s *jsonScanner) String() (string, error) {
@@ -471,17 +453,9 @@ func (s *jsonScanner) Bytes() ([]byte, error) {
 	return nil, serialize.ErrNotBytes
 }
 
-func (s *jsonScanner) Uint32() (uint32, error) {
-	v := string(s.Value())
-	i, err := strconv.ParseUint(v, 10, 32)
-	return uint32(i), err
-}
-
-func NewScanner(tokens JsonTokens, rootToken int) *jsonScanner {
+func NewJsonScanner() *jsonScanner {
 	return &jsonScanner{
-		tokens: tokens,
 		state: state{
-			parentToken:      rootToken,
 			firstObjectValue: true,
 		},
 		stack: make([]state, 0, 10),
@@ -490,7 +464,6 @@ func NewScanner(tokens JsonTokens, rootToken int) *jsonScanner {
 
 func (s *jsonScanner) init(buf []byte) {
 	s.state = state{
-		parentToken:      s.parentToken,
 		firstObjectValue: true,
 		buf:              buf,
 	}
@@ -503,13 +476,11 @@ func (s *jsonScanner) Init(buf []byte) error {
 }
 
 type jsonScanner struct {
-	tokens JsonTokens
 	state
 	stack []state
 }
 
 type state struct {
-	parentToken      int
 	buf              []byte
 	offset           int
 	name             []byte
@@ -521,8 +492,38 @@ type state struct {
 	isValueObject    bool
 }
 
+func (s state) Copy() state {
+	bufs := make([]byte, len(s.buf))
+	copy(bufs, s.buf)
+	names := make([]byte, len(s.name))
+	copy(names, s.name)
+	return state{
+		buf:              bufs,
+		offset:           s.offset,
+		name:             names,
+		startValueOffset: s.startValueOffset,
+		endValueOffset:   s.endValueOffset,
+		inArray:          s.inArray,
+		firstObjectValue: s.firstObjectValue,
+		firstArrayValue:  s.firstArrayValue,
+		isValueObject:    s.isValueObject,
+	}
+}
+
 func (s *jsonScanner) Name() string {
 	return string(s.name)
+}
+
+func (s *jsonScanner) Copy() serialize.Scanner {
+	news := &jsonScanner{
+		state: s.state.Copy(),
+		stack: make([]state, len(s.stack)),
+	}
+	for i := range s.stack {
+		news.stack[i] = s.stack[i].Copy()
+	}
+	return news
+
 }
 
 func (s *jsonScanner) Up() {
@@ -534,7 +535,6 @@ func (s *jsonScanner) Up() {
 func (s *jsonScanner) Down() {
 	s.stack = append(s.stack, s.state)
 	s.state = state{
-		parentToken:      s.tokens.Lookup(s.parentToken, s.name),
 		buf:              s.buf[s.startValueOffset:s.endValueOffset],
 		firstObjectValue: true,
 	}

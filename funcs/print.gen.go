@@ -23,22 +23,6 @@ func init() {
 	Register("print", new(printFloat64))
 }
 
-type printFloat32 struct {
-	E Float32
-}
-
-func (this *printFloat32) Eval() float32 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
-}
-
-func (this *printFloat32) IsVariable() {}
-
-func init() {
-	Register("print", new(printFloat32))
-}
-
 type printInt64 struct {
 	E Int64
 }
@@ -69,38 +53,6 @@ func (this *printUint64) IsVariable() {}
 
 func init() {
 	Register("print", new(printUint64))
-}
-
-type printInt32 struct {
-	E Int32
-}
-
-func (this *printInt32) Eval() int32 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
-}
-
-func (this *printInt32) IsVariable() {}
-
-func init() {
-	Register("print", new(printInt32))
-}
-
-type printUint32 struct {
-	E Uint32
-}
-
-func (this *printUint32) Eval() uint32 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
-}
-
-func (this *printUint32) IsVariable() {}
-
-func init() {
-	Register("print", new(printUint32))
 }
 
 type printBool struct {
@@ -167,22 +119,6 @@ func init() {
 	Register("print", new(printFloat64s))
 }
 
-type printFloat32s struct {
-	E Float32s
-}
-
-func (this *printFloat32s) Eval() []float32 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
-}
-
-func (this *printFloat32s) IsVariable() {}
-
-func init() {
-	Register("print", new(printFloat32s))
-}
-
 type printInt64s struct {
 	E Int64s
 }
@@ -213,38 +149,6 @@ func (this *printUint64s) IsVariable() {}
 
 func init() {
 	Register("print", new(printUint64s))
-}
-
-type printInt32s struct {
-	E Int32s
-}
-
-func (this *printInt32s) Eval() []int32 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
-}
-
-func (this *printInt32s) IsVariable() {}
-
-func init() {
-	Register("print", new(printInt32s))
-}
-
-type printUint32s struct {
-	E Uint32s
-}
-
-func (this *printUint32s) Eval() []uint32 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
-}
-
-func (this *printUint32s) IsVariable() {}
-
-func init() {
-	Register("print", new(printUint32s))
 }
 
 type printBools struct {

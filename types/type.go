@@ -17,14 +17,11 @@ package types
 func IsList(typ Type) bool {
 	switch typ {
 	case LIST_DOUBLE:
-	case LIST_FLOAT:
-	case LIST_INT64:
-	case LIST_UINT64:
-	case LIST_INT32:
+	case LIST_INT:
+	case LIST_UINT:
 	case LIST_BOOL:
 	case LIST_STRING:
 	case LIST_BYTES:
-	case LIST_UINT32:
 	default:
 		return false
 	}
@@ -35,22 +32,16 @@ func ListToSingle(typ Type) Type {
 	switch typ {
 	case LIST_DOUBLE:
 		return SINGLE_DOUBLE
-	case LIST_FLOAT:
-		return SINGLE_FLOAT
-	case LIST_INT64:
-		return SINGLE_INT64
-	case LIST_UINT64:
-		return SINGLE_UINT64
-	case LIST_INT32:
-		return SINGLE_INT32
+	case LIST_INT:
+		return SINGLE_INT
+	case LIST_UINT:
+		return SINGLE_UINT
 	case LIST_BOOL:
 		return SINGLE_BOOL
 	case LIST_STRING:
 		return SINGLE_STRING
 	case LIST_BYTES:
 		return SINGLE_BYTES
-	case LIST_UINT32:
-		return SINGLE_UINT32
 	}
 	panic("unreachable")
 }
@@ -59,22 +50,16 @@ func SingleToList(typ Type) Type {
 	switch typ {
 	case SINGLE_DOUBLE:
 		return LIST_DOUBLE
-	case SINGLE_FLOAT:
-		return LIST_FLOAT
-	case SINGLE_INT64:
-		return LIST_INT64
-	case SINGLE_UINT64:
-		return LIST_UINT64
-	case SINGLE_INT32:
-		return LIST_INT32
+	case SINGLE_INT:
+		return LIST_INT
+	case SINGLE_UINT:
+		return LIST_UINT
 	case SINGLE_BOOL:
 		return LIST_BOOL
 	case SINGLE_STRING:
 		return LIST_STRING
 	case SINGLE_BYTES:
 		return LIST_BYTES
-	case SINGLE_UINT32:
-		return LIST_UINT32
 	}
 	panic("unreachable")
 }
@@ -82,14 +67,11 @@ func SingleToList(typ Type) Type {
 func IsSingle(typ Type) bool {
 	switch typ {
 	case SINGLE_DOUBLE:
-	case SINGLE_FLOAT:
-	case SINGLE_INT64:
-	case SINGLE_UINT64:
-	case SINGLE_INT32:
+	case SINGLE_INT:
+	case SINGLE_UINT:
 	case SINGLE_BOOL:
 	case SINGLE_STRING:
 	case SINGLE_BYTES:
-	case SINGLE_UINT32:
 	default:
 		return false
 	}

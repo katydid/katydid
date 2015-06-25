@@ -19,11 +19,26 @@ import (
 	"github.com/katydid/katydid/expr/compose"
 	"github.com/katydid/katydid/lang/ast"
 	"github.com/katydid/katydid/serialize"
+	"io"
+	"log"
 )
+
+func Interpret(g *lang.Grammar, tree serialize.Scanner) bool {
+	refs := newRefsLookup(g)
+	res := refs["main"]
+	if err := tree.Next(); err != nil {
+		if err != io.EOF {
+			panic(err)
+		}
+	} else {
+		res = deriv(refs, refs["main"], tree)
+	}
+	return nullable(refs, res)
+}
 
 type RefLookup map[string]*lang.Pattern
 
-func refs(g *lang.Grammar) RefLookup {
+func newRefsLookup(g *lang.Grammar) RefLookup {
 	decls := g.GetPatternDecls()
 	refs := make(RefLookup, len(decls))
 	for _, d := range decls {
@@ -59,24 +74,88 @@ func nullable(refs RefLookup, p *lang.Pattern) bool {
 	panic(fmt.Sprintf("unknown typ %T", typ))
 }
 
-type Tree interface {
-	Copy() Tree
-	serialize.Decoder
+func getStringValue(p *lang.TreeNode) (val *string, funcName string) {
+	name := p.GetName()
+	if term := name.GetTerminal(); term != nil {
+		return term.StringValue, "Equal"
+	} else if fun := name.GetFunction(); fun != nil {
+		if fun.GetName() == "Not" && len(fun.GetParams()) == 1 && fun.GetParams()[0].GetTerminal() != nil {
+			term := fun.GetParams()[0].GetTerminal()
+			if term != nil {
+				return term.StringValue, "Not"
+			}
+		}
+	}
+	return nil, ""
 }
 
-func deriv(refs RefLookup, p *lang.Pattern, tree Tree) *lang.Pattern {
+func evalFunc(funcName string, param1 string, param2 string) bool {
+	log.Printf("evalFunc %s(%s,%s)", funcName, param1, param2)
+	switch funcName {
+	case "Equal":
+		return param1 == param2
+	case "Not":
+		return param1 != param2
+	}
+	panic("unsupported function: " + funcName)
+}
+
+func derivTreeNode(refs RefLookup, p *lang.TreeNode, tree serialize.Scanner) *lang.Pattern {
+	s, funcName := getStringValue(p)
+	if s == nil {
+		panic(fmt.Sprintf("%#v not supported in TreeNode", p.GetName()))
+	}
+	matched := evalFunc(funcName, *s, tree.Name())
+	if !matched {
+		tree.Next()
+		return lang.NewEmptySet()
+	}
+	if tree.IsLeaf() {
+		res := deriv(refs, p.GetPattern(), tree)
+		if !nullable(refs, res) {
+			return lang.NewEmptySet()
+		}
+		return lang.NewEmpty()
+	}
+	tree.Down()
+	res := p.GetPattern()
+	for {
+		err := tree.Next()
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+			panic(err)
+		}
+		res = deriv(refs, res, tree)
+	}
+	tree.Up()
+	if !nullable(refs, res) {
+		return lang.NewEmptySet()
+	}
+	return lang.NewEmpty()
+}
+
+func deriv(refs RefLookup, p *lang.Pattern, tree serialize.Scanner) *lang.Pattern {
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *lang.Empty:
+		log.Printf("Empty")
 		return lang.NewEmptySet()
 	case *lang.EmptySet:
+		log.Printf("EmptySet")
 		return lang.NewEmptySet()
 	case *lang.TreeNode:
-
+		log.Printf("TreeNode")
+		return derivTreeNode(refs, v, tree)
 	case *lang.LeafNode:
+		log.Printf("LeafNode")
 		f, err := compose.NewBool(v.GetExpr())
 		if err != nil {
 			panic(err)
+		}
+		if !tree.IsLeaf() {
+			return lang.NewEmptySet()
 		}
 		res, err := f.Eval(tree)
 		if err != nil {
@@ -87,6 +166,7 @@ func deriv(refs RefLookup, p *lang.Pattern, tree Tree) *lang.Pattern {
 		}
 		return lang.NewEmptySet()
 	case *lang.Concat:
+		log.Printf("Concat")
 		leftDeriv := lang.NewConcat(deriv(refs, v.GetLeftPattern(), tree), v.GetRightPattern())
 		if nullable(refs, v.GetLeftPattern()) {
 			return lang.NewOr(
@@ -97,20 +177,25 @@ func deriv(refs RefLookup, p *lang.Pattern, tree Tree) *lang.Pattern {
 			return leftDeriv
 		}
 	case *lang.Or:
+		log.Printf("Or")
 		return lang.NewOr(
 			deriv(refs, v.GetLeftPattern(), tree),
 			deriv(refs, v.GetRightPattern(), tree.Copy()),
 		)
 	case *lang.And:
+		log.Printf("And")
 		return lang.NewAnd(
 			deriv(refs, v.GetLeftPattern(), tree),
 			deriv(refs, v.GetRightPattern(), tree.Copy()),
 		)
 	case *lang.ZeroOrMore:
+		log.Printf("ZeroOrMore")
 		return lang.NewConcat(deriv(refs, v.Pattern, tree), lang.NewZeroOrMore(v.Pattern))
 	case *lang.Reference:
+		log.Printf("Reference")
 		return deriv(refs, refs[v.GetName()], tree)
 	case *lang.Not:
+		log.Printf("Not")
 		return lang.NewNot(deriv(refs, v.GetPattern(), tree))
 	}
 	panic(fmt.Sprintf("unknown typ %T", typ))

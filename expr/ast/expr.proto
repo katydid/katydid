@@ -50,16 +50,13 @@ message Terminal {
 	optional string Literal = 2 [(gogoproto.nullable) = false];
 
 	optional double DoubleValue = 3;
-	optional float FloatValue = 4;
-	optional int64 Int64Value = 5;
-	optional uint64 Uint64Value = 6;
-	optional int32 Int32Value = 7;
+	optional int64 IntValue = 5;
+	optional uint64 UintValue = 6;
 
 	optional bool BoolValue = 8;
 	optional string StringValue = 9;
 
 	optional bytes BytesValue = 10;
-	optional uint32 Uint32Value = 11;
 
 	optional Variable Variable = 50;
 }

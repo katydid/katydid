@@ -16,19 +16,6 @@ func init() {
 	Register("exists", new(existsFloat64))
 }
 
-type existsFloat32 struct {
-	Field Float32
-}
-
-func (this *existsFloat32) Eval() bool {
-	this.Field.Eval()
-	return true
-}
-
-func init() {
-	Register("exists", new(existsFloat32))
-}
-
 type existsInt64 struct {
 	Field Int64
 }
@@ -53,32 +40,6 @@ func (this *existsUint64) Eval() bool {
 
 func init() {
 	Register("exists", new(existsUint64))
-}
-
-type existsInt32 struct {
-	Field Int32
-}
-
-func (this *existsInt32) Eval() bool {
-	this.Field.Eval()
-	return true
-}
-
-func init() {
-	Register("exists", new(existsInt32))
-}
-
-type existsUint32 struct {
-	Field Uint32
-}
-
-func (this *existsUint32) Eval() bool {
-	this.Field.Eval()
-	return true
-}
-
-func init() {
-	Register("exists", new(existsUint32))
 }
 
 type existsBool struct {

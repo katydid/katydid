@@ -1,0 +1,8 @@
+syntax = "proto2";
+
+package tests;
+
+message SrcTree {
+  optional string PackageName = 1;
+  repeated SrcTree Imports = 2;
+}

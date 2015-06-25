@@ -45,31 +45,29 @@ const (
 	ENCODED_SINT32   Type = 17
 	ENCODED_SINT64   Type = 18
 	SINGLE_DOUBLE    Type = 101
-	SINGLE_FLOAT     Type = 102
-	SINGLE_INT64     Type = 103
-	SINGLE_UINT64    Type = 104
-	SINGLE_INT32     Type = 105
+	// SINGLE_FLOAT          = 102;
+	SINGLE_INT  Type = 103
+	SINGLE_UINT Type = 104
+	// SINGLE_INT32          = 105;
 	// SINGLE_FIXED64        = 106;
 	// SINGLE_FIXED32        = 107;
 	SINGLE_BOOL   Type = 108
 	SINGLE_STRING Type = 109
 	// SINGLE_GROUP          = 110;
 	// SINGLE_MESSAGE        = 111;
-	SINGLE_BYTES  Type = 112
-	SINGLE_UINT32 Type = 113
-	LIST_DOUBLE   Type = 201
-	LIST_FLOAT    Type = 202
-	LIST_INT64    Type = 203
-	LIST_UINT64   Type = 204
-	LIST_INT32    Type = 205
+	SINGLE_BYTES Type = 112
+	LIST_DOUBLE  Type = 201
+	// LIST_FLOAT          = 202;
+	LIST_INT  Type = 203
+	LIST_UINT Type = 204
+	// LIST_INT32          = 205;
 	// LIST_FIXED64        = 206;
 	// LIST_FIXED32        = 207;
 	LIST_BOOL   Type = 208
 	LIST_STRING Type = 209
 	// LIST_GROUP          = 210;
 	// LIST_MESSAGE        = 211;
-	LIST_BYTES  Type = 212
-	LIST_UINT32 Type = 213
+	LIST_BYTES Type = 212
 )
 
 var Type_name = map[int32]string{
@@ -93,23 +91,17 @@ var Type_name = map[int32]string{
 	17:  "ENCODED_SINT32",
 	18:  "ENCODED_SINT64",
 	101: "SINGLE_DOUBLE",
-	102: "SINGLE_FLOAT",
-	103: "SINGLE_INT64",
-	104: "SINGLE_UINT64",
-	105: "SINGLE_INT32",
+	103: "SINGLE_INT",
+	104: "SINGLE_UINT",
 	108: "SINGLE_BOOL",
 	109: "SINGLE_STRING",
 	112: "SINGLE_BYTES",
-	113: "SINGLE_UINT32",
 	201: "LIST_DOUBLE",
-	202: "LIST_FLOAT",
-	203: "LIST_INT64",
-	204: "LIST_UINT64",
-	205: "LIST_INT32",
+	203: "LIST_INT",
+	204: "LIST_UINT",
 	208: "LIST_BOOL",
 	209: "LIST_STRING",
 	212: "LIST_BYTES",
-	213: "LIST_UINT32",
 }
 var Type_value = map[string]int32{
 	"UNKNOWN":          0,
@@ -132,23 +124,17 @@ var Type_value = map[string]int32{
 	"ENCODED_SINT32":   17,
 	"ENCODED_SINT64":   18,
 	"SINGLE_DOUBLE":    101,
-	"SINGLE_FLOAT":     102,
-	"SINGLE_INT64":     103,
-	"SINGLE_UINT64":    104,
-	"SINGLE_INT32":     105,
+	"SINGLE_INT":       103,
+	"SINGLE_UINT":      104,
 	"SINGLE_BOOL":      108,
 	"SINGLE_STRING":    109,
 	"SINGLE_BYTES":     112,
-	"SINGLE_UINT32":    113,
 	"LIST_DOUBLE":      201,
-	"LIST_FLOAT":       202,
-	"LIST_INT64":       203,
-	"LIST_UINT64":      204,
-	"LIST_INT32":       205,
+	"LIST_INT":         203,
+	"LIST_UINT":        204,
 	"LIST_BOOL":        208,
 	"LIST_STRING":      209,
 	"LIST_BYTES":       212,
-	"LIST_UINT32":      213,
 }
 
 func (x Type) Enum() *Type {

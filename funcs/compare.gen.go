@@ -20,19 +20,6 @@ func init() {
 	Register("ge", new(float64Ge))
 }
 
-type float32Ge struct {
-	V1 Float32
-	V2 Float32
-}
-
-func (this *float32Ge) Eval() bool {
-	return this.V1.Eval() >= this.V2.Eval()
-}
-
-func init() {
-	Register("ge", new(float32Ge))
-}
-
 type int64Ge struct {
 	V1 Int64
 	V2 Int64
@@ -57,32 +44,6 @@ func (this *uint64Ge) Eval() bool {
 
 func init() {
 	Register("ge", new(uint64Ge))
-}
-
-type int32Ge struct {
-	V1 Int32
-	V2 Int32
-}
-
-func (this *int32Ge) Eval() bool {
-	return this.V1.Eval() >= this.V2.Eval()
-}
-
-func init() {
-	Register("ge", new(int32Ge))
-}
-
-type uint32Ge struct {
-	V1 Uint32
-	V2 Uint32
-}
-
-func (this *uint32Ge) Eval() bool {
-	return this.V1.Eval() >= this.V2.Eval()
-}
-
-func init() {
-	Register("ge", new(uint32Ge))
 }
 
 type bytesGe struct {
@@ -111,19 +72,6 @@ func init() {
 	Register("gt", new(float64Gt))
 }
 
-type float32Gt struct {
-	V1 Float32
-	V2 Float32
-}
-
-func (this *float32Gt) Eval() bool {
-	return this.V1.Eval() > this.V2.Eval()
-}
-
-func init() {
-	Register("gt", new(float32Gt))
-}
-
 type int64Gt struct {
 	V1 Int64
 	V2 Int64
@@ -148,32 +96,6 @@ func (this *uint64Gt) Eval() bool {
 
 func init() {
 	Register("gt", new(uint64Gt))
-}
-
-type int32Gt struct {
-	V1 Int32
-	V2 Int32
-}
-
-func (this *int32Gt) Eval() bool {
-	return this.V1.Eval() > this.V2.Eval()
-}
-
-func init() {
-	Register("gt", new(int32Gt))
-}
-
-type uint32Gt struct {
-	V1 Uint32
-	V2 Uint32
-}
-
-func (this *uint32Gt) Eval() bool {
-	return this.V1.Eval() > this.V2.Eval()
-}
-
-func init() {
-	Register("gt", new(uint32Gt))
 }
 
 type bytesGt struct {
@@ -202,19 +124,6 @@ func init() {
 	Register("le", new(float64Le))
 }
 
-type float32Le struct {
-	V1 Float32
-	V2 Float32
-}
-
-func (this *float32Le) Eval() bool {
-	return this.V1.Eval() <= this.V2.Eval()
-}
-
-func init() {
-	Register("le", new(float32Le))
-}
-
 type int64Le struct {
 	V1 Int64
 	V2 Int64
@@ -239,32 +148,6 @@ func (this *uint64Le) Eval() bool {
 
 func init() {
 	Register("le", new(uint64Le))
-}
-
-type int32Le struct {
-	V1 Int32
-	V2 Int32
-}
-
-func (this *int32Le) Eval() bool {
-	return this.V1.Eval() <= this.V2.Eval()
-}
-
-func init() {
-	Register("le", new(int32Le))
-}
-
-type uint32Le struct {
-	V1 Uint32
-	V2 Uint32
-}
-
-func (this *uint32Le) Eval() bool {
-	return this.V1.Eval() <= this.V2.Eval()
-}
-
-func init() {
-	Register("le", new(uint32Le))
 }
 
 type bytesLe struct {
@@ -293,19 +176,6 @@ func init() {
 	Register("lt", new(float64Lt))
 }
 
-type float32Lt struct {
-	V1 Float32
-	V2 Float32
-}
-
-func (this *float32Lt) Eval() bool {
-	return this.V1.Eval() < this.V2.Eval()
-}
-
-func init() {
-	Register("lt", new(float32Lt))
-}
-
 type int64Lt struct {
 	V1 Int64
 	V2 Int64
@@ -330,32 +200,6 @@ func (this *uint64Lt) Eval() bool {
 
 func init() {
 	Register("lt", new(uint64Lt))
-}
-
-type int32Lt struct {
-	V1 Int32
-	V2 Int32
-}
-
-func (this *int32Lt) Eval() bool {
-	return this.V1.Eval() < this.V2.Eval()
-}
-
-func init() {
-	Register("lt", new(int32Lt))
-}
-
-type uint32Lt struct {
-	V1 Uint32
-	V2 Uint32
-}
-
-func (this *uint32Lt) Eval() bool {
-	return this.V1.Eval() < this.V2.Eval()
-}
-
-func init() {
-	Register("lt", new(uint32Lt))
 }
 
 type bytesLt struct {
@@ -384,19 +228,6 @@ func init() {
 	Register("eq", new(float64Eq))
 }
 
-type float32Eq struct {
-	V1 Float32
-	V2 Float32
-}
-
-func (this *float32Eq) Eval() bool {
-	return this.V1.Eval() == this.V2.Eval()
-}
-
-func init() {
-	Register("eq", new(float32Eq))
-}
-
 type int64Eq struct {
 	V1 Int64
 	V2 Int64
@@ -421,32 +252,6 @@ func (this *uint64Eq) Eval() bool {
 
 func init() {
 	Register("eq", new(uint64Eq))
-}
-
-type int32Eq struct {
-	V1 Int32
-	V2 Int32
-}
-
-func (this *int32Eq) Eval() bool {
-	return this.V1.Eval() == this.V2.Eval()
-}
-
-func init() {
-	Register("eq", new(int32Eq))
-}
-
-type uint32Eq struct {
-	V1 Uint32
-	V2 Uint32
-}
-
-func (this *uint32Eq) Eval() bool {
-	return this.V1.Eval() == this.V2.Eval()
-}
-
-func init() {
-	Register("eq", new(uint32Eq))
 }
 
 type boolEq struct {

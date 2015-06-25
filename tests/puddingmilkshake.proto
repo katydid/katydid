@@ -1,0 +1,240 @@
+//Thank you to http://creativitygames.net/random-word-generator/randomwords/2 for helping me to anonymise this data.
+
+syntax = "proto2";
+
+package tests;
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+option (gogoproto.populate_all) = true;
+
+message PuddingMilkshake {
+    optional FinanceJudo FinanceJudo = 1;
+    optional MudRiddle RainInterlude = 2;
+}
+
+message FinanceJudo {
+    optional SaladWorry SaladWorry = 1;
+    optional int64 RumourSpirit = 2;
+    optional int64 UserInterfaceSpanner = 3;
+}
+
+message SaladWorry {
+    optional bytes MeasureGrade = 1;
+    optional KeyQueen HooliganValley = 2;
+    repeated string MagazineFrame = 3;
+    optional XrayPilot XrayPilot = 4;
+    optional bool LogMicrophone = 5;
+    optional MicrobeMiser NeonLightEnd = 6;
+    optional string LeafTrellis = 7;
+    optional CancerUserExperience CancerUserExperience = 8;
+    optional RadarBox RadarBox = 9;
+    optional bool AccidentStadium = 10;
+    optional SpyCarpenter SpyCarpenter = 11;
+    optional string PrizeRemoteControl = 12;
+    optional TravelBallRoom TableScandal = 13;
+    repeated uint32 StormTermite = 14;
+    repeated bytes ParliamentChime = 15;
+}
+
+message KeyQueen {
+    repeated int32 SkyscraperUniversity = 1;
+    repeated bytes RevengeMirror = 2;
+    repeated uint64 TrailerGallery = 3;
+}
+
+message TravelBallRoom {
+    repeated AccountantPowder DanceShooting = 1;
+    repeated string ReasonCoat = 2;
+}
+
+message SpyCarpenter {
+    repeated uint32 PartyBrakes = 1;
+    repeated uint32 WireOyster = 2;
+    optional XrayPilots XrayPilots = 3;
+    repeated PlasticBagCertificate RussiaBasket = 4;
+    optional StarTusk AccidentStockMarket = 5;
+    optional StarTusk BulldozerHandkerchief = 6;
+    repeated WineMicroscope VelcroBench = 7;
+    repeated string BridgePepper = 8;
+    repeated string FountainTarget = 9;
+    repeated string SoleFin = 10;
+    optional MigraneLemonade MigraneLemonade = 11;
+    repeated uint32 WhaleColour = 12;
+    repeated bytes LawyerRumour = 13;
+    repeated uint32 ToothSale = 14;
+    repeated bytes PearLeader = 15;
+}
+
+message StarTusk {
+    repeated AltarPlastic ViolinDuty = 1;
+    repeated string CloakPlayground = 2;
+}
+
+enum AltarPlastic {
+    Table = 0;
+    Dusk = 1;
+    Drum = 2;
+    Cereal = 3;
+    Prophet = 4;
+}
+
+message MigraneLemonade {
+    repeated ArchBubble ArchBubbles = 1;
+    repeated string FactParrot = 2;
+}
+
+
+enum ArchBubble {
+    Aroma = 0;
+    Moustache = 1;
+    Cup = 2;
+    Toes = 3;
+    Seal = 4;
+}
+
+
+enum PlasticBagCertificate {
+    Mustard = 0;
+    Flood = 1;
+}
+
+enum WineMicroscope {
+    Amplifier = 0;
+    Toy = 1;
+    Code = 2;
+    Perch = 3;
+    Tower = 4;
+}
+
+enum MicrobeMiser {
+    Parlour = 0;
+    Encyclopedia = 1;
+    Pebble = 2;
+    License = 3;
+    Binge = 4;
+    Novel = 5;
+    Class = 6;
+    Pincer = 7;
+    Concrete = 8;
+    Figure = 9;
+    CruiseShip = 10;
+    Tongue = 11;
+    Pepper = 12;
+    Chameleon = 13;
+    Snore = 14;
+}
+
+enum CancerUserExperience {
+    Nun = 0;
+    Massage = 1;
+    Cough = 2;
+    Artillery = 3;
+    Cashier = 4;
+}
+
+
+message MudRiddle {
+    optional XrayPilots XrayPilots = 1;
+    repeated uint32 RunwayGenius = 2;
+    optional BingleDaisy BingleDaisy = 3;
+    repeated uint32 Merit = 4;
+    repeated string CreationBirthday = 5;
+    repeated string HardwareFood = 6;
+    repeated string TurkeyValley = 7;
+    repeated string TramPuppet = 8;
+    repeated EnzymeLift InsultSquare = 9;
+    repeated string HospitalVideo = 10;
+}
+
+enum EnzymeLift {
+    Market = 0;
+    Bishop = 1;
+    Crispy = 2;
+    Friar = 3;
+    Telescope = 4;
+}
+
+message XrayPilot {
+    optional int64 AnkleCoat = 1;
+    optional int64 ShelfSunglass = 2;
+    optional int64 BacteriaPaperclip = 3;
+}
+
+message XrayPilots {
+    repeated uint64 AnkleCoats = 1;
+    repeated uint64 ShelfSunglasses = 2;
+    repeated uint64 BacteriaPaperclips = 3;
+}
+
+message BingleDaisy {
+    repeated AccountantPowder AccountantPowders = 1;
+    repeated uint32 DecoratorTask = 2;
+    repeated bytes TailTable = 3;
+    repeated string MachineCurtain = 4;
+}
+
+enum RadarBox {
+	Gutter = 0;
+	Sea = 1;
+	Purse = 2;
+	Bomb = 3;
+	Research = 4;
+	Staff = 5;
+	Dance = 6;
+	Soldier = 7;
+	Spine = 8;
+	Butterfly = 9;
+	Olive = 10;
+	Grade = 11;
+	Paranoia = 12;
+	Number = 13;
+	Task = 14;
+	Fountain = 15;
+	Hospital = 16;
+	Apetite = 17;
+	Garlic = 18;
+	Photograph = 19;
+	Nib = 20;
+	Wheelbarrow = 21;
+	Poverty = 22;
+	Piano = 23;
+	Poster = 24;
+	Toast = 25;
+	Pub = 26;
+	Fungus = 27;
+	Bulb = 28;
+	Ambiguous = 29;
+	Arms = 30;
+	Pillow = 31;
+	Carrot = 32;
+	Scallop = 33;
+	Nappy = 34;
+	Plug = 35;
+	Peacock = 36;
+	Bribe = 37;
+	Cat = 38;
+	Mat = 39;
+	Press = 40;
+	Fireplace = 41;
+	Carpet = 42;
+	Hunt = 43;
+	Mirror = 44;
+	Stairs = 45;
+	Saviour = 46;
+	Plate = 47;
+	Fall = 48;
+	Alphabet = 49;
+	Daisy = 50;
+	Degree = 51;
+	Fire = 52;
+	Chandelier = 53;
+ }
+ 
+ enum AccountantPowder {
+    Dolphin = 0;
+    Jump = 1;
+    Sausage = 2;
+    Holiday = 3;
+    Flamenco = 4;
+}

@@ -87,8 +87,8 @@ func ToString(s1 string) string {
 	return s
 }
 
-func NewInt64Terminal(slit string) (*Terminal, error) {
-	return &Terminal{Int64Value: ToInt64(Strip(slit, "int64")), Literal: slit}, nil
+func NewIntTerminal(slit string) (*Terminal, error) {
+	return &Terminal{IntValue: ToInt64(Strip(slit, "int")), Literal: slit}, nil
 }
 
 func ToInt64(tok []byte) *int64 {
@@ -99,21 +99,8 @@ func ToInt64(tok []byte) *int64 {
 	return &i
 }
 
-func NewInt32Terminal(slit string) (*Terminal, error) {
-	return &Terminal{Int32Value: ToInt32(Strip(slit, "int32")), Literal: slit}, nil
-}
-
-func ToInt32(tok []byte) *int32 {
-	i, err := util.IntValue(tok)
-	if err != nil {
-		panic(err)
-	}
-	ii := int32(i)
-	return &ii
-}
-
-func NewUint64Terminal(slit string) (*Terminal, error) {
-	return &Terminal{Uint64Value: ToUint64(Strip(slit, "uint64")), Literal: slit}, nil
+func NewUintTerminal(slit string) (*Terminal, error) {
+	return &Terminal{UintValue: ToUint64(Strip(slit, "uint")), Literal: slit}, nil
 }
 
 func ToUint64(tok []byte) *uint64 {
@@ -122,19 +109,6 @@ func ToUint64(tok []byte) *uint64 {
 		panic(err)
 	}
 	return &i
-}
-
-func NewUint32Terminal(slit string) (*Terminal, error) {
-	return &Terminal{Uint32Value: ToUint32(Strip(slit, "uint32")), Literal: slit}, nil
-}
-
-func ToUint32(tok []byte) *uint32 {
-	i, err := util.UintValue(tok)
-	if err != nil {
-		panic(err)
-	}
-	ii := uint32(i)
-	return &ii
 }
 
 func NewDoubleTerminal(slit string) (*Terminal, error) {
@@ -147,19 +121,6 @@ func ToFloat64(tok []byte) *float64 {
 		panic(err)
 	}
 	return &f
-}
-
-func NewFloatTerminal(slit string) (*Terminal, error) {
-	return &Terminal{FloatValue: ToFloat32(Strip(slit, "float")), Literal: slit}, nil
-}
-
-func ToFloat32(tok []byte) *float32 {
-	f, err := strconv.ParseFloat(string(tok), 32)
-	if err != nil {
-		panic(err)
-	}
-	ff := float32(f)
-	return &ff
 }
 
 func NewBytesTerminal(stringLit string) (*Terminal, error) {

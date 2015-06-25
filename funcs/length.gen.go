@@ -15,18 +15,6 @@ func init() {
 	Register("length", new(lenFloat64s))
 }
 
-type lenFloat32s struct {
-	E Float32s
-}
-
-func (this *lenFloat32s) Eval() int64 {
-	return int64(len(this.E.Eval()))
-}
-
-func init() {
-	Register("length", new(lenFloat32s))
-}
-
 type lenInt64s struct {
 	E Int64s
 }
@@ -49,30 +37,6 @@ func (this *lenUint64s) Eval() int64 {
 
 func init() {
 	Register("length", new(lenUint64s))
-}
-
-type lenInt32s struct {
-	E Int32s
-}
-
-func (this *lenInt32s) Eval() int64 {
-	return int64(len(this.E.Eval()))
-}
-
-func init() {
-	Register("length", new(lenInt32s))
-}
-
-type lenUint32s struct {
-	E Uint32s
-}
-
-func (this *lenUint32s) Eval() int64 {
-	return int64(len(this.E.Eval()))
-}
-
-func init() {
-	Register("length", new(lenUint32s))
 }
 
 type lenBools struct {

@@ -33,30 +33,6 @@ func (this *constFloat64) String() string {
 	return fmt.Sprintf("double(%f)", this.v)
 }
 
-type ConstFloat32 interface {
-	Float32
-}
-
-var typConstFloat32 reflect.Type = reflect.TypeOf((*ConstFloat32)(nil)).Elem()
-
-type constFloat32 struct {
-	v float32
-}
-
-func NewConstFloat32(v float32) ConstFloat32 {
-	return &constFloat32{v}
-}
-
-func (this *constFloat32) IsConst() {}
-
-func (this *constFloat32) Eval() float32 {
-	return this.v
-}
-
-func (this *constFloat32) String() string {
-	return fmt.Sprintf("float(%f)", this.v)
-}
-
 type ConstInt64 interface {
 	Int64
 }
@@ -103,54 +79,6 @@ func (this *constUint64) Eval() uint64 {
 
 func (this *constUint64) String() string {
 	return fmt.Sprintf("uint64(%d)", this.v)
-}
-
-type ConstInt32 interface {
-	Int32
-}
-
-var typConstInt32 reflect.Type = reflect.TypeOf((*ConstInt32)(nil)).Elem()
-
-type constInt32 struct {
-	v int32
-}
-
-func NewConstInt32(v int32) ConstInt32 {
-	return &constInt32{v}
-}
-
-func (this *constInt32) IsConst() {}
-
-func (this *constInt32) Eval() int32 {
-	return this.v
-}
-
-func (this *constInt32) String() string {
-	return fmt.Sprintf("int32(%d)", this.v)
-}
-
-type ConstUint32 interface {
-	Uint32
-}
-
-var typConstUint32 reflect.Type = reflect.TypeOf((*ConstUint32)(nil)).Elem()
-
-type constUint32 struct {
-	v uint32
-}
-
-func NewConstUint32(v uint32) ConstUint32 {
-	return &constUint32{v}
-}
-
-func (this *constUint32) IsConst() {}
-
-func (this *constUint32) Eval() uint32 {
-	return this.v
-}
-
-func (this *constUint32) String() string {
-	return fmt.Sprintf("uint32(%d)", this.v)
 }
 
 type ConstBool interface {
@@ -253,34 +181,6 @@ func (this *constFloat64s) String() string {
 	return "[]double{" + strings.Join(ss, ",") + "}"
 }
 
-type ConstFloat32s interface {
-	Float32s
-}
-
-var typConstFloat32s reflect.Type = reflect.TypeOf((*ConstFloat32s)(nil)).Elem()
-
-type constFloat32s struct {
-	v []float32
-}
-
-func NewConstFloat32s(v []float32) ConstFloat32s {
-	return &constFloat32s{v}
-}
-
-func (this *constFloat32s) IsConst() {}
-
-func (this *constFloat32s) Eval() []float32 {
-	return this.v
-}
-
-func (this *constFloat32s) String() string {
-	ss := make([]string, len(this.v))
-	for i := range this.v {
-		ss[i] = fmt.Sprintf("float(%f)", this.v[i])
-	}
-	return "[]float{" + strings.Join(ss, ",") + "}"
-}
-
 type ConstInt64s interface {
 	Int64s
 }
@@ -335,62 +235,6 @@ func (this *constUint64s) String() string {
 		ss[i] = fmt.Sprintf("uint64(%d)", this.v[i])
 	}
 	return "[]uint64{" + strings.Join(ss, ",") + "}"
-}
-
-type ConstInt32s interface {
-	Int32s
-}
-
-var typConstInt32s reflect.Type = reflect.TypeOf((*ConstInt32s)(nil)).Elem()
-
-type constInt32s struct {
-	v []int32
-}
-
-func NewConstInt32s(v []int32) ConstInt32s {
-	return &constInt32s{v}
-}
-
-func (this *constInt32s) IsConst() {}
-
-func (this *constInt32s) Eval() []int32 {
-	return this.v
-}
-
-func (this *constInt32s) String() string {
-	ss := make([]string, len(this.v))
-	for i := range this.v {
-		ss[i] = fmt.Sprintf("int32(%d)", this.v[i])
-	}
-	return "[]int32{" + strings.Join(ss, ",") + "}"
-}
-
-type ConstUint32s interface {
-	Uint32s
-}
-
-var typConstUint32s reflect.Type = reflect.TypeOf((*ConstUint32s)(nil)).Elem()
-
-type constUint32s struct {
-	v []uint32
-}
-
-func NewConstUint32s(v []uint32) ConstUint32s {
-	return &constUint32s{v}
-}
-
-func (this *constUint32s) IsConst() {}
-
-func (this *constUint32s) Eval() []uint32 {
-	return this.v
-}
-
-func (this *constUint32s) String() string {
-	ss := make([]string, len(this.v))
-	for i := range this.v {
-		ss[i] = fmt.Sprintf("uint32(%d)", this.v[i])
-	}
-	return "[]uint32{" + strings.Join(ss, ",") + "}"
 }
 
 type ConstBools interface {

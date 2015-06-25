@@ -88,6 +88,18 @@ type protoScanner struct {
 	stack []state
 }
 
+func (this *protoScanner) Copy() serialize.Scanner {
+	s := &protoScanner{
+		tokens: this.tokens,
+		state:  this.state,
+		stack:  make([]state, len(this.stack)),
+	}
+	for i := range this.stack {
+		s.stack[i] = this.stack[i]
+	}
+	return s
+}
+
 type state struct {
 	buf         []byte
 	parentToken int
@@ -97,31 +109,10 @@ type state struct {
 	name        string
 }
 
-type Scanner interface {
-	Next() error
-	IsLeaf() bool
-	Value() []byte
-	Up()
-	Down()
-	Name() string
-}
-
-type Decoder interface {
-	Float64() (float64, error)
-	Float32() (float32, error)
-	Int64() (int64, error)
-	Uint64() (uint64, error)
-	Int32() (int32, error)
-	Bool() (bool, error)
-	String() (string, error)
-	Bytes() ([]byte, error)
-	Uint32() (uint32, error)
-}
-
 type BytesScanner interface {
-	Scanner
-	Decoder
+	serialize.Scanner
 	Init(buf []byte) error
+	Value() []byte
 }
 
 func NewProtoScanner(tokens ProtoTokens, rootToken int) BytesScanner {
@@ -192,18 +183,13 @@ func (s *protoScanner) Name() string {
 
 func (s *protoScanner) Float64() (float64, error) {
 	buf := s.Value()
-	if len(buf) < 8 {
-		return 0, fmt.Errorf("Double: buffer too short")
+	if len(buf) == 8 {
+		return *(*float64)(unsafe.Pointer(&buf[0])), nil
 	}
-	return *(*float64)(unsafe.Pointer(&buf[0])), nil
-}
-
-func (s *protoScanner) Float32() (float32, error) {
-	buf := s.Value()
-	if len(buf) < 4 {
-		return 0, fmt.Errorf("Float: buffer too short")
+	if len(buf) == 4 {
+		return float64(*(*float32)(unsafe.Pointer(&buf[0]))), nil
 	}
-	return *(*float32)(unsafe.Pointer(&buf[0])), nil
+	return 0, fmt.Errorf("Double: wrong size buffer %d should be 4 or 8", len(buf))
 }
 
 func (s *protoScanner) Int64() (int64, error) {
@@ -215,6 +201,18 @@ func (s *protoScanner) Int64() (int64, error) {
 		return s.decodeSfixed64()
 	case descriptor.FieldDescriptorProto_TYPE_SINT64:
 		return s.decodeSint64()
+	case descriptor.FieldDescriptorProto_TYPE_INT32:
+		i, err := s.decodeInt32()
+		return int64(i), err
+	case descriptor.FieldDescriptorProto_TYPE_SFIXED32:
+		i, err := s.decodeSfixed32()
+		return int64(i), err
+	case descriptor.FieldDescriptorProto_TYPE_SINT32:
+		i, err := s.decodeSint32()
+		return int64(i), err
+	case descriptor.FieldDescriptorProto_TYPE_ENUM:
+		i, err := s.decodeInt32()
+		return int64(i), err
 	}
 	return 0, serialize.ErrNotInt64
 }
@@ -226,23 +224,14 @@ func (s *protoScanner) Uint64() (uint64, error) {
 		return s.decodeUint64()
 	case descriptor.FieldDescriptorProto_TYPE_FIXED64:
 		return s.decodeFixed64()
+	case descriptor.FieldDescriptorProto_TYPE_UINT32:
+		u, err := s.decodeUint32()
+		return uint64(u), err
+	case descriptor.FieldDescriptorProto_TYPE_FIXED32:
+		u, err := s.decodeFixed32()
+		return uint64(u), err
 	}
 	return 0, serialize.ErrNotUint64
-}
-
-func (s *protoScanner) Int32() (int32, error) {
-	typ := s.tokens.LookupType(s.tokenId)
-	switch typ {
-	case descriptor.FieldDescriptorProto_TYPE_INT32:
-		return s.decodeInt32()
-	case descriptor.FieldDescriptorProto_TYPE_SFIXED32:
-		return s.decodeSfixed32()
-	case descriptor.FieldDescriptorProto_TYPE_SINT32:
-		return s.decodeSint32()
-	case descriptor.FieldDescriptorProto_TYPE_ENUM:
-		return s.decodeInt32()
-	}
-	return 0, serialize.ErrNotInt32
 }
 
 func (s *protoScanner) Bool() (bool, error) {
@@ -263,17 +252,6 @@ func (s *protoScanner) String() (string, error) {
 
 func (s *protoScanner) Bytes() ([]byte, error) {
 	return s.Value(), nil
-}
-
-func (s *protoScanner) Uint32() (uint32, error) {
-	typ := s.tokens.LookupType(s.tokenId)
-	switch typ {
-	case descriptor.FieldDescriptorProto_TYPE_UINT32:
-		return s.decodeUint32()
-	case descriptor.FieldDescriptorProto_TYPE_FIXED32:
-		return s.decodeFixed32()
-	}
-	return 0, serialize.ErrNotUint32
 }
 
 func (s *protoScanner) decodeInt64() (int64, error) {

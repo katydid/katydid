@@ -38,13 +38,13 @@ func TestWhichStringEq(t *testing.T) {
 }
 
 func TestWhichInt64Eq(t *testing.T) {
-	which{"int64Eq"}.test(t, "eq", types.SINGLE_INT64, types.SINGLE_INT64)
+	which{"int64Eq"}.test(t, "eq", types.SINGLE_INT, types.SINGLE_INT)
 }
 
 func TestWhichInt64Ge(t *testing.T) {
-	which{"int64Ge"}.test(t, "ge", types.SINGLE_INT64, types.SINGLE_INT64)
+	which{"int64Ge"}.test(t, "ge", types.SINGLE_INT, types.SINGLE_INT)
 }
 
 func TestWhichElem(t *testing.T) {
-	which{"elemUint64s"}.test(t, "elem", types.LIST_UINT64, types.SINGLE_INT64)
+	which{"elemUint64s"}.test(t, "elem", types.LIST_UINT, types.SINGLE_INT)
 }

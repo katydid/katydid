@@ -178,70 +178,40 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `ListType : "[]int64"	<< types.LIST_INT64, nil >>`,
+		String: `ListType : "[]int"	<< types.LIST_INT, nil >>`,
 		Id:         "ListType",
 		NTType:     5,
 		Index:      15,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return types.LIST_INT64, nil
+			return types.LIST_INT, nil
 		},
 	},
 	ProdTabEntry{
-		String: `ListType : "[]int32"	<< types.LIST_INT32, nil >>`,
+		String: `ListType : "[]uint"	<< types.LIST_UINT, nil >>`,
 		Id:         "ListType",
 		NTType:     5,
 		Index:      16,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return types.LIST_INT32, nil
-		},
-	},
-	ProdTabEntry{
-		String: `ListType : "[]uint64"	<< types.LIST_UINT64, nil >>`,
-		Id:         "ListType",
-		NTType:     5,
-		Index:      17,
-		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return types.LIST_UINT64, nil
-		},
-	},
-	ProdTabEntry{
-		String: `ListType : "[]uint32"	<< types.LIST_UINT32, nil >>`,
-		Id:         "ListType",
-		NTType:     5,
-		Index:      18,
-		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return types.LIST_UINT32, nil
+			return types.LIST_UINT, nil
 		},
 	},
 	ProdTabEntry{
 		String: `ListType : "[]double"	<< types.LIST_DOUBLE, nil >>`,
 		Id:         "ListType",
 		NTType:     5,
-		Index:      19,
+		Index:      17,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return types.LIST_DOUBLE, nil
 		},
 	},
 	ProdTabEntry{
-		String: `ListType : "[]float"	<< types.LIST_FLOAT, nil >>`,
-		Id:         "ListType",
-		NTType:     5,
-		Index:      20,
-		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return types.LIST_FLOAT, nil
-		},
-	},
-	ProdTabEntry{
 		String: `ListType : "[]string"	<< types.LIST_STRING, nil >>`,
 		Id:         "ListType",
 		NTType:     5,
-		Index:      21,
+		Index:      18,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return types.LIST_STRING, nil
@@ -251,7 +221,7 @@ var productionsTable = ProdTab{
 		String: `ListType : "[][]byte"	<< types.LIST_BYTES, nil >>`,
 		Id:         "ListType",
 		NTType:     5,
-		Index:      22,
+		Index:      19,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return types.LIST_BYTES, nil
@@ -261,7 +231,7 @@ var productionsTable = ProdTab{
 		String: `SpaceTerminal : Terminal	<< X[0], nil >>`,
 		Id:         "SpaceTerminal",
 		NTType:     6,
-		Index:      23,
+		Index:      20,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return X[0], nil
@@ -271,7 +241,7 @@ var productionsTable = ProdTab{
 		String: `SpaceTerminal : Space Terminal	<< expr.SetTerminalSpace(X[1], X[0]), nil >>`,
 		Id:         "SpaceTerminal",
 		NTType:     6,
-		Index:      24,
+		Index:      21,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.SetTerminalSpace(X[1], X[0]), nil
@@ -281,77 +251,47 @@ var productionsTable = ProdTab{
 		String: `Terminal : Bool	<< expr.NewBoolTerminal(newString(X[0])) >>`,
 		Id:         "Terminal",
 		NTType:     7,
-		Index:      25,
+		Index:      22,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.NewBoolTerminal(newString(X[0]))
 		},
 	},
 	ProdTabEntry{
-		String: `Terminal : int64_lit	<< expr.NewInt64Terminal(newString(X[0])) >>`,
+		String: `Terminal : int_lit	<< expr.NewIntTerminal(newString(X[0])) >>`,
 		Id:         "Terminal",
 		NTType:     7,
-		Index:      26,
+		Index:      23,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return expr.NewInt64Terminal(newString(X[0]))
+			return expr.NewIntTerminal(newString(X[0]))
 		},
 	},
 	ProdTabEntry{
-		String: `Terminal : int32_lit	<< expr.NewInt32Terminal(newString(X[0])) >>`,
+		String: `Terminal : uint_lit	<< expr.NewUintTerminal(newString(X[0])) >>`,
 		Id:         "Terminal",
 		NTType:     7,
-		Index:      27,
+		Index:      24,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return expr.NewInt32Terminal(newString(X[0]))
-		},
-	},
-	ProdTabEntry{
-		String: `Terminal : uint64_lit	<< expr.NewUint64Terminal(newString(X[0])) >>`,
-		Id:         "Terminal",
-		NTType:     7,
-		Index:      28,
-		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return expr.NewUint64Terminal(newString(X[0]))
-		},
-	},
-	ProdTabEntry{
-		String: `Terminal : uint32_lit	<< expr.NewUint32Terminal(newString(X[0])) >>`,
-		Id:         "Terminal",
-		NTType:     7,
-		Index:      29,
-		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return expr.NewUint32Terminal(newString(X[0]))
+			return expr.NewUintTerminal(newString(X[0]))
 		},
 	},
 	ProdTabEntry{
 		String: `Terminal : double_lit	<< expr.NewDoubleTerminal(newString(X[0])) >>`,
 		Id:         "Terminal",
 		NTType:     7,
-		Index:      30,
+		Index:      25,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.NewDoubleTerminal(newString(X[0]))
 		},
 	},
 	ProdTabEntry{
-		String: `Terminal : float_lit	<< expr.NewFloatTerminal(newString(X[0])) >>`,
-		Id:         "Terminal",
-		NTType:     7,
-		Index:      31,
-		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return expr.NewFloatTerminal(newString(X[0]))
-		},
-	},
-	ProdTabEntry{
 		String: `Terminal : string_lit	<< expr.NewStringTerminal(newString(X[0])) >>`,
 		Id:         "Terminal",
 		NTType:     7,
-		Index:      32,
+		Index:      26,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.NewStringTerminal(newString(X[0]))
@@ -361,7 +301,7 @@ var productionsTable = ProdTab{
 		String: `Terminal : bytes_lit	<< expr.NewBytesTerminal(newString(X[0])) >>`,
 		Id:         "Terminal",
 		NTType:     7,
-		Index:      33,
+		Index:      27,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.NewBytesTerminal(newString(X[0]))
@@ -371,77 +311,47 @@ var productionsTable = ProdTab{
 		String: `Terminal : bool_var	<< expr.NewVariableTerminal(types.SINGLE_BOOL) >>`,
 		Id:         "Terminal",
 		NTType:     7,
-		Index:      34,
+		Index:      28,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.NewVariableTerminal(types.SINGLE_BOOL)
 		},
 	},
 	ProdTabEntry{
-		String: `Terminal : int64_var	<< expr.NewVariableTerminal(types.SINGLE_INT64) >>`,
+		String: `Terminal : int_var	<< expr.NewVariableTerminal(types.SINGLE_INT) >>`,
 		Id:         "Terminal",
 		NTType:     7,
-		Index:      35,
+		Index:      29,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return expr.NewVariableTerminal(types.SINGLE_INT64)
+			return expr.NewVariableTerminal(types.SINGLE_INT)
 		},
 	},
 	ProdTabEntry{
-		String: `Terminal : int32_var	<< expr.NewVariableTerminal(types.SINGLE_INT32) >>`,
+		String: `Terminal : uint_var	<< expr.NewVariableTerminal(types.SINGLE_UINT) >>`,
 		Id:         "Terminal",
 		NTType:     7,
-		Index:      36,
+		Index:      30,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return expr.NewVariableTerminal(types.SINGLE_INT32)
-		},
-	},
-	ProdTabEntry{
-		String: `Terminal : uint64_var	<< expr.NewVariableTerminal(types.SINGLE_UINT64) >>`,
-		Id:         "Terminal",
-		NTType:     7,
-		Index:      37,
-		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return expr.NewVariableTerminal(types.SINGLE_UINT64)
-		},
-	},
-	ProdTabEntry{
-		String: `Terminal : uint32_var	<< expr.NewVariableTerminal(types.SINGLE_UINT32) >>`,
-		Id:         "Terminal",
-		NTType:     7,
-		Index:      38,
-		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return expr.NewVariableTerminal(types.SINGLE_UINT32)
+			return expr.NewVariableTerminal(types.SINGLE_UINT)
 		},
 	},
 	ProdTabEntry{
 		String: `Terminal : double_var	<< expr.NewVariableTerminal(types.SINGLE_DOUBLE) >>`,
 		Id:         "Terminal",
 		NTType:     7,
-		Index:      39,
+		Index:      31,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.NewVariableTerminal(types.SINGLE_DOUBLE)
 		},
 	},
 	ProdTabEntry{
-		String: `Terminal : float_var	<< expr.NewVariableTerminal(types.SINGLE_FLOAT) >>`,
-		Id:         "Terminal",
-		NTType:     7,
-		Index:      40,
-		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return expr.NewVariableTerminal(types.SINGLE_FLOAT)
-		},
-	},
-	ProdTabEntry{
 		String: `Terminal : string_var	<< expr.NewVariableTerminal(types.SINGLE_STRING) >>`,
 		Id:         "Terminal",
 		NTType:     7,
-		Index:      41,
+		Index:      32,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.NewVariableTerminal(types.SINGLE_STRING)
@@ -451,7 +361,7 @@ var productionsTable = ProdTab{
 		String: `Terminal : bytes_var	<< expr.NewVariableTerminal(types.SINGLE_BYTES) >>`,
 		Id:         "Terminal",
 		NTType:     7,
-		Index:      42,
+		Index:      33,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.NewVariableTerminal(types.SINGLE_BYTES)
@@ -461,7 +371,7 @@ var productionsTable = ProdTab{
 		String: `Bool : "true"	<< true, nil >>`,
 		Id:         "Bool",
 		NTType:     8,
-		Index:      43,
+		Index:      34,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return true, nil
@@ -471,7 +381,7 @@ var productionsTable = ProdTab{
 		String: `Bool : "false"	<< false, nil >>`,
 		Id:         "Bool",
 		NTType:     8,
-		Index:      44,
+		Index:      35,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return false, nil
@@ -481,7 +391,7 @@ var productionsTable = ProdTab{
 		String: `Equal : "="	<< &expr.Keyword{Value: "="}, nil >>`,
 		Id:         "Equal",
 		NTType:     9,
-		Index:      45,
+		Index:      36,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: "="}, nil
@@ -494,7 +404,7 @@ var productionsTable = ProdTab{
     }, nil >>`,
 		Id:         "Equal",
 		NTType:     9,
-		Index:      46,
+		Index:      37,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -507,7 +417,7 @@ var productionsTable = ProdTab{
 		String: `OpenParen : "("	<< &expr.Keyword{Value: "("}, nil >>`,
 		Id:         "OpenParen",
 		NTType:     10,
-		Index:      47,
+		Index:      38,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: "("}, nil
@@ -520,7 +430,7 @@ var productionsTable = ProdTab{
     }, nil >>`,
 		Id:         "OpenParen",
 		NTType:     10,
-		Index:      48,
+		Index:      39,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -533,7 +443,7 @@ var productionsTable = ProdTab{
 		String: `CloseParen : ")"	<< &expr.Keyword{Value: ")"}, nil >>`,
 		Id:         "CloseParen",
 		NTType:     11,
-		Index:      49,
+		Index:      40,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: ")"}, nil
@@ -546,7 +456,7 @@ var productionsTable = ProdTab{
     }, nil >>`,
 		Id:         "CloseParen",
 		NTType:     11,
-		Index:      50,
+		Index:      41,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -559,7 +469,7 @@ var productionsTable = ProdTab{
 		String: `OpenCurly : "{"	<< &expr.Keyword{Value: "{"}, nil >>`,
 		Id:         "OpenCurly",
 		NTType:     12,
-		Index:      51,
+		Index:      42,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: "{"}, nil
@@ -572,7 +482,7 @@ var productionsTable = ProdTab{
     }, nil >>`,
 		Id:         "OpenCurly",
 		NTType:     12,
-		Index:      52,
+		Index:      43,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -585,7 +495,7 @@ var productionsTable = ProdTab{
 		String: `CloseCurly : "}"	<< &expr.Keyword{Value: "}"}, nil >>`,
 		Id:         "CloseCurly",
 		NTType:     13,
-		Index:      53,
+		Index:      44,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: "}"}, nil
@@ -598,7 +508,7 @@ var productionsTable = ProdTab{
     }, nil >>`,
 		Id:         "CloseCurly",
 		NTType:     13,
-		Index:      54,
+		Index:      45,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -611,7 +521,7 @@ var productionsTable = ProdTab{
 		String: `Comma : ","	<< &expr.Keyword{Value: ","}, nil >>`,
 		Id:         "Comma",
 		NTType:     14,
-		Index:      55,
+		Index:      46,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: ","}, nil
@@ -624,7 +534,7 @@ var productionsTable = ProdTab{
     }, nil >>`,
 		Id:         "Comma",
 		NTType:     14,
-		Index:      56,
+		Index:      47,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -637,7 +547,7 @@ var productionsTable = ProdTab{
 		String: `Space : Space space	<< expr.AppendSpace(X[0], newString(X[1])), nil >>`,
 		Id:         "Space",
 		NTType:     15,
-		Index:      57,
+		Index:      48,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.AppendSpace(X[0], newString(X[1])), nil
@@ -647,7 +557,7 @@ var productionsTable = ProdTab{
 		String: `Space : space	<< &expr.Space{Space: []string{newString(X[0])}}, nil >>`,
 		Id:         "Space",
 		NTType:     15,
-		Index:      58,
+		Index:      49,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Space{Space: []string{newString(X[0])}}, nil

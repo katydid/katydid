@@ -2986,8 +2986,8 @@ var gotoTab = gotoTable{
 		123, // Expr
 		122, // ListType
 		124, // SpaceTerminal
-		134, // Terminal
-		135, // Bool
+		131, // Terminal
+		132, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
 		118, // CloseParen
@@ -3196,7 +3196,7 @@ var gotoTab = gotoTable{
 		-1,  // CloseParen
 		-1,  // OpenCurly
 		-1,  // CloseCurly
-		158, // Comma
+		149, // Comma
 		110, // Space
 
 	},
@@ -3255,7 +3255,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
-		161, // Space
+		152, // Space
 
 	},
 	gotoRow{ // S112
@@ -3330,15 +3330,15 @@ var gotoTab = gotoTable{
 		-1,  // FunctionDecl
 		119, // Function
 		121, // List
-		164, // Exprs
+		155, // Exprs
 		123, // Expr
 		122, // ListType
 		124, // SpaceTerminal
-		134, // Terminal
-		135, // Bool
+		131, // Terminal
+		132, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
-		163, // CloseParen
+		154, // CloseParen
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
@@ -3390,10 +3390,10 @@ var gotoTab = gotoTable{
 		-1,  // List
 		-1,  // Exprs
 		-1,  // Expr
-		166, // ListType
+		157, // ListType
 		-1,  // SpaceTerminal
-		167, // Terminal
-		135, // Bool
+		158, // Terminal
+		132, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
 		-1,  // CloseParen
@@ -3424,7 +3424,7 @@ var gotoTab = gotoTable{
 		-1,  // Terminal
 		-1,  // Bool
 		-1,  // Equal
-		170, // OpenParen
+		161, // OpenParen
 		-1,  // CloseParen
 		-1,  // OpenCurly
 		-1,  // CloseCurly
@@ -3512,11 +3512,11 @@ var gotoTab = gotoTable{
 		-1,  // Bool
 		-1,  // Equal
 		-1,  // OpenParen
-		173, // CloseParen
+		164, // CloseParen
 		-1,  // OpenCurly
 		-1,  // CloseCurly
-		172, // Comma
-		171, // Space
+		163, // Comma
+		162, // Space
 
 	},
 	gotoRow{ // S121
@@ -3571,10 +3571,10 @@ var gotoTab = gotoTable{
 		-1,  // Equal
 		-1,  // OpenParen
 		-1,  // CloseParen
-		177, // OpenCurly
+		168, // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
-		176, // Space
+		167, // Space
 
 	},
 	gotoRow{ // S123
@@ -4333,31 +4333,31 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S149
 
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
+		-1,  // Expr
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		171, // Space
 
 	},
 	gotoRow{ // S150
@@ -4449,31 +4449,31 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S153
 
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
+		-1,  // Expr
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		174, // Comma
+		110, // Space
 
 	},
 	gotoRow{ // S154
@@ -4507,92 +4507,63 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S155
 
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
+		-1,  // Expr
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		175, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		163, // Comma
+		162, // Space
 
 	},
 	gotoRow{ // S156
 
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
+		-1,  // Expr
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		176, // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		101, // Space
 
 	},
 	gotoRow{ // S157
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
-	gotoRow{ // S158
 
 		-1,  // S'
 		-1,  // AllRules
@@ -4615,10 +4586,39 @@ var gotoTab = gotoTable{
 		-1,  // Equal
 		-1,  // OpenParen
 		-1,  // CloseParen
-		-1,  // OpenCurly
+		177, // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
-		180, // Space
+		167, // Space
+
+	},
+	gotoRow{ // S158
+
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
 
 	},
 	gotoRow{ // S159
@@ -4681,35 +4681,64 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S161
 
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		119, // Function
+		121, // List
+		180, // Exprs
+		123, // Expr
+		122, // ListType
+		124, // SpaceTerminal
+		131, // Terminal
+		132, // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		179, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		178, // Space
 
 	},
 	gotoRow{ // S162
 
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
+
+	},
+	gotoRow{ // S163
+
 		-1,  // S'
 		-1,  // AllRules
 		-1,  // Rules
@@ -4720,24 +4749,24 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
+		119, // Function
+		121, // List
 		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
+		185, // Expr
+		122, // ListType
+		124, // SpaceTerminal
+		131, // Terminal
+		132, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
 		-1,  // CloseParen
 		-1,  // OpenCurly
 		-1,  // CloseCurly
-		183, // Comma
-		110, // Space
+		-1,  // Comma
+		184, // Space
 
 	},
-	gotoRow{ // S163
+	gotoRow{ // S164
 
 		-1, // S'
 		-1, // AllRules
@@ -4766,91 +4795,62 @@ var gotoTab = gotoTable{
 		-1, // Space
 
 	},
-	gotoRow{ // S164
-
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		184, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		172, // Comma
-		171, // Space
-
-	},
 	gotoRow{ // S165
 
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		185, // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		101, // Space
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
 
 	},
 	gotoRow{ // S166
 
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		186, // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		176, // Space
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
 
 	},
 	gotoRow{ // S167
@@ -4884,31 +4884,31 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S168
 
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		191, // Function
+		193, // List
+		192, // Exprs
+		196, // Expr
+		194, // ListType
+		197, // SpaceTerminal
+		198, // Terminal
+		199, // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		195, // CloseCurly
+		-1,  // Comma
+		189, // Space
 
 	},
 	gotoRow{ // S169
@@ -4942,31 +4942,31 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S170
 
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		119, // Function
-		121, // List
-		189, // Exprs
-		123, // Expr
-		122, // ListType
-		124, // SpaceTerminal
-		134, // Terminal
-		135, // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		188, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		187, // Space
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
 
 	},
 	gotoRow{ // S171
@@ -5010,79 +5010,79 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
-		119, // Function
-		121, // List
+		-1,  // Function
+		-1,  // List
 		-1,  // Exprs
-		194, // Expr
-		122, // ListType
-		124, // SpaceTerminal
-		134, // Terminal
-		135, // Bool
+		-1,  // Expr
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		216, // Comma
+		110, // Space
+
+	},
+	gotoRow{ // S173
+
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
+		-1,  // Expr
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		217, // Comma
+		110, // Space
+
+	},
+	gotoRow{ // S174
+
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
+		-1,  // Expr
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Terminal
+		-1,  // Bool
 		-1,  // Equal
 		-1,  // OpenParen
 		-1,  // CloseParen
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
-		193, // Space
-
-	},
-	gotoRow{ // S173
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
-	gotoRow{ // S174
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
+		218, // Space
 
 	},
 	gotoRow{ // S175
@@ -5116,31 +5116,31 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S176
 
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		119, // Function
+		121, // List
+		221, // Exprs
+		123, // Expr
+		122, // ListType
+		124, // SpaceTerminal
+		131, // Terminal
+		132, // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		220, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		178, // Space
 
 	},
 	gotoRow{ // S177
@@ -5155,50 +5155,50 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
-		200, // Function
-		202, // List
-		201, // Exprs
-		205, // Expr
-		203, // ListType
-		206, // SpaceTerminal
-		207, // Terminal
-		208, // Bool
+		191, // Function
+		193, // List
+		222, // Exprs
+		196, // Expr
+		194, // ListType
+		197, // SpaceTerminal
+		198, // Terminal
+		199, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
 		-1,  // CloseParen
 		-1,  // OpenCurly
-		204, // CloseCurly
+		223, // CloseCurly
 		-1,  // Comma
-		198, // Space
+		189, // Space
 
 	},
 	gotoRow{ // S178
 
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
+		-1,  // Expr
+		157, // ListType
+		-1,  // SpaceTerminal
+		158, // Terminal
+		132, // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		-1,  // Space
 
 	},
 	gotoRow{ // S179
@@ -5232,121 +5232,63 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S180
 
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
+		-1,  // Expr
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		226, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		163, // Comma
+		225, // Space
 
 	},
 	gotoRow{ // S181
 
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		231, // Comma
-		110, // Space
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
 
 	},
 	gotoRow{ // S182
-
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		232, // Comma
-		110, // Space
-
-	},
-	gotoRow{ // S183
-
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		233, // Space
-
-	},
-	gotoRow{ // S184
 
 		-1, // S'
 		-1, // AllRules
@@ -5375,65 +5317,36 @@ var gotoTab = gotoTable{
 		-1, // Space
 
 	},
-	gotoRow{ // S185
+	gotoRow{ // S183
 
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		119, // Function
-		121, // List
-		236, // Exprs
-		123, // Expr
-		122, // ListType
-		124, // SpaceTerminal
-		134, // Terminal
-		135, // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		235, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		187, // Space
-
-	},
-	gotoRow{ // S186
-
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		200, // Function
-		202, // List
-		237, // Exprs
-		205, // Expr
-		203, // ListType
-		206, // SpaceTerminal
-		207, // Terminal
-		208, // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		238, // CloseCurly
-		-1,  // Comma
-		198, // Space
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
 
 	},
-	gotoRow{ // S187
+	gotoRow{ // S184
 
 		-1,  // S'
 		-1,  // AllRules
@@ -5449,10 +5362,10 @@ var gotoTab = gotoTable{
 		-1,  // List
 		-1,  // Exprs
 		-1,  // Expr
-		166, // ListType
+		157, // ListType
 		-1,  // SpaceTerminal
-		167, // Terminal
-		135, // Bool
+		158, // Terminal
+		132, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
 		-1,  // CloseParen
@@ -5460,6 +5373,93 @@ var gotoTab = gotoTable{
 		-1,  // CloseCurly
 		-1,  // Comma
 		-1,  // Space
+
+	},
+	gotoRow{ // S185
+
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
+
+	},
+	gotoRow{ // S186
+
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
+
+	},
+	gotoRow{ // S187
+
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
 
 	},
 	gotoRow{ // S188
@@ -5507,46 +5507,46 @@ var gotoTab = gotoTable{
 		-1,  // List
 		-1,  // Exprs
 		-1,  // Expr
+		229, // ListType
+		-1,  // SpaceTerminal
+		230, // Terminal
+		199, // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		-1,  // Space
+
+	},
+	gotoRow{ // S190
+
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
+		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
 		-1,  // Bool
 		-1,  // Equal
-		-1,  // OpenParen
-		241, // CloseParen
+		233, // OpenParen
+		-1,  // CloseParen
 		-1,  // OpenCurly
 		-1,  // CloseCurly
-		172, // Comma
-		240, // Space
-
-	},
-	gotoRow{ // S190
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
+		-1,  // Comma
+		101, // Space
 
 	},
 	gotoRow{ // S191
@@ -5580,6 +5580,35 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S192
 
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
+		-1,  // Expr
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		236, // CloseCurly
+		235, // Comma
+		234, // Space
+
+	},
+	gotoRow{ // S193
+
 		-1, // S'
 		-1, // AllRules
 		-1, // Rules
@@ -5607,7 +5636,7 @@ var gotoTab = gotoTable{
 		-1, // Space
 
 	},
-	gotoRow{ // S193
+	gotoRow{ // S194
 
 		-1,  // S'
 		-1,  // AllRules
@@ -5623,46 +5652,17 @@ var gotoTab = gotoTable{
 		-1,  // List
 		-1,  // Exprs
 		-1,  // Expr
-		166, // ListType
+		-1,  // ListType
 		-1,  // SpaceTerminal
-		167, // Terminal
-		135, // Bool
+		-1,  // Terminal
+		-1,  // Bool
 		-1,  // Equal
 		-1,  // OpenParen
 		-1,  // CloseParen
-		-1,  // OpenCurly
+		238, // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
-		-1,  // Space
-
-	},
-	gotoRow{ // S194
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
+		167, // Space
 
 	},
 	gotoRow{ // S195
@@ -5754,60 +5754,60 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S198
 
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		244, // ListType
-		-1,  // SpaceTerminal
-		245, // Terminal
-		208, // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // Space
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
 
 	},
 	gotoRow{ // S199
 
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		248, // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		101, // Space
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
 
 	},
 	gotoRow{ // S200
@@ -5841,31 +5841,31 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S201
 
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		251, // CloseCurly
-		250, // Comma
-		249, // Space
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
 
 	},
 	gotoRow{ // S202
@@ -5899,31 +5899,31 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S203
 
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		253, // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		176, // Space
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
 
 	},
 	gotoRow{ // S204
@@ -6247,89 +6247,89 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S215
 
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
+		-1,  // Expr
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		239, // Comma
+		110, // Space
 
 	},
 	gotoRow{ // S216
 
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
+		-1,  // Expr
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		240, // Space
 
 	},
 	gotoRow{ // S217
 
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
+		-1,  // Expr
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		242, // Space
 
 	},
 	gotoRow{ // S218
@@ -6363,31 +6363,31 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S219
 
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
+		-1,  // Expr
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		246, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		245, // Space
 
 	},
 	gotoRow{ // S220
@@ -6421,60 +6421,60 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S221
 
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
+		-1,  // Expr
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		248, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		163, // Comma
+		225, // Space
 
 	},
 	gotoRow{ // S222
 
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
+		-1,  // Expr
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		249, // CloseCurly
+		235, // Comma
+		234, // Space
 
 	},
 	gotoRow{ // S223
@@ -6624,64 +6624,6 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S228
 
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
-	gotoRow{ // S229
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
-	gotoRow{ // S230
-
 		-1,  // S'
 		-1,  // AllRules
 		-1,  // Rules
@@ -6701,44 +6643,15 @@ var gotoTab = gotoTable{
 		-1,  // Terminal
 		-1,  // Bool
 		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		254, // Comma
-		110, // Space
-
-	},
-	gotoRow{ // S231
-
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
+		250, // OpenParen
 		-1,  // CloseParen
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
-		255, // Space
+		101, // Space
 
 	},
-	gotoRow{ // S232
+	gotoRow{ // S229
 
 		-1,  // S'
 		-1,  // AllRules
@@ -6758,6 +6671,180 @@ var gotoTab = gotoTable{
 		-1,  // SpaceTerminal
 		-1,  // Terminal
 		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		251, // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		167, // Space
+
+	},
+	gotoRow{ // S230
+
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
+
+	},
+	gotoRow{ // S231
+
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
+
+	},
+	gotoRow{ // S232
+
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
+
+	},
+	gotoRow{ // S233
+
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		119, // Function
+		121, // List
+		254, // Exprs
+		123, // Expr
+		122, // ListType
+		124, // SpaceTerminal
+		131, // Terminal
+		132, // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		253, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		252, // Space
+
+	},
+	gotoRow{ // S234
+
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
+
+	},
+	gotoRow{ // S235
+
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		191, // Function
+		193, // List
+		-1,  // Exprs
+		258, // Expr
+		194, // ListType
+		197, // SpaceTerminal
+		198, // Terminal
+		199, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
 		-1,  // CloseParen
@@ -6767,123 +6854,94 @@ var gotoTab = gotoTable{
 		257, // Space
 
 	},
-	gotoRow{ // S233
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
-	gotoRow{ // S234
-
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		261, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		260, // Space
-
-	},
-	gotoRow{ // S235
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
 	gotoRow{ // S236
 
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		263, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		172, // Comma
-		240, // Space
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
 
 	},
 	gotoRow{ // S237
+
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
+
+	},
+	gotoRow{ // S238
+
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		191, // Function
+		193, // List
+		260, // Exprs
+		196, // Expr
+		194, // ListType
+		197, // SpaceTerminal
+		198, // Terminal
+		199, // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		261, // CloseCurly
+		-1,  // Comma
+		259, // Space
+
+	},
+	gotoRow{ // S239
 
 		-1,  // S'
 		-1,  // AllRules
@@ -6907,67 +6965,9 @@ var gotoTab = gotoTable{
 		-1,  // OpenParen
 		-1,  // CloseParen
 		-1,  // OpenCurly
-		264, // CloseCurly
-		250, // Comma
-		249, // Space
-
-	},
-	gotoRow{ // S238
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
-	gotoRow{ // S239
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
+		-1,  // CloseCurly
+		-1,  // Comma
+		263, // Space
 
 	},
 	gotoRow{ // S240
@@ -7001,31 +7001,31 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S241
 
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
+		-1,  // Expr
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		266, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		245, // Space
 
 	},
 	gotoRow{ // S242
@@ -7078,12 +7078,12 @@ var gotoTab = gotoTable{
 		-1,  // Terminal
 		-1,  // Bool
 		-1,  // Equal
-		265, // OpenParen
-		-1,  // CloseParen
+		-1,  // OpenParen
+		268, // CloseParen
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
-		101, // Space
+		245, // Space
 
 	},
 	gotoRow{ // S244
@@ -7108,11 +7108,11 @@ var gotoTab = gotoTable{
 		-1,  // Bool
 		-1,  // Equal
 		-1,  // OpenParen
-		-1,  // CloseParen
-		266, // OpenCurly
+		269, // CloseParen
+		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
-		176, // Space
+		245, // Space
 
 	},
 	gotoRow{ // S245
@@ -7204,31 +7204,31 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S248
 
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		119, // Function
-		121, // List
-		269, // Exprs
-		123, // Expr
-		122, // ListType
-		124, // SpaceTerminal
-		134, // Terminal
-		135, // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		268, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		267, // Space
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
 
 	},
 	gotoRow{ // S249
@@ -7272,82 +7272,24 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
-		200, // Function
-		202, // List
-		-1,  // Exprs
-		273, // Expr
-		203, // ListType
-		206, // SpaceTerminal
-		207, // Terminal
-		208, // Bool
+		119, // Function
+		121, // List
+		272, // Exprs
+		123, // Expr
+		122, // ListType
+		124, // SpaceTerminal
+		131, // Terminal
+		132, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
-		-1,  // CloseParen
+		271, // CloseParen
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
-		272, // Space
+		252, // Space
 
 	},
 	gotoRow{ // S251
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
-	gotoRow{ // S252
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
-	gotoRow{ // S253
 
 		-1,  // S'
 		-1,  // AllRules
@@ -7359,21 +7301,79 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
-		200, // Function
-		202, // List
-		275, // Exprs
-		205, // Expr
-		203, // ListType
-		206, // SpaceTerminal
-		207, // Terminal
-		208, // Bool
+		191, // Function
+		193, // List
+		273, // Exprs
+		196, // Expr
+		194, // ListType
+		197, // SpaceTerminal
+		198, // Terminal
+		199, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
 		-1,  // CloseParen
 		-1,  // OpenCurly
-		276, // CloseCurly
+		274, // CloseCurly
 		-1,  // Comma
-		274, // Space
+		259, // Space
+
+	},
+	gotoRow{ // S252
+
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
+		-1,  // Expr
+		157, // ListType
+		-1,  // SpaceTerminal
+		158, // Terminal
+		132, // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		-1,  // Space
+
+	},
+	gotoRow{ // S253
+
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
 
 	},
 	gotoRow{ // S254
@@ -7398,11 +7398,11 @@ var gotoTab = gotoTable{
 		-1,  // Bool
 		-1,  // Equal
 		-1,  // OpenParen
-		-1,  // CloseParen
+		277, // CloseParen
 		-1,  // OpenCurly
 		-1,  // CloseCurly
-		-1,  // Comma
-		278, // Space
+		163, // Comma
+		276, // Space
 
 	},
 	gotoRow{ // S255
@@ -7436,35 +7436,6 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S256
 
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		281, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		260, // Space
-
-	},
-	gotoRow{ // S257
-
 		-1, // S'
 		-1, // AllRules
 		-1, // Rules
@@ -7492,7 +7463,7 @@ var gotoTab = gotoTable{
 		-1, // Space
 
 	},
-	gotoRow{ // S258
+	gotoRow{ // S257
 
 		-1,  // S'
 		-1,  // AllRules
@@ -7508,17 +7479,46 @@ var gotoTab = gotoTable{
 		-1,  // List
 		-1,  // Exprs
 		-1,  // Expr
-		-1,  // ListType
+		229, // ListType
 		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
+		230, // Terminal
+		199, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
-		283, // CloseParen
+		-1,  // CloseParen
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
-		260, // Space
+		-1,  // Space
+
+	},
+	gotoRow{ // S258
+
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
 
 	},
 	gotoRow{ // S259
@@ -7537,46 +7537,46 @@ var gotoTab = gotoTable{
 		-1,  // List
 		-1,  // Exprs
 		-1,  // Expr
+		229, // ListType
+		-1,  // SpaceTerminal
+		230, // Terminal
+		199, // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		-1,  // Space
+
+	},
+	gotoRow{ // S260
+
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
+		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
 		-1,  // Bool
 		-1,  // Equal
 		-1,  // OpenParen
-		284, // CloseParen
+		-1,  // CloseParen
 		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		260, // Space
-
-	},
-	gotoRow{ // S260
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
+		280, // CloseCurly
+		235, // Comma
+		279, // Space
 
 	},
 	gotoRow{ // S261
@@ -7668,6 +7668,64 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S264
 
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
+		-1,  // Expr
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		282, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		245, // Space
+
+	},
+	gotoRow{ // S265
+
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
+		-1,  // Expr
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		283, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		245, // Space
+
+	},
+	gotoRow{ // S266
+
 		-1, // S'
 		-1, // AllRules
 		-1, // Rules
@@ -7695,64 +7753,6 @@ var gotoTab = gotoTable{
 		-1, // Space
 
 	},
-	gotoRow{ // S265
-
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		119, // Function
-		121, // List
-		287, // Exprs
-		123, // Expr
-		122, // ListType
-		124, // SpaceTerminal
-		134, // Terminal
-		135, // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		286, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		267, // Space
-
-	},
-	gotoRow{ // S266
-
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		200, // Function
-		202, // List
-		288, // Exprs
-		205, // Expr
-		203, // ListType
-		206, // SpaceTerminal
-		207, // Terminal
-		208, // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		289, // CloseCurly
-		-1,  // Comma
-		274, // Space
-
-	},
 	gotoRow{ // S267
 
 		-1,  // S'
@@ -7769,17 +7769,17 @@ var gotoTab = gotoTable{
 		-1,  // List
 		-1,  // Exprs
 		-1,  // Expr
-		166, // ListType
+		-1,  // ListType
 		-1,  // SpaceTerminal
-		167, // Terminal
-		135, // Bool
+		-1,  // Terminal
+		-1,  // Bool
 		-1,  // Equal
 		-1,  // OpenParen
-		-1,  // CloseParen
+		284, // CloseParen
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
-		-1,  // Space
+		245, // Space
 
 	},
 	gotoRow{ // S268
@@ -7813,31 +7813,31 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S269
 
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		292, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		172, // Comma
-		291, // Space
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
 
 	},
 	gotoRow{ // S270
@@ -7914,20 +7914,49 @@ var gotoTab = gotoTable{
 		-1,  // List
 		-1,  // Exprs
 		-1,  // Expr
-		244, // ListType
+		-1,  // ListType
 		-1,  // SpaceTerminal
-		245, // Terminal
-		208, // Bool
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		285, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		163, // Comma
+		276, // Space
+
+	},
+	gotoRow{ // S273
+
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
+		-1,  // Expr
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Terminal
+		-1,  // Bool
 		-1,  // Equal
 		-1,  // OpenParen
 		-1,  // CloseParen
 		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // Space
+		286, // CloseCurly
+		235, // Comma
+		279, // Space
 
 	},
-	gotoRow{ // S273
+	gotoRow{ // S274
 
 		-1, // S'
 		-1, // AllRules
@@ -7956,62 +7985,33 @@ var gotoTab = gotoTable{
 		-1, // Space
 
 	},
-	gotoRow{ // S274
-
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		244, // ListType
-		-1,  // SpaceTerminal
-		245, // Terminal
-		208, // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // Space
-
-	},
 	gotoRow{ // S275
 
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		295, // CloseCurly
-		250, // Comma
-		294, // Space
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
 
 	},
 	gotoRow{ // S276
@@ -8103,63 +8103,34 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S279
 
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		297, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		260, // Space
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
 
 	},
 	gotoRow{ // S280
-
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		298, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		260, // Space
-
-	},
-	gotoRow{ // S281
 
 		-1, // S'
 		-1, // AllRules
@@ -8188,7 +8159,7 @@ var gotoTab = gotoTable{
 		-1, // Space
 
 	},
-	gotoRow{ // S282
+	gotoRow{ // S281
 
 		-1,  // S'
 		-1,  // AllRules
@@ -8210,11 +8181,40 @@ var gotoTab = gotoTable{
 		-1,  // Bool
 		-1,  // Equal
 		-1,  // OpenParen
-		299, // CloseParen
+		287, // CloseParen
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
-		260, // Space
+		245, // Space
+
+	},
+	gotoRow{ // S282
+
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // Expr
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
 
 	},
 	gotoRow{ // S283
@@ -8334,441 +8334,6 @@ var gotoTab = gotoTable{
 
 	},
 	gotoRow{ // S287
-
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		300, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		172, // Comma
-		291, // Space
-
-	},
-	gotoRow{ // S288
-
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		301, // CloseCurly
-		250, // Comma
-		294, // Space
-
-	},
-	gotoRow{ // S289
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
-	gotoRow{ // S290
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
-	gotoRow{ // S291
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
-	gotoRow{ // S292
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
-	gotoRow{ // S293
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
-	gotoRow{ // S294
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
-	gotoRow{ // S295
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
-	gotoRow{ // S296
-
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		302, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		260, // Space
-
-	},
-	gotoRow{ // S297
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
-	gotoRow{ // S298
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
-	gotoRow{ // S299
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
-	gotoRow{ // S300
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
-	gotoRow{ // S301
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
-	gotoRow{ // S302
 
 		-1, // S'
 		-1, // AllRules
