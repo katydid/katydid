@@ -22,10 +22,10 @@ var gotoTab = gotoTable{
 		8,  // Transition
 		-1, // Destination
 		9,  // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -51,10 +51,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -80,10 +80,10 @@ var gotoTab = gotoTable{
 		8,  // Transition
 		-1, // Destination
 		9,  // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -109,10 +109,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -138,10 +138,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -167,10 +167,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -196,10 +196,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -225,10 +225,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -254,10 +254,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -283,10 +283,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -312,10 +312,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -341,10 +341,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -370,10 +370,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -399,10 +399,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -428,10 +428,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -457,10 +457,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -486,10 +486,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -515,10 +515,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -544,10 +544,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -573,10 +573,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -602,10 +602,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -631,10 +631,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -660,10 +660,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -689,10 +689,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -718,10 +718,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -747,10 +747,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -776,10 +776,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -805,10 +805,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -834,10 +834,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -863,10 +863,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -892,10 +892,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -921,10 +921,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -950,10 +950,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -979,10 +979,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1008,10 +1008,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1037,10 +1037,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1066,10 +1066,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1095,10 +1095,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1124,10 +1124,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1153,10 +1153,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1182,10 +1182,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1211,10 +1211,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1240,10 +1240,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1269,10 +1269,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1298,10 +1298,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1327,10 +1327,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1356,10 +1356,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1385,10 +1385,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1414,10 +1414,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1443,10 +1443,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1472,10 +1472,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1501,10 +1501,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		74, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1530,10 +1530,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1559,10 +1559,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1588,10 +1588,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1617,10 +1617,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1646,10 +1646,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1675,10 +1675,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1704,10 +1704,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		83, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1733,10 +1733,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1762,10 +1762,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1791,10 +1791,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1820,10 +1820,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		87, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1849,10 +1849,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1878,10 +1878,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1907,10 +1907,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1936,10 +1936,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1965,10 +1965,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -1994,10 +1994,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		91, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2023,10 +2023,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2052,10 +2052,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2081,10 +2081,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		94, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2110,10 +2110,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2139,10 +2139,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2168,10 +2168,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2197,10 +2197,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2226,10 +2226,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2255,10 +2255,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2284,10 +2284,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2313,10 +2313,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2342,10 +2342,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		99, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2371,10 +2371,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2400,10 +2400,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -2429,10 +2429,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2458,10 +2458,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2487,10 +2487,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2516,10 +2516,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		106, // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -2545,10 +2545,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2574,10 +2574,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2603,10 +2603,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2632,10 +2632,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		107, // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -2661,10 +2661,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2690,10 +2690,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2719,10 +2719,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2748,10 +2748,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2777,10 +2777,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2806,10 +2806,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2835,10 +2835,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2864,10 +2864,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -2893,10 +2893,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2922,10 +2922,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -2951,10 +2951,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -2980,12 +2980,12 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		120, // Expr
 		119, // Function
-		121, // List
-		120, // Exprs
-		123, // Expr
-		122, // ListType
-		124, // SpaceTerminal
+		122, // List
+		123, // Exprs
+		124, // ListType
+		121, // SpaceTerminal
 		131, // Terminal
 		132, // Bool
 		-1,  // Equal
@@ -3009,10 +3009,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3038,10 +3038,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3067,10 +3067,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3096,10 +3096,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3125,10 +3125,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3154,10 +3154,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3183,10 +3183,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -3212,10 +3212,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3241,10 +3241,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -3270,10 +3270,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3299,10 +3299,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3328,12 +3328,12 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		120, // Expr
 		119, // Function
-		121, // List
+		122, // List
 		155, // Exprs
-		123, // Expr
-		122, // ListType
-		124, // SpaceTerminal
+		124, // ListType
+		121, // SpaceTerminal
 		131, // Terminal
 		132, // Bool
 		-1,  // Equal
@@ -3357,10 +3357,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3386,10 +3386,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		157, // ListType
 		-1,  // SpaceTerminal
 		158, // Terminal
@@ -3415,10 +3415,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -3444,10 +3444,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3473,10 +3473,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3492,31 +3492,31 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S120
 
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		164, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		163, // Comma
-		162, // Space
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Expr
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
 
 	},
 	gotoRow{ // S121
@@ -3531,10 +3531,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3550,6 +3550,35 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S122
 
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Expr
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
+
+	},
+	gotoRow{ // S123
+
 		-1,  // S'
 		-1,  // AllRules
 		-1,  // Rules
@@ -3560,10 +3589,39 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		164, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		163, // Comma
+		162, // Space
+
+	},
+	gotoRow{ // S124
+
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
 		-1,  // Expr
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -3575,64 +3633,6 @@ var gotoTab = gotoTable{
 		-1,  // CloseCurly
 		-1,  // Comma
 		167, // Space
-
-	},
-	gotoRow{ // S123
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
-	gotoRow{ // S124
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
 
 	},
 	gotoRow{ // S125
@@ -3647,10 +3647,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3676,10 +3676,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3705,10 +3705,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3734,10 +3734,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3763,10 +3763,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3792,10 +3792,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3821,10 +3821,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3850,10 +3850,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3879,10 +3879,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3908,10 +3908,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3937,10 +3937,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3966,10 +3966,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -3995,10 +3995,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4024,10 +4024,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4053,10 +4053,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4082,10 +4082,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4111,10 +4111,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4140,10 +4140,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4169,10 +4169,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4198,10 +4198,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4227,10 +4227,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4256,10 +4256,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4285,10 +4285,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4314,10 +4314,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4343,10 +4343,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -4372,10 +4372,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4401,10 +4401,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4430,10 +4430,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4459,10 +4459,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -4488,10 +4488,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4517,10 +4517,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -4546,10 +4546,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -4575,10 +4575,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -4604,10 +4604,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4633,10 +4633,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4662,10 +4662,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4691,12 +4691,12 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		120, // Expr
 		119, // Function
-		121, // List
+		122, // List
 		180, // Exprs
-		123, // Expr
-		122, // ListType
-		124, // SpaceTerminal
+		124, // ListType
+		121, // SpaceTerminal
 		131, // Terminal
 		132, // Bool
 		-1,  // Equal
@@ -4720,10 +4720,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4749,12 +4749,12 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
-		119, // Function
-		121, // List
-		-1,  // Exprs
 		185, // Expr
-		122, // ListType
-		124, // SpaceTerminal
+		119, // Function
+		122, // List
+		-1,  // Exprs
+		124, // ListType
+		121, // SpaceTerminal
 		131, // Terminal
 		132, // Bool
 		-1,  // Equal
@@ -4778,10 +4778,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4807,10 +4807,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4836,10 +4836,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4865,10 +4865,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4894,19 +4894,19 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		192, // Expr
 		191, // Function
-		193, // List
-		192, // Exprs
-		196, // Expr
-		194, // ListType
-		197, // SpaceTerminal
+		194, // List
+		195, // Exprs
+		196, // ListType
+		193, // SpaceTerminal
 		198, // Terminal
 		199, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
 		-1,  // CloseParen
 		-1,  // OpenCurly
-		195, // CloseCurly
+		197, // CloseCurly
 		-1,  // Comma
 		189, // Space
 
@@ -4923,10 +4923,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4952,10 +4952,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -4981,10 +4981,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -5010,10 +5010,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -5039,10 +5039,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -5068,10 +5068,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -5097,10 +5097,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -5126,12 +5126,12 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		120, // Expr
 		119, // Function
-		121, // List
+		122, // List
 		221, // Exprs
-		123, // Expr
-		122, // ListType
-		124, // SpaceTerminal
+		124, // ListType
+		121, // SpaceTerminal
 		131, // Terminal
 		132, // Bool
 		-1,  // Equal
@@ -5155,12 +5155,12 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		192, // Expr
 		191, // Function
-		193, // List
+		194, // List
 		222, // Exprs
-		196, // Expr
-		194, // ListType
-		197, // SpaceTerminal
+		196, // ListType
+		193, // SpaceTerminal
 		198, // Terminal
 		199, // Bool
 		-1,  // Equal
@@ -5184,10 +5184,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		157, // ListType
 		-1,  // SpaceTerminal
 		158, // Terminal
@@ -5213,10 +5213,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -5242,10 +5242,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -5271,10 +5271,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -5300,10 +5300,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -5329,10 +5329,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -5358,10 +5358,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		157, // ListType
 		-1,  // SpaceTerminal
 		158, // Terminal
@@ -5387,10 +5387,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -5416,10 +5416,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -5445,10 +5445,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -5474,10 +5474,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -5503,10 +5503,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		229, // ListType
 		-1,  // SpaceTerminal
 		230, // Terminal
@@ -5532,10 +5532,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -5561,10 +5561,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -5580,31 +5580,31 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S192
 
-		-1,  // S'
-		-1,  // AllRules
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // Root
-		-1,  // Init
-		-1,  // Final
-		-1,  // Transition
-		-1,  // Destination
-		-1,  // FunctionDecl
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // Expr
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		236, // CloseCurly
-		235, // Comma
-		234, // Space
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Expr
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
 
 	},
 	gotoRow{ // S193
@@ -5619,10 +5619,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -5638,6 +5638,35 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S194
 
+		-1, // S'
+		-1, // AllRules
+		-1, // Rules
+		-1, // Rule
+		-1, // Root
+		-1, // Init
+		-1, // Final
+		-1, // Transition
+		-1, // Destination
+		-1, // FunctionDecl
+		-1, // Expr
+		-1, // Function
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // Space
+
+	},
+	gotoRow{ // S195
+
 		-1,  // S'
 		-1,  // AllRules
 		-1,  // Rules
@@ -5648,10 +5677,39 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		236, // CloseCurly
+		235, // Comma
+		234, // Space
+
+	},
+	gotoRow{ // S196
+
+		-1,  // S'
+		-1,  // AllRules
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // Root
+		-1,  // Init
+		-1,  // Final
+		-1,  // Transition
+		-1,  // Destination
+		-1,  // FunctionDecl
 		-1,  // Expr
+		-1,  // Function
+		-1,  // List
+		-1,  // Exprs
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -5663,64 +5721,6 @@ var gotoTab = gotoTable{
 		-1,  // CloseCurly
 		-1,  // Comma
 		167, // Space
-
-	},
-	gotoRow{ // S195
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
-
-	},
-	gotoRow{ // S196
-
-		-1, // S'
-		-1, // AllRules
-		-1, // Rules
-		-1, // Rule
-		-1, // Root
-		-1, // Init
-		-1, // Final
-		-1, // Transition
-		-1, // Destination
-		-1, // FunctionDecl
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // Expr
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // Space
 
 	},
 	gotoRow{ // S197
@@ -5735,10 +5735,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -5764,10 +5764,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -5793,10 +5793,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -5822,10 +5822,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -5851,10 +5851,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -5880,10 +5880,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -5909,10 +5909,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -5938,10 +5938,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -5967,10 +5967,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -5996,10 +5996,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -6025,10 +6025,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -6054,10 +6054,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -6083,10 +6083,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -6112,10 +6112,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -6141,10 +6141,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -6170,10 +6170,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -6199,10 +6199,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -6228,10 +6228,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -6257,10 +6257,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -6286,10 +6286,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -6315,10 +6315,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -6344,10 +6344,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -6373,10 +6373,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -6402,10 +6402,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -6431,10 +6431,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -6460,10 +6460,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -6489,10 +6489,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -6518,10 +6518,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -6547,10 +6547,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -6576,10 +6576,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -6605,10 +6605,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -6634,10 +6634,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -6663,10 +6663,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -6692,10 +6692,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -6721,10 +6721,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -6750,10 +6750,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -6779,12 +6779,12 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		120, // Expr
 		119, // Function
-		121, // List
+		122, // List
 		254, // Exprs
-		123, // Expr
-		122, // ListType
-		124, // SpaceTerminal
+		124, // ListType
+		121, // SpaceTerminal
 		131, // Terminal
 		132, // Bool
 		-1,  // Equal
@@ -6808,10 +6808,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -6837,12 +6837,12 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
-		191, // Function
-		193, // List
-		-1,  // Exprs
 		258, // Expr
-		194, // ListType
-		197, // SpaceTerminal
+		191, // Function
+		194, // List
+		-1,  // Exprs
+		196, // ListType
+		193, // SpaceTerminal
 		198, // Terminal
 		199, // Bool
 		-1,  // Equal
@@ -6866,10 +6866,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -6895,10 +6895,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -6924,12 +6924,12 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		192, // Expr
 		191, // Function
-		193, // List
+		194, // List
 		260, // Exprs
-		196, // Expr
-		194, // ListType
-		197, // SpaceTerminal
+		196, // ListType
+		193, // SpaceTerminal
 		198, // Terminal
 		199, // Bool
 		-1,  // Equal
@@ -6953,10 +6953,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -6982,10 +6982,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -7011,10 +7011,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -7040,10 +7040,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -7069,10 +7069,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -7098,10 +7098,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -7127,10 +7127,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -7156,10 +7156,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -7185,10 +7185,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -7214,10 +7214,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -7243,10 +7243,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -7272,12 +7272,12 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		120, // Expr
 		119, // Function
-		121, // List
+		122, // List
 		272, // Exprs
-		123, // Expr
-		122, // ListType
-		124, // SpaceTerminal
+		124, // ListType
+		121, // SpaceTerminal
 		131, // Terminal
 		132, // Bool
 		-1,  // Equal
@@ -7301,12 +7301,12 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		192, // Expr
 		191, // Function
-		193, // List
+		194, // List
 		273, // Exprs
-		196, // Expr
-		194, // ListType
-		197, // SpaceTerminal
+		196, // ListType
+		193, // SpaceTerminal
 		198, // Terminal
 		199, // Bool
 		-1,  // Equal
@@ -7330,10 +7330,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		157, // ListType
 		-1,  // SpaceTerminal
 		158, // Terminal
@@ -7359,10 +7359,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -7388,10 +7388,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -7417,10 +7417,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -7446,10 +7446,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -7475,10 +7475,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		229, // ListType
 		-1,  // SpaceTerminal
 		230, // Terminal
@@ -7504,10 +7504,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -7533,10 +7533,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		229, // ListType
 		-1,  // SpaceTerminal
 		230, // Terminal
@@ -7562,10 +7562,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -7591,10 +7591,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -7620,10 +7620,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -7649,10 +7649,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -7678,10 +7678,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -7707,10 +7707,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -7736,10 +7736,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -7765,10 +7765,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -7794,10 +7794,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -7823,10 +7823,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -7852,10 +7852,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -7881,10 +7881,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -7910,10 +7910,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -7939,10 +7939,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -7968,10 +7968,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -7997,10 +7997,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -8026,10 +8026,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -8055,10 +8055,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -8084,10 +8084,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -8113,10 +8113,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -8142,10 +8142,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -8171,10 +8171,10 @@ var gotoTab = gotoTable{
 		-1,  // Transition
 		-1,  // Destination
 		-1,  // FunctionDecl
+		-1,  // Expr
 		-1,  // Function
 		-1,  // List
 		-1,  // Exprs
-		-1,  // Expr
 		-1,  // ListType
 		-1,  // SpaceTerminal
 		-1,  // Terminal
@@ -8200,10 +8200,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -8229,10 +8229,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -8258,10 +8258,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -8287,10 +8287,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -8316,10 +8316,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal
@@ -8345,10 +8345,10 @@ var gotoTab = gotoTable{
 		-1, // Transition
 		-1, // Destination
 		-1, // FunctionDecl
+		-1, // Expr
 		-1, // Function
 		-1, // List
 		-1, // Exprs
-		-1, // Expr
 		-1, // ListType
 		-1, // SpaceTerminal
 		-1, // Terminal

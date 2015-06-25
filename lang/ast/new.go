@@ -18,6 +18,18 @@ import (
 	"github.com/katydid/katydid/expr/ast"
 )
 
+func NewGrammar(m map[string]*Pattern) *Grammar {
+	ps := make([]*PatternDecl, 0, len(m))
+	for name, p := range m {
+		ps = append(ps, &PatternDecl{
+			Name:    name,
+			Equal:   newEqual(),
+			Pattern: p,
+		})
+	}
+	return &Grammar{PatternDecls: ps}
+}
+
 func NewEmpty() *Pattern {
 	return &Pattern{
 		Empty: &Empty{},
@@ -40,6 +52,10 @@ func newCloseParen() *expr.Keyword {
 
 func newComma() *expr.Keyword {
 	return &expr.Keyword{Value: ","}
+}
+
+func newEqual() *expr.Keyword {
+	return &expr.Keyword{Value: "="}
 }
 
 func NewTreeNode(name *expr.Expr, pattern *Pattern) *Pattern {

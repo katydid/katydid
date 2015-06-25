@@ -17,6 +17,7 @@ package parser
 import (
 	"fmt"
 	"github.com/katydid/katydid/expr/ast"
+	"github.com/katydid/katydid/expr/lexer"
 )
 
 type ErrWrongType struct {
@@ -28,7 +29,8 @@ func (this *ErrWrongType) Error() string {
 	return fmt.Sprintf("expected %s, but got %#v", this.typ, this.res)
 }
 
-func (this *Parser) ParseExpr(scanner Scanner) (res *expr.Expr, err error) {
+func (this *Parser) ParseExpr(s string) (res *expr.Expr, err error) {
+	scanner := lexer.NewLexer([]byte(s))
 	e, err := this.Parse(scanner)
 	if err != nil {
 		return nil, err

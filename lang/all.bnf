@@ -375,6 +375,11 @@ Pattern
 
 
 
+Expr
+  : SpaceTerminal << &expr.Expr{Terminal: $0.(*expr.Terminal)}, nil >>
+  | Function << &expr.Expr{Function: $0.(*expr.Function)}, nil >>
+  | List << &expr.Expr{List: $0.(*expr.List)}, nil >>
+  ;
 
 Function
   : Space id OpenParen Exprs CloseParen << &expr.Function{Before: $0.(*expr.Space), Name: newString($1), OpenParen: $2.(*expr.Keyword), Params: $3.([]*expr.Expr), CloseParen: $4.(*expr.Keyword)}, nil >>
@@ -393,12 +398,6 @@ List
 Exprs
   : Expr << []*expr.Expr{$0.(*expr.Expr)}, nil >>
   | Exprs Comma Expr << append($0.([]*expr.Expr), expr.SetExprComma($2, $1)), nil >>
-  ;
-
-Expr
-  : SpaceTerminal << &expr.Expr{Terminal: $0.(*expr.Terminal)}, nil >>
-  | Function << &expr.Expr{Function: $0.(*expr.Function)}, nil >>
-  | List << &expr.Expr{List: $0.(*expr.List)}, nil >>
   ;
 
 ListType
