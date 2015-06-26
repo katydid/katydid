@@ -26,12 +26,16 @@ import (
 func Interpret(g *lang.Grammar, tree serialize.Scanner) bool {
 	refs := newRefsLookup(g)
 	res := refs["main"]
-	if err := tree.Next(); err != nil {
-		if err != io.EOF {
+	res = refs["main"]
+	for {
+		err := tree.Next()
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
 			panic(err)
 		}
-	} else {
-		res = deriv(refs, refs["main"], tree)
+		res = deriv(refs, res, tree)
 	}
 	return nullable(refs, res)
 }

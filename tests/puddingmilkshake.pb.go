@@ -29,6 +29,13 @@ import math "math"
 
 // discarding unused import gogoproto "github.com/gogo/protobuf/gogoproto/gogo.pb"
 
+import fmt "fmt"
+import strings "strings"
+import github_com_gogo_protobuf_proto "github.com/gogo/protobuf/proto"
+import sort "sort"
+import strconv "strconv"
+import reflect "reflect"
+
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = math.Inf
@@ -1757,4 +1764,189 @@ func encodeVarintPopulatePuddingmilkshake(data []byte, v uint64) []byte {
 	}
 	data = append(data, uint8(v))
 	return data
+}
+func (this *PuddingMilkshake) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.PuddingMilkshake{` +
+		`FinanceJudo:` + fmt.Sprintf("%#v", this.FinanceJudo),
+		`RainInterlude:` + fmt.Sprintf("%#v", this.RainInterlude),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *FinanceJudo) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.FinanceJudo{` +
+		`SaladWorry:` + fmt.Sprintf("%#v", this.SaladWorry),
+		`RumourSpirit:` + valueToGoStringPuddingmilkshake(this.RumourSpirit, "int64"),
+		`UserInterfaceSpanner:` + valueToGoStringPuddingmilkshake(this.UserInterfaceSpanner, "int64"),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *SaladWorry) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.SaladWorry{` +
+		`MeasureGrade:` + valueToGoStringPuddingmilkshake(this.MeasureGrade, "byte"),
+		`HooliganValley:` + fmt.Sprintf("%#v", this.HooliganValley),
+		`MagazineFrame:` + fmt.Sprintf("%#v", this.MagazineFrame),
+		`XrayPilot:` + fmt.Sprintf("%#v", this.XrayPilot),
+		`LogMicrophone:` + valueToGoStringPuddingmilkshake(this.LogMicrophone, "bool"),
+		`NeonLightEnd:` + valueToGoStringPuddingmilkshake(this.NeonLightEnd, "tests.MicrobeMiser"),
+		`LeafTrellis:` + valueToGoStringPuddingmilkshake(this.LeafTrellis, "string"),
+		`CancerUserExperience:` + valueToGoStringPuddingmilkshake(this.CancerUserExperience, "tests.CancerUserExperience"),
+		`RadarBox:` + valueToGoStringPuddingmilkshake(this.RadarBox, "tests.RadarBox"),
+		`AccidentStadium:` + valueToGoStringPuddingmilkshake(this.AccidentStadium, "bool"),
+		`SpyCarpenter:` + fmt.Sprintf("%#v", this.SpyCarpenter),
+		`PrizeRemoteControl:` + valueToGoStringPuddingmilkshake(this.PrizeRemoteControl, "string"),
+		`TableScandal:` + fmt.Sprintf("%#v", this.TableScandal),
+		`StormTermite:` + fmt.Sprintf("%#v", this.StormTermite),
+		`ParliamentChime:` + fmt.Sprintf("%#v", this.ParliamentChime),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *KeyQueen) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.KeyQueen{` +
+		`SkyscraperUniversity:` + fmt.Sprintf("%#v", this.SkyscraperUniversity),
+		`RevengeMirror:` + fmt.Sprintf("%#v", this.RevengeMirror),
+		`TrailerGallery:` + fmt.Sprintf("%#v", this.TrailerGallery),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *TravelBallRoom) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.TravelBallRoom{` +
+		`DanceShooting:` + fmt.Sprintf("%#v", this.DanceShooting),
+		`ReasonCoat:` + fmt.Sprintf("%#v", this.ReasonCoat),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *SpyCarpenter) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.SpyCarpenter{` +
+		`PartyBrakes:` + fmt.Sprintf("%#v", this.PartyBrakes),
+		`WireOyster:` + fmt.Sprintf("%#v", this.WireOyster),
+		`XrayPilots:` + fmt.Sprintf("%#v", this.XrayPilots),
+		`RussiaBasket:` + fmt.Sprintf("%#v", this.RussiaBasket),
+		`AccidentStockMarket:` + fmt.Sprintf("%#v", this.AccidentStockMarket),
+		`BulldozerHandkerchief:` + fmt.Sprintf("%#v", this.BulldozerHandkerchief),
+		`VelcroBench:` + fmt.Sprintf("%#v", this.VelcroBench),
+		`BridgePepper:` + fmt.Sprintf("%#v", this.BridgePepper),
+		`FountainTarget:` + fmt.Sprintf("%#v", this.FountainTarget),
+		`SoleFin:` + fmt.Sprintf("%#v", this.SoleFin),
+		`MigraneLemonade:` + fmt.Sprintf("%#v", this.MigraneLemonade),
+		`WhaleColour:` + fmt.Sprintf("%#v", this.WhaleColour),
+		`LawyerRumour:` + fmt.Sprintf("%#v", this.LawyerRumour),
+		`ToothSale:` + fmt.Sprintf("%#v", this.ToothSale),
+		`PearLeader:` + fmt.Sprintf("%#v", this.PearLeader),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *StarTusk) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.StarTusk{` +
+		`ViolinDuty:` + fmt.Sprintf("%#v", this.ViolinDuty),
+		`CloakPlayground:` + fmt.Sprintf("%#v", this.CloakPlayground),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *MigraneLemonade) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.MigraneLemonade{` +
+		`ArchBubbles:` + fmt.Sprintf("%#v", this.ArchBubbles),
+		`FactParrot:` + fmt.Sprintf("%#v", this.FactParrot),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *MudRiddle) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.MudRiddle{` +
+		`XrayPilots:` + fmt.Sprintf("%#v", this.XrayPilots),
+		`RunwayGenius:` + fmt.Sprintf("%#v", this.RunwayGenius),
+		`BingleDaisy:` + fmt.Sprintf("%#v", this.BingleDaisy),
+		`Merit:` + fmt.Sprintf("%#v", this.Merit),
+		`CreationBirthday:` + fmt.Sprintf("%#v", this.CreationBirthday),
+		`HardwareFood:` + fmt.Sprintf("%#v", this.HardwareFood),
+		`TurkeyValley:` + fmt.Sprintf("%#v", this.TurkeyValley),
+		`TramPuppet:` + fmt.Sprintf("%#v", this.TramPuppet),
+		`InsultSquare:` + fmt.Sprintf("%#v", this.InsultSquare),
+		`HospitalVideo:` + fmt.Sprintf("%#v", this.HospitalVideo),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *XrayPilot) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.XrayPilot{` +
+		`AnkleCoat:` + valueToGoStringPuddingmilkshake(this.AnkleCoat, "int64"),
+		`ShelfSunglass:` + valueToGoStringPuddingmilkshake(this.ShelfSunglass, "int64"),
+		`BacteriaPaperclip:` + valueToGoStringPuddingmilkshake(this.BacteriaPaperclip, "int64"),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *XrayPilots) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.XrayPilots{` +
+		`AnkleCoats:` + fmt.Sprintf("%#v", this.AnkleCoats),
+		`ShelfSunglasses:` + fmt.Sprintf("%#v", this.ShelfSunglasses),
+		`BacteriaPaperclips:` + fmt.Sprintf("%#v", this.BacteriaPaperclips),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *BingleDaisy) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.BingleDaisy{` +
+		`AccountantPowders:` + fmt.Sprintf("%#v", this.AccountantPowders),
+		`DecoratorTask:` + fmt.Sprintf("%#v", this.DecoratorTask),
+		`TailTable:` + fmt.Sprintf("%#v", this.TailTable),
+		`MachineCurtain:` + fmt.Sprintf("%#v", this.MachineCurtain),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func valueToGoStringPuddingmilkshake(v interface{}, typ string) string {
+	rv := reflect.ValueOf(v)
+	if rv.IsNil() {
+		return "nil"
+	}
+	pv := reflect.Indirect(rv).Interface()
+	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
+}
+func extensionToGoStringPuddingmilkshake(e map[int32]github_com_gogo_protobuf_proto.Extension) string {
+	if e == nil {
+		return "nil"
+	}
+	s := "map[int32]proto.Extension{"
+	keys := make([]int, 0, len(e))
+	for k := range e {
+		keys = append(keys, int(k))
+	}
+	sort.Ints(keys)
+	ss := []string{}
+	for _, k := range keys {
+		ss = append(ss, strconv.Itoa(k)+": "+e[int32(k)].GoString())
+	}
+	s += strings.Join(ss, ",") + "}"
+	return s
 }

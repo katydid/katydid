@@ -16,6 +16,7 @@ package interp_test
 
 import (
 	"encoding/json"
+	"github.com/gogo/protobuf/proto"
 	"github.com/katydid/katydid/lang/ast"
 	. "github.com/katydid/katydid/lang/builder"
 	"github.com/katydid/katydid/lang/interp"
@@ -60,7 +61,7 @@ func test(t *testing.T, m interface{}, ps G, positive bool) {
 		s := newScanner(m)
 		match := interp.Interpret(g, s)
 		if match != positive {
-			t.Errorf("Expected a %v match given %s scanner from \n%v \non \n%#v", positive, scannerName, g.String(), m)
+			t.Fatalf("Expected a %v match given %s scanner from \n%v \non \n%#v", positive, scannerName, g.String(), m)
 		}
 	}
 }
@@ -68,19 +69,23 @@ func test(t *testing.T, m interface{}, ps G, positive bool) {
 var r = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 func TestInterp(t *testing.T) {
-	var v int64 = 1
 	m := &tests.FinanceJudo{
-		RumourSpirit: &v,
+		SaladWorry: &tests.SaladWorry{
+			MagazineFrame: []string{"a", "b"},
+			XrayPilot: &tests.XrayPilot{
+				AnkleCoat: proto.Int64(2),
+			},
+		},
+		RumourSpirit: proto.Int64(1),
 	}
 	test(t, m, G{"main": Any()}, true)
 	test(t, m, G{"main": None()}, false)
-	someSpirit := MatchTree(Any(), Eval("spirit"), Any())
 	test(t, m, G{
-		"main":   someSpirit,
+		"main":   MatchTree(Any(), Eval("spirit"), Any()),
 		"spirit": MatchField(`"RumourSpirit"`, "eq($int, int(1))"),
 	}, true)
 	test(t, m, G{
-		"main":   someSpirit,
+		"main":   MatchTree(Any(), Eval("spirit"), Any()),
 		"spirit": MatchField(`"RumourSpirit"`, "eq($int, int(2))"),
 	}, false)
 }

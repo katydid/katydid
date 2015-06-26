@@ -24,6 +24,15 @@ package tests
 import proto "github.com/gogo/protobuf/proto"
 import math "math"
 
+// discarding unused import gogoproto "github.com/gogo/protobuf/gogoproto/gogo.pb"
+
+import fmt "fmt"
+import strings "strings"
+import github_com_gogo_protobuf_proto "github.com/gogo/protobuf/proto"
+import sort "sort"
+import strconv "strconv"
+import reflect "reflect"
+
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = math.Inf
@@ -409,4 +418,413 @@ func (m *ExternalInformationResources) GetLinkOutProvider() *Link {
 func init() {
 	proto.RegisterEnum("tests.GenomeInformationType", GenomeInformationType_name, GenomeInformationType_value)
 	proto.RegisterEnum("tests.Subject", Subject_name, Subject_value)
+}
+func NewPopulatedTaxonomyDatabase(r randyTaxonomy, easy bool) *TaxonomyDatabase {
+	this := &TaxonomyDatabase{}
+	if r.Intn(10) != 0 {
+		v1 := r.Intn(10)
+		this.Entries = make([]*Entry, v1)
+		for i := 0; i < v1; i++ {
+			this.Entries[i] = NewPopulatedEntry(r, easy)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTaxonomy(r, 2)
+	}
+	return this
+}
+
+func NewPopulatedEntry(r randyTaxonomy, easy bool) *Entry {
+	this := &Entry{}
+	if r.Intn(10) != 0 {
+		v2 := randStringTaxonomy(r)
+		this.TaxonomyId = &v2
+	}
+	if r.Intn(10) != 0 {
+		v3 := randStringTaxonomy(r)
+		this.InheritedBlastName = &v3
+	}
+	if r.Intn(10) != 0 {
+		v4 := randStringTaxonomy(r)
+		this.Rank = &v4
+	}
+	if r.Intn(10) != 0 {
+		this.GeneticCode = NewPopulatedGeneticCode(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		v5 := r.Intn(10)
+		this.OtherNames = make([]string, v5)
+		for i := 0; i < v5; i++ {
+			this.OtherNames[i] = randStringTaxonomy(r)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v6 := randStringTaxonomy(r)
+		this.Synonym = &v6
+	}
+	if r.Intn(10) != 0 {
+		v7 := r.Intn(10)
+		this.Lineage = make([]*Link, v7)
+		for i := 0; i < v7; i++ {
+			this.Lineage[i] = NewPopulatedLink(r, easy)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v8 := r.Intn(10)
+		this.CommentsAndReferences = make([]*CommentAndReference, v8)
+		for i := 0; i < v8; i++ {
+			this.CommentsAndReferences[i] = NewPopulatedCommentAndReference(r, easy)
+		}
+	}
+	if r.Intn(10) != 0 {
+		this.GenomeInformation = NewPopulatedGenomeInformation(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		v9 := r.Intn(10)
+		this.ExternalInformationResources = make([]*ExternalInformationResources, v9)
+		for i := 0; i < v9; i++ {
+			this.ExternalInformationResources[i] = NewPopulatedExternalInformationResources(r, easy)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v10 := r.Intn(10)
+		this.Records = make([]*Records, v10)
+		for i := 0; i < v10; i++ {
+			this.Records[i] = NewPopulatedRecords(r, easy)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTaxonomy(r, 12)
+	}
+	return this
+}
+
+func NewPopulatedRecords(r randyTaxonomy, easy bool) *Records {
+	this := &Records{}
+	if r.Intn(10) != 0 {
+		v11 := randStringTaxonomy(r)
+		this.DatabaseName = &v11
+	}
+	if r.Intn(10) != 0 {
+		v12 := r.Intn(10)
+		this.References = make([]*Reference, v12)
+		for i := 0; i < v12; i++ {
+			this.References[i] = NewPopulatedReference(r, easy)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTaxonomy(r, 3)
+	}
+	return this
+}
+
+func NewPopulatedReference(r randyTaxonomy, easy bool) *Reference {
+	this := &Reference{}
+	if r.Intn(10) != 0 {
+		this.Name = NewPopulatedLink(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		v13 := randStringTaxonomy(r)
+		this.Accession = &v13
+	}
+	if r.Intn(10) != 0 {
+		v14 := randStringTaxonomy(r)
+		this.GI = &v14
+	}
+	if r.Intn(10) != 0 {
+		v15 := r.Intn(10)
+		this.Links = make([]*Link, v15)
+		for i := 0; i < v15; i++ {
+			this.Links[i] = NewPopulatedLink(r, easy)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTaxonomy(r, 5)
+	}
+	return this
+}
+
+func NewPopulatedLink(r randyTaxonomy, easy bool) *Link {
+	this := &Link{}
+	if r.Intn(10) != 0 {
+		v16 := randStringTaxonomy(r)
+		this.Name = &v16
+	}
+	if r.Intn(10) != 0 {
+		v17 := randStringTaxonomy(r)
+		this.Link = &v17
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTaxonomy(r, 3)
+	}
+	return this
+}
+
+func NewPopulatedGeneticCode(r randyTaxonomy, easy bool) *GeneticCode {
+	this := &GeneticCode{}
+	if r.Intn(10) != 0 {
+		v18 := r.Int31()
+		if r.Intn(2) == 0 {
+			v18 *= -1
+		}
+		this.TranslationTable = &v18
+	}
+	if r.Intn(10) != 0 {
+		v19 := randStringTaxonomy(r)
+		this.Type = &v19
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTaxonomy(r, 3)
+	}
+	return this
+}
+
+func NewPopulatedCommentAndReference(r randyTaxonomy, easy bool) *CommentAndReference {
+	this := &CommentAndReference{}
+	if r.Intn(10) != 0 {
+		v20 := randStringTaxonomy(r)
+		this.Heading = &v20
+	}
+	if r.Intn(10) != 0 {
+		v21 := randStringTaxonomy(r)
+		this.Content = &v21
+	}
+	if r.Intn(10) != 0 {
+		this.Reference = NewPopulatedLink(r, easy)
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTaxonomy(r, 4)
+	}
+	return this
+}
+
+func NewPopulatedGenomeInformation(r randyTaxonomy, easy bool) *GenomeInformation {
+	this := &GenomeInformation{}
+	if r.Intn(10) != 0 {
+		v22 := GenomeInformationType([]int32{1, 2}[r.Intn(2)])
+		this.Type = &v22
+	}
+	if r.Intn(10) != 0 {
+		v23 := r.Intn(10)
+		this.Programs = make([]*Link, v23)
+		for i := 0; i < v23; i++ {
+			this.Programs[i] = NewPopulatedLink(r, easy)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTaxonomy(r, 3)
+	}
+	return this
+}
+
+func NewPopulatedExternalInformationResources(r randyTaxonomy, easy bool) *ExternalInformationResources {
+	this := &ExternalInformationResources{}
+	if r.Intn(10) != 0 {
+		this.LinkOut = NewPopulatedLink(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		v24 := Subject([]int32{1, 2}[r.Intn(2)])
+		this.Subject = &v24
+	}
+	if r.Intn(10) != 0 {
+		this.LinkOutProvider = NewPopulatedLink(r, easy)
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTaxonomy(r, 4)
+	}
+	return this
+}
+
+type randyTaxonomy interface {
+	Float32() float32
+	Float64() float64
+	Int63() int64
+	Int31() int32
+	Uint32() uint32
+	Intn(n int) int
+}
+
+func randUTF8RuneTaxonomy(r randyTaxonomy) rune {
+	return rune(r.Intn(126-43) + 43)
+}
+func randStringTaxonomy(r randyTaxonomy) string {
+	v25 := r.Intn(100)
+	tmps := make([]rune, v25)
+	for i := 0; i < v25; i++ {
+		tmps[i] = randUTF8RuneTaxonomy(r)
+	}
+	return string(tmps)
+}
+func randUnrecognizedTaxonomy(r randyTaxonomy, maxFieldNumber int) (data []byte) {
+	l := r.Intn(5)
+	for i := 0; i < l; i++ {
+		wire := r.Intn(4)
+		if wire == 3 {
+			wire = 5
+		}
+		fieldNumber := maxFieldNumber + r.Intn(100)
+		data = randFieldTaxonomy(data, r, fieldNumber, wire)
+	}
+	return data
+}
+func randFieldTaxonomy(data []byte, r randyTaxonomy, fieldNumber int, wire int) []byte {
+	key := uint32(fieldNumber)<<3 | uint32(wire)
+	switch wire {
+	case 0:
+		data = encodeVarintPopulateTaxonomy(data, uint64(key))
+		v26 := r.Int63()
+		if r.Intn(2) == 0 {
+			v26 *= -1
+		}
+		data = encodeVarintPopulateTaxonomy(data, uint64(v26))
+	case 1:
+		data = encodeVarintPopulateTaxonomy(data, uint64(key))
+		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+	case 2:
+		data = encodeVarintPopulateTaxonomy(data, uint64(key))
+		ll := r.Intn(100)
+		data = encodeVarintPopulateTaxonomy(data, uint64(ll))
+		for j := 0; j < ll; j++ {
+			data = append(data, byte(r.Intn(256)))
+		}
+	default:
+		data = encodeVarintPopulateTaxonomy(data, uint64(key))
+		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+	}
+	return data
+}
+func encodeVarintPopulateTaxonomy(data []byte, v uint64) []byte {
+	for v >= 1<<7 {
+		data = append(data, uint8(uint64(v)&0x7f|0x80))
+		v >>= 7
+	}
+	data = append(data, uint8(v))
+	return data
+}
+func (this *TaxonomyDatabase) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.TaxonomyDatabase{` +
+		`Entries:` + fmt.Sprintf("%#v", this.Entries),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *Entry) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.Entry{` +
+		`TaxonomyId:` + valueToGoStringTaxonomy(this.TaxonomyId, "string"),
+		`InheritedBlastName:` + valueToGoStringTaxonomy(this.InheritedBlastName, "string"),
+		`Rank:` + valueToGoStringTaxonomy(this.Rank, "string"),
+		`GeneticCode:` + fmt.Sprintf("%#v", this.GeneticCode),
+		`OtherNames:` + fmt.Sprintf("%#v", this.OtherNames),
+		`Synonym:` + valueToGoStringTaxonomy(this.Synonym, "string"),
+		`Lineage:` + fmt.Sprintf("%#v", this.Lineage),
+		`CommentsAndReferences:` + fmt.Sprintf("%#v", this.CommentsAndReferences),
+		`GenomeInformation:` + fmt.Sprintf("%#v", this.GenomeInformation),
+		`ExternalInformationResources:` + fmt.Sprintf("%#v", this.ExternalInformationResources),
+		`Records:` + fmt.Sprintf("%#v", this.Records),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *Records) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.Records{` +
+		`DatabaseName:` + valueToGoStringTaxonomy(this.DatabaseName, "string"),
+		`References:` + fmt.Sprintf("%#v", this.References),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *Reference) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.Reference{` +
+		`Name:` + fmt.Sprintf("%#v", this.Name),
+		`Accession:` + valueToGoStringTaxonomy(this.Accession, "string"),
+		`GI:` + valueToGoStringTaxonomy(this.GI, "string"),
+		`Links:` + fmt.Sprintf("%#v", this.Links),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *Link) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.Link{` +
+		`Name:` + valueToGoStringTaxonomy(this.Name, "string"),
+		`Link:` + valueToGoStringTaxonomy(this.Link, "string"),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *GeneticCode) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.GeneticCode{` +
+		`TranslationTable:` + valueToGoStringTaxonomy(this.TranslationTable, "int32"),
+		`Type:` + valueToGoStringTaxonomy(this.Type, "string"),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *CommentAndReference) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.CommentAndReference{` +
+		`Heading:` + valueToGoStringTaxonomy(this.Heading, "string"),
+		`Content:` + valueToGoStringTaxonomy(this.Content, "string"),
+		`Reference:` + fmt.Sprintf("%#v", this.Reference),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *GenomeInformation) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.GenomeInformation{` +
+		`Type:` + valueToGoStringTaxonomy(this.Type, "tests.GenomeInformationType"),
+		`Programs:` + fmt.Sprintf("%#v", this.Programs),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *ExternalInformationResources) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.ExternalInformationResources{` +
+		`LinkOut:` + fmt.Sprintf("%#v", this.LinkOut),
+		`Subject:` + valueToGoStringTaxonomy(this.Subject, "tests.Subject"),
+		`LinkOutProvider:` + fmt.Sprintf("%#v", this.LinkOutProvider),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func valueToGoStringTaxonomy(v interface{}, typ string) string {
+	rv := reflect.ValueOf(v)
+	if rv.IsNil() {
+		return "nil"
+	}
+	pv := reflect.Indirect(rv).Interface()
+	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
+}
+func extensionToGoStringTaxonomy(e map[int32]github_com_gogo_protobuf_proto.Extension) string {
+	if e == nil {
+		return "nil"
+	}
+	s := "map[int32]proto.Extension{"
+	keys := make([]int, 0, len(e))
+	for k := range e {
+		keys = append(keys, int(k))
+	}
+	sort.Ints(keys)
+	ss := []string{}
+	for _, k := range keys {
+		ss = append(ss, strconv.Itoa(k)+": "+e[int32(k)].GoString())
+	}
+	s += strings.Join(ss, ",") + "}"
+	return s
 }

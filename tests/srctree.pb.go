@@ -16,6 +16,15 @@ package tests
 import proto "github.com/gogo/protobuf/proto"
 import math "math"
 
+// discarding unused import gogoproto "github.com/gogo/protobuf/gogoproto/gogo.pb"
+
+import fmt "fmt"
+import strings "strings"
+import github_com_gogo_protobuf_proto "github.com/gogo/protobuf/proto"
+import sort "sort"
+import strconv "strconv"
+import reflect "reflect"
+
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = math.Inf
@@ -45,4 +54,124 @@ func (m *SrcTree) GetImports() []*SrcTree {
 }
 
 func init() {
+}
+func NewPopulatedSrcTree(r randySrctree, easy bool) *SrcTree {
+	this := &SrcTree{}
+	if r.Intn(10) != 0 {
+		v1 := randStringSrctree(r)
+		this.PackageName = &v1
+	}
+	if r.Intn(10) != 0 {
+		v2 := r.Intn(10)
+		this.Imports = make([]*SrcTree, v2)
+		for i := 0; i < v2; i++ {
+			this.Imports[i] = NewPopulatedSrcTree(r, easy)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedSrctree(r, 3)
+	}
+	return this
+}
+
+type randySrctree interface {
+	Float32() float32
+	Float64() float64
+	Int63() int64
+	Int31() int32
+	Uint32() uint32
+	Intn(n int) int
+}
+
+func randUTF8RuneSrctree(r randySrctree) rune {
+	return rune(r.Intn(126-43) + 43)
+}
+func randStringSrctree(r randySrctree) string {
+	v3 := r.Intn(100)
+	tmps := make([]rune, v3)
+	for i := 0; i < v3; i++ {
+		tmps[i] = randUTF8RuneSrctree(r)
+	}
+	return string(tmps)
+}
+func randUnrecognizedSrctree(r randySrctree, maxFieldNumber int) (data []byte) {
+	l := r.Intn(5)
+	for i := 0; i < l; i++ {
+		wire := r.Intn(4)
+		if wire == 3 {
+			wire = 5
+		}
+		fieldNumber := maxFieldNumber + r.Intn(100)
+		data = randFieldSrctree(data, r, fieldNumber, wire)
+	}
+	return data
+}
+func randFieldSrctree(data []byte, r randySrctree, fieldNumber int, wire int) []byte {
+	key := uint32(fieldNumber)<<3 | uint32(wire)
+	switch wire {
+	case 0:
+		data = encodeVarintPopulateSrctree(data, uint64(key))
+		v4 := r.Int63()
+		if r.Intn(2) == 0 {
+			v4 *= -1
+		}
+		data = encodeVarintPopulateSrctree(data, uint64(v4))
+	case 1:
+		data = encodeVarintPopulateSrctree(data, uint64(key))
+		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+	case 2:
+		data = encodeVarintPopulateSrctree(data, uint64(key))
+		ll := r.Intn(100)
+		data = encodeVarintPopulateSrctree(data, uint64(ll))
+		for j := 0; j < ll; j++ {
+			data = append(data, byte(r.Intn(256)))
+		}
+	default:
+		data = encodeVarintPopulateSrctree(data, uint64(key))
+		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+	}
+	return data
+}
+func encodeVarintPopulateSrctree(data []byte, v uint64) []byte {
+	for v >= 1<<7 {
+		data = append(data, uint8(uint64(v)&0x7f|0x80))
+		v >>= 7
+	}
+	data = append(data, uint8(v))
+	return data
+}
+func (this *SrcTree) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.SrcTree{` +
+		`PackageName:` + valueToGoStringSrctree(this.PackageName, "string"),
+		`Imports:` + fmt.Sprintf("%#v", this.Imports),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func valueToGoStringSrctree(v interface{}, typ string) string {
+	rv := reflect.ValueOf(v)
+	if rv.IsNil() {
+		return "nil"
+	}
+	pv := reflect.Indirect(rv).Interface()
+	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
+}
+func extensionToGoStringSrctree(e map[int32]github_com_gogo_protobuf_proto.Extension) string {
+	if e == nil {
+		return "nil"
+	}
+	s := "map[int32]proto.Extension{"
+	keys := make([]int, 0, len(e))
+	for k := range e {
+		keys = append(keys, int(k))
+	}
+	sort.Ints(keys)
+	ss := []string{}
+	for _, k := range keys {
+		ss = append(ss, strconv.Itoa(k)+": "+e[int32(k)].GoString())
+	}
+	s += strings.Join(ss, ",") + "}"
+	return s
 }

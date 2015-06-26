@@ -7,6 +7,7 @@ package tests;
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
 option (gogoproto.populate_all) = true;
+option (gogoproto.gostring_all) = true;
 
 message TypewriterPrison {
     optional bytes WineMessenger = 1;

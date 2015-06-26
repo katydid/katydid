@@ -2,6 +2,11 @@ syntax = "proto2";
 
 package tests;
 
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+option (gogoproto.populate_all) = true;
+option (gogoproto.gostring_all) = true;
+
 message TaxonomyDatabase {
 	repeated Entry Entries = 1;
 }

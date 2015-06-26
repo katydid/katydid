@@ -20,8 +20,15 @@ import (
 
 func NewGrammar(m map[string]*Pattern) *Grammar {
 	ps := make([]*PatternDecl, 0, len(m))
+	first := true
 	for name, p := range m {
+		before := &expr.Space{Space: []string{"\n"}}
+		if first {
+			before = nil
+			first = false
+		}
 		ps = append(ps, &PatternDecl{
+			Before:  before,
 			Name:    name,
 			Equal:   newEqual(),
 			Pattern: p,
