@@ -20,28 +20,46 @@ import (
 	"reflect"
 )
 
-type Tokens interface {
-	Lookup(parentToken int, name []byte) int
-}
-
 type state struct {
-	parentToken   int
 	parent        reflect.Value
 	typ           reflect.StructField
 	value         reflect.Value
 	field         int
 	maxField      int
-	tokenId       int
 	sliceValue    reflect.Value
 	sliceIndex    int
 	sliceMaxIndex int
 	inSlice       bool
 }
 
+func (this state) Copy() state {
+	return state{
+		parent:        this.parent,
+		typ:           this.typ,
+		value:         this.value,
+		field:         this.field,
+		maxField:      this.maxField,
+		sliceValue:    this.sliceValue,
+		sliceIndex:    this.sliceIndex,
+		sliceMaxIndex: this.sliceMaxIndex,
+		inSlice:       this.inSlice,
+	}
+}
+
 type scanner struct {
-	tokens Tokens
 	state
 	stack []state
+}
+
+func (this *scanner) Copy() serialize.Scanner {
+	s := &scanner{
+		state: this.state.Copy(),
+		stack: make([]state, len(this.stack)),
+	}
+	for i := range this.stack {
+		s.stack[i] = this.stack[i].Copy()
+	}
+	return s
 }
 
 func deref(v reflect.Value) reflect.Value {
@@ -51,21 +69,20 @@ func deref(v reflect.Value) reflect.Value {
 	return v
 }
 
-func newState(parent reflect.Value, token int) state {
+func newState(parent reflect.Value) state {
 	value := deref(parent)
 	return state{
-		parentToken: token,
-		parent:      value,
-		maxField:    value.NumField(),
+		parent:   value,
+		maxField: value.NumField(),
 	}
 }
 
-func NewScanner(tokens Tokens, rootToken int) *scanner {
-	return &scanner{stack: make([]state, 0, 10), tokens: tokens, state: state{parentToken: rootToken}}
+func NewReflectScanner() *scanner {
+	return &scanner{stack: make([]state, 0, 10)}
 }
 
 func (s *scanner) Init(value reflect.Value) *scanner {
-	s.state = newState(value, s.parentToken)
+	s.state = newState(value)
 	return s
 }
 
@@ -89,7 +106,6 @@ func (s *scanner) Next() error {
 	}
 	s.typ = s.parent.Type().Field(s.field)
 	s.value = s.parent.Field(s.field)
-	s.tokenId = s.tokens.Lookup(s.parentToken, []byte(s.typ.Name))
 	if s.value.Kind() == reflect.Ptr || s.value.Kind() == reflect.Slice {
 		if s.value.IsNil() {
 			s.field++
@@ -160,25 +176,16 @@ func (s *scanner) getValue() reflect.Value {
 func (s *scanner) Float64() (float64, error) {
 	value := s.getValue()
 	switch value.Kind() {
-	case reflect.Float64:
+	case reflect.Float64, reflect.Float32:
 		return value.Float(), nil
 	}
 	return 0, serialize.ErrNotFloat64
 }
 
-func (s *scanner) Float32() (float32, error) {
-	value := s.getValue()
-	switch value.Kind() {
-	case reflect.Float32:
-		return float32(value.Float()), nil
-	}
-	return 0, serialize.ErrNotFloat32
-}
-
 func (s *scanner) Int64() (int64, error) {
 	value := s.getValue()
 	switch value.Kind() {
-	case reflect.Int64:
+	case reflect.Int64, reflect.Int32:
 		return value.Int(), nil
 	}
 	return 0, serialize.ErrNotInt64
@@ -187,19 +194,10 @@ func (s *scanner) Int64() (int64, error) {
 func (s *scanner) Uint64() (uint64, error) {
 	value := s.getValue()
 	switch value.Kind() {
-	case reflect.Uint64:
+	case reflect.Uint64, reflect.Uint32:
 		return value.Uint(), nil
 	}
 	return 0, serialize.ErrNotUint64
-}
-
-func (s *scanner) Int32() (int32, error) {
-	value := s.getValue()
-	switch value.Kind() {
-	case reflect.Int32:
-		return int32(value.Int()), nil
-	}
-	return 0, serialize.ErrNotInt32
 }
 
 func (s *scanner) Bool() (bool, error) {
@@ -229,19 +227,6 @@ func (s *scanner) Bytes() ([]byte, error) {
 	return nil, serialize.ErrNotBytes
 }
 
-func (s *scanner) Uint32() (uint32, error) {
-	value := s.getValue()
-	switch value.Kind() {
-	case reflect.Uint32:
-		return uint32(value.Uint()), nil
-	}
-	return 0, serialize.ErrNotUint32
-}
-
-func (s *scanner) Id() int {
-	return s.tokenId
-}
-
 func (s *scanner) Up() {
 	top := len(s.stack) - 1
 	s.state = s.stack[top]
@@ -250,5 +235,5 @@ func (s *scanner) Up() {
 
 func (s *scanner) Down() {
 	s.stack = append(s.stack, s.state)
-	s.state = newState(s.state.value, s.tokenId)
+	s.state = newState(s.state.value)
 }
