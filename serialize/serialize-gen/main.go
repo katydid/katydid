@@ -55,11 +55,8 @@ func main() {
 	gen := gen.NewFunc("serialize")
 	gen(valueStr, "value.gen.go", []interface{}{
 		&valuer{"Float64", "float64", "0"},
-		&valuer{"Float32", "float32", "0"},
 		&valuer{"Int64", "int64", "0"},
 		&valuer{"Uint64", "uint64", "0"},
-		&valuer{"Int32", "int32", "0"},
-		&valuer{"Uint32", "uint32", "0"},
 		&valuer{"Bool", "bool", "false"},
 		&valuer{"String", "string", `""`},
 		&valuer{"Bytes", "[]byte", "nil"},

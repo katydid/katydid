@@ -26,25 +26,6 @@ func (v *float64Value) Float64() (float64, error) {
 	return v.v, nil
 }
 
-var ErrNotFloat32 = fmt.Errorf("value is not a float32")
-
-func (*errValue) Float32() (float32, error) {
-	return 0, ErrNotFloat32
-}
-
-type float32Value struct {
-	*errValue
-	v float32
-}
-
-func NewFloat32Value(v float32) Decoder {
-	return &float32Value{&errValue{}, v}
-}
-
-func (v *float32Value) Float32() (float32, error) {
-	return v.v, nil
-}
-
 var ErrNotInt64 = fmt.Errorf("value is not a int64")
 
 func (*errValue) Int64() (int64, error) {
@@ -80,44 +61,6 @@ func NewUint64Value(v uint64) Decoder {
 }
 
 func (v *uint64Value) Uint64() (uint64, error) {
-	return v.v, nil
-}
-
-var ErrNotInt32 = fmt.Errorf("value is not a int32")
-
-func (*errValue) Int32() (int32, error) {
-	return 0, ErrNotInt32
-}
-
-type int32Value struct {
-	*errValue
-	v int32
-}
-
-func NewInt32Value(v int32) Decoder {
-	return &int32Value{&errValue{}, v}
-}
-
-func (v *int32Value) Int32() (int32, error) {
-	return v.v, nil
-}
-
-var ErrNotUint32 = fmt.Errorf("value is not a uint32")
-
-func (*errValue) Uint32() (uint32, error) {
-	return 0, ErrNotUint32
-}
-
-type uint32Value struct {
-	*errValue
-	v uint32
-}
-
-func NewUint32Value(v uint32) Decoder {
-	return &uint32Value{&errValue{}, v}
-}
-
-func (v *uint32Value) Uint32() (uint32, error) {
 	return v.v, nil
 }
 
