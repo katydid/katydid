@@ -35,8 +35,10 @@ func Interpret(g *lang.Grammar, tree serialize.Scanner) bool {
 			}
 			panic(err)
 		}
+		log.Printf("Interpret = %s given input %s", res, tree.Name())
 		res = deriv(refs, res, tree)
 	}
+	log.Printf("Interpret Final = %s", res)
 	return nullable(refs, res)
 }
 
@@ -94,7 +96,6 @@ func getStringValue(p *lang.TreeNode) (val *string, funcName string) {
 }
 
 func evalFunc(funcName string, param1 string, param2 string) bool {
-	log.Printf("evalFunc %s(%s,%s)", funcName, param1, param2)
 	switch funcName {
 	case "Equal":
 		return param1 == param2
@@ -131,8 +132,10 @@ func derivTreeNode(refs RefLookup, p *lang.TreeNode, tree serialize.Scanner) *la
 			}
 			panic(err)
 		}
+		log.Printf("derivTreeNode = %s given input %s", res, tree.Name())
 		res = deriv(refs, res, tree)
 	}
+	log.Printf("derivTreeNode Final = %s", res)
 	tree.Up()
 	if !nullable(refs, res) {
 		return lang.NewEmptySet()
@@ -144,16 +147,12 @@ func deriv(refs RefLookup, p *lang.Pattern, tree serialize.Scanner) *lang.Patter
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *lang.Empty:
-		log.Printf("Empty")
 		return lang.NewEmptySet()
 	case *lang.EmptySet:
-		log.Printf("EmptySet")
 		return lang.NewEmptySet()
 	case *lang.TreeNode:
-		log.Printf("TreeNode")
 		return derivTreeNode(refs, v, tree)
 	case *lang.LeafNode:
-		log.Printf("LeafNode")
 		f, err := compose.NewBool(v.GetExpr())
 		if err != nil {
 			panic(err)
@@ -170,7 +169,6 @@ func deriv(refs RefLookup, p *lang.Pattern, tree serialize.Scanner) *lang.Patter
 		}
 		return lang.NewEmptySet()
 	case *lang.Concat:
-		log.Printf("Concat")
 		leftDeriv := lang.NewConcat(deriv(refs, v.GetLeftPattern(), tree), v.GetRightPattern())
 		if nullable(refs, v.GetLeftPattern()) {
 			return lang.NewOr(
@@ -181,25 +179,20 @@ func deriv(refs RefLookup, p *lang.Pattern, tree serialize.Scanner) *lang.Patter
 			return leftDeriv
 		}
 	case *lang.Or:
-		log.Printf("Or")
 		return lang.NewOr(
 			deriv(refs, v.GetLeftPattern(), tree),
 			deriv(refs, v.GetRightPattern(), tree.Copy()),
 		)
 	case *lang.And:
-		log.Printf("And")
 		return lang.NewAnd(
 			deriv(refs, v.GetLeftPattern(), tree),
 			deriv(refs, v.GetRightPattern(), tree.Copy()),
 		)
 	case *lang.ZeroOrMore:
-		log.Printf("ZeroOrMore")
 		return lang.NewConcat(deriv(refs, v.Pattern, tree), lang.NewZeroOrMore(v.Pattern))
 	case *lang.Reference:
-		log.Printf("Reference")
 		return deriv(refs, refs[v.GetName()], tree)
 	case *lang.Not:
-		log.Printf("Not")
 		return lang.NewNot(deriv(refs, v.GetPattern(), tree))
 	}
 	panic(fmt.Sprintf("unknown typ %T", typ))

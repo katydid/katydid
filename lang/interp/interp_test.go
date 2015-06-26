@@ -88,4 +88,19 @@ func TestInterp(t *testing.T) {
 		"main":   MatchTree(Any(), Eval("spirit"), Any()),
 		"spirit": MatchField(`"RumourSpirit"`, "eq($int, int(2))"),
 	}, false)
+	test(t, m, G{
+		"main": MatchTree(MatchIn(`"SaladWorry"`,
+			MatchField(`"MagazineFrame"`, `eq($string, "a")`),
+			Any(),
+			MatchIn(`"XrayPilot"`, Any()),
+			Any(),
+		), Any()),
+	}, true)
+	test(t, m, G{
+		"main": MatchTree(MatchIn(`"SaladWorry"`,
+			MatchField(`"MagazineFrame"`, `eq($string, "a")`),
+			MatchIn(`"XrayPilot"`, Any()),
+			Any(),
+		), Any()),
+	}, false)
 }
