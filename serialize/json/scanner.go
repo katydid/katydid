@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package scanner
+package json
 
 import (
 	"bytes"
@@ -23,7 +23,7 @@ import (
 )
 
 func errInString(buf []byte) error {
-	return fmt.Errorf("katydid/json/scanner error in json string: %s", string(buf))
+	return fmt.Errorf("katydid/json error in json string: %s", string(buf))
 }
 
 func isString(buf []byte) bool {
