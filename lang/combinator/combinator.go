@@ -30,11 +30,6 @@ func concat(p *lang.Pattern, ps ...*lang.Pattern) *lang.Pattern {
 	return lang.NewConcat(p, concat(ps[0], ps[1:]...))
 }
 
-// data NameClass = AnyName
-// 	| AnyNameExcept NameClass
-// 	| Name String
-// 	| NameClassChoice NameClass NameClass
-
 func MatchIn(name string, child *lang.Pattern, children ...*lang.Pattern) *lang.Pattern {
 	return lang.NewTreeNode(lang.NewName(name), concat(child, children...))
 }

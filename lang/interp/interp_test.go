@@ -156,19 +156,43 @@ func TestInterp(t *testing.T) {
 			"spirit": MatchField("RumourSpirit", "eq($int, int(2))"),
 		}, false),
 		newTester(t, G{
-			"main": MatchTree(MatchIn("SaladWorry",
-				MatchField("MagazineFrame", `eq($string, "a")`),
+			"main": MatchTree(
+				MatchIn("SaladWorry",
+					MatchField("MagazineFrame", `eq($string, "a")`),
+					Any(),
+					MatchIn("XrayPilot", Any()),
+					Any(),
+				),
 				Any(),
-				MatchIn("XrayPilot", Any()),
-				Any(),
-			), Any()),
+			),
 		}, true),
 		newTester(t, G{
-			"main": MatchTree(MatchIn("SaladWorry",
-				MatchField("MagazineFrame", `eq($string, "a")`),
-				MatchIn("XrayPilot", Any()),
+			"main": MatchTree(
+				MatchIn("SaladWorry",
+					MatchField("MagazineFrame", `eq($string, "a")`),
+					MatchIn("XrayPilot", Any()),
+					Any(),
+				),
 				Any(),
-			), Any()),
+			),
+		}, false),
+		newTester(t, G{
+			"main": MatchTree(
+				MatchInAnyExcept("NotAFieldName",
+					MatchField("MagazineFrame", `eq($string, "a")`),
+					Any(),
+				),
+				Any(),
+			),
+		}, true),
+		newTester(t, G{
+			"main": MatchTree(
+				MatchInAnyExcept("SaladWorry",
+					MatchField("MagazineFrame", `eq($string, "a")`),
+					Any(),
+				),
+				Any(),
+			),
 		}, false),
 	}
 	for _, testy := range testers {
