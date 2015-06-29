@@ -77,40 +77,26 @@ func nullable(refs RefLookup, p *lang.Pattern) bool {
 	case *lang.Not:
 		return !(nullable(refs, v.GetPattern()))
 	}
-	panic(fmt.Sprintf("unknown typ %T", typ))
+	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
 
-func getStringValue(p *lang.TreeNode) (val *string, funcName string) {
-	name := p.GetName()
-	if term := name.GetTerminal(); term != nil {
-		return term.StringValue, "Equal"
-	} else if fun := name.GetFunction(); fun != nil {
-		if fun.GetName() == "Not" && len(fun.GetParams()) == 1 && fun.GetParams()[0].GetTerminal() != nil {
-			term := fun.GetParams()[0].GetTerminal()
-			if term != nil {
-				return term.StringValue, "Not"
-			}
-		}
+func evalName(nameExpr *lang.NameExpr, name string) bool {
+	typ := nameExpr.GetValue()
+	switch v := typ.(type) {
+	case *lang.Name:
+		return name == v.GetName()
+	case *lang.AnyName:
+		return true
+	case *lang.AnyNameExcept:
+		return !evalName(v.GetExcept(), name)
+	case *lang.NameChoice:
+		return evalName(v.GetLeft(), name) || evalName(v.GetRight(), name)
 	}
-	return nil, ""
-}
-
-func evalFunc(funcName string, param1 string, param2 string) bool {
-	switch funcName {
-	case "Equal":
-		return param1 == param2
-	case "Not":
-		return param1 != param2
-	}
-	panic("unsupported function: " + funcName)
+	panic(fmt.Sprintf("unknown nameExpr typ %T", typ))
 }
 
 func derivTreeNode(refs RefLookup, p *lang.TreeNode, tree serialize.Scanner) *lang.Pattern {
-	s, funcName := getStringValue(p)
-	if s == nil {
-		panic(fmt.Sprintf("%#v not supported in TreeNode", p.GetName()))
-	}
-	matched := evalFunc(funcName, *s, tree.Name())
+	matched := evalName(p.GetName(), tree.Name())
 	if !matched {
 		tree.Next()
 		return lang.NewEmptySet()

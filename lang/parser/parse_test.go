@@ -26,32 +26,32 @@ func TestParse(t *testing.T) {
 		`main = Reference(ref1)
 		ref1 = LeafNode(eq($int, int(123)))
 		`,
-		`main = TreeNode("MyParent", Concat(
+		`main = TreeNode(Name("MyParent"), Concat(
 			LeafNode(eq($string, "123")), 
 			LeafNode(eq($string, "456"))
 		))`,
-		`main = TreeNode("A", Concat(
-			TreeNode("a", LeafNode(eq($string, "aa"))),
-			TreeNode("b", LeafNode(eq($int, int(123))))
+		`main = TreeNode(Name("A"), Concat(
+			TreeNode(Name("a"), LeafNode(eq($string, "aa"))),
+			TreeNode(Name("b"), LeafNode(eq($int, int(123))))
 		))`,
-		`main = TreeNode("A", Concat(
+		`main = TreeNode(Name("A"), Concat(
 			Not(EmptySet),
 			Concat(
-				TreeNode("a", LeafNode(eq($string, "aa"))),
+				TreeNode(Name("a"), LeafNode(eq($string, "aa"))),
 				Not(EmptySet)
 			)
 		))`,
-		`main = TreeNode("Desc", Concat(
+		`main = TreeNode(Name("Desc"), Concat(
 			Not(EmptySet),
 			Concat(
-				TreeNode("Src", LeafNode(contains($string, "1"))),
+				TreeNode(Name("Src"), LeafNode(contains($string, "1"))),
 				Concat(
-					TreeNode("Src", LeafNode(contains($string, "2"))),
-					ZeroOrMore(TreeNode(not("Src"), Not(EmptySet)))
+					TreeNode(Name("Src"), LeafNode(contains($string, "2"))),
+					ZeroOrMore(TreeNode(AnyNameExcept(Name("Src")), Not(EmptySet)))
 				)
 			)
 		))`,
-		`main = And(TreeNode("MyParent", LeafNode(int(1))), TreeNode(  "MyParent", LeafNode(int(2))))`,
+		`main = And(TreeNode(Name("MyParent"), LeafNode(int(1))), TreeNode( Name( "MyParent"), LeafNode(int(2))))`,
 	}
 	p := parser.NewParser()
 	for _, patternDecl := range patternDecls {

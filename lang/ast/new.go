@@ -65,7 +65,45 @@ func newEqual() *expr.Keyword {
 	return &expr.Keyword{Value: "="}
 }
 
-func NewTreeNode(name *expr.Expr, pattern *Pattern) *Pattern {
+func NewName(name string) *NameExpr {
+	return &NameExpr{
+		Name: &Name{
+			OpenParen:  newOpenParen(),
+			Name:       name,
+			CloseParen: newCloseParen(),
+		},
+	}
+}
+
+func NewAnyName() *NameExpr {
+	return &NameExpr{
+		AnyName: &AnyName{},
+	}
+}
+
+func NewAnyNameExcept(name *NameExpr) *NameExpr {
+	return &NameExpr{
+		AnyNameExcept: &AnyNameExcept{
+			OpenParen:  newOpenParen(),
+			Except:     name,
+			CloseParen: newCloseParen(),
+		},
+	}
+}
+
+func NewNameChoice(left, right *NameExpr) *NameExpr {
+	return &NameExpr{
+		NameChoice: &NameChoice{
+			OpenParen:  newOpenParen(),
+			Left:       left,
+			Comma:      newComma(),
+			Right:      right,
+			CloseParen: newCloseParen(),
+		},
+	}
+}
+
+func NewTreeNode(name *NameExpr, pattern *Pattern) *Pattern {
 	return &Pattern{
 		TreeNode: &TreeNode{
 			OpenParen:  newOpenParen(),

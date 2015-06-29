@@ -15,6 +15,7 @@
 package lang
 
 import (
+	"strconv"
 	"strings"
 )
 
@@ -30,6 +31,34 @@ func (this *Grammar) String() string {
 func (this *PatternDecl) String() string {
 	return this.Before.String() + this.Name +
 		this.Equal.String() + this.Pattern.String()
+}
+
+func (this *NameExpr) String() string {
+	v := this.GetValue()
+	return v.(interface {
+		String() string
+	}).String()
+}
+
+func (this *Name) String() string {
+	return this.Before.String() + "Name" + this.OpenParen.String() +
+		this.BeforeName.String() + strconv.Quote(this.Name) +
+		this.CloseParen.String()
+}
+
+func (this *AnyName) String() string {
+	return this.Before.String() + "AnyName"
+}
+
+func (this *AnyNameExcept) String() string {
+	return this.Before.String() + "AnyNameExcept" + this.OpenParen.String() +
+		this.Except.String() + this.CloseParen.String()
+}
+
+func (this *NameChoice) String() string {
+	return this.Before.String() + "NameChoice" + this.OpenParen.String() +
+		this.Left.String() + this.Comma.String() + this.Right.String() +
+		this.CloseParen.String()
 }
 
 func (this *Pattern) String() string {

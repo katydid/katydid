@@ -93,75 +93,26 @@ _char_lit	: '\'' (_unicode_value | _byte_value) '\'' ;
 _byte_elem : _int_lit | _char_lit ;
 
 bytes_lit : _bytes '{' { _ws } [ _byte_elem { { _ws } ',' { _ws } _byte_elem } ] { _ws } '}' ;
-/*
-schema5.Mail {
-  Any*,
-  Communication {
-    Any*,
-    TimeRange {
-      Any*,
-      StartTime ge(var, 1984),
-Any* },
-Any* },
-Any* }
-*/
-
-/*
-schema5.Mail { WithSome Communication {
-  WithSome Content { WithSome Participations {
-    WithSome Identities {
-      WithSome Email {
-        WithSome Value.eq(”you@youhoo.com”)
-      }
-}&
-WithSome Role.eq(enum(”schema5.Role.RoleSender”)) }}
-}}
-*/
-
-/*
-schema5.Mail { Communication { Content {
-  Participations {
-    Identities {
-      Email { Value.eq(”you@youhoo.com”) }
-},
-Role.eq(enum(”schema5.Role.RoleSender”)) }}
-}}
-*/
-
-/*
-schema5.Mail { Communication {
-  Content { Object { Mime : mimeObject } } }
-}}
-mimeObject = {
-  Container {
-    ( Type.eq(”image”), Subtype.eq(”bmp”) )
-    | ( Parts: mimeObject )
-    | ( Leaf {
-      Type.eq(”image”),
-Subtype.eq(”bmp”) })
-} }
-*/
-
-/*
-FlowDescriptor {
-  Any*,
-  Stack.eq(frameType1),
-  Stack.eq(frameType2),
-  (!Stack.any())*
-}
-*/
-
 << 
 import (
   . "github.com/katydid/katydid/lang/ast"
   "github.com/katydid/katydid/expr/ast"
   "github.com/katydid/katydid/types"
   "github.com/katydid/katydid/lang/token"
+  "strconv"
 )
 
 func newString(v interface{}) string {
   t := v.(*token.Token)
   return string(t.Lit)
+}
+
+func unquote(s1 string) string {
+  s, err := strconv.Unquote(s1)
+  if err != nil {
+    return s1
+  }
+  return s
 }
 
 >>
@@ -197,6 +148,84 @@ PatternDecl
   ;
 
 /*
+data NameClass = AnyName
+  | AnyNameExcept NameClass
+  | Name String
+  | NameClassChoice NameClass NameClass
+*/
+
+NameExpr
+  : Space "AnyName"     << &NameExpr{AnyName: &AnyName{$0.(*expr.Space)}}, nil >>
+  | "AnyName"           << &NameExpr{AnyName: &AnyName{}}, nil >>
+  | Space "Name" OpenParen Space string_lit CloseParen <<
+    &NameExpr{Name: &Name{
+      Before: $0.(*expr.Space),
+      OpenParen: $2.(*expr.Keyword),
+      BeforeName: $3.(*expr.Space),
+      Name: unquote(newString($4)),
+      CloseParen: $5.(*expr.Keyword),
+    }}, nil
+  >>
+  | "Name" OpenParen Space string_lit CloseParen <<
+    &NameExpr{Name: &Name{
+      OpenParen: $1.(*expr.Keyword),
+      BeforeName: $2.(*expr.Space),
+      Name: unquote(newString($3)),
+      CloseParen: $4.(*expr.Keyword),
+    }}, nil
+  >>
+  | Space "Name" OpenParen string_lit CloseParen <<
+    &NameExpr{Name: &Name{
+      Before: $0.(*expr.Space),
+      OpenParen: $2.(*expr.Keyword),
+      Name: unquote(newString($3)),
+      CloseParen: $4.(*expr.Keyword),
+    }}, nil
+  >>
+  | "Name" OpenParen string_lit CloseParen <<
+    &NameExpr{Name: &Name{
+      OpenParen: $1.(*expr.Keyword),
+      Name: unquote(newString($2)),
+      CloseParen: $3.(*expr.Keyword),
+    }}, nil
+  >>
+  | Space "AnyNameExcept" OpenParen NameExpr CloseParen <<
+    &NameExpr{AnyNameExcept: &AnyNameExcept{
+      Before: $0.(*expr.Space),
+      OpenParen: $2.(*expr.Keyword),
+      Except: $3.(*NameExpr),
+      CloseParen: $4.(*expr.Keyword),
+    }}, nil
+  >>
+  | "AnyNameExcept" OpenParen NameExpr CloseParen <<
+    &NameExpr{AnyNameExcept: &AnyNameExcept{
+      OpenParen: $1.(*expr.Keyword),
+      Except: $2.(*NameExpr),
+      CloseParen: $3.(*expr.Keyword),
+    }}, nil
+  >>
+  | Space "NameChoice" OpenParen NameExpr Comma NameExpr CloseParen <<
+    &NameExpr{NameChoice: &NameChoice{
+      Before: $0.(*expr.Space),
+      OpenParen: $2.(*expr.Keyword),
+      Left: $3.(*NameExpr),
+      Comma: $4.(*expr.Keyword),
+      Right: $5.(*NameExpr),
+      CloseParen: $6.(*expr.Keyword),
+    }}, nil
+  >>
+  | "NameChoice" OpenParen NameExpr Comma NameExpr CloseParen <<
+    &NameExpr{NameChoice: &NameChoice{
+      OpenParen: $1.(*expr.Keyword),
+      Left: $2.(*NameExpr),
+      Comma: $3.(*expr.Keyword),
+      Right: $4.(*NameExpr),
+      CloseParen: $5.(*expr.Keyword),
+    }}, nil
+  >>
+  ;
+
+/*
 data Pattern = Empty
 | EmptySet
 | TreeNode String Pattern -- New
@@ -215,20 +244,20 @@ Pattern
   | "Empty"     << &Pattern{Empty: &Empty{}}, nil >>
   | Space "EmptySet"  << &Pattern{EmptySet: &EmptySet{$0.(*expr.Space)}}, nil >>
   | "EmptySet"  << &Pattern{EmptySet: &EmptySet{}}, nil >>
-  | Space "TreeNode" OpenParen Expr Comma Pattern CloseParen <<
+  | Space "TreeNode" OpenParen NameExpr Comma Pattern CloseParen <<
     &Pattern{TreeNode: &TreeNode{
       Before: $0.(*expr.Space),
       OpenParen: $2.(*expr.Keyword),
-      Name: $3.(*expr.Expr),
+      Name: $3.(*NameExpr),
       Comma: $4.(*expr.Keyword),
       Pattern: $5.(*Pattern),
       CloseParen: $6.(*expr.Keyword),
     }}, nil
   >>
-  | "TreeNode" OpenParen Expr Comma Pattern CloseParen <<
+  | "TreeNode" OpenParen NameExpr Comma Pattern CloseParen <<
     &Pattern{TreeNode: &TreeNode{
       OpenParen: $1.(*expr.Keyword),
-      Name: $2.(*expr.Expr),
+      Name: $2.(*NameExpr),
       Comma: $3.(*expr.Keyword),
       Pattern: $4.(*Pattern),
       CloseParen: $5.(*expr.Keyword),

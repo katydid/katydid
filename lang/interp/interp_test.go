@@ -20,7 +20,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 	"github.com/katydid/katydid/lang/ast"
-	. "github.com/katydid/katydid/lang/builder"
+	. "github.com/katydid/katydid/lang/combinator"
 	"github.com/katydid/katydid/lang/interp"
 	"github.com/katydid/katydid/serialize"
 	jscanner "github.com/katydid/katydid/serialize/json"
@@ -149,24 +149,24 @@ func TestInterp(t *testing.T) {
 		newTester(t, G{"main": None()}, false),
 		newTester(t, G{
 			"main":   MatchTree(Any(), Eval("spirit"), Any()),
-			"spirit": MatchField(`"RumourSpirit"`, "eq($int, int(1))"),
+			"spirit": MatchField("RumourSpirit", "eq($int, int(1))"),
 		}, true),
 		newTester(t, G{
 			"main":   MatchTree(Any(), Eval("spirit"), Any()),
-			"spirit": MatchField(`"RumourSpirit"`, "eq($int, int(2))"),
+			"spirit": MatchField("RumourSpirit", "eq($int, int(2))"),
 		}, false),
 		newTester(t, G{
-			"main": MatchTree(MatchIn(`"SaladWorry"`,
-				MatchField(`"MagazineFrame"`, `eq($string, "a")`),
+			"main": MatchTree(MatchIn("SaladWorry",
+				MatchField("MagazineFrame", `eq($string, "a")`),
 				Any(),
-				MatchIn(`"XrayPilot"`, Any()),
+				MatchIn("XrayPilot", Any()),
 				Any(),
 			), Any()),
 		}, true),
 		newTester(t, G{
-			"main": MatchTree(MatchIn(`"SaladWorry"`,
-				MatchField(`"MagazineFrame"`, `eq($string, "a")`),
-				MatchIn(`"XrayPilot"`, Any()),
+			"main": MatchTree(MatchIn("SaladWorry",
+				MatchField("MagazineFrame", `eq($string, "a")`),
+				MatchIn("XrayPilot", Any()),
 				Any(),
 			), Any()),
 		}, false),
@@ -184,22 +184,22 @@ func Test811(t *testing.T) {
 	ex811 := G{
 		"main": Or(Eval("q1"), Eval("q2")),
 		"q1": Or(
-			MatchIn(`"A"`,
-				MatchIn(`"Left"`, Eval("q1")),
-				MatchIn(`"Right"`, Eval("q2")),
+			MatchIn("A",
+				MatchIn("Left", Eval("q1")),
+				MatchIn("Right", Eval("q2")),
 			),
-			MatchIn(`"A"`,
-				MatchIn(`"Left"`, Eval("q1")),
-				MatchIn(`"Right"`, Eval("q1")),
+			MatchIn("A",
+				MatchIn("Left", Eval("q1")),
+				MatchIn("Right", Eval("q1")),
 			),
 		),
 		"q2": Or(
-			MatchIn(`"A"`,
-				MatchIn(`"Left"`, Eval("q2")),
-				MatchIn(`"Right"`, Eval("q2")),
+			MatchIn("A",
+				MatchIn("Left", Eval("q2")),
+				MatchIn("Right", Eval("q2")),
 			),
-			MatchIn(`"A"`,
-				MatchField(`"Value"`, `eq($string, "#")`),
+			MatchIn("A",
+				MatchField("Value", `eq($string, "#")`),
 			),
 		),
 	}
