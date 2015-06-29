@@ -13,19 +13,4 @@
 # limitations under the License.
 
 regenerate:
-	./build.sh
-	(cd ast && make regenerate)
-
-clean:
-	rm *.txt || true
-
-nuke: clean
-	rm -rf ./errors
-	rm -rf ./lexer
-	rm -rf ./parser/action.go
-	rm -rf ./parser/actiontable.go
-	rm -rf ./parser/gototable.go
-	rm -rf ./parser/parser.go
-	rm -rf ./parser/productionstable.go
-	rm -rf ./token
-	rm -rf ./util
+	protoc --gogo_out=. -I=.:../../../../:../../../../github.com/gogo/protobuf/protobuf types.proto

@@ -16,3 +16,18 @@ regenerate:
 	./build.sh
 	(cd ast && make regenerate)
 	(cd compose && make regenerate)
+
+clean:
+	rm *.txt || true
+
+nuke: clean
+	rm -rf ./errors
+	rm -rf ./lexer
+	rm -rf ./parser/action.go
+	rm -rf ./parser/actiontable.go
+	rm -rf ./parser/gototable.go
+	rm -rf ./parser/parser.go
+	rm -rf ./parser/productionstable.go
+	rm -rf ./token
+	rm -rf ./util
+	rm -rf ./compose/compose.gen.go

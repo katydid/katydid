@@ -13,19 +13,14 @@
 # limitations under the License.
 
 regenerate:
-	./build.sh
-	(cd ast && make regenerate)
+	go install github.com/katydid/katydid/funcs/funcs-gen
+	funcs-gen ./
 
-clean:
-	rm *.txt || true
-
-nuke: clean
-	rm -rf ./errors
-	rm -rf ./lexer
-	rm -rf ./parser/action.go
-	rm -rf ./parser/actiontable.go
-	rm -rf ./parser/gototable.go
-	rm -rf ./parser/parser.go
-	rm -rf ./parser/productionstable.go
-	rm -rf ./token
-	rm -rf ./util
+nuke:
+	rm -rf funcs/compare.gen.go
+	rm -rf funcs/newfunc.gen.go
+	rm -rf funcs/const.gen.go
+	rm -rf funcs/elem.gen.go
+	rm -rf funcs/length.gen.go
+	rm -rf funcs/list.gen.go
+	rm -rf funcs/print.gen.go

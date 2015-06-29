@@ -13,5 +13,29 @@
 # limitations under the License.
 
 regenerate:
+	(cd test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf person.proto)
+	(cd test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf srctree.proto)
+	(cd test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf taxonomy.proto)
+	(cd test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf treeregister.proto)
+	(cd test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf typewriterprison.proto)
+	(cd test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf puddingmilkshake.proto)
 	./build.sh
 	(cd ast && make regenerate)
+
+clean:
+	rm *.txt || true
+	rm -rf ./test/example/*
+
+example:
+	(cd test && go test -c && ./test.test)
+
+nuke: clean
+	rm -rf ./errors
+	rm -rf ./lexer
+	rm -rf ./parser/action.go
+	rm -rf ./parser/actiontable.go
+	rm -rf ./parser/gototable.go
+	rm -rf ./parser/parser.go
+	rm -rf ./parser/productionstable.go
+	rm -rf ./token
+	rm -rf ./util
