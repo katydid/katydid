@@ -183,24 +183,3 @@ func deriv(refs RefLookup, p *lang.Pattern, tree serialize.Scanner) *lang.Patter
 	}
 	panic(fmt.Sprintf("unknown typ %T", typ))
 }
-
-// deriv :: RefLookup -> Pattern -> Tree Alpha -> Pattern
-// deriv _ Empty _ = EmptySet
-// deriv _ EmptySet _ = EmptySet
-// deriv refs (TreeNode a p) (Node b children) =
-//   if a == b && nullable refs (foldl (deriv refs) p children)
-//     then Empty
-//     else EmptySet
-// deriv _ (LeafNode a) (Node b []) =
-//   if a == b then Empty else EmptySet
-// deriv _ (LeafNode _) _ = EmptySet
-// deriv refs (Concat a b) t = if nullable refs a
-//   then Or (Concat (deriv refs a t) b) (deriv refs b t)
-//   else Concat (deriv refs a t) b
-// deriv refs (Or a b) t = Or (deriv refs a t) (deriv refs b t)
-// deriv refs (And a b) t = And (deriv refs a t) (deriv refs b t)
-// deriv refs (ZeroOrMore a) t = Concat (deriv refs a t) (ZeroOrMore a)
-// deriv refs (Not a) t = Not (deriv refs a t)
-// deriv refs (Interleave a b) t =
-//   Or (Concat (deriv refs a t) b) (Concat (deriv refs b t) a)
-// deriv refs (Reference r) t = deriv refs (refs r) t

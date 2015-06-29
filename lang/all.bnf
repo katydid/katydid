@@ -147,13 +147,6 @@ PatternDecl
   >>
   ;
 
-/*
-data NameClass = AnyName
-  | AnyNameExcept NameClass
-  | Name String
-  | NameClassChoice NameClass NameClass
-*/
-
 NameExpr
   : Space "AnyName"     << &NameExpr{AnyName: &AnyName{$0.(*expr.Space)}}, nil >>
   | "AnyName"           << &NameExpr{AnyName: &AnyName{}}, nil >>
@@ -224,20 +217,6 @@ NameExpr
     }}, nil
   >>
   ;
-
-/*
-data Pattern = Empty
-| EmptySet
-| TreeNode String Pattern -- New
-| LeafNode (String -> Bool) -- ”Old” 
-| Concat Pattern Pattern
-| Or Pattern Pattern
-| And Pattern Pattern
-| ZeroOrMore Pattern
-| Not Pattern
-| Interleave Pattern Pattern -- New 
-| Reference String -- New
-*/
 
 Pattern
   : Space "Empty"     << &Pattern{Empty: &Empty{$0.(*expr.Space)}}, nil >>
