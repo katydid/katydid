@@ -19,6 +19,12 @@ import (
 	"github.com/katydid/katydid/lang/ast"
 )
 
+type G map[string]*lang.Pattern
+
+func (g G) Grammar() *lang.Grammar {
+	return lang.NewGrammar(g)
+}
+
 func Any() *lang.Pattern {
 	return lang.NewNot(lang.NewEmptySet())
 }

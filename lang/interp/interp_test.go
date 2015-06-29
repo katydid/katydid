@@ -19,7 +19,6 @@ import (
 	"fmt"
 	"github.com/gogo/protobuf/proto"
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
-	"github.com/katydid/katydid/lang/ast"
 	. "github.com/katydid/katydid/lang/combinator"
 	"github.com/katydid/katydid/lang/interp"
 	"github.com/katydid/katydid/serialize"
@@ -38,8 +37,6 @@ type tree struct {
 	scanner     serialize.Scanner
 	description string
 }
-
-type G map[string]*lang.Pattern
 
 func newJsonScanner(m interface{}) serialize.Scanner {
 	data, err := json.Marshal(m)
@@ -112,7 +109,7 @@ func newTester(t *testing.T, patternDecls G, expected bool) tester {
 }
 
 func (t tester) test(tree tree) tester {
-	g := lang.NewGrammar(t.patternDecls)
+	g := t.patternDecls.Grammar()
 	match := interp.Interpret(g, tree.scanner)
 	if match != t.expected {
 		t.t.Fatalf("Expected a %v match given %s scanner from \n%v \non \n%s", t.expected, tree.scannerName, g.String(), tree.description)

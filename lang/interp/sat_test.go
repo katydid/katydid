@@ -15,14 +15,13 @@
 package interp_test
 
 import (
-	"github.com/katydid/katydid/lang/ast"
 	. "github.com/katydid/katydid/lang/combinator"
 	"github.com/katydid/katydid/lang/interp"
 	"testing"
 )
 
 func check(g G, t *testing.T, expected bool) {
-	grammar := lang.NewGrammar(g)
+	grammar := g.Grammar()
 	out := interp.Satisfiable(grammar)
 	if out != expected {
 		t.Fatalf("expected %v but got %v for %s", expected, out, grammar)
