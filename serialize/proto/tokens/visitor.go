@@ -16,7 +16,7 @@ package tokens
 
 import (
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
-	"github.com/katydid/katydid/asm/maps"
+	"github.com/katydid/katydid/fastmaps"
 )
 
 type Visitor interface {
@@ -102,7 +102,7 @@ func (this *visitor) AddTrans(srcToken int, field *descriptor.FieldDescriptorPro
 func (this *visitor) finalize() *protoTokens {
 	numStates := len(this.tokenToName)
 	m := &protoTokens{
-		transKey:    make([]maps.Uint64ToInt, numStates),
+		transKey:    make([]fastmaps.Uint64ToInt, numStates),
 		trans:       make(map[int]map[string]int),
 		tokenToName: make(map[int]string),
 		transName:   this.transName,
@@ -112,7 +112,7 @@ func (this *visitor) finalize() *protoTokens {
 	}
 	for i := 0; i < numStates; i++ {
 		if len(this.transKey[i]) > 0 {
-			m.transKey[i] = maps.NewUint64ToInt(this.transKey[i])
+			m.transKey[i] = fastmaps.NewUint64ToInt(this.transKey[i])
 		}
 		m.tokenToName[i] = this.tokenToName[i]
 		m.leaf[i] = this.leaf[i]

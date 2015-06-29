@@ -17,7 +17,7 @@ package tokens
 import (
 	"fmt"
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
-	"github.com/katydid/katydid/asm/maps"
+	"github.com/katydid/katydid/fastmaps"
 	"strings"
 )
 
@@ -42,7 +42,7 @@ type ProtoTokens interface {
 }
 
 type protoTokens struct {
-	transKey    []maps.Uint64ToInt
+	transKey    []fastmaps.Uint64ToInt
 	transName   map[int]map[uint64]string
 	trans       map[int]map[string]int
 	tokenToName map[int]string
