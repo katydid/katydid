@@ -10,6 +10,7 @@ option (gogoproto.populate_all) = true;
 option (gogoproto.gostring_all) = true;
 
 message TypewriterPrison {
+	option (gogoproto.description) = true;
     optional bytes WineMessenger = 1;
     optional bytes ShoelaceBeer = 2;
     optional PocketRoses PocketRoses = 3;

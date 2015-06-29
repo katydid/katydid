@@ -8,6 +8,7 @@ option (gogoproto.populate_all) = true;
 option (gogoproto.gostring_all) = true;
 
 message TaxonomyDatabase {
+	option (gogoproto.description) = true;
 	repeated Entry Entries = 1;
 }
 

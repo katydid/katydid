@@ -8,6 +8,7 @@ option (gogoproto.populate_all) = true;
 option (gogoproto.gostring_all) = true;
 
 message SrcTree {
+  option (gogoproto.description) = true;
   optional string PackageName = 1;
   repeated SrcTree Imports = 2;
 }

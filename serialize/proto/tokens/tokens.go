@@ -17,7 +17,6 @@ package tokens
 import (
 	"fmt"
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
-	"github.com/katydid/katydid/asm/ast"
 	"github.com/katydid/katydid/asm/maps"
 	"strings"
 )
@@ -52,12 +51,7 @@ type protoTokens struct {
 	types       []descriptor.FieldDescriptorProto_Type
 }
 
-func New(rules *asm.Rules, desc *descriptor.FileDescriptorSet) (ProtoTokens, error) {
-	srcPackage, srcMessage := rules.GetRoot().GetPackage(), rules.GetRoot().GetMessage()
-	return new(srcPackage, srcMessage, desc)
-}
-
-func new(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet) (ProtoTokens, error) {
+func New(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet) (ProtoTokens, error) {
 	visitor := newVisitor()
 	if err := Walk(srcPackage, srcMessage, desc, visitor); err != nil {
 		return nil, err

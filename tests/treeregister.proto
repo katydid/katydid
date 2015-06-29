@@ -10,6 +10,7 @@ option (gogoproto.populate_all) = true;
 option (gogoproto.gostring_all) = true;
 
 message TreeRegister {
+	option (gogoproto.description) = true;
 	repeated Tree Trees = 1;
 }
 

@@ -40,7 +40,7 @@ func TestTokensPerson(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	m, err := new("test", "Person", fileDescriptorSet)
+	m, err := New("test", "Person", fileDescriptorSet)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -52,7 +52,7 @@ func TestTokensSrcTree(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	m, err := new("test", "SrcTree", fileDescriptorSet)
+	m, err := New("test", "SrcTree", fileDescriptorSet)
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -19,6 +19,7 @@ import (
 	"fmt"
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 	"github.com/katydid/katydid/serialize"
+	"github.com/katydid/katydid/serialize/proto/tokens"
 	"io"
 	//"log"
 	"reflect"
@@ -115,9 +116,17 @@ type BytesScanner interface {
 	Value() []byte
 }
 
-func NewProtoScanner(tokens ProtoTokens, rootToken int) BytesScanner {
+func NewProtoScanner(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet) BytesScanner {
+	toks, err := tokens.New(srcPackage, srcMessage, desc)
+	if err != nil {
+		panic(err)
+	}
+	rootToken, err := toks.GetTokenId(srcPackage + "." + srcMessage)
+	if err != nil {
+		panic(err)
+	}
 	return &protoScanner{
-		tokens: tokens,
+		tokens: toks,
 		state: state{
 			parentToken: rootToken,
 		},

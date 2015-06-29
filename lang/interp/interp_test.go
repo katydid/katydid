@@ -16,12 +16,15 @@ package interp_test
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/gogo/protobuf/proto"
+	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 	"github.com/katydid/katydid/lang/ast"
 	. "github.com/katydid/katydid/lang/builder"
 	"github.com/katydid/katydid/lang/interp"
 	"github.com/katydid/katydid/serialize"
 	jscanner "github.com/katydid/katydid/serialize/json"
+	pscanner "github.com/katydid/katydid/serialize/proto/scanner"
 	rscanner "github.com/katydid/katydid/serialize/reflect"
 	"github.com/katydid/katydid/tests"
 	"math/rand"
@@ -29,6 +32,12 @@ import (
 	"testing"
 	"time"
 )
+
+type tree struct {
+	scannerName string
+	scanner     serialize.Scanner
+	description string
+}
 
 type G map[string]*lang.Pattern
 
@@ -45,25 +54,82 @@ func newJsonScanner(m interface{}) serialize.Scanner {
 	return s
 }
 
+func newJsonTree(m interface{}) tree {
+	return tree{
+		scannerName: "json",
+		scanner:     newJsonScanner(m),
+		description: fmt.Sprintf("%#v", m),
+	}
+}
+
 func newReflectScanner(m interface{}) serialize.Scanner {
 	s := rscanner.NewReflectScanner()
 	s.Init(reflect.ValueOf(m))
 	return s
 }
 
-func test(t *testing.T, m interface{}, ps G, positive bool) {
-	g := lang.NewGrammar(ps)
-	scanners := map[string]func(m interface{}) serialize.Scanner{
-		"json":    newJsonScanner,
-		"reflect": newReflectScanner,
+func newReflectTree(m interface{}) tree {
+	return tree{
+		scannerName: "reflect",
+		scanner:     newReflectScanner(m),
+		description: fmt.Sprintf("%#v", m),
 	}
-	for scannerName, newScanner := range scanners {
-		s := newScanner(m)
-		match := interp.Interpret(g, s)
-		if match != positive {
-			t.Fatalf("Expected a %v match given %s scanner from \n%v \non \n%#v", positive, scannerName, g.String(), m)
-		}
+}
+
+func newProtoScanner(pkg, msg string, m protoMessage) serialize.Scanner {
+	data, err := proto.Marshal(m)
+	if err != nil {
+		panic(err)
 	}
+	s := pscanner.NewProtoScanner(pkg, msg, m.Description())
+	if err := s.Init(data); err != nil {
+		panic(err)
+	}
+	return s
+}
+
+type protoMessage interface {
+	Description() (desc *descriptor.FileDescriptorSet)
+	proto.Message
+}
+
+func newProtoTree(pkg, msg string, m protoMessage) tree {
+	return tree{
+		scannerName: "proto",
+		scanner:     newProtoScanner(pkg, msg, m),
+		description: fmt.Sprintf("%#v", m),
+	}
+}
+
+type tester struct {
+	t            *testing.T
+	patternDecls G
+	expected     bool
+}
+
+func newTester(t *testing.T, patternDecls G, expected bool) tester {
+	return tester{t, patternDecls, expected}
+}
+
+func (t tester) test(tree tree) tester {
+	g := lang.NewGrammar(t.patternDecls)
+	match := interp.Interpret(g, tree.scanner)
+	if match != t.expected {
+		t.t.Fatalf("Expected a %v match given %s scanner from \n%v \non \n%s", t.expected, tree.scannerName, g.String(), tree.description)
+	}
+	return t
+}
+
+func (t tester) json(m interface{}) tester {
+	return t.test(newJsonTree(m))
+}
+
+func (t tester) reflect(m interface{}) tester {
+	return t.test(newReflectTree(m))
+}
+
+func (t tester) proto(pkg, msg string, m protoMessage) tester {
+	return t.test(newProtoTree(pkg, msg, m))
 }
 
 var r = rand.New(rand.NewSource(time.Now().UnixNano()))
@@ -78,29 +144,164 @@ func TestInterp(t *testing.T) {
 		},
 		RumourSpirit: proto.Int64(1),
 	}
-	test(t, m, G{"main": Any()}, true)
-	test(t, m, G{"main": None()}, false)
-	test(t, m, G{
-		"main":   MatchTree(Any(), Eval("spirit"), Any()),
-		"spirit": MatchField(`"RumourSpirit"`, "eq($int, int(1))"),
-	}, true)
-	test(t, m, G{
-		"main":   MatchTree(Any(), Eval("spirit"), Any()),
-		"spirit": MatchField(`"RumourSpirit"`, "eq($int, int(2))"),
-	}, false)
-	test(t, m, G{
-		"main": MatchTree(MatchIn(`"SaladWorry"`,
-			MatchField(`"MagazineFrame"`, `eq($string, "a")`),
-			Any(),
-			MatchIn(`"XrayPilot"`, Any()),
-			Any(),
-		), Any()),
-	}, true)
-	test(t, m, G{
-		"main": MatchTree(MatchIn(`"SaladWorry"`,
-			MatchField(`"MagazineFrame"`, `eq($string, "a")`),
-			MatchIn(`"XrayPilot"`, Any()),
-			Any(),
-		), Any()),
-	}, false)
+	testers := []tester{
+		newTester(t, G{"main": Any()}, true),
+		newTester(t, G{"main": None()}, false),
+		newTester(t, G{
+			"main":   MatchTree(Any(), Eval("spirit"), Any()),
+			"spirit": MatchField(`"RumourSpirit"`, "eq($int, int(1))"),
+		}, true),
+		newTester(t, G{
+			"main":   MatchTree(Any(), Eval("spirit"), Any()),
+			"spirit": MatchField(`"RumourSpirit"`, "eq($int, int(2))"),
+		}, false),
+		newTester(t, G{
+			"main": MatchTree(MatchIn(`"SaladWorry"`,
+				MatchField(`"MagazineFrame"`, `eq($string, "a")`),
+				Any(),
+				MatchIn(`"XrayPilot"`, Any()),
+				Any(),
+			), Any()),
+		}, true),
+		newTester(t, G{
+			"main": MatchTree(MatchIn(`"SaladWorry"`,
+				MatchField(`"MagazineFrame"`, `eq($string, "a")`),
+				MatchIn(`"XrayPilot"`, Any()),
+				Any(),
+			), Any()),
+		}, false),
+	}
+	for _, testy := range testers {
+		testy.json(m).reflect(m).proto("tests", "FinanceJudo", m)
+	}
+}
+
+type M map[string]interface{}
+
+func Test811(t *testing.T) {
+	// Foundations of XML Processing: The Tree Automata Approach - Example 8.1.1
+	// Without simplification rules the state space for the respective automata can be become very large
+	ex811 := G{
+		"main": Or(Eval("q1"), Eval("q2")),
+		"q1": Or(
+			MatchIn(`"A"`,
+				MatchIn(`"Left"`, Eval("q1")),
+				MatchIn(`"Right"`, Eval("q2")),
+			),
+			MatchIn(`"A"`,
+				MatchIn(`"Left"`, Eval("q1")),
+				MatchIn(`"Right"`, Eval("q1")),
+			),
+		),
+		"q2": Or(
+			MatchIn(`"A"`,
+				MatchIn(`"Left"`, Eval("q2")),
+				MatchIn(`"Right"`, Eval("q2")),
+			),
+			MatchIn(`"A"`,
+				MatchField(`"Value"`, `eq($string, "#")`),
+			),
+		),
+	}
+	newTester(t, ex811, true).json(M{
+		"A": M{
+			"Left": M{
+				"A": M{
+					"Value": "#",
+				},
+			},
+			"Right": M{
+				"A": M{
+					"Value": "#",
+				},
+			},
+		},
+	})
+	newTester(t, ex811, true).json(M{
+		"A": M{
+			"Left": M{
+				"A": M{
+					"Value": "#",
+				},
+			},
+			"Right": M{
+				"A": M{
+					"Left": M{
+						"A": M{
+							"Value": "#",
+						},
+					},
+					"Right": M{
+						"A": M{
+							"Value": "#",
+						},
+					},
+				},
+			},
+		},
+	})
+	newTester(t, ex811, true).json(M{
+		"A": M{
+			"Left": M{
+				"A": M{
+					"Left": M{
+						"A": M{
+							"Value": "#",
+						},
+					},
+					"Right": M{
+						"A": M{
+							"Value": "#",
+						},
+					},
+				},
+			},
+			"Right": M{
+				"A": M{
+					"Value": "#",
+				},
+			},
+		},
+	})
+	newTester(t, ex811, true).json(M{
+		"A": M{
+			"Left": M{
+				"A": M{
+					"Left": M{
+						"A": M{
+							"Left": M{
+								"A": M{
+									"Value": "#",
+								},
+							},
+							"Right": M{
+								"A": M{
+									"Value": "#",
+								},
+							},
+						},
+					},
+					"Right": M{
+						"A": M{
+							"Value": "#",
+						},
+					},
+				},
+			},
+			"Right": M{
+				"A": M{
+					"Value": "#",
+				},
+			},
+		},
+	})
+	newTester(t, ex811, false).json(M{
+		"A": M{
+			"Right": M{
+				"A": M{
+					"Value": "#",
+				},
+			},
+		},
+	})
 }

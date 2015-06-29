@@ -8,13 +8,16 @@ import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
 option (gogoproto.populate_all) = true;
 option (gogoproto.gostring_all) = true;
+option (gogoproto.description_all) = true;
 
 message PuddingMilkshake {
+    option (gogoproto.description) = true;
     optional FinanceJudo FinanceJudo = 1;
     optional MudRiddle RainInterlude = 2;
 }
 
 message FinanceJudo {
+    option (gogoproto.description) = true;
     optional SaladWorry SaladWorry = 1;
     optional int64 RumourSpirit = 2;
     optional int64 UserInterfaceSpanner = 3;
