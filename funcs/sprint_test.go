@@ -1,4 +1,4 @@
-//  Copyright 2013 Walter Schulze
+//  Copyright 2015 Walter Schulze
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -15,32 +15,21 @@
 package funcs
 
 import (
-	"regexp"
+	"testing"
 )
 
-func Regex(e ConstString, b Bytes) Bool {
-	return &regex{Expr: e, B: b}
-}
-
-type regex struct {
-	r    *regexp.Regexp
-	Expr ConstString
-	B    Bytes
-}
-
-func (this *regex) Init() error {
-	r, err := regexp.Compile(this.Expr.Eval())
-	if err != nil {
-		return err
+func TestSprint1(t *testing.T) {
+	out := Sprint(BoolEq(NewConstBool(true), NewBoolVariable()))
+	exp := "eq(true,$bool)"
+	if out != exp {
+		t.Fatalf("expected %s, but got %s", exp, out)
 	}
-	this.r = r
-	return nil
 }
 
-func (this *regex) Eval() bool {
-	return this.r.Match(this.B.Eval())
-}
-
-func init() {
-	Register("regex", new(regex))
+func TestSprint2(t *testing.T) {
+	out := Sprint(Int64Ge(ElemInt64s(NewConstInt64s([]int64{1, 2}), NewConstInt64(1)), NewInt64Variable()))
+	exp := "ge(elem([]int{int(1),int(2)},int(1)),$int)"
+	if out != exp {
+		t.Fatalf("expected %s, but got %s", exp, out)
+	}
 }

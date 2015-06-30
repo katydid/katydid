@@ -18,20 +18,12 @@ type Float64 interface {
 	Eval() float64
 }
 
-type Float32 interface {
-	Eval() float32
-}
-
 type Int64 interface {
 	Eval() int64
 }
 
 type Uint64 interface {
 	Eval() uint64
-}
-
-type Int32 interface {
-	Eval() int32
 }
 
 type Bool interface {
@@ -46,16 +38,8 @@ type Bytes interface {
 	Eval() []byte
 }
 
-type Uint32 interface {
-	Eval() uint32
-}
-
 type Float64s interface {
 	Eval() []float64
-}
-
-type Float32s interface {
-	Eval() []float32
 }
 
 type Int64s interface {
@@ -64,10 +48,6 @@ type Int64s interface {
 
 type Uint64s interface {
 	Eval() []uint64
-}
-
-type Int32s interface {
-	Eval() []int32
 }
 
 type Bools interface {
@@ -80,8 +60,4 @@ type Strings interface {
 
 type ListOfBytes interface {
 	Eval() [][]byte
-}
-
-type Uint32s interface {
-	Eval() []uint32
 }

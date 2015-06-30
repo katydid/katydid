@@ -18,6 +18,10 @@ import (
 	"strings"
 )
 
+func ToLower(s String) String {
+	return &toLower{s}
+}
+
 type toLower struct {
 	S String
 }
@@ -28,6 +32,10 @@ func (this *toLower) Eval() string {
 
 func init() {
 	Register("toLower", new(toLower))
+}
+
+func ToUpper(s String) String {
+	return &toUpper{s}
 }
 
 type toUpper struct {
@@ -42,6 +50,10 @@ func init() {
 	Register("toUpper", new(toUpper))
 }
 
+func Contains(s, sub String) Bool {
+	return &contains{s, sub}
+}
+
 type contains struct {
 	S      String
 	Substr String
@@ -53,6 +65,10 @@ func (this *contains) Eval() bool {
 
 func init() {
 	Register("contains", new(contains))
+}
+
+func EqualFold(a, b String) Bool {
+	return &equalFold{a, b}
 }
 
 type equalFold struct {
@@ -70,6 +86,10 @@ func init() {
 	Register("eqFold", new(equalFold))
 }
 
+func HasPrefix(a, b String) Bool {
+	return &hasPrefix{a, b}
+}
+
 type hasPrefix struct {
 	V1 String
 	V2 String
@@ -83,6 +103,10 @@ func (this *hasPrefix) Eval() bool {
 
 func init() {
 	Register("hasPrefix", new(hasPrefix))
+}
+
+func HasSuffix(a, b String) Bool {
+	return &hasSuffix{a, b}
 }
 
 type hasSuffix struct {

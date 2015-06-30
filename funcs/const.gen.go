@@ -54,7 +54,7 @@ func (this *constInt64) Eval() int64 {
 }
 
 func (this *constInt64) String() string {
-	return fmt.Sprintf("int64(%d)", this.v)
+	return fmt.Sprintf("int(%d)", this.v)
 }
 
 type ConstUint64 interface {
@@ -78,7 +78,7 @@ func (this *constUint64) Eval() uint64 {
 }
 
 func (this *constUint64) String() string {
-	return fmt.Sprintf("uint64(%d)", this.v)
+	return fmt.Sprintf("uint(%d)", this.v)
 }
 
 type ConstBool interface {
@@ -204,9 +204,9 @@ func (this *constInt64s) Eval() []int64 {
 func (this *constInt64s) String() string {
 	ss := make([]string, len(this.v))
 	for i := range this.v {
-		ss[i] = fmt.Sprintf("int64(%d)", this.v[i])
+		ss[i] = fmt.Sprintf("int(%d)", this.v[i])
 	}
-	return "[]int64{" + strings.Join(ss, ",") + "}"
+	return "[]int{" + strings.Join(ss, ",") + "}"
 }
 
 type ConstUint64s interface {
@@ -232,9 +232,9 @@ func (this *constUint64s) Eval() []uint64 {
 func (this *constUint64s) String() string {
 	ss := make([]string, len(this.v))
 	for i := range this.v {
-		ss[i] = fmt.Sprintf("uint64(%d)", this.v[i])
+		ss[i] = fmt.Sprintf("uint(%d)", this.v[i])
 	}
-	return "[]uint64{" + strings.Join(ss, ",") + "}"
+	return "[]uint{" + strings.Join(ss, ",") + "}"
 }
 
 type ConstBools interface {

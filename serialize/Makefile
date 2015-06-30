@@ -17,4 +17,4 @@ regenerate:
 	serialize-gen ./
 
 nuke:
-	rm value.gen.go
+	rm value.gen.go || true

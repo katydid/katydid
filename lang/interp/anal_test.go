@@ -17,6 +17,7 @@ package interp_test
 import (
 	"github.com/katydid/katydid/expr/ast"
 	exprparser "github.com/katydid/katydid/expr/parser"
+	. "github.com/katydid/katydid/funcs"
 	. "github.com/katydid/katydid/lang/combinator"
 	"github.com/katydid/katydid/lang/interp"
 	"testing"
@@ -31,8 +32,8 @@ func getExpr(exprStr string) *expr.Expr {
 }
 
 func TestAnal1(t *testing.T) {
-	f := `eq($string, "#")`
-	f2 := `eq($string, "?")`
+	f := Sprint(StringEq(NewStringVariable(), NewConstString("#")))
+	f2 := Sprint(StringEq(NewStringVariable(), NewConstString("?")))
 	g := G{
 		"main": MatchIn("A", MatchIn("B", MatchField("c", f))),
 	}.Grammar()
@@ -46,8 +47,8 @@ func TestAnal1(t *testing.T) {
 }
 
 func TestAnal2(t *testing.T) {
-	f := `eq($string, "#")`
-	f2 := `eq($string, "?")`
+	f := Sprint(StringEq(NewStringVariable(), NewConstString("#")))
+	f2 := Sprint(StringEq(NewStringVariable(), NewConstString("?")))
 	g := G{
 		"main": Or(MatchIn("A", And(MatchIn("B", MatchField("c", f)), Any())), MatchIn("D", MatchField("c", f))),
 	}.Grammar()
@@ -61,8 +62,8 @@ func TestAnal2(t *testing.T) {
 }
 
 func TestAnal3(t *testing.T) {
-	f := `eq($string, "#")`
-	f2 := `eq($string, elem([]string{"?"}, int(0)))`
+	f := Sprint(StringEq(NewStringVariable(), NewConstString("#")))
+	f2 := Sprint(StringEq(NewStringVariable(), ElemStrings(NewConstStrings([]string{"?"}), NewConstInt64(0))))
 	g := G{
 		"main": Or(
 			MatchIn("A", And(
@@ -82,7 +83,7 @@ func TestAnal3(t *testing.T) {
 }
 
 func TestAnal4(t *testing.T) {
-	f := `eq($string, "#")`
+	f := Sprint(StringEq(NewStringVariable(), NewConstString("#")))
 	g := G{
 		"main": Or(
 			MatchIn("A", And(

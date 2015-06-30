@@ -41,22 +41,12 @@ func (this *Thrower) ThrowFloat64(err error) float64 {
 	return 0
 }
 
-func (this *Thrower) ThrowFloat32(err error) float32 {
-	this.catcher.Catch(err)
-	return 0
-}
-
 func (this *Thrower) ThrowInt64(err error) int64 {
 	this.catcher.Catch(err)
 	return 0
 }
 
 func (this *Thrower) ThrowUint64(err error) uint64 {
-	this.catcher.Catch(err)
-	return 0
-}
-
-func (this *Thrower) ThrowInt32(err error) int32 {
 	this.catcher.Catch(err)
 	return 0
 }
@@ -76,17 +66,7 @@ func (this *Thrower) ThrowBytes(err error) []byte {
 	return nil
 }
 
-func (this *Thrower) ThrowUint32(err error) uint32 {
-	this.catcher.Catch(err)
-	return 0
-}
-
 func (this *Thrower) ThrowFloat64s(err error) []float64 {
-	this.catcher.Catch(err)
-	return nil
-}
-
-func (this *Thrower) ThrowFloat32s(err error) []float32 {
 	this.catcher.Catch(err)
 	return nil
 }
@@ -97,11 +77,6 @@ func (this *Thrower) ThrowInt64s(err error) []int64 {
 }
 
 func (this *Thrower) ThrowUint64s(err error) []uint64 {
-	this.catcher.Catch(err)
-	return nil
-}
-
-func (this *Thrower) ThrowInt32s(err error) []int32 {
 	this.catcher.Catch(err)
 	return nil
 }
@@ -117,11 +92,6 @@ func (this *Thrower) ThrowStrings(err error) []string {
 }
 
 func (this *Thrower) ThrowListOfBytes(err error) [][]byte {
-	this.catcher.Catch(err)
-	return nil
-}
-
-func (this *Thrower) ThrowUint32s(err error) []uint32 {
 	this.catcher.Catch(err)
 	return nil
 }

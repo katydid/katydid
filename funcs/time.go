@@ -16,6 +16,10 @@ package funcs
 
 import "time"
 
+func Now() Int64 {
+	return &now{}
+}
+
 type now struct{}
 
 func (this *now) Eval() int64 {

@@ -39,6 +39,14 @@ func init() {
 	Register("range", new(rangeFloat64s))
 }
 
+func RangeFloat64s(list Float64s, from, to Int64) Float64s {
+	return &rangeFloat64s{
+		List:  list,
+		First: from,
+		Last:  to,
+	}
+}
+
 type rangeInt64s struct {
 	List  Int64s
 	First Int64
@@ -73,6 +81,14 @@ func (this *rangeInt64s) Eval() []int64 {
 
 func init() {
 	Register("range", new(rangeInt64s))
+}
+
+func RangeInt64s(list Int64s, from, to Int64) Int64s {
+	return &rangeInt64s{
+		List:  list,
+		First: from,
+		Last:  to,
+	}
 }
 
 type rangeUint64s struct {
@@ -111,6 +127,14 @@ func init() {
 	Register("range", new(rangeUint64s))
 }
 
+func RangeUint64s(list Uint64s, from, to Int64) Uint64s {
+	return &rangeUint64s{
+		List:  list,
+		First: from,
+		Last:  to,
+	}
+}
+
 type rangeBools struct {
 	List  Bools
 	First Int64
@@ -145,6 +169,14 @@ func (this *rangeBools) Eval() []bool {
 
 func init() {
 	Register("range", new(rangeBools))
+}
+
+func RangeBools(list Bools, from, to Int64) Bools {
+	return &rangeBools{
+		List:  list,
+		First: from,
+		Last:  to,
+	}
 }
 
 type rangeStrings struct {
@@ -183,6 +215,14 @@ func init() {
 	Register("range", new(rangeStrings))
 }
 
+func RangeStrings(list Strings, from, to Int64) Strings {
+	return &rangeStrings{
+		List:  list,
+		First: from,
+		Last:  to,
+	}
+}
+
 type rangeListOfBytes struct {
 	List  ListOfBytes
 	First Int64
@@ -217,4 +257,12 @@ func (this *rangeListOfBytes) Eval() [][]byte {
 
 func init() {
 	Register("range", new(rangeListOfBytes))
+}
+
+func RangeListOfBytes(list ListOfBytes, from, to Int64) ListOfBytes {
+	return &rangeListOfBytes{
+		List:  list,
+		First: from,
+		Last:  to,
+	}
 }

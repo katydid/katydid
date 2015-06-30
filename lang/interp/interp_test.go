@@ -19,6 +19,7 @@ import (
 	"fmt"
 	"github.com/gogo/protobuf/proto"
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
+	. "github.com/katydid/katydid/funcs"
 	. "github.com/katydid/katydid/lang/combinator"
 	"github.com/katydid/katydid/lang/interp"
 	"github.com/katydid/katydid/serialize"
@@ -141,21 +142,27 @@ func TestInterp(t *testing.T) {
 		},
 		RumourSpirit: proto.Int64(1),
 	}
+	eq1 := Sprint(Int64Eq(NewInt64Variable(), NewConstInt64(1)))
+	t.Logf("%v", eq1)
+	eq2 := Sprint(Int64Eq(NewInt64Variable(), NewConstInt64(2)))
+	t.Logf("%v", eq2)
+	eqa := Sprint(StringEq(NewStringVariable(), NewConstString("a")))
+	t.Logf("%v", eqa)
 	testers := []tester{
 		newTester(t, G{"main": Any()}, true),
 		newTester(t, G{"main": None()}, false),
 		newTester(t, G{
 			"main":   MatchTree(Any(), Eval("spirit"), Any()),
-			"spirit": MatchField("RumourSpirit", "eq($int, int(1))"),
+			"spirit": MatchField("RumourSpirit", eq1),
 		}, true),
 		newTester(t, G{
 			"main":   MatchTree(Any(), Eval("spirit"), Any()),
-			"spirit": MatchField("RumourSpirit", "eq($int, int(2))"),
+			"spirit": MatchField("RumourSpirit", eq2),
 		}, false),
 		newTester(t, G{
 			"main": MatchTree(
 				MatchIn("SaladWorry",
-					MatchField("MagazineFrame", `eq($string, "a")`),
+					MatchField("MagazineFrame", eqa),
 					Any(),
 					MatchIn("XrayPilot", Any()),
 					Any(),
@@ -166,7 +173,7 @@ func TestInterp(t *testing.T) {
 		newTester(t, G{
 			"main": MatchTree(
 				MatchIn("SaladWorry",
-					MatchField("MagazineFrame", `eq($string, "a")`),
+					MatchField("MagazineFrame", eqa),
 					MatchIn("XrayPilot", Any()),
 					Any(),
 				),
@@ -176,7 +183,7 @@ func TestInterp(t *testing.T) {
 		newTester(t, G{
 			"main": MatchTree(
 				MatchInAnyExcept("NotAFieldName",
-					MatchField("MagazineFrame", `eq($string, "a")`),
+					MatchField("MagazineFrame", eqa),
 					Any(),
 				),
 				Any(),
@@ -185,7 +192,7 @@ func TestInterp(t *testing.T) {
 		newTester(t, G{
 			"main": MatchTree(
 				MatchInAnyExcept("SaladWorry",
-					MatchField("MagazineFrame", `eq($string, "a")`),
+					MatchField("MagazineFrame", eqa),
 					Any(),
 				),
 				Any(),
@@ -202,6 +209,7 @@ type M map[string]interface{}
 func Test811(t *testing.T) {
 	// Foundations of XML Processing: The Tree Automata Approach - Example 8.1.1
 	// Without simplification rules the state space for the respective automata can be become very large
+	eqhash := Sprint(StringEq(NewStringVariable(), NewConstString("#")))
 	ex811 := G{
 		"main": Or(Eval("q1"), Eval("q2")),
 		"q1": Or(
@@ -220,7 +228,7 @@ func Test811(t *testing.T) {
 				MatchIn("Right", Eval("q2")),
 			),
 			MatchIn("A",
-				MatchField("Value", `eq($string, "#")`),
+				MatchField("Value", eqhash),
 			),
 		),
 	}

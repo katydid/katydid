@@ -14,6 +14,10 @@
 
 package funcs
 
+func NotBool(b Bool) Bool {
+	return &not{b}
+}
+
 type not struct {
 	V1 Bool
 }
@@ -24,6 +28,10 @@ func (this *not) Eval() bool {
 
 func init() {
 	Register("not", new(not))
+}
+
+func AndBool(a, b Bool) Bool {
+	return &and{a, b}
 }
 
 type and struct {
@@ -37,6 +45,10 @@ func (this *and) Eval() bool {
 
 func init() {
 	Register("and", new(and))
+}
+
+func OrBool(a, b Bool) Bool {
+	return &or{a, b}
 }
 
 type or struct {

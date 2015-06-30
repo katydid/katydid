@@ -15,6 +15,10 @@ func init() {
 	Register("length", new(lenFloat64s))
 }
 
+func LenFloat64s(e Float64s) Int64 {
+	return &lenFloat64s{E: e}
+}
+
 type lenInt64s struct {
 	E Int64s
 }
@@ -25,6 +29,10 @@ func (this *lenInt64s) Eval() int64 {
 
 func init() {
 	Register("length", new(lenInt64s))
+}
+
+func LenInt64s(e Int64s) Int64 {
+	return &lenInt64s{E: e}
 }
 
 type lenUint64s struct {
@@ -39,6 +47,10 @@ func init() {
 	Register("length", new(lenUint64s))
 }
 
+func LenUint64s(e Uint64s) Int64 {
+	return &lenUint64s{E: e}
+}
+
 type lenBools struct {
 	E Bools
 }
@@ -49,6 +61,10 @@ func (this *lenBools) Eval() int64 {
 
 func init() {
 	Register("length", new(lenBools))
+}
+
+func LenBools(e Bools) Int64 {
+	return &lenBools{E: e}
 }
 
 type lenStrings struct {
@@ -63,6 +79,10 @@ func init() {
 	Register("length", new(lenStrings))
 }
 
+func LenStrings(e Strings) Int64 {
+	return &lenStrings{E: e}
+}
+
 type lenListOfBytes struct {
 	E ListOfBytes
 }
@@ -73,6 +93,10 @@ func (this *lenListOfBytes) Eval() int64 {
 
 func init() {
 	Register("length", new(lenListOfBytes))
+}
+
+func LenListOfBytes(e ListOfBytes) Int64 {
+	return &lenListOfBytes{E: e}
 }
 
 type lenString struct {
@@ -87,6 +111,10 @@ func init() {
 	Register("length", new(lenString))
 }
 
+func LenString(e String) Int64 {
+	return &lenString{E: e}
+}
+
 type lenBytes struct {
 	E Bytes
 }
@@ -97,4 +125,8 @@ func (this *lenBytes) Eval() int64 {
 
 func init() {
 	Register("length", new(lenBytes))
+}
+
+func LenBytes(e Bytes) Int64 {
+	return &lenBytes{E: e}
 }

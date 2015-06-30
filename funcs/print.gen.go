@@ -23,6 +23,10 @@ func init() {
 	Register("print", new(printFloat64))
 }
 
+func PrintFloat64(e Float64) Float64 {
+	return &printFloat64{E: e}
+}
+
 type printInt64 struct {
 	E Int64
 }
@@ -37,6 +41,10 @@ func (this *printInt64) IsVariable() {}
 
 func init() {
 	Register("print", new(printInt64))
+}
+
+func PrintInt64(e Int64) Int64 {
+	return &printInt64{E: e}
 }
 
 type printUint64 struct {
@@ -55,6 +63,10 @@ func init() {
 	Register("print", new(printUint64))
 }
 
+func PrintUint64(e Uint64) Uint64 {
+	return &printUint64{E: e}
+}
+
 type printBool struct {
 	E Bool
 }
@@ -69,6 +81,10 @@ func (this *printBool) IsVariable() {}
 
 func init() {
 	Register("print", new(printBool))
+}
+
+func PrintBool(e Bool) Bool {
+	return &printBool{E: e}
 }
 
 type printString struct {
@@ -87,6 +103,10 @@ func init() {
 	Register("print", new(printString))
 }
 
+func PrintString(e String) String {
+	return &printString{E: e}
+}
+
 type printBytes struct {
 	E Bytes
 }
@@ -101,6 +121,10 @@ func (this *printBytes) IsVariable() {}
 
 func init() {
 	Register("print", new(printBytes))
+}
+
+func PrintBytes(e Bytes) Bytes {
+	return &printBytes{E: e}
 }
 
 type printFloat64s struct {
@@ -119,6 +143,10 @@ func init() {
 	Register("print", new(printFloat64s))
 }
 
+func PrintFloat64s(e Float64s) Float64s {
+	return &printFloat64s{E: e}
+}
+
 type printInt64s struct {
 	E Int64s
 }
@@ -133,6 +161,10 @@ func (this *printInt64s) IsVariable() {}
 
 func init() {
 	Register("print", new(printInt64s))
+}
+
+func PrintInt64s(e Int64s) Int64s {
+	return &printInt64s{E: e}
 }
 
 type printUint64s struct {
@@ -151,6 +183,10 @@ func init() {
 	Register("print", new(printUint64s))
 }
 
+func PrintUint64s(e Uint64s) Uint64s {
+	return &printUint64s{E: e}
+}
+
 type printBools struct {
 	E Bools
 }
@@ -165,6 +201,10 @@ func (this *printBools) IsVariable() {}
 
 func init() {
 	Register("print", new(printBools))
+}
+
+func PrintBools(e Bools) Bools {
+	return &printBools{E: e}
 }
 
 type printStrings struct {
@@ -183,6 +223,10 @@ func init() {
 	Register("print", new(printStrings))
 }
 
+func PrintStrings(e Strings) Strings {
+	return &printStrings{E: e}
+}
+
 type printListOfBytes struct {
 	E ListOfBytes
 }
@@ -197,4 +241,8 @@ func (this *printListOfBytes) IsVariable() {}
 
 func init() {
 	Register("print", new(printListOfBytes))
+}
+
+func PrintListOfBytes(e ListOfBytes) ListOfBytes {
+	return &printListOfBytes{E: e}
 }

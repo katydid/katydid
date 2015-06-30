@@ -30,7 +30,7 @@ func (this *varFloat64) SetDecoder(dec serialize.Decoder) {
 }
 
 func (this *varFloat64) String() string {
-	return "varFloat64"
+	return "$double"
 }
 
 func NewFloat64Variable() *varFloat64 {
@@ -60,7 +60,7 @@ func (this *varInt64) SetDecoder(dec serialize.Decoder) {
 }
 
 func (this *varInt64) String() string {
-	return "varInt64"
+	return "$int"
 }
 
 func NewInt64Variable() *varInt64 {
@@ -90,7 +90,7 @@ func (this *varUint64) SetDecoder(dec serialize.Decoder) {
 }
 
 func (this *varUint64) String() string {
-	return "varUint64"
+	return "$uint"
 }
 
 func NewUint64Variable() *varUint64 {
@@ -120,7 +120,7 @@ func (this *varBool) SetDecoder(dec serialize.Decoder) {
 }
 
 func (this *varBool) String() string {
-	return "varBool"
+	return "$bool"
 }
 
 func NewBoolVariable() *varBool {
@@ -150,7 +150,7 @@ func (this *varString) SetDecoder(dec serialize.Decoder) {
 }
 
 func (this *varString) String() string {
-	return "varString"
+	return "$string"
 }
 
 func NewStringVariable() *varString {
@@ -180,7 +180,7 @@ func (this *varBytes) SetDecoder(dec serialize.Decoder) {
 }
 
 func (this *varBytes) String() string {
-	return "varBytes"
+	return "$[]byte"
 }
 
 func NewBytesVariable() *varBytes {

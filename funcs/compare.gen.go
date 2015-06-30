@@ -20,6 +20,10 @@ func init() {
 	Register("ge", new(float64Ge))
 }
 
+func Float64Ge(a, b Float64) Bool {
+	return &float64Ge{V1: a, V2: b}
+}
+
 type int64Ge struct {
 	V1 Int64
 	V2 Int64
@@ -31,6 +35,10 @@ func (this *int64Ge) Eval() bool {
 
 func init() {
 	Register("ge", new(int64Ge))
+}
+
+func Int64Ge(a, b Int64) Bool {
+	return &int64Ge{V1: a, V2: b}
 }
 
 type uint64Ge struct {
@@ -46,6 +54,10 @@ func init() {
 	Register("ge", new(uint64Ge))
 }
 
+func Uint64Ge(a, b Uint64) Bool {
+	return &uint64Ge{V1: a, V2: b}
+}
+
 type bytesGe struct {
 	V1 Bytes
 	V2 Bytes
@@ -57,6 +69,10 @@ func (this *bytesGe) Eval() bool {
 
 func init() {
 	Register("ge", new(bytesGe))
+}
+
+func BytesGe(a, b Bytes) Bool {
+	return &bytesGe{V1: a, V2: b}
 }
 
 type float64Gt struct {
@@ -72,6 +88,10 @@ func init() {
 	Register("gt", new(float64Gt))
 }
 
+func Float64Gt(a, b Float64) Bool {
+	return &float64Gt{V1: a, V2: b}
+}
+
 type int64Gt struct {
 	V1 Int64
 	V2 Int64
@@ -83,6 +103,10 @@ func (this *int64Gt) Eval() bool {
 
 func init() {
 	Register("gt", new(int64Gt))
+}
+
+func Int64Gt(a, b Int64) Bool {
+	return &int64Gt{V1: a, V2: b}
 }
 
 type uint64Gt struct {
@@ -98,6 +122,10 @@ func init() {
 	Register("gt", new(uint64Gt))
 }
 
+func Uint64Gt(a, b Uint64) Bool {
+	return &uint64Gt{V1: a, V2: b}
+}
+
 type bytesGt struct {
 	V1 Bytes
 	V2 Bytes
@@ -109,6 +137,10 @@ func (this *bytesGt) Eval() bool {
 
 func init() {
 	Register("gt", new(bytesGt))
+}
+
+func BytesGt(a, b Bytes) Bool {
+	return &bytesGt{V1: a, V2: b}
 }
 
 type float64Le struct {
@@ -124,6 +156,10 @@ func init() {
 	Register("le", new(float64Le))
 }
 
+func Float64Le(a, b Float64) Bool {
+	return &float64Le{V1: a, V2: b}
+}
+
 type int64Le struct {
 	V1 Int64
 	V2 Int64
@@ -135,6 +171,10 @@ func (this *int64Le) Eval() bool {
 
 func init() {
 	Register("le", new(int64Le))
+}
+
+func Int64Le(a, b Int64) Bool {
+	return &int64Le{V1: a, V2: b}
 }
 
 type uint64Le struct {
@@ -150,6 +190,10 @@ func init() {
 	Register("le", new(uint64Le))
 }
 
+func Uint64Le(a, b Uint64) Bool {
+	return &uint64Le{V1: a, V2: b}
+}
+
 type bytesLe struct {
 	V1 Bytes
 	V2 Bytes
@@ -161,6 +205,10 @@ func (this *bytesLe) Eval() bool {
 
 func init() {
 	Register("le", new(bytesLe))
+}
+
+func BytesLe(a, b Bytes) Bool {
+	return &bytesLe{V1: a, V2: b}
 }
 
 type float64Lt struct {
@@ -176,6 +224,10 @@ func init() {
 	Register("lt", new(float64Lt))
 }
 
+func Float64Lt(a, b Float64) Bool {
+	return &float64Lt{V1: a, V2: b}
+}
+
 type int64Lt struct {
 	V1 Int64
 	V2 Int64
@@ -187,6 +239,10 @@ func (this *int64Lt) Eval() bool {
 
 func init() {
 	Register("lt", new(int64Lt))
+}
+
+func Int64Lt(a, b Int64) Bool {
+	return &int64Lt{V1: a, V2: b}
 }
 
 type uint64Lt struct {
@@ -202,6 +258,10 @@ func init() {
 	Register("lt", new(uint64Lt))
 }
 
+func Uint64Lt(a, b Uint64) Bool {
+	return &uint64Lt{V1: a, V2: b}
+}
+
 type bytesLt struct {
 	V1 Bytes
 	V2 Bytes
@@ -213,6 +273,10 @@ func (this *bytesLt) Eval() bool {
 
 func init() {
 	Register("lt", new(bytesLt))
+}
+
+func BytesLt(a, b Bytes) Bool {
+	return &bytesLt{V1: a, V2: b}
 }
 
 type float64Eq struct {
@@ -228,6 +292,10 @@ func init() {
 	Register("eq", new(float64Eq))
 }
 
+func Float64Eq(a, b Float64) Bool {
+	return &float64Eq{V1: a, V2: b}
+}
+
 type int64Eq struct {
 	V1 Int64
 	V2 Int64
@@ -239,6 +307,10 @@ func (this *int64Eq) Eval() bool {
 
 func init() {
 	Register("eq", new(int64Eq))
+}
+
+func Int64Eq(a, b Int64) Bool {
+	return &int64Eq{V1: a, V2: b}
 }
 
 type uint64Eq struct {
@@ -254,6 +326,10 @@ func init() {
 	Register("eq", new(uint64Eq))
 }
 
+func Uint64Eq(a, b Uint64) Bool {
+	return &uint64Eq{V1: a, V2: b}
+}
+
 type boolEq struct {
 	V1 Bool
 	V2 Bool
@@ -265,6 +341,10 @@ func (this *boolEq) Eval() bool {
 
 func init() {
 	Register("eq", new(boolEq))
+}
+
+func BoolEq(a, b Bool) Bool {
+	return &boolEq{V1: a, V2: b}
 }
 
 type stringEq struct {
@@ -280,6 +360,10 @@ func init() {
 	Register("eq", new(stringEq))
 }
 
+func StringEq(a, b String) Bool {
+	return &stringEq{V1: a, V2: b}
+}
+
 type bytesEq struct {
 	V1 Bytes
 	V2 Bytes
@@ -291,4 +375,8 @@ func (this *bytesEq) Eval() bool {
 
 func init() {
 	Register("eq", new(bytesEq))
+}
+
+func BytesEq(a, b Bytes) Bool {
+	return &bytesEq{V1: a, V2: b}
 }

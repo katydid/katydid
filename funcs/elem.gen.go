@@ -28,6 +28,13 @@ func init() {
 	Register("elem", new(elemFloat64s))
 }
 
+func ElemFloat64s(list Float64s, index Int64) Float64 {
+	return &elemFloat64s{
+		List:  list,
+		Index: index,
+	}
+}
+
 type elemInt64s struct {
 	List  Int64s
 	Index Int64
@@ -51,6 +58,13 @@ func (this *elemInt64s) Eval() int64 {
 
 func init() {
 	Register("elem", new(elemInt64s))
+}
+
+func ElemInt64s(list Int64s, index Int64) Int64 {
+	return &elemInt64s{
+		List:  list,
+		Index: index,
+	}
 }
 
 type elemUint64s struct {
@@ -78,6 +92,13 @@ func init() {
 	Register("elem", new(elemUint64s))
 }
 
+func ElemUint64s(list Uint64s, index Int64) Uint64 {
+	return &elemUint64s{
+		List:  list,
+		Index: index,
+	}
+}
+
 type elemBools struct {
 	List  Bools
 	Index Int64
@@ -101,6 +122,13 @@ func (this *elemBools) Eval() bool {
 
 func init() {
 	Register("elem", new(elemBools))
+}
+
+func ElemBools(list Bools, index Int64) Bool {
+	return &elemBools{
+		List:  list,
+		Index: index,
+	}
 }
 
 type elemStrings struct {
@@ -128,6 +156,13 @@ func init() {
 	Register("elem", new(elemStrings))
 }
 
+func ElemStrings(list Strings, index Int64) String {
+	return &elemStrings{
+		List:  list,
+		Index: index,
+	}
+}
+
 type elemListOfBytes struct {
 	List  ListOfBytes
 	Index Int64
@@ -151,4 +186,11 @@ func (this *elemListOfBytes) Eval() []byte {
 
 func init() {
 	Register("elem", new(elemListOfBytes))
+}
+
+func ElemListOfBytes(list ListOfBytes, index Int64) Bytes {
+	return &elemListOfBytes{
+		List:  list,
+		Index: index,
+	}
 }
