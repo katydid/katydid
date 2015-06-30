@@ -22,7 +22,25 @@ func (this *Expr) GetTerminalVariable() (*Variable, error) {
 	if this.Terminal != nil {
 		return this.GetTerminal().GetVariable(), nil
 	}
+	if this.List != nil {
+		return this.GetList().GetTerminalVariable()
+	}
 	return this.GetFunction().GetTerminalVariable()
+}
+
+func (this *List) GetTerminalVariable() (*Variable, error) {
+	var res *Variable
+	for _, e := range this.GetElems() {
+		if v, err := e.GetTerminalVariable(); err != nil {
+			return nil, err
+		} else if v != nil {
+			if res != nil {
+				return nil, errors.New("Two Terminal Variables")
+			}
+			res = v
+		}
+	}
+	return res, nil
 }
 
 func (this *Function) GetTerminalVariable() (*Variable, error) {
