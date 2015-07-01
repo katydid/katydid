@@ -12,24 +12,25 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package funcs
+package lang
 
 import (
+	"github.com/katydid/katydid/expr/ast"
+	"reflect"
 	"testing"
 )
 
-func TestSprint1(t *testing.T) {
-	out := Sprint(BoolEq(ConstBool(true), BoolVar()))
-	exp := "eq(true,$bool)"
-	if out != exp {
-		t.Fatalf("expected %s, but got %s", exp, out)
+func TestClone(t *testing.T) {
+	in := NewGrammar(map[string]*Pattern{
+		"main": NewAnd(NewEmpty(), NewTreeNode(NewName("a"), NewLeafNode(&expr.Expr{}))),
+	})
+	out := in.Clone()
+	if !reflect.DeepEqual(in, out) {
+		t.Fatalf("not cloned")
 	}
-}
-
-func TestSprint2(t *testing.T) {
-	out := Sprint(IntGe(ElemInts(ConstInts([]int64{1, 2}), ConstInt(1)), IntVar()))
-	exp := "ge(elem([]int{int(1),int(2)},int(1)),$int)"
-	if out != exp {
-		t.Fatalf("expected %s, but got %s", exp, out)
+	treeNode := in.GetPatternDecls()[0].GetPattern().GetAnd().GetRightPattern().GetTreeNode()
+	treeNode.Pattern = NewNot(NewEmptySet())
+	if reflect.DeepEqual(in, out) {
+		t.Fatalf("not cloned")
 	}
 }

@@ -48,6 +48,10 @@ func satName(nameExpr *lang.NameExpr) bool {
 
 // This function returns mostly false positives, given the nature of user defined functions.
 func satLeaf(expr *expr.Expr) bool {
+	if expr.Terminal != nil && expr.GetTerminal().BoolValue != nil {
+		return expr.GetTerminal().GetBoolValue()
+	}
+	//TODO all functions without any variables should be evaluatable.
 	return true //TODO some standard functions should be evaluatable.
 }
 

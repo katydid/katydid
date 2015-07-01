@@ -34,6 +34,7 @@ func getExpr(exprStr string) *expr.Expr {
 func TestAnal1(t *testing.T) {
 	f := Sprint(StringEq(NewStringVariable(), NewConstString("#")))
 	f2 := Sprint(StringEq(NewStringVariable(), NewConstString("?")))
+	alwaysFalse := getExpr("false")
 	g := G{
 		"main": MatchIn("A", MatchIn("B", MatchField("c", f))),
 	}.Grammar()
@@ -44,13 +45,27 @@ func TestAnal1(t *testing.T) {
 	if !interp.CompareVarExpr(leafs[0], getExpr(f2)) {
 		t.Fatalf("expected %s but got %s", f2, leafs[0].String())
 	}
+	newg := interp.Replace(g, leafs[0], alwaysFalse, "A", "B", "c")
+	if interp.Satisfiable(newg) {
+		t.Fatalf("should be unsatisfiable: %s", newg)
+	}
+	if !interp.Satisfiable(g) {
+		t.Fatalf("should be satisfiable: %s", g)
+	}
 }
 
 func TestAnal2(t *testing.T) {
 	f := Sprint(StringEq(NewStringVariable(), NewConstString("#")))
 	f2 := Sprint(StringEq(NewStringVariable(), NewConstString("?")))
+	alwaysFalse := getExpr("false")
 	g := G{
-		"main": Or(MatchIn("A", And(MatchIn("B", MatchField("c", f)), Any())), MatchIn("D", MatchField("c", f))),
+		"main": Or(
+			MatchIn("A", And(
+				MatchIn("B", MatchField("c", f)),
+				Any()),
+			),
+			MatchIn("D", MatchField("c", f)),
+		),
 	}.Grammar()
 	leafs := interp.GetLeafs(g, "A", "B", "c")
 	if len(leafs) != 1 {
@@ -59,11 +74,19 @@ func TestAnal2(t *testing.T) {
 	if !interp.CompareVarExpr(leafs[0], getExpr(f2)) {
 		t.Fatalf("expected %s but got %s", f2, leafs[0].String())
 	}
+	newg := interp.Replace(g, leafs[0], alwaysFalse, "A", "B", "c")
+	if !interp.Satisfiable(newg) {
+		t.Fatalf("should be satisfiable: %s", newg)
+	}
+	if !interp.Satisfiable(g) {
+		t.Fatalf("should be satisfiable: %s", g)
+	}
 }
 
 func TestAnal3(t *testing.T) {
 	f := Sprint(StringEq(NewStringVariable(), NewConstString("#")))
 	f2 := Sprint(StringEq(NewStringVariable(), ElemStrings(NewConstStrings([]string{"?"}), NewConstInt64(0))))
+	alwaysFalse := getExpr("false")
 	g := G{
 		"main": Or(
 			MatchIn("A", And(
@@ -79,6 +102,13 @@ func TestAnal3(t *testing.T) {
 	}
 	if !interp.CompareVarExpr(leafs[0], getExpr(f2)) {
 		t.Fatalf("expected %s but got %s", f2, leafs[0].String())
+	}
+	newg := interp.Replace(g, leafs[0], alwaysFalse, "A", "B", "c")
+	if !interp.Satisfiable(newg) {
+		t.Fatalf("should be satisfiable: %s", newg)
+	}
+	if !interp.Satisfiable(g) {
+		t.Fatalf("should be satisfiable: %s", g)
 	}
 }
 
@@ -100,4 +130,5 @@ func TestAnal4(t *testing.T) {
 	if len(leafs) != 2 {
 		t.Fatalf("expected %d leafs, but got %d", 2, len(leafs))
 	}
+
 }

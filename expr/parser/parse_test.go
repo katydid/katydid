@@ -12,24 +12,30 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package funcs
+package parser
 
 import (
 	"testing"
 )
 
-func TestSprint1(t *testing.T) {
-	out := Sprint(BoolEq(ConstBool(true), BoolVar()))
-	exp := "eq(true,$bool)"
-	if out != exp {
-		t.Fatalf("expected %s, but got %s", exp, out)
+func TestParse(t *testing.T) {
+	positives := []string{
+		`"String"`,
+		"false",
 	}
-}
-
-func TestSprint2(t *testing.T) {
-	out := Sprint(IntGe(ElemInts(ConstInts([]int64{1, 2}), ConstInt(1)), IntVar()))
-	exp := "ge(elem([]int{int(1),int(2)},int(1)),$int)"
-	if out != exp {
-		t.Fatalf("expected %s, but got %s", exp, out)
+	negatives := []string{
+		"a",
+	}
+	for _, in := range positives {
+		_, err := NewParser().ParseExpr(in)
+		if err != nil {
+			t.Errorf("%s results in error: %s", in, err)
+		}
+	}
+	for _, in := range negatives {
+		_, err := NewParser().ParseExpr(in)
+		if err == nil {
+			t.Errorf("%s results in no error", in)
+		}
 	}
 }

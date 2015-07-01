@@ -12,24 +12,12 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package funcs
+package lang
 
 import (
-	"testing"
+	"github.com/gogo/protobuf/proto"
 )
 
-func TestSprint1(t *testing.T) {
-	out := Sprint(BoolEq(ConstBool(true), BoolVar()))
-	exp := "eq(true,$bool)"
-	if out != exp {
-		t.Fatalf("expected %s, but got %s", exp, out)
-	}
-}
-
-func TestSprint2(t *testing.T) {
-	out := Sprint(IntGe(ElemInts(ConstInts([]int64{1, 2}), ConstInt(1)), IntVar()))
-	exp := "ge(elem([]int{int(1),int(2)},int(1)),$int)"
-	if out != exp {
-		t.Fatalf("expected %s, but got %s", exp, out)
-	}
+func (this *Grammar) Clone() *Grammar {
+	return proto.Clone(this).(*Grammar)
 }

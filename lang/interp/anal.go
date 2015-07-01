@@ -116,3 +116,66 @@ func hasVar(e *expr.Expr) bool {
 	v, _ := e.GetTerminalVariable()
 	return v != nil
 }
+
+//Experimental
+func Replace(g *lang.Grammar, current *expr.Expr, replacement *expr.Expr, path ...string) *lang.Grammar {
+	g2 := g.Clone()
+	refs := newRefsLookup(g2)
+	p := refs["main"]
+	replace(refs, p, path, current, replacement)
+	return g2
+}
+
+func replace(refs RefLookup, p *lang.Pattern, path []string, current *expr.Expr, replacement *expr.Expr) {
+	typ := p.GetValue()
+	switch v := typ.(type) {
+	case *lang.Empty:
+		return
+	case *lang.EmptySet:
+		return
+	case *lang.TreeNode:
+		if len(path) == 0 {
+			return
+		}
+		n, ok := v.GetName().GetValue().(*lang.Name)
+		if !ok {
+			return
+		}
+		if n.GetName() != path[0] {
+			return
+		}
+		replace(refs, v.GetPattern(), path[1:], current, replacement)
+		return
+	case *lang.LeafNode:
+		if len(path) > 0 {
+			return
+		}
+		if v.Expr.String() != current.String() {
+			return
+		}
+		v.Expr = replacement
+		return
+	case *lang.Concat:
+		replace(refs, v.GetLeftPattern(), path, current, replacement)
+		replace(refs, v.GetRightPattern(), path, current, replacement)
+		return
+	case *lang.Or:
+		replace(refs, v.GetLeftPattern(), path, current, replacement)
+		replace(refs, v.GetRightPattern(), path, current, replacement)
+		return
+	case *lang.And:
+		replace(refs, v.GetLeftPattern(), path, current, replacement)
+		replace(refs, v.GetRightPattern(), path, current, replacement)
+		return
+	case *lang.ZeroOrMore:
+		replace(refs, v.GetPattern(), path, current, replacement)
+		return
+	case *lang.Reference:
+		replace(refs, refs[v.GetName()], path, current, replacement)
+		return
+	case *lang.Not:
+		replace(refs, v.GetPattern(), path, current, replacement)
+		return
+	}
+	panic(fmt.Sprintf("unknown pattern typ %T", typ))
+}
