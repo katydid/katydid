@@ -72,7 +72,7 @@ func (m *Grammar) GetAfter() *expr.Space {
 type PatternDecl struct {
 	Before  *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
 	Name    string        `protobuf:"bytes,2,opt" json:"Name"`
-	Equal   *expr.Keyword `protobuf:"bytes,3,opt" json:"Equal,omitempty"`
+	Eq      *expr.Keyword `protobuf:"bytes,3,opt" json:"Eq,omitempty"`
 	Pattern *Pattern      `protobuf:"bytes,4,opt" json:"Pattern,omitempty"`
 }
 
@@ -93,9 +93,9 @@ func (m *PatternDecl) GetName() string {
 	return ""
 }
 
-func (m *PatternDecl) GetEqual() *expr.Keyword {
+func (m *PatternDecl) GetEq() *expr.Keyword {
 	if m != nil {
-		return m.Equal
+		return m.Eq
 	}
 	return nil
 }
@@ -897,7 +897,7 @@ func (this *PatternDecl) GoString() string {
 	s := strings.Join([]string{`&lang.PatternDecl{` +
 		`Before:` + fmt.Sprintf("%#v", this.Before),
 		`Name:` + fmt.Sprintf("%#v", this.Name),
-		`Equal:` + fmt.Sprintf("%#v", this.Equal),
+		`Eq:` + fmt.Sprintf("%#v", this.Eq),
 		`Pattern:` + fmt.Sprintf("%#v", this.Pattern) + `}`}, ", ")
 	return s
 }

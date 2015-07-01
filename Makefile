@@ -85,5 +85,5 @@ drone:
 	(cd $(GOPATH)/src/github.com/goccmack && git clone https://github.com/goccmack/gocc )
 	(cd $(GOPATH)/src/github.com/goccmack/gocc && go install ./... )
 	(cd $(GOPATH)/src/github.com/gogo && git clone https://github.com/gogo/protobuf )
-	(cd $(GOPATH)/src/github.com/gogo/protobuf && make )
+	(cd $(GOPATH)/src/github.com/gogo/protobuf && make)
 	(cd $(GOPATH)/src/github.com/katydid/katydid/ && make)

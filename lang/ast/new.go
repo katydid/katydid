@@ -30,7 +30,7 @@ func NewGrammar(m map[string]*Pattern) *Grammar {
 		ps = append(ps, &PatternDecl{
 			Before:  before,
 			Name:    name,
-			Equal:   newEqual(),
+			Eq:      newEqual(),
 			Pattern: p,
 		})
 	}

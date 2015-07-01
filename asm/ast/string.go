@@ -46,20 +46,20 @@ func (this *Rule) String() string {
 }
 
 func (this *Root) String() string {
-	return this.Before.String() + "root" + this.Equal.String() + this.BeforeQualId.String() + this.Package + "." + this.Message
+	return this.Before.String() + "root" + this.Eq.String() + this.BeforeQualId.String() + this.Package + "." + this.Message
 }
 
 func (this *Init) String() string {
-	return this.Before.String() + "init" + this.Equal.String() + this.BeforeState.String() + this.State
+	return this.Before.String() + "init" + this.Eq.String() + this.BeforeState.String() + this.State
 }
 
 func (this *Final) String() string {
-	return this.Before.String() + "final" + this.Equal.String() + this.BeforeState.String() + this.GetState()
+	return this.Before.String() + "final" + this.Eq.String() + this.BeforeState.String() + this.GetState()
 }
 
 func (this *Transition) String() string {
 	return this.Before.String() + this.Src + this.BeforeInput.String() +
-		this.Input + this.Equal.String() + this.Dst.String()
+		this.Input + this.Eq.String() + this.Dst.String()
 }
 
 func (this *Destination) String() string {
@@ -71,6 +71,6 @@ func (this *Destination) String() string {
 
 func (this *FunctionDecl) String() string {
 	return this.Before.String() + "func" + this.BeforeName.String() +
-		this.Name + this.Equal.String() + this.BeforeFunc.String() +
+		this.Name + this.Eq.String() + this.BeforeFunc.String() +
 		this.Function.String()
 }

@@ -37,7 +37,7 @@ message Rule {
 
 message Root {
 	optional expr.Space Before = 1;
-	optional expr.Keyword Equal = 2;
+	optional expr.Keyword Eq = 2;
 	optional expr.Space BeforeQualId = 3;
 	optional string Package = 4 [(gogoproto.nullable) = false];
 	optional string Message = 5 [(gogoproto.nullable) = false];
@@ -45,14 +45,14 @@ message Root {
 
 message Init {
 	optional expr.Space Before = 1;
-	optional expr.Keyword Equal = 2;
+	optional expr.Keyword Eq = 2;
 	optional expr.Space BeforeState = 3;
 	optional string State = 4 [(gogoproto.nullable) = false];
 }
 
 message Final {
 	optional expr.Space Before = 1;
-	optional expr.Keyword Equal = 2;
+	optional expr.Keyword Eq = 2;
 	optional expr.Space BeforeState = 3;
 	optional string State = 4 [(gogoproto.nullable) = false];
 }
@@ -62,7 +62,7 @@ message Transition {
 	optional string Src = 2 [(gogoproto.nullable) = false];
 	optional expr.Space BeforeInput = 3;
 	optional string Input = 4 [(gogoproto.nullable) = false];
-	optional expr.Keyword Equal = 5;
+	optional expr.Keyword Eq = 5;
 	optional Destination Dst = 6;
 }
 
@@ -83,7 +83,7 @@ message FunctionDecl {
 	optional expr.Space Before = 1;
 	optional expr.Space BeforeName = 2;
 	optional string Name = 3 [(gogoproto.nullable) = false];
-	optional expr.Keyword Equal = 4;
+	optional expr.Keyword Eq = 4;
 	optional expr.Space BeforeFunc = 5;
 	optional expr.Function Function = 6;
 }

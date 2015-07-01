@@ -555,28 +555,28 @@ func NewPopulatedPocketRoses(r randyTypewriterprison, easy bool) *PocketRoses {
 		this.ScarBusStop = &v3
 	}
 	if r.Intn(10) != 0 {
-		v4 := r.Int63()
+		v4 := int64(r.Int63())
 		if r.Intn(2) == 0 {
 			v4 *= -1
 		}
 		this.BadgeShopping = &v4
 	}
 	if r.Intn(10) != 0 {
-		v5 := r.Int63()
+		v5 := int64(r.Int63())
 		if r.Intn(2) == 0 {
 			v5 *= -1
 		}
 		this.DaisySled = &v5
 	}
 	if r.Intn(10) != 0 {
-		v6 := r.Int63()
+		v6 := int64(r.Int63())
 		if r.Intn(2) == 0 {
 			v6 *= -1
 		}
 		this.SubmarineSaw = &v6
 	}
 	if r.Intn(10) != 0 {
-		v7 := bool(r.Intn(2) == 0)
+		v7 := bool(bool(r.Intn(2) == 0))
 		this.SmileLetter = &v7
 	}
 	if r.Intn(10) != 0 {
@@ -616,14 +616,14 @@ func NewPopulatedPocketRoses(r randyTypewriterprison, easy bool) *PocketRoses {
 		v14 := r.Intn(100)
 		this.FlightParachute = make([]uint32, v14)
 		for i := 0; i < v14; i++ {
-			this.FlightParachute[i] = r.Uint32()
+			this.FlightParachute[i] = uint32(r.Uint32())
 		}
 	}
 	if r.Intn(10) != 0 {
 		v15 := r.Intn(100)
 		this.BeerRace = make([]uint32, v15)
 		for i := 0; i < v15; i++ {
-			this.BeerRace[i] = r.Uint32()
+			this.BeerRace[i] = uint32(r.Uint32())
 		}
 	}
 	if r.Intn(10) != 0 {
@@ -652,7 +652,7 @@ func NewPopulatedPocketRoses(r randyTypewriterprison, easy bool) *PocketRoses {
 		v20 := r.Intn(100)
 		this.ElectionButter = make([]uint32, v20)
 		for i := 0; i < v20; i++ {
-			this.ElectionButter[i] = r.Uint32()
+			this.ElectionButter[i] = uint32(r.Uint32())
 		}
 	}
 	if r.Intn(10) != 0 {
@@ -671,7 +671,7 @@ func NewPopulatedPocketRoses(r randyTypewriterprison, easy bool) *PocketRoses {
 		this.MapShark = &v23
 	}
 	if r.Intn(10) != 0 {
-		v24 := bool(r.Intn(2) == 0)
+		v24 := bool(bool(r.Intn(2) == 0))
 		this.NetInterlude = &v24
 	}
 	if !easy && r.Intn(10) != 0 {
@@ -690,7 +690,13 @@ type randyTypewriterprison interface {
 }
 
 func randUTF8RuneTypewriterprison(r randyTypewriterprison) rune {
-	return rune(r.Intn(126-43) + 43)
+	ru := r.Intn(62)
+	if ru < 10 {
+		return rune(ru + 48)
+	} else if ru < 36 {
+		return rune(ru + 55)
+	}
+	return rune(ru + 61)
 }
 func randStringTypewriterprison(r randyTypewriterprison) string {
 	v25 := r.Intn(100)

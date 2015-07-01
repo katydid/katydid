@@ -109,7 +109,7 @@ func (m *Rule) GetFunctionDecl() *FunctionDecl {
 
 type Root struct {
 	Before           *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Equal            *expr.Keyword `protobuf:"bytes,2,opt" json:"Equal,omitempty"`
+	Eq               *expr.Keyword `protobuf:"bytes,2,opt" json:"Eq,omitempty"`
 	BeforeQualId     *expr.Space   `protobuf:"bytes,3,opt" json:"BeforeQualId,omitempty"`
 	Package          string        `protobuf:"bytes,4,opt" json:"Package"`
 	Message          string        `protobuf:"bytes,5,opt" json:"Message"`
@@ -126,9 +126,9 @@ func (m *Root) GetBefore() *expr.Space {
 	return nil
 }
 
-func (m *Root) GetEqual() *expr.Keyword {
+func (m *Root) GetEq() *expr.Keyword {
 	if m != nil {
-		return m.Equal
+		return m.Eq
 	}
 	return nil
 }
@@ -156,7 +156,7 @@ func (m *Root) GetMessage() string {
 
 type Init struct {
 	Before           *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Equal            *expr.Keyword `protobuf:"bytes,2,opt" json:"Equal,omitempty"`
+	Eq               *expr.Keyword `protobuf:"bytes,2,opt" json:"Eq,omitempty"`
 	BeforeState      *expr.Space   `protobuf:"bytes,3,opt" json:"BeforeState,omitempty"`
 	State            string        `protobuf:"bytes,4,opt" json:"State"`
 	XXX_unrecognized []byte        `json:"-"`
@@ -172,9 +172,9 @@ func (m *Init) GetBefore() *expr.Space {
 	return nil
 }
 
-func (m *Init) GetEqual() *expr.Keyword {
+func (m *Init) GetEq() *expr.Keyword {
 	if m != nil {
-		return m.Equal
+		return m.Eq
 	}
 	return nil
 }
@@ -195,7 +195,7 @@ func (m *Init) GetState() string {
 
 type Final struct {
 	Before           *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Equal            *expr.Keyword `protobuf:"bytes,2,opt" json:"Equal,omitempty"`
+	Eq               *expr.Keyword `protobuf:"bytes,2,opt" json:"Eq,omitempty"`
 	BeforeState      *expr.Space   `protobuf:"bytes,3,opt" json:"BeforeState,omitempty"`
 	State            string        `protobuf:"bytes,4,opt" json:"State"`
 	XXX_unrecognized []byte        `json:"-"`
@@ -211,9 +211,9 @@ func (m *Final) GetBefore() *expr.Space {
 	return nil
 }
 
-func (m *Final) GetEqual() *expr.Keyword {
+func (m *Final) GetEq() *expr.Keyword {
 	if m != nil {
-		return m.Equal
+		return m.Eq
 	}
 	return nil
 }
@@ -237,7 +237,7 @@ type Transition struct {
 	Src              string        `protobuf:"bytes,2,opt" json:"Src"`
 	BeforeInput      *expr.Space   `protobuf:"bytes,3,opt" json:"BeforeInput,omitempty"`
 	Input            string        `protobuf:"bytes,4,opt" json:"Input"`
-	Equal            *expr.Keyword `protobuf:"bytes,5,opt" json:"Equal,omitempty"`
+	Eq               *expr.Keyword `protobuf:"bytes,5,opt" json:"Eq,omitempty"`
 	Dst              *Destination  `protobuf:"bytes,6,opt" json:"Dst,omitempty"`
 	XXX_unrecognized []byte        `json:"-"`
 }
@@ -273,9 +273,9 @@ func (m *Transition) GetInput() string {
 	return ""
 }
 
-func (m *Transition) GetEqual() *expr.Keyword {
+func (m *Transition) GetEq() *expr.Keyword {
 	if m != nil {
-		return m.Equal
+		return m.Eq
 	}
 	return nil
 }
@@ -378,7 +378,7 @@ type FunctionDecl struct {
 	Before           *expr.Space    `protobuf:"bytes,1,opt" json:"Before,omitempty"`
 	BeforeName       *expr.Space    `protobuf:"bytes,2,opt" json:"BeforeName,omitempty"`
 	Name             string         `protobuf:"bytes,3,opt" json:"Name"`
-	Equal            *expr.Keyword  `protobuf:"bytes,4,opt" json:"Equal,omitempty"`
+	Eq               *expr.Keyword  `protobuf:"bytes,4,opt" json:"Eq,omitempty"`
 	BeforeFunc       *expr.Space    `protobuf:"bytes,5,opt" json:"BeforeFunc,omitempty"`
 	Function         *expr.Function `protobuf:"bytes,6,opt" json:"Function,omitempty"`
 	XXX_unrecognized []byte         `json:"-"`
@@ -408,9 +408,9 @@ func (m *FunctionDecl) GetName() string {
 	return ""
 }
 
-func (m *FunctionDecl) GetEqual() *expr.Keyword {
+func (m *FunctionDecl) GetEq() *expr.Keyword {
 	if m != nil {
-		return m.Equal
+		return m.Eq
 	}
 	return nil
 }
@@ -460,7 +460,7 @@ func (this *Root) GoString() string {
 	}
 	s := strings.Join([]string{`&asm.Root{` +
 		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Equal:` + fmt.Sprintf("%#v", this.Equal),
+		`Eq:` + fmt.Sprintf("%#v", this.Eq),
 		`BeforeQualId:` + fmt.Sprintf("%#v", this.BeforeQualId),
 		`Package:` + fmt.Sprintf("%#v", this.Package),
 		`Message:` + fmt.Sprintf("%#v", this.Message),
@@ -473,7 +473,7 @@ func (this *Init) GoString() string {
 	}
 	s := strings.Join([]string{`&asm.Init{` +
 		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Equal:` + fmt.Sprintf("%#v", this.Equal),
+		`Eq:` + fmt.Sprintf("%#v", this.Eq),
 		`BeforeState:` + fmt.Sprintf("%#v", this.BeforeState),
 		`State:` + fmt.Sprintf("%#v", this.State),
 		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
@@ -485,7 +485,7 @@ func (this *Final) GoString() string {
 	}
 	s := strings.Join([]string{`&asm.Final{` +
 		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Equal:` + fmt.Sprintf("%#v", this.Equal),
+		`Eq:` + fmt.Sprintf("%#v", this.Eq),
 		`BeforeState:` + fmt.Sprintf("%#v", this.BeforeState),
 		`State:` + fmt.Sprintf("%#v", this.State),
 		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
@@ -500,7 +500,7 @@ func (this *Transition) GoString() string {
 		`Src:` + fmt.Sprintf("%#v", this.Src),
 		`BeforeInput:` + fmt.Sprintf("%#v", this.BeforeInput),
 		`Input:` + fmt.Sprintf("%#v", this.Input),
-		`Equal:` + fmt.Sprintf("%#v", this.Equal),
+		`Eq:` + fmt.Sprintf("%#v", this.Eq),
 		`Dst:` + fmt.Sprintf("%#v", this.Dst),
 		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
@@ -531,7 +531,7 @@ func (this *FunctionDecl) GoString() string {
 		`Before:` + fmt.Sprintf("%#v", this.Before),
 		`BeforeName:` + fmt.Sprintf("%#v", this.BeforeName),
 		`Name:` + fmt.Sprintf("%#v", this.Name),
-		`Equal:` + fmt.Sprintf("%#v", this.Equal),
+		`Eq:` + fmt.Sprintf("%#v", this.Eq),
 		`BeforeFunc:` + fmt.Sprintf("%#v", this.BeforeFunc),
 		`Function:` + fmt.Sprintf("%#v", this.Function),
 		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")

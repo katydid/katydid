@@ -91,7 +91,7 @@ var productionsTable = ProdTab{
 		String: `PatternDecl : Space id Equal Pattern	<< &PatternDecl{
       Before: X[0].(*expr.Space),
       Name: newString(X[1]),
-      Equal: X[2].(*expr.Keyword),
+      Eq: X[2].(*expr.Keyword),
       Pattern: X[3].(*Pattern),
     }, nil >>`,
 		Id:         "PatternDecl",
@@ -102,7 +102,7 @@ var productionsTable = ProdTab{
 			return &PatternDecl{
 				Before:  X[0].(*expr.Space),
 				Name:    newString(X[1]),
-				Equal:   X[2].(*expr.Keyword),
+				Eq:      X[2].(*expr.Keyword),
 				Pattern: X[3].(*Pattern),
 			}, nil
 		},
@@ -110,7 +110,7 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `PatternDecl : id Equal Pattern	<< &PatternDecl{
       Name: newString(X[0]),
-      Equal: X[1].(*expr.Keyword),
+      Eq: X[1].(*expr.Keyword),
       Pattern: X[2].(*Pattern),
     }, nil >>`,
 		Id:         "PatternDecl",
@@ -120,7 +120,7 @@ var productionsTable = ProdTab{
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &PatternDecl{
 				Name:    newString(X[0]),
-				Equal:   X[1].(*expr.Keyword),
+				Eq:      X[1].(*expr.Keyword),
 				Pattern: X[2].(*Pattern),
 			}, nil
 		},

@@ -30,7 +30,7 @@ func (this *Grammar) String() string {
 
 func (this *PatternDecl) String() string {
 	return this.Before.String() + this.Name +
-		this.Equal.String() + this.Pattern.String()
+		this.Eq.String() + this.Pattern.String()
 }
 
 func (this *NameExpr) String() string {

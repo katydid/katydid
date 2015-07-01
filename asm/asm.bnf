@@ -33,52 +33,52 @@ Rule
 	;
 
 Root
-	: Space "root" Equal Space id "." id << &Root{Before: $0.(*expr.Space), Equal: $2.(*expr.Keyword), BeforeQualId: $3.(*expr.Space), Package: newString($4), Message: newString($6)}, nil >>
-	| "root" Equal Space id "." id << &Root{Equal: $1.(*expr.Keyword), BeforeQualId: $2.(*expr.Space), Package: newString($3), Message: newString($5)}, nil >>
-	| Space "root" Equal id "." id << &Root{Before: $0.(*expr.Space), Equal: $2.(*expr.Keyword), Package: newString($3), Message: newString($5)}, nil >>
-	| "root" Equal id "." id << &Root{Equal: $1.(*expr.Keyword), Package: newString($2), Message: newString($4)}, nil >>
+	: Space "root" Equal Space id "." id << &Root{Before: $0.(*expr.Space), Eq: $2.(*expr.Keyword), BeforeQualId: $3.(*expr.Space), Package: newString($4), Message: newString($6)}, nil >>
+	| "root" Equal Space id "." id << &Root{Eq: $1.(*expr.Keyword), BeforeQualId: $2.(*expr.Space), Package: newString($3), Message: newString($5)}, nil >>
+	| Space "root" Equal id "." id << &Root{Before: $0.(*expr.Space), Eq: $2.(*expr.Keyword), Package: newString($3), Message: newString($5)}, nil >>
+	| "root" Equal id "." id << &Root{Eq: $1.(*expr.Keyword), Package: newString($2), Message: newString($4)}, nil >>
 	;
 
 Init : Space "init" Equal Space id << &Init{
 		Before: $0.(*expr.Space), 
-		Equal: $2.(*expr.Keyword),
+		Eq: $2.(*expr.Keyword),
 		BeforeState: $3.(*expr.Space),
 		State: newString($4),
 	  }, nil >>
 	 | "init" Equal Space id << &Init{
-		Equal: $1.(*expr.Keyword),
+		Eq: $1.(*expr.Keyword),
 		BeforeState: $2.(*expr.Space),
 		State: newString($3),
 	  }, nil >>
 	 | Space "init" Equal id << &Init{
 		Before: $0.(*expr.Space), 
-		Equal: $2.(*expr.Keyword),
+		Eq: $2.(*expr.Keyword),
 		State: newString($3),
 	  }, nil >>
 	 | "init" Equal id << &Init{
-		Equal: $1.(*expr.Keyword),
+		Eq: $1.(*expr.Keyword),
 		State: newString($2),
 	  }, nil >>
 	 ;
 
 Final : Space "final" Equal Space id << &Final{
 		Before: $0.(*expr.Space), 
-		Equal: $2.(*expr.Keyword),
+		Eq: $2.(*expr.Keyword),
 		BeforeState: $3.(*expr.Space),
 		State: newString($4),
 	  }, nil >>
 	| "final" Equal Space id << &Final{
-		Equal: $1.(*expr.Keyword),
+		Eq: $1.(*expr.Keyword),
 		BeforeState: $2.(*expr.Space),
 		State: newString($3),
 	  }, nil >>
 	| Space "final" Equal id << &Final{
 		Before: $0.(*expr.Space), 
-		Equal: $2.(*expr.Keyword),
+		Eq: $2.(*expr.Keyword),
 		State: newString($3),
 	  }, nil >>
 	| "final" Equal id << &Final{
-		Equal: $1.(*expr.Keyword),
+		Eq: $1.(*expr.Keyword),
 		State: newString($2),
 	  }, nil >>
 	;
@@ -90,7 +90,7 @@ Transition
 		Src: newString($1),
 		BeforeInput: $2.(*expr.Space),
 		Input: newString($3),
-		Equal: $4.(*expr.Keyword),
+		Eq: $4.(*expr.Keyword),
 		Dst: $5.(*Destination),
 	}, nil >>
 	| id Space id Equal Destination
@@ -98,7 +98,7 @@ Transition
 		Src: newString($0),
 		BeforeInput: $1.(*expr.Space),
 		Input: newString($2),
-		Equal: $3.(*expr.Keyword),
+		Eq: $3.(*expr.Keyword),
 		Dst: $4.(*Destination),
 	}, nil >>
 	| Space id id Equal Destination
@@ -106,14 +106,14 @@ Transition
 		Before: $0.(*expr.Space),
 		Src: newString($1),
 		Input: newString($2),
-		Equal: $3.(*expr.Keyword),
+		Eq: $3.(*expr.Keyword),
 		Dst: $4.(*Destination),
 	}, nil >>
 	| id id Equal Destination
 	<< &Transition{
 		Src: newString($0),
 		Input: newString($1),
-		Equal: $2.(*expr.Keyword),
+		Eq: $2.(*expr.Keyword),
 		Dst: $3.(*Destination),
 	}, nil >>
 	;
@@ -229,24 +229,25 @@ FunctionDecl
 		Before: $0.(*expr.Space),
 		BeforeName: $2.(*expr.Space),
 		Name: newString($3),
-		Equal: $4.(*expr.Keyword),
+		Eq: $4.(*expr.Keyword),
 		Function: $5.(*expr.Function),
 	}, nil >>
 	| "func" Space id Equal Function << &FunctionDecl{
 		BeforeName: $1.(*expr.Space),
 		Name: newString($2),
-		Equal: $3.(*expr.Keyword),
+		Eq: $3.(*expr.Keyword),
 		Function: $4.(*expr.Function),
 	}, nil >>
 	| Space "func" id Equal Function << &FunctionDecl{
 		Before: $0.(*expr.Space),
 		Name: newString($2),
-		Equal: $3.(*expr.Keyword),
+		Eq: $3.(*expr.Keyword),
 		Function: $4.(*expr.Function),
 	}, nil >>
 	| "func" id Equal Function << &FunctionDecl{
 		Name: newString($1),
-		Equal: $2.(*expr.Keyword),
+		Eq: $2.(*expr.Keyword),
 		Function: $3.(*expr.Function),
 	}, nil >>
 	;	
+

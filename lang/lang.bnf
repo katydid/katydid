@@ -38,7 +38,7 @@ PatternDecl
     &PatternDecl{
       Before: $0.(*expr.Space),
       Name: newString($1),
-      Equal: $2.(*expr.Keyword),
+      Eq: $2.(*expr.Keyword),
       Pattern: $3.(*Pattern),
     }, nil
   >>
@@ -46,7 +46,7 @@ PatternDecl
   <<
     &PatternDecl{
       Name: newString($0),
-      Equal: $1.(*expr.Keyword),
+      Eq: $1.(*expr.Keyword),
       Pattern: $2.(*Pattern),
     }, nil
   >>

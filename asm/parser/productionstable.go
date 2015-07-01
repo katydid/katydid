@@ -129,49 +129,49 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Root : Space "root" Equal Space id "." id	<< &Root{Before: X[0].(*expr.Space), Equal: X[2].(*expr.Keyword), BeforeQualId: X[3].(*expr.Space), Package: newString(X[4]), Message: newString(X[6])}, nil >>`,
+		String: `Root : Space "root" Equal Space id "." id	<< &Root{Before: X[0].(*expr.Space), Eq: X[2].(*expr.Keyword), BeforeQualId: X[3].(*expr.Space), Package: newString(X[4]), Message: newString(X[6])}, nil >>`,
 		Id:         "Root",
 		NTType:     4,
 		Index:      10,
 		NumSymbols: 7,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &Root{Before: X[0].(*expr.Space), Equal: X[2].(*expr.Keyword), BeforeQualId: X[3].(*expr.Space), Package: newString(X[4]), Message: newString(X[6])}, nil
+			return &Root{Before: X[0].(*expr.Space), Eq: X[2].(*expr.Keyword), BeforeQualId: X[3].(*expr.Space), Package: newString(X[4]), Message: newString(X[6])}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `Root : "root" Equal Space id "." id	<< &Root{Equal: X[1].(*expr.Keyword), BeforeQualId: X[2].(*expr.Space), Package: newString(X[3]), Message: newString(X[5])}, nil >>`,
+		String: `Root : "root" Equal Space id "." id	<< &Root{Eq: X[1].(*expr.Keyword), BeforeQualId: X[2].(*expr.Space), Package: newString(X[3]), Message: newString(X[5])}, nil >>`,
 		Id:         "Root",
 		NTType:     4,
 		Index:      11,
 		NumSymbols: 6,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &Root{Equal: X[1].(*expr.Keyword), BeforeQualId: X[2].(*expr.Space), Package: newString(X[3]), Message: newString(X[5])}, nil
+			return &Root{Eq: X[1].(*expr.Keyword), BeforeQualId: X[2].(*expr.Space), Package: newString(X[3]), Message: newString(X[5])}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `Root : Space "root" Equal id "." id	<< &Root{Before: X[0].(*expr.Space), Equal: X[2].(*expr.Keyword), Package: newString(X[3]), Message: newString(X[5])}, nil >>`,
+		String: `Root : Space "root" Equal id "." id	<< &Root{Before: X[0].(*expr.Space), Eq: X[2].(*expr.Keyword), Package: newString(X[3]), Message: newString(X[5])}, nil >>`,
 		Id:         "Root",
 		NTType:     4,
 		Index:      12,
 		NumSymbols: 6,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &Root{Before: X[0].(*expr.Space), Equal: X[2].(*expr.Keyword), Package: newString(X[3]), Message: newString(X[5])}, nil
+			return &Root{Before: X[0].(*expr.Space), Eq: X[2].(*expr.Keyword), Package: newString(X[3]), Message: newString(X[5])}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `Root : "root" Equal id "." id	<< &Root{Equal: X[1].(*expr.Keyword), Package: newString(X[2]), Message: newString(X[4])}, nil >>`,
+		String: `Root : "root" Equal id "." id	<< &Root{Eq: X[1].(*expr.Keyword), Package: newString(X[2]), Message: newString(X[4])}, nil >>`,
 		Id:         "Root",
 		NTType:     4,
 		Index:      13,
 		NumSymbols: 5,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &Root{Equal: X[1].(*expr.Keyword), Package: newString(X[2]), Message: newString(X[4])}, nil
+			return &Root{Eq: X[1].(*expr.Keyword), Package: newString(X[2]), Message: newString(X[4])}, nil
 		},
 	},
 	ProdTabEntry{
 		String: `Init : Space "init" Equal Space id	<< &Init{
 		Before: X[0].(*expr.Space), 
-		Equal: X[2].(*expr.Keyword),
+		Eq: X[2].(*expr.Keyword),
 		BeforeState: X[3].(*expr.Space),
 		State: newString(X[4]),
 	  }, nil >>`,
@@ -182,7 +182,7 @@ var productionsTable = ProdTab{
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Init{
 				Before:      X[0].(*expr.Space),
-				Equal:       X[2].(*expr.Keyword),
+				Eq:          X[2].(*expr.Keyword),
 				BeforeState: X[3].(*expr.Space),
 				State:       newString(X[4]),
 			}, nil
@@ -190,7 +190,7 @@ var productionsTable = ProdTab{
 	},
 	ProdTabEntry{
 		String: `Init : "init" Equal Space id	<< &Init{
-		Equal: X[1].(*expr.Keyword),
+		Eq: X[1].(*expr.Keyword),
 		BeforeState: X[2].(*expr.Space),
 		State: newString(X[3]),
 	  }, nil >>`,
@@ -200,7 +200,7 @@ var productionsTable = ProdTab{
 		NumSymbols: 4,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Init{
-				Equal:       X[1].(*expr.Keyword),
+				Eq:          X[1].(*expr.Keyword),
 				BeforeState: X[2].(*expr.Space),
 				State:       newString(X[3]),
 			}, nil
@@ -209,7 +209,7 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Init : Space "init" Equal id	<< &Init{
 		Before: X[0].(*expr.Space), 
-		Equal: X[2].(*expr.Keyword),
+		Eq: X[2].(*expr.Keyword),
 		State: newString(X[3]),
 	  }, nil >>`,
 		Id:         "Init",
@@ -219,14 +219,14 @@ var productionsTable = ProdTab{
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Init{
 				Before: X[0].(*expr.Space),
-				Equal:  X[2].(*expr.Keyword),
+				Eq:     X[2].(*expr.Keyword),
 				State:  newString(X[3]),
 			}, nil
 		},
 	},
 	ProdTabEntry{
 		String: `Init : "init" Equal id	<< &Init{
-		Equal: X[1].(*expr.Keyword),
+		Eq: X[1].(*expr.Keyword),
 		State: newString(X[2]),
 	  }, nil >>`,
 		Id:         "Init",
@@ -235,7 +235,7 @@ var productionsTable = ProdTab{
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Init{
-				Equal: X[1].(*expr.Keyword),
+				Eq:    X[1].(*expr.Keyword),
 				State: newString(X[2]),
 			}, nil
 		},
@@ -243,7 +243,7 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Final : Space "final" Equal Space id	<< &Final{
 		Before: X[0].(*expr.Space), 
-		Equal: X[2].(*expr.Keyword),
+		Eq: X[2].(*expr.Keyword),
 		BeforeState: X[3].(*expr.Space),
 		State: newString(X[4]),
 	  }, nil >>`,
@@ -254,7 +254,7 @@ var productionsTable = ProdTab{
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Final{
 				Before:      X[0].(*expr.Space),
-				Equal:       X[2].(*expr.Keyword),
+				Eq:          X[2].(*expr.Keyword),
 				BeforeState: X[3].(*expr.Space),
 				State:       newString(X[4]),
 			}, nil
@@ -262,7 +262,7 @@ var productionsTable = ProdTab{
 	},
 	ProdTabEntry{
 		String: `Final : "final" Equal Space id	<< &Final{
-		Equal: X[1].(*expr.Keyword),
+		Eq: X[1].(*expr.Keyword),
 		BeforeState: X[2].(*expr.Space),
 		State: newString(X[3]),
 	  }, nil >>`,
@@ -272,7 +272,7 @@ var productionsTable = ProdTab{
 		NumSymbols: 4,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Final{
-				Equal:       X[1].(*expr.Keyword),
+				Eq:          X[1].(*expr.Keyword),
 				BeforeState: X[2].(*expr.Space),
 				State:       newString(X[3]),
 			}, nil
@@ -281,7 +281,7 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Final : Space "final" Equal id	<< &Final{
 		Before: X[0].(*expr.Space), 
-		Equal: X[2].(*expr.Keyword),
+		Eq: X[2].(*expr.Keyword),
 		State: newString(X[3]),
 	  }, nil >>`,
 		Id:         "Final",
@@ -291,14 +291,14 @@ var productionsTable = ProdTab{
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Final{
 				Before: X[0].(*expr.Space),
-				Equal:  X[2].(*expr.Keyword),
+				Eq:     X[2].(*expr.Keyword),
 				State:  newString(X[3]),
 			}, nil
 		},
 	},
 	ProdTabEntry{
 		String: `Final : "final" Equal id	<< &Final{
-		Equal: X[1].(*expr.Keyword),
+		Eq: X[1].(*expr.Keyword),
 		State: newString(X[2]),
 	  }, nil >>`,
 		Id:         "Final",
@@ -307,7 +307,7 @@ var productionsTable = ProdTab{
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Final{
-				Equal: X[1].(*expr.Keyword),
+				Eq:    X[1].(*expr.Keyword),
 				State: newString(X[2]),
 			}, nil
 		},
@@ -318,7 +318,7 @@ var productionsTable = ProdTab{
 		Src: newString(X[1]),
 		BeforeInput: X[2].(*expr.Space),
 		Input: newString(X[3]),
-		Equal: X[4].(*expr.Keyword),
+		Eq: X[4].(*expr.Keyword),
 		Dst: X[5].(*Destination),
 	}, nil >>`,
 		Id:         "Transition",
@@ -331,7 +331,7 @@ var productionsTable = ProdTab{
 				Src:         newString(X[1]),
 				BeforeInput: X[2].(*expr.Space),
 				Input:       newString(X[3]),
-				Equal:       X[4].(*expr.Keyword),
+				Eq:          X[4].(*expr.Keyword),
 				Dst:         X[5].(*Destination),
 			}, nil
 		},
@@ -341,7 +341,7 @@ var productionsTable = ProdTab{
 		Src: newString(X[0]),
 		BeforeInput: X[1].(*expr.Space),
 		Input: newString(X[2]),
-		Equal: X[3].(*expr.Keyword),
+		Eq: X[3].(*expr.Keyword),
 		Dst: X[4].(*Destination),
 	}, nil >>`,
 		Id:         "Transition",
@@ -353,7 +353,7 @@ var productionsTable = ProdTab{
 				Src:         newString(X[0]),
 				BeforeInput: X[1].(*expr.Space),
 				Input:       newString(X[2]),
-				Equal:       X[3].(*expr.Keyword),
+				Eq:          X[3].(*expr.Keyword),
 				Dst:         X[4].(*Destination),
 			}, nil
 		},
@@ -363,7 +363,7 @@ var productionsTable = ProdTab{
 		Before: X[0].(*expr.Space),
 		Src: newString(X[1]),
 		Input: newString(X[2]),
-		Equal: X[3].(*expr.Keyword),
+		Eq: X[3].(*expr.Keyword),
 		Dst: X[4].(*Destination),
 	}, nil >>`,
 		Id:         "Transition",
@@ -375,7 +375,7 @@ var productionsTable = ProdTab{
 				Before: X[0].(*expr.Space),
 				Src:    newString(X[1]),
 				Input:  newString(X[2]),
-				Equal:  X[3].(*expr.Keyword),
+				Eq:     X[3].(*expr.Keyword),
 				Dst:    X[4].(*Destination),
 			}, nil
 		},
@@ -384,7 +384,7 @@ var productionsTable = ProdTab{
 		String: `Transition : id id Equal Destination	<< &Transition{
 		Src: newString(X[0]),
 		Input: newString(X[1]),
-		Equal: X[2].(*expr.Keyword),
+		Eq: X[2].(*expr.Keyword),
 		Dst: X[3].(*Destination),
 	}, nil >>`,
 		Id:         "Transition",
@@ -395,7 +395,7 @@ var productionsTable = ProdTab{
 			return &Transition{
 				Src:   newString(X[0]),
 				Input: newString(X[1]),
-				Equal: X[2].(*expr.Keyword),
+				Eq:    X[2].(*expr.Keyword),
 				Dst:   X[3].(*Destination),
 			}, nil
 		},
@@ -665,7 +665,7 @@ var productionsTable = ProdTab{
 		Before: X[0].(*expr.Space),
 		BeforeName: X[2].(*expr.Space),
 		Name: newString(X[3]),
-		Equal: X[4].(*expr.Keyword),
+		Eq: X[4].(*expr.Keyword),
 		Function: X[5].(*expr.Function),
 	}, nil >>`,
 		Id:         "FunctionDecl",
@@ -677,7 +677,7 @@ var productionsTable = ProdTab{
 				Before:     X[0].(*expr.Space),
 				BeforeName: X[2].(*expr.Space),
 				Name:       newString(X[3]),
-				Equal:      X[4].(*expr.Keyword),
+				Eq:         X[4].(*expr.Keyword),
 				Function:   X[5].(*expr.Function),
 			}, nil
 		},
@@ -686,7 +686,7 @@ var productionsTable = ProdTab{
 		String: `FunctionDecl : "func" Space id Equal Function	<< &FunctionDecl{
 		BeforeName: X[1].(*expr.Space),
 		Name: newString(X[2]),
-		Equal: X[3].(*expr.Keyword),
+		Eq: X[3].(*expr.Keyword),
 		Function: X[4].(*expr.Function),
 	}, nil >>`,
 		Id:         "FunctionDecl",
@@ -697,7 +697,7 @@ var productionsTable = ProdTab{
 			return &FunctionDecl{
 				BeforeName: X[1].(*expr.Space),
 				Name:       newString(X[2]),
-				Equal:      X[3].(*expr.Keyword),
+				Eq:         X[3].(*expr.Keyword),
 				Function:   X[4].(*expr.Function),
 			}, nil
 		},
@@ -706,7 +706,7 @@ var productionsTable = ProdTab{
 		String: `FunctionDecl : Space "func" id Equal Function	<< &FunctionDecl{
 		Before: X[0].(*expr.Space),
 		Name: newString(X[2]),
-		Equal: X[3].(*expr.Keyword),
+		Eq: X[3].(*expr.Keyword),
 		Function: X[4].(*expr.Function),
 	}, nil >>`,
 		Id:         "FunctionDecl",
@@ -717,7 +717,7 @@ var productionsTable = ProdTab{
 			return &FunctionDecl{
 				Before:   X[0].(*expr.Space),
 				Name:     newString(X[2]),
-				Equal:    X[3].(*expr.Keyword),
+				Eq:       X[3].(*expr.Keyword),
 				Function: X[4].(*expr.Function),
 			}, nil
 		},
@@ -725,7 +725,7 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `FunctionDecl : "func" id Equal Function	<< &FunctionDecl{
 		Name: newString(X[1]),
-		Equal: X[2].(*expr.Keyword),
+		Eq: X[2].(*expr.Keyword),
 		Function: X[3].(*expr.Function),
 	}, nil >>`,
 		Id:         "FunctionDecl",
@@ -735,7 +735,7 @@ var productionsTable = ProdTab{
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &FunctionDecl{
 				Name:     newString(X[1]),
-				Equal:    X[2].(*expr.Keyword),
+				Eq:       X[2].(*expr.Keyword),
 				Function: X[3].(*expr.Function),
 			}, nil
 		},
