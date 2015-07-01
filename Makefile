@@ -97,5 +97,4 @@ drone:
 	(cd $(GOPATH)/src/github.com/gogo && git clone https://github.com/gogo/protobuf )
 	(cd $(GOPATH)/src/github.com/gogo/protobuf && make )
 	(cd $(GOPATH)/src/golang.org/x && hg clone https://code.google.com/p/go.text text)
-	(cd $(GOPATH)/src/github.com/katydid/katydid/ && make regenerate)
 	(cd $(GOPATH)/src/github.com/katydid/katydid/ && make)
