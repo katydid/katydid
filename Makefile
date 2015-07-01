@@ -18,7 +18,7 @@ all: nuke dep regenerate gofmt build test checklicense
 
 dep:
 	go install github.com/gogo/protobuf/protoc-gen-gogo
-	go install -v code.google.com/p/gocc/...
+	go install -v github.com/goccmack/gocc/...
 
 checklicense:
 	go install ./cmd/checklicense
@@ -81,10 +81,9 @@ drone:
 	sudo apt-get install protobuf-compiler
 	sudo apt-get install graphviz
 	mkdir -p $(GOPATH)/src/github.com/gogo
-	mkdir -p $(GOPATH)/src/code.google.com/p
-	(cd $(GOPATH)/src/code.google.com/p && git clone https://code.google.com/p/gocc )
-	(cd $(GOPATH)/src/code.google.com/p/gocc && git checkout gocc2 && go install ./... )
+	mkdir -p $(GOPATH)/src/github.com/goccmack
+	(cd $(GOPATH)/src/github.com/goccmack && git clone https://github.com/goccmack/gocc )
+	(cd $(GOPATH)/src/github.com/goccmack/gocc && go install ./... )
 	(cd $(GOPATH)/src/github.com/gogo && git clone https://github.com/gogo/protobuf )
 	(cd $(GOPATH)/src/github.com/gogo/protobuf && make )
-	go get -v code.google.com/p/go.text/unicode/norm
 	(cd $(GOPATH)/src/github.com/katydid/katydid/ && make)
