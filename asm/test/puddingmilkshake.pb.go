@@ -1218,14 +1218,14 @@ func NewPopulatedFinanceJudo(r randyPuddingmilkshake, easy bool) *FinanceJudo {
 		this.SaladWorry = NewPopulatedSaladWorry(r, easy)
 	}
 	if r.Intn(10) != 0 {
-		v1 := r.Int63()
+		v1 := int64(r.Int63())
 		if r.Intn(2) == 0 {
 			v1 *= -1
 		}
 		this.RumourSpirit = &v1
 	}
 	if r.Intn(10) != 0 {
-		v2 := r.Int63()
+		v2 := int64(r.Int63())
 		if r.Intn(2) == 0 {
 			v2 *= -1
 		}
@@ -1260,7 +1260,7 @@ func NewPopulatedSaladWorry(r randyPuddingmilkshake, easy bool) *SaladWorry {
 		this.XrayPilot = NewPopulatedXrayPilot(r, easy)
 	}
 	if r.Intn(10) != 0 {
-		v5 := bool(r.Intn(2) == 0)
+		v5 := bool(bool(r.Intn(2) == 0))
 		this.LogMicrophone = &v5
 	}
 	if r.Intn(10) != 0 {
@@ -1280,7 +1280,7 @@ func NewPopulatedSaladWorry(r randyPuddingmilkshake, easy bool) *SaladWorry {
 		this.RadarBox = &v9
 	}
 	if r.Intn(10) != 0 {
-		v10 := bool(r.Intn(2) == 0)
+		v10 := bool(bool(r.Intn(2) == 0))
 		this.AccidentStadium = &v10
 	}
 	if r.Intn(10) != 0 {
@@ -1297,7 +1297,7 @@ func NewPopulatedSaladWorry(r randyPuddingmilkshake, easy bool) *SaladWorry {
 		v12 := r.Intn(100)
 		this.StormTermite = make([]uint32, v12)
 		for i := 0; i < v12; i++ {
-			this.StormTermite[i] = r.Uint32()
+			this.StormTermite[i] = uint32(r.Uint32())
 		}
 	}
 	if r.Intn(10) != 0 {
@@ -1323,7 +1323,7 @@ func NewPopulatedKeyQueen(r randyPuddingmilkshake, easy bool) *KeyQueen {
 		v15 := r.Intn(100)
 		this.SkyscraperUniversity = make([]int32, v15)
 		for i := 0; i < v15; i++ {
-			this.SkyscraperUniversity[i] = r.Int31()
+			this.SkyscraperUniversity[i] = int32(r.Int31())
 			if r.Intn(2) == 0 {
 				this.SkyscraperUniversity[i] *= -1
 			}
@@ -1344,7 +1344,7 @@ func NewPopulatedKeyQueen(r randyPuddingmilkshake, easy bool) *KeyQueen {
 		v18 := r.Intn(100)
 		this.TrailerGallery = make([]uint64, v18)
 		for i := 0; i < v18; i++ {
-			this.TrailerGallery[i] = uint64(r.Uint32())
+			this.TrailerGallery[i] = uint64(uint64(r.Uint32()))
 		}
 	}
 	if !easy && r.Intn(10) != 0 {
@@ -1381,14 +1381,14 @@ func NewPopulatedSpyCarpenter(r randyPuddingmilkshake, easy bool) *SpyCarpenter 
 		v21 := r.Intn(100)
 		this.PartyBrakes = make([]uint32, v21)
 		for i := 0; i < v21; i++ {
-			this.PartyBrakes[i] = r.Uint32()
+			this.PartyBrakes[i] = uint32(r.Uint32())
 		}
 	}
 	if r.Intn(10) != 0 {
 		v22 := r.Intn(100)
 		this.WireOyster = make([]uint32, v22)
 		for i := 0; i < v22; i++ {
-			this.WireOyster[i] = r.Uint32()
+			this.WireOyster[i] = uint32(r.Uint32())
 		}
 	}
 	if r.Intn(10) != 0 {
@@ -1442,7 +1442,7 @@ func NewPopulatedSpyCarpenter(r randyPuddingmilkshake, easy bool) *SpyCarpenter 
 		v28 := r.Intn(100)
 		this.WhaleColour = make([]uint32, v28)
 		for i := 0; i < v28; i++ {
-			this.WhaleColour[i] = r.Uint32()
+			this.WhaleColour[i] = uint32(r.Uint32())
 		}
 	}
 	if r.Intn(10) != 0 {
@@ -1460,7 +1460,7 @@ func NewPopulatedSpyCarpenter(r randyPuddingmilkshake, easy bool) *SpyCarpenter 
 		v31 := r.Intn(100)
 		this.ToothSale = make([]uint32, v31)
 		for i := 0; i < v31; i++ {
-			this.ToothSale[i] = r.Uint32()
+			this.ToothSale[i] = uint32(r.Uint32())
 		}
 	}
 	if r.Intn(10) != 0 {
@@ -1533,7 +1533,7 @@ func NewPopulatedMudRiddle(r randyPuddingmilkshake, easy bool) *MudRiddle {
 		v38 := r.Intn(100)
 		this.RunwayGenius = make([]uint32, v38)
 		for i := 0; i < v38; i++ {
-			this.RunwayGenius[i] = r.Uint32()
+			this.RunwayGenius[i] = uint32(r.Uint32())
 		}
 	}
 	if r.Intn(10) != 0 {
@@ -1543,7 +1543,7 @@ func NewPopulatedMudRiddle(r randyPuddingmilkshake, easy bool) *MudRiddle {
 		v39 := r.Intn(100)
 		this.Merit = make([]uint32, v39)
 		for i := 0; i < v39; i++ {
-			this.Merit[i] = r.Uint32()
+			this.Merit[i] = uint32(r.Uint32())
 		}
 	}
 	if r.Intn(10) != 0 {
@@ -1597,21 +1597,21 @@ func NewPopulatedMudRiddle(r randyPuddingmilkshake, easy bool) *MudRiddle {
 func NewPopulatedXrayPilot(r randyPuddingmilkshake, easy bool) *XrayPilot {
 	this := &XrayPilot{}
 	if r.Intn(10) != 0 {
-		v46 := r.Int63()
+		v46 := int64(r.Int63())
 		if r.Intn(2) == 0 {
 			v46 *= -1
 		}
 		this.AnkleCoat = &v46
 	}
 	if r.Intn(10) != 0 {
-		v47 := r.Int63()
+		v47 := int64(r.Int63())
 		if r.Intn(2) == 0 {
 			v47 *= -1
 		}
 		this.ShelfSunglass = &v47
 	}
 	if r.Intn(10) != 0 {
-		v48 := r.Int63()
+		v48 := int64(r.Int63())
 		if r.Intn(2) == 0 {
 			v48 *= -1
 		}
@@ -1629,21 +1629,21 @@ func NewPopulatedXrayPilots(r randyPuddingmilkshake, easy bool) *XrayPilots {
 		v49 := r.Intn(100)
 		this.AnkleCoats = make([]uint64, v49)
 		for i := 0; i < v49; i++ {
-			this.AnkleCoats[i] = uint64(r.Uint32())
+			this.AnkleCoats[i] = uint64(uint64(r.Uint32()))
 		}
 	}
 	if r.Intn(10) != 0 {
 		v50 := r.Intn(100)
 		this.ShelfSunglasses = make([]uint64, v50)
 		for i := 0; i < v50; i++ {
-			this.ShelfSunglasses[i] = uint64(r.Uint32())
+			this.ShelfSunglasses[i] = uint64(uint64(r.Uint32()))
 		}
 	}
 	if r.Intn(10) != 0 {
 		v51 := r.Intn(100)
 		this.BacteriaPaperclips = make([]uint64, v51)
 		for i := 0; i < v51; i++ {
-			this.BacteriaPaperclips[i] = uint64(r.Uint32())
+			this.BacteriaPaperclips[i] = uint64(uint64(r.Uint32()))
 		}
 	}
 	if !easy && r.Intn(10) != 0 {
@@ -1665,7 +1665,7 @@ func NewPopulatedBingleDaisy(r randyPuddingmilkshake, easy bool) *BingleDaisy {
 		v53 := r.Intn(100)
 		this.DecoratorTask = make([]uint32, v53)
 		for i := 0; i < v53; i++ {
-			this.DecoratorTask[i] = r.Uint32()
+			this.DecoratorTask[i] = uint32(r.Uint32())
 		}
 	}
 	if r.Intn(10) != 0 {
@@ -1702,7 +1702,13 @@ type randyPuddingmilkshake interface {
 }
 
 func randUTF8RunePuddingmilkshake(r randyPuddingmilkshake) rune {
-	return rune(r.Intn(126-43) + 43)
+	ru := r.Intn(62)
+	if ru < 10 {
+		return rune(ru + 48)
+	} else if ru < 36 {
+		return rune(ru + 55)
+	}
+	return rune(ru + 61)
 }
 func randStringPuddingmilkshake(r randyPuddingmilkshake) string {
 	v57 := r.Intn(100)

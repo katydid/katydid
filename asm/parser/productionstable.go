@@ -123,43 +123,43 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Root : Space "root" Equal Space id "." id	<< &ast.Root{Before: X[0].(*ast.Space), Equal: X[2].(*ast.Keyword), BeforeQualId: X[3].(*ast.Space), Package: ast.NewString(X[4]), Message: ast.NewString(X[6]), State: "root"}, nil >>`,
+		String: `Root : Space "root" Equal Space id "." id	<< &ast.Root{Before: X[0].(*ast.Space), Equal_: X[2].(*ast.Keyword), BeforeQualId: X[3].(*ast.Space), Package: ast.NewString(X[4]), Message: ast.NewString(X[6]), State: "root"}, nil >>`,
 		Id:         "Root",
 		NTType:     4,
 		Index:      10,
 		NumSymbols: 7,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.Root{Before: X[0].(*ast.Space), Equal: X[2].(*ast.Keyword), BeforeQualId: X[3].(*ast.Space), Package: ast.NewString(X[4]), Message: ast.NewString(X[6]), State: "root"}, nil
+			return &ast.Root{Before: X[0].(*ast.Space), Equal_: X[2].(*ast.Keyword), BeforeQualId: X[3].(*ast.Space), Package: ast.NewString(X[4]), Message: ast.NewString(X[6]), State: "root"}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `Root : "root" Equal Space id "." id	<< &ast.Root{Equal: X[1].(*ast.Keyword), BeforeQualId: X[2].(*ast.Space), Package: ast.NewString(X[3]), Message: ast.NewString(X[5]), State: "root"}, nil >>`,
+		String: `Root : "root" Equal Space id "." id	<< &ast.Root{Equal_: X[1].(*ast.Keyword), BeforeQualId: X[2].(*ast.Space), Package: ast.NewString(X[3]), Message: ast.NewString(X[5]), State: "root"}, nil >>`,
 		Id:         "Root",
 		NTType:     4,
 		Index:      11,
 		NumSymbols: 6,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.Root{Equal: X[1].(*ast.Keyword), BeforeQualId: X[2].(*ast.Space), Package: ast.NewString(X[3]), Message: ast.NewString(X[5]), State: "root"}, nil
+			return &ast.Root{Equal_: X[1].(*ast.Keyword), BeforeQualId: X[2].(*ast.Space), Package: ast.NewString(X[3]), Message: ast.NewString(X[5]), State: "root"}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `Root : Space "root" Equal id "." id	<< &ast.Root{Before: X[0].(*ast.Space), Equal: X[2].(*ast.Keyword), Package: ast.NewString(X[3]), Message: ast.NewString(X[5]), State: "root"}, nil >>`,
+		String: `Root : Space "root" Equal id "." id	<< &ast.Root{Before: X[0].(*ast.Space), Equal_: X[2].(*ast.Keyword), Package: ast.NewString(X[3]), Message: ast.NewString(X[5]), State: "root"}, nil >>`,
 		Id:         "Root",
 		NTType:     4,
 		Index:      12,
 		NumSymbols: 6,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.Root{Before: X[0].(*ast.Space), Equal: X[2].(*ast.Keyword), Package: ast.NewString(X[3]), Message: ast.NewString(X[5]), State: "root"}, nil
+			return &ast.Root{Before: X[0].(*ast.Space), Equal_: X[2].(*ast.Keyword), Package: ast.NewString(X[3]), Message: ast.NewString(X[5]), State: "root"}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `Root : "root" Equal id "." id	<< &ast.Root{Equal: X[1].(*ast.Keyword), Package: ast.NewString(X[2]), Message: ast.NewString(X[4]), State: "root"}, nil >>`,
+		String: `Root : "root" Equal id "." id	<< &ast.Root{Equal_: X[1].(*ast.Keyword), Package: ast.NewString(X[2]), Message: ast.NewString(X[4]), State: "root"}, nil >>`,
 		Id:         "Root",
 		NTType:     4,
 		Index:      13,
 		NumSymbols: 5,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.Root{Equal: X[1].(*ast.Keyword), Package: ast.NewString(X[2]), Message: ast.NewString(X[4]), State: "root"}, nil
+			return &ast.Root{Equal_: X[1].(*ast.Keyword), Package: ast.NewString(X[2]), Message: ast.NewString(X[4]), State: "root"}, nil
 		},
 	},
 	ProdTabEntry{
@@ -167,7 +167,7 @@ var productionsTable = ProdTab{
 		Before: X[0].(*ast.Space),
 		Package: ast.NewString(X[1]),
 		Message: ast.NewString(X[3]),
-		Equal: X[4].(*ast.Keyword),
+		Equal_: X[4].(*ast.Keyword),
 		BeforeState: X[5].(*ast.Space),
 		State: ast.NewString(X[6])}, nil >>`,
 		Id:         "Init",
@@ -179,7 +179,7 @@ var productionsTable = ProdTab{
 				Before:      X[0].(*ast.Space),
 				Package:     ast.NewString(X[1]),
 				Message:     ast.NewString(X[3]),
-				Equal:       X[4].(*ast.Keyword),
+				Equal_:      X[4].(*ast.Keyword),
 				BeforeState: X[5].(*ast.Space),
 				State:       ast.NewString(X[6])}, nil
 		},
@@ -188,7 +188,7 @@ var productionsTable = ProdTab{
 		String: `Init : id "." id Equal Space id	<< &ast.Init{
 		Package: ast.NewString(X[0]),
 		Message: ast.NewString(X[2]),
-		Equal: X[3].(*ast.Keyword),
+		Equal_: X[3].(*ast.Keyword),
 		BeforeState: X[4].(*ast.Space),
 		State: ast.NewString(X[5])}, nil >>`,
 		Id:         "Init",
@@ -199,7 +199,7 @@ var productionsTable = ProdTab{
 			return &ast.Init{
 				Package:     ast.NewString(X[0]),
 				Message:     ast.NewString(X[2]),
-				Equal:       X[3].(*ast.Keyword),
+				Equal_:      X[3].(*ast.Keyword),
 				BeforeState: X[4].(*ast.Space),
 				State:       ast.NewString(X[5])}, nil
 		},
@@ -209,7 +209,7 @@ var productionsTable = ProdTab{
 		Before: X[0].(*ast.Space),
 		Package: ast.NewString(X[1]),
 		Message: ast.NewString(X[3]),
-		Equal: X[4].(*ast.Keyword),
+		Equal_: X[4].(*ast.Keyword),
 		State: ast.NewString(X[5])}, nil >>`,
 		Id:         "Init",
 		NTType:     5,
@@ -220,7 +220,7 @@ var productionsTable = ProdTab{
 				Before:  X[0].(*ast.Space),
 				Package: ast.NewString(X[1]),
 				Message: ast.NewString(X[3]),
-				Equal:   X[4].(*ast.Keyword),
+				Equal_:  X[4].(*ast.Keyword),
 				State:   ast.NewString(X[5])}, nil
 		},
 	},
@@ -228,7 +228,7 @@ var productionsTable = ProdTab{
 		String: `Init : id "." id Equal id	<< &ast.Init{
 		Package: ast.NewString(X[0]),
 		Message: ast.NewString(X[2]),
-		Equal: X[3].(*ast.Keyword),
+		Equal_: X[3].(*ast.Keyword),
 		State: ast.NewString(X[4])}, nil >>`,
 		Id:         "Init",
 		NTType:     5,
@@ -238,48 +238,48 @@ var productionsTable = ProdTab{
 			return &ast.Init{
 				Package: ast.NewString(X[0]),
 				Message: ast.NewString(X[2]),
-				Equal:   X[3].(*ast.Keyword),
+				Equal_:  X[3].(*ast.Keyword),
 				State:   ast.NewString(X[4])}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `Transition : Space id Space id Equal Space id	<< &ast.Transition{Before: X[0].(*ast.Space), Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal: X[4].(*ast.Keyword), BeforeDst: X[5].(*ast.Space), Dst: ast.NewString(X[6])}, nil >>`,
+		String: `Transition : Space id Space id Equal Space id	<< &ast.Transition{Before: X[0].(*ast.Space), Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal_: X[4].(*ast.Keyword), BeforeDst: X[5].(*ast.Space), Dst: ast.NewString(X[6])}, nil >>`,
 		Id:         "Transition",
 		NTType:     6,
 		Index:      18,
 		NumSymbols: 7,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.Transition{Before: X[0].(*ast.Space), Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal: X[4].(*ast.Keyword), BeforeDst: X[5].(*ast.Space), Dst: ast.NewString(X[6])}, nil
+			return &ast.Transition{Before: X[0].(*ast.Space), Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal_: X[4].(*ast.Keyword), BeforeDst: X[5].(*ast.Space), Dst: ast.NewString(X[6])}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `Transition : id Space id Equal Space id	<< &ast.Transition{Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal: X[4].(*ast.Keyword), BeforeDst: X[5].(*ast.Space), Dst: ast.NewString(X[6])}, nil >>`,
+		String: `Transition : id Space id Equal Space id	<< &ast.Transition{Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal_: X[4].(*ast.Keyword), BeforeDst: X[5].(*ast.Space), Dst: ast.NewString(X[6])}, nil >>`,
 		Id:         "Transition",
 		NTType:     6,
 		Index:      19,
 		NumSymbols: 6,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.Transition{Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal: X[4].(*ast.Keyword), BeforeDst: X[5].(*ast.Space), Dst: ast.NewString(X[6])}, nil
+			return &ast.Transition{Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal_: X[4].(*ast.Keyword), BeforeDst: X[5].(*ast.Space), Dst: ast.NewString(X[6])}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `Transition : Space id Space id Equal id	<< &ast.Transition{Before: X[0].(*ast.Space), Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal: X[4].(*ast.Keyword), Dst: ast.NewString(X[6])}, nil >>`,
+		String: `Transition : Space id Space id Equal id	<< &ast.Transition{Before: X[0].(*ast.Space), Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal_: X[4].(*ast.Keyword), Dst: ast.NewString(X[6])}, nil >>`,
 		Id:         "Transition",
 		NTType:     6,
 		Index:      20,
 		NumSymbols: 6,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.Transition{Before: X[0].(*ast.Space), Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal: X[4].(*ast.Keyword), Dst: ast.NewString(X[6])}, nil
+			return &ast.Transition{Before: X[0].(*ast.Space), Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal_: X[4].(*ast.Keyword), Dst: ast.NewString(X[6])}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `Transition : id Space id Equal id	<< &ast.Transition{Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal: X[4].(*ast.Keyword), Dst: ast.NewString(X[6])}, nil >>`,
+		String: `Transition : id Space id Equal id	<< &ast.Transition{Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal_: X[4].(*ast.Keyword), Dst: ast.NewString(X[6])}, nil >>`,
 		Id:         "Transition",
 		NTType:     6,
 		Index:      21,
 		NumSymbols: 5,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &ast.Transition{Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal: X[4].(*ast.Keyword), Dst: ast.NewString(X[6])}, nil
+			return &ast.Transition{Src: ast.NewString(X[1]), BeforeInput: X[2].(*ast.Space), Input: ast.NewString(X[3]), Equal_: X[4].(*ast.Keyword), Dst: ast.NewString(X[6])}, nil
 		},
 	},
 	ProdTabEntry{

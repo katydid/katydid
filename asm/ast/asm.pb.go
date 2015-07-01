@@ -107,7 +107,7 @@ func (m *Rule) GetIfExpr() *IfExpr {
 
 type Root struct {
 	Before           *Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Equal            *Keyword `protobuf:"bytes,2,opt" json:"Equal,omitempty"`
+	Equal_           *Keyword `protobuf:"bytes,2,opt" json:"Equal,omitempty"`
 	BeforeQualId     *Space   `protobuf:"bytes,3,opt" json:"BeforeQualId,omitempty"`
 	Package          string   `protobuf:"bytes,4,opt" json:"Package"`
 	Message          string   `protobuf:"bytes,5,opt" json:"Message"`
@@ -125,9 +125,9 @@ func (m *Root) GetBefore() *Space {
 	return nil
 }
 
-func (m *Root) GetEqual() *Keyword {
+func (m *Root) GetEqual_() *Keyword {
 	if m != nil {
-		return m.Equal
+		return m.Equal_
 	}
 	return nil
 }
@@ -164,7 +164,7 @@ type Init struct {
 	Before           *Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
 	Package          string   `protobuf:"bytes,2,opt" json:"Package"`
 	Message          string   `protobuf:"bytes,3,opt" json:"Message"`
-	Equal            *Keyword `protobuf:"bytes,4,opt" json:"Equal,omitempty"`
+	Equal_           *Keyword `protobuf:"bytes,4,opt" json:"Equal,omitempty"`
 	BeforeState      *Space   `protobuf:"bytes,5,opt" json:"BeforeState,omitempty"`
 	State            string   `protobuf:"bytes,6,opt" json:"State"`
 	XXX_unrecognized []byte   `json:"-"`
@@ -194,9 +194,9 @@ func (m *Init) GetMessage() string {
 	return ""
 }
 
-func (m *Init) GetEqual() *Keyword {
+func (m *Init) GetEqual_() *Keyword {
 	if m != nil {
-		return m.Equal
+		return m.Equal_
 	}
 	return nil
 }
@@ -220,7 +220,7 @@ type Transition struct {
 	Src              string   `protobuf:"bytes,2,opt" json:"Src"`
 	BeforeInput      *Space   `protobuf:"bytes,3,opt" json:"BeforeInput,omitempty"`
 	Input            string   `protobuf:"bytes,4,opt" json:"Input"`
-	Equal            *Keyword `protobuf:"bytes,5,opt" json:"Equal,omitempty"`
+	Equal_           *Keyword `protobuf:"bytes,5,opt" json:"Equal,omitempty"`
 	BeforeDst        *Space   `protobuf:"bytes,6,opt" json:"BeforeDst,omitempty"`
 	Dst              string   `protobuf:"bytes,7,opt" json:"Dst"`
 	XXX_unrecognized []byte   `json:"-"`
@@ -257,9 +257,9 @@ func (m *Transition) GetInput() string {
 	return ""
 }
 
-func (m *Transition) GetEqual() *Keyword {
+func (m *Transition) GetEqual_() *Keyword {
 	if m != nil {
-		return m.Equal
+		return m.Equal_
 	}
 	return nil
 }
@@ -699,7 +699,7 @@ func (this *Root) GoString() string {
 	}
 	s := strings.Join([]string{`&ast.Root{` +
 		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Equal:` + fmt.Sprintf("%#v", this.Equal),
+		`Equal_:` + fmt.Sprintf("%#v", this.Equal_),
 		`BeforeQualId:` + fmt.Sprintf("%#v", this.BeforeQualId),
 		`Package:` + fmt.Sprintf("%#v", this.Package),
 		`Message:` + fmt.Sprintf("%#v", this.Message),
@@ -715,7 +715,7 @@ func (this *Init) GoString() string {
 		`Before:` + fmt.Sprintf("%#v", this.Before),
 		`Package:` + fmt.Sprintf("%#v", this.Package),
 		`Message:` + fmt.Sprintf("%#v", this.Message),
-		`Equal:` + fmt.Sprintf("%#v", this.Equal),
+		`Equal_:` + fmt.Sprintf("%#v", this.Equal_),
 		`BeforeState:` + fmt.Sprintf("%#v", this.BeforeState),
 		`State:` + fmt.Sprintf("%#v", this.State),
 		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
@@ -730,7 +730,7 @@ func (this *Transition) GoString() string {
 		`Src:` + fmt.Sprintf("%#v", this.Src),
 		`BeforeInput:` + fmt.Sprintf("%#v", this.BeforeInput),
 		`Input:` + fmt.Sprintf("%#v", this.Input),
-		`Equal:` + fmt.Sprintf("%#v", this.Equal),
+		`Equal_:` + fmt.Sprintf("%#v", this.Equal_),
 		`BeforeDst:` + fmt.Sprintf("%#v", this.BeforeDst),
 		`Dst:` + fmt.Sprintf("%#v", this.Dst),
 		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")

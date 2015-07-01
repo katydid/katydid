@@ -44,15 +44,15 @@ func (this *Rule) String() string {
 }
 
 func (this *Root) String() string {
-	return this.Before.String() + "root" + this.Equal.String() + this.BeforeQualId.String() + this.Package + "." + this.Message
+	return this.Before.String() + "root" + this.Equal_.String() + this.BeforeQualId.String() + this.Package + "." + this.Message
 }
 
 func (this *Init) String() string {
-	return this.Before.String() + this.Package + "." + this.Message + this.Equal.String() + this.BeforeState.String() + this.State
+	return this.Before.String() + this.Package + "." + this.Message + this.Equal_.String() + this.BeforeState.String() + this.State
 }
 
 func (this *Transition) String() string {
-	return this.Before.String() + this.Src + this.BeforeInput.String() + this.Input + this.Equal.String() + this.BeforeDst.String() + this.Dst
+	return this.Before.String() + this.Src + this.BeforeInput.String() + this.Input + this.Equal_.String() + this.BeforeDst.String() + this.Dst
 }
 
 func (this *IfExpr) String() string {

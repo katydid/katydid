@@ -131,10 +131,10 @@ Rule
 	;
 
 Root
-	: Space "root" Equal Space id "." id << &ast.Root{Before: $0.(*ast.Space), Equal: $2.(*ast.Keyword), BeforeQualId: $3.(*ast.Space), Package: ast.NewString($4), Message: ast.NewString($6), State: "root"}, nil >>
-	| "root" Equal Space id "." id << &ast.Root{Equal: $1.(*ast.Keyword), BeforeQualId: $2.(*ast.Space), Package: ast.NewString($3), Message: ast.NewString($5), State: "root"}, nil >>
-	| Space "root" Equal id "." id << &ast.Root{Before: $0.(*ast.Space), Equal: $2.(*ast.Keyword), Package: ast.NewString($3), Message: ast.NewString($5), State: "root"}, nil >>
-	| "root" Equal id "." id << &ast.Root{Equal: $1.(*ast.Keyword), Package: ast.NewString($2), Message: ast.NewString($4), State: "root"}, nil >>
+	: Space "root" Equal Space id "." id << &ast.Root{Before: $0.(*ast.Space), Equal_: $2.(*ast.Keyword), BeforeQualId: $3.(*ast.Space), Package: ast.NewString($4), Message: ast.NewString($6), State: "root"}, nil >>
+	| "root" Equal Space id "." id << &ast.Root{Equal_: $1.(*ast.Keyword), BeforeQualId: $2.(*ast.Space), Package: ast.NewString($3), Message: ast.NewString($5), State: "root"}, nil >>
+	| Space "root" Equal id "." id << &ast.Root{Before: $0.(*ast.Space), Equal_: $2.(*ast.Keyword), Package: ast.NewString($3), Message: ast.NewString($5), State: "root"}, nil >>
+	| "root" Equal id "." id << &ast.Root{Equal_: $1.(*ast.Keyword), Package: ast.NewString($2), Message: ast.NewString($4), State: "root"}, nil >>
 	;
 
 Init
@@ -142,33 +142,33 @@ Init
 		Before: $0.(*ast.Space),
 		Package: ast.NewString($1),
 		Message: ast.NewString($3),
-		Equal: $4.(*ast.Keyword),
+		Equal_: $4.(*ast.Keyword),
 		BeforeState: $5.(*ast.Space),
 		State: ast.NewString($6)}, nil >>
 	| id "." id Equal Space id << &ast.Init{
 		Package: ast.NewString($0),
 		Message: ast.NewString($2),
-		Equal: $3.(*ast.Keyword),
+		Equal_: $3.(*ast.Keyword),
 		BeforeState: $4.(*ast.Space),
 		State: ast.NewString($5)}, nil >>
 	| Space id "." id Equal id << &ast.Init{
 		Before: $0.(*ast.Space),
 		Package: ast.NewString($1),
 		Message: ast.NewString($3),
-		Equal: $4.(*ast.Keyword),
+		Equal_: $4.(*ast.Keyword),
 		State: ast.NewString($5)}, nil >>
 	| id "." id Equal id << &ast.Init{
 		Package: ast.NewString($0),
 		Message: ast.NewString($2),
-		Equal: $3.(*ast.Keyword),
+		Equal_: $3.(*ast.Keyword),
 		State: ast.NewString($4)}, nil >>
 	;
 
 Transition
-	: Space id Space id Equal Space id << &ast.Transition{Before: $0.(*ast.Space), Src: ast.NewString($1), BeforeInput: $2.(*ast.Space), Input: ast.NewString($3), Equal: $4.(*ast.Keyword), BeforeDst: $5.(*ast.Space), Dst: ast.NewString($6)}, nil >>
-	| id Space id Equal Space id << &ast.Transition{Src: ast.NewString($1), BeforeInput: $2.(*ast.Space), Input: ast.NewString($3), Equal: $4.(*ast.Keyword), BeforeDst: $5.(*ast.Space), Dst: ast.NewString($6)}, nil >>
-	| Space id Space id Equal id << &ast.Transition{Before: $0.(*ast.Space), Src: ast.NewString($1), BeforeInput: $2.(*ast.Space), Input: ast.NewString($3), Equal: $4.(*ast.Keyword), Dst: ast.NewString($6)}, nil >>
-	| id Space id Equal id << &ast.Transition{Src: ast.NewString($1), BeforeInput: $2.(*ast.Space), Input: ast.NewString($3), Equal: $4.(*ast.Keyword), Dst: ast.NewString($6)}, nil >>
+	: Space id Space id Equal Space id << &ast.Transition{Before: $0.(*ast.Space), Src: ast.NewString($1), BeforeInput: $2.(*ast.Space), Input: ast.NewString($3), Equal_: $4.(*ast.Keyword), BeforeDst: $5.(*ast.Space), Dst: ast.NewString($6)}, nil >>
+	| id Space id Equal Space id << &ast.Transition{Src: ast.NewString($1), BeforeInput: $2.(*ast.Space), Input: ast.NewString($3), Equal_: $4.(*ast.Keyword), BeforeDst: $5.(*ast.Space), Dst: ast.NewString($6)}, nil >>
+	| Space id Space id Equal id << &ast.Transition{Before: $0.(*ast.Space), Src: ast.NewString($1), BeforeInput: $2.(*ast.Space), Input: ast.NewString($3), Equal_: $4.(*ast.Keyword), Dst: ast.NewString($6)}, nil >>
+	| id Space id Equal id << &ast.Transition{Src: ast.NewString($1), BeforeInput: $2.(*ast.Space), Input: ast.NewString($3), Equal_: $4.(*ast.Keyword), Dst: ast.NewString($6)}, nil >>
 	;
 
 IfExpr
