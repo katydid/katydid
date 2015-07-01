@@ -86,17 +86,17 @@ func newValues(params []*expr.Expr) ([]interface{}, error) {
 func composeVariable(v *expr.Variable) funcs.Variable {
 	switch v.Type {
 	case types.SINGLE_DOUBLE:
-		return funcs.NewFloat64Variable()
+		return funcs.DoubleVar()
 	case types.SINGLE_INT:
-		return funcs.NewInt64Variable()
+		return funcs.IntVar()
 	case types.SINGLE_UINT:
-		return funcs.NewUint64Variable()
+		return funcs.UintVar()
 	case types.SINGLE_BOOL:
-		return funcs.NewBoolVariable()
+		return funcs.BoolVar()
 	case types.SINGLE_STRING:
-		return funcs.NewStringVariable()
+		return funcs.StringVar()
 	case types.SINGLE_BYTES:
-		return funcs.NewBytesVariable()
+		return funcs.BytesVar()
 	}
 	panic("unreachable")
 }
@@ -111,11 +111,11 @@ func newValue(p *expr.Expr) (interface{}, error) {
 	}
 	switch typ {
 	case types.SINGLE_DOUBLE:
-		return composeFloat64(p)
+		return composeDouble(p)
 	case types.SINGLE_INT:
-		return composeInt64(p)
+		return composeInt(p)
 	case types.SINGLE_UINT:
-		return composeUint64(p)
+		return composeUint(p)
 	case types.SINGLE_BOOL:
 		return composeBool(p)
 	case types.SINGLE_STRING:
@@ -123,11 +123,11 @@ func newValue(p *expr.Expr) (interface{}, error) {
 	case types.SINGLE_BYTES:
 		return composeBytes(p)
 	case types.LIST_DOUBLE:
-		return composeFloat64s(p)
+		return composeDoubles(p)
 	case types.LIST_INT:
-		return composeInt64s(p)
+		return composeInts(p)
 	case types.LIST_UINT:
-		return composeUint64s(p)
+		return composeUints(p)
 	case types.LIST_BOOL:
 		return composeBools(p)
 	case types.LIST_STRING:

@@ -15,9 +15,9 @@
 package serialize
 
 type Decoder interface {
-	Float64() (float64, error)
-	Int64() (int64, error)
-	Uint64() (uint64, error)
+	Double() (float64, error)
+	Int() (int64, error)
+	Uint() (uint64, error)
 	Bool() (bool, error)
 	String() (string, error)
 	Bytes() ([]byte, error)

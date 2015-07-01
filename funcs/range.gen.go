@@ -3,132 +3,132 @@
 
 package funcs
 
-type rangeFloat64s struct {
-	List  Float64s
-	First Int64
-	Last  Int64
+type rangeDoubles struct {
+	List  Doubles
+	First Int
+	Last  Int
 	Thrower
 }
 
-func (this *rangeFloat64s) Eval() []float64 {
+func (this *rangeDoubles) Eval() []float64 {
 	list := this.List.Eval()
 	first := int(this.First.Eval())
 	if len(list) == 0 {
-		return this.ThrowFloat64s(NewRangeCheckErr(first, len(list)))
+		return this.ThrowDoubles(NewRangeCheckErr(first, len(list)))
 	}
 	if first < 0 {
 		first = first % len(list)
 	}
 	if first > len(list) {
-		return this.ThrowFloat64s(NewRangeCheckErr(first, len(list)))
+		return this.ThrowDoubles(NewRangeCheckErr(first, len(list)))
 	}
 	last := int(this.Last.Eval())
 	if last < 0 {
 		last = last % len(list)
 	}
 	if last > len(list) {
-		return this.ThrowFloat64s(NewRangeCheckErr(last, len(list)))
+		return this.ThrowDoubles(NewRangeCheckErr(last, len(list)))
 	}
 	if first > last {
-		return this.ThrowFloat64s(NewRangeErr(first, last))
+		return this.ThrowDoubles(NewRangeErr(first, last))
 	}
 	return list[first:last]
 }
 
 func init() {
-	Register("range", new(rangeFloat64s))
+	Register("range", new(rangeDoubles))
 }
 
-func RangeFloat64s(list Float64s, from, to Int64) Float64s {
-	return &rangeFloat64s{
+func RangeDoubles(list Doubles, from, to Int) Doubles {
+	return &rangeDoubles{
 		List:  list,
 		First: from,
 		Last:  to,
 	}
 }
 
-type rangeInt64s struct {
-	List  Int64s
-	First Int64
-	Last  Int64
+type rangeInts struct {
+	List  Ints
+	First Int
+	Last  Int
 	Thrower
 }
 
-func (this *rangeInt64s) Eval() []int64 {
+func (this *rangeInts) Eval() []int64 {
 	list := this.List.Eval()
 	first := int(this.First.Eval())
 	if len(list) == 0 {
-		return this.ThrowInt64s(NewRangeCheckErr(first, len(list)))
+		return this.ThrowInts(NewRangeCheckErr(first, len(list)))
 	}
 	if first < 0 {
 		first = first % len(list)
 	}
 	if first > len(list) {
-		return this.ThrowInt64s(NewRangeCheckErr(first, len(list)))
+		return this.ThrowInts(NewRangeCheckErr(first, len(list)))
 	}
 	last := int(this.Last.Eval())
 	if last < 0 {
 		last = last % len(list)
 	}
 	if last > len(list) {
-		return this.ThrowInt64s(NewRangeCheckErr(last, len(list)))
+		return this.ThrowInts(NewRangeCheckErr(last, len(list)))
 	}
 	if first > last {
-		return this.ThrowInt64s(NewRangeErr(first, last))
+		return this.ThrowInts(NewRangeErr(first, last))
 	}
 	return list[first:last]
 }
 
 func init() {
-	Register("range", new(rangeInt64s))
+	Register("range", new(rangeInts))
 }
 
-func RangeInt64s(list Int64s, from, to Int64) Int64s {
-	return &rangeInt64s{
+func RangeInts(list Ints, from, to Int) Ints {
+	return &rangeInts{
 		List:  list,
 		First: from,
 		Last:  to,
 	}
 }
 
-type rangeUint64s struct {
-	List  Uint64s
-	First Int64
-	Last  Int64
+type rangeUints struct {
+	List  Uints
+	First Int
+	Last  Int
 	Thrower
 }
 
-func (this *rangeUint64s) Eval() []uint64 {
+func (this *rangeUints) Eval() []uint64 {
 	list := this.List.Eval()
 	first := int(this.First.Eval())
 	if len(list) == 0 {
-		return this.ThrowUint64s(NewRangeCheckErr(first, len(list)))
+		return this.ThrowUints(NewRangeCheckErr(first, len(list)))
 	}
 	if first < 0 {
 		first = first % len(list)
 	}
 	if first > len(list) {
-		return this.ThrowUint64s(NewRangeCheckErr(first, len(list)))
+		return this.ThrowUints(NewRangeCheckErr(first, len(list)))
 	}
 	last := int(this.Last.Eval())
 	if last < 0 {
 		last = last % len(list)
 	}
 	if last > len(list) {
-		return this.ThrowUint64s(NewRangeCheckErr(last, len(list)))
+		return this.ThrowUints(NewRangeCheckErr(last, len(list)))
 	}
 	if first > last {
-		return this.ThrowUint64s(NewRangeErr(first, last))
+		return this.ThrowUints(NewRangeErr(first, last))
 	}
 	return list[first:last]
 }
 
 func init() {
-	Register("range", new(rangeUint64s))
+	Register("range", new(rangeUints))
 }
 
-func RangeUint64s(list Uint64s, from, to Int64) Uint64s {
-	return &rangeUint64s{
+func RangeUints(list Uints, from, to Int) Uints {
+	return &rangeUints{
 		List:  list,
 		First: from,
 		Last:  to,
@@ -137,8 +137,8 @@ func RangeUint64s(list Uint64s, from, to Int64) Uint64s {
 
 type rangeBools struct {
 	List  Bools
-	First Int64
-	Last  Int64
+	First Int
+	Last  Int
 	Thrower
 }
 
@@ -171,7 +171,7 @@ func init() {
 	Register("range", new(rangeBools))
 }
 
-func RangeBools(list Bools, from, to Int64) Bools {
+func RangeBools(list Bools, from, to Int) Bools {
 	return &rangeBools{
 		List:  list,
 		First: from,
@@ -181,8 +181,8 @@ func RangeBools(list Bools, from, to Int64) Bools {
 
 type rangeStrings struct {
 	List  Strings
-	First Int64
-	Last  Int64
+	First Int
+	Last  Int
 	Thrower
 }
 
@@ -215,7 +215,7 @@ func init() {
 	Register("range", new(rangeStrings))
 }
 
-func RangeStrings(list Strings, from, to Int64) Strings {
+func RangeStrings(list Strings, from, to Int) Strings {
 	return &rangeStrings{
 		List:  list,
 		First: from,
@@ -225,8 +225,8 @@ func RangeStrings(list Strings, from, to Int64) Strings {
 
 type rangeListOfBytes struct {
 	List  ListOfBytes
-	First Int64
-	Last  Int64
+	First Int
+	Last  Int
 	Thrower
 }
 
@@ -259,7 +259,7 @@ func init() {
 	Register("range", new(rangeListOfBytes))
 }
 
-func RangeListOfBytes(list ListOfBytes, from, to Int64) ListOfBytes {
+func RangeListOfBytes(list ListOfBytes, from, to Int) ListOfBytes {
 	return &rangeListOfBytes{
 		List:  list,
 		First: from,

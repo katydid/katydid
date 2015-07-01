@@ -14,15 +14,15 @@
 
 package funcs
 
-type Float64 interface {
+type Double interface {
 	Eval() float64
 }
 
-type Int64 interface {
+type Int interface {
 	Eval() int64
 }
 
-type Uint64 interface {
+type Uint interface {
 	Eval() uint64
 }
 
@@ -38,15 +38,15 @@ type Bytes interface {
 	Eval() []byte
 }
 
-type Float64s interface {
+type Doubles interface {
 	Eval() []float64
 }
 
-type Int64s interface {
+type Ints interface {
 	Eval() []int64
 }
 
-type Uint64s interface {
+type Uints interface {
 	Eval() []uint64
 }
 

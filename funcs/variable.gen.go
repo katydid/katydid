@@ -7,94 +7,94 @@ import (
 	"github.com/katydid/katydid/serialize"
 )
 
-type varFloat64 struct {
+type varDouble struct {
 	Dec serialize.Decoder
 	Thrower
 }
 
-var _ Decoder = &varFloat64{}
-var _ Variable = &varFloat64{}
+var _ Decoder = &varDouble{}
+var _ Variable = &varDouble{}
 
-func (this *varFloat64) Eval() float64 {
-	v, err := this.Dec.Float64()
+func (this *varDouble) Eval() float64 {
+	v, err := this.Dec.Double()
 	if err != nil {
-		return this.ThrowFloat64(err)
+		return this.ThrowDouble(err)
 	}
 	return v
 }
 
-func (this *varFloat64) IsVariable() {}
+func (this *varDouble) IsVariable() {}
 
-func (this *varFloat64) SetDecoder(dec serialize.Decoder) {
+func (this *varDouble) SetDecoder(dec serialize.Decoder) {
 	this.Dec = dec
 }
 
-func (this *varFloat64) String() string {
+func (this *varDouble) String() string {
 	return "$double"
 }
 
-func NewFloat64Variable() *varFloat64 {
-	return &varFloat64{}
+func DoubleVar() *varDouble {
+	return &varDouble{}
 }
 
-type varInt64 struct {
+type varInt struct {
 	Dec serialize.Decoder
 	Thrower
 }
 
-var _ Decoder = &varInt64{}
-var _ Variable = &varInt64{}
+var _ Decoder = &varInt{}
+var _ Variable = &varInt{}
 
-func (this *varInt64) Eval() int64 {
-	v, err := this.Dec.Int64()
+func (this *varInt) Eval() int64 {
+	v, err := this.Dec.Int()
 	if err != nil {
-		return this.ThrowInt64(err)
+		return this.ThrowInt(err)
 	}
 	return v
 }
 
-func (this *varInt64) IsVariable() {}
+func (this *varInt) IsVariable() {}
 
-func (this *varInt64) SetDecoder(dec serialize.Decoder) {
+func (this *varInt) SetDecoder(dec serialize.Decoder) {
 	this.Dec = dec
 }
 
-func (this *varInt64) String() string {
+func (this *varInt) String() string {
 	return "$int"
 }
 
-func NewInt64Variable() *varInt64 {
-	return &varInt64{}
+func IntVar() *varInt {
+	return &varInt{}
 }
 
-type varUint64 struct {
+type varUint struct {
 	Dec serialize.Decoder
 	Thrower
 }
 
-var _ Decoder = &varUint64{}
-var _ Variable = &varUint64{}
+var _ Decoder = &varUint{}
+var _ Variable = &varUint{}
 
-func (this *varUint64) Eval() uint64 {
-	v, err := this.Dec.Uint64()
+func (this *varUint) Eval() uint64 {
+	v, err := this.Dec.Uint()
 	if err != nil {
-		return this.ThrowUint64(err)
+		return this.ThrowUint(err)
 	}
 	return v
 }
 
-func (this *varUint64) IsVariable() {}
+func (this *varUint) IsVariable() {}
 
-func (this *varUint64) SetDecoder(dec serialize.Decoder) {
+func (this *varUint) SetDecoder(dec serialize.Decoder) {
 	this.Dec = dec
 }
 
-func (this *varUint64) String() string {
+func (this *varUint) String() string {
 	return "$uint"
 }
 
-func NewUint64Variable() *varUint64 {
-	return &varUint64{}
+func UintVar() *varUint {
+	return &varUint{}
 }
 
 type varBool struct {
@@ -123,7 +123,7 @@ func (this *varBool) String() string {
 	return "$bool"
 }
 
-func NewBoolVariable() *varBool {
+func BoolVar() *varBool {
 	return &varBool{}
 }
 
@@ -153,7 +153,7 @@ func (this *varString) String() string {
 	return "$string"
 }
 
-func NewStringVariable() *varString {
+func StringVar() *varString {
 	return &varString{}
 }
 
@@ -183,6 +183,6 @@ func (this *varBytes) String() string {
 	return "$[]byte"
 }
 
-func NewBytesVariable() *varBytes {
+func BytesVar() *varBytes {
 	return &varBytes{}
 }

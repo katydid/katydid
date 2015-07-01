@@ -16,6 +16,7 @@ package main
 
 import (
 	"github.com/katydid/katydid/gen"
+	"strings"
 )
 
 const compareStr = `
@@ -42,14 +43,14 @@ type compare struct {
 	Operator string
 	Type     string
 	Eval     string
+	CType    string
 }
 
 func (this *compare) CName() string {
+	if this.Name == "ge" || this.Name == "le" {
+		return strings.ToUpper(this.Name)
+	}
 	return gen.CapFirst(this.Name)
-}
-
-func (this *compare) CType() string {
-	return gen.CapFirst(this.Type)
 }
 
 const newFuncStr = `
@@ -73,7 +74,7 @@ type const{{.CType}} struct {
 	v {{.GoType}}
 }
 
-func NewConst{{.CType}}(v {{.GoType}}) Const{{.CType}} {
+func {{.CType}}Const(v {{.GoType}}) Const{{.CType}} {
 	return &const{{.CType}}{v}
 }
 
@@ -173,7 +174,7 @@ func init() {
 	Register("length", new(len{{.}}))
 }
 
-func Len{{.}}(e {{.}}) Int64 {
+func Len{{.}}(e {{.}}) Int {
 	return &len{{.}}{E: e}
 }
 `
@@ -181,7 +182,7 @@ func Len{{.}}(e {{.}}) Int64 {
 const elemStr = `
 type elem{{.ListType}} struct {
 	List {{.ListType}}
-	Index Int64
+	Index Int
 	Thrower
 }
 
@@ -204,7 +205,7 @@ func init() {
 	Register("elem", new(elem{{.ListType}}))
 }
 
-func Elem{{.ListType}}(list {{.ListType}}, index Int64) {{.ThrowType}} {
+func Elem{{.ListType}}(list {{.ListType}}, index Int) {{.ThrowType}} {
 	return &elem{{.ListType}}{
 		List: list,
 		Index: index,
@@ -221,8 +222,8 @@ type elemer struct {
 const rangeStr = `
 type range{{.ListType}} struct {
 	List {{.ListType}}
-	First Int64
-	Last Int64
+	First Int
+	Last Int
 	Thrower
 }
 
@@ -255,7 +256,7 @@ func init() {
 	Register("range", new(range{{.ListType}}))
 }
 
-func Range{{.ListType}}(list {{.ListType}}, from, to Int64) {{.ListType}} {
+func Range{{.ListType}}(list {{.ListType}}, from, to Int) {{.ListType}} {
 	return &range{{.ListType}}{
 		List: list,
 		First: from,
@@ -296,7 +297,7 @@ func (this *var{{.Name}}) String() string {
 	return "${{.Decode}}"
 }
 
-func New{{.Name}}Variable() *var{{.Name}} {
+func {{.Name}}Var() *var{{.Name}} {
 	return &var{{.Name}}{}
 }
 
@@ -308,102 +309,86 @@ type varer struct {
 	GoType string
 }
 
-var existsStr = `
-type exists{{.Name}} struct {
-	Field {{.Name}}
-}
-
-func (this *exists{{.Name}}) Eval() bool {
-	this.Field.Eval()
-	return true
-}
-
-func init() {
-	Register("exists", new(exists{{.Name}}))
-}
-
-`
-
 func main() {
 	gen := gen.NewFunc("funcs")
 	gen(compareStr, "compare.gen.go", []interface{}{
-		&compare{"ge", ">=", "float64", ""},
-		&compare{"ge", ">=", "int64", ""},
-		&compare{"ge", ">=", "uint64", ""},
-		&compare{"ge", "", "bytes", "return bytes.Compare(this.V1.Eval(), this.V2.Eval()) >= 0"},
-		&compare{"gt", ">", "float64", ""},
-		&compare{"gt", ">", "int64", ""},
-		&compare{"gt", ">", "uint64", ""},
-		&compare{"gt", "", "bytes", "return bytes.Compare(this.V1.Eval(), this.V2.Eval()) > 0"},
-		&compare{"le", "<=", "float64", ""},
-		&compare{"le", "<=", "int64", ""},
-		&compare{"le", "<=", "uint64", ""},
-		&compare{"le", "", "bytes", "return bytes.Compare(this.V1.Eval(), this.V2.Eval()) <= 0"},
-		&compare{"lt", "<", "float64", ""},
-		&compare{"lt", "<", "int64", ""},
-		&compare{"lt", "<", "uint64", ""},
-		&compare{"lt", "", "bytes", "return bytes.Compare(this.V1.Eval(), this.V2.Eval()) < 0"},
-		&compare{"eq", "==", "float64", ""},
-		&compare{"eq", "==", "int64", ""},
-		&compare{"eq", "==", "uint64", ""},
-		&compare{"eq", "==", "bool", ""},
-		&compare{"eq", "==", "string", ""},
-		&compare{"eq", "", "bytes", "return bytes.Equal(this.V1.Eval(), this.V2.Eval())"},
+		&compare{"ge", ">=", "double", "", "Double"},
+		&compare{"ge", ">=", "int", "", "Int"},
+		&compare{"ge", ">=", "uint", "", "Uint"},
+		&compare{"ge", "", "bytes", "return bytes.Compare(this.V1.Eval(), this.V2.Eval()) >= 0", "Bytes"},
+		&compare{"gt", ">", "double", "", "Double"},
+		&compare{"gt", ">", "int", "", "Int"},
+		&compare{"gt", ">", "uint", "", "Uint"},
+		&compare{"gt", "", "bytes", "return bytes.Compare(this.V1.Eval(), this.V2.Eval()) > 0", "Bytes"},
+		&compare{"le", "<=", "double", "", "Double"},
+		&compare{"le", "<=", "int", "", "Int"},
+		&compare{"le", "<=", "uint", "", "Uint"},
+		&compare{"le", "", "bytes", "return bytes.Compare(this.V1.Eval(), this.V2.Eval()) <= 0", "Bytes"},
+		&compare{"lt", "<", "double", "", "Double"},
+		&compare{"lt", "<", "int", "", "Int"},
+		&compare{"lt", "<", "uint", "", "Uint"},
+		&compare{"lt", "", "bytes", "return bytes.Compare(this.V1.Eval(), this.V2.Eval()) < 0", "Bytes"},
+		&compare{"eq", "==", "double", "", "Double"},
+		&compare{"eq", "==", "int", "", "Int"},
+		&compare{"eq", "==", "uint", "", "Uint"},
+		&compare{"eq", "==", "bool", "", "Bool"},
+		&compare{"eq", "==", "string", "", "String"},
+		&compare{"eq", "", "bytes", "return bytes.Equal(this.V1.Eval(), this.V2.Eval())", "Bytes"},
 	}, `"bytes"`)
 	gen(newFuncStr, "newfunc.gen.go", []interface{}{
-		"Float64",
-		"Int64",
-		"Uint64",
+		"Double",
+		"Int",
+		"Uint",
 		"Bool",
 		"String",
 		"Bytes",
-		"Float64s",
-		"Int64s",
-		"Uint64s",
+		"Doubles",
+		"Ints",
+		"Uints",
 		"Bools",
 		"Strings",
 		"ListOfBytes",
 	})
 	gen(constStr, "const.gen.go", []interface{}{
-		&conster{"Float64", "float64", "double(%f)", ""},
-		&conster{"Int64", "int64", "int(%d)", ""},
-		&conster{"Uint64", "uint64", "uint(%d)", ""},
+		&conster{"Double", "float64", "double(%f)", ""},
+		&conster{"Int", "int64", "int(%d)", ""},
+		&conster{"Uint", "uint64", "uint(%d)", ""},
 		&conster{"Bool", "bool", "%v", ""},
 		&conster{"String", "string", "`%s`", ""},
 		&conster{"Bytes", "[]byte", "%#v", ""},
-		&conster{"Float64s", "[]float64", "double(%f)", "double"},
-		&conster{"Int64s", "[]int64", "int(%d)", "int"},
-		&conster{"Uint64s", "[]uint64", "uint(%d)", "uint"},
+		&conster{"Doubles", "[]float64", "double(%f)", "double"},
+		&conster{"Ints", "[]int64", "int(%d)", "int"},
+		&conster{"Uints", "[]uint64", "uint(%d)", "uint"},
 		&conster{"Bools", "[]bool", "%v", "bool"},
 		&conster{"Strings", "[]string", "`%s`", "string"},
 		&conster{"ListOfBytes", "[][]byte", "%#v", "[]byte"},
 	}, `"fmt"`, `"strings"`, `"reflect"`)
 	gen(listStr, "list.gen.go", []interface{}{
-		&list{"Float64s", "Float64", "float64"},
-		&list{"Int64s", "Int64", "int64"},
-		&list{"Uint64s", "Uint64", "uint64"},
+		&list{"Doubles", "Double", "float64"},
+		&list{"Ints", "Int", "int64"},
+		&list{"Uints", "Uint", "uint64"},
 		&list{"Bools", "Bool", "bool"},
 		&list{"Strings", "String", "string"},
 		&list{"ListOfBytes", "Bytes", "[]byte"},
 	}, `"strings"`)
 	gen(printStr, "print.gen.go", []interface{}{
-		&printer{"Float64", "float64"},
-		&printer{"Int64", "int64"},
-		&printer{"Uint64", "uint64"},
+		&printer{"Double", "float64"},
+		&printer{"Int", "int64"},
+		&printer{"Uint", "uint64"},
 		&printer{"Bool", "bool"},
 		&printer{"String", "string"},
 		&printer{"Bytes", "[]byte"},
-		&printer{"Float64s", "[]float64"},
-		&printer{"Int64s", "[]int64"},
-		&printer{"Uint64s", "[]uint64"},
+		&printer{"Doubles", "[]float64"},
+		&printer{"Ints", "[]int64"},
+		&printer{"Uints", "[]uint64"},
 		&printer{"Bools", "[]bool"},
 		&printer{"Strings", "[]string"},
 		&printer{"ListOfBytes", "[][]byte"},
 	}, `"fmt"`)
 	gen(lengthStr, "length.gen.go", []interface{}{
-		"Float64s",
-		"Int64s",
-		"Uint64s",
+		"Doubles",
+		"Ints",
+		"Uints",
 		"Bools",
 		"Strings",
 		"ListOfBytes",
@@ -411,35 +396,27 @@ func main() {
 		"Bytes",
 	})
 	gen(elemStr, "elem.gen.go", []interface{}{
-		&elemer{"Float64s", "float64", "Float64"},
-		&elemer{"Int64s", "int64", "Int64"},
-		&elemer{"Uint64s", "uint64", "Uint64"},
+		&elemer{"Doubles", "float64", "Double"},
+		&elemer{"Ints", "int64", "Int"},
+		&elemer{"Uints", "uint64", "Uint"},
 		&elemer{"Bools", "bool", "Bool"},
 		&elemer{"Strings", "string", "String"},
 		&elemer{"ListOfBytes", "[]byte", "Bytes"},
 	})
 	gen(rangeStr, "range.gen.go", []interface{}{
-		&ranger{"Float64s", "[]float64"},
-		&ranger{"Int64s", "[]int64"},
-		&ranger{"Uint64s", "[]uint64"},
+		&ranger{"Doubles", "[]float64"},
+		&ranger{"Ints", "[]int64"},
+		&ranger{"Uints", "[]uint64"},
 		&ranger{"Bools", "[]bool"},
 		&ranger{"Strings", "[]string"},
 		&ranger{"ListOfBytes", "[][]byte"},
 	})
 	gen(variableStr, "variable.gen.go", []interface{}{
-		&varer{"Float64", "double", "float64"},
-		&varer{"Int64", "int", "int64"},
-		&varer{"Uint64", "uint", "uint64"},
+		&varer{"Double", "double", "float64"},
+		&varer{"Int", "int", "int64"},
+		&varer{"Uint", "uint", "uint64"},
 		&varer{"Bool", "bool", "bool"},
 		&varer{"String", "string", "string"},
 		&varer{"Bytes", "[]byte", "[]byte"},
 	}, `"github.com/katydid/katydid/serialize"`)
-	gen(existsStr, "exists.gen.go", []interface{}{
-		&printer{"Float64", "float64"},
-		&printer{"Int64", "int64"},
-		&printer{"Uint64", "uint64"},
-		&printer{"Bool", "bool"},
-		&printer{"String", "string"},
-		&printer{"Bytes", "[]byte"},
-	})
 }

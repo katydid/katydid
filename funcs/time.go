@@ -16,7 +16,7 @@ package funcs
 
 import "time"
 
-func Now() Int64 {
+func Now() Int {
 	return &now{}
 }
 

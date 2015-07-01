@@ -63,15 +63,15 @@ func getValue(scanner serialize.Scanner) interface{} {
 	if err == nil {
 		return v
 	}
-	v, err = scanner.Int64()
+	v, err = scanner.Int()
 	if err == nil {
 		return v
 	}
-	v, err = scanner.Uint64()
+	v, err = scanner.Uint()
 	if err == nil {
 		return v
 	}
-	v, err = scanner.Float64()
+	v, err = scanner.Double()
 	if err == nil {
 		return v
 	}

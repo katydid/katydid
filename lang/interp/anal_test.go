@@ -32,8 +32,8 @@ func getExpr(exprStr string) *expr.Expr {
 }
 
 func TestAnal1(t *testing.T) {
-	f := Sprint(StringEq(NewStringVariable(), NewConstString("#")))
-	f2 := Sprint(StringEq(NewStringVariable(), NewConstString("?")))
+	f := Sprint(StringEq(StringVar(), StringConst("#")))
+	f2 := Sprint(StringEq(StringVar(), StringConst("?")))
 	alwaysFalse := getExpr("false")
 	g := G{
 		"main": MatchIn("A", MatchIn("B", MatchField("c", f))),
@@ -55,12 +55,12 @@ func TestAnal1(t *testing.T) {
 }
 
 func TestAnal2(t *testing.T) {
-	f := Sprint(StringEq(NewStringVariable(), NewConstString("#")))
-	f2 := Sprint(StringEq(NewStringVariable(), NewConstString("?")))
+	f := Sprint(StringEq(StringVar(), StringConst("#")))
+	f2 := Sprint(StringEq(StringVar(), StringConst("?")))
 	alwaysFalse := getExpr("false")
 	g := G{
-		"main": Or(
-			MatchIn("A", And(
+		"main": OrMatch(
+			MatchIn("A", AndMatch(
 				MatchIn("B", MatchField("c", f)),
 				Any()),
 			),
@@ -84,12 +84,12 @@ func TestAnal2(t *testing.T) {
 }
 
 func TestAnal3(t *testing.T) {
-	f := Sprint(StringEq(NewStringVariable(), NewConstString("#")))
-	f2 := Sprint(StringEq(NewStringVariable(), ElemStrings(NewConstStrings([]string{"?"}), NewConstInt64(0))))
+	f := Sprint(StringEq(StringVar(), StringConst("#")))
+	f2 := Sprint(StringEq(StringVar(), StringConst("?")))
 	alwaysFalse := getExpr("false")
 	g := G{
-		"main": Or(
-			MatchIn("A", And(
+		"main": OrMatch(
+			MatchIn("A", AndMatch(
 				Many(MatchIn("B", MatchField("c", f))),
 				MatchIn("B", MatchField("d", f)),
 			)),
@@ -113,12 +113,12 @@ func TestAnal3(t *testing.T) {
 }
 
 func TestAnal4(t *testing.T) {
-	f := Sprint(StringEq(NewStringVariable(), NewConstString("#")))
+	f := Sprint(StringEq(StringVar(), StringConst("#")))
 	g := G{
-		"main": Or(
-			MatchIn("A", And(
+		"main": OrMatch(
+			MatchIn("A", AndMatch(
 				Many(MatchIn("B", MatchField("c", f))),
-				MatchIn("B", Or(
+				MatchIn("B", OrMatch(
 					MatchField("d", f),
 					MatchField("c", f),
 				)),

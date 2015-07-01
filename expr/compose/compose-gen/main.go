@@ -26,9 +26,9 @@ func compose{{.SingleName}}(expr *expr.Expr) (funcs.{{.SingleName}}, error) {
 	}
 	if expr.Terminal != nil {
 		if expr.GetTerminal().Variable != nil {
-			return funcs.New{{.SingleName}}Variable(), nil
+			return funcs.{{.SingleName}}Var(), nil
 		} else {
-			return funcs.NewConst{{.SingleName}}(expr.GetTerminal().Get{{.SingleValue}}Value()), nil
+			return funcs.{{.SingleName}}Const(expr.GetTerminal().Get{{.SingleValue}}Value()), nil
 		}
 	}
 	values, err := newValues(expr.GetFunction().GetParams())
@@ -77,9 +77,9 @@ type composer struct {
 func main() {
 	gen := gen.NewFunc("compose")
 	gen(composeStr, "compose.gen.go", []interface{}{
-		&composer{"Float64", "SINGLE_DOUBLE", "Double", "Float64s", "LIST_DOUBLE"},
-		&composer{"Int64", "SINGLE_INT", "Int", "Int64s", "LIST_INT"},
-		&composer{"Uint64", "SINGLE_UINT", "Uint", "Uint64s", "LIST_UINT"},
+		&composer{"Double", "SINGLE_DOUBLE", "Double", "Doubles", "LIST_DOUBLE"},
+		&composer{"Int", "SINGLE_INT", "Int", "Ints", "LIST_INT"},
+		&composer{"Uint", "SINGLE_UINT", "Uint", "Uints", "LIST_UINT"},
 		&composer{"Bool", "SINGLE_BOOL", "Bool", "Bools", "LIST_BOOL"},
 		&composer{"String", "SINGLE_STRING", "String", "Strings", "LIST_STRING"},
 		&composer{"Bytes", "SINGLE_BYTES", "Bytes", "ListOfBytes", "LIST_BYTES"},

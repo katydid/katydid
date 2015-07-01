@@ -190,7 +190,7 @@ func (s *protoScanner) Name() string {
 	return s.name
 }
 
-func (s *protoScanner) Float64() (float64, error) {
+func (s *protoScanner) Double() (float64, error) {
 	buf := s.Value()
 	if len(buf) == 8 {
 		return *(*float64)(unsafe.Pointer(&buf[0])), nil
@@ -201,7 +201,7 @@ func (s *protoScanner) Float64() (float64, error) {
 	return 0, fmt.Errorf("Double: wrong size buffer %d should be 4 or 8", len(buf))
 }
 
-func (s *protoScanner) Int64() (int64, error) {
+func (s *protoScanner) Int() (int64, error) {
 	typ := s.tokens.LookupType(s.tokenId)
 	switch typ {
 	case descriptor.FieldDescriptorProto_TYPE_INT64:
@@ -223,10 +223,10 @@ func (s *protoScanner) Int64() (int64, error) {
 		i, err := s.decodeInt32()
 		return int64(i), err
 	}
-	return 0, serialize.ErrNotInt64
+	return 0, serialize.ErrNotInt
 }
 
-func (s *protoScanner) Uint64() (uint64, error) {
+func (s *protoScanner) Uint() (uint64, error) {
 	typ := s.tokens.LookupType(s.tokenId)
 	switch typ {
 	case descriptor.FieldDescriptorProto_TYPE_UINT64:
@@ -240,7 +240,7 @@ func (s *protoScanner) Uint64() (uint64, error) {
 		u, err := s.decodeFixed32()
 		return uint64(u), err
 	}
-	return 0, serialize.ErrNotUint64
+	return 0, serialize.ErrNotUint
 }
 
 func (s *protoScanner) Bool() (bool, error) {

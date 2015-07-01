@@ -3,52 +3,52 @@
 
 package funcs
 
-type lenFloat64s struct {
-	E Float64s
+type lenDoubles struct {
+	E Doubles
 }
 
-func (this *lenFloat64s) Eval() int64 {
+func (this *lenDoubles) Eval() int64 {
 	return int64(len(this.E.Eval()))
 }
 
 func init() {
-	Register("length", new(lenFloat64s))
+	Register("length", new(lenDoubles))
 }
 
-func LenFloat64s(e Float64s) Int64 {
-	return &lenFloat64s{E: e}
+func LenDoubles(e Doubles) Int {
+	return &lenDoubles{E: e}
 }
 
-type lenInt64s struct {
-	E Int64s
+type lenInts struct {
+	E Ints
 }
 
-func (this *lenInt64s) Eval() int64 {
+func (this *lenInts) Eval() int64 {
 	return int64(len(this.E.Eval()))
 }
 
 func init() {
-	Register("length", new(lenInt64s))
+	Register("length", new(lenInts))
 }
 
-func LenInt64s(e Int64s) Int64 {
-	return &lenInt64s{E: e}
+func LenInts(e Ints) Int {
+	return &lenInts{E: e}
 }
 
-type lenUint64s struct {
-	E Uint64s
+type lenUints struct {
+	E Uints
 }
 
-func (this *lenUint64s) Eval() int64 {
+func (this *lenUints) Eval() int64 {
 	return int64(len(this.E.Eval()))
 }
 
 func init() {
-	Register("length", new(lenUint64s))
+	Register("length", new(lenUints))
 }
 
-func LenUint64s(e Uint64s) Int64 {
-	return &lenUint64s{E: e}
+func LenUints(e Uints) Int {
+	return &lenUints{E: e}
 }
 
 type lenBools struct {
@@ -63,7 +63,7 @@ func init() {
 	Register("length", new(lenBools))
 }
 
-func LenBools(e Bools) Int64 {
+func LenBools(e Bools) Int {
 	return &lenBools{E: e}
 }
 
@@ -79,7 +79,7 @@ func init() {
 	Register("length", new(lenStrings))
 }
 
-func LenStrings(e Strings) Int64 {
+func LenStrings(e Strings) Int {
 	return &lenStrings{E: e}
 }
 
@@ -95,7 +95,7 @@ func init() {
 	Register("length", new(lenListOfBytes))
 }
 
-func LenListOfBytes(e ListOfBytes) Int64 {
+func LenListOfBytes(e ListOfBytes) Int {
 	return &lenListOfBytes{E: e}
 }
 
@@ -111,7 +111,7 @@ func init() {
 	Register("length", new(lenString))
 }
 
-func LenString(e String) Int64 {
+func LenString(e String) Int {
 	return &lenString{E: e}
 }
 
@@ -127,6 +127,6 @@ func init() {
 	Register("length", new(lenBytes))
 }
 
-func LenBytes(e Bytes) Int64 {
+func LenBytes(e Bytes) Int {
 	return &lenBytes{E: e}
 }

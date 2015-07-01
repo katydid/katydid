@@ -142,11 +142,11 @@ func TestInterp(t *testing.T) {
 		},
 		RumourSpirit: proto.Int64(1),
 	}
-	eq1 := Sprint(Int64Eq(NewInt64Variable(), NewConstInt64(1)))
+	eq1 := Sprint(IntEq(IntVar(), IntConst(1)))
 	t.Logf("%v", eq1)
-	eq2 := Sprint(Int64Eq(NewInt64Variable(), NewConstInt64(2)))
+	eq2 := Sprint(IntEq(IntVar(), IntConst(2)))
 	t.Logf("%v", eq2)
-	eqa := Sprint(StringEq(NewStringVariable(), NewConstString("a")))
+	eqa := Sprint(StringEq(StringVar(), StringConst("a")))
 	t.Logf("%v", eqa)
 	testers := []tester{
 		newTester(t, G{"main": Any()}, true),
@@ -209,10 +209,10 @@ type M map[string]interface{}
 func Test811(t *testing.T) {
 	// Foundations of XML Processing: The Tree Automata Approach - Example 8.1.1
 	// Without simplification rules the state space for the respective automata can be become very large
-	eqhash := Sprint(StringEq(NewStringVariable(), NewConstString("#")))
+	eqhash := Sprint(StringEq(StringVar(), StringConst("#")))
 	ex811 := G{
-		"main": Or(Eval("q1"), Eval("q2")),
-		"q1": Or(
+		"main": OrMatch(Eval("q1"), Eval("q2")),
+		"q1": OrMatch(
 			MatchIn("A",
 				MatchIn("Left", Eval("q1")),
 				MatchIn("Right", Eval("q2")),
@@ -222,7 +222,7 @@ func Test811(t *testing.T) {
 				MatchIn("Right", Eval("q1")),
 			),
 		),
-		"q2": Or(
+		"q2": OrMatch(
 			MatchIn("A",
 				MatchIn("Left", Eval("q2")),
 				MatchIn("Right", Eval("q2")),

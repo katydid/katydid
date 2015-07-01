@@ -36,17 +36,17 @@ func (this *Thrower) Throw(err error) {
 	this.catcher.Catch(err)
 }
 
-func (this *Thrower) ThrowFloat64(err error) float64 {
+func (this *Thrower) ThrowDouble(err error) float64 {
 	this.catcher.Catch(err)
 	return 0
 }
 
-func (this *Thrower) ThrowInt64(err error) int64 {
+func (this *Thrower) ThrowInt(err error) int64 {
 	this.catcher.Catch(err)
 	return 0
 }
 
-func (this *Thrower) ThrowUint64(err error) uint64 {
+func (this *Thrower) ThrowUint(err error) uint64 {
 	this.catcher.Catch(err)
 	return 0
 }
@@ -66,17 +66,17 @@ func (this *Thrower) ThrowBytes(err error) []byte {
 	return nil
 }
 
-func (this *Thrower) ThrowFloat64s(err error) []float64 {
+func (this *Thrower) ThrowDoubles(err error) []float64 {
 	this.catcher.Catch(err)
 	return nil
 }
 
-func (this *Thrower) ThrowInt64s(err error) []int64 {
+func (this *Thrower) ThrowInts(err error) []int64 {
 	this.catcher.Catch(err)
 	return nil
 }
 
-func (this *Thrower) ThrowUint64s(err error) []uint64 {
+func (this *Thrower) ThrowUints(err error) []uint64 {
 	this.catcher.Catch(err)
 	return nil
 }

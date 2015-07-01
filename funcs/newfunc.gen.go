@@ -3,28 +3,28 @@
 
 package funcs
 
-func NewFloat64Func(uniq string, values ...interface{}) (Float64, error) {
+func NewDoubleFunc(uniq string, values ...interface{}) (Double, error) {
 	f, err := newFunc(uniq, values...)
 	if err != nil {
 		return nil, err
 	}
-	return f.(Float64), nil
+	return f.(Double), nil
 }
 
-func NewInt64Func(uniq string, values ...interface{}) (Int64, error) {
+func NewIntFunc(uniq string, values ...interface{}) (Int, error) {
 	f, err := newFunc(uniq, values...)
 	if err != nil {
 		return nil, err
 	}
-	return f.(Int64), nil
+	return f.(Int), nil
 }
 
-func NewUint64Func(uniq string, values ...interface{}) (Uint64, error) {
+func NewUintFunc(uniq string, values ...interface{}) (Uint, error) {
 	f, err := newFunc(uniq, values...)
 	if err != nil {
 		return nil, err
 	}
-	return f.(Uint64), nil
+	return f.(Uint), nil
 }
 
 func NewBoolFunc(uniq string, values ...interface{}) (Bool, error) {
@@ -51,28 +51,28 @@ func NewBytesFunc(uniq string, values ...interface{}) (Bytes, error) {
 	return f.(Bytes), nil
 }
 
-func NewFloat64sFunc(uniq string, values ...interface{}) (Float64s, error) {
+func NewDoublesFunc(uniq string, values ...interface{}) (Doubles, error) {
 	f, err := newFunc(uniq, values...)
 	if err != nil {
 		return nil, err
 	}
-	return f.(Float64s), nil
+	return f.(Doubles), nil
 }
 
-func NewInt64sFunc(uniq string, values ...interface{}) (Int64s, error) {
+func NewIntsFunc(uniq string, values ...interface{}) (Ints, error) {
 	f, err := newFunc(uniq, values...)
 	if err != nil {
 		return nil, err
 	}
-	return f.(Int64s), nil
+	return f.(Ints), nil
 }
 
-func NewUint64sFunc(uniq string, values ...interface{}) (Uint64s, error) {
+func NewUintsFunc(uniq string, values ...interface{}) (Uints, error) {
 	f, err := newFunc(uniq, values...)
 	if err != nil {
 		return nil, err
 	}
-	return f.(Uint64s), nil
+	return f.(Uints), nil
 }
 
 func NewBoolsFunc(uniq string, values ...interface{}) (Bools, error) {

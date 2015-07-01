@@ -173,31 +173,31 @@ func (s *scanner) getValue() reflect.Value {
 	return s.value
 }
 
-func (s *scanner) Float64() (float64, error) {
+func (s *scanner) Double() (float64, error) {
 	value := s.getValue()
 	switch value.Kind() {
 	case reflect.Float64, reflect.Float32:
 		return value.Float(), nil
 	}
-	return 0, serialize.ErrNotFloat64
+	return 0, serialize.ErrNotDouble
 }
 
-func (s *scanner) Int64() (int64, error) {
+func (s *scanner) Int() (int64, error) {
 	value := s.getValue()
 	switch value.Kind() {
 	case reflect.Int64, reflect.Int32:
 		return value.Int(), nil
 	}
-	return 0, serialize.ErrNotInt64
+	return 0, serialize.ErrNotInt
 }
 
-func (s *scanner) Uint64() (uint64, error) {
+func (s *scanner) Uint() (uint64, error) {
 	value := s.getValue()
 	switch value.Kind() {
 	case reflect.Uint64, reflect.Uint32:
 		return value.Uint(), nil
 	}
-	return 0, serialize.ErrNotUint64
+	return 0, serialize.ErrNotUint
 }
 
 func (s *scanner) Bool() (bool, error) {

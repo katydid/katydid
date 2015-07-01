@@ -7,64 +7,64 @@ import (
 	"fmt"
 )
 
-type printFloat64 struct {
-	E Float64
+type printDouble struct {
+	E Double
 }
 
-func (this *printFloat64) Eval() float64 {
+func (this *printDouble) Eval() float64 {
 	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
 
-func (this *printFloat64) IsVariable() {}
+func (this *printDouble) IsVariable() {}
 
 func init() {
-	Register("print", new(printFloat64))
+	Register("print", new(printDouble))
 }
 
-func PrintFloat64(e Float64) Float64 {
-	return &printFloat64{E: e}
+func PrintDouble(e Double) Double {
+	return &printDouble{E: e}
 }
 
-type printInt64 struct {
-	E Int64
+type printInt struct {
+	E Int
 }
 
-func (this *printInt64) Eval() int64 {
+func (this *printInt) Eval() int64 {
 	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
 
-func (this *printInt64) IsVariable() {}
+func (this *printInt) IsVariable() {}
 
 func init() {
-	Register("print", new(printInt64))
+	Register("print", new(printInt))
 }
 
-func PrintInt64(e Int64) Int64 {
-	return &printInt64{E: e}
+func PrintInt(e Int) Int {
+	return &printInt{E: e}
 }
 
-type printUint64 struct {
-	E Uint64
+type printUint struct {
+	E Uint
 }
 
-func (this *printUint64) Eval() uint64 {
+func (this *printUint) Eval() uint64 {
 	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
 
-func (this *printUint64) IsVariable() {}
+func (this *printUint) IsVariable() {}
 
 func init() {
-	Register("print", new(printUint64))
+	Register("print", new(printUint))
 }
 
-func PrintUint64(e Uint64) Uint64 {
-	return &printUint64{E: e}
+func PrintUint(e Uint) Uint {
+	return &printUint{E: e}
 }
 
 type printBool struct {
@@ -127,64 +127,64 @@ func PrintBytes(e Bytes) Bytes {
 	return &printBytes{E: e}
 }
 
-type printFloat64s struct {
-	E Float64s
+type printDoubles struct {
+	E Doubles
 }
 
-func (this *printFloat64s) Eval() []float64 {
+func (this *printDoubles) Eval() []float64 {
 	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
 
-func (this *printFloat64s) IsVariable() {}
+func (this *printDoubles) IsVariable() {}
 
 func init() {
-	Register("print", new(printFloat64s))
+	Register("print", new(printDoubles))
 }
 
-func PrintFloat64s(e Float64s) Float64s {
-	return &printFloat64s{E: e}
+func PrintDoubles(e Doubles) Doubles {
+	return &printDoubles{E: e}
 }
 
-type printInt64s struct {
-	E Int64s
+type printInts struct {
+	E Ints
 }
 
-func (this *printInt64s) Eval() []int64 {
+func (this *printInts) Eval() []int64 {
 	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
 
-func (this *printInt64s) IsVariable() {}
+func (this *printInts) IsVariable() {}
 
 func init() {
-	Register("print", new(printInt64s))
+	Register("print", new(printInts))
 }
 
-func PrintInt64s(e Int64s) Int64s {
-	return &printInt64s{E: e}
+func PrintInts(e Ints) Ints {
+	return &printInts{E: e}
 }
 
-type printUint64s struct {
-	E Uint64s
+type printUints struct {
+	E Uints
 }
 
-func (this *printUint64s) Eval() []uint64 {
+func (this *printUints) Eval() []uint64 {
 	v := this.E.Eval()
 	fmt.Printf("%#v\n", v)
 	return v
 }
 
-func (this *printUint64s) IsVariable() {}
+func (this *printUints) IsVariable() {}
 
 func init() {
-	Register("print", new(printUint64s))
+	Register("print", new(printUints))
 }
 
-func PrintUint64s(e Uint64s) Uint64s {
-	return &printUint64s{E: e}
+func PrintUints(e Uints) Uints {
+	return &printUints{E: e}
 }
 
 type printBools struct {

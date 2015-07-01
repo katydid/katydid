@@ -9,26 +9,26 @@ import (
 	"github.com/katydid/katydid/types"
 )
 
-func composeFloat64(expr *expr.Expr) (funcs.Float64, error) {
+func composeDouble(expr *expr.Expr) (funcs.Double, error) {
 	uniq, err := prep(expr, types.SINGLE_DOUBLE)
 	if err != nil {
 		return nil, err
 	}
 	if expr.Terminal != nil {
 		if expr.GetTerminal().Variable != nil {
-			return funcs.NewFloat64Variable(), nil
+			return funcs.DoubleVar(), nil
 		} else {
-			return funcs.NewConstFloat64(expr.GetTerminal().GetDoubleValue()), nil
+			return funcs.DoubleConst(expr.GetTerminal().GetDoubleValue()), nil
 		}
 	}
 	values, err := newValues(expr.GetFunction().GetParams())
 	if err != nil {
 		return nil, err
 	}
-	return funcs.NewFloat64Func(uniq, values...)
+	return funcs.NewDoubleFunc(uniq, values...)
 }
 
-func composeFloat64s(expr *expr.Expr) (funcs.Float64s, error) {
+func composeDoubles(expr *expr.Expr) (funcs.Doubles, error) {
 	uniq, err := prep(expr, types.LIST_DOUBLE)
 	if err != nil {
 		return nil, err
@@ -38,43 +38,43 @@ func composeFloat64s(expr *expr.Expr) (funcs.Float64s, error) {
 		if err != nil {
 			return nil, err
 		}
-		bs := make([]funcs.Float64, len(vs))
+		bs := make([]funcs.Double, len(vs))
 		var ok bool
 		for i := range vs {
-			bs[i], ok = vs[i].(funcs.Float64)
+			bs[i], ok = vs[i].(funcs.Double)
 			if !ok {
 				return nil, &errExpected{types.SINGLE_DOUBLE.String(), expr.String()}
 			}
 		}
-		return funcs.NewListOfFloat64(bs), nil
+		return funcs.NewListOfDouble(bs), nil
 	}
 	values, err := newValues(expr.GetFunction().GetParams())
 	if err != nil {
 		return nil, err
 	}
-	return funcs.NewFloat64sFunc(uniq, values...)
+	return funcs.NewDoublesFunc(uniq, values...)
 }
 
-func composeInt64(expr *expr.Expr) (funcs.Int64, error) {
+func composeInt(expr *expr.Expr) (funcs.Int, error) {
 	uniq, err := prep(expr, types.SINGLE_INT)
 	if err != nil {
 		return nil, err
 	}
 	if expr.Terminal != nil {
 		if expr.GetTerminal().Variable != nil {
-			return funcs.NewInt64Variable(), nil
+			return funcs.IntVar(), nil
 		} else {
-			return funcs.NewConstInt64(expr.GetTerminal().GetIntValue()), nil
+			return funcs.IntConst(expr.GetTerminal().GetIntValue()), nil
 		}
 	}
 	values, err := newValues(expr.GetFunction().GetParams())
 	if err != nil {
 		return nil, err
 	}
-	return funcs.NewInt64Func(uniq, values...)
+	return funcs.NewIntFunc(uniq, values...)
 }
 
-func composeInt64s(expr *expr.Expr) (funcs.Int64s, error) {
+func composeInts(expr *expr.Expr) (funcs.Ints, error) {
 	uniq, err := prep(expr, types.LIST_INT)
 	if err != nil {
 		return nil, err
@@ -84,43 +84,43 @@ func composeInt64s(expr *expr.Expr) (funcs.Int64s, error) {
 		if err != nil {
 			return nil, err
 		}
-		bs := make([]funcs.Int64, len(vs))
+		bs := make([]funcs.Int, len(vs))
 		var ok bool
 		for i := range vs {
-			bs[i], ok = vs[i].(funcs.Int64)
+			bs[i], ok = vs[i].(funcs.Int)
 			if !ok {
 				return nil, &errExpected{types.SINGLE_INT.String(), expr.String()}
 			}
 		}
-		return funcs.NewListOfInt64(bs), nil
+		return funcs.NewListOfInt(bs), nil
 	}
 	values, err := newValues(expr.GetFunction().GetParams())
 	if err != nil {
 		return nil, err
 	}
-	return funcs.NewInt64sFunc(uniq, values...)
+	return funcs.NewIntsFunc(uniq, values...)
 }
 
-func composeUint64(expr *expr.Expr) (funcs.Uint64, error) {
+func composeUint(expr *expr.Expr) (funcs.Uint, error) {
 	uniq, err := prep(expr, types.SINGLE_UINT)
 	if err != nil {
 		return nil, err
 	}
 	if expr.Terminal != nil {
 		if expr.GetTerminal().Variable != nil {
-			return funcs.NewUint64Variable(), nil
+			return funcs.UintVar(), nil
 		} else {
-			return funcs.NewConstUint64(expr.GetTerminal().GetUintValue()), nil
+			return funcs.UintConst(expr.GetTerminal().GetUintValue()), nil
 		}
 	}
 	values, err := newValues(expr.GetFunction().GetParams())
 	if err != nil {
 		return nil, err
 	}
-	return funcs.NewUint64Func(uniq, values...)
+	return funcs.NewUintFunc(uniq, values...)
 }
 
-func composeUint64s(expr *expr.Expr) (funcs.Uint64s, error) {
+func composeUints(expr *expr.Expr) (funcs.Uints, error) {
 	uniq, err := prep(expr, types.LIST_UINT)
 	if err != nil {
 		return nil, err
@@ -130,21 +130,21 @@ func composeUint64s(expr *expr.Expr) (funcs.Uint64s, error) {
 		if err != nil {
 			return nil, err
 		}
-		bs := make([]funcs.Uint64, len(vs))
+		bs := make([]funcs.Uint, len(vs))
 		var ok bool
 		for i := range vs {
-			bs[i], ok = vs[i].(funcs.Uint64)
+			bs[i], ok = vs[i].(funcs.Uint)
 			if !ok {
 				return nil, &errExpected{types.SINGLE_UINT.String(), expr.String()}
 			}
 		}
-		return funcs.NewListOfUint64(bs), nil
+		return funcs.NewListOfUint(bs), nil
 	}
 	values, err := newValues(expr.GetFunction().GetParams())
 	if err != nil {
 		return nil, err
 	}
-	return funcs.NewUint64sFunc(uniq, values...)
+	return funcs.NewUintsFunc(uniq, values...)
 }
 
 func composeBool(expr *expr.Expr) (funcs.Bool, error) {
@@ -154,9 +154,9 @@ func composeBool(expr *expr.Expr) (funcs.Bool, error) {
 	}
 	if expr.Terminal != nil {
 		if expr.GetTerminal().Variable != nil {
-			return funcs.NewBoolVariable(), nil
+			return funcs.BoolVar(), nil
 		} else {
-			return funcs.NewConstBool(expr.GetTerminal().GetBoolValue()), nil
+			return funcs.BoolConst(expr.GetTerminal().GetBoolValue()), nil
 		}
 	}
 	values, err := newValues(expr.GetFunction().GetParams())
@@ -200,9 +200,9 @@ func composeString(expr *expr.Expr) (funcs.String, error) {
 	}
 	if expr.Terminal != nil {
 		if expr.GetTerminal().Variable != nil {
-			return funcs.NewStringVariable(), nil
+			return funcs.StringVar(), nil
 		} else {
-			return funcs.NewConstString(expr.GetTerminal().GetStringValue()), nil
+			return funcs.StringConst(expr.GetTerminal().GetStringValue()), nil
 		}
 	}
 	values, err := newValues(expr.GetFunction().GetParams())
@@ -246,9 +246,9 @@ func composeBytes(expr *expr.Expr) (funcs.Bytes, error) {
 	}
 	if expr.Terminal != nil {
 		if expr.GetTerminal().Variable != nil {
-			return funcs.NewBytesVariable(), nil
+			return funcs.BytesVar(), nil
 		} else {
-			return funcs.NewConstBytes(expr.GetTerminal().GetBytesValue()), nil
+			return funcs.BytesConst(expr.GetTerminal().GetBytesValue()), nil
 		}
 	}
 	values, err := newValues(expr.GetFunction().GetParams())

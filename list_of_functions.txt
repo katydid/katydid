@@ -13,12 +13,6 @@ func eq(v1 int,v2 int) bool
 func eq(v1 string,v2 string) bool
 func eq(v1 uint,v2 uint) bool
 func eqFold(v1 string,v2 string) bool
-func exists(field []byte) bool
-func exists(field bool) bool
-func exists(field double) bool
-func exists(field int) bool
-func exists(field string) bool
-func exists(field uint) bool
 func ge(v1 []byte,v2 []byte) bool
 func ge(v1 double,v2 double) bool
 func ge(v1 int,v2 int) bool

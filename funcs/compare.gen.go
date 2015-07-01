@@ -7,123 +7,123 @@ import (
 	"bytes"
 )
 
-type float64Ge struct {
-	V1 Float64
-	V2 Float64
+type doubleGE struct {
+	V1 Double
+	V2 Double
 }
 
-func (this *float64Ge) Eval() bool {
+func (this *doubleGE) Eval() bool {
 	return this.V1.Eval() >= this.V2.Eval()
 }
 
 func init() {
-	Register("ge", new(float64Ge))
+	Register("ge", new(doubleGE))
 }
 
-func Float64Ge(a, b Float64) Bool {
-	return &float64Ge{V1: a, V2: b}
+func DoubleGE(a, b Double) Bool {
+	return &doubleGE{V1: a, V2: b}
 }
 
-type int64Ge struct {
-	V1 Int64
-	V2 Int64
+type intGE struct {
+	V1 Int
+	V2 Int
 }
 
-func (this *int64Ge) Eval() bool {
+func (this *intGE) Eval() bool {
 	return this.V1.Eval() >= this.V2.Eval()
 }
 
 func init() {
-	Register("ge", new(int64Ge))
+	Register("ge", new(intGE))
 }
 
-func Int64Ge(a, b Int64) Bool {
-	return &int64Ge{V1: a, V2: b}
+func IntGE(a, b Int) Bool {
+	return &intGE{V1: a, V2: b}
 }
 
-type uint64Ge struct {
-	V1 Uint64
-	V2 Uint64
+type uintGE struct {
+	V1 Uint
+	V2 Uint
 }
 
-func (this *uint64Ge) Eval() bool {
+func (this *uintGE) Eval() bool {
 	return this.V1.Eval() >= this.V2.Eval()
 }
 
 func init() {
-	Register("ge", new(uint64Ge))
+	Register("ge", new(uintGE))
 }
 
-func Uint64Ge(a, b Uint64) Bool {
-	return &uint64Ge{V1: a, V2: b}
+func UintGE(a, b Uint) Bool {
+	return &uintGE{V1: a, V2: b}
 }
 
-type bytesGe struct {
+type bytesGE struct {
 	V1 Bytes
 	V2 Bytes
 }
 
-func (this *bytesGe) Eval() bool {
+func (this *bytesGE) Eval() bool {
 	return bytes.Compare(this.V1.Eval(), this.V2.Eval()) >= 0
 }
 
 func init() {
-	Register("ge", new(bytesGe))
+	Register("ge", new(bytesGE))
 }
 
-func BytesGe(a, b Bytes) Bool {
-	return &bytesGe{V1: a, V2: b}
+func BytesGE(a, b Bytes) Bool {
+	return &bytesGE{V1: a, V2: b}
 }
 
-type float64Gt struct {
-	V1 Float64
-	V2 Float64
+type doubleGt struct {
+	V1 Double
+	V2 Double
 }
 
-func (this *float64Gt) Eval() bool {
+func (this *doubleGt) Eval() bool {
 	return this.V1.Eval() > this.V2.Eval()
 }
 
 func init() {
-	Register("gt", new(float64Gt))
+	Register("gt", new(doubleGt))
 }
 
-func Float64Gt(a, b Float64) Bool {
-	return &float64Gt{V1: a, V2: b}
+func DoubleGt(a, b Double) Bool {
+	return &doubleGt{V1: a, V2: b}
 }
 
-type int64Gt struct {
-	V1 Int64
-	V2 Int64
+type intGt struct {
+	V1 Int
+	V2 Int
 }
 
-func (this *int64Gt) Eval() bool {
+func (this *intGt) Eval() bool {
 	return this.V1.Eval() > this.V2.Eval()
 }
 
 func init() {
-	Register("gt", new(int64Gt))
+	Register("gt", new(intGt))
 }
 
-func Int64Gt(a, b Int64) Bool {
-	return &int64Gt{V1: a, V2: b}
+func IntGt(a, b Int) Bool {
+	return &intGt{V1: a, V2: b}
 }
 
-type uint64Gt struct {
-	V1 Uint64
-	V2 Uint64
+type uintGt struct {
+	V1 Uint
+	V2 Uint
 }
 
-func (this *uint64Gt) Eval() bool {
+func (this *uintGt) Eval() bool {
 	return this.V1.Eval() > this.V2.Eval()
 }
 
 func init() {
-	Register("gt", new(uint64Gt))
+	Register("gt", new(uintGt))
 }
 
-func Uint64Gt(a, b Uint64) Bool {
-	return &uint64Gt{V1: a, V2: b}
+func UintGt(a, b Uint) Bool {
+	return &uintGt{V1: a, V2: b}
 }
 
 type bytesGt struct {
@@ -143,123 +143,123 @@ func BytesGt(a, b Bytes) Bool {
 	return &bytesGt{V1: a, V2: b}
 }
 
-type float64Le struct {
-	V1 Float64
-	V2 Float64
+type doubleLE struct {
+	V1 Double
+	V2 Double
 }
 
-func (this *float64Le) Eval() bool {
+func (this *doubleLE) Eval() bool {
 	return this.V1.Eval() <= this.V2.Eval()
 }
 
 func init() {
-	Register("le", new(float64Le))
+	Register("le", new(doubleLE))
 }
 
-func Float64Le(a, b Float64) Bool {
-	return &float64Le{V1: a, V2: b}
+func DoubleLE(a, b Double) Bool {
+	return &doubleLE{V1: a, V2: b}
 }
 
-type int64Le struct {
-	V1 Int64
-	V2 Int64
+type intLE struct {
+	V1 Int
+	V2 Int
 }
 
-func (this *int64Le) Eval() bool {
+func (this *intLE) Eval() bool {
 	return this.V1.Eval() <= this.V2.Eval()
 }
 
 func init() {
-	Register("le", new(int64Le))
+	Register("le", new(intLE))
 }
 
-func Int64Le(a, b Int64) Bool {
-	return &int64Le{V1: a, V2: b}
+func IntLE(a, b Int) Bool {
+	return &intLE{V1: a, V2: b}
 }
 
-type uint64Le struct {
-	V1 Uint64
-	V2 Uint64
+type uintLE struct {
+	V1 Uint
+	V2 Uint
 }
 
-func (this *uint64Le) Eval() bool {
+func (this *uintLE) Eval() bool {
 	return this.V1.Eval() <= this.V2.Eval()
 }
 
 func init() {
-	Register("le", new(uint64Le))
+	Register("le", new(uintLE))
 }
 
-func Uint64Le(a, b Uint64) Bool {
-	return &uint64Le{V1: a, V2: b}
+func UintLE(a, b Uint) Bool {
+	return &uintLE{V1: a, V2: b}
 }
 
-type bytesLe struct {
+type bytesLE struct {
 	V1 Bytes
 	V2 Bytes
 }
 
-func (this *bytesLe) Eval() bool {
+func (this *bytesLE) Eval() bool {
 	return bytes.Compare(this.V1.Eval(), this.V2.Eval()) <= 0
 }
 
 func init() {
-	Register("le", new(bytesLe))
+	Register("le", new(bytesLE))
 }
 
-func BytesLe(a, b Bytes) Bool {
-	return &bytesLe{V1: a, V2: b}
+func BytesLE(a, b Bytes) Bool {
+	return &bytesLE{V1: a, V2: b}
 }
 
-type float64Lt struct {
-	V1 Float64
-	V2 Float64
+type doubleLt struct {
+	V1 Double
+	V2 Double
 }
 
-func (this *float64Lt) Eval() bool {
+func (this *doubleLt) Eval() bool {
 	return this.V1.Eval() < this.V2.Eval()
 }
 
 func init() {
-	Register("lt", new(float64Lt))
+	Register("lt", new(doubleLt))
 }
 
-func Float64Lt(a, b Float64) Bool {
-	return &float64Lt{V1: a, V2: b}
+func DoubleLt(a, b Double) Bool {
+	return &doubleLt{V1: a, V2: b}
 }
 
-type int64Lt struct {
-	V1 Int64
-	V2 Int64
+type intLt struct {
+	V1 Int
+	V2 Int
 }
 
-func (this *int64Lt) Eval() bool {
+func (this *intLt) Eval() bool {
 	return this.V1.Eval() < this.V2.Eval()
 }
 
 func init() {
-	Register("lt", new(int64Lt))
+	Register("lt", new(intLt))
 }
 
-func Int64Lt(a, b Int64) Bool {
-	return &int64Lt{V1: a, V2: b}
+func IntLt(a, b Int) Bool {
+	return &intLt{V1: a, V2: b}
 }
 
-type uint64Lt struct {
-	V1 Uint64
-	V2 Uint64
+type uintLt struct {
+	V1 Uint
+	V2 Uint
 }
 
-func (this *uint64Lt) Eval() bool {
+func (this *uintLt) Eval() bool {
 	return this.V1.Eval() < this.V2.Eval()
 }
 
 func init() {
-	Register("lt", new(uint64Lt))
+	Register("lt", new(uintLt))
 }
 
-func Uint64Lt(a, b Uint64) Bool {
-	return &uint64Lt{V1: a, V2: b}
+func UintLt(a, b Uint) Bool {
+	return &uintLt{V1: a, V2: b}
 }
 
 type bytesLt struct {
@@ -279,55 +279,55 @@ func BytesLt(a, b Bytes) Bool {
 	return &bytesLt{V1: a, V2: b}
 }
 
-type float64Eq struct {
-	V1 Float64
-	V2 Float64
+type doubleEq struct {
+	V1 Double
+	V2 Double
 }
 
-func (this *float64Eq) Eval() bool {
+func (this *doubleEq) Eval() bool {
 	return this.V1.Eval() == this.V2.Eval()
 }
 
 func init() {
-	Register("eq", new(float64Eq))
+	Register("eq", new(doubleEq))
 }
 
-func Float64Eq(a, b Float64) Bool {
-	return &float64Eq{V1: a, V2: b}
+func DoubleEq(a, b Double) Bool {
+	return &doubleEq{V1: a, V2: b}
 }
 
-type int64Eq struct {
-	V1 Int64
-	V2 Int64
+type intEq struct {
+	V1 Int
+	V2 Int
 }
 
-func (this *int64Eq) Eval() bool {
+func (this *intEq) Eval() bool {
 	return this.V1.Eval() == this.V2.Eval()
 }
 
 func init() {
-	Register("eq", new(int64Eq))
+	Register("eq", new(intEq))
 }
 
-func Int64Eq(a, b Int64) Bool {
-	return &int64Eq{V1: a, V2: b}
+func IntEq(a, b Int) Bool {
+	return &intEq{V1: a, V2: b}
 }
 
-type uint64Eq struct {
-	V1 Uint64
-	V2 Uint64
+type uintEq struct {
+	V1 Uint
+	V2 Uint
 }
 
-func (this *uint64Eq) Eval() bool {
+func (this *uintEq) Eval() bool {
 	return this.V1.Eval() == this.V2.Eval()
 }
 
 func init() {
-	Register("eq", new(uint64Eq))
+	Register("eq", new(uintEq))
 }
 
-func Uint64Eq(a, b Uint64) Bool {
-	return &uint64Eq{V1: a, V2: b}
+func UintEq(a, b Uint) Bool {
+	return &uintEq{V1: a, V2: b}
 }
 
 type boolEq struct {

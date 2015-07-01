@@ -109,11 +109,11 @@ func MatchTree(child *lang.Pattern, children ...*lang.Pattern) *lang.Pattern {
 	return concat(child, children...)
 }
 
-func And(left, right *lang.Pattern) *lang.Pattern {
+func AndMatch(left, right *lang.Pattern) *lang.Pattern {
 	return lang.NewAnd(left, right)
 }
 
-func Or(left, right *lang.Pattern) *lang.Pattern {
+func OrMatch(left, right *lang.Pattern) *lang.Pattern {
 	return lang.NewOr(left, right)
 }
 

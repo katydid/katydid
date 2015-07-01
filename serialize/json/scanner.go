@@ -412,19 +412,19 @@ func (s *jsonScanner) Value() []byte {
 	return s.buf[s.startValueOffset:s.endValueOffset]
 }
 
-func (s *jsonScanner) Float64() (float64, error) {
+func (s *jsonScanner) Double() (float64, error) {
 	v := string(s.Value())
 	i, err := strconv.ParseFloat(v, 64)
 	return i, err
 }
 
-func (s *jsonScanner) Int64() (int64, error) {
+func (s *jsonScanner) Int() (int64, error) {
 	v := string(s.Value())
 	i, err := strconv.ParseInt(v, 10, 64)
 	return int64(i), err
 }
 
-func (s *jsonScanner) Uint64() (uint64, error) {
+func (s *jsonScanner) Uint() (uint64, error) {
 	v := string(s.Value())
 	i, err := strconv.ParseUint(v, 10, 64)
 	return uint64(i), err

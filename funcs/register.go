@@ -147,15 +147,15 @@ func RegisterFactory(name string, newFunc func() interface{}) {
 
 func IsConst(typ reflect.Type) bool {
 	switch typ {
-	case typConstFloat64:
-	case typConstInt64:
-	case typConstUint64:
+	case typConstDouble:
+	case typConstInt:
+	case typConstUint:
 	case typConstBool:
 	case typConstString:
 	case typConstBytes:
-	case typConstFloat64s:
-	case typConstInt64s:
-	case typConstUint64s:
+	case typConstDoubles:
+	case typConstInts:
+	case typConstUints:
 	case typConstBools:
 	case typConstStrings:
 	case typConstListOfBytes:

@@ -7,15 +7,15 @@ import (
 	"strings"
 )
 
-type listOfFloat64 struct {
-	List []Float64
+type listOfDouble struct {
+	List []Double
 }
 
-func NewListOfFloat64(v []Float64) Float64s {
-	return &listOfFloat64{v}
+func NewListOfDouble(v []Double) Doubles {
+	return &listOfDouble{v}
 }
 
-func (this *listOfFloat64) Eval() []float64 {
+func (this *listOfDouble) Eval() []float64 {
 	res := make([]float64, len(this.List))
 	for i, e := range this.List {
 		res[i] = e.Eval()
@@ -23,7 +23,7 @@ func (this *listOfFloat64) Eval() []float64 {
 	return res
 }
 
-func (this *listOfFloat64) String() string {
+func (this *listOfDouble) String() string {
 	ss := make([]string, len(this.List))
 	for i := range this.List {
 		ss[i] = Sprint(this.List[i])
@@ -31,17 +31,17 @@ func (this *listOfFloat64) String() string {
 	return "[]float64{" + strings.Join(ss, ",") + "}"
 }
 
-func (this *listOfFloat64) IsListOf() {}
+func (this *listOfDouble) IsListOf() {}
 
-type listOfInt64 struct {
-	List []Int64
+type listOfInt struct {
+	List []Int
 }
 
-func NewListOfInt64(v []Int64) Int64s {
-	return &listOfInt64{v}
+func NewListOfInt(v []Int) Ints {
+	return &listOfInt{v}
 }
 
-func (this *listOfInt64) Eval() []int64 {
+func (this *listOfInt) Eval() []int64 {
 	res := make([]int64, len(this.List))
 	for i, e := range this.List {
 		res[i] = e.Eval()
@@ -49,7 +49,7 @@ func (this *listOfInt64) Eval() []int64 {
 	return res
 }
 
-func (this *listOfInt64) String() string {
+func (this *listOfInt) String() string {
 	ss := make([]string, len(this.List))
 	for i := range this.List {
 		ss[i] = Sprint(this.List[i])
@@ -57,17 +57,17 @@ func (this *listOfInt64) String() string {
 	return "[]int64{" + strings.Join(ss, ",") + "}"
 }
 
-func (this *listOfInt64) IsListOf() {}
+func (this *listOfInt) IsListOf() {}
 
-type listOfUint64 struct {
-	List []Uint64
+type listOfUint struct {
+	List []Uint
 }
 
-func NewListOfUint64(v []Uint64) Uint64s {
-	return &listOfUint64{v}
+func NewListOfUint(v []Uint) Uints {
+	return &listOfUint{v}
 }
 
-func (this *listOfUint64) Eval() []uint64 {
+func (this *listOfUint) Eval() []uint64 {
 	res := make([]uint64, len(this.List))
 	for i, e := range this.List {
 		res[i] = e.Eval()
@@ -75,7 +75,7 @@ func (this *listOfUint64) Eval() []uint64 {
 	return res
 }
 
-func (this *listOfUint64) String() string {
+func (this *listOfUint) String() string {
 	ss := make([]string, len(this.List))
 	for i := range this.List {
 		ss[i] = Sprint(this.List[i])
@@ -83,7 +83,7 @@ func (this *listOfUint64) String() string {
 	return "[]uint64{" + strings.Join(ss, ",") + "}"
 }
 
-func (this *listOfUint64) IsListOf() {}
+func (this *listOfUint) IsListOf() {}
 
 type listOfBool struct {
 	List []Bool

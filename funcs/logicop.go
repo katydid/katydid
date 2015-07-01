@@ -14,7 +14,7 @@
 
 package funcs
 
-func NotBool(b Bool) Bool {
+func Not(b Bool) Bool {
 	return &not{b}
 }
 
@@ -30,7 +30,7 @@ func init() {
 	Register("not", new(not))
 }
 
-func AndBool(a, b Bool) Bool {
+func And(a, b Bool) Bool {
 	return &and{a, b}
 }
 
@@ -47,7 +47,7 @@ func init() {
 	Register("and", new(and))
 }
 
-func OrBool(a, b Bool) Bool {
+func Or(a, b Bool) Bool {
 	return &or{a, b}
 }
 
