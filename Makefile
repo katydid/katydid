@@ -91,10 +91,10 @@ drone:
 	sudo apt-get install graphviz
 	mkdir -p $(GOPATH)/src/github.com/gogo
 	mkdir -p $(GOPATH)/src/github.com/goccmack
-	mkdir -p $(GOPATH)/src/code.google.com/p
+	mkdir -p $(GOPATH)/src/golang.org/x
 	(cd $(GOPATH)/src/github.com/goccmack && git clone https://github.com/goccmack/gocc )
 	(cd $(GOPATH)/src/github.com/goccmack/gocc && go install ./... )
 	(cd $(GOPATH)/src/github.com/gogo && git clone https://github.com/gogo/protobuf )
 	(cd $(GOPATH)/src/github.com/gogo/protobuf && make )
-	go get -v code.google.com/p/go.text/unicode/norm
+	(cd $(GOPATH)/src/golang.org/x && hg clone https://code.google.com/p/go.text text)
 	(cd $(GOPATH)/src/github.com/katydid/katydid/ && make)
