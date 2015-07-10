@@ -1,4 +1,4 @@
-//  Copyright 2013 Walter Schulze
+//  Copyright 2015 Walter Schulze
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -12,30 +12,29 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package parser
+package tests
 
 import (
-	"fmt"
-	"github.com/katydid/katydid/asm/ast"
+	"github.com/gogo/protobuf/proto"
+	"math/rand"
+	"time"
 )
 
-type ErrWrongType struct {
-	typ string
-	res interface{}
+var r = rand.New(rand.NewSource(time.Now().UnixNano()))
+
+func RandomPerson() proto.Message {
+	return NewPopulatedPerson(r, true)
 }
 
-func (this *ErrWrongType) Error() string {
-	return fmt.Sprintf("expected %s, but got %#v", this.typ, this.res)
+func RandomSrcTree() proto.Message {
+	pops := []*SrcTree{IoUtilSrcTree, PathSrcTree, RuntimeSrcTree, SyscallSrcTree}
+	return pops[r.Intn(4)]
 }
 
-func (this *Parser) ParseRules(scanner Scanner) (res *asm.Rules, err error) {
-	r, err := this.Parse(scanner)
-	if err != nil {
-		return nil, err
-	}
-	rules, ok := r.(*asm.Rules)
-	if !ok {
-		return nil, &ErrWrongType{"*asm.Rules", r}
-	}
-	return rules, nil
+func RandomTypewriterPrison() proto.Message {
+	return NewPopulatedTypewriterPrison(r, true)
+}
+
+func RandomPuddingMilkshake() proto.Message {
+	return NewPopulatedPuddingMilkshake(r, true)
 }

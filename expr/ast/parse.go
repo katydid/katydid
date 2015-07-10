@@ -17,8 +17,8 @@ package expr
 import (
 	"fmt"
 	"github.com/gogo/protobuf/proto"
-	"github.com/katydid/katydid/asm/token"
-	"github.com/katydid/katydid/asm/util"
+	"github.com/katydid/katydid/expr/token"
+	"github.com/katydid/katydid/expr/util"
 	"github.com/katydid/katydid/types"
 	"strconv"
 	"strings"

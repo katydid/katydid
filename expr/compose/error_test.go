@@ -12,37 +12,27 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package json
+package compose_test
 
 import (
-	"bytes"
-	"encoding/json"
-	"github.com/katydid/katydid/serialize/fortesting"
+	"github.com/katydid/katydid/expr/compose"
+	"github.com/katydid/katydid/expr/parser"
+	. "github.com/katydid/katydid/funcs"
+	"github.com/katydid/katydid/serialize"
 	"testing"
 )
 
-func TestJsonScanner(t *testing.T) {
-	j := map[string][]interface{}{
-		"a": {1},
-		"b": {
-			map[string][]interface{}{
-				"ba": {1, 2, 3},
-				"bb": {"string"},
-			},
-		},
-	}
-	data, err := json.Marshal(j)
+func TestRuntimeError(t *testing.T) {
+	exprStr := Sprint(StringEq(ElemStrings(NewListOfString([]String{StringVar()}), IntConst(3)), StringConst("0123456789")))
+	e, err := parser.NewParser().ParseExpr(exprStr)
 	if err != nil {
 		t.Fatal(err)
 	}
-	scanner := NewJsonScanner()
-	scanner.Init(data)
-	jout := fortesting.Walk(scanner)
-	data2, err := json.Marshal(jout)
+	b, err := compose.NewBool(e)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
-	if !bytes.Equal(data, data2) {
-		t.Error("bytes not equal")
+	if _, err := b.Eval(serialize.NewStringValue("0")); err == nil {
+		t.Fatal("expected error")
 	}
 }

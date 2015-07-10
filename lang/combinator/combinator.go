@@ -117,6 +117,10 @@ func OrMatch(left, right *lang.Pattern) *lang.Pattern {
 	return lang.NewOr(left, right)
 }
 
+func NotMatch(p *lang.Pattern) *lang.Pattern {
+	return lang.NewNot(p)
+}
+
 func Many(p *lang.Pattern) *lang.Pattern {
 	return lang.NewZeroOrMore(p)
 }
