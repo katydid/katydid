@@ -2,7 +2,7 @@
  */
 package parser
 
-const numNTSymbols = 16
+const numNTSymbols = 17
 
 type (
 	gotoTable [numStates]gotoRow
@@ -27,6 +27,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		5,  // Space
 
 	},
@@ -47,6 +48,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -67,6 +69,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -87,6 +90,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -107,6 +111,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -127,6 +132,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -147,6 +153,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		34, // Space
 
 	},
@@ -167,6 +174,7 @@ var gotoTab = gotoTable{
 		39, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		38, // Space
 
 	},
@@ -187,6 +195,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -207,6 +216,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -227,6 +237,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -247,6 +258,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -267,6 +279,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -287,6 +300,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -307,6 +321,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -327,6 +342,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -347,6 +363,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -367,6 +384,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -387,6 +405,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -407,6 +426,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -427,6 +447,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -447,6 +468,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -467,6 +489,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -487,6 +510,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -507,6 +531,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -527,6 +552,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -547,6 +573,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -567,6 +594,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -587,6 +615,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -607,6 +636,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -627,6 +657,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		34, // Space
 
 	},
@@ -647,6 +678,7 @@ var gotoTab = gotoTable{
 		43, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		38, // Space
 
 	},
@@ -667,6 +699,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -687,6 +720,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -707,6 +741,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -727,6 +762,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		50, // Space
 
 	},
@@ -747,6 +783,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -767,6 +804,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -787,6 +825,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -807,6 +846,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		82, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		78, // Space
 
 	},
@@ -827,6 +867,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -847,6 +888,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -867,6 +909,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		50,  // Space
 
 	},
@@ -887,6 +930,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		103, // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		78,  // Space
 
 	},
@@ -907,6 +951,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -927,6 +972,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -947,6 +993,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -967,6 +1014,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -987,6 +1035,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1007,6 +1056,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1027,6 +1077,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		-1,  // Space
 
 	},
@@ -1047,6 +1098,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		34,  // Space
 
 	},
@@ -1067,6 +1119,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		112, // Comma
+		-1,  // SemiColon
 		110, // Space
 
 	},
@@ -1087,6 +1140,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1107,6 +1161,7 @@ var gotoTab = gotoTable{
 		115, // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		38,  // Space
 
 	},
@@ -1127,6 +1182,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1147,6 +1203,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1167,6 +1224,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1187,6 +1245,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1207,6 +1266,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1227,6 +1287,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1247,6 +1308,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1267,6 +1329,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1287,6 +1350,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1307,6 +1371,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1327,6 +1392,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1347,6 +1413,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1367,6 +1434,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1387,6 +1455,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1407,6 +1476,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1427,6 +1497,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1447,6 +1518,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1467,6 +1539,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1487,6 +1560,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1507,6 +1581,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1527,6 +1602,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1547,6 +1623,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1567,6 +1644,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1587,6 +1665,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		-1,  // Space
 
 	},
@@ -1607,6 +1686,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		34,  // Space
 
 	},
@@ -1627,6 +1707,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		123, // CloseCurly
 		124, // Comma
+		-1,  // SemiColon
 		122, // Space
 
 	},
@@ -1647,6 +1728,7 @@ var gotoTab = gotoTable{
 		126, // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		38,  // Space
 
 	},
@@ -1667,6 +1749,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1687,6 +1770,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1707,6 +1791,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1727,6 +1812,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1747,6 +1833,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1767,6 +1854,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1787,6 +1875,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1807,6 +1896,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1827,6 +1917,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1847,6 +1938,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1867,6 +1959,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1887,6 +1980,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1907,6 +2001,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1927,6 +2022,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1947,6 +2043,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1967,6 +2064,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -1987,6 +2085,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2007,6 +2106,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2027,6 +2127,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		112, // Comma
+		-1,  // SemiColon
 		110, // Space
 
 	},
@@ -2047,6 +2148,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2067,6 +2169,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		128, // CloseCurly
 		124, // Comma
+		-1,  // SemiColon
 		122, // Space
 
 	},
@@ -2087,6 +2190,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2107,6 +2211,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		34,  // Space
 
 	},
@@ -2127,6 +2232,7 @@ var gotoTab = gotoTable{
 		130, // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		38,  // Space
 
 	},
@@ -2147,6 +2253,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2167,6 +2274,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2187,6 +2295,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2207,6 +2316,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		131, // Space
 
 	},
@@ -2227,6 +2337,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2247,6 +2358,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2267,6 +2379,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		138, // Space
 
 	},
@@ -2287,6 +2400,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2307,6 +2421,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2327,6 +2442,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		141, // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		139, // Space
 
 	},
@@ -2347,6 +2463,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		34,  // Space
 
 	},
@@ -2367,6 +2484,7 @@ var gotoTab = gotoTable{
 		144, // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		38,  // Space
 
 	},
@@ -2387,6 +2505,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2407,6 +2526,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2427,6 +2547,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2447,6 +2568,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		145, // Space
 
 	},
@@ -2467,6 +2589,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2487,6 +2610,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2507,6 +2631,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		151, // Space
 
 	},
@@ -2527,6 +2652,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2547,6 +2673,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		154, // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		152, // Space
 
 	},
@@ -2567,6 +2694,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2587,6 +2715,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2607,6 +2736,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		131, // Space
 
 	},
@@ -2627,6 +2757,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		159, // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		139, // Space
 
 	},
@@ -2647,6 +2778,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		-1,  // Space
 
 	},
@@ -2667,6 +2799,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		112, // Comma
+		-1,  // SemiColon
 		161, // Space
 
 	},
@@ -2687,6 +2820,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2707,6 +2841,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2727,6 +2862,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2747,6 +2883,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2767,6 +2904,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2787,6 +2925,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		-1,  // Space
 
 	},
@@ -2807,6 +2946,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		-1,  // Space
 
 	},
@@ -2827,6 +2967,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		165, // CloseCurly
 		124, // Comma
+		-1,  // SemiColon
 		164, // Space
 
 	},
@@ -2847,6 +2988,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2867,6 +3009,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2887,6 +3030,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		145, // Space
 
 	},
@@ -2907,6 +3051,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		169, // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		152, // Space
 
 	},
@@ -2927,6 +3072,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		-1,  // Space
 
 	},
@@ -2947,6 +3093,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		112, // Comma
+		-1,  // SemiColon
 		171, // Space
 
 	},
@@ -2967,6 +3114,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -2987,6 +3135,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3007,6 +3156,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3027,6 +3177,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3047,6 +3198,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		-1,  // Space
 
 	},
@@ -3067,6 +3219,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
+		-1,  // SemiColon
 		-1,  // Space
 
 	},
@@ -3087,6 +3240,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		175, // CloseCurly
 		124, // Comma
+		-1,  // SemiColon
 		174, // Space
 
 	},
@@ -3107,6 +3261,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3127,6 +3282,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3147,6 +3303,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		112, // Comma
+		-1,  // SemiColon
 		161, // Space
 
 	},
@@ -3167,6 +3324,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3187,6 +3345,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		177, // CloseCurly
 		124, // Comma
+		-1,  // SemiColon
 		164, // Space
 
 	},
@@ -3207,6 +3366,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3227,6 +3387,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3247,6 +3408,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3267,6 +3429,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3287,6 +3450,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3307,6 +3471,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3327,6 +3492,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3347,6 +3513,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		112, // Comma
+		-1,  // SemiColon
 		171, // Space
 
 	},
@@ -3367,6 +3534,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3387,6 +3555,7 @@ var gotoTab = gotoTable{
 		-1,  // OpenCurly
 		179, // CloseCurly
 		124, // Comma
+		-1,  // SemiColon
 		174, // Space
 
 	},
@@ -3407,6 +3576,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3427,6 +3597,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3447,6 +3618,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3467,6 +3639,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3487,6 +3660,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3507,6 +3681,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3527,6 +3702,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3547,6 +3723,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3567,6 +3744,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3587,6 +3765,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},
@@ -3607,6 +3786,7 @@ var gotoTab = gotoTable{
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
+		-1, // SemiColon
 		-1, // Space
 
 	},

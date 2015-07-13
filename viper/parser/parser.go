@@ -4,14 +4,14 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	parseError "github.com/katydid/katydid/expr/errors"
-	"github.com/katydid/katydid/expr/token"
+	parseError "github.com/katydid/katydid/viper/errors"
+	"github.com/katydid/katydid/viper/token"
 )
 
 const (
-	numProductions = 52
-	numStates      = 180
-	numSymbols     = 47
+	numProductions = 75
+	numStates      = 271
+	numSymbols     = 61
 )
 
 // Stack

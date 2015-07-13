@@ -40,6 +40,7 @@ regenerate:
 	(cd types && make regenerate)
 	(cd funcs && make regenerate)
 	(cd expr && make regenerate)
+	(cd viper && make regenerate)
 	(cd relapse && make regenerate)
 	(cd tests && make regenerate)
 	(cd serialize && make regenerate)
@@ -49,12 +50,14 @@ regenerate:
 clean:
 	go clean ./...
 	(cd expr && make clean)
+	(cd viper && make clean)
 	(cd relapse && make clean)
 
 nuke: clean
 	(cd funcs && make nuke)
 	(cd serialize && make nuke)
 	(cd expr && make nuke)
+	(cd viper && make nuke)
 	(cd relapse && make nuke)
 	rm list_of_functions.txt || true
 	go clean -i ./...

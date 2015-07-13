@@ -40,6 +40,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			shift(29), /* space */
 
 		},
@@ -75,6 +76,7 @@ var actionTab = actionTable{
 			nil,          /* { */
 			nil,          /* } */
 			nil,          /* , */
+			nil,          /* ; */
 			nil,          /* space */
 
 		},
@@ -110,6 +112,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			nil,       /* space */
 
 		},
@@ -145,6 +148,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			nil,       /* space */
 
 		},
@@ -180,6 +184,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			nil,       /* space */
 
 		},
@@ -215,6 +220,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			shift(33), /* space */
 
 		},
@@ -250,6 +256,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			shift(37), /* space */
 
 		},
@@ -285,6 +292,7 @@ var actionTab = actionTable{
 			shift(40), /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			shift(41), /* space */
 
 		},
@@ -320,6 +328,7 @@ var actionTab = actionTable{
 			reduce(14), /* {, reduce: ListType */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			reduce(14), /* space, reduce: ListType */
 
 		},
@@ -355,6 +364,7 @@ var actionTab = actionTable{
 			reduce(15), /* {, reduce: ListType */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			reduce(15), /* space, reduce: ListType */
 
 		},
@@ -390,6 +400,7 @@ var actionTab = actionTable{
 			reduce(16), /* {, reduce: ListType */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			reduce(16), /* space, reduce: ListType */
 
 		},
@@ -425,6 +436,7 @@ var actionTab = actionTable{
 			reduce(17), /* {, reduce: ListType */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			reduce(17), /* space, reduce: ListType */
 
 		},
@@ -460,6 +472,7 @@ var actionTab = actionTable{
 			reduce(18), /* {, reduce: ListType */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			reduce(18), /* space, reduce: ListType */
 
 		},
@@ -495,6 +508,7 @@ var actionTab = actionTable{
 			reduce(19), /* {, reduce: ListType */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			reduce(19), /* space, reduce: ListType */
 
 		},
@@ -530,6 +544,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			nil,        /* space */
 
 		},
@@ -565,6 +580,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			nil,        /* space */
 
 		},
@@ -600,6 +616,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			nil,        /* space */
 
 		},
@@ -635,6 +652,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			nil,        /* space */
 
 		},
@@ -670,6 +688,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			nil,        /* space */
 
 		},
@@ -705,6 +724,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			nil,        /* space */
 
 		},
@@ -740,6 +760,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			nil,        /* space */
 
 		},
@@ -775,6 +796,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			nil,        /* space */
 
 		},
@@ -810,6 +832,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			nil,        /* space */
 
 		},
@@ -845,6 +868,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			nil,        /* space */
 
 		},
@@ -880,6 +904,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			nil,        /* space */
 
 		},
@@ -915,6 +940,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			nil,        /* space */
 
 		},
@@ -950,6 +976,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			nil,        /* space */
 
 		},
@@ -985,6 +1012,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			nil,        /* space */
 
 		},
@@ -1020,6 +1048,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			nil,        /* space */
 
 		},
@@ -1029,33 +1058,34 @@ var actionTab = actionTable{
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			reduce(49), /* id, reduce: Space */
-			reduce(49), /* []bool, reduce: Space */
-			reduce(49), /* []int, reduce: Space */
-			reduce(49), /* []uint, reduce: Space */
-			reduce(49), /* []double, reduce: Space */
-			reduce(49), /* []string, reduce: Space */
-			reduce(49), /* [][]byte, reduce: Space */
-			reduce(49), /* int_lit, reduce: Space */
-			reduce(49), /* uint_lit, reduce: Space */
-			reduce(49), /* double_lit, reduce: Space */
-			reduce(49), /* string_lit, reduce: Space */
-			reduce(49), /* bytes_lit, reduce: Space */
-			reduce(49), /* bool_var, reduce: Space */
-			reduce(49), /* int_var, reduce: Space */
-			reduce(49), /* uint_var, reduce: Space */
-			reduce(49), /* double_var, reduce: Space */
-			reduce(49), /* string_var, reduce: Space */
-			reduce(49), /* bytes_var, reduce: Space */
-			reduce(49), /* true, reduce: Space */
-			reduce(49), /* false, reduce: Space */
+			reduce(51), /* id, reduce: Space */
+			reduce(51), /* []bool, reduce: Space */
+			reduce(51), /* []int, reduce: Space */
+			reduce(51), /* []uint, reduce: Space */
+			reduce(51), /* []double, reduce: Space */
+			reduce(51), /* []string, reduce: Space */
+			reduce(51), /* [][]byte, reduce: Space */
+			reduce(51), /* int_lit, reduce: Space */
+			reduce(51), /* uint_lit, reduce: Space */
+			reduce(51), /* double_lit, reduce: Space */
+			reduce(51), /* string_lit, reduce: Space */
+			reduce(51), /* bytes_lit, reduce: Space */
+			reduce(51), /* bool_var, reduce: Space */
+			reduce(51), /* int_var, reduce: Space */
+			reduce(51), /* uint_var, reduce: Space */
+			reduce(51), /* double_var, reduce: Space */
+			reduce(51), /* string_var, reduce: Space */
+			reduce(51), /* bytes_var, reduce: Space */
+			reduce(51), /* true, reduce: Space */
+			reduce(51), /* false, reduce: Space */
 			nil,        /* = */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(49), /* space, reduce: Space */
+			nil,        /* ; */
+			reduce(51), /* space, reduce: Space */
 
 		},
 	},
@@ -1090,6 +1120,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			shift(37), /* space */
 
 		},
@@ -1125,6 +1156,7 @@ var actionTab = actionTable{
 			shift(40), /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			shift(41), /* space */
 
 		},
@@ -1160,6 +1192,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			nil,        /* space */
 
 		},
@@ -1169,33 +1202,34 @@ var actionTab = actionTable{
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			reduce(48), /* id, reduce: Space */
-			reduce(48), /* []bool, reduce: Space */
-			reduce(48), /* []int, reduce: Space */
-			reduce(48), /* []uint, reduce: Space */
-			reduce(48), /* []double, reduce: Space */
-			reduce(48), /* []string, reduce: Space */
-			reduce(48), /* [][]byte, reduce: Space */
-			reduce(48), /* int_lit, reduce: Space */
-			reduce(48), /* uint_lit, reduce: Space */
-			reduce(48), /* double_lit, reduce: Space */
-			reduce(48), /* string_lit, reduce: Space */
-			reduce(48), /* bytes_lit, reduce: Space */
-			reduce(48), /* bool_var, reduce: Space */
-			reduce(48), /* int_var, reduce: Space */
-			reduce(48), /* uint_var, reduce: Space */
-			reduce(48), /* double_var, reduce: Space */
-			reduce(48), /* string_var, reduce: Space */
-			reduce(48), /* bytes_var, reduce: Space */
-			reduce(48), /* true, reduce: Space */
-			reduce(48), /* false, reduce: Space */
+			reduce(50), /* id, reduce: Space */
+			reduce(50), /* []bool, reduce: Space */
+			reduce(50), /* []int, reduce: Space */
+			reduce(50), /* []uint, reduce: Space */
+			reduce(50), /* []double, reduce: Space */
+			reduce(50), /* []string, reduce: Space */
+			reduce(50), /* [][]byte, reduce: Space */
+			reduce(50), /* int_lit, reduce: Space */
+			reduce(50), /* uint_lit, reduce: Space */
+			reduce(50), /* double_lit, reduce: Space */
+			reduce(50), /* string_lit, reduce: Space */
+			reduce(50), /* bytes_lit, reduce: Space */
+			reduce(50), /* bool_var, reduce: Space */
+			reduce(50), /* int_var, reduce: Space */
+			reduce(50), /* uint_var, reduce: Space */
+			reduce(50), /* double_var, reduce: Space */
+			reduce(50), /* string_var, reduce: Space */
+			reduce(50), /* bytes_var, reduce: Space */
+			reduce(50), /* true, reduce: Space */
+			reduce(50), /* false, reduce: Space */
 			nil,        /* = */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(48), /* space, reduce: Space */
+			nil,        /* ; */
+			reduce(50), /* space, reduce: Space */
 
 		},
 	},
@@ -1230,6 +1264,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			shift(45), /* space */
 
 		},
@@ -1265,6 +1300,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			shift(71), /* space */
 
 		},
@@ -1300,6 +1336,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			reduce(38), /* space, reduce: OpenParen */
 
 		},
@@ -1330,12 +1367,13 @@ var actionTab = actionTable{
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(49), /* (, reduce: Space */
+			reduce(51), /* (, reduce: Space */
 			nil,        /* ) */
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(49), /* space, reduce: Space */
+			nil,        /* ; */
+			reduce(51), /* space, reduce: Space */
 
 		},
 	},
@@ -1370,6 +1408,7 @@ var actionTab = actionTable{
 			shift(72), /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			shift(73), /* space */
 
 		},
@@ -1405,6 +1444,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			shift(98), /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			shift(99), /* space */
 
 		},
@@ -1440,6 +1480,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(42), /* }, reduce: OpenCurly */
 			nil,        /* , */
+			nil,        /* ; */
 			reduce(42), /* space, reduce: OpenCurly */
 
 		},
@@ -1472,10 +1513,11 @@ var actionTab = actionTable{
 			nil,        /* = */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(49), /* {, reduce: Space */
+			reduce(51), /* {, reduce: Space */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(49), /* space, reduce: Space */
+			nil,        /* ; */
+			reduce(51), /* space, reduce: Space */
 
 		},
 	},
@@ -1510,6 +1552,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			shift(71), /* space */
 
 		},
@@ -1545,6 +1588,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			shift(98), /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			shift(99), /* space */
 
 		},
@@ -1580,6 +1624,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			reduce(39), /* space, reduce: OpenParen */
 
 		},
@@ -1610,12 +1655,13 @@ var actionTab = actionTable{
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* = */
-			reduce(48), /* (, reduce: Space */
+			reduce(50), /* (, reduce: Space */
 			nil,        /* ) */
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(48), /* space, reduce: Space */
+			nil,        /* ; */
+			reduce(50), /* space, reduce: Space */
 
 		},
 	},
@@ -1650,6 +1696,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(12), /* ,, reduce: Exprs */
+			nil,        /* ; */
 			reduce(12), /* space, reduce: Exprs */
 
 		},
@@ -1685,6 +1732,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			reduce(1), /* ,, reduce: Expr */
+			nil,       /* ; */
 			reduce(1), /* space, reduce: Expr */
 
 		},
@@ -1720,6 +1768,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			reduce(2), /* ,, reduce: Expr */
+			nil,       /* ; */
 			reduce(2), /* space, reduce: Expr */
 
 		},
@@ -1755,6 +1804,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			reduce(3), /* ,, reduce: Expr */
+			nil,       /* ; */
 			reduce(3), /* space, reduce: Expr */
 
 		},
@@ -1790,6 +1840,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			shift(108), /* space */
 
 		},
@@ -1825,6 +1876,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			shift(37), /* space */
 
 		},
@@ -1860,6 +1912,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			shift(113), /* , */
+			nil,        /* ; */
 			shift(114), /* space */
 
 		},
@@ -1895,6 +1948,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			nil,       /* space */
 
 		},
@@ -1930,6 +1984,7 @@ var actionTab = actionTable{
 			shift(40), /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			shift(41), /* space */
 
 		},
@@ -1965,6 +2020,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(20), /* ,, reduce: SpaceTerminal */
+			nil,        /* ; */
 			reduce(20), /* space, reduce: SpaceTerminal */
 
 		},
@@ -2000,6 +2056,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(22), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(22), /* space, reduce: Terminal */
 
 		},
@@ -2035,6 +2092,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(23), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(23), /* space, reduce: Terminal */
 
 		},
@@ -2070,6 +2128,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(24), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(24), /* space, reduce: Terminal */
 
 		},
@@ -2105,6 +2164,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(25), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(25), /* space, reduce: Terminal */
 
 		},
@@ -2140,6 +2200,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(26), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(26), /* space, reduce: Terminal */
 
 		},
@@ -2175,6 +2236,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(27), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(27), /* space, reduce: Terminal */
 
 		},
@@ -2210,6 +2272,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(28), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(28), /* space, reduce: Terminal */
 
 		},
@@ -2245,6 +2308,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(29), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(29), /* space, reduce: Terminal */
 
 		},
@@ -2280,6 +2344,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(30), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(30), /* space, reduce: Terminal */
 
 		},
@@ -2315,6 +2380,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(31), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(31), /* space, reduce: Terminal */
 
 		},
@@ -2350,6 +2416,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(32), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(32), /* space, reduce: Terminal */
 
 		},
@@ -2385,6 +2452,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(33), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(33), /* space, reduce: Terminal */
 
 		},
@@ -2420,6 +2488,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(34), /* ,, reduce: Bool */
+			nil,        /* ; */
 			reduce(34), /* space, reduce: Bool */
 
 		},
@@ -2455,6 +2524,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(35), /* ,, reduce: Bool */
+			nil,        /* ; */
 			reduce(35), /* space, reduce: Bool */
 
 		},
@@ -2490,6 +2560,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			nil,        /* space */
 
 		},
@@ -2499,33 +2570,34 @@ var actionTab = actionTable{
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			reduce(49), /* id, reduce: Space */
-			reduce(49), /* []bool, reduce: Space */
-			reduce(49), /* []int, reduce: Space */
-			reduce(49), /* []uint, reduce: Space */
-			reduce(49), /* []double, reduce: Space */
-			reduce(49), /* []string, reduce: Space */
-			reduce(49), /* [][]byte, reduce: Space */
-			reduce(49), /* int_lit, reduce: Space */
-			reduce(49), /* uint_lit, reduce: Space */
-			reduce(49), /* double_lit, reduce: Space */
-			reduce(49), /* string_lit, reduce: Space */
-			reduce(49), /* bytes_lit, reduce: Space */
-			reduce(49), /* bool_var, reduce: Space */
-			reduce(49), /* int_var, reduce: Space */
-			reduce(49), /* uint_var, reduce: Space */
-			reduce(49), /* double_var, reduce: Space */
-			reduce(49), /* string_var, reduce: Space */
-			reduce(49), /* bytes_var, reduce: Space */
-			reduce(49), /* true, reduce: Space */
-			reduce(49), /* false, reduce: Space */
+			reduce(51), /* id, reduce: Space */
+			reduce(51), /* []bool, reduce: Space */
+			reduce(51), /* []int, reduce: Space */
+			reduce(51), /* []uint, reduce: Space */
+			reduce(51), /* []double, reduce: Space */
+			reduce(51), /* []string, reduce: Space */
+			reduce(51), /* [][]byte, reduce: Space */
+			reduce(51), /* int_lit, reduce: Space */
+			reduce(51), /* uint_lit, reduce: Space */
+			reduce(51), /* double_lit, reduce: Space */
+			reduce(51), /* string_lit, reduce: Space */
+			reduce(51), /* bytes_lit, reduce: Space */
+			reduce(51), /* bool_var, reduce: Space */
+			reduce(51), /* int_var, reduce: Space */
+			reduce(51), /* uint_var, reduce: Space */
+			reduce(51), /* double_var, reduce: Space */
+			reduce(51), /* string_var, reduce: Space */
+			reduce(51), /* bytes_var, reduce: Space */
+			reduce(51), /* true, reduce: Space */
+			reduce(51), /* false, reduce: Space */
 			nil,        /* = */
 			nil,        /* ( */
-			reduce(49), /* ), reduce: Space */
+			reduce(51), /* ), reduce: Space */
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(49), /* space, reduce: Space */
+			nil,        /* ; */
+			reduce(51), /* space, reduce: Space */
 
 		},
 	},
@@ -2560,6 +2632,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(43), /* }, reduce: OpenCurly */
 			nil,        /* , */
+			nil,        /* ; */
 			reduce(43), /* space, reduce: OpenCurly */
 
 		},
@@ -2592,10 +2665,11 @@ var actionTab = actionTable{
 			nil,        /* = */
 			nil,        /* ( */
 			nil,        /* ) */
-			reduce(48), /* {, reduce: Space */
+			reduce(50), /* {, reduce: Space */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(48), /* space, reduce: Space */
+			nil,        /* ; */
+			reduce(50), /* space, reduce: Space */
 
 		},
 	},
@@ -2630,6 +2704,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(12), /* }, reduce: Exprs */
 			reduce(12), /* ,, reduce: Exprs */
+			nil,        /* ; */
 			reduce(12), /* space, reduce: Exprs */
 
 		},
@@ -2665,6 +2740,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			reduce(1), /* }, reduce: Expr */
 			reduce(1), /* ,, reduce: Expr */
+			nil,       /* ; */
 			reduce(1), /* space, reduce: Expr */
 
 		},
@@ -2700,6 +2776,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			reduce(2), /* }, reduce: Expr */
 			reduce(2), /* ,, reduce: Expr */
+			nil,       /* ; */
 			reduce(2), /* space, reduce: Expr */
 
 		},
@@ -2735,6 +2812,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			reduce(3), /* }, reduce: Expr */
 			reduce(3), /* ,, reduce: Expr */
+			nil,       /* ; */
 			reduce(3), /* space, reduce: Expr */
 
 		},
@@ -2770,6 +2848,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			shift(119), /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			shift(120), /* space */
 
 		},
@@ -2805,6 +2884,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			shift(37), /* space */
 
 		},
@@ -2840,6 +2920,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			shift(98),  /* } */
 			shift(113), /* , */
+			nil,        /* ; */
 			shift(125), /* space */
 
 		},
@@ -2875,6 +2956,7 @@ var actionTab = actionTable{
 			shift(40), /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			shift(41), /* space */
 
 		},
@@ -2910,6 +2992,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			nil,        /* space */
 
 		},
@@ -2945,6 +3028,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(20), /* }, reduce: SpaceTerminal */
 			reduce(20), /* ,, reduce: SpaceTerminal */
+			nil,        /* ; */
 			reduce(20), /* space, reduce: SpaceTerminal */
 
 		},
@@ -2980,6 +3064,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(22), /* }, reduce: Terminal */
 			reduce(22), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(22), /* space, reduce: Terminal */
 
 		},
@@ -3015,6 +3100,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(23), /* }, reduce: Terminal */
 			reduce(23), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(23), /* space, reduce: Terminal */
 
 		},
@@ -3050,6 +3136,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(24), /* }, reduce: Terminal */
 			reduce(24), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(24), /* space, reduce: Terminal */
 
 		},
@@ -3085,6 +3172,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(25), /* }, reduce: Terminal */
 			reduce(25), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(25), /* space, reduce: Terminal */
 
 		},
@@ -3120,6 +3208,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(26), /* }, reduce: Terminal */
 			reduce(26), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(26), /* space, reduce: Terminal */
 
 		},
@@ -3155,6 +3244,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(27), /* }, reduce: Terminal */
 			reduce(27), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(27), /* space, reduce: Terminal */
 
 		},
@@ -3190,6 +3280,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(28), /* }, reduce: Terminal */
 			reduce(28), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(28), /* space, reduce: Terminal */
 
 		},
@@ -3225,6 +3316,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(29), /* }, reduce: Terminal */
 			reduce(29), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(29), /* space, reduce: Terminal */
 
 		},
@@ -3260,6 +3352,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(30), /* }, reduce: Terminal */
 			reduce(30), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(30), /* space, reduce: Terminal */
 
 		},
@@ -3295,6 +3388,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(31), /* }, reduce: Terminal */
 			reduce(31), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(31), /* space, reduce: Terminal */
 
 		},
@@ -3330,6 +3424,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(32), /* }, reduce: Terminal */
 			reduce(32), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(32), /* space, reduce: Terminal */
 
 		},
@@ -3365,6 +3460,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(33), /* }, reduce: Terminal */
 			reduce(33), /* ,, reduce: Terminal */
+			nil,        /* ; */
 			reduce(33), /* space, reduce: Terminal */
 
 		},
@@ -3400,6 +3496,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(34), /* }, reduce: Bool */
 			reduce(34), /* ,, reduce: Bool */
+			nil,        /* ; */
 			reduce(34), /* space, reduce: Bool */
 
 		},
@@ -3435,6 +3532,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(35), /* }, reduce: Bool */
 			reduce(35), /* ,, reduce: Bool */
+			nil,        /* ; */
 			reduce(35), /* space, reduce: Bool */
 
 		},
@@ -3470,6 +3568,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			nil,        /* space */
 
 		},
@@ -3479,33 +3578,34 @@ var actionTab = actionTable{
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			reduce(49), /* id, reduce: Space */
-			reduce(49), /* []bool, reduce: Space */
-			reduce(49), /* []int, reduce: Space */
-			reduce(49), /* []uint, reduce: Space */
-			reduce(49), /* []double, reduce: Space */
-			reduce(49), /* []string, reduce: Space */
-			reduce(49), /* [][]byte, reduce: Space */
-			reduce(49), /* int_lit, reduce: Space */
-			reduce(49), /* uint_lit, reduce: Space */
-			reduce(49), /* double_lit, reduce: Space */
-			reduce(49), /* string_lit, reduce: Space */
-			reduce(49), /* bytes_lit, reduce: Space */
-			reduce(49), /* bool_var, reduce: Space */
-			reduce(49), /* int_var, reduce: Space */
-			reduce(49), /* uint_var, reduce: Space */
-			reduce(49), /* double_var, reduce: Space */
-			reduce(49), /* string_var, reduce: Space */
-			reduce(49), /* bytes_var, reduce: Space */
-			reduce(49), /* true, reduce: Space */
-			reduce(49), /* false, reduce: Space */
+			reduce(51), /* id, reduce: Space */
+			reduce(51), /* []bool, reduce: Space */
+			reduce(51), /* []int, reduce: Space */
+			reduce(51), /* []uint, reduce: Space */
+			reduce(51), /* []double, reduce: Space */
+			reduce(51), /* []string, reduce: Space */
+			reduce(51), /* [][]byte, reduce: Space */
+			reduce(51), /* int_lit, reduce: Space */
+			reduce(51), /* uint_lit, reduce: Space */
+			reduce(51), /* double_lit, reduce: Space */
+			reduce(51), /* string_lit, reduce: Space */
+			reduce(51), /* bytes_lit, reduce: Space */
+			reduce(51), /* bool_var, reduce: Space */
+			reduce(51), /* int_var, reduce: Space */
+			reduce(51), /* uint_var, reduce: Space */
+			reduce(51), /* double_var, reduce: Space */
+			reduce(51), /* string_var, reduce: Space */
+			reduce(51), /* bytes_var, reduce: Space */
+			reduce(51), /* true, reduce: Space */
+			reduce(51), /* false, reduce: Space */
 			nil,        /* = */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* { */
-			reduce(49), /* }, reduce: Space */
+			reduce(51), /* }, reduce: Space */
 			nil,        /* , */
-			reduce(49), /* space, reduce: Space */
+			nil,        /* ; */
+			reduce(51), /* space, reduce: Space */
 
 		},
 	},
@@ -3540,6 +3640,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			shift(113), /* , */
+			nil,        /* ; */
 			shift(114), /* space */
 
 		},
@@ -3575,6 +3676,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			nil,       /* space */
 
 		},
@@ -3610,6 +3712,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			shift(98),  /* } */
 			shift(113), /* , */
+			nil,        /* ; */
 			shift(125), /* space */
 
 		},
@@ -3645,6 +3748,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			nil,        /* space */
 
 		},
@@ -3680,6 +3784,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			shift(37), /* space */
 
 		},
@@ -3715,6 +3820,7 @@ var actionTab = actionTable{
 			shift(40), /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			shift(41), /* space */
 
 		},
@@ -3750,6 +3856,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(21), /* ,, reduce: SpaceTerminal */
+			nil,        /* ; */
 			reduce(21), /* space, reduce: SpaceTerminal */
 
 		},
@@ -3785,6 +3892,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			nil,        /* space */
 
 		},
@@ -3794,33 +3902,34 @@ var actionTab = actionTable{
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			reduce(48), /* id, reduce: Space */
-			reduce(48), /* []bool, reduce: Space */
-			reduce(48), /* []int, reduce: Space */
-			reduce(48), /* []uint, reduce: Space */
-			reduce(48), /* []double, reduce: Space */
-			reduce(48), /* []string, reduce: Space */
-			reduce(48), /* [][]byte, reduce: Space */
-			reduce(48), /* int_lit, reduce: Space */
-			reduce(48), /* uint_lit, reduce: Space */
-			reduce(48), /* double_lit, reduce: Space */
-			reduce(48), /* string_lit, reduce: Space */
-			reduce(48), /* bytes_lit, reduce: Space */
-			reduce(48), /* bool_var, reduce: Space */
-			reduce(48), /* int_var, reduce: Space */
-			reduce(48), /* uint_var, reduce: Space */
-			reduce(48), /* double_var, reduce: Space */
-			reduce(48), /* string_var, reduce: Space */
-			reduce(48), /* bytes_var, reduce: Space */
-			reduce(48), /* true, reduce: Space */
-			reduce(48), /* false, reduce: Space */
+			reduce(50), /* id, reduce: Space */
+			reduce(50), /* []bool, reduce: Space */
+			reduce(50), /* []int, reduce: Space */
+			reduce(50), /* []uint, reduce: Space */
+			reduce(50), /* []double, reduce: Space */
+			reduce(50), /* []string, reduce: Space */
+			reduce(50), /* [][]byte, reduce: Space */
+			reduce(50), /* int_lit, reduce: Space */
+			reduce(50), /* uint_lit, reduce: Space */
+			reduce(50), /* double_lit, reduce: Space */
+			reduce(50), /* string_lit, reduce: Space */
+			reduce(50), /* bytes_lit, reduce: Space */
+			reduce(50), /* bool_var, reduce: Space */
+			reduce(50), /* int_var, reduce: Space */
+			reduce(50), /* uint_var, reduce: Space */
+			reduce(50), /* double_var, reduce: Space */
+			reduce(50), /* string_var, reduce: Space */
+			reduce(50), /* bytes_var, reduce: Space */
+			reduce(50), /* true, reduce: Space */
+			reduce(50), /* false, reduce: Space */
 			nil,        /* = */
 			nil,        /* ( */
-			reduce(48), /* ), reduce: Space */
+			reduce(50), /* ), reduce: Space */
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
-			reduce(48), /* space, reduce: Space */
+			nil,        /* ; */
+			reduce(50), /* space, reduce: Space */
 
 		},
 	},
@@ -3855,6 +3964,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			shift(71),  /* space */
 
 		},
@@ -3890,6 +4000,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			shift(135), /* , */
+			nil,        /* ; */
 			shift(136), /* space */
 
 		},
@@ -3925,6 +4036,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			nil,       /* space */
 
 		},
@@ -3960,6 +4072,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			shift(29), /* space */
 
 		},
@@ -3995,6 +4108,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			reduce(46), /* space, reduce: Comma */
 
 		},
@@ -4026,11 +4140,12 @@ var actionTab = actionTable{
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* ( */
-			reduce(49), /* ), reduce: Space */
+			reduce(51), /* ), reduce: Space */
 			nil,        /* { */
 			nil,        /* } */
-			reduce(49), /* ,, reduce: Space */
-			reduce(49), /* space, reduce: Space */
+			reduce(51), /* ,, reduce: Space */
+			nil,        /* ; */
+			reduce(51), /* space, reduce: Space */
 
 		},
 	},
@@ -4065,6 +4180,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			shift(142), /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			shift(99),  /* space */
 
 		},
@@ -4100,6 +4216,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			shift(37), /* space */
 
 		},
@@ -4135,6 +4252,7 @@ var actionTab = actionTable{
 			shift(40), /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			shift(41), /* space */
 
 		},
@@ -4170,6 +4288,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(21), /* }, reduce: SpaceTerminal */
 			reduce(21), /* ,, reduce: SpaceTerminal */
+			nil,        /* ; */
 			reduce(21), /* space, reduce: SpaceTerminal */
 
 		},
@@ -4205,6 +4324,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			nil,        /* space */
 
 		},
@@ -4214,33 +4334,34 @@ var actionTab = actionTable{
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			reduce(48), /* id, reduce: Space */
-			reduce(48), /* []bool, reduce: Space */
-			reduce(48), /* []int, reduce: Space */
-			reduce(48), /* []uint, reduce: Space */
-			reduce(48), /* []double, reduce: Space */
-			reduce(48), /* []string, reduce: Space */
-			reduce(48), /* [][]byte, reduce: Space */
-			reduce(48), /* int_lit, reduce: Space */
-			reduce(48), /* uint_lit, reduce: Space */
-			reduce(48), /* double_lit, reduce: Space */
-			reduce(48), /* string_lit, reduce: Space */
-			reduce(48), /* bytes_lit, reduce: Space */
-			reduce(48), /* bool_var, reduce: Space */
-			reduce(48), /* int_var, reduce: Space */
-			reduce(48), /* uint_var, reduce: Space */
-			reduce(48), /* double_var, reduce: Space */
-			reduce(48), /* string_var, reduce: Space */
-			reduce(48), /* bytes_var, reduce: Space */
-			reduce(48), /* true, reduce: Space */
-			reduce(48), /* false, reduce: Space */
+			reduce(50), /* id, reduce: Space */
+			reduce(50), /* []bool, reduce: Space */
+			reduce(50), /* []int, reduce: Space */
+			reduce(50), /* []uint, reduce: Space */
+			reduce(50), /* []double, reduce: Space */
+			reduce(50), /* []string, reduce: Space */
+			reduce(50), /* [][]byte, reduce: Space */
+			reduce(50), /* int_lit, reduce: Space */
+			reduce(50), /* uint_lit, reduce: Space */
+			reduce(50), /* double_lit, reduce: Space */
+			reduce(50), /* string_lit, reduce: Space */
+			reduce(50), /* bytes_lit, reduce: Space */
+			reduce(50), /* bool_var, reduce: Space */
+			reduce(50), /* int_var, reduce: Space */
+			reduce(50), /* uint_var, reduce: Space */
+			reduce(50), /* double_var, reduce: Space */
+			reduce(50), /* string_var, reduce: Space */
+			reduce(50), /* bytes_var, reduce: Space */
+			reduce(50), /* true, reduce: Space */
+			reduce(50), /* false, reduce: Space */
 			nil,        /* = */
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* { */
-			reduce(48), /* }, reduce: Space */
+			reduce(50), /* }, reduce: Space */
 			nil,        /* , */
-			reduce(48), /* space, reduce: Space */
+			nil,        /* ; */
+			reduce(50), /* space, reduce: Space */
 
 		},
 	},
@@ -4275,6 +4396,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			shift(71),  /* space */
 
 		},
@@ -4310,6 +4432,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			shift(119), /* } */
 			shift(135), /* , */
+			nil,        /* ; */
 			shift(149), /* space */
 
 		},
@@ -4345,6 +4468,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			nil,       /* space */
 
 		},
@@ -4380,6 +4504,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			shift(29), /* space */
 
 		},
@@ -4413,9 +4538,10 @@ var actionTab = actionTable{
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* { */
-			reduce(49), /* }, reduce: Space */
-			reduce(49), /* ,, reduce: Space */
-			reduce(49), /* space, reduce: Space */
+			reduce(51), /* }, reduce: Space */
+			reduce(51), /* ,, reduce: Space */
+			nil,        /* ; */
+			reduce(51), /* space, reduce: Space */
 
 		},
 	},
@@ -4450,6 +4576,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			shift(155), /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			shift(99),  /* space */
 
 		},
@@ -4485,6 +4612,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			nil,       /* space */
 
 		},
@@ -4520,6 +4648,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			nil,       /* , */
+			nil,       /* ; */
 			nil,       /* space */
 
 		},
@@ -4555,6 +4684,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			shift(71),  /* space */
 
 		},
@@ -4590,6 +4720,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			shift(142), /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			shift(99),  /* space */
 
 		},
@@ -4625,6 +4756,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			shift(108), /* space */
 
 		},
@@ -4660,6 +4792,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			shift(113), /* , */
+			nil,        /* ; */
 			shift(114), /* space */
 
 		},
@@ -4695,6 +4828,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			reduce(7), /* ,, reduce: Function */
+			nil,       /* ; */
 			reduce(7), /* space, reduce: Function */
 
 		},
@@ -4730,6 +4864,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(40), /* ,, reduce: CloseParen */
+			nil,        /* ; */
 			reduce(40), /* space, reduce: CloseParen */
 
 		},
@@ -4765,6 +4900,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			reduce(47), /* space, reduce: Comma */
 
 		},
@@ -4796,11 +4932,12 @@ var actionTab = actionTable{
 			nil,        /* false */
 			nil,        /* = */
 			nil,        /* ( */
-			reduce(48), /* ), reduce: Space */
+			reduce(50), /* ), reduce: Space */
 			nil,        /* { */
 			nil,        /* } */
-			reduce(48), /* ,, reduce: Space */
-			reduce(48), /* space, reduce: Space */
+			reduce(50), /* ,, reduce: Space */
+			nil,        /* ; */
+			reduce(50), /* space, reduce: Space */
 
 		},
 	},
@@ -4835,6 +4972,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(13), /* ,, reduce: Exprs */
+			nil,        /* ; */
 			reduce(13), /* space, reduce: Exprs */
 
 		},
@@ -4870,6 +5008,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			shift(33),  /* space */
 
 		},
@@ -4905,6 +5044,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			shift(163), /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			shift(120), /* space */
 
 		},
@@ -4940,6 +5080,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			shift(142), /* } */
 			shift(113), /* , */
+			nil,        /* ; */
 			shift(125), /* space */
 
 		},
@@ -4975,6 +5116,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(11), /* ,, reduce: List */
+			nil,        /* ; */
 			reduce(11), /* space, reduce: List */
 
 		},
@@ -5010,6 +5152,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(44), /* ,, reduce: CloseCurly */
+			nil,        /* ; */
 			reduce(44), /* space, reduce: CloseCurly */
 
 		},
@@ -5045,6 +5188,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			shift(71),  /* space */
 
 		},
@@ -5080,6 +5224,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			shift(155), /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			shift(99),  /* space */
 
 		},
@@ -5115,6 +5260,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			shift(108), /* space */
 
 		},
@@ -5150,6 +5296,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			shift(113), /* , */
+			nil,        /* ; */
 			shift(114), /* space */
 
 		},
@@ -5185,6 +5332,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			reduce(7), /* }, reduce: Function */
 			reduce(7), /* ,, reduce: Function */
+			nil,       /* ; */
 			reduce(7), /* space, reduce: Function */
 
 		},
@@ -5220,6 +5368,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(40), /* }, reduce: CloseParen */
 			reduce(40), /* ,, reduce: CloseParen */
+			nil,        /* ; */
 			reduce(40), /* space, reduce: CloseParen */
 
 		},
@@ -5253,9 +5402,10 @@ var actionTab = actionTable{
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* { */
-			reduce(48), /* }, reduce: Space */
-			reduce(48), /* ,, reduce: Space */
-			reduce(48), /* space, reduce: Space */
+			reduce(50), /* }, reduce: Space */
+			reduce(50), /* ,, reduce: Space */
+			nil,        /* ; */
+			reduce(50), /* space, reduce: Space */
 
 		},
 	},
@@ -5290,6 +5440,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(13), /* }, reduce: Exprs */
 			reduce(13), /* ,, reduce: Exprs */
+			nil,        /* ; */
 			reduce(13), /* space, reduce: Exprs */
 
 		},
@@ -5325,6 +5476,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			shift(33),  /* space */
 
 		},
@@ -5360,6 +5512,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			shift(173), /* } */
 			nil,        /* , */
+			nil,        /* ; */
 			shift(120), /* space */
 
 		},
@@ -5395,6 +5548,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			shift(155), /* } */
 			shift(113), /* , */
+			nil,        /* ; */
 			shift(125), /* space */
 
 		},
@@ -5430,6 +5584,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(11), /* }, reduce: List */
 			reduce(11), /* ,, reduce: List */
+			nil,        /* ; */
 			reduce(11), /* space, reduce: List */
 
 		},
@@ -5465,6 +5620,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(44), /* }, reduce: CloseCurly */
 			reduce(44), /* ,, reduce: CloseCurly */
+			nil,        /* ; */
 			reduce(44), /* space, reduce: CloseCurly */
 
 		},
@@ -5500,6 +5656,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			shift(113), /* , */
+			nil,        /* ; */
 			shift(114), /* space */
 
 		},
@@ -5535,6 +5692,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			reduce(5), /* ,, reduce: Function */
+			nil,       /* ; */
 			reduce(5), /* space, reduce: Function */
 
 		},
@@ -5570,6 +5728,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			shift(142), /* } */
 			shift(113), /* , */
+			nil,        /* ; */
 			shift(125), /* space */
 
 		},
@@ -5605,6 +5764,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(10), /* ,, reduce: List */
+			nil,        /* ; */
 			reduce(10), /* space, reduce: List */
 
 		},
@@ -5640,6 +5800,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(41), /* ,, reduce: CloseParen */
+			nil,        /* ; */
 			reduce(41), /* space, reduce: CloseParen */
 
 		},
@@ -5675,6 +5836,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			shift(135), /* , */
+			nil,        /* ; */
 			shift(136), /* space */
 
 		},
@@ -5710,6 +5872,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			reduce(6), /* ,, reduce: Function */
+			nil,       /* ; */
 			reduce(6), /* space, reduce: Function */
 
 		},
@@ -5745,6 +5908,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			reduce(45), /* ,, reduce: CloseCurly */
+			nil,        /* ; */
 			reduce(45), /* space, reduce: CloseCurly */
 
 		},
@@ -5780,6 +5944,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			shift(163), /* } */
 			shift(135), /* , */
+			nil,        /* ; */
 			shift(149), /* space */
 
 		},
@@ -5815,6 +5980,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			reduce(9), /* ,, reduce: List */
+			nil,       /* ; */
 			reduce(9), /* space, reduce: List */
 
 		},
@@ -5850,6 +6016,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			shift(113), /* , */
+			nil,        /* ; */
 			shift(114), /* space */
 
 		},
@@ -5885,6 +6052,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			reduce(5), /* }, reduce: Function */
 			reduce(5), /* ,, reduce: Function */
+			nil,       /* ; */
 			reduce(5), /* space, reduce: Function */
 
 		},
@@ -5920,6 +6088,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			shift(155), /* } */
 			shift(113), /* , */
+			nil,        /* ; */
 			shift(125), /* space */
 
 		},
@@ -5955,6 +6124,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(10), /* }, reduce: List */
 			reduce(10), /* ,, reduce: List */
+			nil,        /* ; */
 			reduce(10), /* space, reduce: List */
 
 		},
@@ -5990,6 +6160,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(41), /* }, reduce: CloseParen */
 			reduce(41), /* ,, reduce: CloseParen */
+			nil,        /* ; */
 			reduce(41), /* space, reduce: CloseParen */
 
 		},
@@ -6025,6 +6196,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			nil,        /* } */
 			shift(135), /* , */
+			nil,        /* ; */
 			shift(136), /* space */
 
 		},
@@ -6060,6 +6232,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			reduce(6), /* }, reduce: Function */
 			reduce(6), /* ,, reduce: Function */
+			nil,       /* ; */
 			reduce(6), /* space, reduce: Function */
 
 		},
@@ -6095,6 +6268,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			reduce(45), /* }, reduce: CloseCurly */
 			reduce(45), /* ,, reduce: CloseCurly */
+			nil,        /* ; */
 			reduce(45), /* space, reduce: CloseCurly */
 
 		},
@@ -6130,6 +6304,7 @@ var actionTab = actionTable{
 			nil,        /* { */
 			shift(173), /* } */
 			shift(135), /* , */
+			nil,        /* ; */
 			shift(149), /* space */
 
 		},
@@ -6165,6 +6340,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			reduce(9), /* }, reduce: List */
 			reduce(9), /* ,, reduce: List */
+			nil,       /* ; */
 			reduce(9), /* space, reduce: List */
 
 		},
@@ -6200,6 +6376,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			reduce(4), /* ,, reduce: Function */
+			nil,       /* ; */
 			reduce(4), /* space, reduce: Function */
 
 		},
@@ -6235,6 +6412,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			nil,       /* } */
 			reduce(8), /* ,, reduce: List */
+			nil,       /* ; */
 			reduce(8), /* space, reduce: List */
 
 		},
@@ -6270,6 +6448,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			reduce(4), /* }, reduce: Function */
 			reduce(4), /* ,, reduce: Function */
+			nil,       /* ; */
 			reduce(4), /* space, reduce: Function */
 
 		},
@@ -6305,6 +6484,7 @@ var actionTab = actionTable{
 			nil,       /* { */
 			reduce(8), /* }, reduce: List */
 			reduce(8), /* ,, reduce: List */
+			nil,       /* ; */
 			reduce(8), /* space, reduce: List */
 
 		},

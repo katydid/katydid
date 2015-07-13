@@ -14,6 +14,8 @@
 
 package serialize
 
+import "fmt"
+
 type Decoder interface {
 	Double() (float64, error)
 	Int() (int64, error)
@@ -33,4 +35,38 @@ type Scanner interface {
 	Up()
 	Down()
 	Decoder
+}
+
+func Sprint(value Decoder) string {
+	return fmt.Sprintf("%#v", getValue(value))
+}
+
+func getValue(value Decoder) interface{} {
+	var v interface{}
+	var err error
+	v, err = value.Bool()
+	if err == nil {
+		return v
+	}
+	v, err = value.Bytes()
+	if err == nil {
+		return v
+	}
+	v, err = value.String()
+	if err == nil {
+		return v
+	}
+	v, err = value.Int()
+	if err == nil {
+		return v
+	}
+	v, err = value.Uint()
+	if err == nil {
+		return v
+	}
+	v, err = value.Double()
+	if err == nil {
+		return v
+	}
+	return nil
 }
