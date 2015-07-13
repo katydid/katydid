@@ -40,7 +40,7 @@ regenerate:
 	(cd types && make regenerate)
 	(cd funcs && make regenerate)
 	(cd expr && make regenerate)
-	(cd lang && make regenerate)
+	(cd relapse && make regenerate)
 	(cd tests && make regenerate)
 	(cd serialize && make regenerate)
 	(cd funcs && go test -test.run=GenFuncList 2>../list_of_functions.txt)
@@ -49,13 +49,13 @@ regenerate:
 clean:
 	go clean ./...
 	(cd expr && make clean)
-	(cd lang && make clean)
+	(cd relapse && make clean)
 
 nuke: clean
 	(cd funcs && make nuke)
 	(cd serialize && make nuke)
 	(cd expr && make nuke)
-	(cd lang && make nuke)
+	(cd relapse && make nuke)
 	rm list_of_functions.txt || true
 	go clean -i ./...
 
