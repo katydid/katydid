@@ -21,6 +21,7 @@ import "github.com/katydid/katydid/expr/ast/expr.proto";
 
 option (gogoproto.goproto_stringer_all) = false;
 option (gogoproto.gostring_all) = true;
+option (gogoproto.equal_all) = true;
 option (gogoproto.goproto_unrecognized_all) = false;
 
 message Grammar {

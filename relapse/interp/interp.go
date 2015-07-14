@@ -36,7 +36,7 @@ func Interpret(g *relapse.Grammar, tree serialize.Scanner) bool {
 			panic(err)
 		}
 		log.Printf("Interpret = %s given input %s", res, tree.Name())
-		res = deriv(refs, res, tree)
+		res = sderiv(refs, res, tree)
 	}
 	log.Printf("Interpret Final = %s", res)
 	return nullable(refs, res)
@@ -102,7 +102,7 @@ func derivTreeNode(refs RefLookup, p *relapse.TreeNode, tree serialize.Scanner) 
 		return relapse.NewEmptySet()
 	}
 	if tree.IsLeaf() {
-		res := deriv(refs, p.GetPattern(), tree)
+		res := sderiv(refs, p.GetPattern(), tree)
 		if !nullable(refs, res) {
 			return relapse.NewEmptySet()
 		}
@@ -119,7 +119,7 @@ func derivTreeNode(refs RefLookup, p *relapse.TreeNode, tree serialize.Scanner) 
 			panic(err)
 		}
 		log.Printf("derivTreeNode = %s given input %s", res, tree.Name())
-		res = deriv(refs, res, tree)
+		res = sderiv(refs, res, tree)
 	}
 	log.Printf("derivTreeNode Final = %s", res)
 	tree.Up()
@@ -127,6 +127,10 @@ func derivTreeNode(refs RefLookup, p *relapse.TreeNode, tree serialize.Scanner) 
 		return relapse.NewEmptySet()
 	}
 	return relapse.NewEmpty()
+}
+
+func sderiv(refs RefLookup, p *relapse.Pattern, tree serialize.Scanner) *relapse.Pattern {
+	return Simplify(refs, deriv(refs, p, tree))
 }
 
 func deriv(refs RefLookup, p *relapse.Pattern, tree serialize.Scanner) *relapse.Pattern {
@@ -155,31 +159,31 @@ func deriv(refs RefLookup, p *relapse.Pattern, tree serialize.Scanner) *relapse.
 		}
 		return relapse.NewEmptySet()
 	case *relapse.Concat:
-		leftDeriv := relapse.NewConcat(deriv(refs, v.GetLeftPattern(), tree), v.GetRightPattern())
+		leftDeriv := relapse.NewConcat(sderiv(refs, v.GetLeftPattern(), tree), v.GetRightPattern())
 		if nullable(refs, v.GetLeftPattern()) {
 			return relapse.NewOr(
 				leftDeriv,
-				deriv(refs, v.GetRightPattern(), tree.Copy()),
+				sderiv(refs, v.GetRightPattern(), tree.Copy()),
 			)
 		} else {
 			return leftDeriv
 		}
 	case *relapse.Or:
 		return relapse.NewOr(
-			deriv(refs, v.GetLeftPattern(), tree),
-			deriv(refs, v.GetRightPattern(), tree.Copy()),
+			sderiv(refs, v.GetLeftPattern(), tree),
+			sderiv(refs, v.GetRightPattern(), tree.Copy()),
 		)
 	case *relapse.And:
 		return relapse.NewAnd(
-			deriv(refs, v.GetLeftPattern(), tree),
-			deriv(refs, v.GetRightPattern(), tree.Copy()),
+			sderiv(refs, v.GetLeftPattern(), tree),
+			sderiv(refs, v.GetRightPattern(), tree.Copy()),
 		)
 	case *relapse.ZeroOrMore:
-		return relapse.NewConcat(deriv(refs, v.Pattern, tree), relapse.NewZeroOrMore(v.Pattern))
+		return relapse.NewConcat(sderiv(refs, v.Pattern, tree), relapse.NewZeroOrMore(v.Pattern))
 	case *relapse.Reference:
-		return deriv(refs, refs[v.GetName()], tree)
+		return sderiv(refs, refs[v.GetName()], tree)
 	case *relapse.Not:
-		return relapse.NewNot(deriv(refs, v.GetPattern(), tree))
+		return relapse.NewNot(sderiv(refs, v.GetPattern(), tree))
 	}
 	panic(fmt.Sprintf("unknown typ %T", typ))
 }

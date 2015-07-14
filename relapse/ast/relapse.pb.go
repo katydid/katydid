@@ -1111,3 +1111,641 @@ func extensionToGoStringRelapse(e map[int32]github_com_gogo_protobuf_proto.Exten
 	s += strings.Join(ss, ",") + "}"
 	return s
 }
+func (this *Grammar) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Grammar)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if len(this.PatternDecls) != len(that1.PatternDecls) {
+		return false
+	}
+	for i := range this.PatternDecls {
+		if !this.PatternDecls[i].Equal(that1.PatternDecls[i]) {
+			return false
+		}
+	}
+	if !this.After.Equal(that1.After) {
+		return false
+	}
+	return true
+}
+func (this *PatternDecl) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*PatternDecl)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Before.Equal(that1.Before) {
+		return false
+	}
+	if this.Name != that1.Name {
+		return false
+	}
+	if !this.Eq.Equal(that1.Eq) {
+		return false
+	}
+	if !this.Pattern.Equal(that1.Pattern) {
+		return false
+	}
+	return true
+}
+func (this *NameExpr) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*NameExpr)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Name.Equal(that1.Name) {
+		return false
+	}
+	if !this.AnyName.Equal(that1.AnyName) {
+		return false
+	}
+	if !this.AnyNameExcept.Equal(that1.AnyNameExcept) {
+		return false
+	}
+	if !this.NameChoice.Equal(that1.NameChoice) {
+		return false
+	}
+	return true
+}
+func (this *Name) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Name)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Before.Equal(that1.Before) {
+		return false
+	}
+	if !this.OpenParen.Equal(that1.OpenParen) {
+		return false
+	}
+	if !this.BeforeName.Equal(that1.BeforeName) {
+		return false
+	}
+	if this.Name != that1.Name {
+		return false
+	}
+	if !this.CloseParen.Equal(that1.CloseParen) {
+		return false
+	}
+	return true
+}
+func (this *AnyName) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*AnyName)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Before.Equal(that1.Before) {
+		return false
+	}
+	return true
+}
+func (this *AnyNameExcept) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*AnyNameExcept)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Before.Equal(that1.Before) {
+		return false
+	}
+	if !this.OpenParen.Equal(that1.OpenParen) {
+		return false
+	}
+	if !this.Except.Equal(that1.Except) {
+		return false
+	}
+	if !this.CloseParen.Equal(that1.CloseParen) {
+		return false
+	}
+	return true
+}
+func (this *NameChoice) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*NameChoice)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Before.Equal(that1.Before) {
+		return false
+	}
+	if !this.OpenParen.Equal(that1.OpenParen) {
+		return false
+	}
+	if !this.Left.Equal(that1.Left) {
+		return false
+	}
+	if !this.Comma.Equal(that1.Comma) {
+		return false
+	}
+	if !this.Right.Equal(that1.Right) {
+		return false
+	}
+	if !this.CloseParen.Equal(that1.CloseParen) {
+		return false
+	}
+	return true
+}
+func (this *Pattern) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Pattern)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Empty.Equal(that1.Empty) {
+		return false
+	}
+	if !this.EmptySet.Equal(that1.EmptySet) {
+		return false
+	}
+	if !this.TreeNode.Equal(that1.TreeNode) {
+		return false
+	}
+	if !this.LeafNode.Equal(that1.LeafNode) {
+		return false
+	}
+	if !this.Concat.Equal(that1.Concat) {
+		return false
+	}
+	if !this.Or.Equal(that1.Or) {
+		return false
+	}
+	if !this.And.Equal(that1.And) {
+		return false
+	}
+	if !this.ZeroOrMore.Equal(that1.ZeroOrMore) {
+		return false
+	}
+	if !this.Reference.Equal(that1.Reference) {
+		return false
+	}
+	if !this.Not.Equal(that1.Not) {
+		return false
+	}
+	return true
+}
+func (this *Empty) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Empty)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Before.Equal(that1.Before) {
+		return false
+	}
+	return true
+}
+func (this *EmptySet) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*EmptySet)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Before.Equal(that1.Before) {
+		return false
+	}
+	return true
+}
+func (this *TreeNode) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*TreeNode)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Before.Equal(that1.Before) {
+		return false
+	}
+	if !this.OpenParen.Equal(that1.OpenParen) {
+		return false
+	}
+	if !this.Name.Equal(that1.Name) {
+		return false
+	}
+	if !this.Comma.Equal(that1.Comma) {
+		return false
+	}
+	if !this.Pattern.Equal(that1.Pattern) {
+		return false
+	}
+	if !this.CloseParen.Equal(that1.CloseParen) {
+		return false
+	}
+	return true
+}
+func (this *LeafNode) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*LeafNode)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Before.Equal(that1.Before) {
+		return false
+	}
+	if !this.OpenParen.Equal(that1.OpenParen) {
+		return false
+	}
+	if !this.Expr.Equal(that1.Expr) {
+		return false
+	}
+	if !this.CloseParen.Equal(that1.CloseParen) {
+		return false
+	}
+	return true
+}
+func (this *Concat) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Concat)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Before.Equal(that1.Before) {
+		return false
+	}
+	if !this.OpenParen.Equal(that1.OpenParen) {
+		return false
+	}
+	if !this.LeftPattern.Equal(that1.LeftPattern) {
+		return false
+	}
+	if !this.Comma.Equal(that1.Comma) {
+		return false
+	}
+	if !this.RightPattern.Equal(that1.RightPattern) {
+		return false
+	}
+	if !this.CloseParen.Equal(that1.CloseParen) {
+		return false
+	}
+	return true
+}
+func (this *Or) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Or)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Before.Equal(that1.Before) {
+		return false
+	}
+	if !this.OpenParen.Equal(that1.OpenParen) {
+		return false
+	}
+	if !this.LeftPattern.Equal(that1.LeftPattern) {
+		return false
+	}
+	if !this.Comma.Equal(that1.Comma) {
+		return false
+	}
+	if !this.RightPattern.Equal(that1.RightPattern) {
+		return false
+	}
+	if !this.CloseParen.Equal(that1.CloseParen) {
+		return false
+	}
+	return true
+}
+func (this *And) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*And)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Before.Equal(that1.Before) {
+		return false
+	}
+	if !this.OpenParen.Equal(that1.OpenParen) {
+		return false
+	}
+	if !this.LeftPattern.Equal(that1.LeftPattern) {
+		return false
+	}
+	if !this.Comma.Equal(that1.Comma) {
+		return false
+	}
+	if !this.RightPattern.Equal(that1.RightPattern) {
+		return false
+	}
+	if !this.CloseParen.Equal(that1.CloseParen) {
+		return false
+	}
+	return true
+}
+func (this *ZeroOrMore) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*ZeroOrMore)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Before.Equal(that1.Before) {
+		return false
+	}
+	if !this.OpenParen.Equal(that1.OpenParen) {
+		return false
+	}
+	if !this.Pattern.Equal(that1.Pattern) {
+		return false
+	}
+	if !this.CloseParen.Equal(that1.CloseParen) {
+		return false
+	}
+	return true
+}
+func (this *Reference) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Reference)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Before.Equal(that1.Before) {
+		return false
+	}
+	if !this.OpenParen.Equal(that1.OpenParen) {
+		return false
+	}
+	if !this.BeforeName.Equal(that1.BeforeName) {
+		return false
+	}
+	if this.Name != that1.Name {
+		return false
+	}
+	if !this.CloseParen.Equal(that1.CloseParen) {
+		return false
+	}
+	return true
+}
+func (this *Not) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Not)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Before.Equal(that1.Before) {
+		return false
+	}
+	if !this.OpenParen.Equal(that1.OpenParen) {
+		return false
+	}
+	if !this.Pattern.Equal(that1.Pattern) {
+		return false
+	}
+	if !this.CloseParen.Equal(that1.CloseParen) {
+		return false
+	}
+	return true
+}

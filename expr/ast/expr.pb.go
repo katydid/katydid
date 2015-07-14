@@ -32,6 +32,8 @@ import sort "sort"
 import strconv "strconv"
 import reflect "reflect"
 
+import bytes "bytes"
+
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = math.Inf
@@ -410,4 +412,305 @@ func extensionToGoStringExpr(e map[int32]github_com_gogo_protobuf_proto.Extensio
 	}
 	s += strings.Join(ss, ",") + "}"
 	return s
+}
+func (this *Expr) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Expr)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Comma.Equal(that1.Comma) {
+		return false
+	}
+	if !this.Terminal.Equal(that1.Terminal) {
+		return false
+	}
+	if !this.List.Equal(that1.List) {
+		return false
+	}
+	if !this.Function.Equal(that1.Function) {
+		return false
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *List) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*List)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Before.Equal(that1.Before) {
+		return false
+	}
+	if this.Type != that1.Type {
+		return false
+	}
+	if !this.OpenCurly.Equal(that1.OpenCurly) {
+		return false
+	}
+	if len(this.Elems) != len(that1.Elems) {
+		return false
+	}
+	for i := range this.Elems {
+		if !this.Elems[i].Equal(that1.Elems[i]) {
+			return false
+		}
+	}
+	if !this.CloseCurly.Equal(that1.CloseCurly) {
+		return false
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *Function) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Function)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Before.Equal(that1.Before) {
+		return false
+	}
+	if this.Name != that1.Name {
+		return false
+	}
+	if !this.OpenParen.Equal(that1.OpenParen) {
+		return false
+	}
+	if len(this.Params) != len(that1.Params) {
+		return false
+	}
+	for i := range this.Params {
+		if !this.Params[i].Equal(that1.Params[i]) {
+			return false
+		}
+	}
+	if !this.CloseParen.Equal(that1.CloseParen) {
+		return false
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *Terminal) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Terminal)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Before.Equal(that1.Before) {
+		return false
+	}
+	if this.Literal != that1.Literal {
+		return false
+	}
+	if this.DoubleValue != nil && that1.DoubleValue != nil {
+		if *this.DoubleValue != *that1.DoubleValue {
+			return false
+		}
+	} else if this.DoubleValue != nil {
+		return false
+	} else if that1.DoubleValue != nil {
+		return false
+	}
+	if this.IntValue != nil && that1.IntValue != nil {
+		if *this.IntValue != *that1.IntValue {
+			return false
+		}
+	} else if this.IntValue != nil {
+		return false
+	} else if that1.IntValue != nil {
+		return false
+	}
+	if this.UintValue != nil && that1.UintValue != nil {
+		if *this.UintValue != *that1.UintValue {
+			return false
+		}
+	} else if this.UintValue != nil {
+		return false
+	} else if that1.UintValue != nil {
+		return false
+	}
+	if this.BoolValue != nil && that1.BoolValue != nil {
+		if *this.BoolValue != *that1.BoolValue {
+			return false
+		}
+	} else if this.BoolValue != nil {
+		return false
+	} else if that1.BoolValue != nil {
+		return false
+	}
+	if this.StringValue != nil && that1.StringValue != nil {
+		if *this.StringValue != *that1.StringValue {
+			return false
+		}
+	} else if this.StringValue != nil {
+		return false
+	} else if that1.StringValue != nil {
+		return false
+	}
+	if !bytes.Equal(this.BytesValue, that1.BytesValue) {
+		return false
+	}
+	if !this.Variable.Equal(that1.Variable) {
+		return false
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *Variable) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Variable)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if this.Type != that1.Type {
+		return false
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *Keyword) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Keyword)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Before.Equal(that1.Before) {
+		return false
+	}
+	if this.Value != that1.Value {
+		return false
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *Space) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Space)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if len(this.Space) != len(that1.Space) {
+		return false
+	}
+	for i := range this.Space {
+		if this.Space[i] != that1.Space[i] {
+			return false
+		}
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
 }

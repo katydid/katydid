@@ -20,6 +20,7 @@ import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 import "github.com/katydid/katydid/types/types.proto";
 
 option (gogoproto.goproto_stringer_all) = false;
+option (gogoproto.equal_all) = true;
 option (gogoproto.gostring_all) = true;
 
 message Expr {

@@ -114,6 +114,7 @@ func TestSaladWorry(t *testing.T) {
 		viper.NewCall("final", anyName(), "final", "final"),
 		viper.NewReturn("final", "final", anyName(), "final"),
 		viper.NewInternal("final", any(), "final"),
+
 		viper.NewInternal("magazineFrame", newExpr(funcs.StringEq(funcs.StringVar(), funcs.StringConst("a"))), "final"),
 		viper.NewInternal("magazineFrame", newExpr(funcs.Not(funcs.StringEq(funcs.StringVar(), funcs.StringConst("a")))), "magazineFrame"),
 	)
