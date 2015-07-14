@@ -18,10 +18,10 @@ import (
 	"fmt"
 	"github.com/gogo/protobuf/proto"
 	"github.com/katydid/katydid/expr/token"
-	"github.com/katydid/katydid/expr/util"
 	"github.com/katydid/katydid/types"
 	"strconv"
 	"strings"
+	"unicode/utf8"
 )
 
 func NewKeyword(space interface{}, v interface{}) *Keyword {
@@ -92,7 +92,7 @@ func NewIntTerminal(slit string) (*Terminal, error) {
 }
 
 func ToInt64(tok []byte) *int64 {
-	i, err := util.IntValue(tok)
+	i, err := strconv.ParseInt(string(tok), 10, 64)
 	if err != nil {
 		panic(err)
 	}
@@ -104,7 +104,7 @@ func NewUintTerminal(slit string) (*Terminal, error) {
 }
 
 func ToUint64(tok []byte) *uint64 {
-	i, err := util.UintValue(tok)
+	i, err := strconv.ParseUint(string(tok), 10, 64)
 	if err != nil {
 		panic(err)
 	}
@@ -165,7 +165,7 @@ func hexesToByte(a byte, b byte) byte {
 
 func parseByte(s string) (byte, error) {
 	if s[0] == '\'' {
-		r := util.RuneValue([]byte(s))
+		r, _ := utf8.DecodeRune([]byte(s)[1:])
 		if r <= 255 {
 			return byte(r), nil
 		}

@@ -115,9 +115,12 @@ func TestSaladWorry(t *testing.T) {
 		viper.NewReturn("final", "final", anyName(), "final"),
 		viper.NewInternal("final", any(), "final"),
 
-		viper.NewInternal("magazineFrame", newExpr(funcs.StringEq(funcs.StringVar(), funcs.StringConst("a"))), "final"),
-		viper.NewInternal("magazineFrame", newExpr(funcs.Not(funcs.StringEq(funcs.StringVar(), funcs.StringConst("a")))), "magazineFrame"),
+		viper.NewInternal("magazineFrame", newExpr(funcs.Contains(funcs.StringVar(), funcs.StringConst("a"))), "final"),
+		viper.NewInternal("magazineFrame", newExpr(funcs.Contains(funcs.StringVar(), funcs.StringConst("b"))), "final"),
+		viper.NewInternal("magazineFrame", newExpr(funcs.Not(funcs.Contains(funcs.StringVar(), funcs.StringConst("a")))), "magazineFrame"),
 	)
+	test(t, rules, m, true)
+	m.SaladWorry.MagazineFrame = []string{"c", "b"}
 	test(t, rules, m, true)
 	m.SaladWorry.MagazineFrame = []string{"c", "d"}
 	test(t, rules, m, false)

@@ -15,6 +15,9 @@
 regenerate:
 	./build.sh
 	(cd ast && make regenerate)
+	rm ./util/litconv.go
+	rm ./util/rune.go
+	rmdir util
 
 clean:
 	rm *.txt || true
