@@ -16,7 +16,7 @@ package tokens
 
 import (
 	"github.com/katydid/katydid/graphviz"
-	"github.com/katydid/katydid/protoparser"
+	"github.com/katydid/katydid/tests"
 	"io/ioutil"
 	"testing"
 )
@@ -36,11 +36,7 @@ func output(t *testing.T, dot string, filename string) {
 }
 
 func TestTokensPerson(t *testing.T) {
-	fileDescriptorSet, err := protoparser.ParseFile("test.proto", ".")
-	if err != nil {
-		t.Fatal(err)
-	}
-	m, err := New("test", "Person", fileDescriptorSet)
+	m, err := New("tests", "Person", tests.PersonDescription())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -48,11 +44,7 @@ func TestTokensPerson(t *testing.T) {
 }
 
 func TestTokensSrcTree(t *testing.T) {
-	fileDescriptorSet, err := protoparser.ParseFile("test.proto", ".")
-	if err != nil {
-		t.Fatal(err)
-	}
-	m, err := New("test", "SrcTree", fileDescriptorSet)
+	m, err := New("tests", "SrcTree", tests.SrctreeDescription())
 	if err != nil {
 		t.Fatal(err)
 	}
