@@ -99,10 +99,10 @@ func simplifyOr(refs RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
 	if isNotEmptySet(p1) || isNotEmptySet(p2) {
 		return relapse.NewNot(relapse.NewEmptySet())
 	}
-	if isEmpty(p1) && nullable(refs, p2) {
+	if isEmpty(p1) && Nullable(refs, p2) {
 		return p2
 	}
-	if isEmpty(p2) && nullable(refs, p1) {
+	if isEmpty(p2) && Nullable(refs, p1) {
 		return p1
 	}
 	if p1.Equal(p2) {
@@ -126,8 +126,8 @@ func simplifyAnd(refs RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
 	if isNotEmptySet(p2) {
 		return p1
 	}
-	if isEmpty(p1) && nullable(refs, p2) ||
-		isEmpty(p2) && nullable(refs, p1) {
+	if isEmpty(p1) && Nullable(refs, p2) ||
+		isEmpty(p2) && Nullable(refs, p1) {
 		return relapse.NewEmpty()
 	} else {
 		return relapse.NewEmptySet()

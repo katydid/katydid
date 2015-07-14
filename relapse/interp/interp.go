@@ -39,7 +39,7 @@ func Interpret(g *relapse.Grammar, tree serialize.Scanner) bool {
 		res = sderiv(refs, res, tree)
 	}
 	log.Printf("Interpret Final = %s", res)
-	return nullable(refs, res)
+	return Nullable(refs, res)
 }
 
 type RefLookup map[string]*relapse.Pattern
@@ -53,7 +53,7 @@ func newRefsLookup(g *relapse.Grammar) RefLookup {
 	return refs
 }
 
-func nullable(refs RefLookup, p *relapse.Pattern) bool {
+func Nullable(refs RefLookup, p *relapse.Pattern) bool {
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *relapse.Empty:
@@ -65,17 +65,17 @@ func nullable(refs RefLookup, p *relapse.Pattern) bool {
 	case *relapse.LeafNode:
 		return false
 	case *relapse.Concat:
-		return nullable(refs, v.GetLeftPattern()) && nullable(refs, v.GetRightPattern())
+		return Nullable(refs, v.GetLeftPattern()) && Nullable(refs, v.GetRightPattern())
 	case *relapse.Or:
-		return nullable(refs, v.GetLeftPattern()) || nullable(refs, v.GetRightPattern())
+		return Nullable(refs, v.GetLeftPattern()) || Nullable(refs, v.GetRightPattern())
 	case *relapse.And:
-		return nullable(refs, v.GetLeftPattern()) && nullable(refs, v.GetRightPattern())
+		return Nullable(refs, v.GetLeftPattern()) && Nullable(refs, v.GetRightPattern())
 	case *relapse.ZeroOrMore:
 		return true
 	case *relapse.Reference:
-		return nullable(refs, refs[v.GetName()])
+		return Nullable(refs, refs[v.GetName()])
 	case *relapse.Not:
-		return !(nullable(refs, v.GetPattern()))
+		return !(Nullable(refs, v.GetPattern()))
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
@@ -103,7 +103,7 @@ func derivTreeNode(refs RefLookup, p *relapse.TreeNode, tree serialize.Scanner) 
 	}
 	if tree.IsLeaf() {
 		res := sderiv(refs, p.GetPattern(), tree)
-		if !nullable(refs, res) {
+		if !Nullable(refs, res) {
 			return relapse.NewEmptySet()
 		}
 		return relapse.NewEmpty()
@@ -123,7 +123,7 @@ func derivTreeNode(refs RefLookup, p *relapse.TreeNode, tree serialize.Scanner) 
 	}
 	log.Printf("derivTreeNode Final = %s", res)
 	tree.Up()
-	if !nullable(refs, res) {
+	if !Nullable(refs, res) {
 		return relapse.NewEmptySet()
 	}
 	return relapse.NewEmpty()
@@ -160,7 +160,7 @@ func deriv(refs RefLookup, p *relapse.Pattern, tree serialize.Scanner) *relapse.
 		return relapse.NewEmptySet()
 	case *relapse.Concat:
 		leftDeriv := relapse.NewConcat(sderiv(refs, v.GetLeftPattern(), tree), v.GetRightPattern())
-		if nullable(refs, v.GetLeftPattern()) {
+		if Nullable(refs, v.GetLeftPattern()) {
 			return relapse.NewOr(
 				leftDeriv,
 				sderiv(refs, v.GetRightPattern(), tree.Copy()),
