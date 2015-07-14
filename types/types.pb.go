@@ -21,75 +21,26 @@ import math "math"
 var _ = proto.Marshal
 var _ = math.Inf
 
-// First numbers correspond with Protocol Buffer FieldDescriptorProto Type in descriptor.proto
 type Type int32
 
 const (
-	UNKNOWN          Type = 0
-	ENCODED_DOUBLE   Type = 1
-	ENCODED_FLOAT    Type = 2
-	ENCODED_INT64    Type = 3
-	ENCODED_UINT64   Type = 4
-	ENCODED_INT32    Type = 5
-	ENCODED_FIXED64  Type = 6
-	ENCODED_FIXED32  Type = 7
-	ENCODED_BOOL     Type = 8
-	ENCODED_STRING   Type = 9
-	ENCODED_GROUP    Type = 10
-	ENCODED_MESSAGE  Type = 11
-	ENCODED_BYTES    Type = 12
-	ENCODED_UINT32   Type = 13
-	ENCODED_ENUM     Type = 14
-	ENCODED_SFIXED32 Type = 15
-	ENCODED_SFIXED64 Type = 16
-	ENCODED_SINT32   Type = 17
-	ENCODED_SINT64   Type = 18
-	SINGLE_DOUBLE    Type = 101
-	// SINGLE_FLOAT          = 102;
-	SINGLE_INT  Type = 103
-	SINGLE_UINT Type = 104
-	// SINGLE_INT32          = 105;
-	// SINGLE_FIXED64        = 106;
-	// SINGLE_FIXED32        = 107;
+	UNKNOWN       Type = 0
+	SINGLE_DOUBLE Type = 101
+	SINGLE_INT    Type = 103
+	SINGLE_UINT   Type = 104
 	SINGLE_BOOL   Type = 108
 	SINGLE_STRING Type = 109
-	// SINGLE_GROUP          = 110;
-	// SINGLE_MESSAGE        = 111;
-	SINGLE_BYTES Type = 112
-	LIST_DOUBLE  Type = 201
-	// LIST_FLOAT          = 202;
-	LIST_INT  Type = 203
-	LIST_UINT Type = 204
-	// LIST_INT32          = 205;
-	// LIST_FIXED64        = 206;
-	// LIST_FIXED32        = 207;
-	LIST_BOOL   Type = 208
-	LIST_STRING Type = 209
-	// LIST_GROUP          = 210;
-	// LIST_MESSAGE        = 211;
-	LIST_BYTES Type = 212
+	SINGLE_BYTES  Type = 112
+	LIST_DOUBLE   Type = 201
+	LIST_INT      Type = 203
+	LIST_UINT     Type = 204
+	LIST_BOOL     Type = 208
+	LIST_STRING   Type = 209
+	LIST_BYTES    Type = 212
 )
 
 var Type_name = map[int32]string{
 	0:   "UNKNOWN",
-	1:   "ENCODED_DOUBLE",
-	2:   "ENCODED_FLOAT",
-	3:   "ENCODED_INT64",
-	4:   "ENCODED_UINT64",
-	5:   "ENCODED_INT32",
-	6:   "ENCODED_FIXED64",
-	7:   "ENCODED_FIXED32",
-	8:   "ENCODED_BOOL",
-	9:   "ENCODED_STRING",
-	10:  "ENCODED_GROUP",
-	11:  "ENCODED_MESSAGE",
-	12:  "ENCODED_BYTES",
-	13:  "ENCODED_UINT32",
-	14:  "ENCODED_ENUM",
-	15:  "ENCODED_SFIXED32",
-	16:  "ENCODED_SFIXED64",
-	17:  "ENCODED_SINT32",
-	18:  "ENCODED_SINT64",
 	101: "SINGLE_DOUBLE",
 	103: "SINGLE_INT",
 	104: "SINGLE_UINT",
@@ -104,37 +55,19 @@ var Type_name = map[int32]string{
 	212: "LIST_BYTES",
 }
 var Type_value = map[string]int32{
-	"UNKNOWN":          0,
-	"ENCODED_DOUBLE":   1,
-	"ENCODED_FLOAT":    2,
-	"ENCODED_INT64":    3,
-	"ENCODED_UINT64":   4,
-	"ENCODED_INT32":    5,
-	"ENCODED_FIXED64":  6,
-	"ENCODED_FIXED32":  7,
-	"ENCODED_BOOL":     8,
-	"ENCODED_STRING":   9,
-	"ENCODED_GROUP":    10,
-	"ENCODED_MESSAGE":  11,
-	"ENCODED_BYTES":    12,
-	"ENCODED_UINT32":   13,
-	"ENCODED_ENUM":     14,
-	"ENCODED_SFIXED32": 15,
-	"ENCODED_SFIXED64": 16,
-	"ENCODED_SINT32":   17,
-	"ENCODED_SINT64":   18,
-	"SINGLE_DOUBLE":    101,
-	"SINGLE_INT":       103,
-	"SINGLE_UINT":      104,
-	"SINGLE_BOOL":      108,
-	"SINGLE_STRING":    109,
-	"SINGLE_BYTES":     112,
-	"LIST_DOUBLE":      201,
-	"LIST_INT":         203,
-	"LIST_UINT":        204,
-	"LIST_BOOL":        208,
-	"LIST_STRING":      209,
-	"LIST_BYTES":       212,
+	"UNKNOWN":       0,
+	"SINGLE_DOUBLE": 101,
+	"SINGLE_INT":    103,
+	"SINGLE_UINT":   104,
+	"SINGLE_BOOL":   108,
+	"SINGLE_STRING": 109,
+	"SINGLE_BYTES":  112,
+	"LIST_DOUBLE":   201,
+	"LIST_INT":      203,
+	"LIST_UINT":     204,
+	"LIST_BOOL":     208,
+	"LIST_STRING":   209,
+	"LIST_BYTES":    212,
 }
 
 func (x Type) Enum() *Type {

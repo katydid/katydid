@@ -77,29 +77,3 @@ func IsSingle(typ Type) bool {
 	}
 	return true
 }
-
-func IsEncoded(typ Type) bool {
-	switch typ {
-	case ENCODED_DOUBLE:
-	case ENCODED_FLOAT:
-	case ENCODED_INT64:
-	case ENCODED_UINT64:
-	case ENCODED_INT32:
-	case ENCODED_FIXED64:
-	case ENCODED_FIXED32:
-	case ENCODED_BOOL:
-	case ENCODED_STRING:
-	case ENCODED_GROUP:
-	case ENCODED_MESSAGE:
-	case ENCODED_BYTES:
-	case ENCODED_UINT32:
-	case ENCODED_ENUM:
-	case ENCODED_SFIXED32:
-	case ENCODED_SFIXED64:
-	case ENCODED_SINT32:
-	case ENCODED_SINT64:
-	default:
-		return false
-	}
-	return true
-}
