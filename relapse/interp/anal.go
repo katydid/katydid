@@ -22,12 +22,12 @@ import (
 
 // Experimental
 func GetLeafs(g *relapse.Grammar, path ...string) []*expr.Expr {
-	refs := newRefsLookup(g)
+	refs := relapse.NewRefsLookup(g)
 	p := refs["main"]
 	return getLeafs(refs, p, path)
 }
 
-func getLeafs(refs RefLookup, p *relapse.Pattern, path []string) []*expr.Expr {
+func getLeafs(refs relapse.RefLookup, p *relapse.Pattern, path []string) []*expr.Expr {
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *relapse.Empty:
@@ -120,13 +120,13 @@ func hasVar(e *expr.Expr) bool {
 //Experimental
 func Replace(g *relapse.Grammar, current *expr.Expr, replacement *expr.Expr, path ...string) *relapse.Grammar {
 	g2 := g.Clone()
-	refs := newRefsLookup(g2)
+	refs := relapse.NewRefsLookup(g2)
 	p := refs["main"]
 	replace(refs, p, path, current, replacement)
 	return g2
 }
 
-func replace(refs RefLookup, p *relapse.Pattern, path []string, current *expr.Expr, replacement *expr.Expr) {
+func replace(refs relapse.RefLookup, p *relapse.Pattern, path []string, current *expr.Expr, replacement *expr.Expr) {
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *relapse.Empty:

@@ -24,7 +24,7 @@ import (
 )
 
 func Interpret(g *relapse.Grammar, tree serialize.Scanner) bool {
-	refs := newRefsLookup(g)
+	refs := relapse.NewRefsLookup(g)
 	res := refs["main"]
 	res = refs["main"]
 	for {
@@ -42,18 +42,7 @@ func Interpret(g *relapse.Grammar, tree serialize.Scanner) bool {
 	return Nullable(refs, res)
 }
 
-type RefLookup map[string]*relapse.Pattern
-
-func newRefsLookup(g *relapse.Grammar) RefLookup {
-	decls := g.GetPatternDecls()
-	refs := make(RefLookup, len(decls))
-	for _, d := range decls {
-		refs[d.Name] = d.Pattern
-	}
-	return refs
-}
-
-func Nullable(refs RefLookup, p *relapse.Pattern) bool {
+func Nullable(refs relapse.RefLookup, p *relapse.Pattern) bool {
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *relapse.Empty:
@@ -95,7 +84,7 @@ func evalName(nameExpr *relapse.NameExpr, name string) bool {
 	panic(fmt.Sprintf("unknown nameExpr typ %T", typ))
 }
 
-func derivTreeNode(refs RefLookup, p *relapse.TreeNode, tree serialize.Scanner) *relapse.Pattern {
+func derivTreeNode(refs relapse.RefLookup, p *relapse.TreeNode, tree serialize.Scanner) *relapse.Pattern {
 	matched := evalName(p.GetName(), tree.Name())
 	if !matched {
 		tree.Next()
@@ -129,11 +118,11 @@ func derivTreeNode(refs RefLookup, p *relapse.TreeNode, tree serialize.Scanner) 
 	return relapse.NewEmpty()
 }
 
-func sderiv(refs RefLookup, p *relapse.Pattern, tree serialize.Scanner) *relapse.Pattern {
+func sderiv(refs relapse.RefLookup, p *relapse.Pattern, tree serialize.Scanner) *relapse.Pattern {
 	return Simplify(refs, deriv(refs, p, tree))
 }
 
-func deriv(refs RefLookup, p *relapse.Pattern, tree serialize.Scanner) *relapse.Pattern {
+func deriv(refs relapse.RefLookup, p *relapse.Pattern, tree serialize.Scanner) *relapse.Pattern {
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *relapse.Empty:

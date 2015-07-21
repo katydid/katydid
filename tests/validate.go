@@ -12,40 +12,29 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package interp_test
+package tests
 
 import (
-	. "github.com/katydid/katydid/relapse/combinator"
-	"github.com/katydid/katydid/relapse/interp"
-	"testing"
+	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse/combinator"
 )
 
-func check(g G, t *testing.T, expected bool) {
-	grammar := g.Grammar()
-	out := interp.Satisfiable(grammar)
-	if out != expected {
-		t.Fatalf("expected %v but got %v for %s", expected, out, grammar)
-	}
+type Validator struct {
+	Name        string
+	Grammar     *relapse.Grammar
+	Expected    bool
+	Description string
+	Scanners    map[string]NewScanner
 }
 
-func TestSatisfiability(t *testing.T) {
-	check(G{
-		"main": Any(),
-	}, t, true)
-	check(G{
-		"main": None(),
-	}, t, false)
-	check(G{
-		"main": MatchInAny(
-			None(),
-		),
-	}, t, false)
-	check(G{
-		"main": MatchIn("A",
-			Either(
-				MatchIn("B", Any()),
-				None(),
-			),
-		),
-	}, t, true)
+var Validators = make(map[string]Validator)
+
+func Validate(name string, grammar combinator.G, codecs Codecs, expected bool) {
+	Validators[name] = Validator{
+		Name:        name,
+		Grammar:     grammar.Grammar(),
+		Expected:    expected,
+		Scanners:    codecs.Scanners,
+		Description: codecs.Description,
+	}
 }

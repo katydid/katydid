@@ -18,6 +18,17 @@ import (
 	"github.com/katydid/katydid/expr/ast"
 )
 
+type RefLookup map[string]*Pattern
+
+func NewRefsLookup(g *Grammar) RefLookup {
+	decls := g.GetPatternDecls()
+	refs := make(RefLookup, len(decls))
+	for _, d := range decls {
+		refs[d.Name] = d.Pattern
+	}
+	return refs
+}
+
 func NewGrammar(m map[string]*Pattern) *Grammar {
 	ps := make([]*PatternDecl, 0, len(m))
 	first := true

@@ -36,6 +36,10 @@ func init() {
 func {{.CType}}{{.CName}}(a, b {{.CType}}) Bool {
 	return &{{.Type}}{{.CName}}{V1: a, V2: b}
 }
+
+func {{.CType}}Var{{.CName}}(a {{.CType}}) Bool {
+	return &{{.Type}}{{.CName}}{V1: a, V2: {{.CType}}Var()}
+}
 `
 
 type compare struct {

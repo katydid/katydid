@@ -109,15 +109,15 @@ func MatchTree(child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pa
 	return concat(child, children...)
 }
 
-func AndMatch(left, right *relapse.Pattern) *relapse.Pattern {
+func Both(left, right *relapse.Pattern) *relapse.Pattern {
 	return relapse.NewAnd(left, right)
 }
 
-func OrMatch(left, right *relapse.Pattern) *relapse.Pattern {
+func Either(left, right *relapse.Pattern) *relapse.Pattern {
 	return relapse.NewOr(left, right)
 }
 
-func NotMatch(p *relapse.Pattern) *relapse.Pattern {
+func OppositeOf(p *relapse.Pattern) *relapse.Pattern {
 	return relapse.NewNot(p)
 }
 

@@ -24,6 +24,10 @@ func DoubleGE(a, b Double) Bool {
 	return &doubleGE{V1: a, V2: b}
 }
 
+func DoubleVarGE(a Double) Bool {
+	return &doubleGE{V1: a, V2: DoubleVar()}
+}
+
 type intGE struct {
 	V1 Int
 	V2 Int
@@ -39,6 +43,10 @@ func init() {
 
 func IntGE(a, b Int) Bool {
 	return &intGE{V1: a, V2: b}
+}
+
+func IntVarGE(a Int) Bool {
+	return &intGE{V1: a, V2: IntVar()}
 }
 
 type uintGE struct {
@@ -58,6 +66,10 @@ func UintGE(a, b Uint) Bool {
 	return &uintGE{V1: a, V2: b}
 }
 
+func UintVarGE(a Uint) Bool {
+	return &uintGE{V1: a, V2: UintVar()}
+}
+
 type bytesGE struct {
 	V1 Bytes
 	V2 Bytes
@@ -73,6 +85,10 @@ func init() {
 
 func BytesGE(a, b Bytes) Bool {
 	return &bytesGE{V1: a, V2: b}
+}
+
+func BytesVarGE(a Bytes) Bool {
+	return &bytesGE{V1: a, V2: BytesVar()}
 }
 
 type doubleGt struct {
@@ -92,6 +108,10 @@ func DoubleGt(a, b Double) Bool {
 	return &doubleGt{V1: a, V2: b}
 }
 
+func DoubleVarGt(a Double) Bool {
+	return &doubleGt{V1: a, V2: DoubleVar()}
+}
+
 type intGt struct {
 	V1 Int
 	V2 Int
@@ -107,6 +127,10 @@ func init() {
 
 func IntGt(a, b Int) Bool {
 	return &intGt{V1: a, V2: b}
+}
+
+func IntVarGt(a Int) Bool {
+	return &intGt{V1: a, V2: IntVar()}
 }
 
 type uintGt struct {
@@ -126,6 +150,10 @@ func UintGt(a, b Uint) Bool {
 	return &uintGt{V1: a, V2: b}
 }
 
+func UintVarGt(a Uint) Bool {
+	return &uintGt{V1: a, V2: UintVar()}
+}
+
 type bytesGt struct {
 	V1 Bytes
 	V2 Bytes
@@ -141,6 +169,10 @@ func init() {
 
 func BytesGt(a, b Bytes) Bool {
 	return &bytesGt{V1: a, V2: b}
+}
+
+func BytesVarGt(a Bytes) Bool {
+	return &bytesGt{V1: a, V2: BytesVar()}
 }
 
 type doubleLE struct {
@@ -160,6 +192,10 @@ func DoubleLE(a, b Double) Bool {
 	return &doubleLE{V1: a, V2: b}
 }
 
+func DoubleVarLE(a Double) Bool {
+	return &doubleLE{V1: a, V2: DoubleVar()}
+}
+
 type intLE struct {
 	V1 Int
 	V2 Int
@@ -175,6 +211,10 @@ func init() {
 
 func IntLE(a, b Int) Bool {
 	return &intLE{V1: a, V2: b}
+}
+
+func IntVarLE(a Int) Bool {
+	return &intLE{V1: a, V2: IntVar()}
 }
 
 type uintLE struct {
@@ -194,6 +234,10 @@ func UintLE(a, b Uint) Bool {
 	return &uintLE{V1: a, V2: b}
 }
 
+func UintVarLE(a Uint) Bool {
+	return &uintLE{V1: a, V2: UintVar()}
+}
+
 type bytesLE struct {
 	V1 Bytes
 	V2 Bytes
@@ -209,6 +253,10 @@ func init() {
 
 func BytesLE(a, b Bytes) Bool {
 	return &bytesLE{V1: a, V2: b}
+}
+
+func BytesVarLE(a Bytes) Bool {
+	return &bytesLE{V1: a, V2: BytesVar()}
 }
 
 type doubleLt struct {
@@ -228,6 +276,10 @@ func DoubleLt(a, b Double) Bool {
 	return &doubleLt{V1: a, V2: b}
 }
 
+func DoubleVarLt(a Double) Bool {
+	return &doubleLt{V1: a, V2: DoubleVar()}
+}
+
 type intLt struct {
 	V1 Int
 	V2 Int
@@ -243,6 +295,10 @@ func init() {
 
 func IntLt(a, b Int) Bool {
 	return &intLt{V1: a, V2: b}
+}
+
+func IntVarLt(a Int) Bool {
+	return &intLt{V1: a, V2: IntVar()}
 }
 
 type uintLt struct {
@@ -262,6 +318,10 @@ func UintLt(a, b Uint) Bool {
 	return &uintLt{V1: a, V2: b}
 }
 
+func UintVarLt(a Uint) Bool {
+	return &uintLt{V1: a, V2: UintVar()}
+}
+
 type bytesLt struct {
 	V1 Bytes
 	V2 Bytes
@@ -277,6 +337,10 @@ func init() {
 
 func BytesLt(a, b Bytes) Bool {
 	return &bytesLt{V1: a, V2: b}
+}
+
+func BytesVarLt(a Bytes) Bool {
+	return &bytesLt{V1: a, V2: BytesVar()}
 }
 
 type doubleEq struct {
@@ -296,6 +360,10 @@ func DoubleEq(a, b Double) Bool {
 	return &doubleEq{V1: a, V2: b}
 }
 
+func DoubleVarEq(a Double) Bool {
+	return &doubleEq{V1: a, V2: DoubleVar()}
+}
+
 type intEq struct {
 	V1 Int
 	V2 Int
@@ -311,6 +379,10 @@ func init() {
 
 func IntEq(a, b Int) Bool {
 	return &intEq{V1: a, V2: b}
+}
+
+func IntVarEq(a Int) Bool {
+	return &intEq{V1: a, V2: IntVar()}
 }
 
 type uintEq struct {
@@ -330,6 +402,10 @@ func UintEq(a, b Uint) Bool {
 	return &uintEq{V1: a, V2: b}
 }
 
+func UintVarEq(a Uint) Bool {
+	return &uintEq{V1: a, V2: UintVar()}
+}
+
 type boolEq struct {
 	V1 Bool
 	V2 Bool
@@ -345,6 +421,10 @@ func init() {
 
 func BoolEq(a, b Bool) Bool {
 	return &boolEq{V1: a, V2: b}
+}
+
+func BoolVarEq(a Bool) Bool {
+	return &boolEq{V1: a, V2: BoolVar()}
 }
 
 type stringEq struct {
@@ -364,6 +444,10 @@ func StringEq(a, b String) Bool {
 	return &stringEq{V1: a, V2: b}
 }
 
+func StringVarEq(a String) Bool {
+	return &stringEq{V1: a, V2: StringVar()}
+}
+
 type bytesEq struct {
 	V1 Bytes
 	V2 Bytes
@@ -379,4 +463,8 @@ func init() {
 
 func BytesEq(a, b Bytes) Bool {
 	return &bytesEq{V1: a, V2: b}
+}
+
+func BytesVarEq(a Bytes) Bool {
+	return &bytesEq{V1: a, V2: BytesVar()}
 }

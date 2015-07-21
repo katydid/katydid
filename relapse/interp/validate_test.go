@@ -15,37 +15,20 @@
 package interp_test
 
 import (
-	. "github.com/katydid/katydid/relapse/combinator"
 	"github.com/katydid/katydid/relapse/interp"
+	"github.com/katydid/katydid/tests"
+	"log"
 	"testing"
 )
 
-func check(g G, t *testing.T, expected bool) {
-	grammar := g.Grammar()
-	out := interp.Satisfiable(grammar)
-	if out != expected {
-		t.Fatalf("expected %v but got %v for %s", expected, out, grammar)
+func TestValidators(t *testing.T) {
+	for _, v := range tests.Validators {
+		for scannerName, s := range v.Scanners {
+			log.Printf("TESTING %s with Codec %s", v.Name, scannerName)
+			match := interp.Interpret(v.Grammar, s())
+			if match != v.Expected {
+				t.Errorf("%s: Expected a %v match given %s scanner from \n%v \non \n%#v", v.Name, v.Expected, scannerName, v.Grammar.String(), v.Description)
+			}
+		}
 	}
-}
-
-func TestSatisfiability(t *testing.T) {
-	check(G{
-		"main": Any(),
-	}, t, true)
-	check(G{
-		"main": None(),
-	}, t, false)
-	check(G{
-		"main": MatchInAny(
-			None(),
-		),
-	}, t, false)
-	check(G{
-		"main": MatchIn("A",
-			Either(
-				MatchIn("B", Any()),
-				None(),
-			),
-		),
-	}, t, true)
 }

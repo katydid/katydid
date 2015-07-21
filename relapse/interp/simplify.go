@@ -19,7 +19,7 @@ import (
 	"github.com/katydid/katydid/relapse/ast"
 )
 
-func Simplify(refs RefLookup, p *relapse.Pattern) *relapse.Pattern {
+func Simplify(refs relapse.RefLookup, p *relapse.Pattern) *relapse.Pattern {
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *relapse.Empty:
@@ -89,7 +89,7 @@ func simplifyConcat(p1, p2 *relapse.Pattern) *relapse.Pattern {
 	return relapse.NewConcat(p1, p2)
 }
 
-func simplifyOr(refs RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
+func simplifyOr(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
 	if isEmptySet(p1) {
 		return p2
 	}
@@ -116,7 +116,7 @@ func simplifyOr(refs RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
 	return relapse.NewOr(p1, p2)
 }
 
-func simplifyAnd(refs RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
+func simplifyAnd(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
 	if isEmptySet(p1) || isEmptySet(p2) {
 		return relapse.NewEmptySet()
 	}

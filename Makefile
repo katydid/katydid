@@ -14,7 +14,7 @@
 
 .PHONY: nuke regenerate gofmt build test
 
-all: nuke dep regenerate gofmt build test checklicense
+all: nuke dep regenerate build test checklicense
 
 dep:
 	go install github.com/gogo/protobuf/protoc-gen-gogo
@@ -45,7 +45,8 @@ regenerate:
 	(cd tests && make regenerate)
 	(cd serialize && make regenerate)
 	(cd funcs && go test -test.run=GenFuncList 2>../list_of_functions.txt)
-	make gofmt
+	find . -name "*.pb.go" | xargs gofmt -l -s -w
+	find . -name "*.gen.go" | xargs gofmt -l -s -w
 
 clean:
 	go clean ./...

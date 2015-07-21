@@ -23,7 +23,7 @@ import (
 // Returns true if there exists a tree that can satisfy the Grammar.
 // This function may return some false positives.
 func Satisfiable(g *relapse.Grammar) bool {
-	refs := newRefsLookup(g)
+	refs := relapse.NewRefsLookup(g)
 	p := refs["main"]
 	return sat(refs, p)
 }
@@ -55,7 +55,7 @@ func satLeaf(expr *expr.Expr) bool {
 	return true //TODO some standard functions should be evaluatable.
 }
 
-func sat(refs RefLookup, p *relapse.Pattern) bool {
+func sat(refs relapse.RefLookup, p *relapse.Pattern) bool {
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *relapse.Empty:

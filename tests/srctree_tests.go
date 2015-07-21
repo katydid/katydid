@@ -16,6 +16,8 @@ package tests
 
 import (
 	"github.com/gogo/protobuf/proto"
+	. "github.com/katydid/katydid/funcs"
+	. "github.com/katydid/katydid/relapse/combinator"
 )
 
 var IoUtilSrcTree = &SrcTree{
@@ -111,4 +113,23 @@ var SyscallSrcTree = &SrcTree{
 			PackageName: proto.String("unsafe"),
 		},
 	},
+}
+
+//Does this SrcTree depend on io or is its package name io
+var RecursiveSrcTree = G{
+	"main": MatchTree(
+		Any(),
+		Either(
+			MatchField("PackageName", Sprint(StringVarEq(StringConst("io")))),
+			MatchIn("Imports", Eval("main")),
+		),
+		Any(),
+	),
+}
+
+func init() {
+	Validate("RecursiveIoUtil", RecursiveSrcTree, AllCodecs(IoUtilSrcTree), true)
+	Validate("RecursivePath", RecursiveSrcTree, AllCodecs(PathSrcTree), true)
+	Validate("RecursiveRuntime", RecursiveSrcTree, Reflect(RuntimeSrcTree), false) //TODO fix for AllCodecs
+	Validate("RecursiveSyscall", RecursiveSrcTree, Reflect(SyscallSrcTree), false) //TODO fix for AllCodecs
 }

@@ -15,6 +15,7 @@
 package interp_test
 
 import (
+	"fmt"
 	"github.com/gogo/protobuf/proto"
 	. "github.com/katydid/katydid/funcs"
 	. "github.com/katydid/katydid/relapse/combinator"
@@ -36,7 +37,7 @@ func bench(b *testing.B, patternDecls G, pkg string, msg string, gen func() prot
 		datas[i] = data
 	}
 	tmp := gen()
-	desc := tmp.(protoMessage).Description()
+	desc := tmp.(tests.ProtoMessage).Description()
 	g := patternDecls.Grammar()
 	s := pscanner.NewProtoScanner(pkg, msg, desc)
 	b.ResetTimer()
@@ -49,44 +50,54 @@ func bench(b *testing.B, patternDecls G, pkg string, msg string, gen func() prot
 	}
 }
 
+func test(t *testing.T, patternDecls G, expected bool, pkg string, msg string, m tests.ProtoMessage) {
+	g := patternDecls.Grammar()
+	desc := fmt.Sprintf("%#v", m)
+	scanner := tests.NewProtoScanner(pkg, msg, m)
+	match := interp.Interpret(g, scanner)
+	if match != expected {
+		t.Fatalf("Expected %v on given \n%s\n on \n%s", expected, g.String(), desc)
+	}
+}
+
 func BenchmarkContextPerson(b *testing.B) {
-	bench(b, contextPerson, "tests", "Person", tests.RandomPerson)
+	bench(b, tests.ContextPerson, "tests", "Person", tests.RandomPerson)
 }
 
 func BenchmarkRecursiveSrcTree(b *testing.B) {
-	bench(b, recursiveSrcTree, "tests", "SrcTree", tests.RandomSrcTree)
+	bench(b, tests.RecursiveSrcTree, "tests", "SrcTree", tests.RandomSrcTree)
 }
 
 func BenchmarkListIndexAddress(b *testing.B) {
-	bench(b, listIndexAddress, "tests", "Person", tests.RandomPerson)
+	bench(b, tests.ListIndexAddressPerson, "tests", "Person", tests.RandomPerson)
 }
 
 func BenchmarkNilName(b *testing.B) {
-	bench(b, nilName, "tests", "Person", tests.RandomPerson)
+	bench(b, tests.NilNamePerson, "tests", "Person", tests.RandomPerson)
 }
 
 func BenchmarkLenName(b *testing.B) {
-	bench(b, lenName, "tests", "Person", tests.RandomPerson)
+	bench(b, tests.LenNamePerson, "tests", "Person", tests.RandomPerson)
 }
 
 func BenchmarkEmptyOrNil(b *testing.B) {
-	bench(b, emptyOrNil, "tests", "Person", tests.RandomPerson)
+	bench(b, tests.EmptyOrNilPerson, "tests", "Person", tests.RandomPerson)
 }
 
 func BenchmarkIncorrectNotName(b *testing.B) {
-	bench(b, incorrentNotName, "tests", "Person", tests.RandomPerson)
+	bench(b, tests.NaiveNotNamePerson, "tests", "Person", tests.RandomPerson)
 }
 
 func BenchmarkCorrectNotName(b *testing.B) {
-	bench(b, correctNotName, "tests", "Person", tests.RandomPerson)
+	bench(b, tests.ProperNotNamePerson, "tests", "Person", tests.RandomPerson)
 }
 
 func BenchmarkAndNameTelephone(b *testing.B) {
-	bench(b, andNameTelephone, "tests", "Person", tests.RandomPerson)
+	bench(b, tests.AndNameTelephonePerson, "tests", "Person", tests.RandomPerson)
 }
 
 func BenchmarkOrNameTelephone(b *testing.B) {
-	bench(b, orNameTelephone, "tests", "Person", tests.RandomPerson)
+	bench(b, tests.OrNameTelephonePerson, "tests", "Person", tests.RandomPerson)
 }
 
 var scarBusStop = G{
@@ -103,7 +114,7 @@ var scarBusStop = G{
 
 func TestTypewriterPrisonScarBusStop(t *testing.T) {
 	m := &tests.TypewriterPrison{PocketRoses: &tests.PocketRoses{ScarBusStop: proto.String("a")}}
-	newTester(t, scarBusStop, true).proto("tests", "TypewriterPrison", m)
+	test(t, scarBusStop, true, "tests", "TypewriterPrison", m)
 }
 
 func BenchmarkTypewriterPrisonScarBusStop(b *testing.B) {
@@ -124,7 +135,7 @@ var daisySled = G{
 
 func TestTypewriterPrisonDaisySled(t *testing.T) {
 	m := &tests.TypewriterPrison{PocketRoses: &tests.PocketRoses{DaisySled: proto.Int64(1)}}
-	newTester(t, daisySled, true).proto("tests", "TypewriterPrison", m)
+	test(t, daisySled, true, "tests", "TypewriterPrison", m)
 }
 
 func BenchmarkTypewriterPrisonDaisySled(b *testing.B) {
@@ -145,7 +156,7 @@ var smileLetter = G{
 
 func TestTypewriterPrisonSmileLetter(t *testing.T) {
 	m := &tests.TypewriterPrison{PocketRoses: &tests.PocketRoses{SmileLetter: proto.Bool(true)}}
-	newTester(t, smileLetter, true).proto("tests", "TypewriterPrison", m)
+	test(t, smileLetter, true, "tests", "TypewriterPrison", m)
 }
 
 func BenchmarkTypewriterPrisonSmileLetter(b *testing.B) {
@@ -166,7 +177,7 @@ var menuPaperClip = G{
 
 func TestTypewriterPrisonMenuPaperclip(t *testing.T) {
 	m := &tests.TypewriterPrison{PocketRoses: &tests.PocketRoses{MenuPaperclip: []string{"a"}}}
-	newTester(t, menuPaperClip, true).proto("tests", "TypewriterPrison", m)
+	test(t, menuPaperClip, true, "tests", "TypewriterPrison", m)
 }
 
 func BenchmarkTypewriterPrisonMenuPaperclip(b *testing.B) {
@@ -187,7 +198,7 @@ var mapShark = G{
 
 func TestTypewriterPrisonMapShark(t *testing.T) {
 	m := &tests.TypewriterPrison{PocketRoses: &tests.PocketRoses{MapShark: proto.String("a")}}
-	newTester(t, mapShark, true).proto("tests", "TypewriterPrison", m)
+	test(t, mapShark, true, "tests", "TypewriterPrison", m)
 }
 
 func BenchmarkTypewriterPrisonMapShark(b *testing.B) {
@@ -216,7 +227,7 @@ var bridgePepper = G{
 
 func TestBridgePepper(t *testing.T) {
 	m := &tests.PuddingMilkshake{FinanceJudo: &tests.FinanceJudo{SaladWorry: &tests.SaladWorry{SpyCarpenter: &tests.SpyCarpenter{BridgePepper: []string{"a"}}}}}
-	newTester(t, bridgePepper, true).proto("tests", "PuddingMilkshake", m)
+	test(t, bridgePepper, true, "tests", "PuddingMilkshake", m)
 }
 
 func BenchmarkBridgePepper(b *testing.B) {
@@ -231,7 +242,7 @@ var bridgePepperAndFountainTarget = G{
 			MatchIn("SaladWorry",
 				Any(),
 				MatchIn("SpyCarpenter",
-					AndMatch(
+					Both(
 						MatchTree(
 							Any(),
 							MatchField("BridgePepper", Sprint(Contains(StringVar(), StringConst("a")))),
@@ -254,7 +265,7 @@ var bridgePepperAndFountainTarget = G{
 
 func TestBridgePepperAndFountainTarget(t *testing.T) {
 	m := &tests.PuddingMilkshake{FinanceJudo: &tests.FinanceJudo{SaladWorry: &tests.SaladWorry{SpyCarpenter: &tests.SpyCarpenter{BridgePepper: []string{"a"}, FountainTarget: []string{"a"}}}}}
-	newTester(t, bridgePepperAndFountainTarget, true).proto("tests", "PuddingMilkshake", m)
+	test(t, bridgePepperAndFountainTarget, true, "tests", "PuddingMilkshake", m)
 }
 
 func BenchmarkBridgePepperAndFountainTarget(b *testing.B) {
@@ -269,7 +280,7 @@ var bridgePepperOrFountainTarget = G{
 			MatchIn("SaladWorry",
 				Any(),
 				MatchIn("SpyCarpenter",
-					OrMatch(
+					Either(
 						MatchTree(
 							Any(),
 							MatchField("BridgePepper", Sprint(Contains(StringVar(), StringConst("a")))),
@@ -292,7 +303,7 @@ var bridgePepperOrFountainTarget = G{
 
 func TestBridgePepperOrFountainTarget(t *testing.T) {
 	m := &tests.PuddingMilkshake{FinanceJudo: &tests.FinanceJudo{SaladWorry: &tests.SaladWorry{SpyCarpenter: &tests.SpyCarpenter{BridgePepper: []string{"b"}, FountainTarget: []string{"a"}}}}}
-	newTester(t, bridgePepperOrFountainTarget, true).proto("tests", "PuddingMilkshake", m)
+	test(t, bridgePepperOrFountainTarget, true, "tests", "PuddingMilkshake", m)
 }
 
 func BenchmarkBridgePepperOrFountainTarget(b *testing.B) {

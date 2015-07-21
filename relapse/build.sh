@@ -22,3 +22,7 @@ cat relapse.bnf >> all.bnf
 cat ../expr/expr.bnf >> all.bnf
 cat ../expr/keyword.bnf >> all.bnf
 gocc all.bnf
+gofmt -l -s -w ./parser/
+gofmt -l -s -w ./errors/
+gofmt -l -s -w ./lexer/
+gofmt -l -s -w ./token/

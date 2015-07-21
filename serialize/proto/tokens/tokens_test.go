@@ -12,10 +12,11 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package tokens
+package tokens_test
 
 import (
 	"github.com/katydid/katydid/graphviz"
+	. "github.com/katydid/katydid/serialize/proto/tokens"
 	"github.com/katydid/katydid/tests"
 	"io/ioutil"
 	"testing"
