@@ -12,38 +12,21 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package json_test
+package interp_test
 
 import (
-	"bytes"
-	"encoding/json"
-	"github.com/katydid/katydid/serialize/debug"
-	sjson "github.com/katydid/katydid/serialize/json"
+	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse/interp"
+	"github.com/katydid/katydid/serialize"
+	//"github.com/katydid/katydid/serialize/debug"
+	//"github.com/katydid/katydid/tests"
 	"testing"
 )
 
-func TestJsonScanner(t *testing.T) {
-	j := map[string][]interface{}{
-		"a": {1},
-		"b": {
-			map[string][]interface{}{
-				"ba": {1, 2, 3},
-				"bb": {"string"},
-			},
-		},
-	}
-	data, err := json.Marshal(j)
-	if err != nil {
-		t.Fatal(err)
-	}
-	scanner := sjson.NewJsonScanner()
-	scanner.Init(data)
-	jout := debug.Walk(scanner)
-	data2, err := json.Marshal(jout)
-	if err != nil {
-		panic(err)
-	}
-	if !bytes.Equal(data, data2) {
-		t.Error("bytes not equal")
+func test(t *testing.T, g *relapse.Grammar, scanner serialize.Scanner, expected bool, desc string) {
+	//scanner = debug.NewLogger(scanner, debug.NewLineLogger())
+	match := interp.Interpret(g, scanner)
+	if match != expected {
+		t.Fatalf("Expected %v on given \n%s\n on \n%s", expected, g.String(), desc)
 	}
 }

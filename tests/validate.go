@@ -21,20 +21,37 @@ import (
 
 type Validator struct {
 	Name        string
+	CodecName   string
 	Grammar     *relapse.Grammar
+	Scanner     NewScanner
 	Expected    bool
 	Description string
-	Scanners    map[string]NewScanner
 }
 
-var Validators = make(map[string]Validator)
+var Validators = make(map[string]map[string]Validator)
+
+func ValidatorList() []interface{} {
+	vs := make([]interface{}, 0, len(Validators)*3)
+	for name, cs := range Validators {
+		for cname, _ := range cs {
+			vs = append(vs, Validators[name][cname])
+		}
+	}
+	return vs
+}
 
 func Validate(name string, grammar combinator.G, codecs Codecs, expected bool) {
-	Validators[name] = Validator{
-		Name:        name,
-		Grammar:     grammar.Grammar(),
-		Expected:    expected,
-		Scanners:    codecs.Scanners,
-		Description: codecs.Description,
+	if _, ok := Validators[name]; !ok {
+		Validators[name] = make(map[string]Validator)
+	}
+	for codecName, s := range codecs.Scanners {
+		Validators[name][codecName] = Validator{
+			Name:        name,
+			CodecName:   codecName,
+			Grammar:     grammar.Grammar(),
+			Scanner:     s,
+			Expected:    expected,
+			Description: codecs.Description,
+		}
 	}
 }

@@ -12,12 +12,15 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package fortesting
+package debug
 
 import (
 	"github.com/katydid/katydid/serialize"
 	"log"
 	"os"
+	"path/filepath"
+	"runtime"
+	"strconv"
 	"time"
 )
 
@@ -25,14 +28,45 @@ type Logger interface {
 	Printf(format string, v ...interface{})
 }
 
-func NewStdLogger() Logger {
-	return log.New(os.Stderr, "", log.Llongfile)
+func NewLineLogger() Logger {
+	return &line{log.New(os.Stderr, "", 0)}
+}
+
+type line struct {
+	l Logger
+}
+
+func (l *line) Printf(format string, v ...interface{}) {
+	_, thisfile, _, ok := runtime.Caller(0)
+	if !ok {
+		l.l.Printf("<weirdlyunknown>:0: "+format, v...)
+		return
+	}
+	i := 0
+	for {
+		i++
+		_, file, line, ok := runtime.Caller(i)
+		if !ok {
+			l.l.Printf("<unknown>:"+strconv.Itoa(i)+": "+format, v...)
+			return
+		}
+		if file == thisfile {
+			continue
+		}
+		_, name := filepath.Split(file)
+		if name != "interp.go" {
+			continue
+		}
+		l.l.Printf(name+":"+strconv.Itoa(line)+": "+format, v...)
+		return
+	}
+	panic("unreachable")
 }
 
 func NewDelayLogger(delay time.Duration) Logger {
 	return &d{
 		delay: delay,
-		log:   NewStdLogger(),
+		log:   NewLineLogger(),
 	}
 }
 
@@ -47,82 +81,86 @@ func (d *d) Printf(format string, v ...interface{}) {
 }
 
 type l struct {
-	s serialize.Scanner
-	l Logger
+	name   string
+	s      serialize.Scanner
+	l      Logger
+	copies int
 }
 
 func NewLogger(s serialize.Scanner, logger Logger) serialize.Scanner {
-	return &l{s, logger}
+	return &l{"scanner", s, logger, 0}
 }
 
 func (l *l) Double() (float64, error) {
 	v, err := l.s.Double()
-	l.l.Printf("scanner.Double() (%v, %v)", v, err)
+	l.l.Printf(l.name+".Double() (%v, %v)", v, err)
 	return v, err
 }
 
 func (l *l) Int() (int64, error) {
 	v, err := l.s.Int()
-	l.l.Printf("scanner.Int() (%v, %v)", v, err)
+	l.l.Printf(l.name+".Int() (%v, %v)", v, err)
 	return v, err
 }
 
 func (l *l) Uint() (uint64, error) {
 	v, err := l.s.Uint()
-	l.l.Printf("scanner.Uint() (%v, %v)", v, err)
+	l.l.Printf(l.name+".Uint() (%v, %v)", v, err)
 	return v, err
 }
 
 func (l *l) Bool() (bool, error) {
 	v, err := l.s.Bool()
-	l.l.Printf("scanner.Bool() (%v, %v)", v, err)
+	l.l.Printf(l.name+".Bool() (%v, %v)", v, err)
 	return v, err
 }
 
 func (l *l) String() (string, error) {
 	v, err := l.s.String()
-	l.l.Printf("scanner.String() (%v, %v)", v, err)
+	l.l.Printf(l.name+".String() (%v, %v)", v, err)
 	return v, err
 }
 
 func (l *l) Bytes() ([]byte, error) {
 	v, err := l.s.Bytes()
-	l.l.Printf("scanner.Bytes() (%v, %v)", v, err)
+	l.l.Printf(l.name+".Bytes() (%v, %v)", v, err)
 	return v, err
 }
 
-func (l *l) Copy() serialize.Scanner {
-	s := l.s.Copy()
-	l.l.Printf("scanner.Copy()")
-	return s
+func (this *l) Copy() serialize.Scanner {
+	s := this.s.Copy()
+	this.copies++
+	name := this.name + strconv.Itoa(this.copies)
+	this.l.Printf(this.name+".Copy() (%s)", name)
+	return &l{name, s, this.l, 0}
 }
 
 func (l *l) Next() error {
 	err := l.s.Next()
-	l.l.Printf("scanner.Next() (%v)", err)
+	l.l.Printf(l.name+".Next() (%v)", err)
 	return err
 }
 
 func (l *l) IsLeaf() bool {
 	v := l.s.IsLeaf()
-	l.l.Printf("scanner.IsLeaf() (%v)", v)
+	l.l.Printf(l.name+".IsLeaf() (%v)", v)
 	return v
 }
 
 func (l *l) Name() string {
 	v := l.s.Name()
-	l.l.Printf("scanner.Name() (%v)", v)
+	l.l.Printf(l.name+".Name() (%v)", v)
 	return v
 }
 
 func (l *l) Up() {
 	l.s.Up()
-	l.l.Printf("scanner.Up()")
+	l.l.Printf(l.name + ".Up()")
 	return
 }
 
 func (l *l) Down() {
 	l.s.Down()
-	l.l.Printf("scanner.Down()")
+	l.l.Printf(l.name + ".Down()")
 	return
 }

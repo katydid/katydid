@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package fortesting
+package debug
 
 import (
 	"github.com/katydid/katydid/serialize"

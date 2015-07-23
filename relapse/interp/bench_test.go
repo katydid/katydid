@@ -50,7 +50,7 @@ func bench(b *testing.B, patternDecls G, pkg string, msg string, gen func() prot
 	}
 }
 
-func test(t *testing.T, patternDecls G, expected bool, pkg string, msg string, m tests.ProtoMessage) {
+func benchTest(t *testing.T, patternDecls G, expected bool, pkg string, msg string, m tests.ProtoMessage) {
 	g := patternDecls.Grammar()
 	desc := fmt.Sprintf("%#v", m)
 	scanner := tests.NewProtoScanner(pkg, msg, m)
@@ -114,7 +114,7 @@ var scarBusStop = G{
 
 func TestTypewriterPrisonScarBusStop(t *testing.T) {
 	m := &tests.TypewriterPrison{PocketRoses: &tests.PocketRoses{ScarBusStop: proto.String("a")}}
-	test(t, scarBusStop, true, "tests", "TypewriterPrison", m)
+	benchTest(t, scarBusStop, true, "tests", "TypewriterPrison", m)
 }
 
 func BenchmarkTypewriterPrisonScarBusStop(b *testing.B) {
@@ -135,7 +135,7 @@ var daisySled = G{
 
 func TestTypewriterPrisonDaisySled(t *testing.T) {
 	m := &tests.TypewriterPrison{PocketRoses: &tests.PocketRoses{DaisySled: proto.Int64(1)}}
-	test(t, daisySled, true, "tests", "TypewriterPrison", m)
+	benchTest(t, daisySled, true, "tests", "TypewriterPrison", m)
 }
 
 func BenchmarkTypewriterPrisonDaisySled(b *testing.B) {
@@ -156,7 +156,7 @@ var smileLetter = G{
 
 func TestTypewriterPrisonSmileLetter(t *testing.T) {
 	m := &tests.TypewriterPrison{PocketRoses: &tests.PocketRoses{SmileLetter: proto.Bool(true)}}
-	test(t, smileLetter, true, "tests", "TypewriterPrison", m)
+	benchTest(t, smileLetter, true, "tests", "TypewriterPrison", m)
 }
 
 func BenchmarkTypewriterPrisonSmileLetter(b *testing.B) {
@@ -177,7 +177,7 @@ var menuPaperClip = G{
 
 func TestTypewriterPrisonMenuPaperclip(t *testing.T) {
 	m := &tests.TypewriterPrison{PocketRoses: &tests.PocketRoses{MenuPaperclip: []string{"a"}}}
-	test(t, menuPaperClip, true, "tests", "TypewriterPrison", m)
+	benchTest(t, menuPaperClip, true, "tests", "TypewriterPrison", m)
 }
 
 func BenchmarkTypewriterPrisonMenuPaperclip(b *testing.B) {
@@ -198,7 +198,7 @@ var mapShark = G{
 
 func TestTypewriterPrisonMapShark(t *testing.T) {
 	m := &tests.TypewriterPrison{PocketRoses: &tests.PocketRoses{MapShark: proto.String("a")}}
-	test(t, mapShark, true, "tests", "TypewriterPrison", m)
+	benchTest(t, mapShark, true, "tests", "TypewriterPrison", m)
 }
 
 func BenchmarkTypewriterPrisonMapShark(b *testing.B) {
@@ -227,7 +227,7 @@ var bridgePepper = G{
 
 func TestBridgePepper(t *testing.T) {
 	m := &tests.PuddingMilkshake{FinanceJudo: &tests.FinanceJudo{SaladWorry: &tests.SaladWorry{SpyCarpenter: &tests.SpyCarpenter{BridgePepper: []string{"a"}}}}}
-	test(t, bridgePepper, true, "tests", "PuddingMilkshake", m)
+	benchTest(t, bridgePepper, true, "tests", "PuddingMilkshake", m)
 }
 
 func BenchmarkBridgePepper(b *testing.B) {
@@ -265,7 +265,7 @@ var bridgePepperAndFountainTarget = G{
 
 func TestBridgePepperAndFountainTarget(t *testing.T) {
 	m := &tests.PuddingMilkshake{FinanceJudo: &tests.FinanceJudo{SaladWorry: &tests.SaladWorry{SpyCarpenter: &tests.SpyCarpenter{BridgePepper: []string{"a"}, FountainTarget: []string{"a"}}}}}
-	test(t, bridgePepperAndFountainTarget, true, "tests", "PuddingMilkshake", m)
+	benchTest(t, bridgePepperAndFountainTarget, true, "tests", "PuddingMilkshake", m)
 }
 
 func BenchmarkBridgePepperAndFountainTarget(b *testing.B) {
@@ -303,7 +303,7 @@ var bridgePepperOrFountainTarget = G{
 
 func TestBridgePepperOrFountainTarget(t *testing.T) {
 	m := &tests.PuddingMilkshake{FinanceJudo: &tests.FinanceJudo{SaladWorry: &tests.SaladWorry{SpyCarpenter: &tests.SpyCarpenter{BridgePepper: []string{"b"}, FountainTarget: []string{"a"}}}}}
-	test(t, bridgePepperOrFountainTarget, true, "tests", "PuddingMilkshake", m)
+	benchTest(t, bridgePepperOrFountainTarget, true, "tests", "PuddingMilkshake", m)
 }
 
 func BenchmarkBridgePepperOrFountainTarget(b *testing.B) {

@@ -85,10 +85,6 @@ func (s *scanner) IsLeaf() bool {
 	return !s.current.info.IsDir()
 }
 
-func (s *scanner) Id() int {
-	return 0 //TODO tokens
-}
-
 func (s *scanner) Value() []byte {
 	return []byte(s.current.path)
 }

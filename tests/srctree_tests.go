@@ -130,6 +130,6 @@ var RecursiveSrcTree = G{
 func init() {
 	Validate("RecursiveIoUtil", RecursiveSrcTree, AllCodecs(IoUtilSrcTree), true)
 	Validate("RecursivePath", RecursiveSrcTree, AllCodecs(PathSrcTree), true)
-	Validate("RecursiveRuntime", RecursiveSrcTree, Reflect(RuntimeSrcTree), false) //TODO fix for AllCodecs
-	Validate("RecursiveSyscall", RecursiveSrcTree, Reflect(SyscallSrcTree), false) //TODO fix for AllCodecs
+	Validate("RecursiveRuntime", RecursiveSrcTree, AllCodecs(RuntimeSrcTree), false)
+	Validate("RecursiveSyscall", RecursiveSrcTree, AllCodecs(SyscallSrcTree), false)
 }

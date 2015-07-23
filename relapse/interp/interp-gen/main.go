@@ -1,4 +1,4 @@
-//  Copyright 2015 Walter Schulze
+//  Copyright 2013 Walter Schulze
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -12,23 +12,21 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package interp_test
+package main
 
 import (
-	"github.com/katydid/katydid/relapse/interp"
+	"github.com/katydid/katydid/gen"
 	"github.com/katydid/katydid/tests"
-	"log"
-	"testing"
 )
 
-func TestValidators(t *testing.T) {
-	for _, v := range tests.Validators {
-		for scannerName, s := range v.Scanners {
-			log.Printf("TESTING %s with Codec %s", v.Name, scannerName)
-			match := interp.Interpret(v.Grammar, s())
-			if match != v.Expected {
-				t.Errorf("%s: Expected a %v match given %s scanner from \n%v \non \n%#v", v.Name, v.Expected, scannerName, v.Grammar.String(), v.Description)
-			}
-		}
-	}
+const testStr = `
+func Test{{.Name}}{{capFirst .CodecName}}(t *testing.T) {
+	v := tests.Validators["{{.Name}}"]["{{.CodecName}}"]
+	test(t, v.Grammar, v.Scanner(), v.Expected, v.Description)
+}
+`
+
+func main() {
+	gen := gen.NewFunc("interp_test")
+	gen(testStr, "interp.gen_test.go", tests.ValidatorList(), `"testing"`, `"github.com/katydid/katydid/tests"`)
 }

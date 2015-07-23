@@ -20,25 +20,23 @@ import (
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/serialize"
 	"io"
-	"log"
+	//"log"
 )
 
 func Interpret(g *relapse.Grammar, tree serialize.Scanner) bool {
 	refs := relapse.NewRefsLookup(g)
 	res := refs["main"]
 	res = refs["main"]
-	for {
-		err := tree.Next()
-		if err != nil {
-			if err == io.EOF {
-				break
-			}
-			panic(err)
-		}
-		log.Printf("Interpret = %s given input %s", res, tree.Name())
+	err := tree.Next()
+	for err == nil {
+		//log.Printf("Interpret = %s given input %s", res, tree.Name())
 		res = sderiv(refs, res, tree)
+		err = tree.Next()
 	}
-	log.Printf("Interpret Final = %s", res)
+	if err != io.EOF {
+		panic(err)
+	}
+	//log.Printf("Interpret Final = %s", res)
 	return Nullable(refs, res)
 }
 
@@ -87,7 +85,6 @@ func evalName(nameExpr *relapse.NameExpr, name string) bool {
 func derivTreeNode(refs relapse.RefLookup, p *relapse.TreeNode, tree serialize.Scanner) *relapse.Pattern {
 	matched := evalName(p.GetName(), tree.Name())
 	if !matched {
-		tree.Next()
 		return relapse.NewEmptySet()
 	}
 	if tree.IsLeaf() {
@@ -99,18 +96,16 @@ func derivTreeNode(refs relapse.RefLookup, p *relapse.TreeNode, tree serialize.S
 	}
 	tree.Down()
 	res := p.GetPattern()
-	for {
-		err := tree.Next()
-		if err != nil {
-			if err == io.EOF {
-				break
-			}
-			panic(err)
-		}
-		log.Printf("derivTreeNode = %s given input %s", res, tree.Name())
+	err := tree.Next()
+	for err == nil {
+		//log.Printf("derivTreeNode = %s given input %s", res, tree.Name())
 		res = sderiv(refs, res, tree)
+		err = tree.Next()
 	}
-	log.Printf("derivTreeNode Final = %s", res)
+	if err != io.EOF {
+		panic(err)
+	}
+	//log.Printf("derivTreeNode Final = %s", res)
 	tree.Up()
 	if !Nullable(refs, res) {
 		return relapse.NewEmptySet()
