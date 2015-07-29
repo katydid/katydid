@@ -22,39 +22,40 @@ import (
 
 func TestParse(t *testing.T) {
 	patternDecls := []string{
-		`main = LeafNode("string_lit")`,
-		`main = Reference(ref1)
-		ref1 = LeafNode(eq($int, int(123)))
+		`main = "string_lit"`,
+		`main = #ref1
+		ref1 = eq($int, int(123))
 		`,
-		`main = TreeNode(Name("MyParent"), Concat(
-			LeafNode(eq($string, "123")), 
-			LeafNode(eq($string, "456"))
-		))`,
-		`main = TreeNode(Name("A"), Concat(
-			TreeNode(Name("a"), LeafNode(eq($string, "aa"))),
-			TreeNode(Name("b"), LeafNode(eq($int, int(123))))
-		))`,
-		`main = TreeNode(Name("A"), Concat(
-			Not(EmptySet),
-			Concat(
-				TreeNode(Name("a"), LeafNode(eq($string, "aa"))),
-				Not(EmptySet)
-			)
-		))`,
-		`main = TreeNode(Name("Desc"), Concat(
-			Not(EmptySet),
-			Concat(
-				TreeNode(Name("Src"), LeafNode(contains($string, "1"))),
-				Concat(
-					TreeNode(Name("Src"), LeafNode(contains($string, "2"))),
-					ZeroOrMore(TreeNode(AnyNameExcept(Name("Src")), Not(EmptySet)))
-				)
-			)
-		))`,
-		`main = And(TreeNode(Name("MyParent"), LeafNode(int(1))), TreeNode( Name( "MyParent"), LeafNode(int(2))))`,
+		`main = Name("MyParent"): [
+			eq($string, "123"), 
+			eq($string, "456")
+		]`,
+		`main = Name("A") : [
+			Name("a"): eq($string, "aa"),
+			Name("b"): eq($int, int(123))
+		]`,
+		`main = Name("A"): [
+			!(EmptySet),
+			[
+				Name("a"): eq($string, "aa"),
+				!(EmptySet)
+			]
+		]`,
+		`main = Name("Desc"): [
+			!(EmptySet),
+			[
+				Name("Src"): contains($string, "1"),
+				[
+					Name("Src"): contains($string, "2"),
+					ZeroOrMore(AnyNameExcept(Name("Src")): !(EmptySet))
+				]
+			]
+		]`,
+		`main = (Name("MyParent"): int(1) &  Name( "MyParent"): int(2))`,
 	}
 	p := parser.NewParser()
-	for _, patternDecl := range patternDecls {
+	for i, patternDecl := range patternDecls {
+		t.Logf("parsing %d", i)
 		scanner := lexer.NewLexer([]byte(patternDecl))
 		st, err := p.ParseGrammar(scanner)
 		if err != nil {

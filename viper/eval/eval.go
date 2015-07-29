@@ -15,6 +15,7 @@
 package eval
 
 import (
+	"fmt"
 	"github.com/katydid/katydid/expr/ast"
 	"github.com/katydid/katydid/expr/compose"
 	"github.com/katydid/katydid/serialize"
@@ -67,6 +68,7 @@ func evalReturn(rules *viper.Rules, srcParent, srcChild string, name string) (ds
 			continue
 		}
 		if rule.Return.ParentSrc.Name == srcParent && rule.Return.ChildSrc.Name == srcChild {
+			fmt.Printf("%s\n", rule)
 			if evalName(rule.Return.Expr, name) {
 				return rule.Return.Dst.Name
 			}
@@ -82,6 +84,7 @@ func evalCall(rules *viper.Rules, src string, name string) (parentDst string, ch
 		}
 		if rule.Call.Src.Name == src {
 			if evalName(rule.Call.Expr, name) {
+				fmt.Printf("%s\n", rule)
 				return rule.Call.ParentDst.Name, rule.Call.ChildDst.Name
 			}
 		}
@@ -96,7 +99,8 @@ func evalExpr(expr *expr.Expr, value serialize.Decoder) bool {
 	}
 	res, err := f.Eval(value)
 	if err != nil {
-		panic(err)
+		//TODO think about this again and write some tests
+		return false
 	}
 	return res
 }
@@ -108,6 +112,7 @@ func evalInternal(rules *viper.Rules, src string, value serialize.Decoder) (dst 
 		}
 		if rule.Internal.Src.Name == src {
 			if evalExpr(rule.Internal.Expr, value) {
+				fmt.Printf("%s\n", rule)
 				return rule.Internal.Dst.Name
 			}
 		}
@@ -117,6 +122,7 @@ func evalInternal(rules *viper.Rules, src string, value serialize.Decoder) (dst 
 
 func eval(rules *viper.Rules, tree serialize.Scanner, current string) string {
 	for {
+		fmt.Printf("state = %s\n", current)
 		if err := tree.Next(); err != nil {
 			if err == io.EOF {
 				break

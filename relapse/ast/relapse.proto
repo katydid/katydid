@@ -95,46 +95,37 @@ message EmptySet {
 }
 
 message TreeNode {
-	optional expr.Space Before = 1;
-	optional expr.Keyword OpenParen = 2;
-	optional NameExpr Name = 4;
-	optional expr.Keyword Comma = 5;
-	optional Pattern Pattern = 6;
-	optional expr.Keyword CloseParen = 7;
+	optional NameExpr Name = 1;
+	optional expr.Keyword Colon = 2;
+	optional Pattern Pattern = 3;
 }
 
 message LeafNode {
-	optional expr.Space Before = 1;
-	optional expr.Keyword OpenParen = 2;
-	optional expr.Expr Expr = 3;
-	optional expr.Keyword CloseParen = 4;
+	optional expr.Expr Expr = 1;
 }
 
 message Concat {
-	optional expr.Space Before = 1;
-	optional expr.Keyword OpenParen = 2;
+	optional expr.Keyword OpenBracket = 2;
 	optional Pattern LeftPattern = 3;
 	optional expr.Keyword Comma = 4;
 	optional Pattern RightPattern = 5;
-	optional expr.Keyword CloseParen = 6;
+	optional expr.Keyword CloseBracket = 6;
 }
 
 message Or {
-	optional expr.Space Before = 1;
-	optional expr.Keyword OpenParen = 2;
-	optional Pattern LeftPattern = 3;
-	optional expr.Keyword Comma = 4;
-	optional Pattern RightPattern = 5;
-	optional expr.Keyword CloseParen = 6;
+	optional expr.Keyword OpenParen = 1;
+	optional Pattern LeftPattern = 2;
+	optional expr.Keyword Pipe = 3;
+	optional Pattern RightPattern = 4;
+	optional expr.Keyword CloseParen = 5;
 }
 
 message And {
-	optional expr.Space Before = 1;
-	optional expr.Keyword OpenParen = 2;
-	optional Pattern LeftPattern = 3;
-	optional expr.Keyword Comma = 4;
-	optional Pattern RightPattern = 5;
-	optional expr.Keyword CloseParen = 6;
+	optional expr.Keyword OpenParen = 1;
+	optional Pattern LeftPattern = 2;
+	optional expr.Keyword Ampersand = 3;
+	optional Pattern RightPattern = 4;
+	optional expr.Keyword CloseParen = 5;
 }
 
 message ZeroOrMore {
@@ -145,15 +136,12 @@ message ZeroOrMore {
 }
 
 message Reference {
-	optional expr.Space Before = 1;
-	optional expr.Keyword OpenParen = 2;
-	optional expr.Space BeforeName = 3;
-	optional string Name = 4 [(gogoproto.nullable) = false];
-	optional expr.Keyword CloseParen = 5;
+	optional expr.Keyword HashTag = 1;
+	optional string Name = 2 [(gogoproto.nullable) = false];
 }
 
 message Not {
-	optional expr.Space Before = 1;
+	optional expr.Keyword Exclamation = 1;
 	optional expr.Keyword OpenParen = 2;
 	optional Pattern Pattern = 3;
 	optional expr.Keyword CloseParen = 4;

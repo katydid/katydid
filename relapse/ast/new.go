@@ -76,6 +76,34 @@ func newEqual() *expr.Keyword {
 	return &expr.Keyword{Value: "="}
 }
 
+func newHashTag() *expr.Keyword {
+	return &expr.Keyword{Value: "#"}
+}
+
+func newAmpersand() *expr.Keyword {
+	return &expr.Keyword{Value: "&"}
+}
+
+func newPipe() *expr.Keyword {
+	return &expr.Keyword{Value: "|"}
+}
+
+func newOpenBracket() *expr.Keyword {
+	return &expr.Keyword{Value: "["}
+}
+
+func newCloseBracket() *expr.Keyword {
+	return &expr.Keyword{Value: "]"}
+}
+
+func newColon() *expr.Keyword {
+	return &expr.Keyword{Value: ":"}
+}
+
+func newExclamation() *expr.Keyword {
+	return &expr.Keyword{Value: "!"}
+}
+
 func NewName(name string) *NameExpr {
 	return &NameExpr{
 		Name: &Name{
@@ -117,11 +145,9 @@ func NewNameChoice(left, right *NameExpr) *NameExpr {
 func NewTreeNode(name *NameExpr, pattern *Pattern) *Pattern {
 	return &Pattern{
 		TreeNode: &TreeNode{
-			OpenParen:  newOpenParen(),
-			Name:       name,
-			Comma:      newComma(),
-			Pattern:    pattern,
-			CloseParen: newCloseParen(),
+			Name:    name,
+			Colon:   newColon(),
+			Pattern: pattern,
 		},
 	}
 }
@@ -129,9 +155,7 @@ func NewTreeNode(name *NameExpr, pattern *Pattern) *Pattern {
 func NewLeafNode(expr *expr.Expr) *Pattern {
 	return &Pattern{
 		LeafNode: &LeafNode{
-			OpenParen:  newOpenParen(),
-			Expr:       expr,
-			CloseParen: newCloseParen(),
+			Expr: expr,
 		},
 	}
 }
@@ -139,11 +163,11 @@ func NewLeafNode(expr *expr.Expr) *Pattern {
 func NewConcat(left, right *Pattern) *Pattern {
 	return &Pattern{
 		Concat: &Concat{
-			OpenParen:    newOpenParen(),
+			OpenBracket:  newOpenBracket(),
 			LeftPattern:  left,
 			Comma:        newComma(),
 			RightPattern: right,
-			CloseParen:   newCloseParen(),
+			CloseBracket: newCloseBracket(),
 		},
 	}
 }
@@ -153,7 +177,7 @@ func NewOr(left, right *Pattern) *Pattern {
 		Or: &Or{
 			OpenParen:    newOpenParen(),
 			LeftPattern:  left,
-			Comma:        newComma(),
+			Pipe:         newPipe(),
 			RightPattern: right,
 			CloseParen:   newCloseParen(),
 		},
@@ -165,7 +189,7 @@ func NewAnd(left, right *Pattern) *Pattern {
 		And: &And{
 			OpenParen:    newOpenParen(),
 			LeftPattern:  left,
-			Comma:        newComma(),
+			Ampersand:    newAmpersand(),
 			RightPattern: right,
 			CloseParen:   newCloseParen(),
 		},
@@ -185,9 +209,8 @@ func NewZeroOrMore(pattern *Pattern) *Pattern {
 func NewReference(name string) *Pattern {
 	return &Pattern{
 		Reference: &Reference{
-			OpenParen:  newOpenParen(),
-			Name:       name,
-			CloseParen: newCloseParen(),
+			HashTag: newHashTag(),
+			Name:    name,
 		},
 	}
 }
@@ -195,9 +218,10 @@ func NewReference(name string) *Pattern {
 func NewNot(pattern *Pattern) *Pattern {
 	return &Pattern{
 		Not: &Not{
-			OpenParen:  newOpenParen(),
-			Pattern:    pattern,
-			CloseParen: newCloseParen(),
+			Exclamation: newExclamation(),
+			OpenParen:   newOpenParen(),
+			Pattern:     pattern,
+			CloseParen:  newCloseParen(),
 		},
 	}
 }

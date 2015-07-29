@@ -412,30 +412,13 @@ func (m *EmptySet) GetBefore() *expr.Space {
 }
 
 type TreeNode struct {
-	Before     *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	OpenParen  *expr.Keyword `protobuf:"bytes,2,opt" json:"OpenParen,omitempty"`
-	Name       *NameExpr     `protobuf:"bytes,4,opt" json:"Name,omitempty"`
-	Comma      *expr.Keyword `protobuf:"bytes,5,opt" json:"Comma,omitempty"`
-	Pattern    *Pattern      `protobuf:"bytes,6,opt" json:"Pattern,omitempty"`
-	CloseParen *expr.Keyword `protobuf:"bytes,7,opt" json:"CloseParen,omitempty"`
+	Name    *NameExpr     `protobuf:"bytes,1,opt" json:"Name,omitempty"`
+	Colon   *expr.Keyword `protobuf:"bytes,2,opt" json:"Colon,omitempty"`
+	Pattern *Pattern      `protobuf:"bytes,3,opt" json:"Pattern,omitempty"`
 }
 
 func (m *TreeNode) Reset()      { *m = TreeNode{} }
 func (*TreeNode) ProtoMessage() {}
-
-func (m *TreeNode) GetBefore() *expr.Space {
-	if m != nil {
-		return m.Before
-	}
-	return nil
-}
-
-func (m *TreeNode) GetOpenParen() *expr.Keyword {
-	if m != nil {
-		return m.OpenParen
-	}
-	return nil
-}
 
 func (m *TreeNode) GetName() *NameExpr {
 	if m != nil {
@@ -444,9 +427,9 @@ func (m *TreeNode) GetName() *NameExpr {
 	return nil
 }
 
-func (m *TreeNode) GetComma() *expr.Keyword {
+func (m *TreeNode) GetColon() *expr.Keyword {
 	if m != nil {
-		return m.Comma
+		return m.Colon
 	}
 	return nil
 }
@@ -458,36 +441,12 @@ func (m *TreeNode) GetPattern() *Pattern {
 	return nil
 }
 
-func (m *TreeNode) GetCloseParen() *expr.Keyword {
-	if m != nil {
-		return m.CloseParen
-	}
-	return nil
-}
-
 type LeafNode struct {
-	Before     *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	OpenParen  *expr.Keyword `protobuf:"bytes,2,opt" json:"OpenParen,omitempty"`
-	Expr       *expr.Expr    `protobuf:"bytes,3,opt" json:"Expr,omitempty"`
-	CloseParen *expr.Keyword `protobuf:"bytes,4,opt" json:"CloseParen,omitempty"`
+	Expr *expr.Expr `protobuf:"bytes,1,opt" json:"Expr,omitempty"`
 }
 
 func (m *LeafNode) Reset()      { *m = LeafNode{} }
 func (*LeafNode) ProtoMessage() {}
-
-func (m *LeafNode) GetBefore() *expr.Space {
-	if m != nil {
-		return m.Before
-	}
-	return nil
-}
-
-func (m *LeafNode) GetOpenParen() *expr.Keyword {
-	if m != nil {
-		return m.OpenParen
-	}
-	return nil
-}
 
 func (m *LeafNode) GetExpr() *expr.Expr {
 	if m != nil {
@@ -496,35 +455,20 @@ func (m *LeafNode) GetExpr() *expr.Expr {
 	return nil
 }
 
-func (m *LeafNode) GetCloseParen() *expr.Keyword {
-	if m != nil {
-		return m.CloseParen
-	}
-	return nil
-}
-
 type Concat struct {
-	Before       *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	OpenParen    *expr.Keyword `protobuf:"bytes,2,opt" json:"OpenParen,omitempty"`
+	OpenBracket  *expr.Keyword `protobuf:"bytes,2,opt" json:"OpenBracket,omitempty"`
 	LeftPattern  *Pattern      `protobuf:"bytes,3,opt" json:"LeftPattern,omitempty"`
 	Comma        *expr.Keyword `protobuf:"bytes,4,opt" json:"Comma,omitempty"`
 	RightPattern *Pattern      `protobuf:"bytes,5,opt" json:"RightPattern,omitempty"`
-	CloseParen   *expr.Keyword `protobuf:"bytes,6,opt" json:"CloseParen,omitempty"`
+	CloseBracket *expr.Keyword `protobuf:"bytes,6,opt" json:"CloseBracket,omitempty"`
 }
 
 func (m *Concat) Reset()      { *m = Concat{} }
 func (*Concat) ProtoMessage() {}
 
-func (m *Concat) GetBefore() *expr.Space {
+func (m *Concat) GetOpenBracket() *expr.Keyword {
 	if m != nil {
-		return m.Before
-	}
-	return nil
-}
-
-func (m *Concat) GetOpenParen() *expr.Keyword {
-	if m != nil {
-		return m.OpenParen
+		return m.OpenBracket
 	}
 	return nil
 }
@@ -550,31 +494,23 @@ func (m *Concat) GetRightPattern() *Pattern {
 	return nil
 }
 
-func (m *Concat) GetCloseParen() *expr.Keyword {
+func (m *Concat) GetCloseBracket() *expr.Keyword {
 	if m != nil {
-		return m.CloseParen
+		return m.CloseBracket
 	}
 	return nil
 }
 
 type Or struct {
-	Before       *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	OpenParen    *expr.Keyword `protobuf:"bytes,2,opt" json:"OpenParen,omitempty"`
-	LeftPattern  *Pattern      `protobuf:"bytes,3,opt" json:"LeftPattern,omitempty"`
-	Comma        *expr.Keyword `protobuf:"bytes,4,opt" json:"Comma,omitempty"`
-	RightPattern *Pattern      `protobuf:"bytes,5,opt" json:"RightPattern,omitempty"`
-	CloseParen   *expr.Keyword `protobuf:"bytes,6,opt" json:"CloseParen,omitempty"`
+	OpenParen    *expr.Keyword `protobuf:"bytes,1,opt" json:"OpenParen,omitempty"`
+	LeftPattern  *Pattern      `protobuf:"bytes,2,opt" json:"LeftPattern,omitempty"`
+	Pipe         *expr.Keyword `protobuf:"bytes,3,opt" json:"Pipe,omitempty"`
+	RightPattern *Pattern      `protobuf:"bytes,4,opt" json:"RightPattern,omitempty"`
+	CloseParen   *expr.Keyword `protobuf:"bytes,5,opt" json:"CloseParen,omitempty"`
 }
 
 func (m *Or) Reset()      { *m = Or{} }
 func (*Or) ProtoMessage() {}
-
-func (m *Or) GetBefore() *expr.Space {
-	if m != nil {
-		return m.Before
-	}
-	return nil
-}
 
 func (m *Or) GetOpenParen() *expr.Keyword {
 	if m != nil {
@@ -590,9 +526,9 @@ func (m *Or) GetLeftPattern() *Pattern {
 	return nil
 }
 
-func (m *Or) GetComma() *expr.Keyword {
+func (m *Or) GetPipe() *expr.Keyword {
 	if m != nil {
-		return m.Comma
+		return m.Pipe
 	}
 	return nil
 }
@@ -612,23 +548,15 @@ func (m *Or) GetCloseParen() *expr.Keyword {
 }
 
 type And struct {
-	Before       *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	OpenParen    *expr.Keyword `protobuf:"bytes,2,opt" json:"OpenParen,omitempty"`
-	LeftPattern  *Pattern      `protobuf:"bytes,3,opt" json:"LeftPattern,omitempty"`
-	Comma        *expr.Keyword `protobuf:"bytes,4,opt" json:"Comma,omitempty"`
-	RightPattern *Pattern      `protobuf:"bytes,5,opt" json:"RightPattern,omitempty"`
-	CloseParen   *expr.Keyword `protobuf:"bytes,6,opt" json:"CloseParen,omitempty"`
+	OpenParen    *expr.Keyword `protobuf:"bytes,1,opt" json:"OpenParen,omitempty"`
+	LeftPattern  *Pattern      `protobuf:"bytes,2,opt" json:"LeftPattern,omitempty"`
+	Ampersand    *expr.Keyword `protobuf:"bytes,3,opt" json:"Ampersand,omitempty"`
+	RightPattern *Pattern      `protobuf:"bytes,4,opt" json:"RightPattern,omitempty"`
+	CloseParen   *expr.Keyword `protobuf:"bytes,5,opt" json:"CloseParen,omitempty"`
 }
 
 func (m *And) Reset()      { *m = And{} }
 func (*And) ProtoMessage() {}
-
-func (m *And) GetBefore() *expr.Space {
-	if m != nil {
-		return m.Before
-	}
-	return nil
-}
 
 func (m *And) GetOpenParen() *expr.Keyword {
 	if m != nil {
@@ -644,9 +572,9 @@ func (m *And) GetLeftPattern() *Pattern {
 	return nil
 }
 
-func (m *And) GetComma() *expr.Keyword {
+func (m *And) GetAmpersand() *expr.Keyword {
 	if m != nil {
-		return m.Comma
+		return m.Ampersand
 	}
 	return nil
 }
@@ -704,33 +632,16 @@ func (m *ZeroOrMore) GetCloseParen() *expr.Keyword {
 }
 
 type Reference struct {
-	Before     *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	OpenParen  *expr.Keyword `protobuf:"bytes,2,opt" json:"OpenParen,omitempty"`
-	BeforeName *expr.Space   `protobuf:"bytes,3,opt" json:"BeforeName,omitempty"`
-	Name       string        `protobuf:"bytes,4,opt" json:"Name"`
-	CloseParen *expr.Keyword `protobuf:"bytes,5,opt" json:"CloseParen,omitempty"`
+	HashTag *expr.Keyword `protobuf:"bytes,1,opt" json:"HashTag,omitempty"`
+	Name    string        `protobuf:"bytes,2,opt" json:"Name"`
 }
 
 func (m *Reference) Reset()      { *m = Reference{} }
 func (*Reference) ProtoMessage() {}
 
-func (m *Reference) GetBefore() *expr.Space {
+func (m *Reference) GetHashTag() *expr.Keyword {
 	if m != nil {
-		return m.Before
-	}
-	return nil
-}
-
-func (m *Reference) GetOpenParen() *expr.Keyword {
-	if m != nil {
-		return m.OpenParen
-	}
-	return nil
-}
-
-func (m *Reference) GetBeforeName() *expr.Space {
-	if m != nil {
-		return m.BeforeName
+		return m.HashTag
 	}
 	return nil
 }
@@ -742,26 +653,19 @@ func (m *Reference) GetName() string {
 	return ""
 }
 
-func (m *Reference) GetCloseParen() *expr.Keyword {
-	if m != nil {
-		return m.CloseParen
-	}
-	return nil
-}
-
 type Not struct {
-	Before     *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	OpenParen  *expr.Keyword `protobuf:"bytes,2,opt" json:"OpenParen,omitempty"`
-	Pattern    *Pattern      `protobuf:"bytes,3,opt" json:"Pattern,omitempty"`
-	CloseParen *expr.Keyword `protobuf:"bytes,4,opt" json:"CloseParen,omitempty"`
+	Exclamation *expr.Keyword `protobuf:"bytes,1,opt" json:"Exclamation,omitempty"`
+	OpenParen   *expr.Keyword `protobuf:"bytes,2,opt" json:"OpenParen,omitempty"`
+	Pattern     *Pattern      `protobuf:"bytes,3,opt" json:"Pattern,omitempty"`
+	CloseParen  *expr.Keyword `protobuf:"bytes,4,opt" json:"CloseParen,omitempty"`
 }
 
 func (m *Not) Reset()      { *m = Not{} }
 func (*Not) ProtoMessage() {}
 
-func (m *Not) GetBefore() *expr.Space {
+func (m *Not) GetExclamation() *expr.Keyword {
 	if m != nil {
-		return m.Before
+		return m.Exclamation
 	}
 	return nil
 }
@@ -994,12 +898,9 @@ func (this *TreeNode) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.TreeNode{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
 		`Name:` + fmt.Sprintf("%#v", this.Name),
-		`Comma:` + fmt.Sprintf("%#v", this.Comma),
-		`Pattern:` + fmt.Sprintf("%#v", this.Pattern),
-		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
+		`Colon:` + fmt.Sprintf("%#v", this.Colon),
+		`Pattern:` + fmt.Sprintf("%#v", this.Pattern) + `}`}, ", ")
 	return s
 }
 func (this *LeafNode) GoString() string {
@@ -1007,10 +908,7 @@ func (this *LeafNode) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.LeafNode{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
-		`Expr:` + fmt.Sprintf("%#v", this.Expr),
-		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
+		`Expr:` + fmt.Sprintf("%#v", this.Expr) + `}`}, ", ")
 	return s
 }
 func (this *Concat) GoString() string {
@@ -1018,12 +916,11 @@ func (this *Concat) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.Concat{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
+		`OpenBracket:` + fmt.Sprintf("%#v", this.OpenBracket),
 		`LeftPattern:` + fmt.Sprintf("%#v", this.LeftPattern),
 		`Comma:` + fmt.Sprintf("%#v", this.Comma),
 		`RightPattern:` + fmt.Sprintf("%#v", this.RightPattern),
-		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
+		`CloseBracket:` + fmt.Sprintf("%#v", this.CloseBracket) + `}`}, ", ")
 	return s
 }
 func (this *Or) GoString() string {
@@ -1031,10 +928,9 @@ func (this *Or) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.Or{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
 		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
 		`LeftPattern:` + fmt.Sprintf("%#v", this.LeftPattern),
-		`Comma:` + fmt.Sprintf("%#v", this.Comma),
+		`Pipe:` + fmt.Sprintf("%#v", this.Pipe),
 		`RightPattern:` + fmt.Sprintf("%#v", this.RightPattern),
 		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
 	return s
@@ -1044,10 +940,9 @@ func (this *And) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.And{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
 		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
 		`LeftPattern:` + fmt.Sprintf("%#v", this.LeftPattern),
-		`Comma:` + fmt.Sprintf("%#v", this.Comma),
+		`Ampersand:` + fmt.Sprintf("%#v", this.Ampersand),
 		`RightPattern:` + fmt.Sprintf("%#v", this.RightPattern),
 		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
 	return s
@@ -1068,11 +963,8 @@ func (this *Reference) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.Reference{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
-		`BeforeName:` + fmt.Sprintf("%#v", this.BeforeName),
-		`Name:` + fmt.Sprintf("%#v", this.Name),
-		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
+		`HashTag:` + fmt.Sprintf("%#v", this.HashTag),
+		`Name:` + fmt.Sprintf("%#v", this.Name) + `}`}, ", ")
 	return s
 }
 func (this *Not) GoString() string {
@@ -1080,7 +972,7 @@ func (this *Not) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.Not{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
+		`Exclamation:` + fmt.Sprintf("%#v", this.Exclamation),
 		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
 		`Pattern:` + fmt.Sprintf("%#v", this.Pattern),
 		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
@@ -1470,22 +1362,13 @@ func (this *TreeNode) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if !this.Before.Equal(that1.Before) {
-		return false
-	}
-	if !this.OpenParen.Equal(that1.OpenParen) {
-		return false
-	}
 	if !this.Name.Equal(that1.Name) {
 		return false
 	}
-	if !this.Comma.Equal(that1.Comma) {
+	if !this.Colon.Equal(that1.Colon) {
 		return false
 	}
 	if !this.Pattern.Equal(that1.Pattern) {
-		return false
-	}
-	if !this.CloseParen.Equal(that1.CloseParen) {
 		return false
 	}
 	return true
@@ -1510,16 +1393,7 @@ func (this *LeafNode) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if !this.Before.Equal(that1.Before) {
-		return false
-	}
-	if !this.OpenParen.Equal(that1.OpenParen) {
-		return false
-	}
 	if !this.Expr.Equal(that1.Expr) {
-		return false
-	}
-	if !this.CloseParen.Equal(that1.CloseParen) {
 		return false
 	}
 	return true
@@ -1544,10 +1418,7 @@ func (this *Concat) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if !this.Before.Equal(that1.Before) {
-		return false
-	}
-	if !this.OpenParen.Equal(that1.OpenParen) {
+	if !this.OpenBracket.Equal(that1.OpenBracket) {
 		return false
 	}
 	if !this.LeftPattern.Equal(that1.LeftPattern) {
@@ -1559,7 +1430,7 @@ func (this *Concat) Equal(that interface{}) bool {
 	if !this.RightPattern.Equal(that1.RightPattern) {
 		return false
 	}
-	if !this.CloseParen.Equal(that1.CloseParen) {
+	if !this.CloseBracket.Equal(that1.CloseBracket) {
 		return false
 	}
 	return true
@@ -1584,16 +1455,13 @@ func (this *Or) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if !this.Before.Equal(that1.Before) {
-		return false
-	}
 	if !this.OpenParen.Equal(that1.OpenParen) {
 		return false
 	}
 	if !this.LeftPattern.Equal(that1.LeftPattern) {
 		return false
 	}
-	if !this.Comma.Equal(that1.Comma) {
+	if !this.Pipe.Equal(that1.Pipe) {
 		return false
 	}
 	if !this.RightPattern.Equal(that1.RightPattern) {
@@ -1624,16 +1492,13 @@ func (this *And) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if !this.Before.Equal(that1.Before) {
-		return false
-	}
 	if !this.OpenParen.Equal(that1.OpenParen) {
 		return false
 	}
 	if !this.LeftPattern.Equal(that1.LeftPattern) {
 		return false
 	}
-	if !this.Comma.Equal(that1.Comma) {
+	if !this.Ampersand.Equal(that1.Ampersand) {
 		return false
 	}
 	if !this.RightPattern.Equal(that1.RightPattern) {
@@ -1698,19 +1563,10 @@ func (this *Reference) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if !this.Before.Equal(that1.Before) {
-		return false
-	}
-	if !this.OpenParen.Equal(that1.OpenParen) {
-		return false
-	}
-	if !this.BeforeName.Equal(that1.BeforeName) {
+	if !this.HashTag.Equal(that1.HashTag) {
 		return false
 	}
 	if this.Name != that1.Name {
-		return false
-	}
-	if !this.CloseParen.Equal(that1.CloseParen) {
 		return false
 	}
 	return true
@@ -1735,7 +1591,7 @@ func (this *Not) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if !this.Before.Equal(that1.Before) {
+	if !this.Exclamation.Equal(that1.Exclamation) {
 		return false
 	}
 	if !this.OpenParen.Equal(that1.OpenParen) {

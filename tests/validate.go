@@ -17,6 +17,7 @@ package tests
 import (
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/combinator"
+	"sort"
 )
 
 type Validator struct {
@@ -30,13 +31,28 @@ type Validator struct {
 
 var Validators = make(map[string]map[string]Validator)
 
+type validatorList []interface{}
+
+func (this validatorList) Less(i, j int) bool {
+	return this[i].(Validator).Name < this[j].(Validator).Name
+}
+
+func (this validatorList) Len() int {
+	return len(this)
+}
+
+func (this validatorList) Swap(i, j int) {
+	this[i], this[j] = this[j], this[i]
+}
+
 func ValidatorList() []interface{} {
-	vs := make([]interface{}, 0, len(Validators)*3)
+	vs := make(validatorList, 0, len(Validators)*3)
 	for name, cs := range Validators {
 		for cname, _ := range cs {
 			vs = append(vs, Validators[name][cname])
 		}
 	}
+	sort.Sort(vs)
 	return vs
 }
 

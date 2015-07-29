@@ -1,4 +1,4 @@
-//  Copyright 2015 Walter Schulze
+//  Copyright 2013 Walter Schulze
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -12,24 +12,21 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package relapse
+package main
 
 import (
-	"github.com/gogo/protobuf/proto"
+	"github.com/katydid/katydid/gen"
+	"github.com/katydid/katydid/tests"
 )
 
-func (this *Grammar) Clone() *Grammar {
-	return proto.Clone(this).(*Grammar)
+const testStr = `
+func Test{{.Name}}{{capFirst .CodecName}}(t *testing.T) {
+	v := tests.Validators["{{.Name}}"]["{{.CodecName}}"]
+	test(t, v.Grammar, v.Scanner(), v.Expected, v.Description)
 }
+`
 
-func (this RefLookup) Clone() RefLookup {
-	that := make(RefLookup, len(this))
-	for name, _ := range this {
-		that[name] = this[name].Clone()
-	}
-	return that
-}
-
-func (this *Pattern) Clone() *Pattern {
-	return proto.Clone(this).(*Pattern)
+func main() {
+	gen := gen.NewFunc("convert_test")
+	gen(testStr, "convert.gen_test.go", tests.ValidatorList(), `"testing"`, `"github.com/katydid/katydid/tests"`)
 }

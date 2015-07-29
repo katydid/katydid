@@ -375,6 +375,76 @@ SemiColon
   >>
   ;
 
+HashTag
+  : "#" << &expr.Keyword{Value: "#"}, nil >>
+  | Space "#" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "#",
+    }, nil
+  >>
+  ;
+
+Ampersand
+  : "&" << &expr.Keyword{Value: "&"}, nil >>
+  | Space "&" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "&",
+    }, nil
+  >>
+  ;
+
+Pipe
+  : "|" << &expr.Keyword{Value: "|"}, nil >>
+  | Space "|" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "|",
+    }, nil
+  >>
+  ;
+
+OpenBracket
+  : "[" << &expr.Keyword{Value: "["}, nil >>
+  | Space "[" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "[",
+    }, nil
+  >>
+  ;
+
+CloseBracket
+  : "]" << &expr.Keyword{Value: "]"}, nil >>
+  | Space "]" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "]",
+    }, nil
+  >>
+  ;
+
+Colon
+  : ":" << &expr.Keyword{Value: ":"}, nil >>
+  | Space ":" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: ":",
+    }, nil
+  >>
+  ;
+
+Exclamation
+  : "!" << &expr.Keyword{Value: "!"}, nil >>
+  | Space "!" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "!",
+    }, nil
+  >>
+  ;
+
 Space
   : Space space << expr.AppendSpace($0, newString($1)), nil >>
   | space << &expr.Space{Space: []string{newString($0)}}, nil >>

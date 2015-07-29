@@ -19,6 +19,15 @@ import (
 	"github.com/katydid/katydid/relapse/ast"
 )
 
+func checkRef(refs relapse.RefLookup, p *relapse.Pattern) *relapse.Pattern {
+	for name, rpat := range refs {
+		if rpat.Equal(p) {
+			return relapse.NewReference(name)
+		}
+	}
+	return p
+}
+
 func Simplify(refs relapse.RefLookup, p *relapse.Pattern) *relapse.Pattern {
 	typ := p.GetValue()
 	switch v := typ.(type) {
@@ -27,30 +36,30 @@ func Simplify(refs relapse.RefLookup, p *relapse.Pattern) *relapse.Pattern {
 	case *relapse.EmptySet:
 		return p
 	case *relapse.TreeNode:
-		return relapse.NewTreeNode(v.GetName(), Simplify(refs, v.GetPattern()))
+		return checkRef(refs, relapse.NewTreeNode(v.GetName(), Simplify(refs, v.GetPattern())))
 	case *relapse.LeafNode:
 		return p
 	case *relapse.Concat:
-		return simplifyConcat(
+		return checkRef(refs, simplifyConcat(
 			Simplify(refs, v.GetLeftPattern()),
 			Simplify(refs, v.GetRightPattern()),
-		)
+		))
 	case *relapse.Or:
-		return simplifyOr(refs,
+		return checkRef(refs, simplifyOr(refs,
 			Simplify(refs, v.GetLeftPattern()),
 			Simplify(refs, v.GetRightPattern()),
-		)
+		))
 	case *relapse.And:
-		return simplifyAnd(refs,
+		return checkRef(refs, simplifyAnd(refs,
 			Simplify(refs, v.GetLeftPattern()),
 			Simplify(refs, v.GetRightPattern()),
-		)
+		))
 	case *relapse.ZeroOrMore:
-		return relapse.NewZeroOrMore(Simplify(refs, v.GetPattern()))
+		return checkRef(refs, relapse.NewZeroOrMore(Simplify(refs, v.GetPattern())))
 	case *relapse.Reference:
 		return p
 	case *relapse.Not:
-		return simplifyNot(v.GetPattern())
+		return checkRef(refs, simplifyNot(Simplify(refs, v.GetPattern())))
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
@@ -71,14 +80,14 @@ func isNotEmptySet(p *relapse.Pattern) bool {
 }
 
 func simplifyConcat(p1, p2 *relapse.Pattern) *relapse.Pattern {
+	if isEmptySet(p1) || isEmptySet(p2) {
+		return relapse.NewEmptySet()
+	}
 	if p1.Concat != nil {
 		return simplifyConcat(
 			p1.Concat.GetLeftPattern(),
 			relapse.NewConcat(p1.Concat.GetRightPattern(), p2),
 		)
-	}
-	if isEmptySet(p1) || isEmptySet(p2) {
-		return relapse.NewEmptySet()
 	}
 	if isEmpty(p1) {
 		return p2
@@ -126,11 +135,19 @@ func simplifyAnd(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Patte
 	if isNotEmptySet(p2) {
 		return p1
 	}
-	if isEmpty(p1) && Nullable(refs, p2) ||
-		isEmpty(p2) && Nullable(refs, p1) {
-		return relapse.NewEmpty()
-	} else {
-		return relapse.NewEmptySet()
+	if isEmpty(p1) {
+		if Nullable(refs, p2) {
+			return relapse.NewEmpty()
+		} else {
+			return relapse.NewEmptySet()
+		}
+	}
+	if isEmpty(p2) {
+		if Nullable(refs, p1) {
+			return relapse.NewEmpty()
+		} else {
+			return relapse.NewEmptySet()
+		}
 	}
 	if p1.Equal(p2) {
 		return p1

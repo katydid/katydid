@@ -16,7 +16,6 @@ package tests
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/gogo/protobuf/proto"
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 	"github.com/katydid/katydid/serialize"
@@ -31,9 +30,17 @@ type Codecs struct {
 	Scanners    map[string]NewScanner
 }
 
+func getDesc(m interface{}) string {
+	data, err := json.MarshalIndent(m, "", "\t")
+	if err != nil {
+		panic(err)
+	}
+	return string(data)
+}
+
 func AllCodecs(m interface{}) Codecs {
 	return Codecs{
-		Description: fmt.Sprintf("%#v", m),
+		Description: getDesc(m),
 		Scanners: map[string]NewScanner{
 			"reflect": Reflect(m).Scanners["reflect"],
 			"json":    Json(m).Scanners["json"],
@@ -44,7 +51,7 @@ func AllCodecs(m interface{}) Codecs {
 
 func Reflect(m interface{}) Codecs {
 	return Codecs{
-		Description: fmt.Sprintf("%#v", m),
+		Description: getDesc(m),
 		Scanners: map[string]NewScanner{
 			"reflect": func() serialize.Scanner {
 				return NewReflectScanner(m)
@@ -55,7 +62,7 @@ func Reflect(m interface{}) Codecs {
 
 func Json(m interface{}) Codecs {
 	return Codecs{
-		Description: fmt.Sprintf("%#v", m),
+		Description: getDesc(m),
 		Scanners: map[string]NewScanner{
 			"json": func() serialize.Scanner {
 				return NewJsonScanner(m)
@@ -68,7 +75,7 @@ func Proto(m interface{}) Codecs {
 	messageName := reflect.TypeOf(m).Elem().Name()
 	packageName := "tests"
 	return Codecs{
-		Description: fmt.Sprintf("%#v", m),
+		Description: getDesc(m),
 		Scanners: map[string]NewScanner{
 			"proto": func() serialize.Scanner {
 				return NewProtoScanner(packageName, messageName, m.(ProtoMessage))

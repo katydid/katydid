@@ -77,36 +77,29 @@ func (this *EmptySet) String() string {
 }
 
 func (this *TreeNode) String() string {
-	return this.Before.String() + "TreeNode" +
-		this.OpenParen.String() + this.Name.String() +
-		this.Comma.String() + this.Pattern.String() +
-		this.CloseParen.String()
+	return this.Name.String() + this.Colon.String() +
+		this.Pattern.String()
 }
 
 func (this *LeafNode) String() string {
-	return this.Before.String() + "LeafNode" +
-		this.OpenParen.String() + this.Expr.String() +
-		this.CloseParen.String()
+	return this.Expr.String()
 }
 
 func (this *Concat) String() string {
-	return this.Before.String() + "Concat" +
-		this.OpenParen.String() + this.LeftPattern.String() +
+	return this.OpenBracket.String() + this.LeftPattern.String() +
 		this.Comma.String() + this.RightPattern.String() +
-		this.CloseParen.String()
+		this.CloseBracket.String()
 }
 
 func (this *Or) String() string {
-	return this.Before.String() + "Or" +
-		this.OpenParen.String() + this.LeftPattern.String() +
-		this.Comma.String() + this.RightPattern.String() +
+	return this.OpenParen.String() + this.LeftPattern.String() +
+		this.Pipe.String() + this.RightPattern.String() +
 		this.CloseParen.String()
 }
 
 func (this *And) String() string {
-	return this.Before.String() + "And" +
-		this.OpenParen.String() + this.LeftPattern.String() +
-		this.Comma.String() + this.RightPattern.String() +
+	return this.OpenParen.String() + this.LeftPattern.String() +
+		this.Ampersand.String() + this.RightPattern.String() +
 		this.CloseParen.String()
 }
 
@@ -117,13 +110,11 @@ func (this *ZeroOrMore) String() string {
 }
 
 func (this *Reference) String() string {
-	return this.Before.String() + "Reference" +
-		this.OpenParen.String() + this.BeforeName.String() +
-		this.Name + this.CloseParen.String()
+	return this.HashTag.String() + this.Name
 }
 
 func (this *Not) String() string {
-	return this.Before.String() + "Not" +
+	return this.Exclamation.String() +
 		this.OpenParen.String() + this.Pattern.String() +
 		this.CloseParen.String()
 }

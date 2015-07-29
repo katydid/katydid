@@ -54,9 +54,6 @@ func (l *line) Printf(format string, v ...interface{}) {
 			continue
 		}
 		_, name := filepath.Split(file)
-		if name != "interp.go" {
-			continue
-		}
 		l.l.Printf(name+":"+strconv.Itoa(line)+": "+format, v...)
 		return
 	}
