@@ -15,14 +15,12 @@
 package convert_test
 
 import (
-	"github.com/katydid/katydid/graphviz"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/convert"
 	"github.com/katydid/katydid/serialize"
 	"github.com/katydid/katydid/serialize/debug"
+	"github.com/katydid/katydid/tests"
 	"github.com/katydid/katydid/viper/eval"
-	"io/ioutil"
-	//"github.com/katydid/katydid/tests"
 	"testing"
 )
 
@@ -32,14 +30,17 @@ func test(t *testing.T, g *relapse.Grammar, scanner serialize.Scanner, expected 
 	//println("Rules:" + rules.String())
 	match := eval.Eval(rules, scanner)
 	if match != expected {
-		svg, err := graphviz.DrawSVG(rules.Dot())
-		if err != nil {
-			panic(err)
-		}
-		if err := ioutil.WriteFile("a.svg", []byte(svg), 0666); err != nil {
-			panic(err)
-		}
 		t.Fail()
-		t.Fatalf("Expected %v on converted to %v given \n%s\n on \n%s", g, expected, rules, desc)
+		t.Fatalf("Expected %v given %v converted to \n%s\n on \n%s", expected, g, rules, desc)
 	}
+}
+
+func TestNotNil(t *testing.T) {
+	v := tests.Validators["EmptyOrNilJohn"]["reflect"]
+	refs := relapse.NewRefsLookup(v.Grammar)
+	delete(refs, "main")
+	refs["main"] = refs["nil"]
+	delete(refs, "nil")
+	delete(refs, "empty")
+	test(t, relapse.NewGrammar(refs), v.Scanner(), v.Expected, v.Description)
 }

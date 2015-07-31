@@ -20,7 +20,7 @@ import (
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/serialize"
 	"io"
-	//"log"
+	"log"
 )
 
 func Interpret(g *relapse.Grammar, tree serialize.Scanner) bool {
@@ -29,14 +29,14 @@ func Interpret(g *relapse.Grammar, tree serialize.Scanner) bool {
 	res = refs["main"]
 	err := tree.Next()
 	for err == nil {
-		//log.Printf("Interpret = %s given input %s", res, tree.Name())
+		log.Printf("Interpret = %s given input %s", res, tree.Name())
 		res = sderiv(refs, res, tree)
 		err = tree.Next()
 	}
 	if err != io.EOF {
 		panic(err)
 	}
-	//log.Printf("Interpret Final = %s", res)
+	log.Printf("Interpret Final = %s", res)
 	return Nullable(refs, res)
 }
 
@@ -98,14 +98,14 @@ func derivTreeNode(refs relapse.RefLookup, p *relapse.TreeNode, tree serialize.S
 	res := p.GetPattern()
 	err := tree.Next()
 	for err == nil {
-		//log.Printf("derivTreeNode = %s given input %s", res, tree.Name())
+		log.Printf("derivTreeNode = %s given input %s", res, tree.Name())
 		res = sderiv(refs, res, tree)
 		err = tree.Next()
 	}
 	if err != io.EOF {
 		panic(err)
 	}
-	//log.Printf("derivTreeNode Final = %s", res)
+	log.Printf("derivTreeNode Final = %s", res)
 	tree.Up()
 	if !Nullable(refs, res) {
 		return relapse.NewEmptySet()
@@ -114,7 +114,9 @@ func derivTreeNode(refs relapse.RefLookup, p *relapse.TreeNode, tree serialize.S
 }
 
 func sderiv(refs relapse.RefLookup, p *relapse.Pattern, tree serialize.Scanner) *relapse.Pattern {
-	return Simplify(refs, deriv(refs, p, tree))
+	d := deriv(refs, p, tree)
+	log.Printf("sderiv %s -> %s", p, d)
+	return Simplify(refs, d)
 }
 
 func deriv(refs relapse.RefLookup, p *relapse.Pattern, tree serialize.Scanner) *relapse.Pattern {

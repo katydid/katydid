@@ -25,7 +25,6 @@ checklicense:
 	checklicense .
 
 test:
-	rm ./relapse/convert/convert.gen_test.go
 	go test -v ./...
 
 build:

@@ -34,7 +34,13 @@ var Validators = make(map[string]map[string]Validator)
 type validatorList []interface{}
 
 func (this validatorList) Less(i, j int) bool {
-	return this[i].(Validator).Name < this[j].(Validator).Name
+	if this[i].(Validator).Name < this[j].(Validator).Name {
+		return true
+	}
+	if this[i].(Validator).Name == this[j].(Validator).Name {
+		return this[i].(Validator).CodecName < this[j].(Validator).CodecName
+	}
+	return false
 }
 
 func (this validatorList) Len() int {

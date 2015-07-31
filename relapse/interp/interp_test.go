@@ -18,13 +18,13 @@ import (
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/interp"
 	"github.com/katydid/katydid/serialize"
-	//"github.com/katydid/katydid/serialize/debug"
+	"github.com/katydid/katydid/serialize/debug"
 	//"github.com/katydid/katydid/tests"
 	"testing"
 )
 
 func test(t *testing.T, g *relapse.Grammar, scanner serialize.Scanner, expected bool, desc string) {
-	//scanner = debug.NewLogger(scanner, debug.NewLineLogger())
+	scanner = debug.NewLogger(scanner, debug.NewLineLogger())
 	match := interp.Interpret(g, scanner)
 	if match != expected {
 		t.Fatalf("Expected %v on given \n%s\n on \n%s", expected, g.String(), desc)

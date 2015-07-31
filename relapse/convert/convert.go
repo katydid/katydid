@@ -44,10 +44,10 @@ func ToRules(g *relapse.Grammar) *viper.Rules {
 				newCall(v.src, v.name, v.src, v.child),
 			)
 			for _, state := range states {
-				if interp.Nullable(refs, state) == v.finalNullable {
+				if interp.Nullable(refs, state) {
 					rules = append(rules, newReturn(v.src, state, v.name, v.dst))
 				} else {
-					rules = append(rules, newReturn(v.src, state, v.name, relapse.NewEmptySet()))
+					rules = append(rules, newReturn(v.src, state, v.name, v.fail))
 				}
 			}
 		}
@@ -141,13 +141,19 @@ func transForPattern(refs relapse.RefLookup, p *relapse.Pattern) transSet {
 	for i, n := range ns {
 		d := deriv(refs, p, nil, n)
 		ddst := interp.Simplify(refs, d.dst)
-		dchild := interp.Simplify(refs, d.child)
+		dfail := interp.Simplify(refs, d.fail)
+		dchild := d.child
+		if dchild != nil {
+			dchild = interp.Simplify(refs, dchild)
+		} else {
+			dchild = interp.Simplify(refs, relapse.NewNot(relapse.NewEmptySet()))
+		}
 		ts = ts.add(&callAndReturn{
-			src:           p,
-			name:          ns[i],
-			child:         dchild,
-			dst:           ddst,
-			finalNullable: d.finalNullable,
+			src:   p,
+			name:  ns[i],
+			child: dchild,
+			dst:   ddst,
+			fail:  dfail,
 		})
 	}
 	for i, e := range es {
@@ -346,11 +352,11 @@ func (a *internal) Equal(that trans) bool {
 }
 
 type callAndReturn struct {
-	src           *relapse.Pattern
-	name          *relapse.NameExpr
-	child         *relapse.Pattern
-	dst           *relapse.Pattern
-	finalNullable bool
+	src   *relapse.Pattern
+	name  *relapse.NameExpr
+	child *relapse.Pattern
+	dst   *relapse.Pattern
+	fail  *relapse.Pattern
 }
 
 func (a *callAndReturn) Equal(that trans) bool {
@@ -370,55 +376,78 @@ func (a *callAndReturn) Equal(that trans) bool {
 }
 
 type downup struct {
-	child         *relapse.Pattern
-	dst           *relapse.Pattern
-	finalNullable bool
+	child *relapse.Pattern
+	dst   *relapse.Pattern
+	fail  *relapse.Pattern
 }
 
 func concat(c *downup, p *relapse.Pattern) *downup {
 	return &downup{
-		child:         c.child,
-		dst:           relapse.NewConcat(c.dst, p),
-		finalNullable: c.finalNullable,
+		child: c.child,
+		dst:   relapse.NewConcat(c.dst, p),
+		fail:  relapse.NewConcat(c.fail, p),
 	}
 }
 
 func or(left *downup, right *downup) *downup {
+	child := left.child
+	if right.child != nil {
+		if left.child != nil {
+			child = relapse.NewOr(left.child, right.child)
+		} else {
+			child = right.child
+		}
+	}
 	return &downup{
-		child:         relapse.NewOr(left.child, right.child),
-		dst:           relapse.NewOr(left.dst, right.dst),
-		finalNullable: left.finalNullable || right.finalNullable, //TODO think and test
+		child: child,
+		dst:   relapse.NewOr(left.dst, right.dst),
+		fail:  relapse.NewOr(left.fail, right.fail),
 	}
 }
 
 func and(left *downup, right *downup) *downup {
+	child := left.child
+	if right.child != nil {
+		if left.child != nil {
+			child = relapse.NewAnd(left.child, right.child)
+		} else {
+			child = right.child
+		}
+	}
 	return &downup{
-		child:         relapse.NewAnd(left.child, right.child),
-		dst:           relapse.NewAnd(left.dst, right.dst),
-		finalNullable: left.finalNullable && right.finalNullable, //TODO think and test
+		child: child,
+		dst:   relapse.NewAnd(left.dst, right.dst),
+		fail:  relapse.NewAnd(left.fail, right.fail),
 	}
 }
 
 //TODO think about this again and write a few tests
 func not(c *downup) *downup {
+	child := c.child
+	if child != nil {
+		child = relapse.NewNot(child)
+	}
 	return &downup{
-		child:         c.child,
-		dst:           relapse.NewNot(c.dst),
-		finalNullable: !c.finalNullable,
+		child: child,
+		dst:   relapse.NewNot(c.dst),
+		fail:  relapse.NewNot(c.fail),
 	}
 }
 
 func emptySet() *downup {
 	return &downup{
-		child:         relapse.NewEmptySet(),
-		dst:           relapse.NewEmptySet(),
-		finalNullable: true,
+		child: nil,
+		dst:   relapse.NewEmptySet(),
+		fail:  relapse.NewEmptySet(),
 	}
 }
 
 func deriv(refs relapse.RefLookup, p *relapse.Pattern, expr *expr.Expr, name *relapse.NameExpr) *downup {
 	d := func(pattern *relapse.Pattern) *downup {
-		return deriv(refs, pattern, expr, name)
+		dp := deriv(refs, pattern, expr, name)
+		fmt.Printf("dst  deriv %s -> %s\n", pattern.String(), dp.dst.String())
+		fmt.Printf("fail deriv %s -> %s\n", pattern.String(), dp.fail.String())
+		return dp
 	}
 	typ := p.GetValue()
 	switch v := typ.(type) {
@@ -431,16 +460,12 @@ func deriv(refs relapse.RefLookup, p *relapse.Pattern, expr *expr.Expr, name *re
 			return emptySet()
 		}
 		if !v.GetName().Equal(name) {
-			return &downup{
-				child:         relapse.NewEmptySet(),
-				dst:           relapse.NewEmptySet(),
-				finalNullable: false,
-			}
+			return emptySet()
 		}
 		return &downup{
-			child:         v.GetPattern(),
-			dst:           relapse.NewEmpty(),
-			finalNullable: true,
+			child: v.GetPattern(),
+			dst:   relapse.NewEmpty(),
+			fail:  relapse.NewEmptySet(),
 		}
 	case *relapse.LeafNode:
 		if expr == nil {
@@ -450,9 +475,9 @@ func deriv(refs relapse.RefLookup, p *relapse.Pattern, expr *expr.Expr, name *re
 			return emptySet()
 		}
 		return &downup{
-			child:         relapse.NewEmpty(), //should not have any children
-			dst:           relapse.NewEmpty(),
-			finalNullable: true,
+			child: nil,
+			dst:   relapse.NewEmpty(),
+			fail:  relapse.NewEmptySet(),
 		}
 	case *relapse.Concat:
 		dl := d(v.GetLeftPattern())

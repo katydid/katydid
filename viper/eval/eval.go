@@ -21,6 +21,7 @@ import (
 	"github.com/katydid/katydid/serialize"
 	"github.com/katydid/katydid/viper/ast"
 	"io"
+	"strings"
 )
 
 func getStart(rules *viper.Rules) string {
@@ -68,8 +69,8 @@ func evalReturn(rules *viper.Rules, srcParent, srcChild string, name string) (ds
 			continue
 		}
 		if rule.Return.ParentSrc.Name == srcParent && rule.Return.ChildSrc.Name == srcChild {
-			fmt.Printf("%s\n", rule)
 			if evalName(rule.Return.Expr, name) {
+				fmt.Printf("%s\n", strings.TrimSpace(rule.String()))
 				return rule.Return.Dst.Name
 			}
 		}
@@ -84,7 +85,7 @@ func evalCall(rules *viper.Rules, src string, name string) (parentDst string, ch
 		}
 		if rule.Call.Src.Name == src {
 			if evalName(rule.Call.Expr, name) {
-				fmt.Printf("%s\n", rule)
+				fmt.Printf("%s\n", strings.TrimSpace(rule.String()))
 				return rule.Call.ParentDst.Name, rule.Call.ChildDst.Name
 			}
 		}
@@ -112,7 +113,7 @@ func evalInternal(rules *viper.Rules, src string, value serialize.Decoder) (dst 
 		}
 		if rule.Internal.Src.Name == src {
 			if evalExpr(rule.Internal.Expr, value) {
-				fmt.Printf("%s\n", rule)
+				fmt.Printf("%s\n", strings.TrimSpace(rule.String()))
 				return rule.Internal.Dst.Name
 			}
 		}
