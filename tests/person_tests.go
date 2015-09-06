@@ -335,8 +335,8 @@ var LeftRecursion = G{
 }
 
 func init() {
-	//TODO Validate("LeftRecursionDavid", LeftRecursion, AllCodecs(DavidPerson), true)
-	//TODO Validate("LeftRecursionRobert", LeftRecursion, AllCodecs(RobertPerson), false)
+	Validate("LeftRecursionDavid", LeftRecursion, AllCodecs(DavidPerson), true)
+	Validate("LeftRecursionRobert", LeftRecursion, AllCodecs(RobertPerson), false)
 }
 
 var HiddenLeftRecursion = G{

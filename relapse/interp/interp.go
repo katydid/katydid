@@ -40,34 +40,94 @@ func Interpret(g *relapse.Grammar, tree serialize.Scanner) bool {
 	return Nullable(refs, res)
 }
 
+//This algorithm uses fix points to converge to a value for nullable.
+func Nullable(refs relapse.RefLookup, p *relapse.Pattern) bool {
+	mem := &cache{make(map[*relapse.Pattern]bool)}
+	changed := true
+	for changed {
+		changed = nullable(mem, refs, p)
+	}
+	//The pattern might not have been set in which case false is returned
+	if !mem.Visited(p) {
+		panic(p)
+	}
+	return mem.GetNullable(p)
+}
+
+//The cache is used to handle left recursion and hidden left recursion
+//which causes a endless loop in the naive implementation.
+//A little optimization is a side effect and not the goal.
+type cache struct {
+	mem map[*relapse.Pattern]bool
+}
+
+func (this *cache) Visited(p *relapse.Pattern) bool {
+	_, ok := this.mem[p]
+	return ok
+}
+
+func (this *cache) GetNullable(p *relapse.Pattern) bool {
+	return this.mem[p]
+}
+
+func (this *cache) Visiting(p *relapse.Pattern) {
+	this.mem[p] = false
+}
+
+func (this *cache) SetNullable(p *relapse.Pattern, v bool) {
+	this.mem[p] = v
+}
+
 //TODO improve nullable for left recursion using fix points
 // https://github.com/kennknowles/go-yid/blob/master/src/yid/nullable.go
-
-func Nullable(refs relapse.RefLookup, p *relapse.Pattern) bool {
+func nullable(mem *cache, refs relapse.RefLookup, p *relapse.Pattern) (changed bool) {
+	if mem.Visited(p) {
+		return false
+	}
+	mem.Visiting(p)
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *relapse.Empty:
-		return true
+		changed = true
+		mem.SetNullable(p, true)
 	case *relapse.EmptySet:
-		return false
+		changed = true
+		mem.SetNullable(p, false)
 	case *relapse.TreeNode:
-		return false
+		changed = true
+		mem.SetNullable(p, false)
 	case *relapse.LeafNode:
-		return false
+		changed = true
+		mem.SetNullable(p, false)
 	case *relapse.Concat:
-		return Nullable(refs, v.GetLeftPattern()) && Nullable(refs, v.GetRightPattern())
+		leftChanged := nullable(mem, refs, v.LeftPattern)
+		rightChanged := nullable(mem, refs, v.RightPattern)
+		changed = leftChanged || rightChanged
+		mem.SetNullable(p, mem.GetNullable(v.LeftPattern) && mem.GetNullable(v.RightPattern))
 	case *relapse.Or:
-		return Nullable(refs, v.GetLeftPattern()) || Nullable(refs, v.GetRightPattern())
+		leftChanged := nullable(mem, refs, v.LeftPattern)
+		rightChanged := nullable(mem, refs, v.RightPattern)
+		changed = leftChanged || rightChanged
+		mem.SetNullable(p, mem.GetNullable(v.LeftPattern) || mem.GetNullable(v.RightPattern))
 	case *relapse.And:
-		return Nullable(refs, v.GetLeftPattern()) && Nullable(refs, v.GetRightPattern())
+		leftChanged := nullable(mem, refs, v.LeftPattern)
+		rightChanged := nullable(mem, refs, v.RightPattern)
+		changed = leftChanged || rightChanged
+		mem.SetNullable(p, mem.GetNullable(v.LeftPattern) && mem.GetNullable(v.RightPattern))
 	case *relapse.ZeroOrMore:
-		return true
+		changed = true
+		mem.SetNullable(p, true)
 	case *relapse.Reference:
-		return Nullable(refs, refs[v.GetName()])
+		p2 := refs[v.GetName()]
+		changed = nullable(mem, refs, p2)
+		mem.SetNullable(p, mem.GetNullable(p2))
 	case *relapse.Not:
-		return !(Nullable(refs, v.GetPattern()))
+		changed = nullable(mem, refs, v.Pattern)
+		mem.SetNullable(p, !mem.GetNullable(v.Pattern))
+	default:
+		panic(fmt.Sprintf("unknown pattern typ %T", typ))
 	}
-	panic(fmt.Sprintf("unknown pattern typ %T", typ))
+	return mem.GetNullable(p) || changed
 }
 
 func evalName(nameExpr *relapse.NameExpr, name string) bool {
