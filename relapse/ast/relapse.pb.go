@@ -693,316 +693,6 @@ func (m *Not) GetCloseParen() *expr.Keyword {
 
 func init() {
 }
-func (this *NameExpr) GetValue() interface{} {
-	if this.Name != nil {
-		return this.Name
-	}
-	if this.AnyName != nil {
-		return this.AnyName
-	}
-	if this.AnyNameExcept != nil {
-		return this.AnyNameExcept
-	}
-	if this.NameChoice != nil {
-		return this.NameChoice
-	}
-	return nil
-}
-
-func (this *NameExpr) SetValue(value interface{}) bool {
-	switch vt := value.(type) {
-	case *Name:
-		this.Name = vt
-	case *AnyName:
-		this.AnyName = vt
-	case *AnyNameExcept:
-		this.AnyNameExcept = vt
-	case *NameChoice:
-		this.NameChoice = vt
-	default:
-		return false
-	}
-	return true
-}
-func (this *Pattern) GetValue() interface{} {
-	if this.Empty != nil {
-		return this.Empty
-	}
-	if this.EmptySet != nil {
-		return this.EmptySet
-	}
-	if this.TreeNode != nil {
-		return this.TreeNode
-	}
-	if this.LeafNode != nil {
-		return this.LeafNode
-	}
-	if this.Concat != nil {
-		return this.Concat
-	}
-	if this.Or != nil {
-		return this.Or
-	}
-	if this.And != nil {
-		return this.And
-	}
-	if this.ZeroOrMore != nil {
-		return this.ZeroOrMore
-	}
-	if this.Reference != nil {
-		return this.Reference
-	}
-	if this.Not != nil {
-		return this.Not
-	}
-	return nil
-}
-
-func (this *Pattern) SetValue(value interface{}) bool {
-	switch vt := value.(type) {
-	case *Empty:
-		this.Empty = vt
-	case *EmptySet:
-		this.EmptySet = vt
-	case *TreeNode:
-		this.TreeNode = vt
-	case *LeafNode:
-		this.LeafNode = vt
-	case *Concat:
-		this.Concat = vt
-	case *Or:
-		this.Or = vt
-	case *And:
-		this.And = vt
-	case *ZeroOrMore:
-		this.ZeroOrMore = vt
-	case *Reference:
-		this.Reference = vt
-	case *Not:
-		this.Not = vt
-	default:
-		return false
-	}
-	return true
-}
-func (this *Grammar) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&relapse.Grammar{` +
-		`PatternDecls:` + fmt.Sprintf("%#v", this.PatternDecls),
-		`After:` + fmt.Sprintf("%#v", this.After) + `}`}, ", ")
-	return s
-}
-func (this *PatternDecl) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&relapse.PatternDecl{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Name:` + fmt.Sprintf("%#v", this.Name),
-		`Eq:` + fmt.Sprintf("%#v", this.Eq),
-		`Pattern:` + fmt.Sprintf("%#v", this.Pattern) + `}`}, ", ")
-	return s
-}
-func (this *NameExpr) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&relapse.NameExpr{` +
-		`Name:` + fmt.Sprintf("%#v", this.Name),
-		`AnyName:` + fmt.Sprintf("%#v", this.AnyName),
-		`AnyNameExcept:` + fmt.Sprintf("%#v", this.AnyNameExcept),
-		`NameChoice:` + fmt.Sprintf("%#v", this.NameChoice) + `}`}, ", ")
-	return s
-}
-func (this *Name) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&relapse.Name{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
-		`BeforeName:` + fmt.Sprintf("%#v", this.BeforeName),
-		`Name:` + fmt.Sprintf("%#v", this.Name),
-		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
-	return s
-}
-func (this *AnyName) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&relapse.AnyName{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before) + `}`}, ", ")
-	return s
-}
-func (this *AnyNameExcept) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&relapse.AnyNameExcept{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
-		`Except:` + fmt.Sprintf("%#v", this.Except),
-		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
-	return s
-}
-func (this *NameChoice) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&relapse.NameChoice{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
-		`Left:` + fmt.Sprintf("%#v", this.Left),
-		`Comma:` + fmt.Sprintf("%#v", this.Comma),
-		`Right:` + fmt.Sprintf("%#v", this.Right),
-		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
-	return s
-}
-func (this *Pattern) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&relapse.Pattern{` +
-		`Empty:` + fmt.Sprintf("%#v", this.Empty),
-		`EmptySet:` + fmt.Sprintf("%#v", this.EmptySet),
-		`TreeNode:` + fmt.Sprintf("%#v", this.TreeNode),
-		`LeafNode:` + fmt.Sprintf("%#v", this.LeafNode),
-		`Concat:` + fmt.Sprintf("%#v", this.Concat),
-		`Or:` + fmt.Sprintf("%#v", this.Or),
-		`And:` + fmt.Sprintf("%#v", this.And),
-		`ZeroOrMore:` + fmt.Sprintf("%#v", this.ZeroOrMore),
-		`Reference:` + fmt.Sprintf("%#v", this.Reference),
-		`Not:` + fmt.Sprintf("%#v", this.Not) + `}`}, ", ")
-	return s
-}
-func (this *Empty) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&relapse.Empty{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before) + `}`}, ", ")
-	return s
-}
-func (this *EmptySet) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&relapse.EmptySet{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before) + `}`}, ", ")
-	return s
-}
-func (this *TreeNode) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&relapse.TreeNode{` +
-		`Name:` + fmt.Sprintf("%#v", this.Name),
-		`Colon:` + fmt.Sprintf("%#v", this.Colon),
-		`Pattern:` + fmt.Sprintf("%#v", this.Pattern) + `}`}, ", ")
-	return s
-}
-func (this *LeafNode) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&relapse.LeafNode{` +
-		`Expr:` + fmt.Sprintf("%#v", this.Expr) + `}`}, ", ")
-	return s
-}
-func (this *Concat) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&relapse.Concat{` +
-		`OpenBracket:` + fmt.Sprintf("%#v", this.OpenBracket),
-		`LeftPattern:` + fmt.Sprintf("%#v", this.LeftPattern),
-		`Comma:` + fmt.Sprintf("%#v", this.Comma),
-		`RightPattern:` + fmt.Sprintf("%#v", this.RightPattern),
-		`CloseBracket:` + fmt.Sprintf("%#v", this.CloseBracket) + `}`}, ", ")
-	return s
-}
-func (this *Or) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&relapse.Or{` +
-		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
-		`LeftPattern:` + fmt.Sprintf("%#v", this.LeftPattern),
-		`Pipe:` + fmt.Sprintf("%#v", this.Pipe),
-		`RightPattern:` + fmt.Sprintf("%#v", this.RightPattern),
-		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
-	return s
-}
-func (this *And) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&relapse.And{` +
-		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
-		`LeftPattern:` + fmt.Sprintf("%#v", this.LeftPattern),
-		`Ampersand:` + fmt.Sprintf("%#v", this.Ampersand),
-		`RightPattern:` + fmt.Sprintf("%#v", this.RightPattern),
-		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
-	return s
-}
-func (this *ZeroOrMore) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&relapse.ZeroOrMore{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
-		`Pattern:` + fmt.Sprintf("%#v", this.Pattern),
-		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
-	return s
-}
-func (this *Reference) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&relapse.Reference{` +
-		`HashTag:` + fmt.Sprintf("%#v", this.HashTag),
-		`Name:` + fmt.Sprintf("%#v", this.Name) + `}`}, ", ")
-	return s
-}
-func (this *Not) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&relapse.Not{` +
-		`Exclamation:` + fmt.Sprintf("%#v", this.Exclamation),
-		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
-		`Pattern:` + fmt.Sprintf("%#v", this.Pattern),
-		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
-	return s
-}
-func valueToGoStringRelapse(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
-func extensionToGoStringRelapse(e map[int32]github_com_gogo_protobuf_proto.Extension) string {
-	if e == nil {
-		return "nil"
-	}
-	s := "map[int32]proto.Extension{"
-	keys := make([]int, 0, len(e))
-	for k := range e {
-		keys = append(keys, int(k))
-	}
-	sort.Ints(keys)
-	ss := []string{}
-	for _, k := range keys {
-		ss = append(ss, strconv.Itoa(k)+": "+e[int32(k)].GoString())
-	}
-	s += strings.Join(ss, ",") + "}"
-	return s
-}
 func (this *Grammar) Equal(that interface{}) bool {
 	if that == nil {
 		if this == nil {
@@ -1601,6 +1291,316 @@ func (this *Not) Equal(that interface{}) bool {
 		return false
 	}
 	if !this.CloseParen.Equal(that1.CloseParen) {
+		return false
+	}
+	return true
+}
+func (this *Grammar) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.Grammar{` +
+		`PatternDecls:` + fmt.Sprintf("%#v", this.PatternDecls),
+		`After:` + fmt.Sprintf("%#v", this.After) + `}`}, ", ")
+	return s
+}
+func (this *PatternDecl) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.PatternDecl{` +
+		`Before:` + fmt.Sprintf("%#v", this.Before),
+		`Name:` + fmt.Sprintf("%#v", this.Name),
+		`Eq:` + fmt.Sprintf("%#v", this.Eq),
+		`Pattern:` + fmt.Sprintf("%#v", this.Pattern) + `}`}, ", ")
+	return s
+}
+func (this *NameExpr) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.NameExpr{` +
+		`Name:` + fmt.Sprintf("%#v", this.Name),
+		`AnyName:` + fmt.Sprintf("%#v", this.AnyName),
+		`AnyNameExcept:` + fmt.Sprintf("%#v", this.AnyNameExcept),
+		`NameChoice:` + fmt.Sprintf("%#v", this.NameChoice) + `}`}, ", ")
+	return s
+}
+func (this *Name) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.Name{` +
+		`Before:` + fmt.Sprintf("%#v", this.Before),
+		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
+		`BeforeName:` + fmt.Sprintf("%#v", this.BeforeName),
+		`Name:` + fmt.Sprintf("%#v", this.Name),
+		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
+	return s
+}
+func (this *AnyName) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.AnyName{` +
+		`Before:` + fmt.Sprintf("%#v", this.Before) + `}`}, ", ")
+	return s
+}
+func (this *AnyNameExcept) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.AnyNameExcept{` +
+		`Before:` + fmt.Sprintf("%#v", this.Before),
+		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
+		`Except:` + fmt.Sprintf("%#v", this.Except),
+		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
+	return s
+}
+func (this *NameChoice) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.NameChoice{` +
+		`Before:` + fmt.Sprintf("%#v", this.Before),
+		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
+		`Left:` + fmt.Sprintf("%#v", this.Left),
+		`Comma:` + fmt.Sprintf("%#v", this.Comma),
+		`Right:` + fmt.Sprintf("%#v", this.Right),
+		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
+	return s
+}
+func (this *Pattern) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.Pattern{` +
+		`Empty:` + fmt.Sprintf("%#v", this.Empty),
+		`EmptySet:` + fmt.Sprintf("%#v", this.EmptySet),
+		`TreeNode:` + fmt.Sprintf("%#v", this.TreeNode),
+		`LeafNode:` + fmt.Sprintf("%#v", this.LeafNode),
+		`Concat:` + fmt.Sprintf("%#v", this.Concat),
+		`Or:` + fmt.Sprintf("%#v", this.Or),
+		`And:` + fmt.Sprintf("%#v", this.And),
+		`ZeroOrMore:` + fmt.Sprintf("%#v", this.ZeroOrMore),
+		`Reference:` + fmt.Sprintf("%#v", this.Reference),
+		`Not:` + fmt.Sprintf("%#v", this.Not) + `}`}, ", ")
+	return s
+}
+func (this *Empty) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.Empty{` +
+		`Before:` + fmt.Sprintf("%#v", this.Before) + `}`}, ", ")
+	return s
+}
+func (this *EmptySet) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.EmptySet{` +
+		`Before:` + fmt.Sprintf("%#v", this.Before) + `}`}, ", ")
+	return s
+}
+func (this *TreeNode) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.TreeNode{` +
+		`Name:` + fmt.Sprintf("%#v", this.Name),
+		`Colon:` + fmt.Sprintf("%#v", this.Colon),
+		`Pattern:` + fmt.Sprintf("%#v", this.Pattern) + `}`}, ", ")
+	return s
+}
+func (this *LeafNode) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.LeafNode{` +
+		`Expr:` + fmt.Sprintf("%#v", this.Expr) + `}`}, ", ")
+	return s
+}
+func (this *Concat) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.Concat{` +
+		`OpenBracket:` + fmt.Sprintf("%#v", this.OpenBracket),
+		`LeftPattern:` + fmt.Sprintf("%#v", this.LeftPattern),
+		`Comma:` + fmt.Sprintf("%#v", this.Comma),
+		`RightPattern:` + fmt.Sprintf("%#v", this.RightPattern),
+		`CloseBracket:` + fmt.Sprintf("%#v", this.CloseBracket) + `}`}, ", ")
+	return s
+}
+func (this *Or) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.Or{` +
+		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
+		`LeftPattern:` + fmt.Sprintf("%#v", this.LeftPattern),
+		`Pipe:` + fmt.Sprintf("%#v", this.Pipe),
+		`RightPattern:` + fmt.Sprintf("%#v", this.RightPattern),
+		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
+	return s
+}
+func (this *And) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.And{` +
+		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
+		`LeftPattern:` + fmt.Sprintf("%#v", this.LeftPattern),
+		`Ampersand:` + fmt.Sprintf("%#v", this.Ampersand),
+		`RightPattern:` + fmt.Sprintf("%#v", this.RightPattern),
+		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
+	return s
+}
+func (this *ZeroOrMore) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.ZeroOrMore{` +
+		`Before:` + fmt.Sprintf("%#v", this.Before),
+		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
+		`Pattern:` + fmt.Sprintf("%#v", this.Pattern),
+		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
+	return s
+}
+func (this *Reference) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.Reference{` +
+		`HashTag:` + fmt.Sprintf("%#v", this.HashTag),
+		`Name:` + fmt.Sprintf("%#v", this.Name) + `}`}, ", ")
+	return s
+}
+func (this *Not) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.Not{` +
+		`Exclamation:` + fmt.Sprintf("%#v", this.Exclamation),
+		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
+		`Pattern:` + fmt.Sprintf("%#v", this.Pattern),
+		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
+	return s
+}
+func valueToGoStringRelapse(v interface{}, typ string) string {
+	rv := reflect.ValueOf(v)
+	if rv.IsNil() {
+		return "nil"
+	}
+	pv := reflect.Indirect(rv).Interface()
+	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
+}
+func extensionToGoStringRelapse(e map[int32]github_com_gogo_protobuf_proto.Extension) string {
+	if e == nil {
+		return "nil"
+	}
+	s := "map[int32]proto.Extension{"
+	keys := make([]int, 0, len(e))
+	for k := range e {
+		keys = append(keys, int(k))
+	}
+	sort.Ints(keys)
+	ss := []string{}
+	for _, k := range keys {
+		ss = append(ss, strconv.Itoa(k)+": "+e[int32(k)].GoString())
+	}
+	s += strings.Join(ss, ",") + "}"
+	return s
+}
+func (this *NameExpr) GetValue() interface{} {
+	if this.Name != nil {
+		return this.Name
+	}
+	if this.AnyName != nil {
+		return this.AnyName
+	}
+	if this.AnyNameExcept != nil {
+		return this.AnyNameExcept
+	}
+	if this.NameChoice != nil {
+		return this.NameChoice
+	}
+	return nil
+}
+
+func (this *NameExpr) SetValue(value interface{}) bool {
+	switch vt := value.(type) {
+	case *Name:
+		this.Name = vt
+	case *AnyName:
+		this.AnyName = vt
+	case *AnyNameExcept:
+		this.AnyNameExcept = vt
+	case *NameChoice:
+		this.NameChoice = vt
+	default:
+		return false
+	}
+	return true
+}
+func (this *Pattern) GetValue() interface{} {
+	if this.Empty != nil {
+		return this.Empty
+	}
+	if this.EmptySet != nil {
+		return this.EmptySet
+	}
+	if this.TreeNode != nil {
+		return this.TreeNode
+	}
+	if this.LeafNode != nil {
+		return this.LeafNode
+	}
+	if this.Concat != nil {
+		return this.Concat
+	}
+	if this.Or != nil {
+		return this.Or
+	}
+	if this.And != nil {
+		return this.And
+	}
+	if this.ZeroOrMore != nil {
+		return this.ZeroOrMore
+	}
+	if this.Reference != nil {
+		return this.Reference
+	}
+	if this.Not != nil {
+		return this.Not
+	}
+	return nil
+}
+
+func (this *Pattern) SetValue(value interface{}) bool {
+	switch vt := value.(type) {
+	case *Empty:
+		this.Empty = vt
+	case *EmptySet:
+		this.EmptySet = vt
+	case *TreeNode:
+		this.TreeNode = vt
+	case *LeafNode:
+		this.LeafNode = vt
+	case *Concat:
+		this.Concat = vt
+	case *Or:
+		this.Or = vt
+	case *And:
+		this.And = vt
+	case *ZeroOrMore:
+		this.ZeroOrMore = vt
+	case *Reference:
+		this.Reference = vt
+	case *Not:
+		this.Not = vt
+	default:
 		return false
 	}
 	return true

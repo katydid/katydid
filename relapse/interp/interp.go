@@ -40,6 +40,9 @@ func Interpret(g *relapse.Grammar, tree serialize.Scanner) bool {
 	return Nullable(refs, res)
 }
 
+//TODO improve nullable for left recursion using fix points
+// https://github.com/kennknowles/go-yid/blob/master/src/yid/nullable.go
+
 func Nullable(refs relapse.RefLookup, p *relapse.Pattern) bool {
 	typ := p.GetValue()
 	switch v := typ.(type) {

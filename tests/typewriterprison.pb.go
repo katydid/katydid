@@ -19,14 +19,14 @@ import math "math"
 
 // discarding unused import gogoproto "github.com/gogo/protobuf/gogoproto/gogo.pb"
 
+import google_protobuf "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
+
 import fmt "fmt"
 import strings "strings"
 import github_com_gogo_protobuf_proto "github.com/gogo/protobuf/proto"
 import sort "sort"
 import strconv "strconv"
 import reflect "reflect"
-
-import google_protobuf "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -531,298 +531,6 @@ func init() {
 	proto.RegisterEnum("tests.DivorceFair", DivorceFair_name, DivorceFair_value)
 	proto.RegisterEnum("tests.HopeArch", HopeArch_name, HopeArch_value)
 	proto.RegisterEnum("tests.BullySunrise", BullySunrise_name, BullySunrise_value)
-}
-func NewPopulatedTypewriterPrison(r randyTypewriterprison, easy bool) *TypewriterPrison {
-	this := &TypewriterPrison{}
-	if r.Intn(10) != 0 {
-		v1 := r.Intn(100)
-		this.WineMessenger = make([]byte, v1)
-		for i := 0; i < v1; i++ {
-			this.WineMessenger[i] = byte(r.Intn(256))
-		}
-	}
-	if r.Intn(10) != 0 {
-		v2 := r.Intn(100)
-		this.ShoelaceBeer = make([]byte, v2)
-		for i := 0; i < v2; i++ {
-			this.ShoelaceBeer[i] = byte(r.Intn(256))
-		}
-	}
-	if r.Intn(10) != 0 {
-		this.PocketRoses = NewPopulatedPocketRoses(r, easy)
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedTypewriterprison(r, 4)
-	}
-	return this
-}
-
-func NewPopulatedPocketRoses(r randyTypewriterprison, easy bool) *PocketRoses {
-	this := &PocketRoses{}
-	if r.Intn(10) != 0 {
-		v3 := randStringTypewriterprison(r)
-		this.ScarBusStop = &v3
-	}
-	if r.Intn(10) != 0 {
-		v4 := int64(r.Int63())
-		if r.Intn(2) == 0 {
-			v4 *= -1
-		}
-		this.BadgeShopping = &v4
-	}
-	if r.Intn(10) != 0 {
-		v5 := int64(r.Int63())
-		if r.Intn(2) == 0 {
-			v5 *= -1
-		}
-		this.DaisySled = &v5
-	}
-	if r.Intn(10) != 0 {
-		v6 := int64(r.Int63())
-		if r.Intn(2) == 0 {
-			v6 *= -1
-		}
-		this.SubmarineSaw = &v6
-	}
-	if r.Intn(10) != 0 {
-		v7 := bool(bool(r.Intn(2) == 0))
-		this.SmileLetter = &v7
-	}
-	if r.Intn(10) != 0 {
-		v8 := BullySunrise([]int32{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}[r.Intn(11)])
-		this.IconHope = &v8
-	}
-	if r.Intn(10) != 0 {
-		v9 := HopeArch([]int32{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53}[r.Intn(54)])
-		this.VanPurse = &v9
-	}
-	if r.Intn(10) != 0 {
-		v10 := r.Intn(10)
-		this.MenuPaperclip = make([]string, v10)
-		for i := 0; i < v10; i++ {
-			this.MenuPaperclip[i] = randStringTypewriterprison(r)
-		}
-	}
-	if r.Intn(10) != 0 {
-		v11 := r.Intn(10)
-		this.BeetlePoker = make([]string, v11)
-		for i := 0; i < v11; i++ {
-			this.BeetlePoker[i] = randStringTypewriterprison(r)
-		}
-	}
-	if r.Intn(10) != 0 {
-		v12 := r.Intn(10)
-		this.WigPride = make([]string, v12)
-		for i := 0; i < v12; i++ {
-			this.WigPride[i] = randStringTypewriterprison(r)
-		}
-	}
-	if r.Intn(10) != 0 {
-		v13 := DivorceFair([]int32{4, 5, 6, 9, 10, 11, 15, 21, 22}[r.Intn(9)])
-		this.DivorceFair = &v13
-	}
-	if r.Intn(10) != 0 {
-		v14 := r.Intn(100)
-		this.FlightParachute = make([]uint32, v14)
-		for i := 0; i < v14; i++ {
-			this.FlightParachute[i] = uint32(r.Uint32())
-		}
-	}
-	if r.Intn(10) != 0 {
-		v15 := r.Intn(100)
-		this.BeerRace = make([]uint32, v15)
-		for i := 0; i < v15; i++ {
-			this.BeerRace[i] = uint32(r.Uint32())
-		}
-	}
-	if r.Intn(10) != 0 {
-		v16 := r.Intn(100)
-		this.LoftQuarry = make([][]byte, v16)
-		for i := 0; i < v16; i++ {
-			v17 := r.Intn(100)
-			this.LoftQuarry[i] = make([]byte, v17)
-			for j := 0; j < v17; j++ {
-				this.LoftQuarry[i][j] = byte(r.Intn(256))
-			}
-		}
-	}
-	if r.Intn(10) != 0 {
-		v18 := r.Intn(100)
-		this.TaxiDivorce = make([][]byte, v18)
-		for i := 0; i < v18; i++ {
-			v19 := r.Intn(100)
-			this.TaxiDivorce[i] = make([]byte, v19)
-			for j := 0; j < v19; j++ {
-				this.TaxiDivorce[i][j] = byte(r.Intn(256))
-			}
-		}
-	}
-	if r.Intn(10) != 0 {
-		v20 := r.Intn(100)
-		this.ElectionButter = make([]uint32, v20)
-		for i := 0; i < v20; i++ {
-			this.ElectionButter[i] = uint32(r.Uint32())
-		}
-	}
-	if r.Intn(10) != 0 {
-		v21 := r.Intn(100)
-		this.BriefcaseBaboon = make([][]byte, v21)
-		for i := 0; i < v21; i++ {
-			v22 := r.Intn(100)
-			this.BriefcaseBaboon[i] = make([]byte, v22)
-			for j := 0; j < v22; j++ {
-				this.BriefcaseBaboon[i][j] = byte(r.Intn(256))
-			}
-		}
-	}
-	if r.Intn(10) != 0 {
-		v23 := randStringTypewriterprison(r)
-		this.MapShark = &v23
-	}
-	if r.Intn(10) != 0 {
-		v24 := bool(bool(r.Intn(2) == 0))
-		this.NetInterlude = &v24
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedTypewriterprison(r, 20)
-	}
-	return this
-}
-
-type randyTypewriterprison interface {
-	Float32() float32
-	Float64() float64
-	Int63() int64
-	Int31() int32
-	Uint32() uint32
-	Intn(n int) int
-}
-
-func randUTF8RuneTypewriterprison(r randyTypewriterprison) rune {
-	ru := r.Intn(62)
-	if ru < 10 {
-		return rune(ru + 48)
-	} else if ru < 36 {
-		return rune(ru + 55)
-	}
-	return rune(ru + 61)
-}
-func randStringTypewriterprison(r randyTypewriterprison) string {
-	v25 := r.Intn(100)
-	tmps := make([]rune, v25)
-	for i := 0; i < v25; i++ {
-		tmps[i] = randUTF8RuneTypewriterprison(r)
-	}
-	return string(tmps)
-}
-func randUnrecognizedTypewriterprison(r randyTypewriterprison, maxFieldNumber int) (data []byte) {
-	l := r.Intn(5)
-	for i := 0; i < l; i++ {
-		wire := r.Intn(4)
-		if wire == 3 {
-			wire = 5
-		}
-		fieldNumber := maxFieldNumber + r.Intn(100)
-		data = randFieldTypewriterprison(data, r, fieldNumber, wire)
-	}
-	return data
-}
-func randFieldTypewriterprison(data []byte, r randyTypewriterprison, fieldNumber int, wire int) []byte {
-	key := uint32(fieldNumber)<<3 | uint32(wire)
-	switch wire {
-	case 0:
-		data = encodeVarintPopulateTypewriterprison(data, uint64(key))
-		v26 := r.Int63()
-		if r.Intn(2) == 0 {
-			v26 *= -1
-		}
-		data = encodeVarintPopulateTypewriterprison(data, uint64(v26))
-	case 1:
-		data = encodeVarintPopulateTypewriterprison(data, uint64(key))
-		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
-	case 2:
-		data = encodeVarintPopulateTypewriterprison(data, uint64(key))
-		ll := r.Intn(100)
-		data = encodeVarintPopulateTypewriterprison(data, uint64(ll))
-		for j := 0; j < ll; j++ {
-			data = append(data, byte(r.Intn(256)))
-		}
-	default:
-		data = encodeVarintPopulateTypewriterprison(data, uint64(key))
-		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
-	}
-	return data
-}
-func encodeVarintPopulateTypewriterprison(data []byte, v uint64) []byte {
-	for v >= 1<<7 {
-		data = append(data, uint8(uint64(v)&0x7f|0x80))
-		v >>= 7
-	}
-	data = append(data, uint8(v))
-	return data
-}
-func (this *TypewriterPrison) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.TypewriterPrison{` +
-		`WineMessenger:` + valueToGoStringTypewriterprison(this.WineMessenger, "byte"),
-		`ShoelaceBeer:` + valueToGoStringTypewriterprison(this.ShoelaceBeer, "byte"),
-		`PocketRoses:` + fmt.Sprintf("%#v", this.PocketRoses),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *PocketRoses) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.PocketRoses{` +
-		`ScarBusStop:` + valueToGoStringTypewriterprison(this.ScarBusStop, "string"),
-		`BadgeShopping:` + valueToGoStringTypewriterprison(this.BadgeShopping, "int64"),
-		`DaisySled:` + valueToGoStringTypewriterprison(this.DaisySled, "int64"),
-		`SubmarineSaw:` + valueToGoStringTypewriterprison(this.SubmarineSaw, "int64"),
-		`SmileLetter:` + valueToGoStringTypewriterprison(this.SmileLetter, "bool"),
-		`IconHope:` + valueToGoStringTypewriterprison(this.IconHope, "tests.BullySunrise"),
-		`VanPurse:` + valueToGoStringTypewriterprison(this.VanPurse, "tests.HopeArch"),
-		`MenuPaperclip:` + fmt.Sprintf("%#v", this.MenuPaperclip),
-		`BeetlePoker:` + fmt.Sprintf("%#v", this.BeetlePoker),
-		`WigPride:` + fmt.Sprintf("%#v", this.WigPride),
-		`DivorceFair:` + valueToGoStringTypewriterprison(this.DivorceFair, "tests.DivorceFair"),
-		`FlightParachute:` + fmt.Sprintf("%#v", this.FlightParachute),
-		`BeerRace:` + fmt.Sprintf("%#v", this.BeerRace),
-		`LoftQuarry:` + fmt.Sprintf("%#v", this.LoftQuarry),
-		`TaxiDivorce:` + fmt.Sprintf("%#v", this.TaxiDivorce),
-		`ElectionButter:` + fmt.Sprintf("%#v", this.ElectionButter),
-		`BriefcaseBaboon:` + fmt.Sprintf("%#v", this.BriefcaseBaboon),
-		`MapShark:` + valueToGoStringTypewriterprison(this.MapShark, "string"),
-		`NetInterlude:` + valueToGoStringTypewriterprison(this.NetInterlude, "bool"),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func valueToGoStringTypewriterprison(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
-func extensionToGoStringTypewriterprison(e map[int32]github_com_gogo_protobuf_proto.Extension) string {
-	if e == nil {
-		return "nil"
-	}
-	s := "map[int32]proto.Extension{"
-	keys := make([]int, 0, len(e))
-	for k := range e {
-		keys = append(keys, int(k))
-	}
-	sort.Ints(keys)
-	ss := []string{}
-	for _, k := range keys {
-		ss = append(ss, strconv.Itoa(k)+": "+e[int32(k)].GoString())
-	}
-	s += strings.Join(ss, ",") + "}"
-	return s
 }
 func (this *TypewriterPrison) Description() (desc *google_protobuf.FileDescriptorSet) {
 	return TypewriterprisonDescription()
@@ -1505,4 +1213,296 @@ func TypewriterprisonDescription() (desc *google_protobuf.FileDescriptorSet) {
 	}(1), Type: func(v google_protobuf.FieldDescriptorProto_Type) *google_protobuf.FieldDescriptorProto_Type {
 		return &v
 	}(8), TypeName: nil, Extendee: nil, DefaultValue: nil, OneofIndex: nil, Options: nil, XXX_unrecognized: []byte(nil)}}, Extension: []*google_protobuf.FieldDescriptorProto(nil), NestedType: []*google_protobuf.DescriptorProto(nil), EnumType: []*google_protobuf.EnumDescriptorProto(nil), ExtensionRange: []*google_protobuf.DescriptorProto_ExtensionRange(nil), OneofDecl: []*google_protobuf.OneofDescriptorProto(nil), Options: nil, XXX_unrecognized: []byte(nil)}}, EnumType: []*google_protobuf.EnumDescriptorProto{{Name: func(v string) *string { return &v }("DivorceFair"), Value: []*google_protobuf.EnumValueDescriptorProto{{Name: func(v string) *string { return &v }("Lawyer"), Number: func(v int32) *int32 { return &v }(4), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("OldMan"), Number: func(v int32) *int32 { return &v }(5), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Help"), Number: func(v int32) *int32 { return &v }(6), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Radar"), Number: func(v int32) *int32 { return &v }(9), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Arm"), Number: func(v int32) *int32 { return &v }(10), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Verse"), Number: func(v int32) *int32 { return &v }(11), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Nuts"), Number: func(v int32) *int32 { return &v }(15), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Briefcase"), Number: func(v int32) *int32 { return &v }(21), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Palace"), Number: func(v int32) *int32 { return &v }(22), Options: nil, XXX_unrecognized: []byte(nil)}}, Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("HopeArch"), Value: []*google_protobuf.EnumValueDescriptorProto{{Name: func(v string) *string { return &v }("Mind"), Number: func(v int32) *int32 { return &v }(0), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Kennel"), Number: func(v int32) *int32 { return &v }(1), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Corn"), Number: func(v int32) *int32 { return &v }(2), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Silence"), Number: func(v int32) *int32 { return &v }(3), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Lobster"), Number: func(v int32) *int32 { return &v }(4), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Oven"), Number: func(v int32) *int32 { return &v }(5), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Nose"), Number: func(v int32) *int32 { return &v }(6), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Navel"), Number: func(v int32) *int32 { return &v }(7), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Pill"), Number: func(v int32) *int32 { return &v }(8), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Holly"), Number: func(v int32) *int32 { return &v }(9), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Doctrine"), Number: func(v int32) *int32 { return &v }(10), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Fork"), Number: func(v int32) *int32 { return &v }(11), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Belt"), Number: func(v int32) *int32 { return &v }(12), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Cult"), Number: func(v int32) *int32 { return &v }(13), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Tusk"), Number: func(v int32) *int32 { return &v }(14), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Chips"), Number: func(v int32) *int32 { return &v }(15), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Tent"), Number: func(v int32) *int32 { return &v }(16), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Coat"), Number: func(v int32) *int32 { return &v }(17), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Court"), Number: func(v int32) *int32 { return &v }(18), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Runaway"), Number: func(v int32) *int32 { return &v }(19), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Mulberry"), Number: func(v int32) *int32 { return &v }(20), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Politician"), Number: func(v int32) *int32 { return &v }(21), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Message"), Number: func(v int32) *int32 { return &v }(22), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Teacher"), Number: func(v int32) *int32 { return &v }(23), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Lift"), Number: func(v int32) *int32 { return &v }(24), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Danger"), Number: func(v int32) *int32 { return &v }(25), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Order"), Number: func(v int32) *int32 { return &v }(26), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Title"), Number: func(v int32) *int32 { return &v }(27), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Wheelbarrow"), Number: func(v int32) *int32 { return &v }(28), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Hosepipe"), Number: func(v int32) *int32 { return &v }(29), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Carpenter"), Number: func(v int32) *int32 { return &v }(30), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Shop"), Number: func(v int32) *int32 { return &v }(31), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Nile"), Number: func(v int32) *int32 { return &v }(32), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Cloud"), Number: func(v int32) *int32 { return &v }(33), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Mill"), Number: func(v int32) *int32 { return &v }(34), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Wallet"), Number: func(v int32) *int32 { return &v }(35), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Sugar"), Number: func(v int32) *int32 { return &v }(36), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Crisis"), Number: func(v int32) *int32 { return &v }(37), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Duty"), Number: func(v int32) *int32 { return &v }(38), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Milkshake"), Number: func(v int32) *int32 { return &v }(39), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Tap"), Number: func(v int32) *int32 { return &v }(40), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Clay"), Number: func(v int32) *int32 { return &v }(41), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Coronet"), Number: func(v int32) *int32 { return &v }(42), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Breakfast"), Number: func(v int32) *int32 { return &v }(43), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("File"), Number: func(v int32) *int32 { return &v }(44), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Bulldozer"), Number: func(v int32) *int32 { return &v }(45), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Mattress"), Number: func(v int32) *int32 { return &v }(46), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Minute"), Number: func(v int32) *int32 { return &v }(47), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Chisel"), Number: func(v int32) *int32 { return &v }(48), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Aspirin"), Number: func(v int32) *int32 { return &v }(49), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Roulette"), Number: func(v int32) *int32 { return &v }(50), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Ham"), Number: func(v int32) *int32 { return &v }(51), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Bench"), Number: func(v int32) *int32 { return &v }(52), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Miner"), Number: func(v int32) *int32 { return &v }(53), Options: nil, XXX_unrecognized: []byte(nil)}}, Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("BullySunrise"), Value: []*google_protobuf.EnumValueDescriptorProto{{Name: func(v string) *string { return &v }("Sandals"), Number: func(v int32) *int32 { return &v }(0), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Showcase"), Number: func(v int32) *int32 { return &v }(1), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Florist"), Number: func(v int32) *int32 { return &v }(2), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Fridge"), Number: func(v int32) *int32 { return &v }(3), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Tram"), Number: func(v int32) *int32 { return &v }(4), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Porch"), Number: func(v int32) *int32 { return &v }(5), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Skylight"), Number: func(v int32) *int32 { return &v }(6), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Joke"), Number: func(v int32) *int32 { return &v }(7), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Leather"), Number: func(v int32) *int32 { return &v }(8), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Crane"), Number: func(v int32) *int32 { return &v }(9), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Tour"), Number: func(v int32) *int32 { return &v }(10), Options: nil, XXX_unrecognized: []byte(nil)}}, Options: nil, XXX_unrecognized: []byte(nil)}}, Service: []*google_protobuf.ServiceDescriptorProto(nil), Extension: []*google_protobuf.FieldDescriptorProto(nil), Options: &google_protobuf.FileOptions{JavaPackage: nil, JavaOuterClassname: nil, JavaMultipleFiles: nil, JavaGenerateEqualsAndHash: nil, JavaStringCheckUtf8: nil, OptimizeFor: nil, GoPackage: nil, CcGenericServices: nil, JavaGenericServices: nil, PyGenericServices: nil, Deprecated: nil, CcEnableArenas: nil, UninterpretedOption: []*google_protobuf.UninterpretedOption(nil), XXX_extensions: map[int32]proto.Extension{63006: proto.NewExtension([]byte{0xf0, 0xe1, 0x1e, 0x1}), 63007: proto.NewExtension([]byte{0xf8, 0xe1, 0x1e, 0x1})}, XXX_unrecognized: []byte(nil)}, SourceCodeInfo: nil, Syntax: nil, XXX_unrecognized: []byte(nil)}}, XXX_unrecognized: []byte(nil)}
+}
+func (this *TypewriterPrison) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.TypewriterPrison{` +
+		`WineMessenger:` + valueToGoStringTypewriterprison(this.WineMessenger, "byte"),
+		`ShoelaceBeer:` + valueToGoStringTypewriterprison(this.ShoelaceBeer, "byte"),
+		`PocketRoses:` + fmt.Sprintf("%#v", this.PocketRoses),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *PocketRoses) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.PocketRoses{` +
+		`ScarBusStop:` + valueToGoStringTypewriterprison(this.ScarBusStop, "string"),
+		`BadgeShopping:` + valueToGoStringTypewriterprison(this.BadgeShopping, "int64"),
+		`DaisySled:` + valueToGoStringTypewriterprison(this.DaisySled, "int64"),
+		`SubmarineSaw:` + valueToGoStringTypewriterprison(this.SubmarineSaw, "int64"),
+		`SmileLetter:` + valueToGoStringTypewriterprison(this.SmileLetter, "bool"),
+		`IconHope:` + valueToGoStringTypewriterprison(this.IconHope, "tests.BullySunrise"),
+		`VanPurse:` + valueToGoStringTypewriterprison(this.VanPurse, "tests.HopeArch"),
+		`MenuPaperclip:` + fmt.Sprintf("%#v", this.MenuPaperclip),
+		`BeetlePoker:` + fmt.Sprintf("%#v", this.BeetlePoker),
+		`WigPride:` + fmt.Sprintf("%#v", this.WigPride),
+		`DivorceFair:` + valueToGoStringTypewriterprison(this.DivorceFair, "tests.DivorceFair"),
+		`FlightParachute:` + fmt.Sprintf("%#v", this.FlightParachute),
+		`BeerRace:` + fmt.Sprintf("%#v", this.BeerRace),
+		`LoftQuarry:` + fmt.Sprintf("%#v", this.LoftQuarry),
+		`TaxiDivorce:` + fmt.Sprintf("%#v", this.TaxiDivorce),
+		`ElectionButter:` + fmt.Sprintf("%#v", this.ElectionButter),
+		`BriefcaseBaboon:` + fmt.Sprintf("%#v", this.BriefcaseBaboon),
+		`MapShark:` + valueToGoStringTypewriterprison(this.MapShark, "string"),
+		`NetInterlude:` + valueToGoStringTypewriterprison(this.NetInterlude, "bool"),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func valueToGoStringTypewriterprison(v interface{}, typ string) string {
+	rv := reflect.ValueOf(v)
+	if rv.IsNil() {
+		return "nil"
+	}
+	pv := reflect.Indirect(rv).Interface()
+	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
+}
+func extensionToGoStringTypewriterprison(e map[int32]github_com_gogo_protobuf_proto.Extension) string {
+	if e == nil {
+		return "nil"
+	}
+	s := "map[int32]proto.Extension{"
+	keys := make([]int, 0, len(e))
+	for k := range e {
+		keys = append(keys, int(k))
+	}
+	sort.Ints(keys)
+	ss := []string{}
+	for _, k := range keys {
+		ss = append(ss, strconv.Itoa(k)+": "+e[int32(k)].GoString())
+	}
+	s += strings.Join(ss, ",") + "}"
+	return s
+}
+func NewPopulatedTypewriterPrison(r randyTypewriterprison, easy bool) *TypewriterPrison {
+	this := &TypewriterPrison{}
+	if r.Intn(10) != 0 {
+		v1 := r.Intn(100)
+		this.WineMessenger = make([]byte, v1)
+		for i := 0; i < v1; i++ {
+			this.WineMessenger[i] = byte(r.Intn(256))
+		}
+	}
+	if r.Intn(10) != 0 {
+		v2 := r.Intn(100)
+		this.ShoelaceBeer = make([]byte, v2)
+		for i := 0; i < v2; i++ {
+			this.ShoelaceBeer[i] = byte(r.Intn(256))
+		}
+	}
+	if r.Intn(10) != 0 {
+		this.PocketRoses = NewPopulatedPocketRoses(r, easy)
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypewriterprison(r, 4)
+	}
+	return this
+}
+
+func NewPopulatedPocketRoses(r randyTypewriterprison, easy bool) *PocketRoses {
+	this := &PocketRoses{}
+	if r.Intn(10) != 0 {
+		v3 := randStringTypewriterprison(r)
+		this.ScarBusStop = &v3
+	}
+	if r.Intn(10) != 0 {
+		v4 := int64(r.Int63())
+		if r.Intn(2) == 0 {
+			v4 *= -1
+		}
+		this.BadgeShopping = &v4
+	}
+	if r.Intn(10) != 0 {
+		v5 := int64(r.Int63())
+		if r.Intn(2) == 0 {
+			v5 *= -1
+		}
+		this.DaisySled = &v5
+	}
+	if r.Intn(10) != 0 {
+		v6 := int64(r.Int63())
+		if r.Intn(2) == 0 {
+			v6 *= -1
+		}
+		this.SubmarineSaw = &v6
+	}
+	if r.Intn(10) != 0 {
+		v7 := bool(bool(r.Intn(2) == 0))
+		this.SmileLetter = &v7
+	}
+	if r.Intn(10) != 0 {
+		v8 := BullySunrise([]int32{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}[r.Intn(11)])
+		this.IconHope = &v8
+	}
+	if r.Intn(10) != 0 {
+		v9 := HopeArch([]int32{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53}[r.Intn(54)])
+		this.VanPurse = &v9
+	}
+	if r.Intn(10) != 0 {
+		v10 := r.Intn(10)
+		this.MenuPaperclip = make([]string, v10)
+		for i := 0; i < v10; i++ {
+			this.MenuPaperclip[i] = randStringTypewriterprison(r)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v11 := r.Intn(10)
+		this.BeetlePoker = make([]string, v11)
+		for i := 0; i < v11; i++ {
+			this.BeetlePoker[i] = randStringTypewriterprison(r)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v12 := r.Intn(10)
+		this.WigPride = make([]string, v12)
+		for i := 0; i < v12; i++ {
+			this.WigPride[i] = randStringTypewriterprison(r)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v13 := DivorceFair([]int32{4, 5, 6, 9, 10, 11, 15, 21, 22}[r.Intn(9)])
+		this.DivorceFair = &v13
+	}
+	if r.Intn(10) != 0 {
+		v14 := r.Intn(100)
+		this.FlightParachute = make([]uint32, v14)
+		for i := 0; i < v14; i++ {
+			this.FlightParachute[i] = uint32(r.Uint32())
+		}
+	}
+	if r.Intn(10) != 0 {
+		v15 := r.Intn(100)
+		this.BeerRace = make([]uint32, v15)
+		for i := 0; i < v15; i++ {
+			this.BeerRace[i] = uint32(r.Uint32())
+		}
+	}
+	if r.Intn(10) != 0 {
+		v16 := r.Intn(100)
+		this.LoftQuarry = make([][]byte, v16)
+		for i := 0; i < v16; i++ {
+			v17 := r.Intn(100)
+			this.LoftQuarry[i] = make([]byte, v17)
+			for j := 0; j < v17; j++ {
+				this.LoftQuarry[i][j] = byte(r.Intn(256))
+			}
+		}
+	}
+	if r.Intn(10) != 0 {
+		v18 := r.Intn(100)
+		this.TaxiDivorce = make([][]byte, v18)
+		for i := 0; i < v18; i++ {
+			v19 := r.Intn(100)
+			this.TaxiDivorce[i] = make([]byte, v19)
+			for j := 0; j < v19; j++ {
+				this.TaxiDivorce[i][j] = byte(r.Intn(256))
+			}
+		}
+	}
+	if r.Intn(10) != 0 {
+		v20 := r.Intn(100)
+		this.ElectionButter = make([]uint32, v20)
+		for i := 0; i < v20; i++ {
+			this.ElectionButter[i] = uint32(r.Uint32())
+		}
+	}
+	if r.Intn(10) != 0 {
+		v21 := r.Intn(100)
+		this.BriefcaseBaboon = make([][]byte, v21)
+		for i := 0; i < v21; i++ {
+			v22 := r.Intn(100)
+			this.BriefcaseBaboon[i] = make([]byte, v22)
+			for j := 0; j < v22; j++ {
+				this.BriefcaseBaboon[i][j] = byte(r.Intn(256))
+			}
+		}
+	}
+	if r.Intn(10) != 0 {
+		v23 := randStringTypewriterprison(r)
+		this.MapShark = &v23
+	}
+	if r.Intn(10) != 0 {
+		v24 := bool(bool(r.Intn(2) == 0))
+		this.NetInterlude = &v24
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypewriterprison(r, 20)
+	}
+	return this
+}
+
+type randyTypewriterprison interface {
+	Float32() float32
+	Float64() float64
+	Int63() int64
+	Int31() int32
+	Uint32() uint32
+	Intn(n int) int
+}
+
+func randUTF8RuneTypewriterprison(r randyTypewriterprison) rune {
+	ru := r.Intn(62)
+	if ru < 10 {
+		return rune(ru + 48)
+	} else if ru < 36 {
+		return rune(ru + 55)
+	}
+	return rune(ru + 61)
+}
+func randStringTypewriterprison(r randyTypewriterprison) string {
+	v25 := r.Intn(100)
+	tmps := make([]rune, v25)
+	for i := 0; i < v25; i++ {
+		tmps[i] = randUTF8RuneTypewriterprison(r)
+	}
+	return string(tmps)
+}
+func randUnrecognizedTypewriterprison(r randyTypewriterprison, maxFieldNumber int) (data []byte) {
+	l := r.Intn(5)
+	for i := 0; i < l; i++ {
+		wire := r.Intn(4)
+		if wire == 3 {
+			wire = 5
+		}
+		fieldNumber := maxFieldNumber + r.Intn(100)
+		data = randFieldTypewriterprison(data, r, fieldNumber, wire)
+	}
+	return data
+}
+func randFieldTypewriterprison(data []byte, r randyTypewriterprison, fieldNumber int, wire int) []byte {
+	key := uint32(fieldNumber)<<3 | uint32(wire)
+	switch wire {
+	case 0:
+		data = encodeVarintPopulateTypewriterprison(data, uint64(key))
+		v26 := r.Int63()
+		if r.Intn(2) == 0 {
+			v26 *= -1
+		}
+		data = encodeVarintPopulateTypewriterprison(data, uint64(v26))
+	case 1:
+		data = encodeVarintPopulateTypewriterprison(data, uint64(key))
+		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+	case 2:
+		data = encodeVarintPopulateTypewriterprison(data, uint64(key))
+		ll := r.Intn(100)
+		data = encodeVarintPopulateTypewriterprison(data, uint64(ll))
+		for j := 0; j < ll; j++ {
+			data = append(data, byte(r.Intn(256)))
+		}
+	default:
+		data = encodeVarintPopulateTypewriterprison(data, uint64(key))
+		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+	}
+	return data
+}
+func encodeVarintPopulateTypewriterprison(data []byte, v uint64) []byte {
+	for v >= 1<<7 {
+		data = append(data, uint8(uint64(v)&0x7f|0x80))
+		v >>= 7
+	}
+	data = append(data, uint8(v))
+	return data
 }

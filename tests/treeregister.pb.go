@@ -28,14 +28,14 @@ import math "math"
 
 // discarding unused import gogoproto "github.com/gogo/protobuf/gogoproto/gogo.pb"
 
+import google_protobuf "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
+
 import fmt "fmt"
 import strings "strings"
 import github_com_gogo_protobuf_proto "github.com/gogo/protobuf/proto"
 import sort "sort"
 import strconv "strconv"
 import reflect "reflect"
-
-import google_protobuf "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -900,544 +900,6 @@ func init() {
 	proto.RegisterEnum("tests.PastManagement", PastManagement_name, PastManagement_value)
 	proto.RegisterEnum("tests.NotSureBool", NotSureBool_name, NotSureBool_value)
 }
-func NewPopulatedTreeRegister(r randyTreeregister, easy bool) *TreeRegister {
-	this := &TreeRegister{}
-	if r.Intn(10) != 0 {
-		v1 := r.Intn(10)
-		this.Trees = make([]*Tree, v1)
-		for i := 0; i < v1; i++ {
-			this.Trees[i] = NewPopulatedTree(r, easy)
-		}
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedTreeregister(r, 2)
-	}
-	return this
-}
-
-func NewPopulatedTree(r randyTreeregister, easy bool) *Tree {
-	this := &Tree{}
-	if r.Intn(10) != 0 {
-		this.GeneralInformation = NewPopulatedGeneralInformation(r, easy)
-	}
-	if r.Intn(10) != 0 {
-		this.OtherInformation = NewPopulatedOtherInformation(r, easy)
-	}
-	if r.Intn(10) != 0 {
-		this.Measurements = NewPopulatedMeasurements(r, easy)
-	}
-	if r.Intn(10) != 0 {
-		this.Condition = NewPopulatedCondition(r, easy)
-	}
-	if r.Intn(10) != 0 {
-		this.AdditionalInformation = NewPopulatedAdditionalInformation(r, easy)
-	}
-	if r.Intn(10) != 0 {
-		this.Sender = NewPopulatedSender(r, easy)
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedTreeregister(r, 7)
-	}
-	return this
-}
-
-func NewPopulatedGeneralInformation(r randyTreeregister, easy bool) *GeneralInformation {
-	this := &GeneralInformation{}
-	if r.Intn(10) != 0 {
-		v2 := randStringTreeregister(r)
-		this.TypeOfTree = &v2
-	}
-	if r.Intn(10) != 0 {
-		v3 := randStringTreeregister(r)
-		this.Ownership = &v3
-	}
-	if r.Intn(10) != 0 {
-		v4 := randStringTreeregister(r)
-		this.CountryState = &v4
-	}
-	if r.Intn(10) != 0 {
-		v5 := randStringTreeregister(r)
-		this.PostCodeZipCode = &v5
-	}
-	if r.Intn(10) != 0 {
-		v6 := randStringTreeregister(r)
-		this.Location = &v6
-	}
-	if r.Intn(10) != 0 {
-		v7 := randStringTreeregister(r)
-		this.FullAddress = &v7
-	}
-	if r.Intn(10) != 0 {
-		v8 := randStringTreeregister(r)
-		this.Country = &v8
-	}
-	if r.Intn(10) != 0 {
-		v9 := randStringTreeregister(r)
-		this.GridReference = &v9
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedTreeregister(r, 9)
-	}
-	return this
-}
-
-func NewPopulatedOtherInformation(r randyTreeregister, easy bool) *OtherInformation {
-	this := &OtherInformation{}
-	if r.Intn(10) != 0 {
-		v10 := randStringTreeregister(r)
-		this.PlantingDate = &v10
-	}
-	if r.Intn(10) != 0 {
-		v11 := randStringTreeregister(r)
-		this.SeedCollectionNo = &v11
-	}
-	if r.Intn(10) != 0 {
-		v12 := randStringTreeregister(r)
-		this.PlantedBy = &v12
-	}
-	if r.Intn(10) != 0 {
-		v13 := randStringTreeregister(r)
-		this.SeedCollector = &v13
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedTreeregister(r, 5)
-	}
-	return this
-}
-
-func NewPopulatedMeasurements(r randyTreeregister, easy bool) *Measurements {
-	this := &Measurements{}
-	if r.Intn(10) != 0 {
-		this.HeightMeasurement = NewPopulatedHeightMeasurement(r, easy)
-	}
-	if r.Intn(10) != 0 {
-		v14 := bool(bool(r.Intn(2) == 0))
-		this.WasHeightEstimated = &v14
-	}
-	if r.Intn(10) != 0 {
-		this.Girth = NewPopulatedMeasurement(r, easy)
-	}
-	if r.Intn(10) != 0 {
-		this.HeightOfGirthMeasurement = NewPopulatedMeasurement(r, easy)
-	}
-	if r.Intn(10) != 0 {
-		v15 := bool(bool(r.Intn(2) == 0))
-		this.GirthExaggerated = &v15
-	}
-	if r.Intn(10) != 0 {
-		v16 := TreeGrowthCategory([]int32{1, 2, 3}[r.Intn(3)])
-		this.TreeGrowthCategory = &v16
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedTreeregister(r, 7)
-	}
-	return this
-}
-
-func NewPopulatedHeightMeasurement(r randyTreeregister, easy bool) *HeightMeasurement {
-	this := &HeightMeasurement{}
-	if r.Intn(10) != 0 {
-		v17 := float64(r.Float64())
-		if r.Intn(2) == 0 {
-			v17 *= -1
-		}
-		this.Metres = &v17
-	}
-	if r.Intn(10) != 0 {
-		v18 := float64(r.Float64())
-		if r.Intn(2) == 0 {
-			v18 *= -1
-		}
-		this.Feet = &v18
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedTreeregister(r, 3)
-	}
-	return this
-}
-
-func NewPopulatedMeasurement(r randyTreeregister, easy bool) *Measurement {
-	this := &Measurement{}
-	if r.Intn(10) != 0 {
-		v19 := float64(r.Float64())
-		if r.Intn(2) == 0 {
-			v19 *= -1
-		}
-		this.Metres = &v19
-	}
-	if r.Intn(10) != 0 {
-		v20 := int64(r.Int63())
-		if r.Intn(2) == 0 {
-			v20 *= -1
-		}
-		this.Feet = &v20
-	}
-	if r.Intn(10) != 0 {
-		v21 := int64(r.Int63())
-		if r.Intn(2) == 0 {
-			v21 *= -1
-		}
-		this.Inches = &v21
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedTreeregister(r, 4)
-	}
-	return this
-}
-
-func NewPopulatedCondition(r randyTreeregister, easy bool) *Condition {
-	this := &Condition{}
-	if r.Intn(10) != 0 {
-		v22 := GeneralAppearance([]int32{1, 2, 3, 4, 5, 6}[r.Intn(6)])
-		this.GeneralAppearance = &v22
-	}
-	if r.Intn(10) != 0 {
-		v23 := TrunkStemming([]int32{1, 2, 3, 4}[r.Intn(4)])
-		this.TrunkStemming = &v23
-	}
-	if r.Intn(10) != 0 {
-		v24 := Ground([]int32{1, 2, 3}[r.Intn(3)])
-		this.Ground = &v24
-	}
-	if r.Intn(10) != 0 {
-		v25 := Lean([]int32{1, 2, 3, 4}[r.Intn(4)])
-		this.Lead = &v25
-	}
-	if r.Intn(10) != 0 {
-		v26 := DeadBranches([]int32{1, 2, 3, 4}[r.Intn(4)])
-		this.DeadBranches = &v26
-	}
-	if r.Intn(10) != 0 {
-		v27 := StormDamage([]int32{1, 2, 3, 4}[r.Intn(4)])
-		this.StormDamage = &v27
-	}
-	if r.Intn(10) != 0 {
-		v28 := PastManagement([]int32{1, 2, 3, 4, 5, 6, 7, 8}[r.Intn(8)])
-		this.PastManagement = &v28
-	}
-	if r.Intn(10) != 0 {
-		v29 := NotSureBool([]int32{1, 2, 3}[r.Intn(3)])
-		this.LocalOrNationalHistoricalInterest = &v29
-	}
-	if r.Intn(10) != 0 {
-		v30 := NotSureBool([]int32{1, 2, 3}[r.Intn(3)])
-		this.LocalLandmark = &v30
-	}
-	if r.Intn(10) != 0 {
-		v31 := bool(bool(r.Intn(2) == 0))
-		this.RemarkableOrUnusual = &v31
-	}
-	if r.Intn(10) != 0 {
-		v32 := NotSureBool([]int32{1, 2, 3}[r.Intn(3)])
-		this.Veteran = &v32
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedTreeregister(r, 12)
-	}
-	return this
-}
-
-func NewPopulatedAdditionalInformation(r randyTreeregister, easy bool) *AdditionalInformation {
-	this := &AdditionalInformation{}
-	if r.Intn(10) != 0 {
-		v33 := randStringTreeregister(r)
-		this.Comments = &v33
-	}
-	if r.Intn(10) != 0 {
-		v34 := randStringTreeregister(r)
-		this.Other = &v34
-	}
-	if r.Intn(10) != 0 {
-		v35 := r.Intn(10)
-		this.Photos = make([]*Photo, v35)
-		for i := 0; i < v35; i++ {
-			this.Photos[i] = NewPopulatedPhoto(r, easy)
-		}
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedTreeregister(r, 4)
-	}
-	return this
-}
-
-func NewPopulatedPhoto(r randyTreeregister, easy bool) *Photo {
-	this := &Photo{}
-	if r.Intn(10) != 0 {
-		v36 := randStringTreeregister(r)
-		this.Filename = &v36
-	}
-	if r.Intn(10) != 0 {
-		v37 := r.Intn(100)
-		this.Data = make([]byte, v37)
-		for i := 0; i < v37; i++ {
-			this.Data[i] = byte(r.Intn(256))
-		}
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedTreeregister(r, 3)
-	}
-	return this
-}
-
-func NewPopulatedSender(r randyTreeregister, easy bool) *Sender {
-	this := &Sender{}
-	if r.Intn(10) != 0 {
-		v38 := randStringTreeregister(r)
-		this.Name = &v38
-	}
-	if r.Intn(10) != 0 {
-		v39 := randStringTreeregister(r)
-		this.Address = &v39
-	}
-	if r.Intn(10) != 0 {
-		v40 := randStringTreeregister(r)
-		this.Email = &v40
-	}
-	if r.Intn(10) != 0 {
-		v41 := randStringTreeregister(r)
-		this.Telephone = &v41
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedTreeregister(r, 5)
-	}
-	return this
-}
-
-type randyTreeregister interface {
-	Float32() float32
-	Float64() float64
-	Int63() int64
-	Int31() int32
-	Uint32() uint32
-	Intn(n int) int
-}
-
-func randUTF8RuneTreeregister(r randyTreeregister) rune {
-	ru := r.Intn(62)
-	if ru < 10 {
-		return rune(ru + 48)
-	} else if ru < 36 {
-		return rune(ru + 55)
-	}
-	return rune(ru + 61)
-}
-func randStringTreeregister(r randyTreeregister) string {
-	v42 := r.Intn(100)
-	tmps := make([]rune, v42)
-	for i := 0; i < v42; i++ {
-		tmps[i] = randUTF8RuneTreeregister(r)
-	}
-	return string(tmps)
-}
-func randUnrecognizedTreeregister(r randyTreeregister, maxFieldNumber int) (data []byte) {
-	l := r.Intn(5)
-	for i := 0; i < l; i++ {
-		wire := r.Intn(4)
-		if wire == 3 {
-			wire = 5
-		}
-		fieldNumber := maxFieldNumber + r.Intn(100)
-		data = randFieldTreeregister(data, r, fieldNumber, wire)
-	}
-	return data
-}
-func randFieldTreeregister(data []byte, r randyTreeregister, fieldNumber int, wire int) []byte {
-	key := uint32(fieldNumber)<<3 | uint32(wire)
-	switch wire {
-	case 0:
-		data = encodeVarintPopulateTreeregister(data, uint64(key))
-		v43 := r.Int63()
-		if r.Intn(2) == 0 {
-			v43 *= -1
-		}
-		data = encodeVarintPopulateTreeregister(data, uint64(v43))
-	case 1:
-		data = encodeVarintPopulateTreeregister(data, uint64(key))
-		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
-	case 2:
-		data = encodeVarintPopulateTreeregister(data, uint64(key))
-		ll := r.Intn(100)
-		data = encodeVarintPopulateTreeregister(data, uint64(ll))
-		for j := 0; j < ll; j++ {
-			data = append(data, byte(r.Intn(256)))
-		}
-	default:
-		data = encodeVarintPopulateTreeregister(data, uint64(key))
-		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
-	}
-	return data
-}
-func encodeVarintPopulateTreeregister(data []byte, v uint64) []byte {
-	for v >= 1<<7 {
-		data = append(data, uint8(uint64(v)&0x7f|0x80))
-		v >>= 7
-	}
-	data = append(data, uint8(v))
-	return data
-}
-func (this *TreeRegister) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.TreeRegister{` +
-		`Trees:` + fmt.Sprintf("%#v", this.Trees),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *Tree) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.Tree{` +
-		`GeneralInformation:` + fmt.Sprintf("%#v", this.GeneralInformation),
-		`OtherInformation:` + fmt.Sprintf("%#v", this.OtherInformation),
-		`Measurements:` + fmt.Sprintf("%#v", this.Measurements),
-		`Condition:` + fmt.Sprintf("%#v", this.Condition),
-		`AdditionalInformation:` + fmt.Sprintf("%#v", this.AdditionalInformation),
-		`Sender:` + fmt.Sprintf("%#v", this.Sender),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *GeneralInformation) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.GeneralInformation{` +
-		`TypeOfTree:` + valueToGoStringTreeregister(this.TypeOfTree, "string"),
-		`Ownership:` + valueToGoStringTreeregister(this.Ownership, "string"),
-		`CountryState:` + valueToGoStringTreeregister(this.CountryState, "string"),
-		`PostCodeZipCode:` + valueToGoStringTreeregister(this.PostCodeZipCode, "string"),
-		`Location:` + valueToGoStringTreeregister(this.Location, "string"),
-		`FullAddress:` + valueToGoStringTreeregister(this.FullAddress, "string"),
-		`Country:` + valueToGoStringTreeregister(this.Country, "string"),
-		`GridReference:` + valueToGoStringTreeregister(this.GridReference, "string"),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *OtherInformation) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.OtherInformation{` +
-		`PlantingDate:` + valueToGoStringTreeregister(this.PlantingDate, "string"),
-		`SeedCollectionNo:` + valueToGoStringTreeregister(this.SeedCollectionNo, "string"),
-		`PlantedBy:` + valueToGoStringTreeregister(this.PlantedBy, "string"),
-		`SeedCollector:` + valueToGoStringTreeregister(this.SeedCollector, "string"),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *Measurements) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.Measurements{` +
-		`HeightMeasurement:` + fmt.Sprintf("%#v", this.HeightMeasurement),
-		`WasHeightEstimated:` + valueToGoStringTreeregister(this.WasHeightEstimated, "bool"),
-		`Girth:` + fmt.Sprintf("%#v", this.Girth),
-		`HeightOfGirthMeasurement:` + fmt.Sprintf("%#v", this.HeightOfGirthMeasurement),
-		`GirthExaggerated:` + valueToGoStringTreeregister(this.GirthExaggerated, "bool"),
-		`TreeGrowthCategory:` + valueToGoStringTreeregister(this.TreeGrowthCategory, "tests.TreeGrowthCategory"),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *HeightMeasurement) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.HeightMeasurement{` +
-		`Metres:` + valueToGoStringTreeregister(this.Metres, "float64"),
-		`Feet:` + valueToGoStringTreeregister(this.Feet, "float64"),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *Measurement) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.Measurement{` +
-		`Metres:` + valueToGoStringTreeregister(this.Metres, "float64"),
-		`Feet:` + valueToGoStringTreeregister(this.Feet, "int64"),
-		`Inches:` + valueToGoStringTreeregister(this.Inches, "int64"),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *Condition) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.Condition{` +
-		`GeneralAppearance:` + valueToGoStringTreeregister(this.GeneralAppearance, "tests.GeneralAppearance"),
-		`TrunkStemming:` + valueToGoStringTreeregister(this.TrunkStemming, "tests.TrunkStemming"),
-		`Ground:` + valueToGoStringTreeregister(this.Ground, "tests.Ground"),
-		`Lead:` + valueToGoStringTreeregister(this.Lead, "tests.Lean"),
-		`DeadBranches:` + valueToGoStringTreeregister(this.DeadBranches, "tests.DeadBranches"),
-		`StormDamage:` + valueToGoStringTreeregister(this.StormDamage, "tests.StormDamage"),
-		`PastManagement:` + valueToGoStringTreeregister(this.PastManagement, "tests.PastManagement"),
-		`LocalOrNationalHistoricalInterest:` + valueToGoStringTreeregister(this.LocalOrNationalHistoricalInterest, "tests.NotSureBool"),
-		`LocalLandmark:` + valueToGoStringTreeregister(this.LocalLandmark, "tests.NotSureBool"),
-		`RemarkableOrUnusual:` + valueToGoStringTreeregister(this.RemarkableOrUnusual, "bool"),
-		`Veteran:` + valueToGoStringTreeregister(this.Veteran, "tests.NotSureBool"),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *AdditionalInformation) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.AdditionalInformation{` +
-		`Comments:` + valueToGoStringTreeregister(this.Comments, "string"),
-		`Other:` + valueToGoStringTreeregister(this.Other, "string"),
-		`Photos:` + fmt.Sprintf("%#v", this.Photos),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *Photo) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.Photo{` +
-		`Filename:` + valueToGoStringTreeregister(this.Filename, "string"),
-		`Data:` + valueToGoStringTreeregister(this.Data, "byte"),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *Sender) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.Sender{` +
-		`Name:` + valueToGoStringTreeregister(this.Name, "string"),
-		`Address:` + valueToGoStringTreeregister(this.Address, "string"),
-		`Email:` + valueToGoStringTreeregister(this.Email, "string"),
-		`Telephone:` + valueToGoStringTreeregister(this.Telephone, "string"),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func valueToGoStringTreeregister(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
-func extensionToGoStringTreeregister(e map[int32]github_com_gogo_protobuf_proto.Extension) string {
-	if e == nil {
-		return "nil"
-	}
-	s := "map[int32]proto.Extension{"
-	keys := make([]int, 0, len(e))
-	for k := range e {
-		keys = append(keys, int(k))
-	}
-	sort.Ints(keys)
-	ss := []string{}
-	for _, k := range keys {
-		ss = append(ss, strconv.Itoa(k)+": "+e[int32(k)].GoString())
-	}
-	s += strings.Join(ss, ",") + "}"
-	return s
-}
 func (this *TreeRegister) Description() (desc *google_protobuf.FileDescriptorSet) {
 	return TreeregisterDescription()
 }
@@ -2231,4 +1693,542 @@ func TreeregisterDescription() (desc *google_protobuf.FileDescriptorSet) {
 	}(1), Type: func(v google_protobuf.FieldDescriptorProto_Type) *google_protobuf.FieldDescriptorProto_Type {
 		return &v
 	}(9), TypeName: nil, Extendee: nil, DefaultValue: nil, OneofIndex: nil, Options: nil, XXX_unrecognized: []byte(nil)}}, Extension: []*google_protobuf.FieldDescriptorProto(nil), NestedType: []*google_protobuf.DescriptorProto(nil), EnumType: []*google_protobuf.EnumDescriptorProto(nil), ExtensionRange: []*google_protobuf.DescriptorProto_ExtensionRange(nil), OneofDecl: []*google_protobuf.OneofDescriptorProto(nil), Options: nil, XXX_unrecognized: []byte(nil)}}, EnumType: []*google_protobuf.EnumDescriptorProto{{Name: func(v string) *string { return &v }("TreeGrowthCategory"), Value: []*google_protobuf.EnumValueDescriptorProto{{Name: func(v string) *string { return &v }("A"), Number: func(v int32) *int32 { return &v }(1), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("B"), Number: func(v int32) *int32 { return &v }(2), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("C"), Number: func(v int32) *int32 { return &v }(3), Options: nil, XXX_unrecognized: []byte(nil)}}, Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("GeneralAppearance"), Value: []*google_protobuf.EnumValueDescriptorProto{{Name: func(v string) *string { return &v }("Excellent"), Number: func(v int32) *int32 { return &v }(1), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Good"), Number: func(v int32) *int32 { return &v }(2), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Fair"), Number: func(v int32) *int32 { return &v }(3), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Poor"), Number: func(v int32) *int32 { return &v }(4), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("DyingOrDead"), Number: func(v int32) *int32 { return &v }(5), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("GeneralAppearance_NotSure"), Number: func(v int32) *int32 { return &v }(6), Options: nil, XXX_unrecognized: []byte(nil)}}, Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("TrunkStemming"), Value: []*google_protobuf.EnumValueDescriptorProto{{Name: func(v string) *string { return &v }("GoodSingleStem"), Number: func(v int32) *int32 { return &v }(1), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("MultipleStemmed"), Number: func(v int32) *int32 { return &v }(2), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("TwinStemmed"), Number: func(v int32) *int32 { return &v }(3), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("TrunkStemming_NotSure"), Number: func(v int32) *int32 { return &v }(4), Options: nil, XXX_unrecognized: []byte(nil)}}, Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Ground"), Value: []*google_protobuf.EnumValueDescriptorProto{{Name: func(v string) *string { return &v }("Level"), Number: func(v int32) *int32 { return &v }(1), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("SlightSlope"), Number: func(v int32) *int32 { return &v }(2), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("SteepSlope"), Number: func(v int32) *int32 { return &v }(3), Options: nil, XXX_unrecognized: []byte(nil)}}, Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Lean"), Value: []*google_protobuf.EnumValueDescriptorProto{{Name: func(v string) *string { return &v }("Lean_No"), Number: func(v int32) *int32 { return &v }(1), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("SlightlyWindswept"), Number: func(v int32) *int32 { return &v }(2), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("SixtyDegreesOrLess"), Number: func(v int32) *int32 { return &v }(3), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("HorizontalOrCollapsed"), Number: func(v int32) *int32 { return &v }(4), Options: nil, XXX_unrecognized: []byte(nil)}}, Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("DeadBranches"), Value: []*google_protobuf.EnumValueDescriptorProto{{Name: func(v string) *string { return &v }("NoneOrVeryLittle"), Number: func(v int32) *int32 { return &v }(1), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Some"), Number: func(v int32) *int32 { return &v }(2), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("LotsAndOrExtensiveDieBack"), Number: func(v int32) *int32 { return &v }(3), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("DeadBranches_NotSure"), Number: func(v int32) *int32 { return &v }(4), Options: nil, XXX_unrecognized: []byte(nil)}}, Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("StormDamage"), Value: []*google_protobuf.EnumValueDescriptorProto{{Name: func(v string) *string { return &v }("NoObviousDamage"), Number: func(v int32) *int32 { return &v }(1), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("SomeDamage"), Number: func(v int32) *int32 { return &v }(2), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("LossOfLargeLimbs"), Number: func(v int32) *int32 { return &v }(3), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("StormDamage_NotSure"), Number: func(v int32) *int32 { return &v }(4), Options: nil, XXX_unrecognized: []byte(nil)}}, Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("PastManagement"), Value: []*google_protobuf.EnumValueDescriptorProto{{Name: func(v string) *string { return &v }("NothingObvious"), Number: func(v int32) *int32 { return &v }(1), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("SomePruning"), Number: func(v int32) *int32 { return &v }(2), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("LoppedOrReducedInHeight"), Number: func(v int32) *int32 { return &v }(3), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("OldPollard"), Number: func(v int32) *int32 { return &v }(4), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("RecentPollard"), Number: func(v int32) *int32 { return &v }(5), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("CoppiceStool"), Number: func(v int32) *int32 { return &v }(6), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("CableBraced"), Number: func(v int32) *int32 { return &v }(7), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("PastManagement_NotSure"), Number: func(v int32) *int32 { return &v }(8), Options: nil, XXX_unrecognized: []byte(nil)}}, Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("NotSureBool"), Value: []*google_protobuf.EnumValueDescriptorProto{{Name: func(v string) *string { return &v }("NotSure"), Number: func(v int32) *int32 { return &v }(1), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Yes"), Number: func(v int32) *int32 { return &v }(2), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("No"), Number: func(v int32) *int32 { return &v }(3), Options: nil, XXX_unrecognized: []byte(nil)}}, Options: nil, XXX_unrecognized: []byte(nil)}}, Service: []*google_protobuf.ServiceDescriptorProto(nil), Extension: []*google_protobuf.FieldDescriptorProto(nil), Options: &google_protobuf.FileOptions{JavaPackage: nil, JavaOuterClassname: nil, JavaMultipleFiles: nil, JavaGenerateEqualsAndHash: nil, JavaStringCheckUtf8: nil, OptimizeFor: nil, GoPackage: nil, CcGenericServices: nil, JavaGenericServices: nil, PyGenericServices: nil, Deprecated: nil, CcEnableArenas: nil, UninterpretedOption: []*google_protobuf.UninterpretedOption(nil), XXX_extensions: map[int32]proto.Extension{63006: proto.NewExtension([]byte{0xf0, 0xe1, 0x1e, 0x1}), 63007: proto.NewExtension([]byte{0xf8, 0xe1, 0x1e, 0x1})}, XXX_unrecognized: []byte(nil)}, SourceCodeInfo: nil, Syntax: nil, XXX_unrecognized: []byte(nil)}}, XXX_unrecognized: []byte(nil)}
+}
+func (this *TreeRegister) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.TreeRegister{` +
+		`Trees:` + fmt.Sprintf("%#v", this.Trees),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *Tree) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.Tree{` +
+		`GeneralInformation:` + fmt.Sprintf("%#v", this.GeneralInformation),
+		`OtherInformation:` + fmt.Sprintf("%#v", this.OtherInformation),
+		`Measurements:` + fmt.Sprintf("%#v", this.Measurements),
+		`Condition:` + fmt.Sprintf("%#v", this.Condition),
+		`AdditionalInformation:` + fmt.Sprintf("%#v", this.AdditionalInformation),
+		`Sender:` + fmt.Sprintf("%#v", this.Sender),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *GeneralInformation) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.GeneralInformation{` +
+		`TypeOfTree:` + valueToGoStringTreeregister(this.TypeOfTree, "string"),
+		`Ownership:` + valueToGoStringTreeregister(this.Ownership, "string"),
+		`CountryState:` + valueToGoStringTreeregister(this.CountryState, "string"),
+		`PostCodeZipCode:` + valueToGoStringTreeregister(this.PostCodeZipCode, "string"),
+		`Location:` + valueToGoStringTreeregister(this.Location, "string"),
+		`FullAddress:` + valueToGoStringTreeregister(this.FullAddress, "string"),
+		`Country:` + valueToGoStringTreeregister(this.Country, "string"),
+		`GridReference:` + valueToGoStringTreeregister(this.GridReference, "string"),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *OtherInformation) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.OtherInformation{` +
+		`PlantingDate:` + valueToGoStringTreeregister(this.PlantingDate, "string"),
+		`SeedCollectionNo:` + valueToGoStringTreeregister(this.SeedCollectionNo, "string"),
+		`PlantedBy:` + valueToGoStringTreeregister(this.PlantedBy, "string"),
+		`SeedCollector:` + valueToGoStringTreeregister(this.SeedCollector, "string"),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *Measurements) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.Measurements{` +
+		`HeightMeasurement:` + fmt.Sprintf("%#v", this.HeightMeasurement),
+		`WasHeightEstimated:` + valueToGoStringTreeregister(this.WasHeightEstimated, "bool"),
+		`Girth:` + fmt.Sprintf("%#v", this.Girth),
+		`HeightOfGirthMeasurement:` + fmt.Sprintf("%#v", this.HeightOfGirthMeasurement),
+		`GirthExaggerated:` + valueToGoStringTreeregister(this.GirthExaggerated, "bool"),
+		`TreeGrowthCategory:` + valueToGoStringTreeregister(this.TreeGrowthCategory, "tests.TreeGrowthCategory"),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *HeightMeasurement) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.HeightMeasurement{` +
+		`Metres:` + valueToGoStringTreeregister(this.Metres, "float64"),
+		`Feet:` + valueToGoStringTreeregister(this.Feet, "float64"),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *Measurement) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.Measurement{` +
+		`Metres:` + valueToGoStringTreeregister(this.Metres, "float64"),
+		`Feet:` + valueToGoStringTreeregister(this.Feet, "int64"),
+		`Inches:` + valueToGoStringTreeregister(this.Inches, "int64"),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *Condition) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.Condition{` +
+		`GeneralAppearance:` + valueToGoStringTreeregister(this.GeneralAppearance, "tests.GeneralAppearance"),
+		`TrunkStemming:` + valueToGoStringTreeregister(this.TrunkStemming, "tests.TrunkStemming"),
+		`Ground:` + valueToGoStringTreeregister(this.Ground, "tests.Ground"),
+		`Lead:` + valueToGoStringTreeregister(this.Lead, "tests.Lean"),
+		`DeadBranches:` + valueToGoStringTreeregister(this.DeadBranches, "tests.DeadBranches"),
+		`StormDamage:` + valueToGoStringTreeregister(this.StormDamage, "tests.StormDamage"),
+		`PastManagement:` + valueToGoStringTreeregister(this.PastManagement, "tests.PastManagement"),
+		`LocalOrNationalHistoricalInterest:` + valueToGoStringTreeregister(this.LocalOrNationalHistoricalInterest, "tests.NotSureBool"),
+		`LocalLandmark:` + valueToGoStringTreeregister(this.LocalLandmark, "tests.NotSureBool"),
+		`RemarkableOrUnusual:` + valueToGoStringTreeregister(this.RemarkableOrUnusual, "bool"),
+		`Veteran:` + valueToGoStringTreeregister(this.Veteran, "tests.NotSureBool"),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *AdditionalInformation) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.AdditionalInformation{` +
+		`Comments:` + valueToGoStringTreeregister(this.Comments, "string"),
+		`Other:` + valueToGoStringTreeregister(this.Other, "string"),
+		`Photos:` + fmt.Sprintf("%#v", this.Photos),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *Photo) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.Photo{` +
+		`Filename:` + valueToGoStringTreeregister(this.Filename, "string"),
+		`Data:` + valueToGoStringTreeregister(this.Data, "byte"),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *Sender) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.Sender{` +
+		`Name:` + valueToGoStringTreeregister(this.Name, "string"),
+		`Address:` + valueToGoStringTreeregister(this.Address, "string"),
+		`Email:` + valueToGoStringTreeregister(this.Email, "string"),
+		`Telephone:` + valueToGoStringTreeregister(this.Telephone, "string"),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func valueToGoStringTreeregister(v interface{}, typ string) string {
+	rv := reflect.ValueOf(v)
+	if rv.IsNil() {
+		return "nil"
+	}
+	pv := reflect.Indirect(rv).Interface()
+	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
+}
+func extensionToGoStringTreeregister(e map[int32]github_com_gogo_protobuf_proto.Extension) string {
+	if e == nil {
+		return "nil"
+	}
+	s := "map[int32]proto.Extension{"
+	keys := make([]int, 0, len(e))
+	for k := range e {
+		keys = append(keys, int(k))
+	}
+	sort.Ints(keys)
+	ss := []string{}
+	for _, k := range keys {
+		ss = append(ss, strconv.Itoa(k)+": "+e[int32(k)].GoString())
+	}
+	s += strings.Join(ss, ",") + "}"
+	return s
+}
+func NewPopulatedTreeRegister(r randyTreeregister, easy bool) *TreeRegister {
+	this := &TreeRegister{}
+	if r.Intn(10) != 0 {
+		v1 := r.Intn(10)
+		this.Trees = make([]*Tree, v1)
+		for i := 0; i < v1; i++ {
+			this.Trees[i] = NewPopulatedTree(r, easy)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTreeregister(r, 2)
+	}
+	return this
+}
+
+func NewPopulatedTree(r randyTreeregister, easy bool) *Tree {
+	this := &Tree{}
+	if r.Intn(10) != 0 {
+		this.GeneralInformation = NewPopulatedGeneralInformation(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		this.OtherInformation = NewPopulatedOtherInformation(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		this.Measurements = NewPopulatedMeasurements(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		this.Condition = NewPopulatedCondition(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		this.AdditionalInformation = NewPopulatedAdditionalInformation(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		this.Sender = NewPopulatedSender(r, easy)
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTreeregister(r, 7)
+	}
+	return this
+}
+
+func NewPopulatedGeneralInformation(r randyTreeregister, easy bool) *GeneralInformation {
+	this := &GeneralInformation{}
+	if r.Intn(10) != 0 {
+		v2 := randStringTreeregister(r)
+		this.TypeOfTree = &v2
+	}
+	if r.Intn(10) != 0 {
+		v3 := randStringTreeregister(r)
+		this.Ownership = &v3
+	}
+	if r.Intn(10) != 0 {
+		v4 := randStringTreeregister(r)
+		this.CountryState = &v4
+	}
+	if r.Intn(10) != 0 {
+		v5 := randStringTreeregister(r)
+		this.PostCodeZipCode = &v5
+	}
+	if r.Intn(10) != 0 {
+		v6 := randStringTreeregister(r)
+		this.Location = &v6
+	}
+	if r.Intn(10) != 0 {
+		v7 := randStringTreeregister(r)
+		this.FullAddress = &v7
+	}
+	if r.Intn(10) != 0 {
+		v8 := randStringTreeregister(r)
+		this.Country = &v8
+	}
+	if r.Intn(10) != 0 {
+		v9 := randStringTreeregister(r)
+		this.GridReference = &v9
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTreeregister(r, 9)
+	}
+	return this
+}
+
+func NewPopulatedOtherInformation(r randyTreeregister, easy bool) *OtherInformation {
+	this := &OtherInformation{}
+	if r.Intn(10) != 0 {
+		v10 := randStringTreeregister(r)
+		this.PlantingDate = &v10
+	}
+	if r.Intn(10) != 0 {
+		v11 := randStringTreeregister(r)
+		this.SeedCollectionNo = &v11
+	}
+	if r.Intn(10) != 0 {
+		v12 := randStringTreeregister(r)
+		this.PlantedBy = &v12
+	}
+	if r.Intn(10) != 0 {
+		v13 := randStringTreeregister(r)
+		this.SeedCollector = &v13
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTreeregister(r, 5)
+	}
+	return this
+}
+
+func NewPopulatedMeasurements(r randyTreeregister, easy bool) *Measurements {
+	this := &Measurements{}
+	if r.Intn(10) != 0 {
+		this.HeightMeasurement = NewPopulatedHeightMeasurement(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		v14 := bool(bool(r.Intn(2) == 0))
+		this.WasHeightEstimated = &v14
+	}
+	if r.Intn(10) != 0 {
+		this.Girth = NewPopulatedMeasurement(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		this.HeightOfGirthMeasurement = NewPopulatedMeasurement(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		v15 := bool(bool(r.Intn(2) == 0))
+		this.GirthExaggerated = &v15
+	}
+	if r.Intn(10) != 0 {
+		v16 := TreeGrowthCategory([]int32{1, 2, 3}[r.Intn(3)])
+		this.TreeGrowthCategory = &v16
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTreeregister(r, 7)
+	}
+	return this
+}
+
+func NewPopulatedHeightMeasurement(r randyTreeregister, easy bool) *HeightMeasurement {
+	this := &HeightMeasurement{}
+	if r.Intn(10) != 0 {
+		v17 := float64(r.Float64())
+		if r.Intn(2) == 0 {
+			v17 *= -1
+		}
+		this.Metres = &v17
+	}
+	if r.Intn(10) != 0 {
+		v18 := float64(r.Float64())
+		if r.Intn(2) == 0 {
+			v18 *= -1
+		}
+		this.Feet = &v18
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTreeregister(r, 3)
+	}
+	return this
+}
+
+func NewPopulatedMeasurement(r randyTreeregister, easy bool) *Measurement {
+	this := &Measurement{}
+	if r.Intn(10) != 0 {
+		v19 := float64(r.Float64())
+		if r.Intn(2) == 0 {
+			v19 *= -1
+		}
+		this.Metres = &v19
+	}
+	if r.Intn(10) != 0 {
+		v20 := int64(r.Int63())
+		if r.Intn(2) == 0 {
+			v20 *= -1
+		}
+		this.Feet = &v20
+	}
+	if r.Intn(10) != 0 {
+		v21 := int64(r.Int63())
+		if r.Intn(2) == 0 {
+			v21 *= -1
+		}
+		this.Inches = &v21
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTreeregister(r, 4)
+	}
+	return this
+}
+
+func NewPopulatedCondition(r randyTreeregister, easy bool) *Condition {
+	this := &Condition{}
+	if r.Intn(10) != 0 {
+		v22 := GeneralAppearance([]int32{1, 2, 3, 4, 5, 6}[r.Intn(6)])
+		this.GeneralAppearance = &v22
+	}
+	if r.Intn(10) != 0 {
+		v23 := TrunkStemming([]int32{1, 2, 3, 4}[r.Intn(4)])
+		this.TrunkStemming = &v23
+	}
+	if r.Intn(10) != 0 {
+		v24 := Ground([]int32{1, 2, 3}[r.Intn(3)])
+		this.Ground = &v24
+	}
+	if r.Intn(10) != 0 {
+		v25 := Lean([]int32{1, 2, 3, 4}[r.Intn(4)])
+		this.Lead = &v25
+	}
+	if r.Intn(10) != 0 {
+		v26 := DeadBranches([]int32{1, 2, 3, 4}[r.Intn(4)])
+		this.DeadBranches = &v26
+	}
+	if r.Intn(10) != 0 {
+		v27 := StormDamage([]int32{1, 2, 3, 4}[r.Intn(4)])
+		this.StormDamage = &v27
+	}
+	if r.Intn(10) != 0 {
+		v28 := PastManagement([]int32{1, 2, 3, 4, 5, 6, 7, 8}[r.Intn(8)])
+		this.PastManagement = &v28
+	}
+	if r.Intn(10) != 0 {
+		v29 := NotSureBool([]int32{1, 2, 3}[r.Intn(3)])
+		this.LocalOrNationalHistoricalInterest = &v29
+	}
+	if r.Intn(10) != 0 {
+		v30 := NotSureBool([]int32{1, 2, 3}[r.Intn(3)])
+		this.LocalLandmark = &v30
+	}
+	if r.Intn(10) != 0 {
+		v31 := bool(bool(r.Intn(2) == 0))
+		this.RemarkableOrUnusual = &v31
+	}
+	if r.Intn(10) != 0 {
+		v32 := NotSureBool([]int32{1, 2, 3}[r.Intn(3)])
+		this.Veteran = &v32
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTreeregister(r, 12)
+	}
+	return this
+}
+
+func NewPopulatedAdditionalInformation(r randyTreeregister, easy bool) *AdditionalInformation {
+	this := &AdditionalInformation{}
+	if r.Intn(10) != 0 {
+		v33 := randStringTreeregister(r)
+		this.Comments = &v33
+	}
+	if r.Intn(10) != 0 {
+		v34 := randStringTreeregister(r)
+		this.Other = &v34
+	}
+	if r.Intn(10) != 0 {
+		v35 := r.Intn(10)
+		this.Photos = make([]*Photo, v35)
+		for i := 0; i < v35; i++ {
+			this.Photos[i] = NewPopulatedPhoto(r, easy)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTreeregister(r, 4)
+	}
+	return this
+}
+
+func NewPopulatedPhoto(r randyTreeregister, easy bool) *Photo {
+	this := &Photo{}
+	if r.Intn(10) != 0 {
+		v36 := randStringTreeregister(r)
+		this.Filename = &v36
+	}
+	if r.Intn(10) != 0 {
+		v37 := r.Intn(100)
+		this.Data = make([]byte, v37)
+		for i := 0; i < v37; i++ {
+			this.Data[i] = byte(r.Intn(256))
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTreeregister(r, 3)
+	}
+	return this
+}
+
+func NewPopulatedSender(r randyTreeregister, easy bool) *Sender {
+	this := &Sender{}
+	if r.Intn(10) != 0 {
+		v38 := randStringTreeregister(r)
+		this.Name = &v38
+	}
+	if r.Intn(10) != 0 {
+		v39 := randStringTreeregister(r)
+		this.Address = &v39
+	}
+	if r.Intn(10) != 0 {
+		v40 := randStringTreeregister(r)
+		this.Email = &v40
+	}
+	if r.Intn(10) != 0 {
+		v41 := randStringTreeregister(r)
+		this.Telephone = &v41
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTreeregister(r, 5)
+	}
+	return this
+}
+
+type randyTreeregister interface {
+	Float32() float32
+	Float64() float64
+	Int63() int64
+	Int31() int32
+	Uint32() uint32
+	Intn(n int) int
+}
+
+func randUTF8RuneTreeregister(r randyTreeregister) rune {
+	ru := r.Intn(62)
+	if ru < 10 {
+		return rune(ru + 48)
+	} else if ru < 36 {
+		return rune(ru + 55)
+	}
+	return rune(ru + 61)
+}
+func randStringTreeregister(r randyTreeregister) string {
+	v42 := r.Intn(100)
+	tmps := make([]rune, v42)
+	for i := 0; i < v42; i++ {
+		tmps[i] = randUTF8RuneTreeregister(r)
+	}
+	return string(tmps)
+}
+func randUnrecognizedTreeregister(r randyTreeregister, maxFieldNumber int) (data []byte) {
+	l := r.Intn(5)
+	for i := 0; i < l; i++ {
+		wire := r.Intn(4)
+		if wire == 3 {
+			wire = 5
+		}
+		fieldNumber := maxFieldNumber + r.Intn(100)
+		data = randFieldTreeregister(data, r, fieldNumber, wire)
+	}
+	return data
+}
+func randFieldTreeregister(data []byte, r randyTreeregister, fieldNumber int, wire int) []byte {
+	key := uint32(fieldNumber)<<3 | uint32(wire)
+	switch wire {
+	case 0:
+		data = encodeVarintPopulateTreeregister(data, uint64(key))
+		v43 := r.Int63()
+		if r.Intn(2) == 0 {
+			v43 *= -1
+		}
+		data = encodeVarintPopulateTreeregister(data, uint64(v43))
+	case 1:
+		data = encodeVarintPopulateTreeregister(data, uint64(key))
+		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+	case 2:
+		data = encodeVarintPopulateTreeregister(data, uint64(key))
+		ll := r.Intn(100)
+		data = encodeVarintPopulateTreeregister(data, uint64(ll))
+		for j := 0; j < ll; j++ {
+			data = append(data, byte(r.Intn(256)))
+		}
+	default:
+		data = encodeVarintPopulateTreeregister(data, uint64(key))
+		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+	}
+	return data
+}
+func encodeVarintPopulateTreeregister(data []byte, v uint64) []byte {
+	for v >= 1<<7 {
+		data = append(data, uint8(uint64(v)&0x7f|0x80))
+		v >>= 7
+	}
+	data = append(data, uint8(v))
+	return data
 }

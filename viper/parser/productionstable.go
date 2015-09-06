@@ -598,13 +598,13 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Terminal : Bool	<< expr.NewBoolTerminal(X[0]) >>`,
+		String: `Terminal : Bool	<< expr.NewBoolTerminal(X[0]), nil >>`,
 		Id:         "Terminal",
 		NTType:     16,
 		Index:      45,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return expr.NewBoolTerminal(X[0])
+			return expr.NewBoolTerminal(X[0]), nil
 		},
 	},
 	ProdTabEntry{

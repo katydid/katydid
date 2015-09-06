@@ -45,9 +45,13 @@ func ToRules(g *relapse.Grammar) *viper.Rules {
 			)
 			for _, state := range states {
 				if interp.Nullable(refs, state) {
-					rules = append(rules, newReturn(v.src, state, v.name, v.dst))
+					rules = append(rules, newReturn(v.src, state, v.name, v.retNull))
 				} else {
-					rules = append(rules, newReturn(v.src, state, v.name, v.fail))
+					if v.retElse != nil {
+						rules = append(rules, newReturn(v.src, state, v.name, v.retElse))
+					} else {
+						//TODO
+					}
 				}
 			}
 		}
@@ -71,18 +75,18 @@ func toTrans(refs relapse.RefLookup) (transitions transSet, states map[string]*r
 			case *internal:
 				sdst := v.dst.String()
 				if _, ok := states[sdst]; !ok {
-					tsdst := transForPattern(refs, v.dst)
-					transitions = transitions.add(tsdst...)
+					//tsdst := transForPattern(refs, v.dst)
+					//transitions = transitions.add(tsdst...)
 					states[sdst] = v.dst
 					//fmt.Printf("newState %s\n", sdst)
 					allVisited = false
 				}
 			case *callAndReturn:
-				sdst := v.dst.String()
+				sdst := v.retNull.String()
 				if _, ok := states[sdst]; !ok {
-					tsdst := transForPattern(refs, v.dst)
-					transitions = transitions.add(tsdst...)
-					states[sdst] = v.dst
+					tsnul := transForPattern(refs, v.retNull)
+					transitions = transitions.add(tsnul...)
+					states[sdst] = v.retNull
 					//fmt.Printf("newState %s\n", sdst)
 					allVisited = false
 				}
@@ -135,35 +139,46 @@ func newFinal(p *relapse.Pattern) *viper.Rule {
 }
 
 func transForPattern(refs relapse.RefLookup, p *relapse.Pattern) transSet {
+	simplify := func(p *relapse.Pattern) *relapse.Pattern {
+		return interp.Simplify(refs, p)
+	}
 	p = interp.Simplify(refs, p)
 	es, ns := getAllReachableExprs(refs, p)
 	ts := make(transSet, 0, len(ns)+len(es))
 	for i, n := range ns {
-		d := deriv(refs, p, nil, n)
-		ddst := interp.Simplify(refs, d.dst)
-		dfail := interp.Simplify(refs, d.fail)
-		dchild := d.child
-		if dchild != nil {
-			dchild = interp.Simplify(refs, dchild)
+		dn := deriv(refs, p, nil, n)
+		d, ok := dn.(*callAndReturn)
+		if ok {
+			dNull := simplify(d.retNull)
+			dElse := applyIfNotNil(simplify, d.retElse)
+			dchild := applyIfNotNil(simplify, d.child)
+			if dchild == nil {
+				dchild = interp.Simplify(refs, relapse.NewNot(relapse.NewEmptySet()))
+			}
+			ts = ts.add(&callAndReturn{
+				src:     p,
+				name:    ns[i],
+				child:   dchild,
+				retNull: dNull,
+				retElse: dElse,
+			})
 		} else {
-			dchild = interp.Simplify(refs, relapse.NewNot(relapse.NewEmptySet()))
+			//TODO
 		}
-		ts = ts.add(&callAndReturn{
-			src:   p,
-			name:  ns[i],
-			child: dchild,
-			dst:   ddst,
-			fail:  dfail,
-		})
 	}
 	for i, e := range es {
-		d := deriv(refs, p, e, nil)
-		ddst := interp.Simplify(refs, d.dst)
-		ts = ts.add(&internal{
-			src:  p,
-			expr: es[i],
-			dst:  ddst,
-		})
+		de := deriv(refs, p, e, nil)
+		d, ok := de.(*internal)
+		if ok {
+			ddst := interp.Simplify(refs, d.dst)
+			ts = ts.add(&internal{
+				src:  p,
+				expr: es[i],
+				dst:  ddst,
+			})
+		} else {
+			//TODO
+		}
 	}
 	return ts
 }
@@ -347,16 +362,33 @@ func (a *internal) Equal(that trans) bool {
 		return false
 	}
 	//The rest of the fields do not need to be checked,
-	// given the deterministic nature in which child and dst are calculated.
+	// given the deterministic nature in which the rest are calculated.
 	return true
 }
 
+func (a *internal) String() string {
+	return fmt.Sprintf("internal{\n\tsrc: %s,\n\texpr: %s,\n\tdst: %s\n}", a.src, a.expr, a.dst)
+}
+
 type callAndReturn struct {
-	src   *relapse.Pattern
-	name  *relapse.NameExpr
-	child *relapse.Pattern
-	dst   *relapse.Pattern
-	fail  *relapse.Pattern
+	src     *relapse.Pattern
+	name    *relapse.NameExpr
+	child   *relapse.Pattern
+	retNull *relapse.Pattern
+	retElse *relapse.Pattern
+}
+
+func (a *callAndReturn) String() string {
+	s := fmt.Sprintf("callAndReturn{\n\tsrc: %s,\n\tname: %s", a.src, a.name)
+	if a.child != nil {
+		s += fmt.Sprintf(",\n\tchild: %s", a.child)
+	}
+	s += fmt.Sprintf(",\n\tretNull: %s", a.retNull)
+	if a.retElse != nil {
+		s += fmt.Sprintf(",\n\tretElse: %s", a.retElse)
+	}
+	s += "\n}"
+	return s
 }
 
 func (a *callAndReturn) Equal(that trans) bool {
@@ -371,125 +403,207 @@ func (a *callAndReturn) Equal(that trans) bool {
 		return false
 	}
 	//The rest of the fields do not need to be checked,
-	// given the deterministic nature in which child and dst are calculated.
+	// given the deterministic nature in which the rest are calculated.
 	return true
 }
 
-type downup struct {
-	child *relapse.Pattern
-	dst   *relapse.Pattern
-	fail  *relapse.Pattern
-}
-
-func concat(c *downup, p *relapse.Pattern) *downup {
-	return &downup{
-		child: c.child,
-		dst:   relapse.NewConcat(c.dst, p),
-		fail:  relapse.NewConcat(c.fail, p),
+func applyIfNotNil(f func(*relapse.Pattern) *relapse.Pattern, p *relapse.Pattern) *relapse.Pattern {
+	if p == nil {
+		return p
 	}
+	return f(p)
 }
 
-func or(left *downup, right *downup) *downup {
-	child := left.child
-	if right.child != nil {
-		if left.child != nil {
-			child = relapse.NewOr(left.child, right.child)
-		} else {
-			child = right.child
+func combineIfNotNil(f func(*relapse.Pattern, *relapse.Pattern) *relapse.Pattern, left, right *relapse.Pattern) *relapse.Pattern {
+	if left == nil {
+		return right
+	}
+	if right == nil {
+		return left
+	}
+	return f(left, right)
+}
+
+func concat(t trans, p *relapse.Pattern) trans {
+	switch v := t.(type) {
+	case *internal:
+		return &internal{
+			src:  relapse.NewConcat(v.src, p),
+			expr: v.expr,
+			dst:  relapse.NewConcat(v.dst, p),
+		}
+	case *callAndReturn:
+		return &callAndReturn{
+			src:     relapse.NewConcat(v.src, p),
+			name:    v.name,
+			child:   v.child,
+			retNull: relapse.NewConcat(v.retNull, p),
+			retElse: combineIfNotNil(relapse.NewConcat, v.retElse, p),
 		}
 	}
-	return &downup{
-		child: child,
-		dst:   relapse.NewOr(left.dst, right.dst),
-		fail:  relapse.NewOr(left.fail, right.fail),
-	}
+	panic(fmt.Sprintf("unknown trans type %T", t))
 }
 
-func and(left *downup, right *downup) *downup {
-	child := left.child
-	if right.child != nil {
-		if left.child != nil {
-			child = relapse.NewAnd(left.child, right.child)
-		} else {
-			child = right.child
+func or(leftt, rightt trans) trans {
+	switch left := leftt.(type) {
+	case *internal:
+		switch right := rightt.(type) {
+		case *internal:
+			return &internal{
+				src:  relapse.NewOr(left.src, right.src),
+				expr: left.expr,
+				dst:  relapse.NewOr(left.dst, right.dst),
+			}
+		case *callAndReturn:
+			panic(fmt.Sprintf("todo: %s or %s", leftt, rightt))
+		}
+		panic(fmt.Sprintf("unknown trans type %T", rightt))
+	case *callAndReturn:
+		switch right := rightt.(type) {
+		case *internal:
+			panic(fmt.Sprintf("todo: %s or %s", leftt, rightt))
+		case *callAndReturn:
+			return &callAndReturn{
+				src:     relapse.NewOr(left.src, right.src),
+				name:    left.name,
+				child:   combineIfNotNil(relapse.NewOr, left.child, right.child),
+				retNull: relapse.NewOr(left.retNull, right.retNull),
+				retElse: combineIfNotNil(relapse.NewOr, left.retElse, right.retElse),
+			}
+		}
+		panic(fmt.Sprintf("unknown trans type %T", rightt))
+	}
+	panic(fmt.Sprintf("unknown trans type %T", leftt))
+}
+
+func and(leftt, rightt trans) trans {
+	switch left := leftt.(type) {
+	case *internal:
+		switch right := rightt.(type) {
+		case *internal:
+			return &internal{
+				src:  relapse.NewAnd(left.src, right.src),
+				expr: left.expr,
+				dst:  relapse.NewAnd(left.dst, right.dst),
+			}
+		case *callAndReturn:
+			panic("todo")
+		}
+		panic(fmt.Sprintf("unknown trans type %T", rightt))
+	case *callAndReturn:
+		switch right := rightt.(type) {
+		case *internal:
+			panic("todo")
+		case *callAndReturn:
+			return &callAndReturn{
+				src:     relapse.NewAnd(left.src, right.src),
+				name:    left.name,
+				child:   combineIfNotNil(relapse.NewAnd, left.child, right.child),
+				retNull: relapse.NewAnd(left.retNull, right.retNull),
+				retElse: combineIfNotNil(relapse.NewAnd, left.retElse, right.retElse),
+			}
+		}
+		panic(fmt.Sprintf("unknown trans type %T", rightt))
+	}
+	panic(fmt.Sprintf("unknown trans type %T", leftt))
+}
+
+func not(t trans) trans {
+	switch v := t.(type) {
+	case *internal:
+		return &internal{
+			src:  relapse.NewNot(v.src),
+			expr: v.expr,
+			dst:  relapse.NewNot(v.dst),
+		}
+	case *callAndReturn:
+		//TODO think about this, why is this a special case
+		//     this should probably have been an internal
+		return &callAndReturn{
+			src:     relapse.NewNot(v.src),
+			name:    v.name,
+			child:   applyIfNotNil(relapse.NewNot, v.child),
+			retNull: relapse.NewNot(v.retNull),
+			retElse: applyIfNotNil(relapse.NewNot, v.retElse),
 		}
 	}
-	return &downup{
-		child: child,
-		dst:   relapse.NewAnd(left.dst, right.dst),
-		fail:  relapse.NewAnd(left.fail, right.fail),
-	}
+	panic(fmt.Sprintf("unknown trans type %T", t))
 }
 
-//TODO think about this again and write a few tests
-func not(c *downup) *downup {
-	child := c.child
-	if child != nil {
-		child = relapse.NewNot(child)
-	}
-	return &downup{
-		child: child,
-		dst:   relapse.NewNot(c.dst),
-		fail:  relapse.NewNot(c.fail),
-	}
-}
-
-func emptySet() *downup {
-	return &downup{
-		child: nil,
-		dst:   relapse.NewEmptySet(),
-		fail:  relapse.NewEmptySet(),
-	}
-}
-
-func deriv(refs relapse.RefLookup, p *relapse.Pattern, expr *expr.Expr, name *relapse.NameExpr) *downup {
-	d := func(pattern *relapse.Pattern) *downup {
+func deriv(refs relapse.RefLookup, p *relapse.Pattern, expr *expr.Expr, name *relapse.NameExpr) trans {
+	d := func(pattern *relapse.Pattern) trans {
 		dp := deriv(refs, pattern, expr, name)
-		fmt.Printf("dst  deriv %s -> %s\n", pattern.String(), dp.dst.String())
-		fmt.Printf("fail deriv %s -> %s\n", pattern.String(), dp.fail.String())
+		fmt.Printf("deriv %s\n", dp)
 		return dp
 	}
 	typ := p.GetValue()
 	switch v := typ.(type) {
-	case *relapse.Empty:
-		return emptySet()
-	case *relapse.EmptySet:
-		return emptySet()
+	case *relapse.Empty, *relapse.EmptySet:
+		if expr != nil {
+			return &internal{
+				src:  p,
+				expr: expr,
+				dst:  relapse.NewEmptySet(),
+			}
+		} else {
+			//TODO this should probably be an internal
+			return &callAndReturn{
+				src:     p,
+				name:    name,
+				child:   nil,
+				retNull: relapse.NewEmptySet(),
+				retElse: relapse.NewEmptySet(),
+			}
+		}
 	case *relapse.TreeNode:
-		if name == nil {
-			return emptySet()
+		if name != nil {
+			nul := relapse.NewEmptySet()
+			var els *relapse.Pattern = relapse.NewEmptySet() // TODO this should probably be an internal
+			var child *relapse.Pattern = nil
+			if v.GetName().Equal(name) {
+				nul = relapse.NewEmpty()
+				els = relapse.NewEmptySet()
+				child = v.GetPattern()
+			}
+			return &callAndReturn{
+				src:     p,
+				name:    name,
+				child:   child,
+				retNull: nul,
+				retElse: els,
+			}
 		}
-		if !v.GetName().Equal(name) {
-			return emptySet()
-		}
-		return &downup{
-			child: v.GetPattern(),
-			dst:   relapse.NewEmpty(),
-			fail:  relapse.NewEmptySet(),
+		return &internal{
+			src:  p,
+			expr: expr,
+			dst:  relapse.NewEmptySet(),
 		}
 	case *relapse.LeafNode:
-		if expr == nil {
-			return emptySet()
+		if expr != nil {
+			dst := relapse.NewEmptySet()
+			if v.GetExpr().Equal(expr) {
+				dst = relapse.NewEmpty()
+			}
+			return &internal{
+				src:  p,
+				expr: expr,
+				dst:  dst,
+			}
 		}
-		if !v.GetExpr().Equal(expr) {
-			return emptySet()
-		}
-		return &downup{
-			child: nil,
-			dst:   relapse.NewEmpty(),
-			fail:  relapse.NewEmptySet(),
+		return &callAndReturn{
+			src:     p,
+			name:    name,
+			child:   nil,
+			retNull: relapse.NewEmptySet(),
+			retElse: relapse.NewEmptySet(),
 		}
 	case *relapse.Concat:
 		dl := d(v.GetLeftPattern())
-		//fmt.Printf("Left: %s\n Right: %s\n dl.Child: %s\n dl.Dst: %s\n", v.GetLeftPattern(), v.GetRightPattern(), dl.child, dl.dst)
 		c := concat(dl, v.GetRightPattern())
-		//fmt.Printf(" cl.Child %s\n cl.Dst %s\n", c.child, c.dst)
 		if !interp.Nullable(refs, v.GetLeftPattern()) {
-			//fmt.Printf("NotNullable %s\n", v.GetLeftPattern())
 			return c
 		}
 		o := or(c, d(v.GetRightPattern()))
-		//fmt.Printf(" or.Child %s\n or.Dst %s\n", o.child, o.dst)
 		return o
 	case *relapse.Or:
 		return or(d(v.GetLeftPattern()), d(v.GetRightPattern()))

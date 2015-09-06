@@ -146,7 +146,7 @@ SpaceTerminal
   ;
 
 Terminal
-  : Bool << expr.NewBoolTerminal($0) >>
+  : Bool << expr.NewBoolTerminal($0), nil >>
   | int_lit << expr.NewIntTerminal(newString($0)) >>
   | uint_lit << expr.NewUintTerminal(newString($0)) >>
   | double_lit << expr.NewDoubleTerminal(newString($0)) >>

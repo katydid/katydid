@@ -27,7 +27,8 @@ import (
 func child(t *testing.T, refs relapse.RefLookup, name *relapse.NameExpr, expected *relapse.Pattern) {
 	t.Logf("input = %s", refs["main"])
 	t.Logf("name = %s", name)
-	du := deriv(refs, refs["main"], nil, name)
+	dun := deriv(refs, refs["main"], nil, name)
+	du := dun.(*callAndReturn)
 	t.Logf("child = %s", du.child)
 	if du.child != nil {
 		child := interp.Simplify(refs, du.child)
@@ -92,17 +93,19 @@ func TestChild7(t *testing.T) {
 	refs := relapse.NewRefsLookup(g)
 	_, names := getAllReachableExprs(refs, refs["main"])
 	t.Logf("input = %s", refs["main"])
-	du := deriv(refs, refs["main"], nil, names[0])
-	t.Logf("dst   = %s", du.dst)
-	t.Logf("fail  = %s", du.fail)
-	sdst := interp.Simplify(refs, du.dst)
-	sfail := interp.Simplify(refs, du.fail)
-	t.Logf("sdst  = %s", sdst)
-	t.Logf("sfail = %s", sfail)
-	if !sdst.Equal(relapse.NewNot(relapse.NewEmptySet())) {
-		t.Fatalf("for dst expected !EmptySet, but got %s", sdst)
+	dun := deriv(refs, refs["main"], nil, names[0])
+	du := dun.(*callAndReturn)
+	t.Logf("name = %s", names[0])
+	t.Logf("null  = %s", du.retNull)
+	t.Logf("else  = %s", du.retElse)
+	snull := interp.Simplify(refs, du.retNull)
+	selse := interp.Simplify(refs, du.retElse)
+	t.Logf("snull = %s", snull)
+	t.Logf("selse = %s", selse)
+	if !snull.Equal(relapse.NewNot(relapse.NewEmptySet())) {
+		t.Fatalf("for dst expected !EmptySet, but got %s", snull)
 	}
-	if !sfail.Equal(relapse.NewReference("empty")) {
-		t.Fatalf("for fail expected #empty, but got %s", sfail)
+	if !selse.Equal(relapse.NewReference("empty")) {
+		t.Fatalf("for fail expected #empty, but got %s", selse)
 	}
 }

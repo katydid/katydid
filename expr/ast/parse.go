@@ -67,12 +67,12 @@ func NewVariableTerminal(typ types.Type) (*Terminal, error) {
 	return &Terminal{Variable: &Variable{Type: typ}}, nil
 }
 
-func NewBoolTerminal(v interface{}) (*Terminal, error) {
+func NewBoolTerminal(v interface{}) *Terminal {
 	b := v.(bool)
 	if b {
-		return &Terminal{BoolValue: proto.Bool(b), Literal: "true"}, nil
+		return &Terminal{BoolValue: proto.Bool(b), Literal: "true"}
 	}
-	return &Terminal{BoolValue: proto.Bool(b), Literal: "false"}, nil
+	return &Terminal{BoolValue: proto.Bool(b), Literal: "false"}
 }
 
 func NewStringTerminal(slit string) (*Terminal, error) {

@@ -25,14 +25,14 @@ import math "math"
 // discarding unused import gogoproto "github.com/gogo/protobuf/gogoproto/gogo.pb"
 import types "github.com/katydid/katydid/types"
 
+import bytes "bytes"
+
 import fmt "fmt"
 import strings "strings"
 import github_com_gogo_protobuf_proto "github.com/gogo/protobuf/proto"
 import sort "sort"
 import strconv "strconv"
 import reflect "reflect"
-
-import bytes "bytes"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -304,114 +304,6 @@ func (m *Space) GetSpace() []string {
 }
 
 func init() {
-}
-func (this *Expr) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&expr.Expr{` +
-		`Comma:` + fmt.Sprintf("%#v", this.Comma),
-		`Terminal:` + fmt.Sprintf("%#v", this.Terminal),
-		`List:` + fmt.Sprintf("%#v", this.List),
-		`Function:` + fmt.Sprintf("%#v", this.Function),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *List) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&expr.List{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Type:` + fmt.Sprintf("%#v", this.Type),
-		`OpenCurly:` + fmt.Sprintf("%#v", this.OpenCurly),
-		`Elems:` + fmt.Sprintf("%#v", this.Elems),
-		`CloseCurly:` + fmt.Sprintf("%#v", this.CloseCurly),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *Function) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&expr.Function{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Name:` + fmt.Sprintf("%#v", this.Name),
-		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
-		`Params:` + fmt.Sprintf("%#v", this.Params),
-		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *Terminal) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&expr.Terminal{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Literal:` + fmt.Sprintf("%#v", this.Literal),
-		`DoubleValue:` + valueToGoStringExpr(this.DoubleValue, "float64"),
-		`IntValue:` + valueToGoStringExpr(this.IntValue, "int64"),
-		`UintValue:` + valueToGoStringExpr(this.UintValue, "uint64"),
-		`BoolValue:` + valueToGoStringExpr(this.BoolValue, "bool"),
-		`StringValue:` + valueToGoStringExpr(this.StringValue, "string"),
-		`BytesValue:` + valueToGoStringExpr(this.BytesValue, "byte"),
-		`Variable:` + fmt.Sprintf("%#v", this.Variable),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *Variable) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&expr.Variable{` +
-		`Type:` + fmt.Sprintf("%#v", this.Type),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *Keyword) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&expr.Keyword{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Value:` + fmt.Sprintf("%#v", this.Value),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *Space) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&expr.Space{` +
-		`Space:` + fmt.Sprintf("%#v", this.Space),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func valueToGoStringExpr(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
-func extensionToGoStringExpr(e map[int32]github_com_gogo_protobuf_proto.Extension) string {
-	if e == nil {
-		return "nil"
-	}
-	s := "map[int32]proto.Extension{"
-	keys := make([]int, 0, len(e))
-	for k := range e {
-		keys = append(keys, int(k))
-	}
-	sort.Ints(keys)
-	ss := []string{}
-	for _, k := range keys {
-		ss = append(ss, strconv.Itoa(k)+": "+e[int32(k)].GoString())
-	}
-	s += strings.Join(ss, ",") + "}"
-	return s
 }
 func (this *Expr) Equal(that interface{}) bool {
 	if that == nil {
@@ -713,4 +605,112 @@ func (this *Space) Equal(that interface{}) bool {
 		return false
 	}
 	return true
+}
+func (this *Expr) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&expr.Expr{` +
+		`Comma:` + fmt.Sprintf("%#v", this.Comma),
+		`Terminal:` + fmt.Sprintf("%#v", this.Terminal),
+		`List:` + fmt.Sprintf("%#v", this.List),
+		`Function:` + fmt.Sprintf("%#v", this.Function),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *List) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&expr.List{` +
+		`Before:` + fmt.Sprintf("%#v", this.Before),
+		`Type:` + fmt.Sprintf("%#v", this.Type),
+		`OpenCurly:` + fmt.Sprintf("%#v", this.OpenCurly),
+		`Elems:` + fmt.Sprintf("%#v", this.Elems),
+		`CloseCurly:` + fmt.Sprintf("%#v", this.CloseCurly),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *Function) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&expr.Function{` +
+		`Before:` + fmt.Sprintf("%#v", this.Before),
+		`Name:` + fmt.Sprintf("%#v", this.Name),
+		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
+		`Params:` + fmt.Sprintf("%#v", this.Params),
+		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *Terminal) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&expr.Terminal{` +
+		`Before:` + fmt.Sprintf("%#v", this.Before),
+		`Literal:` + fmt.Sprintf("%#v", this.Literal),
+		`DoubleValue:` + valueToGoStringExpr(this.DoubleValue, "float64"),
+		`IntValue:` + valueToGoStringExpr(this.IntValue, "int64"),
+		`UintValue:` + valueToGoStringExpr(this.UintValue, "uint64"),
+		`BoolValue:` + valueToGoStringExpr(this.BoolValue, "bool"),
+		`StringValue:` + valueToGoStringExpr(this.StringValue, "string"),
+		`BytesValue:` + valueToGoStringExpr(this.BytesValue, "byte"),
+		`Variable:` + fmt.Sprintf("%#v", this.Variable),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *Variable) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&expr.Variable{` +
+		`Type:` + fmt.Sprintf("%#v", this.Type),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *Keyword) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&expr.Keyword{` +
+		`Before:` + fmt.Sprintf("%#v", this.Before),
+		`Value:` + fmt.Sprintf("%#v", this.Value),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *Space) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&expr.Space{` +
+		`Space:` + fmt.Sprintf("%#v", this.Space),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func valueToGoStringExpr(v interface{}, typ string) string {
+	rv := reflect.ValueOf(v)
+	if rv.IsNil() {
+		return "nil"
+	}
+	pv := reflect.Indirect(rv).Interface()
+	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
+}
+func extensionToGoStringExpr(e map[int32]github_com_gogo_protobuf_proto.Extension) string {
+	if e == nil {
+		return "nil"
+	}
+	s := "map[int32]proto.Extension{"
+	keys := make([]int, 0, len(e))
+	for k := range e {
+		keys = append(keys, int(k))
+	}
+	sort.Ints(keys)
+	ss := []string{}
+	for _, k := range keys {
+		ss = append(ss, strconv.Itoa(k)+": "+e[int32(k)].GoString())
+	}
+	s += strings.Join(ss, ",") + "}"
+	return s
 }

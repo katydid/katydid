@@ -359,42 +359,6 @@ func (m *State) GetName() string {
 
 func init() {
 }
-func (this *Rule) GetValue() interface{} {
-	if this.Start != nil {
-		return this.Start
-	}
-	if this.Final != nil {
-		return this.Final
-	}
-	if this.Internal != nil {
-		return this.Internal
-	}
-	if this.Call != nil {
-		return this.Call
-	}
-	if this.Return != nil {
-		return this.Return
-	}
-	return nil
-}
-
-func (this *Rule) SetValue(value interface{}) bool {
-	switch vt := value.(type) {
-	case *Start:
-		this.Start = vt
-	case *Final:
-		this.Final = vt
-	case *Internal:
-		this.Internal = vt
-	case *Call:
-		this.Call = vt
-	case *Return:
-		this.Return = vt
-	default:
-		return false
-	}
-	return true
-}
 func (this *Rules) GoString() string {
 	if this == nil {
 		return "nil"
@@ -509,4 +473,40 @@ func extensionToGoStringViper(e map[int32]github_com_gogo_protobuf_proto.Extensi
 	}
 	s += strings.Join(ss, ",") + "}"
 	return s
+}
+func (this *Rule) GetValue() interface{} {
+	if this.Start != nil {
+		return this.Start
+	}
+	if this.Final != nil {
+		return this.Final
+	}
+	if this.Internal != nil {
+		return this.Internal
+	}
+	if this.Call != nil {
+		return this.Call
+	}
+	if this.Return != nil {
+		return this.Return
+	}
+	return nil
+}
+
+func (this *Rule) SetValue(value interface{}) bool {
+	switch vt := value.(type) {
+	case *Start:
+		this.Start = vt
+	case *Final:
+		this.Final = vt
+	case *Internal:
+		this.Internal = vt
+	case *Call:
+		this.Call = vt
+	case *Return:
+		this.Return = vt
+	default:
+		return false
+	}
+	return true
 }

@@ -321,3 +321,38 @@ func init() {
 	Validate("ListOfTelephonesShaker", ListOfTelephonesPerson, AllCodecs(ShakerPerson), true)
 	Validate("ListOfTelephonesRoutine", ListOfTelephonesPerson, AllCodecs(RoutinePerson), false)
 }
+
+var LeftRecursion = G{
+	"main": MatchTree(
+		Either(
+			Eval("main"),
+			MatchTree(
+				Any(),
+				MatchField("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
+			),
+		),
+	),
+}
+
+func init() {
+	//TODO Validate("LeftRecursionDavid", LeftRecursion, AllCodecs(DavidPerson), true)
+	//TODO Validate("LeftRecursionRobert", LeftRecursion, AllCodecs(RobertPerson), false)
+}
+
+var HiddenLeftRecursion = G{
+	"main": MatchTree(
+		Either(
+			Eval("hidden"),
+			MatchTree(
+				Any(),
+				MatchField("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
+			),
+		),
+	),
+	"hidden": Eval("main"),
+}
+
+func init() {
+	//TODO Validate("HiddenLeftRecursionDavid", HiddenLeftRecursion, AllCodecs(DavidPerson), true)
+	//TODO Validate("HiddenLeftRecursionRobert", HiddenLeftRecursion, AllCodecs(RobertPerson), false)
+}

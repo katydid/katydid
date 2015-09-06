@@ -29,14 +29,14 @@ import math "math"
 
 // discarding unused import gogoproto "github.com/gogo/protobuf/gogoproto/gogo.pb"
 
+import google_protobuf "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
+
 import fmt "fmt"
 import strings "strings"
 import github_com_gogo_protobuf_proto "github.com/gogo/protobuf/proto"
 import sort "sort"
 import strconv "strconv"
 import reflect "reflect"
-
-import google_protobuf "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -1207,757 +1207,6 @@ func init() {
 	proto.RegisterEnum("tests.RadarBox", RadarBox_name, RadarBox_value)
 	proto.RegisterEnum("tests.AccountantPowder", AccountantPowder_name, AccountantPowder_value)
 }
-func NewPopulatedPuddingMilkshake(r randyPuddingmilkshake, easy bool) *PuddingMilkshake {
-	this := &PuddingMilkshake{}
-	if r.Intn(10) != 0 {
-		this.FinanceJudo = NewPopulatedFinanceJudo(r, easy)
-	}
-	if r.Intn(10) != 0 {
-		this.RainInterlude = NewPopulatedMudRiddle(r, easy)
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 3)
-	}
-	return this
-}
-
-func NewPopulatedFinanceJudo(r randyPuddingmilkshake, easy bool) *FinanceJudo {
-	this := &FinanceJudo{}
-	if r.Intn(10) != 0 {
-		this.SaladWorry = NewPopulatedSaladWorry(r, easy)
-	}
-	if r.Intn(10) != 0 {
-		v1 := int64(r.Int63())
-		if r.Intn(2) == 0 {
-			v1 *= -1
-		}
-		this.RumourSpirit = &v1
-	}
-	if r.Intn(10) != 0 {
-		v2 := int64(r.Int63())
-		if r.Intn(2) == 0 {
-			v2 *= -1
-		}
-		this.UserInterfaceSpanner = &v2
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 4)
-	}
-	return this
-}
-
-func NewPopulatedSaladWorry(r randyPuddingmilkshake, easy bool) *SaladWorry {
-	this := &SaladWorry{}
-	if r.Intn(10) != 0 {
-		v3 := r.Intn(100)
-		this.MeasureGrade = make([]byte, v3)
-		for i := 0; i < v3; i++ {
-			this.MeasureGrade[i] = byte(r.Intn(256))
-		}
-	}
-	if r.Intn(10) != 0 {
-		this.HooliganValley = NewPopulatedKeyQueen(r, easy)
-	}
-	if r.Intn(10) != 0 {
-		v4 := r.Intn(10)
-		this.MagazineFrame = make([]string, v4)
-		for i := 0; i < v4; i++ {
-			this.MagazineFrame[i] = randStringPuddingmilkshake(r)
-		}
-	}
-	if r.Intn(10) != 0 {
-		this.XrayPilot = NewPopulatedXrayPilot(r, easy)
-	}
-	if r.Intn(10) != 0 {
-		v5 := bool(bool(r.Intn(2) == 0))
-		this.LogMicrophone = &v5
-	}
-	if r.Intn(10) != 0 {
-		v6 := MicrobeMiser([]int32{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}[r.Intn(15)])
-		this.NeonLightEnd = &v6
-	}
-	if r.Intn(10) != 0 {
-		v7 := randStringPuddingmilkshake(r)
-		this.LeafTrellis = &v7
-	}
-	if r.Intn(10) != 0 {
-		v8 := CancerUserExperience([]int32{0, 1, 2, 3, 4}[r.Intn(5)])
-		this.CancerUserExperience = &v8
-	}
-	if r.Intn(10) != 0 {
-		v9 := RadarBox([]int32{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53}[r.Intn(54)])
-		this.RadarBox = &v9
-	}
-	if r.Intn(10) != 0 {
-		v10 := bool(bool(r.Intn(2) == 0))
-		this.AccidentStadium = &v10
-	}
-	if r.Intn(10) != 0 {
-		this.SpyCarpenter = NewPopulatedSpyCarpenter(r, easy)
-	}
-	if r.Intn(10) != 0 {
-		v11 := randStringPuddingmilkshake(r)
-		this.PrizeRemoteControl = &v11
-	}
-	if r.Intn(10) != 0 {
-		this.TableScandal = NewPopulatedTravelBallRoom(r, easy)
-	}
-	if r.Intn(10) != 0 {
-		v12 := r.Intn(100)
-		this.StormTermite = make([]uint32, v12)
-		for i := 0; i < v12; i++ {
-			this.StormTermite[i] = uint32(r.Uint32())
-		}
-	}
-	if r.Intn(10) != 0 {
-		v13 := r.Intn(100)
-		this.ParliamentChime = make([][]byte, v13)
-		for i := 0; i < v13; i++ {
-			v14 := r.Intn(100)
-			this.ParliamentChime[i] = make([]byte, v14)
-			for j := 0; j < v14; j++ {
-				this.ParliamentChime[i][j] = byte(r.Intn(256))
-			}
-		}
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 16)
-	}
-	return this
-}
-
-func NewPopulatedKeyQueen(r randyPuddingmilkshake, easy bool) *KeyQueen {
-	this := &KeyQueen{}
-	if r.Intn(10) != 0 {
-		v15 := r.Intn(100)
-		this.SkyscraperUniversity = make([]int32, v15)
-		for i := 0; i < v15; i++ {
-			this.SkyscraperUniversity[i] = int32(r.Int31())
-			if r.Intn(2) == 0 {
-				this.SkyscraperUniversity[i] *= -1
-			}
-		}
-	}
-	if r.Intn(10) != 0 {
-		v16 := r.Intn(100)
-		this.RevengeMirror = make([][]byte, v16)
-		for i := 0; i < v16; i++ {
-			v17 := r.Intn(100)
-			this.RevengeMirror[i] = make([]byte, v17)
-			for j := 0; j < v17; j++ {
-				this.RevengeMirror[i][j] = byte(r.Intn(256))
-			}
-		}
-	}
-	if r.Intn(10) != 0 {
-		v18 := r.Intn(100)
-		this.TrailerGallery = make([]uint64, v18)
-		for i := 0; i < v18; i++ {
-			this.TrailerGallery[i] = uint64(uint64(r.Uint32()))
-		}
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 4)
-	}
-	return this
-}
-
-func NewPopulatedTravelBallRoom(r randyPuddingmilkshake, easy bool) *TravelBallRoom {
-	this := &TravelBallRoom{}
-	if r.Intn(10) != 0 {
-		v19 := r.Intn(10)
-		this.DanceShooting = make([]AccountantPowder, v19)
-		for i := 0; i < v19; i++ {
-			this.DanceShooting[i] = AccountantPowder([]int32{0, 1, 2, 3, 4}[r.Intn(5)])
-		}
-	}
-	if r.Intn(10) != 0 {
-		v20 := r.Intn(10)
-		this.ReasonCoat = make([]string, v20)
-		for i := 0; i < v20; i++ {
-			this.ReasonCoat[i] = randStringPuddingmilkshake(r)
-		}
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 3)
-	}
-	return this
-}
-
-func NewPopulatedSpyCarpenter(r randyPuddingmilkshake, easy bool) *SpyCarpenter {
-	this := &SpyCarpenter{}
-	if r.Intn(10) != 0 {
-		v21 := r.Intn(100)
-		this.PartyBrakes = make([]uint32, v21)
-		for i := 0; i < v21; i++ {
-			this.PartyBrakes[i] = uint32(r.Uint32())
-		}
-	}
-	if r.Intn(10) != 0 {
-		v22 := r.Intn(100)
-		this.WireOyster = make([]uint32, v22)
-		for i := 0; i < v22; i++ {
-			this.WireOyster[i] = uint32(r.Uint32())
-		}
-	}
-	if r.Intn(10) != 0 {
-		this.XrayPilots = NewPopulatedXrayPilots(r, easy)
-	}
-	if r.Intn(10) != 0 {
-		v23 := r.Intn(10)
-		this.RussiaBasket = make([]PlasticBagCertificate, v23)
-		for i := 0; i < v23; i++ {
-			this.RussiaBasket[i] = PlasticBagCertificate([]int32{0, 1}[r.Intn(2)])
-		}
-	}
-	if r.Intn(10) != 0 {
-		this.AccidentStockMarket = NewPopulatedStarTusk(r, easy)
-	}
-	if r.Intn(10) != 0 {
-		this.BulldozerHandkerchief = NewPopulatedStarTusk(r, easy)
-	}
-	if r.Intn(10) != 0 {
-		v24 := r.Intn(10)
-		this.VelcroBench = make([]WineMicroscope, v24)
-		for i := 0; i < v24; i++ {
-			this.VelcroBench[i] = WineMicroscope([]int32{0, 1, 2, 3, 4}[r.Intn(5)])
-		}
-	}
-	if r.Intn(10) != 0 {
-		v25 := r.Intn(10)
-		this.BridgePepper = make([]string, v25)
-		for i := 0; i < v25; i++ {
-			this.BridgePepper[i] = randStringPuddingmilkshake(r)
-		}
-	}
-	if r.Intn(10) != 0 {
-		v26 := r.Intn(10)
-		this.FountainTarget = make([]string, v26)
-		for i := 0; i < v26; i++ {
-			this.FountainTarget[i] = randStringPuddingmilkshake(r)
-		}
-	}
-	if r.Intn(10) != 0 {
-		v27 := r.Intn(10)
-		this.SoleFin = make([]string, v27)
-		for i := 0; i < v27; i++ {
-			this.SoleFin[i] = randStringPuddingmilkshake(r)
-		}
-	}
-	if r.Intn(10) != 0 {
-		this.MigraneLemonade = NewPopulatedMigraneLemonade(r, easy)
-	}
-	if r.Intn(10) != 0 {
-		v28 := r.Intn(100)
-		this.WhaleColour = make([]uint32, v28)
-		for i := 0; i < v28; i++ {
-			this.WhaleColour[i] = uint32(r.Uint32())
-		}
-	}
-	if r.Intn(10) != 0 {
-		v29 := r.Intn(100)
-		this.LawyerRumour = make([][]byte, v29)
-		for i := 0; i < v29; i++ {
-			v30 := r.Intn(100)
-			this.LawyerRumour[i] = make([]byte, v30)
-			for j := 0; j < v30; j++ {
-				this.LawyerRumour[i][j] = byte(r.Intn(256))
-			}
-		}
-	}
-	if r.Intn(10) != 0 {
-		v31 := r.Intn(100)
-		this.ToothSale = make([]uint32, v31)
-		for i := 0; i < v31; i++ {
-			this.ToothSale[i] = uint32(r.Uint32())
-		}
-	}
-	if r.Intn(10) != 0 {
-		v32 := r.Intn(100)
-		this.PearLeader = make([][]byte, v32)
-		for i := 0; i < v32; i++ {
-			v33 := r.Intn(100)
-			this.PearLeader[i] = make([]byte, v33)
-			for j := 0; j < v33; j++ {
-				this.PearLeader[i][j] = byte(r.Intn(256))
-			}
-		}
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 16)
-	}
-	return this
-}
-
-func NewPopulatedStarTusk(r randyPuddingmilkshake, easy bool) *StarTusk {
-	this := &StarTusk{}
-	if r.Intn(10) != 0 {
-		v34 := r.Intn(10)
-		this.ViolinDuty = make([]AltarPlastic, v34)
-		for i := 0; i < v34; i++ {
-			this.ViolinDuty[i] = AltarPlastic([]int32{0, 1, 2, 3, 4}[r.Intn(5)])
-		}
-	}
-	if r.Intn(10) != 0 {
-		v35 := r.Intn(10)
-		this.CloakPlayground = make([]string, v35)
-		for i := 0; i < v35; i++ {
-			this.CloakPlayground[i] = randStringPuddingmilkshake(r)
-		}
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 3)
-	}
-	return this
-}
-
-func NewPopulatedMigraneLemonade(r randyPuddingmilkshake, easy bool) *MigraneLemonade {
-	this := &MigraneLemonade{}
-	if r.Intn(10) != 0 {
-		v36 := r.Intn(10)
-		this.ArchBubbles = make([]ArchBubble, v36)
-		for i := 0; i < v36; i++ {
-			this.ArchBubbles[i] = ArchBubble([]int32{0, 1, 2, 3, 4}[r.Intn(5)])
-		}
-	}
-	if r.Intn(10) != 0 {
-		v37 := r.Intn(10)
-		this.FactParrot = make([]string, v37)
-		for i := 0; i < v37; i++ {
-			this.FactParrot[i] = randStringPuddingmilkshake(r)
-		}
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 3)
-	}
-	return this
-}
-
-func NewPopulatedMudRiddle(r randyPuddingmilkshake, easy bool) *MudRiddle {
-	this := &MudRiddle{}
-	if r.Intn(10) != 0 {
-		this.XrayPilots = NewPopulatedXrayPilots(r, easy)
-	}
-	if r.Intn(10) != 0 {
-		v38 := r.Intn(100)
-		this.RunwayGenius = make([]uint32, v38)
-		for i := 0; i < v38; i++ {
-			this.RunwayGenius[i] = uint32(r.Uint32())
-		}
-	}
-	if r.Intn(10) != 0 {
-		this.BingleDaisy = NewPopulatedBingleDaisy(r, easy)
-	}
-	if r.Intn(10) != 0 {
-		v39 := r.Intn(100)
-		this.Merit = make([]uint32, v39)
-		for i := 0; i < v39; i++ {
-			this.Merit[i] = uint32(r.Uint32())
-		}
-	}
-	if r.Intn(10) != 0 {
-		v40 := r.Intn(10)
-		this.CreationBirthday = make([]string, v40)
-		for i := 0; i < v40; i++ {
-			this.CreationBirthday[i] = randStringPuddingmilkshake(r)
-		}
-	}
-	if r.Intn(10) != 0 {
-		v41 := r.Intn(10)
-		this.HardwareFood = make([]string, v41)
-		for i := 0; i < v41; i++ {
-			this.HardwareFood[i] = randStringPuddingmilkshake(r)
-		}
-	}
-	if r.Intn(10) != 0 {
-		v42 := r.Intn(10)
-		this.TurkeyValley = make([]string, v42)
-		for i := 0; i < v42; i++ {
-			this.TurkeyValley[i] = randStringPuddingmilkshake(r)
-		}
-	}
-	if r.Intn(10) != 0 {
-		v43 := r.Intn(10)
-		this.TramPuppet = make([]string, v43)
-		for i := 0; i < v43; i++ {
-			this.TramPuppet[i] = randStringPuddingmilkshake(r)
-		}
-	}
-	if r.Intn(10) != 0 {
-		v44 := r.Intn(10)
-		this.InsultSquare = make([]EnzymeLift, v44)
-		for i := 0; i < v44; i++ {
-			this.InsultSquare[i] = EnzymeLift([]int32{0, 1, 2, 3, 4}[r.Intn(5)])
-		}
-	}
-	if r.Intn(10) != 0 {
-		v45 := r.Intn(10)
-		this.HospitalVideo = make([]string, v45)
-		for i := 0; i < v45; i++ {
-			this.HospitalVideo[i] = randStringPuddingmilkshake(r)
-		}
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 11)
-	}
-	return this
-}
-
-func NewPopulatedXrayPilot(r randyPuddingmilkshake, easy bool) *XrayPilot {
-	this := &XrayPilot{}
-	if r.Intn(10) != 0 {
-		v46 := int64(r.Int63())
-		if r.Intn(2) == 0 {
-			v46 *= -1
-		}
-		this.AnkleCoat = &v46
-	}
-	if r.Intn(10) != 0 {
-		v47 := int64(r.Int63())
-		if r.Intn(2) == 0 {
-			v47 *= -1
-		}
-		this.ShelfSunglass = &v47
-	}
-	if r.Intn(10) != 0 {
-		v48 := int64(r.Int63())
-		if r.Intn(2) == 0 {
-			v48 *= -1
-		}
-		this.BacteriaPaperclip = &v48
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 4)
-	}
-	return this
-}
-
-func NewPopulatedXrayPilots(r randyPuddingmilkshake, easy bool) *XrayPilots {
-	this := &XrayPilots{}
-	if r.Intn(10) != 0 {
-		v49 := r.Intn(100)
-		this.AnkleCoats = make([]uint64, v49)
-		for i := 0; i < v49; i++ {
-			this.AnkleCoats[i] = uint64(uint64(r.Uint32()))
-		}
-	}
-	if r.Intn(10) != 0 {
-		v50 := r.Intn(100)
-		this.ShelfSunglasses = make([]uint64, v50)
-		for i := 0; i < v50; i++ {
-			this.ShelfSunglasses[i] = uint64(uint64(r.Uint32()))
-		}
-	}
-	if r.Intn(10) != 0 {
-		v51 := r.Intn(100)
-		this.BacteriaPaperclips = make([]uint64, v51)
-		for i := 0; i < v51; i++ {
-			this.BacteriaPaperclips[i] = uint64(uint64(r.Uint32()))
-		}
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 4)
-	}
-	return this
-}
-
-func NewPopulatedBingleDaisy(r randyPuddingmilkshake, easy bool) *BingleDaisy {
-	this := &BingleDaisy{}
-	if r.Intn(10) != 0 {
-		v52 := r.Intn(10)
-		this.AccountantPowders = make([]AccountantPowder, v52)
-		for i := 0; i < v52; i++ {
-			this.AccountantPowders[i] = AccountantPowder([]int32{0, 1, 2, 3, 4}[r.Intn(5)])
-		}
-	}
-	if r.Intn(10) != 0 {
-		v53 := r.Intn(100)
-		this.DecoratorTask = make([]uint32, v53)
-		for i := 0; i < v53; i++ {
-			this.DecoratorTask[i] = uint32(r.Uint32())
-		}
-	}
-	if r.Intn(10) != 0 {
-		v54 := r.Intn(100)
-		this.TailTable = make([][]byte, v54)
-		for i := 0; i < v54; i++ {
-			v55 := r.Intn(100)
-			this.TailTable[i] = make([]byte, v55)
-			for j := 0; j < v55; j++ {
-				this.TailTable[i][j] = byte(r.Intn(256))
-			}
-		}
-	}
-	if r.Intn(10) != 0 {
-		v56 := r.Intn(10)
-		this.MachineCurtain = make([]string, v56)
-		for i := 0; i < v56; i++ {
-			this.MachineCurtain[i] = randStringPuddingmilkshake(r)
-		}
-	}
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 5)
-	}
-	return this
-}
-
-type randyPuddingmilkshake interface {
-	Float32() float32
-	Float64() float64
-	Int63() int64
-	Int31() int32
-	Uint32() uint32
-	Intn(n int) int
-}
-
-func randUTF8RunePuddingmilkshake(r randyPuddingmilkshake) rune {
-	ru := r.Intn(62)
-	if ru < 10 {
-		return rune(ru + 48)
-	} else if ru < 36 {
-		return rune(ru + 55)
-	}
-	return rune(ru + 61)
-}
-func randStringPuddingmilkshake(r randyPuddingmilkshake) string {
-	v57 := r.Intn(100)
-	tmps := make([]rune, v57)
-	for i := 0; i < v57; i++ {
-		tmps[i] = randUTF8RunePuddingmilkshake(r)
-	}
-	return string(tmps)
-}
-func randUnrecognizedPuddingmilkshake(r randyPuddingmilkshake, maxFieldNumber int) (data []byte) {
-	l := r.Intn(5)
-	for i := 0; i < l; i++ {
-		wire := r.Intn(4)
-		if wire == 3 {
-			wire = 5
-		}
-		fieldNumber := maxFieldNumber + r.Intn(100)
-		data = randFieldPuddingmilkshake(data, r, fieldNumber, wire)
-	}
-	return data
-}
-func randFieldPuddingmilkshake(data []byte, r randyPuddingmilkshake, fieldNumber int, wire int) []byte {
-	key := uint32(fieldNumber)<<3 | uint32(wire)
-	switch wire {
-	case 0:
-		data = encodeVarintPopulatePuddingmilkshake(data, uint64(key))
-		v58 := r.Int63()
-		if r.Intn(2) == 0 {
-			v58 *= -1
-		}
-		data = encodeVarintPopulatePuddingmilkshake(data, uint64(v58))
-	case 1:
-		data = encodeVarintPopulatePuddingmilkshake(data, uint64(key))
-		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
-	case 2:
-		data = encodeVarintPopulatePuddingmilkshake(data, uint64(key))
-		ll := r.Intn(100)
-		data = encodeVarintPopulatePuddingmilkshake(data, uint64(ll))
-		for j := 0; j < ll; j++ {
-			data = append(data, byte(r.Intn(256)))
-		}
-	default:
-		data = encodeVarintPopulatePuddingmilkshake(data, uint64(key))
-		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
-	}
-	return data
-}
-func encodeVarintPopulatePuddingmilkshake(data []byte, v uint64) []byte {
-	for v >= 1<<7 {
-		data = append(data, uint8(uint64(v)&0x7f|0x80))
-		v >>= 7
-	}
-	data = append(data, uint8(v))
-	return data
-}
-func (this *PuddingMilkshake) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.PuddingMilkshake{` +
-		`FinanceJudo:` + fmt.Sprintf("%#v", this.FinanceJudo),
-		`RainInterlude:` + fmt.Sprintf("%#v", this.RainInterlude),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *FinanceJudo) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.FinanceJudo{` +
-		`SaladWorry:` + fmt.Sprintf("%#v", this.SaladWorry),
-		`RumourSpirit:` + valueToGoStringPuddingmilkshake(this.RumourSpirit, "int64"),
-		`UserInterfaceSpanner:` + valueToGoStringPuddingmilkshake(this.UserInterfaceSpanner, "int64"),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *SaladWorry) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.SaladWorry{` +
-		`MeasureGrade:` + valueToGoStringPuddingmilkshake(this.MeasureGrade, "byte"),
-		`HooliganValley:` + fmt.Sprintf("%#v", this.HooliganValley),
-		`MagazineFrame:` + fmt.Sprintf("%#v", this.MagazineFrame),
-		`XrayPilot:` + fmt.Sprintf("%#v", this.XrayPilot),
-		`LogMicrophone:` + valueToGoStringPuddingmilkshake(this.LogMicrophone, "bool"),
-		`NeonLightEnd:` + valueToGoStringPuddingmilkshake(this.NeonLightEnd, "tests.MicrobeMiser"),
-		`LeafTrellis:` + valueToGoStringPuddingmilkshake(this.LeafTrellis, "string"),
-		`CancerUserExperience:` + valueToGoStringPuddingmilkshake(this.CancerUserExperience, "tests.CancerUserExperience"),
-		`RadarBox:` + valueToGoStringPuddingmilkshake(this.RadarBox, "tests.RadarBox"),
-		`AccidentStadium:` + valueToGoStringPuddingmilkshake(this.AccidentStadium, "bool"),
-		`SpyCarpenter:` + fmt.Sprintf("%#v", this.SpyCarpenter),
-		`PrizeRemoteControl:` + valueToGoStringPuddingmilkshake(this.PrizeRemoteControl, "string"),
-		`TableScandal:` + fmt.Sprintf("%#v", this.TableScandal),
-		`StormTermite:` + fmt.Sprintf("%#v", this.StormTermite),
-		`ParliamentChime:` + fmt.Sprintf("%#v", this.ParliamentChime),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *KeyQueen) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.KeyQueen{` +
-		`SkyscraperUniversity:` + fmt.Sprintf("%#v", this.SkyscraperUniversity),
-		`RevengeMirror:` + fmt.Sprintf("%#v", this.RevengeMirror),
-		`TrailerGallery:` + fmt.Sprintf("%#v", this.TrailerGallery),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *TravelBallRoom) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.TravelBallRoom{` +
-		`DanceShooting:` + fmt.Sprintf("%#v", this.DanceShooting),
-		`ReasonCoat:` + fmt.Sprintf("%#v", this.ReasonCoat),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *SpyCarpenter) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.SpyCarpenter{` +
-		`PartyBrakes:` + fmt.Sprintf("%#v", this.PartyBrakes),
-		`WireOyster:` + fmt.Sprintf("%#v", this.WireOyster),
-		`XrayPilots:` + fmt.Sprintf("%#v", this.XrayPilots),
-		`RussiaBasket:` + fmt.Sprintf("%#v", this.RussiaBasket),
-		`AccidentStockMarket:` + fmt.Sprintf("%#v", this.AccidentStockMarket),
-		`BulldozerHandkerchief:` + fmt.Sprintf("%#v", this.BulldozerHandkerchief),
-		`VelcroBench:` + fmt.Sprintf("%#v", this.VelcroBench),
-		`BridgePepper:` + fmt.Sprintf("%#v", this.BridgePepper),
-		`FountainTarget:` + fmt.Sprintf("%#v", this.FountainTarget),
-		`SoleFin:` + fmt.Sprintf("%#v", this.SoleFin),
-		`MigraneLemonade:` + fmt.Sprintf("%#v", this.MigraneLemonade),
-		`WhaleColour:` + fmt.Sprintf("%#v", this.WhaleColour),
-		`LawyerRumour:` + fmt.Sprintf("%#v", this.LawyerRumour),
-		`ToothSale:` + fmt.Sprintf("%#v", this.ToothSale),
-		`PearLeader:` + fmt.Sprintf("%#v", this.PearLeader),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *StarTusk) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.StarTusk{` +
-		`ViolinDuty:` + fmt.Sprintf("%#v", this.ViolinDuty),
-		`CloakPlayground:` + fmt.Sprintf("%#v", this.CloakPlayground),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *MigraneLemonade) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.MigraneLemonade{` +
-		`ArchBubbles:` + fmt.Sprintf("%#v", this.ArchBubbles),
-		`FactParrot:` + fmt.Sprintf("%#v", this.FactParrot),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *MudRiddle) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.MudRiddle{` +
-		`XrayPilots:` + fmt.Sprintf("%#v", this.XrayPilots),
-		`RunwayGenius:` + fmt.Sprintf("%#v", this.RunwayGenius),
-		`BingleDaisy:` + fmt.Sprintf("%#v", this.BingleDaisy),
-		`Merit:` + fmt.Sprintf("%#v", this.Merit),
-		`CreationBirthday:` + fmt.Sprintf("%#v", this.CreationBirthday),
-		`HardwareFood:` + fmt.Sprintf("%#v", this.HardwareFood),
-		`TurkeyValley:` + fmt.Sprintf("%#v", this.TurkeyValley),
-		`TramPuppet:` + fmt.Sprintf("%#v", this.TramPuppet),
-		`InsultSquare:` + fmt.Sprintf("%#v", this.InsultSquare),
-		`HospitalVideo:` + fmt.Sprintf("%#v", this.HospitalVideo),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *XrayPilot) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.XrayPilot{` +
-		`AnkleCoat:` + valueToGoStringPuddingmilkshake(this.AnkleCoat, "int64"),
-		`ShelfSunglass:` + valueToGoStringPuddingmilkshake(this.ShelfSunglass, "int64"),
-		`BacteriaPaperclip:` + valueToGoStringPuddingmilkshake(this.BacteriaPaperclip, "int64"),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *XrayPilots) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.XrayPilots{` +
-		`AnkleCoats:` + fmt.Sprintf("%#v", this.AnkleCoats),
-		`ShelfSunglasses:` + fmt.Sprintf("%#v", this.ShelfSunglasses),
-		`BacteriaPaperclips:` + fmt.Sprintf("%#v", this.BacteriaPaperclips),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func (this *BingleDaisy) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&tests.BingleDaisy{` +
-		`AccountantPowders:` + fmt.Sprintf("%#v", this.AccountantPowders),
-		`DecoratorTask:` + fmt.Sprintf("%#v", this.DecoratorTask),
-		`TailTable:` + fmt.Sprintf("%#v", this.TailTable),
-		`MachineCurtain:` + fmt.Sprintf("%#v", this.MachineCurtain),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
-}
-func valueToGoStringPuddingmilkshake(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
-func extensionToGoStringPuddingmilkshake(e map[int32]github_com_gogo_protobuf_proto.Extension) string {
-	if e == nil {
-		return "nil"
-	}
-	s := "map[int32]proto.Extension{"
-	keys := make([]int, 0, len(e))
-	for k := range e {
-		keys = append(keys, int(k))
-	}
-	sort.Ints(keys)
-	ss := []string{}
-	for _, k := range keys {
-		ss = append(ss, strconv.Itoa(k)+": "+e[int32(k)].GoString())
-	}
-	s += strings.Join(ss, ",") + "}"
-	return s
-}
 func (this *PuddingMilkshake) Description() (desc *google_protobuf.FileDescriptorSet) {
 	return PuddingmilkshakeDescription()
 }
@@ -2840,4 +2089,755 @@ func PuddingmilkshakeDescription() (desc *google_protobuf.FileDescriptorSet) {
 	}(3), Type: func(v google_protobuf.FieldDescriptorProto_Type) *google_protobuf.FieldDescriptorProto_Type {
 		return &v
 	}(9), TypeName: nil, Extendee: nil, DefaultValue: nil, OneofIndex: nil, Options: nil, XXX_unrecognized: []byte(nil)}}, Extension: []*google_protobuf.FieldDescriptorProto(nil), NestedType: []*google_protobuf.DescriptorProto(nil), EnumType: []*google_protobuf.EnumDescriptorProto(nil), ExtensionRange: []*google_protobuf.DescriptorProto_ExtensionRange(nil), OneofDecl: []*google_protobuf.OneofDescriptorProto(nil), Options: nil, XXX_unrecognized: []byte(nil)}}, EnumType: []*google_protobuf.EnumDescriptorProto{{Name: func(v string) *string { return &v }("AltarPlastic"), Value: []*google_protobuf.EnumValueDescriptorProto{{Name: func(v string) *string { return &v }("Table"), Number: func(v int32) *int32 { return &v }(0), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Dusk"), Number: func(v int32) *int32 { return &v }(1), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Drum"), Number: func(v int32) *int32 { return &v }(2), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Cereal"), Number: func(v int32) *int32 { return &v }(3), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Prophet"), Number: func(v int32) *int32 { return &v }(4), Options: nil, XXX_unrecognized: []byte(nil)}}, Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("ArchBubble"), Value: []*google_protobuf.EnumValueDescriptorProto{{Name: func(v string) *string { return &v }("Aroma"), Number: func(v int32) *int32 { return &v }(0), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Moustache"), Number: func(v int32) *int32 { return &v }(1), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Cup"), Number: func(v int32) *int32 { return &v }(2), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Toes"), Number: func(v int32) *int32 { return &v }(3), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Seal"), Number: func(v int32) *int32 { return &v }(4), Options: nil, XXX_unrecognized: []byte(nil)}}, Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("PlasticBagCertificate"), Value: []*google_protobuf.EnumValueDescriptorProto{{Name: func(v string) *string { return &v }("Mustard"), Number: func(v int32) *int32 { return &v }(0), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Flood"), Number: func(v int32) *int32 { return &v }(1), Options: nil, XXX_unrecognized: []byte(nil)}}, Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("WineMicroscope"), Value: []*google_protobuf.EnumValueDescriptorProto{{Name: func(v string) *string { return &v }("Amplifier"), Number: func(v int32) *int32 { return &v }(0), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Toy"), Number: func(v int32) *int32 { return &v }(1), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Code"), Number: func(v int32) *int32 { return &v }(2), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Perch"), Number: func(v int32) *int32 { return &v }(3), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Tower"), Number: func(v int32) *int32 { return &v }(4), Options: nil, XXX_unrecognized: []byte(nil)}}, Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("MicrobeMiser"), Value: []*google_protobuf.EnumValueDescriptorProto{{Name: func(v string) *string { return &v }("Parlour"), Number: func(v int32) *int32 { return &v }(0), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Encyclopedia"), Number: func(v int32) *int32 { return &v }(1), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Pebble"), Number: func(v int32) *int32 { return &v }(2), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("License"), Number: func(v int32) *int32 { return &v }(3), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Binge"), Number: func(v int32) *int32 { return &v }(4), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Novel"), Number: func(v int32) *int32 { return &v }(5), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Class"), Number: func(v int32) *int32 { return &v }(6), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Pincer"), Number: func(v int32) *int32 { return &v }(7), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Concrete"), Number: func(v int32) *int32 { return &v }(8), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Figure"), Number: func(v int32) *int32 { return &v }(9), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("CruiseShip"), Number: func(v int32) *int32 { return &v }(10), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Tongue"), Number: func(v int32) *int32 { return &v }(11), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Pepper"), Number: func(v int32) *int32 { return &v }(12), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Chameleon"), Number: func(v int32) *int32 { return &v }(13), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Snore"), Number: func(v int32) *int32 { return &v }(14), Options: nil, XXX_unrecognized: []byte(nil)}}, Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("CancerUserExperience"), Value: []*google_protobuf.EnumValueDescriptorProto{{Name: func(v string) *string { return &v }("Nun"), Number: func(v int32) *int32 { return &v }(0), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Massage"), Number: func(v int32) *int32 { return &v }(1), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Cough"), Number: func(v int32) *int32 { return &v }(2), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Artillery"), Number: func(v int32) *int32 { return &v }(3), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Cashier"), Number: func(v int32) *int32 { return &v }(4), Options: nil, XXX_unrecognized: []byte(nil)}}, Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("EnzymeLift"), Value: []*google_protobuf.EnumValueDescriptorProto{{Name: func(v string) *string { return &v }("Market"), Number: func(v int32) *int32 { return &v }(0), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Bishop"), Number: func(v int32) *int32 { return &v }(1), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Crispy"), Number: func(v int32) *int32 { return &v }(2), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Friar"), Number: func(v int32) *int32 { return &v }(3), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Telescope"), Number: func(v int32) *int32 { return &v }(4), Options: nil, XXX_unrecognized: []byte(nil)}}, Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("RadarBox"), Value: []*google_protobuf.EnumValueDescriptorProto{{Name: func(v string) *string { return &v }("Gutter"), Number: func(v int32) *int32 { return &v }(0), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Sea"), Number: func(v int32) *int32 { return &v }(1), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Purse"), Number: func(v int32) *int32 { return &v }(2), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Bomb"), Number: func(v int32) *int32 { return &v }(3), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Research"), Number: func(v int32) *int32 { return &v }(4), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Staff"), Number: func(v int32) *int32 { return &v }(5), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Dance"), Number: func(v int32) *int32 { return &v }(6), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Soldier"), Number: func(v int32) *int32 { return &v }(7), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Spine"), Number: func(v int32) *int32 { return &v }(8), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Butterfly"), Number: func(v int32) *int32 { return &v }(9), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Olive"), Number: func(v int32) *int32 { return &v }(10), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Grade"), Number: func(v int32) *int32 { return &v }(11), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Paranoia"), Number: func(v int32) *int32 { return &v }(12), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Number"), Number: func(v int32) *int32 { return &v }(13), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Task"), Number: func(v int32) *int32 { return &v }(14), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Fountain"), Number: func(v int32) *int32 { return &v }(15), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Hospital"), Number: func(v int32) *int32 { return &v }(16), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Apetite"), Number: func(v int32) *int32 { return &v }(17), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Garlic"), Number: func(v int32) *int32 { return &v }(18), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Photograph"), Number: func(v int32) *int32 { return &v }(19), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Nib"), Number: func(v int32) *int32 { return &v }(20), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Wheelbarrow"), Number: func(v int32) *int32 { return &v }(21), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Poverty"), Number: func(v int32) *int32 { return &v }(22), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Piano"), Number: func(v int32) *int32 { return &v }(23), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Poster"), Number: func(v int32) *int32 { return &v }(24), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Toast"), Number: func(v int32) *int32 { return &v }(25), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Pub"), Number: func(v int32) *int32 { return &v }(26), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Fungus"), Number: func(v int32) *int32 { return &v }(27), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Bulb"), Number: func(v int32) *int32 { return &v }(28), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Ambiguous"), Number: func(v int32) *int32 { return &v }(29), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Arms"), Number: func(v int32) *int32 { return &v }(30), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Pillow"), Number: func(v int32) *int32 { return &v }(31), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Carrot"), Number: func(v int32) *int32 { return &v }(32), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Scallop"), Number: func(v int32) *int32 { return &v }(33), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Nappy"), Number: func(v int32) *int32 { return &v }(34), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Plug"), Number: func(v int32) *int32 { return &v }(35), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Peacock"), Number: func(v int32) *int32 { return &v }(36), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Bribe"), Number: func(v int32) *int32 { return &v }(37), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Cat"), Number: func(v int32) *int32 { return &v }(38), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Mat"), Number: func(v int32) *int32 { return &v }(39), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Press"), Number: func(v int32) *int32 { return &v }(40), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Fireplace"), Number: func(v int32) *int32 { return &v }(41), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Carpet"), Number: func(v int32) *int32 { return &v }(42), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Hunt"), Number: func(v int32) *int32 { return &v }(43), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Mirror"), Number: func(v int32) *int32 { return &v }(44), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Stairs"), Number: func(v int32) *int32 { return &v }(45), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Saviour"), Number: func(v int32) *int32 { return &v }(46), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Plate"), Number: func(v int32) *int32 { return &v }(47), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Fall"), Number: func(v int32) *int32 { return &v }(48), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Alphabet"), Number: func(v int32) *int32 { return &v }(49), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Daisy"), Number: func(v int32) *int32 { return &v }(50), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Degree"), Number: func(v int32) *int32 { return &v }(51), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Fire"), Number: func(v int32) *int32 { return &v }(52), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Chandelier"), Number: func(v int32) *int32 { return &v }(53), Options: nil, XXX_unrecognized: []byte(nil)}}, Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("AccountantPowder"), Value: []*google_protobuf.EnumValueDescriptorProto{{Name: func(v string) *string { return &v }("Dolphin"), Number: func(v int32) *int32 { return &v }(0), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Jump"), Number: func(v int32) *int32 { return &v }(1), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Sausage"), Number: func(v int32) *int32 { return &v }(2), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Holiday"), Number: func(v int32) *int32 { return &v }(3), Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("Flamenco"), Number: func(v int32) *int32 { return &v }(4), Options: nil, XXX_unrecognized: []byte(nil)}}, Options: nil, XXX_unrecognized: []byte(nil)}}, Service: []*google_protobuf.ServiceDescriptorProto(nil), Extension: []*google_protobuf.FieldDescriptorProto(nil), Options: &google_protobuf.FileOptions{JavaPackage: nil, JavaOuterClassname: nil, JavaMultipleFiles: nil, JavaGenerateEqualsAndHash: nil, JavaStringCheckUtf8: nil, OptimizeFor: nil, GoPackage: nil, CcGenericServices: nil, JavaGenericServices: nil, PyGenericServices: nil, Deprecated: nil, CcEnableArenas: nil, UninterpretedOption: []*google_protobuf.UninterpretedOption(nil), XXX_extensions: map[int32]proto.Extension{63006: proto.NewExtension([]byte{0xf0, 0xe1, 0x1e, 0x1}), 63007: proto.NewExtension([]byte{0xf8, 0xe1, 0x1e, 0x1}), 63014: proto.NewExtension([]byte{0xb0, 0xe2, 0x1e, 0x1})}, XXX_unrecognized: []byte(nil)}, SourceCodeInfo: nil, Syntax: nil, XXX_unrecognized: []byte(nil)}}, XXX_unrecognized: []byte(nil)}
+}
+func (this *PuddingMilkshake) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.PuddingMilkshake{` +
+		`FinanceJudo:` + fmt.Sprintf("%#v", this.FinanceJudo),
+		`RainInterlude:` + fmt.Sprintf("%#v", this.RainInterlude),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *FinanceJudo) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.FinanceJudo{` +
+		`SaladWorry:` + fmt.Sprintf("%#v", this.SaladWorry),
+		`RumourSpirit:` + valueToGoStringPuddingmilkshake(this.RumourSpirit, "int64"),
+		`UserInterfaceSpanner:` + valueToGoStringPuddingmilkshake(this.UserInterfaceSpanner, "int64"),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *SaladWorry) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.SaladWorry{` +
+		`MeasureGrade:` + valueToGoStringPuddingmilkshake(this.MeasureGrade, "byte"),
+		`HooliganValley:` + fmt.Sprintf("%#v", this.HooliganValley),
+		`MagazineFrame:` + fmt.Sprintf("%#v", this.MagazineFrame),
+		`XrayPilot:` + fmt.Sprintf("%#v", this.XrayPilot),
+		`LogMicrophone:` + valueToGoStringPuddingmilkshake(this.LogMicrophone, "bool"),
+		`NeonLightEnd:` + valueToGoStringPuddingmilkshake(this.NeonLightEnd, "tests.MicrobeMiser"),
+		`LeafTrellis:` + valueToGoStringPuddingmilkshake(this.LeafTrellis, "string"),
+		`CancerUserExperience:` + valueToGoStringPuddingmilkshake(this.CancerUserExperience, "tests.CancerUserExperience"),
+		`RadarBox:` + valueToGoStringPuddingmilkshake(this.RadarBox, "tests.RadarBox"),
+		`AccidentStadium:` + valueToGoStringPuddingmilkshake(this.AccidentStadium, "bool"),
+		`SpyCarpenter:` + fmt.Sprintf("%#v", this.SpyCarpenter),
+		`PrizeRemoteControl:` + valueToGoStringPuddingmilkshake(this.PrizeRemoteControl, "string"),
+		`TableScandal:` + fmt.Sprintf("%#v", this.TableScandal),
+		`StormTermite:` + fmt.Sprintf("%#v", this.StormTermite),
+		`ParliamentChime:` + fmt.Sprintf("%#v", this.ParliamentChime),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *KeyQueen) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.KeyQueen{` +
+		`SkyscraperUniversity:` + fmt.Sprintf("%#v", this.SkyscraperUniversity),
+		`RevengeMirror:` + fmt.Sprintf("%#v", this.RevengeMirror),
+		`TrailerGallery:` + fmt.Sprintf("%#v", this.TrailerGallery),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *TravelBallRoom) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.TravelBallRoom{` +
+		`DanceShooting:` + fmt.Sprintf("%#v", this.DanceShooting),
+		`ReasonCoat:` + fmt.Sprintf("%#v", this.ReasonCoat),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *SpyCarpenter) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.SpyCarpenter{` +
+		`PartyBrakes:` + fmt.Sprintf("%#v", this.PartyBrakes),
+		`WireOyster:` + fmt.Sprintf("%#v", this.WireOyster),
+		`XrayPilots:` + fmt.Sprintf("%#v", this.XrayPilots),
+		`RussiaBasket:` + fmt.Sprintf("%#v", this.RussiaBasket),
+		`AccidentStockMarket:` + fmt.Sprintf("%#v", this.AccidentStockMarket),
+		`BulldozerHandkerchief:` + fmt.Sprintf("%#v", this.BulldozerHandkerchief),
+		`VelcroBench:` + fmt.Sprintf("%#v", this.VelcroBench),
+		`BridgePepper:` + fmt.Sprintf("%#v", this.BridgePepper),
+		`FountainTarget:` + fmt.Sprintf("%#v", this.FountainTarget),
+		`SoleFin:` + fmt.Sprintf("%#v", this.SoleFin),
+		`MigraneLemonade:` + fmt.Sprintf("%#v", this.MigraneLemonade),
+		`WhaleColour:` + fmt.Sprintf("%#v", this.WhaleColour),
+		`LawyerRumour:` + fmt.Sprintf("%#v", this.LawyerRumour),
+		`ToothSale:` + fmt.Sprintf("%#v", this.ToothSale),
+		`PearLeader:` + fmt.Sprintf("%#v", this.PearLeader),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *StarTusk) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.StarTusk{` +
+		`ViolinDuty:` + fmt.Sprintf("%#v", this.ViolinDuty),
+		`CloakPlayground:` + fmt.Sprintf("%#v", this.CloakPlayground),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *MigraneLemonade) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.MigraneLemonade{` +
+		`ArchBubbles:` + fmt.Sprintf("%#v", this.ArchBubbles),
+		`FactParrot:` + fmt.Sprintf("%#v", this.FactParrot),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *MudRiddle) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.MudRiddle{` +
+		`XrayPilots:` + fmt.Sprintf("%#v", this.XrayPilots),
+		`RunwayGenius:` + fmt.Sprintf("%#v", this.RunwayGenius),
+		`BingleDaisy:` + fmt.Sprintf("%#v", this.BingleDaisy),
+		`Merit:` + fmt.Sprintf("%#v", this.Merit),
+		`CreationBirthday:` + fmt.Sprintf("%#v", this.CreationBirthday),
+		`HardwareFood:` + fmt.Sprintf("%#v", this.HardwareFood),
+		`TurkeyValley:` + fmt.Sprintf("%#v", this.TurkeyValley),
+		`TramPuppet:` + fmt.Sprintf("%#v", this.TramPuppet),
+		`InsultSquare:` + fmt.Sprintf("%#v", this.InsultSquare),
+		`HospitalVideo:` + fmt.Sprintf("%#v", this.HospitalVideo),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *XrayPilot) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.XrayPilot{` +
+		`AnkleCoat:` + valueToGoStringPuddingmilkshake(this.AnkleCoat, "int64"),
+		`ShelfSunglass:` + valueToGoStringPuddingmilkshake(this.ShelfSunglass, "int64"),
+		`BacteriaPaperclip:` + valueToGoStringPuddingmilkshake(this.BacteriaPaperclip, "int64"),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *XrayPilots) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.XrayPilots{` +
+		`AnkleCoats:` + fmt.Sprintf("%#v", this.AnkleCoats),
+		`ShelfSunglasses:` + fmt.Sprintf("%#v", this.ShelfSunglasses),
+		`BacteriaPaperclips:` + fmt.Sprintf("%#v", this.BacteriaPaperclips),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *BingleDaisy) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&tests.BingleDaisy{` +
+		`AccountantPowders:` + fmt.Sprintf("%#v", this.AccountantPowders),
+		`DecoratorTask:` + fmt.Sprintf("%#v", this.DecoratorTask),
+		`TailTable:` + fmt.Sprintf("%#v", this.TailTable),
+		`MachineCurtain:` + fmt.Sprintf("%#v", this.MachineCurtain),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func valueToGoStringPuddingmilkshake(v interface{}, typ string) string {
+	rv := reflect.ValueOf(v)
+	if rv.IsNil() {
+		return "nil"
+	}
+	pv := reflect.Indirect(rv).Interface()
+	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
+}
+func extensionToGoStringPuddingmilkshake(e map[int32]github_com_gogo_protobuf_proto.Extension) string {
+	if e == nil {
+		return "nil"
+	}
+	s := "map[int32]proto.Extension{"
+	keys := make([]int, 0, len(e))
+	for k := range e {
+		keys = append(keys, int(k))
+	}
+	sort.Ints(keys)
+	ss := []string{}
+	for _, k := range keys {
+		ss = append(ss, strconv.Itoa(k)+": "+e[int32(k)].GoString())
+	}
+	s += strings.Join(ss, ",") + "}"
+	return s
+}
+func NewPopulatedPuddingMilkshake(r randyPuddingmilkshake, easy bool) *PuddingMilkshake {
+	this := &PuddingMilkshake{}
+	if r.Intn(10) != 0 {
+		this.FinanceJudo = NewPopulatedFinanceJudo(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		this.RainInterlude = NewPopulatedMudRiddle(r, easy)
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 3)
+	}
+	return this
+}
+
+func NewPopulatedFinanceJudo(r randyPuddingmilkshake, easy bool) *FinanceJudo {
+	this := &FinanceJudo{}
+	if r.Intn(10) != 0 {
+		this.SaladWorry = NewPopulatedSaladWorry(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		v1 := int64(r.Int63())
+		if r.Intn(2) == 0 {
+			v1 *= -1
+		}
+		this.RumourSpirit = &v1
+	}
+	if r.Intn(10) != 0 {
+		v2 := int64(r.Int63())
+		if r.Intn(2) == 0 {
+			v2 *= -1
+		}
+		this.UserInterfaceSpanner = &v2
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 4)
+	}
+	return this
+}
+
+func NewPopulatedSaladWorry(r randyPuddingmilkshake, easy bool) *SaladWorry {
+	this := &SaladWorry{}
+	if r.Intn(10) != 0 {
+		v3 := r.Intn(100)
+		this.MeasureGrade = make([]byte, v3)
+		for i := 0; i < v3; i++ {
+			this.MeasureGrade[i] = byte(r.Intn(256))
+		}
+	}
+	if r.Intn(10) != 0 {
+		this.HooliganValley = NewPopulatedKeyQueen(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		v4 := r.Intn(10)
+		this.MagazineFrame = make([]string, v4)
+		for i := 0; i < v4; i++ {
+			this.MagazineFrame[i] = randStringPuddingmilkshake(r)
+		}
+	}
+	if r.Intn(10) != 0 {
+		this.XrayPilot = NewPopulatedXrayPilot(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		v5 := bool(bool(r.Intn(2) == 0))
+		this.LogMicrophone = &v5
+	}
+	if r.Intn(10) != 0 {
+		v6 := MicrobeMiser([]int32{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}[r.Intn(15)])
+		this.NeonLightEnd = &v6
+	}
+	if r.Intn(10) != 0 {
+		v7 := randStringPuddingmilkshake(r)
+		this.LeafTrellis = &v7
+	}
+	if r.Intn(10) != 0 {
+		v8 := CancerUserExperience([]int32{0, 1, 2, 3, 4}[r.Intn(5)])
+		this.CancerUserExperience = &v8
+	}
+	if r.Intn(10) != 0 {
+		v9 := RadarBox([]int32{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53}[r.Intn(54)])
+		this.RadarBox = &v9
+	}
+	if r.Intn(10) != 0 {
+		v10 := bool(bool(r.Intn(2) == 0))
+		this.AccidentStadium = &v10
+	}
+	if r.Intn(10) != 0 {
+		this.SpyCarpenter = NewPopulatedSpyCarpenter(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		v11 := randStringPuddingmilkshake(r)
+		this.PrizeRemoteControl = &v11
+	}
+	if r.Intn(10) != 0 {
+		this.TableScandal = NewPopulatedTravelBallRoom(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		v12 := r.Intn(100)
+		this.StormTermite = make([]uint32, v12)
+		for i := 0; i < v12; i++ {
+			this.StormTermite[i] = uint32(r.Uint32())
+		}
+	}
+	if r.Intn(10) != 0 {
+		v13 := r.Intn(100)
+		this.ParliamentChime = make([][]byte, v13)
+		for i := 0; i < v13; i++ {
+			v14 := r.Intn(100)
+			this.ParliamentChime[i] = make([]byte, v14)
+			for j := 0; j < v14; j++ {
+				this.ParliamentChime[i][j] = byte(r.Intn(256))
+			}
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 16)
+	}
+	return this
+}
+
+func NewPopulatedKeyQueen(r randyPuddingmilkshake, easy bool) *KeyQueen {
+	this := &KeyQueen{}
+	if r.Intn(10) != 0 {
+		v15 := r.Intn(100)
+		this.SkyscraperUniversity = make([]int32, v15)
+		for i := 0; i < v15; i++ {
+			this.SkyscraperUniversity[i] = int32(r.Int31())
+			if r.Intn(2) == 0 {
+				this.SkyscraperUniversity[i] *= -1
+			}
+		}
+	}
+	if r.Intn(10) != 0 {
+		v16 := r.Intn(100)
+		this.RevengeMirror = make([][]byte, v16)
+		for i := 0; i < v16; i++ {
+			v17 := r.Intn(100)
+			this.RevengeMirror[i] = make([]byte, v17)
+			for j := 0; j < v17; j++ {
+				this.RevengeMirror[i][j] = byte(r.Intn(256))
+			}
+		}
+	}
+	if r.Intn(10) != 0 {
+		v18 := r.Intn(100)
+		this.TrailerGallery = make([]uint64, v18)
+		for i := 0; i < v18; i++ {
+			this.TrailerGallery[i] = uint64(uint64(r.Uint32()))
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 4)
+	}
+	return this
+}
+
+func NewPopulatedTravelBallRoom(r randyPuddingmilkshake, easy bool) *TravelBallRoom {
+	this := &TravelBallRoom{}
+	if r.Intn(10) != 0 {
+		v19 := r.Intn(10)
+		this.DanceShooting = make([]AccountantPowder, v19)
+		for i := 0; i < v19; i++ {
+			this.DanceShooting[i] = AccountantPowder([]int32{0, 1, 2, 3, 4}[r.Intn(5)])
+		}
+	}
+	if r.Intn(10) != 0 {
+		v20 := r.Intn(10)
+		this.ReasonCoat = make([]string, v20)
+		for i := 0; i < v20; i++ {
+			this.ReasonCoat[i] = randStringPuddingmilkshake(r)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 3)
+	}
+	return this
+}
+
+func NewPopulatedSpyCarpenter(r randyPuddingmilkshake, easy bool) *SpyCarpenter {
+	this := &SpyCarpenter{}
+	if r.Intn(10) != 0 {
+		v21 := r.Intn(100)
+		this.PartyBrakes = make([]uint32, v21)
+		for i := 0; i < v21; i++ {
+			this.PartyBrakes[i] = uint32(r.Uint32())
+		}
+	}
+	if r.Intn(10) != 0 {
+		v22 := r.Intn(100)
+		this.WireOyster = make([]uint32, v22)
+		for i := 0; i < v22; i++ {
+			this.WireOyster[i] = uint32(r.Uint32())
+		}
+	}
+	if r.Intn(10) != 0 {
+		this.XrayPilots = NewPopulatedXrayPilots(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		v23 := r.Intn(10)
+		this.RussiaBasket = make([]PlasticBagCertificate, v23)
+		for i := 0; i < v23; i++ {
+			this.RussiaBasket[i] = PlasticBagCertificate([]int32{0, 1}[r.Intn(2)])
+		}
+	}
+	if r.Intn(10) != 0 {
+		this.AccidentStockMarket = NewPopulatedStarTusk(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		this.BulldozerHandkerchief = NewPopulatedStarTusk(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		v24 := r.Intn(10)
+		this.VelcroBench = make([]WineMicroscope, v24)
+		for i := 0; i < v24; i++ {
+			this.VelcroBench[i] = WineMicroscope([]int32{0, 1, 2, 3, 4}[r.Intn(5)])
+		}
+	}
+	if r.Intn(10) != 0 {
+		v25 := r.Intn(10)
+		this.BridgePepper = make([]string, v25)
+		for i := 0; i < v25; i++ {
+			this.BridgePepper[i] = randStringPuddingmilkshake(r)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v26 := r.Intn(10)
+		this.FountainTarget = make([]string, v26)
+		for i := 0; i < v26; i++ {
+			this.FountainTarget[i] = randStringPuddingmilkshake(r)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v27 := r.Intn(10)
+		this.SoleFin = make([]string, v27)
+		for i := 0; i < v27; i++ {
+			this.SoleFin[i] = randStringPuddingmilkshake(r)
+		}
+	}
+	if r.Intn(10) != 0 {
+		this.MigraneLemonade = NewPopulatedMigraneLemonade(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		v28 := r.Intn(100)
+		this.WhaleColour = make([]uint32, v28)
+		for i := 0; i < v28; i++ {
+			this.WhaleColour[i] = uint32(r.Uint32())
+		}
+	}
+	if r.Intn(10) != 0 {
+		v29 := r.Intn(100)
+		this.LawyerRumour = make([][]byte, v29)
+		for i := 0; i < v29; i++ {
+			v30 := r.Intn(100)
+			this.LawyerRumour[i] = make([]byte, v30)
+			for j := 0; j < v30; j++ {
+				this.LawyerRumour[i][j] = byte(r.Intn(256))
+			}
+		}
+	}
+	if r.Intn(10) != 0 {
+		v31 := r.Intn(100)
+		this.ToothSale = make([]uint32, v31)
+		for i := 0; i < v31; i++ {
+			this.ToothSale[i] = uint32(r.Uint32())
+		}
+	}
+	if r.Intn(10) != 0 {
+		v32 := r.Intn(100)
+		this.PearLeader = make([][]byte, v32)
+		for i := 0; i < v32; i++ {
+			v33 := r.Intn(100)
+			this.PearLeader[i] = make([]byte, v33)
+			for j := 0; j < v33; j++ {
+				this.PearLeader[i][j] = byte(r.Intn(256))
+			}
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 16)
+	}
+	return this
+}
+
+func NewPopulatedStarTusk(r randyPuddingmilkshake, easy bool) *StarTusk {
+	this := &StarTusk{}
+	if r.Intn(10) != 0 {
+		v34 := r.Intn(10)
+		this.ViolinDuty = make([]AltarPlastic, v34)
+		for i := 0; i < v34; i++ {
+			this.ViolinDuty[i] = AltarPlastic([]int32{0, 1, 2, 3, 4}[r.Intn(5)])
+		}
+	}
+	if r.Intn(10) != 0 {
+		v35 := r.Intn(10)
+		this.CloakPlayground = make([]string, v35)
+		for i := 0; i < v35; i++ {
+			this.CloakPlayground[i] = randStringPuddingmilkshake(r)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 3)
+	}
+	return this
+}
+
+func NewPopulatedMigraneLemonade(r randyPuddingmilkshake, easy bool) *MigraneLemonade {
+	this := &MigraneLemonade{}
+	if r.Intn(10) != 0 {
+		v36 := r.Intn(10)
+		this.ArchBubbles = make([]ArchBubble, v36)
+		for i := 0; i < v36; i++ {
+			this.ArchBubbles[i] = ArchBubble([]int32{0, 1, 2, 3, 4}[r.Intn(5)])
+		}
+	}
+	if r.Intn(10) != 0 {
+		v37 := r.Intn(10)
+		this.FactParrot = make([]string, v37)
+		for i := 0; i < v37; i++ {
+			this.FactParrot[i] = randStringPuddingmilkshake(r)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 3)
+	}
+	return this
+}
+
+func NewPopulatedMudRiddle(r randyPuddingmilkshake, easy bool) *MudRiddle {
+	this := &MudRiddle{}
+	if r.Intn(10) != 0 {
+		this.XrayPilots = NewPopulatedXrayPilots(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		v38 := r.Intn(100)
+		this.RunwayGenius = make([]uint32, v38)
+		for i := 0; i < v38; i++ {
+			this.RunwayGenius[i] = uint32(r.Uint32())
+		}
+	}
+	if r.Intn(10) != 0 {
+		this.BingleDaisy = NewPopulatedBingleDaisy(r, easy)
+	}
+	if r.Intn(10) != 0 {
+		v39 := r.Intn(100)
+		this.Merit = make([]uint32, v39)
+		for i := 0; i < v39; i++ {
+			this.Merit[i] = uint32(r.Uint32())
+		}
+	}
+	if r.Intn(10) != 0 {
+		v40 := r.Intn(10)
+		this.CreationBirthday = make([]string, v40)
+		for i := 0; i < v40; i++ {
+			this.CreationBirthday[i] = randStringPuddingmilkshake(r)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v41 := r.Intn(10)
+		this.HardwareFood = make([]string, v41)
+		for i := 0; i < v41; i++ {
+			this.HardwareFood[i] = randStringPuddingmilkshake(r)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v42 := r.Intn(10)
+		this.TurkeyValley = make([]string, v42)
+		for i := 0; i < v42; i++ {
+			this.TurkeyValley[i] = randStringPuddingmilkshake(r)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v43 := r.Intn(10)
+		this.TramPuppet = make([]string, v43)
+		for i := 0; i < v43; i++ {
+			this.TramPuppet[i] = randStringPuddingmilkshake(r)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v44 := r.Intn(10)
+		this.InsultSquare = make([]EnzymeLift, v44)
+		for i := 0; i < v44; i++ {
+			this.InsultSquare[i] = EnzymeLift([]int32{0, 1, 2, 3, 4}[r.Intn(5)])
+		}
+	}
+	if r.Intn(10) != 0 {
+		v45 := r.Intn(10)
+		this.HospitalVideo = make([]string, v45)
+		for i := 0; i < v45; i++ {
+			this.HospitalVideo[i] = randStringPuddingmilkshake(r)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 11)
+	}
+	return this
+}
+
+func NewPopulatedXrayPilot(r randyPuddingmilkshake, easy bool) *XrayPilot {
+	this := &XrayPilot{}
+	if r.Intn(10) != 0 {
+		v46 := int64(r.Int63())
+		if r.Intn(2) == 0 {
+			v46 *= -1
+		}
+		this.AnkleCoat = &v46
+	}
+	if r.Intn(10) != 0 {
+		v47 := int64(r.Int63())
+		if r.Intn(2) == 0 {
+			v47 *= -1
+		}
+		this.ShelfSunglass = &v47
+	}
+	if r.Intn(10) != 0 {
+		v48 := int64(r.Int63())
+		if r.Intn(2) == 0 {
+			v48 *= -1
+		}
+		this.BacteriaPaperclip = &v48
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 4)
+	}
+	return this
+}
+
+func NewPopulatedXrayPilots(r randyPuddingmilkshake, easy bool) *XrayPilots {
+	this := &XrayPilots{}
+	if r.Intn(10) != 0 {
+		v49 := r.Intn(100)
+		this.AnkleCoats = make([]uint64, v49)
+		for i := 0; i < v49; i++ {
+			this.AnkleCoats[i] = uint64(uint64(r.Uint32()))
+		}
+	}
+	if r.Intn(10) != 0 {
+		v50 := r.Intn(100)
+		this.ShelfSunglasses = make([]uint64, v50)
+		for i := 0; i < v50; i++ {
+			this.ShelfSunglasses[i] = uint64(uint64(r.Uint32()))
+		}
+	}
+	if r.Intn(10) != 0 {
+		v51 := r.Intn(100)
+		this.BacteriaPaperclips = make([]uint64, v51)
+		for i := 0; i < v51; i++ {
+			this.BacteriaPaperclips[i] = uint64(uint64(r.Uint32()))
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 4)
+	}
+	return this
+}
+
+func NewPopulatedBingleDaisy(r randyPuddingmilkshake, easy bool) *BingleDaisy {
+	this := &BingleDaisy{}
+	if r.Intn(10) != 0 {
+		v52 := r.Intn(10)
+		this.AccountantPowders = make([]AccountantPowder, v52)
+		for i := 0; i < v52; i++ {
+			this.AccountantPowders[i] = AccountantPowder([]int32{0, 1, 2, 3, 4}[r.Intn(5)])
+		}
+	}
+	if r.Intn(10) != 0 {
+		v53 := r.Intn(100)
+		this.DecoratorTask = make([]uint32, v53)
+		for i := 0; i < v53; i++ {
+			this.DecoratorTask[i] = uint32(r.Uint32())
+		}
+	}
+	if r.Intn(10) != 0 {
+		v54 := r.Intn(100)
+		this.TailTable = make([][]byte, v54)
+		for i := 0; i < v54; i++ {
+			v55 := r.Intn(100)
+			this.TailTable[i] = make([]byte, v55)
+			for j := 0; j < v55; j++ {
+				this.TailTable[i][j] = byte(r.Intn(256))
+			}
+		}
+	}
+	if r.Intn(10) != 0 {
+		v56 := r.Intn(10)
+		this.MachineCurtain = make([]string, v56)
+		for i := 0; i < v56; i++ {
+			this.MachineCurtain[i] = randStringPuddingmilkshake(r)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedPuddingmilkshake(r, 5)
+	}
+	return this
+}
+
+type randyPuddingmilkshake interface {
+	Float32() float32
+	Float64() float64
+	Int63() int64
+	Int31() int32
+	Uint32() uint32
+	Intn(n int) int
+}
+
+func randUTF8RunePuddingmilkshake(r randyPuddingmilkshake) rune {
+	ru := r.Intn(62)
+	if ru < 10 {
+		return rune(ru + 48)
+	} else if ru < 36 {
+		return rune(ru + 55)
+	}
+	return rune(ru + 61)
+}
+func randStringPuddingmilkshake(r randyPuddingmilkshake) string {
+	v57 := r.Intn(100)
+	tmps := make([]rune, v57)
+	for i := 0; i < v57; i++ {
+		tmps[i] = randUTF8RunePuddingmilkshake(r)
+	}
+	return string(tmps)
+}
+func randUnrecognizedPuddingmilkshake(r randyPuddingmilkshake, maxFieldNumber int) (data []byte) {
+	l := r.Intn(5)
+	for i := 0; i < l; i++ {
+		wire := r.Intn(4)
+		if wire == 3 {
+			wire = 5
+		}
+		fieldNumber := maxFieldNumber + r.Intn(100)
+		data = randFieldPuddingmilkshake(data, r, fieldNumber, wire)
+	}
+	return data
+}
+func randFieldPuddingmilkshake(data []byte, r randyPuddingmilkshake, fieldNumber int, wire int) []byte {
+	key := uint32(fieldNumber)<<3 | uint32(wire)
+	switch wire {
+	case 0:
+		data = encodeVarintPopulatePuddingmilkshake(data, uint64(key))
+		v58 := r.Int63()
+		if r.Intn(2) == 0 {
+			v58 *= -1
+		}
+		data = encodeVarintPopulatePuddingmilkshake(data, uint64(v58))
+	case 1:
+		data = encodeVarintPopulatePuddingmilkshake(data, uint64(key))
+		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+	case 2:
+		data = encodeVarintPopulatePuddingmilkshake(data, uint64(key))
+		ll := r.Intn(100)
+		data = encodeVarintPopulatePuddingmilkshake(data, uint64(ll))
+		for j := 0; j < ll; j++ {
+			data = append(data, byte(r.Intn(256)))
+		}
+	default:
+		data = encodeVarintPopulatePuddingmilkshake(data, uint64(key))
+		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+	}
+	return data
+}
+func encodeVarintPopulatePuddingmilkshake(data []byte, v uint64) []byte {
+	for v >= 1<<7 {
+		data = append(data, uint8(uint64(v)&0x7f|0x80))
+		v >>= 7
+	}
+	data = append(data, uint8(v))
+	return data
 }
