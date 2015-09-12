@@ -268,6 +268,66 @@ func TestEmptyOrNilSmithReflect(t *testing.T) {
 	test(t, v.Grammar, v.Scanner(), v.Expected, v.Description)
 }
 
+func TestHiddenLeftRecursionDavidJson(t *testing.T) {
+	v := tests.Validators["HiddenLeftRecursionDavid"]["json"]
+	test(t, v.Grammar, v.Scanner(), v.Expected, v.Description)
+}
+
+func TestHiddenLeftRecursionDavidProto(t *testing.T) {
+	v := tests.Validators["HiddenLeftRecursionDavid"]["proto"]
+	test(t, v.Grammar, v.Scanner(), v.Expected, v.Description)
+}
+
+func TestHiddenLeftRecursionDavidReflect(t *testing.T) {
+	v := tests.Validators["HiddenLeftRecursionDavid"]["reflect"]
+	test(t, v.Grammar, v.Scanner(), v.Expected, v.Description)
+}
+
+func TestHiddenLeftRecursionRobertJson(t *testing.T) {
+	v := tests.Validators["HiddenLeftRecursionRobert"]["json"]
+	test(t, v.Grammar, v.Scanner(), v.Expected, v.Description)
+}
+
+func TestHiddenLeftRecursionRobertProto(t *testing.T) {
+	v := tests.Validators["HiddenLeftRecursionRobert"]["proto"]
+	test(t, v.Grammar, v.Scanner(), v.Expected, v.Description)
+}
+
+func TestHiddenLeftRecursionRobertReflect(t *testing.T) {
+	v := tests.Validators["HiddenLeftRecursionRobert"]["reflect"]
+	test(t, v.Grammar, v.Scanner(), v.Expected, v.Description)
+}
+
+func TestLeftRecursionDavidJson(t *testing.T) {
+	v := tests.Validators["LeftRecursionDavid"]["json"]
+	test(t, v.Grammar, v.Scanner(), v.Expected, v.Description)
+}
+
+func TestLeftRecursionDavidProto(t *testing.T) {
+	v := tests.Validators["LeftRecursionDavid"]["proto"]
+	test(t, v.Grammar, v.Scanner(), v.Expected, v.Description)
+}
+
+func TestLeftRecursionDavidReflect(t *testing.T) {
+	v := tests.Validators["LeftRecursionDavid"]["reflect"]
+	test(t, v.Grammar, v.Scanner(), v.Expected, v.Description)
+}
+
+func TestLeftRecursionRobertJson(t *testing.T) {
+	v := tests.Validators["LeftRecursionRobert"]["json"]
+	test(t, v.Grammar, v.Scanner(), v.Expected, v.Description)
+}
+
+func TestLeftRecursionRobertProto(t *testing.T) {
+	v := tests.Validators["LeftRecursionRobert"]["proto"]
+	test(t, v.Grammar, v.Scanner(), v.Expected, v.Description)
+}
+
+func TestLeftRecursionRobertReflect(t *testing.T) {
+	v := tests.Validators["LeftRecursionRobert"]["reflect"]
+	test(t, v.Grammar, v.Scanner(), v.Expected, v.Description)
+}
+
 func TestLenNameJohnJson(t *testing.T) {
 	v := tests.Validators["LenNameJohn"]["json"]
 	test(t, v.Grammar, v.Scanner(), v.Expected, v.Description)

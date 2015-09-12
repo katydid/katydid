@@ -24,6 +24,9 @@ import (
 )
 
 func test(t *testing.T, g *relapse.Grammar, scanner serialize.Scanner, expected bool, desc string) {
+	if interp.HasLeftRecursion(g) {
+		t.Skipf("interp was not designed to handle left recursion")
+	}
 	scanner = debug.NewLogger(scanner, debug.NewLineLogger())
 	match := interp.Interpret(g, scanner)
 	if match != expected {

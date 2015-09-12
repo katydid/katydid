@@ -23,6 +23,7 @@ import (
 	"log"
 )
 
+//This is a naive implementation and it does not handle left recursion
 func Interpret(g *relapse.Grammar, tree serialize.Scanner) bool {
 	refs := relapse.NewRefsLookup(g)
 	res := refs["main"]
@@ -42,7 +43,7 @@ func Interpret(g *relapse.Grammar, tree serialize.Scanner) bool {
 
 //TODO improve nullable for left recursion using fix points
 // https://github.com/kennknowles/go-yid/blob/master/src/yid/nullable.go
-
+//This is a naive implementation and it does not handle left recursion
 func Nullable(refs relapse.RefLookup, p *relapse.Pattern) bool {
 	typ := p.GetValue()
 	switch v := typ.(type) {
