@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-.PHONY: nuke dep regenerate gofmt build test
+.PHONY: nuke regenerate gofmt build test
 
 all: nuke dep regenerate build test checklicense
 

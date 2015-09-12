@@ -127,7 +127,7 @@ func (l *l) Bytes() ([]byte, error) {
 func (this *l) Copy() serialize.Scanner {
 	s := this.s.Copy()
 	this.copies++
-	name := this.name + "->" + strconv.Itoa(this.copies)
+	name := this.name + strconv.Itoa(this.copies)
 	this.l.Printf(this.name+".Copy() (%s)", name)
 	return &l{name, s, this.l, 0}
 }
