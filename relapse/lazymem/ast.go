@@ -47,6 +47,14 @@ func (this *Pattern) GetNullable() bool {
 	return *this.nullable
 }
 
+func NewLazyPattern(p *Pattern) *Pattern {
+	return &Pattern{
+		thunk: func() *PatternHead {
+			return p.Head()
+		},
+	}
+}
+
 type PatternHead struct {
 	Empty      *Empty
 	EmptySet   *EmptySet

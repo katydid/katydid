@@ -15,11 +15,15 @@
 package lazymem
 
 import (
+	"fmt"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/serialize"
 )
 
 func Interpret(g *relapse.Grammar, tree serialize.Scanner) bool {
+	fmt.Printf("BEFORE: %s\n", g)
 	p := ConvertGrammar(g)
+	pp := ConvertPattern(p)
+	fmt.Printf("CONVERTED: %s\n", pp)
 	return Nullable(p)
 }
