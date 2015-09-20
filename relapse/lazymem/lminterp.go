@@ -20,5 +20,6 @@ import (
 )
 
 func Interpret(g *relapse.Grammar, tree serialize.Scanner) bool {
-	return false
+	p := ConvertGrammar(g)
+	return Nullable(p)
 }

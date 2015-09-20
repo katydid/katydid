@@ -24,7 +24,6 @@ import (
 )
 
 func test(t *testing.T, g *relapse.Grammar, scanner serialize.Scanner, expected bool, desc string) {
-	t.Skip("TODO")
 	scanner = debug.NewLogger(scanner, debug.NewLineLogger())
 	match := lazymem.Interpret(g, scanner)
 	if match != expected {
