@@ -17,6 +17,7 @@ package parser
 import (
 	"fmt"
 	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse/lexer"
 )
 
 type ErrWrongType struct {
@@ -38,4 +39,10 @@ func (this *Parser) ParseGrammar(scanner Scanner) (*relapse.Grammar, error) {
 		return nil, &ErrWrongType{"*relapse.Grammar", g}
 	}
 	return gram, nil
+}
+
+func ParseGrammar(s string) (*relapse.Grammar, error) {
+	p := NewParser()
+	scanner := lexer.NewLexer([]byte(s))
+	return p.ParseGrammar(scanner)
 }

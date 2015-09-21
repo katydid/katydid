@@ -47,7 +47,7 @@ var RobertPerson = &Person{
 }
 
 //Has this person ever lived at 456 TheStreet
-var ContextPerson = G{"main": MatchTree(
+var ContextPerson = G{"main": MatchInOrder(
 	Any(),
 	MatchIn("Addresses",
 		MatchField("Number", Sprint(IntVarEq(IntConst(456)))),
@@ -162,7 +162,7 @@ var SmithPerson = &Person{
 //Assume that addresses are appended to the list, so the last address is the newest address.
 //find tests.Person where { tests.Person { Addresses[-2].Number == 2 && Addresses[-1].Number == 1 } }
 var ListIndexAddressPerson = G{
-	"main": MatchTree(
+	"main": MatchInOrder(
 		Any(),
 		MatchIn("Addresses",
 			Any(),
@@ -185,7 +185,7 @@ func init() {
 }
 
 //Is this person's name missing
-var NilNamePerson = G{"main": OppositeOf(MatchTree(
+var NilNamePerson = G{"main": OppositeOf(MatchInOrder(
 	Any(),
 	MatchIn("Name", Any()),
 	Any(),
@@ -198,7 +198,7 @@ func init() {
 }
 
 //Is this person's name an empty string
-var LenNamePerson = G{"main": MatchTree(
+var LenNamePerson = G{"main": MatchInOrder(
 	Any(),
 	MatchField("Name", Sprint(IntEq(LenString(StringVar()), IntConst(0)))),
 	Any(),
@@ -212,7 +212,7 @@ func init() {
 
 //Is this person's name empty or an empty string
 var EmptyOrNilPerson = G{
-	"main":  Either(Eval("empty"), Eval("nil")),
+	"main":  AnyOf(Eval("empty"), Eval("nil")),
 	"empty": LenNamePerson["main"],
 	"nil":   NilNamePerson["main"],
 }
@@ -225,7 +225,7 @@ func init() {
 
 //Is the person's name not David
 var NaiveNotNamePerson = G{
-	"main": MatchTree(
+	"main": MatchInOrder(
 		Any(),
 		MatchField("Name", Sprint(Not(StringEq(StringVar(), StringConst("David"))))),
 		Any(),
@@ -241,9 +241,9 @@ func init() {
 
 //Is the person's name not David and make sure that the case where the name does not exist is also covered
 var ProperNotNamePerson = G{
-	"main": Either(Eval("name"), Eval("nil")),
+	"main": AnyOf(Eval("name"), Eval("nil")),
 	"nil":  NilNamePerson["main"],
-	"name": MatchTree(
+	"name": MatchInOrder(
 		Any(),
 		MatchField("Name", Sprint(Not(StringEq(StringVar(), StringConst("David"))))),
 		Any(),
@@ -259,14 +259,14 @@ func init() {
 
 //Is this person's name David and telephone number 0123456789
 var AndNameTelephonePerson = G{
-	"main": MatchTree(
-		Both(
-			MatchTree(
+	"main": MatchInOrder(
+		AllOf(
+			MatchInOrder(
 				Any(),
 				MatchField("Name", Sprint(StringEq(StringVar(), StringConst("David")))),
 				Any(),
 			),
-			MatchTree(
+			MatchInOrder(
 				Any(),
 				MatchField("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
 				Any(),
@@ -284,14 +284,14 @@ func init() {
 
 //Is this person's name David or telephone number 0123456789
 var OrNameTelephonePerson = G{
-	"main": MatchTree(
-		Either(
-			MatchTree(
+	"main": MatchInOrder(
+		AnyOf(
+			MatchInOrder(
 				Any(),
 				MatchField("Name", Sprint(StringEq(StringVar(), StringConst("David")))),
 				Any(),
 			),
-			MatchTree(
+			MatchInOrder(
 				Any(),
 				MatchField("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
 				Any(),
@@ -309,7 +309,7 @@ func init() {
 
 //Is this person's telephone number 0123456789 or 0127897897
 var ListOfTelephonesPerson = G{
-	"main": MatchTree(
+	"main": MatchInOrder(
 		Any(),
 		MatchField("Telephone", Sprint(Or(StringEq(StringVar(), StringConst("0123456789")), StringEq(StringVar(), StringConst("0127897897"))))),
 		Any(),
@@ -323,10 +323,10 @@ func init() {
 }
 
 var LeftRecursion = G{
-	"main": MatchTree(
-		Either(
+	"main": MatchInOrder(
+		AnyOf(
 			Eval("main"),
-			MatchTree(
+			MatchInOrder(
 				Any(),
 				MatchField("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
 			),
@@ -340,10 +340,10 @@ func init() {
 }
 
 var HiddenLeftRecursion = G{
-	"main": MatchTree(
-		Either(
+	"main": MatchInOrder(
+		AnyOf(
 			Eval("hidden"),
-			MatchTree(
+			MatchInOrder(
 				Any(),
 				MatchField("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
 			),

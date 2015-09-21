@@ -117,9 +117,9 @@ var SyscallSrcTree = &SrcTree{
 
 //Does this SrcTree depend on io or is its package name io
 var RecursiveSrcTree = G{
-	"main": MatchTree(
+	"main": MatchInOrder(
 		Any(),
-		Either(
+		AnyOf(
 			MatchField("PackageName", Sprint(StringVarEq(StringConst("io")))),
 			MatchIn("Imports", Eval("main")),
 		),

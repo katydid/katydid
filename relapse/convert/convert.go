@@ -414,7 +414,7 @@ func applyIfNotNil(f func(*relapse.Pattern) *relapse.Pattern, p *relapse.Pattern
 	return f(p)
 }
 
-func combineIfNotNil(f func(*relapse.Pattern, *relapse.Pattern) *relapse.Pattern, left, right *relapse.Pattern) *relapse.Pattern {
+func combineIfNotNil(f func(...*relapse.Pattern) *relapse.Pattern, left, right *relapse.Pattern) *relapse.Pattern {
 	if left == nil {
 		return right
 	}

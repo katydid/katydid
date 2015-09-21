@@ -160,38 +160,95 @@ func NewLeafNode(expr *expr.Expr) *Pattern {
 	}
 }
 
-func NewConcat(left, right *Pattern) *Pattern {
+func NewConcat(patterns ...*Pattern) *Pattern {
+	if len(patterns) == 0 {
+		return nil
+	}
+	if len(patterns) == 1 {
+		return patterns[0]
+	}
 	return &Pattern{
 		Concat: &Concat{
 			OpenBracket:  newOpenBracket(),
-			LeftPattern:  left,
+			LeftPattern:  patterns[0],
 			Comma:        newComma(),
-			RightPattern: right,
+			RightPattern: newConcat(patterns[1:]),
 			CloseBracket: newCloseBracket(),
 		},
 	}
 }
 
-func NewOr(left, right *Pattern) *Pattern {
+func newConcat(patterns []*Pattern) *Pattern {
+	if len(patterns) == 1 {
+		return patterns[0]
+	}
+	return &Pattern{
+		Concat: &Concat{
+			LeftPattern:  patterns[0],
+			Comma:        newComma(),
+			RightPattern: newConcat(patterns[1:]),
+		},
+	}
+}
+
+func NewOr(patterns ...*Pattern) *Pattern {
+	if len(patterns) == 0 {
+		return nil
+	}
+	if len(patterns) == 1 {
+		return patterns[0]
+	}
 	return &Pattern{
 		Or: &Or{
 			OpenParen:    newOpenParen(),
-			LeftPattern:  left,
+			LeftPattern:  patterns[0],
 			Pipe:         newPipe(),
-			RightPattern: right,
+			RightPattern: newOr(patterns[1:]),
 			CloseParen:   newCloseParen(),
 		},
 	}
 }
 
-func NewAnd(left, right *Pattern) *Pattern {
+func newOr(patterns []*Pattern) *Pattern {
+	if len(patterns) == 1 {
+		return patterns[0]
+	}
+	return &Pattern{
+		Or: &Or{
+			LeftPattern:  patterns[0],
+			Pipe:         newPipe(),
+			RightPattern: newOr(patterns[1:]),
+		},
+	}
+}
+
+func NewAnd(patterns ...*Pattern) *Pattern {
+	if len(patterns) == 0 {
+		return nil
+	}
+	if len(patterns) == 1 {
+		return patterns[0]
+	}
 	return &Pattern{
 		And: &And{
 			OpenParen:    newOpenParen(),
-			LeftPattern:  left,
+			LeftPattern:  patterns[0],
 			Ampersand:    newAmpersand(),
-			RightPattern: right,
+			RightPattern: newAnd(patterns[1:]),
 			CloseParen:   newCloseParen(),
+		},
+	}
+}
+
+func newAnd(patterns []*Pattern) *Pattern {
+	if len(patterns) == 1 {
+		return patterns[0]
+	}
+	return &Pattern{
+		And: &And{
+			LeftPattern:  patterns[0],
+			Ampersand:    newAmpersand(),
+			RightPattern: newAnd(patterns[1:]),
 		},
 	}
 }

@@ -235,33 +235,9 @@ Pattern
       Expr: $0.(*expr.Expr),
     }}, nil
   >>
-  | OpenBracket Pattern Comma Pattern CloseBracket <<
-    &Pattern{Concat: &Concat{
-      OpenBracket: $0.(*expr.Keyword),
-      LeftPattern: $1.(*Pattern),
-      Comma: $2.(*expr.Keyword),
-      RightPattern: $3.(*Pattern),
-      CloseBracket: $4.(*expr.Keyword),
-    }}, nil
-  >>
-  | OpenParen Pattern Pipe Pattern CloseParen <<
-    &Pattern{Or: &Or{
-      OpenParen: $0.(*expr.Keyword),
-      LeftPattern: $1.(*Pattern),
-      Pipe: $2.(*expr.Keyword),
-      RightPattern: $3.(*Pattern),
-      CloseParen: $4.(*expr.Keyword),
-    }}, nil
-  >>
-  | OpenParen Pattern Ampersand Pattern CloseParen <<
-    &Pattern{And: &And{
-      OpenParen: $0.(*expr.Keyword),
-      LeftPattern: $1.(*Pattern),
-      Ampersand: $2.(*expr.Keyword),
-      RightPattern: $3.(*Pattern),
-      CloseParen: $4.(*expr.Keyword),
-    }}, nil
-  >>
+  | StartConcat
+  | StartOr
+  | StartAnd
   | Space "ZeroOrMore" OpenParen Pattern CloseParen <<
     &Pattern{ZeroOrMore: &ZeroOrMore{
       Before: $0.(*expr.Space),
@@ -294,8 +270,74 @@ Pattern
   // | Interleave Pattern Pattern -- New 
   ;
 
+StartConcat
+  : OpenBracket Pattern Comma ContinueConcat CloseBracket <<
+    &Pattern{Concat: &Concat{
+      OpenBracket: $0.(*expr.Keyword),
+      LeftPattern: $1.(*Pattern),
+      Comma: $2.(*expr.Keyword),
+      RightPattern: $3.(*Pattern),
+      CloseBracket: $4.(*expr.Keyword),
+    }}, nil
+  >>
+  ;
 
+ContinueConcat
+  : Pattern
+  | ContinueConcat Comma Pattern <<
+    &Pattern{Concat: &Concat{
+      LeftPattern: $0.(*Pattern),
+      Comma: $1.(*expr.Keyword),
+      RightPattern: $2.(*Pattern),
+    }}, nil
+  >>
+  ;
 
+StartOr
+  : OpenParen Pattern Pipe ContinueOr CloseParen <<
+    &Pattern{Or: &Or{
+      OpenParen: $0.(*expr.Keyword),
+      LeftPattern: $1.(*Pattern),
+      Pipe: $2.(*expr.Keyword),
+      RightPattern: $3.(*Pattern),
+      CloseParen: $4.(*expr.Keyword),
+    }}, nil
+  >>
+  ;
+
+ContinueOr
+  : Pattern
+  | ContinueOr Pipe Pattern <<
+    &Pattern{Or: &Or{
+      LeftPattern: $0.(*Pattern),
+      Pipe: $1.(*expr.Keyword),
+      RightPattern: $2.(*Pattern),
+    }}, nil
+  >>
+  ;
+
+StartAnd
+  : OpenParen Pattern Ampersand ContinueAnd CloseParen <<
+    &Pattern{And: &And{
+      OpenParen: $0.(*expr.Keyword),
+      LeftPattern: $1.(*Pattern),
+      Ampersand: $2.(*expr.Keyword),
+      RightPattern: $3.(*Pattern),
+      CloseParen: $4.(*expr.Keyword),
+    }}, nil
+  >>
+  ;
+
+ContinueAnd
+  : Pattern
+  | ContinueAnd Ampersand Pattern <<
+    &Pattern{And: &And{
+      LeftPattern: $0.(*Pattern),
+      Ampersand: $1.(*expr.Keyword),
+      RightPattern: $2.(*Pattern),
+    }}, nil
+  >>
+  ;
 
 
 Expr

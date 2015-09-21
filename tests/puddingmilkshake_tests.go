@@ -43,7 +43,7 @@ func init() {
 }
 
 var HasSpirit1FinanceJudo = G{
-	"main":   MatchTree(Any(), Eval("spirit"), Any()),
+	"main":   MatchInOrder(Any(), Eval("spirit"), Any()),
 	"spirit": MatchField("RumourSpirit", Sprint(IntEq(IntVar(), IntConst(1)))),
 }
 
@@ -52,7 +52,7 @@ func init() {
 }
 
 var HasSpirit2FinanceJudo = G{
-	"main":   MatchTree(Any(), Eval("spirit"), Any()),
+	"main":   MatchInOrder(Any(), Eval("spirit"), Any()),
 	"spirit": MatchField("RumourSpirit", Sprint(IntEq(IntVar(), IntConst(2)))),
 }
 
@@ -61,7 +61,7 @@ func init() {
 }
 
 var MagazineFrameAFinanceJudo = G{
-	"main": MatchTree(
+	"main": MatchInOrder(
 		MatchIn("SaladWorry",
 			MatchField("MagazineFrame", Sprint(StringEq(StringVar(), StringConst("a")))),
 			Any(),
@@ -77,7 +77,7 @@ func init() {
 }
 
 var MagazineFrameSingleAFinanceJudo = G{
-	"main": MatchTree(
+	"main": MatchInOrder(
 		MatchIn("SaladWorry",
 			MatchField("MagazineFrame", Sprint(StringEq(StringVar(), StringConst("a")))),
 			MatchIn("XrayPilot", Any()),
@@ -92,7 +92,7 @@ func init() {
 }
 
 var InAnyExceptNotAFieldNameFinanceJudo = G{
-	"main": MatchTree(
+	"main": MatchInOrder(
 		MatchInAnyExcept("NotAFieldName",
 			MatchField("MagazineFrame", Sprint(StringEq(StringVar(), StringConst("a")))),
 			Any(),
@@ -106,7 +106,7 @@ func init() {
 }
 
 var InAnyExceptSaladWorryFinanceJudo = G{
-	"main": MatchTree(
+	"main": MatchInOrder(
 		MatchInAnyExcept("SaladWorry",
 			MatchField("MagazineFrame", Sprint(StringEq(StringVar(), StringConst("a")))),
 			Any(),

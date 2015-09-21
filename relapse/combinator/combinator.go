@@ -33,7 +33,8 @@ func concat(p *relapse.Pattern, ps ...*relapse.Pattern) *relapse.Pattern {
 	if len(ps) == 0 {
 		return p
 	}
-	return relapse.NewConcat(p, concat(ps[0], ps[1:]...))
+	pss := append([]*relapse.Pattern{p}, ps...)
+	return relapse.NewConcat(pss...)
 }
 
 func MatchIn(name string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
@@ -105,16 +106,16 @@ func Eval(name string) *relapse.Pattern {
 	return relapse.NewReference(name)
 }
 
-func MatchTree(child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
+func MatchInOrder(child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
 	return concat(child, children...)
 }
 
-func Both(left, right *relapse.Pattern) *relapse.Pattern {
-	return relapse.NewAnd(left, right)
+func AllOf(patterns ...*relapse.Pattern) *relapse.Pattern {
+	return relapse.NewAnd(patterns...)
 }
 
-func Either(left, right *relapse.Pattern) *relapse.Pattern {
-	return relapse.NewOr(left, right)
+func AnyOf(patterns ...*relapse.Pattern) *relapse.Pattern {
+	return relapse.NewOr(patterns...)
 }
 
 func OppositeOf(p *relapse.Pattern) *relapse.Pattern {

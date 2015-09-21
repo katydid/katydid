@@ -59,8 +59,8 @@ func TestAnal2(t *testing.T) {
 	f2 := Sprint(StringEq(StringVar(), StringConst("?")))
 	alwaysFalse := getExpr("false")
 	g := G{
-		"main": Either(
-			MatchIn("A", Both(
+		"main": AnyOf(
+			MatchIn("A", AllOf(
 				MatchIn("B", MatchField("c", f)),
 				Any()),
 			),
@@ -88,8 +88,8 @@ func TestAnal3(t *testing.T) {
 	f2 := Sprint(StringEq(StringVar(), StringConst("?")))
 	alwaysFalse := getExpr("false")
 	g := G{
-		"main": Either(
-			MatchIn("A", Both(
+		"main": AnyOf(
+			MatchIn("A", AllOf(
 				Many(MatchIn("B", MatchField("c", f))),
 				MatchIn("B", MatchField("d", f)),
 			)),
@@ -115,10 +115,10 @@ func TestAnal3(t *testing.T) {
 func TestAnal4(t *testing.T) {
 	f := Sprint(StringEq(StringVar(), StringConst("#")))
 	g := G{
-		"main": Either(
-			MatchIn("A", Both(
+		"main": AnyOf(
+			MatchIn("A", AllOf(
 				Many(MatchIn("B", MatchField("c", f))),
-				MatchIn("B", Either(
+				MatchIn("B", AnyOf(
 					MatchField("d", f),
 					MatchField("c", f),
 				)),

@@ -52,6 +52,39 @@ func TestParse(t *testing.T) {
 			]
 		]`,
 		`main = (Name("MyParent"): int(1) &  Name( "MyParent"): int(2))`,
+		`main = Name("A"): [
+			!(EmptySet),
+			Name("a"): eq($string, "aa"),
+			!(EmptySet)
+		]`,
+		`main = Name("A"): (
+			!(EmptySet) &
+			Name("a"): eq($string, "aa") &
+			!(EmptySet)
+		)`,
+		`main = Name("A"): (
+			!(EmptySet) |
+			Name("a"): eq($string, "aa") |
+			!(EmptySet) |
+			!(EmptySet) |
+			!(EmptySet)
+		)`,
+		`main = Name("A"): [
+			!(EmptySet),
+			Name("a"): eq($string, "aa"),
+			( 
+			  Name("b"): contains($string, "bb")
+			  | (
+			  	Name("c"): contains($string, "cc") &
+			  	Name("c"): contains($string, "see") &
+			  	(
+			  		Name("c"): contains($string, "sea") |
+			  		Name("c"): contains($string, "ocean")
+			  	)
+			  )
+			  | Name("d"): contains($string, "dd")
+			)
+		]`,
 	}
 	p := parser.NewParser()
 	for i, patternDecl := range patternDecls {

@@ -101,7 +101,7 @@ func BenchmarkOrNameTelephone(b *testing.B) {
 }
 
 var scarBusStop = G{
-	"main": MatchTree(
+	"main": MatchInOrder(
 		Any(),
 		MatchIn("PocketRoses",
 			Any(),
@@ -122,7 +122,7 @@ func BenchmarkTypewriterPrisonScarBusStop(b *testing.B) {
 }
 
 var daisySled = G{
-	"main": MatchTree(
+	"main": MatchInOrder(
 		Any(),
 		MatchIn("PocketRoses",
 			Any(),
@@ -143,7 +143,7 @@ func BenchmarkTypewriterPrisonDaisySled(b *testing.B) {
 }
 
 var smileLetter = G{
-	"main": MatchTree(
+	"main": MatchInOrder(
 		Any(),
 		MatchIn("PocketRoses",
 			Any(),
@@ -164,7 +164,7 @@ func BenchmarkTypewriterPrisonSmileLetter(b *testing.B) {
 }
 
 var menuPaperClip = G{
-	"main": MatchTree(
+	"main": MatchInOrder(
 		Any(),
 		MatchIn("PocketRoses",
 			Any(),
@@ -185,7 +185,7 @@ func BenchmarkTypewriterPrisonMenuPaperclip(b *testing.B) {
 }
 
 var mapShark = G{
-	"main": MatchTree(
+	"main": MatchInOrder(
 		Any(),
 		MatchIn("PocketRoses",
 			Any(),
@@ -206,7 +206,7 @@ func BenchmarkTypewriterPrisonMapShark(b *testing.B) {
 }
 
 var bridgePepper = G{
-	"main": MatchTree(
+	"main": MatchInOrder(
 		Any(),
 		MatchIn("FinanceJudo",
 			Any(),
@@ -235,20 +235,20 @@ func BenchmarkBridgePepper(b *testing.B) {
 }
 
 var bridgePepperAndFountainTarget = G{
-	"main": MatchTree(
+	"main": MatchInOrder(
 		Any(),
 		MatchIn("FinanceJudo",
 			Any(),
 			MatchIn("SaladWorry",
 				Any(),
 				MatchIn("SpyCarpenter",
-					Both(
-						MatchTree(
+					AllOf(
+						MatchInOrder(
 							Any(),
 							MatchField("BridgePepper", Sprint(Contains(StringVar(), StringConst("a")))),
 							Any(),
 						),
-						MatchTree(
+						MatchInOrder(
 							Any(),
 							MatchField("FountainTarget", Sprint(Contains(StringVar(), StringConst("a")))),
 							Any(),
@@ -273,20 +273,20 @@ func BenchmarkBridgePepperAndFountainTarget(b *testing.B) {
 }
 
 var bridgePepperOrFountainTarget = G{
-	"main": MatchTree(
+	"main": MatchInOrder(
 		Any(),
 		MatchIn("FinanceJudo",
 			Any(),
 			MatchIn("SaladWorry",
 				Any(),
 				MatchIn("SpyCarpenter",
-					Either(
-						MatchTree(
+					AnyOf(
+						MatchInOrder(
 							Any(),
 							MatchField("BridgePepper", Sprint(Contains(StringVar(), StringConst("a")))),
 							Any(),
 						),
-						MatchTree(
+						MatchInOrder(
 							Any(),
 							MatchField("FountainTarget", Sprint(Contains(StringVar(), StringConst("a")))),
 							Any(),

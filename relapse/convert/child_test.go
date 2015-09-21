@@ -32,6 +32,7 @@ func child(t *testing.T, refs relapse.RefLookup, name *relapse.NameExpr, expecte
 	t.Logf("child = %s", du.child)
 	if du.child != nil {
 		child := interp.Simplify(refs, du.child)
+		relapse.Format(child)
 		t.Logf("simplified child = %s", child)
 		if !child.Equal(expected) {
 			t.Fatalf("expected %s\n, but got %s", expected, child)
@@ -74,7 +75,7 @@ func TestChild4(t *testing.T) {
 }
 
 func TestChild5(t *testing.T) {
-	p := combinator.MatchTree(combinator.Any(), combinator.MatchField("Telephone", funcs.Sprint(funcs.StringVarEq(funcs.StringConst("01234")))))
+	p := combinator.MatchInOrder(combinator.Any(), combinator.MatchField("Telephone", funcs.Sprint(funcs.StringVarEq(funcs.StringConst("01234")))))
 	refs := relapse.RefLookup{"main": p}
 	name := relapse.NewName("David")
 	child(t, refs, name, nil)

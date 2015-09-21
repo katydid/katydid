@@ -42,7 +42,7 @@ func TestSatisfiability(t *testing.T) {
 	}, t, false)
 	check(G{
 		"main": MatchIn("A",
-			Either(
+			AnyOf(
 				MatchIn("B", Any()),
 				None(),
 			),

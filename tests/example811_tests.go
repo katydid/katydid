@@ -22,8 +22,8 @@ import (
 // Foundations of XML Processing: The Tree Automata Approach - Example 8.1.1
 // Without simplification rules the state space for the respective automata can be become very large
 var Example811 = G{
-	"main": Either(Eval("q1"), Eval("q2")),
-	"q1": Either(
+	"main": AnyOf(Eval("q1"), Eval("q2")),
+	"q1": AnyOf(
 		MatchIn("A",
 			MatchIn("Left", Eval("q1")),
 			MatchIn("Right", Eval("q2")),
@@ -33,7 +33,7 @@ var Example811 = G{
 			MatchIn("Right", Eval("q1")),
 		),
 	),
-	"q2": Either(
+	"q2": AnyOf(
 		MatchIn("A",
 			MatchIn("Left", Eval("q2")),
 			MatchIn("Right", Eval("q2")),

@@ -53,6 +53,9 @@ func (this *Space) HasComment() bool {
 }
 
 func (this *Space) GetComments() []Comment {
+	if this == nil {
+		return nil
+	}
 	comments := []Comment{}
 	for i, s := range this.Space {
 		if isComment(s) {
