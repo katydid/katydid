@@ -47,7 +47,7 @@ func TestParse(t *testing.T) {
 				"Src": { contains($string, "1") },
 				[
 					"Src": { contains($string, "2") },
-					(AnyNameExcept("Src"): !(EmptySet))*
+					(!("Src"): !(EmptySet))*
 				]
 			]
 		]`,
@@ -85,6 +85,7 @@ func TestParse(t *testing.T) {
 			  | "d": { contains($string, "dd") }
 			)
 		]`,
+		`main = *: { int(1) }`,
 	}
 	p := parser.NewParser()
 	for i, patternDecl := range patternDecls {

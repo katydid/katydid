@@ -126,28 +126,48 @@ func NewName(name string) *NameExpr {
 
 func NewAnyName() *NameExpr {
 	return &NameExpr{
-		AnyName: &AnyName{},
+		AnyName: &AnyName{Star: newStar()},
 	}
 }
 
 func NewAnyNameExcept(name *NameExpr) *NameExpr {
 	return &NameExpr{
 		AnyNameExcept: &AnyNameExcept{
+			Exclamation: newExclamation(),
+			OpenParen:   newOpenParen(),
+			Except:      name,
+			CloseParen:  newCloseParen(),
+		},
+	}
+}
+
+func NewNameChoice(names ...*NameExpr) *NameExpr {
+	if len(names) == 0 {
+		return nil
+	}
+	if len(names) == 1 {
+		return names[0]
+	}
+	return &NameExpr{
+		NameChoice: &NameChoice{
 			OpenParen:  newOpenParen(),
-			Except:     name,
+			Left:       names[0],
+			Pipe:       newPipe(),
+			Right:      newNameChoice(names[1:]),
 			CloseParen: newCloseParen(),
 		},
 	}
 }
 
-func NewNameChoice(left, right *NameExpr) *NameExpr {
+func newNameChoice(names []*NameExpr) *NameExpr {
+	if len(names) == 1 {
+		return names[0]
+	}
 	return &NameExpr{
 		NameChoice: &NameChoice{
-			OpenParen:  newOpenParen(),
-			Left:       left,
-			Comma:      newComma(),
-			Right:      right,
-			CloseParen: newCloseParen(),
+			Left:  names[0],
+			Pipe:  newPipe(),
+			Right: newNameChoice(names[1:]),
 		},
 	}
 }

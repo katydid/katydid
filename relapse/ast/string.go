@@ -45,17 +45,17 @@ func (this *Name) String() string {
 }
 
 func (this *AnyName) String() string {
-	return this.Before.String() + "AnyName"
+	return this.Star.String()
 }
 
 func (this *AnyNameExcept) String() string {
-	return this.Before.String() + "AnyNameExcept" + this.OpenParen.String() +
+	return this.Exclamation.String() + this.OpenParen.String() +
 		this.Except.String() + this.CloseParen.String()
 }
 
 func (this *NameChoice) String() string {
-	return this.Before.String() + "NameChoice" + this.OpenParen.String() +
-		this.Left.String() + this.Comma.String() + this.Right.String() +
+	return this.OpenParen.String() + this.Left.String() +
+		this.Pipe.String() + this.Right.String() +
 		this.CloseParen.String()
 }
 

@@ -50,23 +50,22 @@ message Name {
 }
 
 message AnyName {
-	optional expr.Space Before = 1;
+	optional expr.Keyword Star = 1;
 }
 
 message AnyNameExcept {
-	optional expr.Space Before = 1;
+	optional expr.Keyword Exclamation = 1;
 	optional expr.Keyword OpenParen = 2;
 	optional NameExpr Except = 3;
 	optional expr.Keyword CloseParen = 4;
 }
 
 message NameChoice {
-	optional expr.Space Before = 1;
-	optional expr.Keyword OpenParen = 2;
-	optional NameExpr Left = 3;
-	optional expr.Keyword Comma = 4;
-	optional NameExpr Right = 5;
-	optional expr.Keyword CloseParen = 6;
+	optional expr.Keyword OpenParen = 1;
+	optional NameExpr Left = 2;
+	optional expr.Keyword Pipe = 3;
+	optional NameExpr Right = 4;
+	optional expr.Keyword CloseParen = 5;
 }
 
 message Pattern {

@@ -148,8 +148,7 @@ PatternDecl
   ;
 
 NameExpr
-  : Space "AnyName"     << &NameExpr{AnyName: &AnyName{$0.(*expr.Space)}}, nil >>
-  | "AnyName"           << &NameExpr{AnyName: &AnyName{}}, nil >>
+  : Star     << &NameExpr{AnyName: &AnyName{$0.(*expr.Keyword)}}, nil >>
   | Space string_lit <<
     &NameExpr{Name: &Name{
       Before: $0.(*expr.Space),
@@ -161,38 +160,36 @@ NameExpr
       Name: unquote(newString($0)),
     }}, nil
   >>
-  | Space "AnyNameExcept" OpenParen NameExpr CloseParen <<
+  | Exclamation OpenParen NameExpr CloseParen <<
     &NameExpr{AnyNameExcept: &AnyNameExcept{
-      Before: $0.(*expr.Space),
-      OpenParen: $2.(*expr.Keyword),
-      Except: $3.(*NameExpr),
-      CloseParen: $4.(*expr.Keyword),
-    }}, nil
-  >>
-  | "AnyNameExcept" OpenParen NameExpr CloseParen <<
-    &NameExpr{AnyNameExcept: &AnyNameExcept{
+      Exclamation: $0.(*expr.Keyword),
       OpenParen: $1.(*expr.Keyword),
       Except: $2.(*NameExpr),
       CloseParen: $3.(*expr.Keyword),
     }}, nil
   >>
-  | Space "NameChoice" OpenParen NameExpr Comma NameExpr CloseParen <<
+  | StartNameChoice
+  ;
+
+StartNameChoice
+  : OpenBracket NameExpr Pipe ContinueNameChoice CloseBracket <<
     &NameExpr{NameChoice: &NameChoice{
-      Before: $0.(*expr.Space),
-      OpenParen: $2.(*expr.Keyword),
-      Left: $3.(*NameExpr),
-      Comma: $4.(*expr.Keyword),
-      Right: $5.(*NameExpr),
-      CloseParen: $6.(*expr.Keyword),
+      OpenParen: $0.(*expr.Keyword),
+      Left: $1.(*NameExpr),
+      Pipe: $2.(*expr.Keyword),
+      Right: $3.(*NameExpr),
+      CloseParen: $4.(*expr.Keyword),
     }}, nil
   >>
-  | "NameChoice" OpenParen NameExpr Comma NameExpr CloseParen <<
+  ;
+
+ContinueNameChoice
+  : NameExpr
+  | ContinueNameChoice Pipe NameExpr <<
     &NameExpr{NameChoice: &NameChoice{
-      OpenParen: $1.(*expr.Keyword),
-      Left: $2.(*NameExpr),
-      Comma: $3.(*expr.Keyword),
-      Right: $4.(*NameExpr),
-      CloseParen: $5.(*expr.Keyword),
+      Left: $0.(*NameExpr),
+      Pipe: $1.(*expr.Keyword),
+      Right: $2.(*NameExpr),
     }}, nil
   >>
   ;

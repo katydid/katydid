@@ -168,32 +168,32 @@ func (m *Name) GetName() string {
 }
 
 type AnyName struct {
-	Before *expr.Space `protobuf:"bytes,1,opt" json:"Before,omitempty"`
+	Star *expr.Keyword `protobuf:"bytes,1,opt" json:"Star,omitempty"`
 }
 
 func (m *AnyName) Reset()      { *m = AnyName{} }
 func (*AnyName) ProtoMessage() {}
 
-func (m *AnyName) GetBefore() *expr.Space {
+func (m *AnyName) GetStar() *expr.Keyword {
 	if m != nil {
-		return m.Before
+		return m.Star
 	}
 	return nil
 }
 
 type AnyNameExcept struct {
-	Before     *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	OpenParen  *expr.Keyword `protobuf:"bytes,2,opt" json:"OpenParen,omitempty"`
-	Except     *NameExpr     `protobuf:"bytes,3,opt" json:"Except,omitempty"`
-	CloseParen *expr.Keyword `protobuf:"bytes,4,opt" json:"CloseParen,omitempty"`
+	Exclamation *expr.Keyword `protobuf:"bytes,1,opt" json:"Exclamation,omitempty"`
+	OpenParen   *expr.Keyword `protobuf:"bytes,2,opt" json:"OpenParen,omitempty"`
+	Except      *NameExpr     `protobuf:"bytes,3,opt" json:"Except,omitempty"`
+	CloseParen  *expr.Keyword `protobuf:"bytes,4,opt" json:"CloseParen,omitempty"`
 }
 
 func (m *AnyNameExcept) Reset()      { *m = AnyNameExcept{} }
 func (*AnyNameExcept) ProtoMessage() {}
 
-func (m *AnyNameExcept) GetBefore() *expr.Space {
+func (m *AnyNameExcept) GetExclamation() *expr.Keyword {
 	if m != nil {
-		return m.Before
+		return m.Exclamation
 	}
 	return nil
 }
@@ -220,23 +220,15 @@ func (m *AnyNameExcept) GetCloseParen() *expr.Keyword {
 }
 
 type NameChoice struct {
-	Before     *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	OpenParen  *expr.Keyword `protobuf:"bytes,2,opt" json:"OpenParen,omitempty"`
-	Left       *NameExpr     `protobuf:"bytes,3,opt" json:"Left,omitempty"`
-	Comma      *expr.Keyword `protobuf:"bytes,4,opt" json:"Comma,omitempty"`
-	Right      *NameExpr     `protobuf:"bytes,5,opt" json:"Right,omitempty"`
-	CloseParen *expr.Keyword `protobuf:"bytes,6,opt" json:"CloseParen,omitempty"`
+	OpenParen  *expr.Keyword `protobuf:"bytes,1,opt" json:"OpenParen,omitempty"`
+	Left       *NameExpr     `protobuf:"bytes,2,opt" json:"Left,omitempty"`
+	Pipe       *expr.Keyword `protobuf:"bytes,3,opt" json:"Pipe,omitempty"`
+	Right      *NameExpr     `protobuf:"bytes,4,opt" json:"Right,omitempty"`
+	CloseParen *expr.Keyword `protobuf:"bytes,5,opt" json:"CloseParen,omitempty"`
 }
 
 func (m *NameChoice) Reset()      { *m = NameChoice{} }
 func (*NameChoice) ProtoMessage() {}
-
-func (m *NameChoice) GetBefore() *expr.Space {
-	if m != nil {
-		return m.Before
-	}
-	return nil
-}
 
 func (m *NameChoice) GetOpenParen() *expr.Keyword {
 	if m != nil {
@@ -252,9 +244,9 @@ func (m *NameChoice) GetLeft() *NameExpr {
 	return nil
 }
 
-func (m *NameChoice) GetComma() *expr.Keyword {
+func (m *NameChoice) GetPipe() *expr.Keyword {
 	if m != nil {
-		return m.Comma
+		return m.Pipe
 	}
 	return nil
 }
@@ -834,7 +826,7 @@ func (this *AnyName) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if !this.Before.Equal(that1.Before) {
+	if !this.Star.Equal(that1.Star) {
 		return false
 	}
 	return true
@@ -859,7 +851,7 @@ func (this *AnyNameExcept) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if !this.Before.Equal(that1.Before) {
+	if !this.Exclamation.Equal(that1.Exclamation) {
 		return false
 	}
 	if !this.OpenParen.Equal(that1.OpenParen) {
@@ -893,16 +885,13 @@ func (this *NameChoice) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if !this.Before.Equal(that1.Before) {
-		return false
-	}
 	if !this.OpenParen.Equal(that1.OpenParen) {
 		return false
 	}
 	if !this.Left.Equal(that1.Left) {
 		return false
 	}
-	if !this.Comma.Equal(that1.Comma) {
+	if !this.Pipe.Equal(that1.Pipe) {
 		return false
 	}
 	if !this.Right.Equal(that1.Right) {
@@ -1329,7 +1318,7 @@ func (this *AnyName) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.AnyName{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before) + `}`}, ", ")
+		`Star:` + fmt.Sprintf("%#v", this.Star) + `}`}, ", ")
 	return s
 }
 func (this *AnyNameExcept) GoString() string {
@@ -1337,7 +1326,7 @@ func (this *AnyNameExcept) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.AnyNameExcept{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
+		`Exclamation:` + fmt.Sprintf("%#v", this.Exclamation),
 		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
 		`Except:` + fmt.Sprintf("%#v", this.Except),
 		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
@@ -1348,10 +1337,9 @@ func (this *NameChoice) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.NameChoice{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
 		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
 		`Left:` + fmt.Sprintf("%#v", this.Left),
-		`Comma:` + fmt.Sprintf("%#v", this.Comma),
+		`Pipe:` + fmt.Sprintf("%#v", this.Pipe),
 		`Right:` + fmt.Sprintf("%#v", this.Right),
 		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
 	return s
