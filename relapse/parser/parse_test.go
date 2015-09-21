@@ -69,8 +69,9 @@ func TestParse(t *testing.T) {
 			!(EmptySet) |
 			!(EmptySet)
 		)`,
-		`main ="A": [
+		`main = [
 			!(EmptySet),
+			Empty,
 			"a": { eq($string, "aa") },
 			( 
 			  "b": { contains($string, "bb") }
@@ -86,6 +87,12 @@ func TestParse(t *testing.T) {
 			)
 		]`,
 		`main = *: { int(1) }`,
+		`main = [
+			(*: { eq($int, int(1)) })*,
+			"bla": { true }
+		]`,
+		`main = ( "a"|"b" ): { eq($int, int(1)) }`,
+		`main =( "a"|*|!("b") ): { eq($int, int(1)) }`,
 	}
 	p := parser.NewParser()
 	for i, patternDecl := range patternDecls {
@@ -94,10 +101,11 @@ func TestParse(t *testing.T) {
 		st, err := p.ParseGrammar(scanner)
 		if err != nil {
 			t.Errorf("err = %v, input = %s", err, patternDecl)
-		}
-		s := st.String()
-		if s != patternDecl {
-			t.Errorf("String function output = %s\n expected output = %s\n", s, patternDecl)
+		} else {
+			s := st.String()
+			if s != patternDecl {
+				t.Errorf("String function output = %s\n expected output = %s\n", s, patternDecl)
+			}
 		}
 	}
 }

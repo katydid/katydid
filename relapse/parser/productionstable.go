@@ -196,7 +196,7 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `StartNameChoice : OpenBracket NameExpr Pipe ContinueNameChoice CloseBracket	<< &NameExpr{NameChoice: &NameChoice{
+		String: `StartNameChoice : OpenParen NameExpr Pipe ContinueNameChoice CloseParen	<< &NameExpr{NameChoice: &NameChoice{
       OpenParen: X[0].(*expr.Keyword),
       Left: X[1].(*NameExpr),
       Pipe: X[2].(*expr.Keyword),

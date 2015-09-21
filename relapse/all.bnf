@@ -172,7 +172,7 @@ NameExpr
   ;
 
 StartNameChoice
-  : OpenBracket NameExpr Pipe ContinueNameChoice CloseBracket <<
+  : OpenParen NameExpr Pipe ContinueNameChoice CloseParen <<
     &NameExpr{NameChoice: &NameChoice{
       OpenParen: $0.(*expr.Keyword),
       Left: $1.(*NameExpr),

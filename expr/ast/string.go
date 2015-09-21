@@ -77,7 +77,7 @@ func (this *Terminal) String() string {
 		return this.Before.String() + "uint(" + strconv.FormatUint(this.GetUintValue(), 10) + ")"
 	}
 	if this.BoolValue != nil {
-		return this.Before.String() + "bool(" + strconv.FormatBool(this.GetBoolValue()) + ")"
+		return this.Before.String() + strconv.FormatBool(this.GetBoolValue())
 	}
 	if this.StringValue != nil {
 		return this.Before.String() + strconv.Quote(this.GetStringValue())
