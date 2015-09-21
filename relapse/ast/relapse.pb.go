@@ -352,29 +352,29 @@ func (m *Pattern) GetNot() *Not {
 }
 
 type Empty struct {
-	Before *expr.Space `protobuf:"bytes,1,opt" json:"Before,omitempty"`
+	Underscore *expr.Keyword `protobuf:"bytes,1,opt" json:"Underscore,omitempty"`
 }
 
 func (m *Empty) Reset()      { *m = Empty{} }
 func (*Empty) ProtoMessage() {}
 
-func (m *Empty) GetBefore() *expr.Space {
+func (m *Empty) GetUnderscore() *expr.Keyword {
 	if m != nil {
-		return m.Before
+		return m.Underscore
 	}
 	return nil
 }
 
 type EmptySet struct {
-	Before *expr.Space `protobuf:"bytes,1,opt" json:"Before,omitempty"`
+	Tilde *expr.Keyword `protobuf:"bytes,1,opt" json:"Tilde,omitempty"`
 }
 
 func (m *EmptySet) Reset()      { *m = EmptySet{} }
 func (*EmptySet) ProtoMessage() {}
 
-func (m *EmptySet) GetBefore() *expr.Space {
+func (m *EmptySet) GetTilde() *expr.Keyword {
 	if m != nil {
-		return m.Before
+		return m.Tilde
 	}
 	return nil
 }
@@ -974,7 +974,7 @@ func (this *Empty) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if !this.Before.Equal(that1.Before) {
+	if !this.Underscore.Equal(that1.Underscore) {
 		return false
 	}
 	return true
@@ -999,7 +999,7 @@ func (this *EmptySet) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if !this.Before.Equal(that1.Before) {
+	if !this.Tilde.Equal(that1.Tilde) {
 		return false
 	}
 	return true
@@ -1366,7 +1366,7 @@ func (this *Empty) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.Empty{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before) + `}`}, ", ")
+		`Underscore:` + fmt.Sprintf("%#v", this.Underscore) + `}`}, ", ")
 	return s
 }
 func (this *EmptySet) GoString() string {
@@ -1374,7 +1374,7 @@ func (this *EmptySet) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.EmptySet{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before) + `}`}, ", ")
+		`Tilde:` + fmt.Sprintf("%#v", this.Tilde) + `}`}, ", ")
 	return s
 }
 func (this *TreeNode) GoString() string {

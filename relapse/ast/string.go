@@ -67,11 +67,11 @@ func (this *Pattern) String() string {
 }
 
 func (this *Empty) String() string {
-	return this.Before.String() + "Empty"
+	return this.Underscore.String()
 }
 
 func (this *EmptySet) String() string {
-	return this.Before.String() + "EmptySet"
+	return this.Tilde.String()
 }
 
 func (this *TreeNode) String() string {

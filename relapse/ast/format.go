@@ -56,23 +56,11 @@ func formatPattern(pattern *Pattern, first bool, tabs int) {
 }
 
 func formatEmpty(e *Empty, first bool, tabs int) {
-	if e.Before == nil {
-		e.Before = &expr.Space{}
-	}
-	formatTrim(e.Before, first, tabs)
-	if first {
-		addSpace(e.Before)
-	}
+	formatKeyword(e.Underscore, tabs)
 }
 
 func formatEmptySet(e *EmptySet, first bool, tabs int) {
-	if e.Before == nil {
-		e.Before = &expr.Space{}
-	}
-	formatTrim(e.Before, first, tabs)
-	if first {
-		addSpace(e.Before)
-	}
+	formatKeyword(e.Tilde, tabs)
 }
 
 func formatTreeNode(t *TreeNode, first bool, tabs int) {

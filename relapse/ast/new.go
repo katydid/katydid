@@ -50,13 +50,13 @@ func NewGrammar(m map[string]*Pattern) *Grammar {
 
 func NewEmpty() *Pattern {
 	return &Pattern{
-		Empty: &Empty{},
+		Empty: &Empty{newUnderscore()},
 	}
 }
 
 func NewEmptySet() *Pattern {
 	return &Pattern{
-		EmptySet: &EmptySet{},
+		EmptySet: &EmptySet{newTilde()},
 	}
 }
 
@@ -114,6 +114,14 @@ func newCloseCurly() *expr.Keyword {
 
 func newStar() *expr.Keyword {
 	return &expr.Keyword{Value: "*"}
+}
+
+func newUnderscore() *expr.Keyword {
+	return &expr.Keyword{Value: "_"}
+}
+
+func newTilde() *expr.Keyword {
+	return &expr.Keyword{Value: "~"}
 }
 
 func NewName(name string) *NameExpr {

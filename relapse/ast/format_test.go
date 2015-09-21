@@ -41,37 +41,37 @@ func testFormat(t *testing.T, in string, expected string) {
 }
 
 func TestFormat(t *testing.T) {
-	testFormat(t, " main =  Empty", "main = Empty")
+	testFormat(t, " main =  _", "main = _")
 	testFormat(t,
 		`//attachedcomment
-    main = EmptySet`,
+    main = ~`,
 		`//attachedcomment
-main = EmptySet`)
+main = ~`)
 	testFormat(t,
 		`//unattachedcomment
 
-    main = EmptySet`,
+    main = ~`,
 		`//unattachedcomment
 
-main = EmptySet`)
+main = ~`)
 	//2 pattern declarations
 	testFormat(t,
-		`main = Empty
-		other = EmptySet`,
-		`main = Empty
-other = EmptySet`)
+		`main = _
+		other = ~`,
+		`main = _
+other = ~`)
 	//3 pattern declarations
 	testFormat(t,
-		`main = Empty
-		other = EmptySet
+		`main = _
+		other = ~
 
-		more = (Empty)*`,
-		`main = Empty
-other = EmptySet
-more = (Empty)*`)
+		more = (_)*`,
+		`main = _
+other = ~
+more = (_)*`)
 	//treenode
 	testFormat(t,
 		`main = 
-			"a":Empty`,
-		`main = "a": Empty`)
+			"a":_`,
+		`main = "a": _`)
 }

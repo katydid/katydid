@@ -2,7 +2,7 @@
  */
 package parser
 
-const numNTSymbols = 25
+const numNTSymbols = 27
 
 type (
 	gotoTable [numStates]gotoRow
@@ -36,6 +36,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		5,  // Space
 
 	},
@@ -65,6 +67,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -94,6 +98,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -123,6 +129,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -152,6 +160,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -181,6 +191,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -210,6 +222,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		34, // Space
 
 	},
@@ -239,6 +253,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		38, // Space
 
 	},
@@ -268,6 +284,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -297,6 +315,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -326,6 +346,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -355,6 +377,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -384,6 +408,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -413,6 +439,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -442,6 +470,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -471,6 +501,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -500,6 +532,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -529,6 +563,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -558,6 +594,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -587,6 +625,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -616,6 +656,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -645,6 +687,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -674,6 +718,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -703,6 +749,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -732,6 +780,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -761,6 +811,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -790,6 +842,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -819,6 +873,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -848,6 +904,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -877,6 +935,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -906,6 +966,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		34, // Space
 
 	},
@@ -935,6 +997,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		38, // Space
 
 	},
@@ -964,6 +1028,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -993,6 +1059,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1022,6 +1090,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1051,6 +1121,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		50, // Space
 
 	},
@@ -1080,6 +1152,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1109,6 +1183,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1138,6 +1214,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1167,6 +1245,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		78, // Space
 
 	},
@@ -1196,6 +1276,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1225,6 +1307,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1254,6 +1338,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		50,  // Space
 
 	},
@@ -1283,6 +1369,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		78,  // Space
 
 	},
@@ -1312,6 +1400,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1341,6 +1431,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1370,6 +1462,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1399,6 +1493,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1428,6 +1524,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1457,6 +1555,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1486,6 +1586,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		-1,  // Space
 
 	},
@@ -1515,6 +1617,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		34,  // Space
 
 	},
@@ -1544,6 +1648,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		110, // Space
 
 	},
@@ -1573,6 +1679,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1602,6 +1710,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		38,  // Space
 
 	},
@@ -1631,6 +1741,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1660,6 +1772,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1689,6 +1803,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1718,6 +1834,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1747,6 +1865,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1776,6 +1896,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1805,6 +1927,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1834,6 +1958,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1863,6 +1989,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1892,6 +2020,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1921,6 +2051,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1950,6 +2082,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -1979,6 +2113,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2008,6 +2144,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2037,6 +2175,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2066,6 +2206,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2095,6 +2237,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2124,6 +2268,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2153,6 +2299,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2182,6 +2330,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2211,6 +2361,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2240,6 +2392,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2269,6 +2423,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2298,6 +2454,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		-1,  // Space
 
 	},
@@ -2327,6 +2485,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		34,  // Space
 
 	},
@@ -2356,6 +2516,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		122, // Space
 
 	},
@@ -2385,6 +2547,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		38,  // Space
 
 	},
@@ -2414,6 +2578,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2443,6 +2609,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2472,6 +2640,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2501,6 +2671,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2530,6 +2702,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2559,6 +2733,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2588,6 +2764,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2617,6 +2795,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2646,6 +2826,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2675,6 +2857,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2704,6 +2888,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2733,6 +2919,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2762,6 +2950,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2791,6 +2981,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2820,6 +3012,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2849,6 +3043,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2878,6 +3074,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2907,6 +3105,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2936,6 +3136,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		110, // Space
 
 	},
@@ -2965,6 +3167,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -2994,6 +3198,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		122, // Space
 
 	},
@@ -3023,6 +3229,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -3052,6 +3260,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		34,  // Space
 
 	},
@@ -3081,6 +3291,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		38,  // Space
 
 	},
@@ -3110,6 +3322,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -3139,6 +3353,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -3168,6 +3384,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -3197,6 +3415,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		131, // Space
 
 	},
@@ -3226,6 +3446,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -3255,6 +3477,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -3284,6 +3508,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		138, // Space
 
 	},
@@ -3313,6 +3539,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -3342,6 +3570,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -3371,6 +3601,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		139, // Space
 
 	},
@@ -3400,6 +3632,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		34,  // Space
 
 	},
@@ -3429,6 +3663,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		38,  // Space
 
 	},
@@ -3458,6 +3694,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -3487,6 +3725,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -3516,6 +3756,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -3545,6 +3787,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		145, // Space
 
 	},
@@ -3574,6 +3818,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -3603,6 +3849,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -3632,6 +3880,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		151, // Space
 
 	},
@@ -3661,6 +3911,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -3690,6 +3942,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		152, // Space
 
 	},
@@ -3719,6 +3973,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -3748,6 +4004,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -3777,6 +4035,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		131, // Space
 
 	},
@@ -3806,6 +4066,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		139, // Space
 
 	},
@@ -3835,6 +4097,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		-1,  // Space
 
 	},
@@ -3864,6 +4128,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		161, // Space
 
 	},
@@ -3893,6 +4159,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -3922,6 +4190,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -3951,6 +4221,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -3980,6 +4252,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -4009,6 +4283,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -4038,6 +4314,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		-1,  // Space
 
 	},
@@ -4067,6 +4345,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		-1,  // Space
 
 	},
@@ -4096,6 +4376,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		164, // Space
 
 	},
@@ -4125,6 +4407,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -4154,6 +4438,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -4183,6 +4469,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		145, // Space
 
 	},
@@ -4212,6 +4500,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		152, // Space
 
 	},
@@ -4241,6 +4531,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		-1,  // Space
 
 	},
@@ -4270,6 +4562,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		171, // Space
 
 	},
@@ -4299,6 +4593,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -4328,6 +4624,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -4357,6 +4655,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -4386,6 +4686,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -4415,6 +4717,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		-1,  // Space
 
 	},
@@ -4444,6 +4748,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		-1,  // Space
 
 	},
@@ -4473,6 +4779,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		174, // Space
 
 	},
@@ -4502,6 +4810,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -4531,6 +4841,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -4560,6 +4872,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		161, // Space
 
 	},
@@ -4589,6 +4903,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -4618,6 +4934,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		164, // Space
 
 	},
@@ -4647,6 +4965,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -4676,6 +4996,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -4705,6 +5027,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -4734,6 +5058,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -4763,6 +5089,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -4792,6 +5120,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -4821,6 +5151,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -4850,6 +5182,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		171, // Space
 
 	},
@@ -4879,6 +5213,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -4908,6 +5244,8 @@ var gotoTab = gotoTable{
 		-1,  // Colon
 		-1,  // Exclamation
 		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
 		174, // Space
 
 	},
@@ -4937,6 +5275,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -4966,6 +5306,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -4995,6 +5337,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -5024,6 +5368,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -5053,6 +5399,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -5082,6 +5430,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -5111,6 +5461,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -5140,6 +5492,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -5169,6 +5523,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -5198,6 +5554,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},
@@ -5227,6 +5585,8 @@ var gotoTab = gotoTable{
 		-1, // Colon
 		-1, // Exclamation
 		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
 		-1, // Space
 
 	},

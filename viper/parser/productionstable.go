@@ -1128,10 +1128,62 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Space : Space space	<< expr.AppendSpace(X[0], newString(X[1])), nil >>`,
-		Id:         "Space",
+		String: `Underscore : "_"	<< &expr.Keyword{Value: "_"}, nil >>`,
+		Id:         "Underscore",
 		NTType:     33,
 		Index:      89,
+		NumSymbols: 1,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &expr.Keyword{Value: "_"}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `Underscore : Space "_"	<< &expr.Keyword{
+      Before: X[0].(*expr.Space),
+      Value: "_",
+    }, nil >>`,
+		Id:         "Underscore",
+		NTType:     33,
+		Index:      90,
+		NumSymbols: 2,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &expr.Keyword{
+				Before: X[0].(*expr.Space),
+				Value:  "_",
+			}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `Tilde : "~"	<< &expr.Keyword{Value: "~"}, nil >>`,
+		Id:         "Tilde",
+		NTType:     34,
+		Index:      91,
+		NumSymbols: 1,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &expr.Keyword{Value: "~"}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `Tilde : Space "~"	<< &expr.Keyword{
+      Before: X[0].(*expr.Space),
+      Value: "~",
+    }, nil >>`,
+		Id:         "Tilde",
+		NTType:     34,
+		Index:      92,
+		NumSymbols: 2,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &expr.Keyword{
+				Before: X[0].(*expr.Space),
+				Value:  "~",
+			}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `Space : Space space	<< expr.AppendSpace(X[0], newString(X[1])), nil >>`,
+		Id:         "Space",
+		NTType:     35,
+		Index:      93,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.AppendSpace(X[0], newString(X[1])), nil
@@ -1140,8 +1192,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Space : space	<< &expr.Space{Space: []string{newString(X[0])}}, nil >>`,
 		Id:         "Space",
-		NTType:     33,
-		Index:      90,
+		NTType:     35,
+		Index:      94,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Space{Space: []string{newString(X[0])}}, nil

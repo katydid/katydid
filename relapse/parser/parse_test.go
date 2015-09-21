@@ -35,43 +35,43 @@ func TestParse(t *testing.T) {
 			"b": {eq($int, int(123))}
 		]`,
 		`main = "A": [
-			!(EmptySet),
+			!(~),
 			[
 				"a": {eq($string, "aa")},
-				!(EmptySet)
+				!(~)
 			]
 		]`,
 		`main = "Desc": [
-			!(EmptySet),
+			!(~),
 			[
 				"Src": { contains($string, "1") },
 				[
 					"Src": { contains($string, "2") },
-					(!("Src"): !(EmptySet))*
+					(!("Src"): !(~))*
 				]
 			]
 		]`,
 		`main = ("MyParent": { int(1) } &  "MyParent": { int(2)})`,
 		`main = "A": [
-			!(EmptySet),
+			!(~),
 			"a": { eq($string, "aa") },
-			!(EmptySet)
+			!(~)
 		]`,
 		`main = "A": (
-			!(EmptySet) &
+			!(~) &
 			"a": { eq($string, "aa") } &
-			!(EmptySet)
+			!(~)
 		)`,
 		`main = "A": (
-			!(EmptySet) |
+			!(~) |
 			"a": { eq($string, "aa") } |
-			!(EmptySet) |
-			!(EmptySet) |
-			!(EmptySet)
+			!(~) |
+			!(~) |
+			!(~)
 		)`,
 		`main = [
-			!(EmptySet),
-			Empty,
+			!(~),
+			_,
 			"a": { eq($string, "aa") },
 			( 
 			  "b": { contains($string, "bb") }

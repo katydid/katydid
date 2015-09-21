@@ -83,11 +83,11 @@ message Pattern {
 }
 
 message Empty {
-	optional expr.Space Before = 1;
+	optional expr.Keyword Underscore = 1;
 }
 
 message EmptySet {
-	optional expr.Space Before = 1;
+	optional expr.Keyword Tilde = 1;
 }
 
 message TreeNode {

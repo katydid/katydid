@@ -100,10 +100,8 @@ ContinueNameChoice
   ;
 
 Pattern
-  : Space "Empty"     << &Pattern{Empty: &Empty{$0.(*expr.Space)}}, nil >>
-  | "Empty"     << &Pattern{Empty: &Empty{}}, nil >>
-  | Space "EmptySet"  << &Pattern{EmptySet: &EmptySet{$0.(*expr.Space)}}, nil >>
-  | "EmptySet"  << &Pattern{EmptySet: &EmptySet{}}, nil >>
+  : Underscore << &Pattern{Empty: &Empty{$0.(*expr.Keyword)}}, nil >>
+  | Tilde  << &Pattern{EmptySet: &EmptySet{$0.(*expr.Keyword)}}, nil >>
   | NameExpr Colon Pattern <<
     &Pattern{TreeNode: &TreeNode{
       Name: $0.(*NameExpr),
