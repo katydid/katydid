@@ -146,11 +146,8 @@ func (m *NameExpr) GetNameChoice() *NameChoice {
 }
 
 type Name struct {
-	Before     *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	OpenParen  *expr.Keyword `protobuf:"bytes,2,opt" json:"OpenParen,omitempty"`
-	BeforeName *expr.Space   `protobuf:"bytes,3,opt" json:"BeforeName,omitempty"`
-	Name       string        `protobuf:"bytes,4,opt" json:"Name"`
-	CloseParen *expr.Keyword `protobuf:"bytes,5,opt" json:"CloseParen,omitempty"`
+	Before *expr.Space `protobuf:"bytes,1,opt" json:"Before,omitempty"`
+	Name   string      `protobuf:"bytes,2,opt" json:"Name"`
 }
 
 func (m *Name) Reset()      { *m = Name{} }
@@ -163,32 +160,11 @@ func (m *Name) GetBefore() *expr.Space {
 	return nil
 }
 
-func (m *Name) GetOpenParen() *expr.Keyword {
-	if m != nil {
-		return m.OpenParen
-	}
-	return nil
-}
-
-func (m *Name) GetBeforeName() *expr.Space {
-	if m != nil {
-		return m.BeforeName
-	}
-	return nil
-}
-
 func (m *Name) GetName() string {
 	if m != nil {
 		return m.Name
 	}
 	return ""
-}
-
-func (m *Name) GetCloseParen() *expr.Keyword {
-	if m != nil {
-		return m.CloseParen
-	}
-	return nil
 }
 
 type AnyName struct {
@@ -442,15 +418,31 @@ func (m *TreeNode) GetPattern() *Pattern {
 }
 
 type LeafNode struct {
-	Expr *expr.Expr `protobuf:"bytes,1,opt" json:"Expr,omitempty"`
+	OpenCurly  *expr.Keyword `protobuf:"bytes,1,opt" json:"OpenCurly,omitempty"`
+	Expr       *expr.Expr    `protobuf:"bytes,2,opt" json:"Expr,omitempty"`
+	CloseCurly *expr.Keyword `protobuf:"bytes,3,opt" json:"CloseCurly,omitempty"`
 }
 
 func (m *LeafNode) Reset()      { *m = LeafNode{} }
 func (*LeafNode) ProtoMessage() {}
 
+func (m *LeafNode) GetOpenCurly() *expr.Keyword {
+	if m != nil {
+		return m.OpenCurly
+	}
+	return nil
+}
+
 func (m *LeafNode) GetExpr() *expr.Expr {
 	if m != nil {
 		return m.Expr
+	}
+	return nil
+}
+
+func (m *LeafNode) GetCloseCurly() *expr.Keyword {
+	if m != nil {
+		return m.CloseCurly
 	}
 	return nil
 }
@@ -594,21 +586,14 @@ func (m *And) GetCloseParen() *expr.Keyword {
 }
 
 type ZeroOrMore struct {
-	Before     *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	OpenParen  *expr.Keyword `protobuf:"bytes,2,opt" json:"OpenParen,omitempty"`
-	Pattern    *Pattern      `protobuf:"bytes,3,opt" json:"Pattern,omitempty"`
-	CloseParen *expr.Keyword `protobuf:"bytes,4,opt" json:"CloseParen,omitempty"`
+	OpenParen  *expr.Keyword `protobuf:"bytes,1,opt" json:"OpenParen,omitempty"`
+	Pattern    *Pattern      `protobuf:"bytes,2,opt" json:"Pattern,omitempty"`
+	CloseParen *expr.Keyword `protobuf:"bytes,3,opt" json:"CloseParen,omitempty"`
+	Star       *expr.Keyword `protobuf:"bytes,4,opt" json:"Star,omitempty"`
 }
 
 func (m *ZeroOrMore) Reset()      { *m = ZeroOrMore{} }
 func (*ZeroOrMore) ProtoMessage() {}
-
-func (m *ZeroOrMore) GetBefore() *expr.Space {
-	if m != nil {
-		return m.Before
-	}
-	return nil
-}
 
 func (m *ZeroOrMore) GetOpenParen() *expr.Keyword {
 	if m != nil {
@@ -627,6 +612,13 @@ func (m *ZeroOrMore) GetPattern() *Pattern {
 func (m *ZeroOrMore) GetCloseParen() *expr.Keyword {
 	if m != nil {
 		return m.CloseParen
+	}
+	return nil
+}
+
+func (m *ZeroOrMore) GetStar() *expr.Keyword {
+	if m != nil {
+		return m.Star
 	}
 	return nil
 }
@@ -817,16 +809,7 @@ func (this *Name) Equal(that interface{}) bool {
 	if !this.Before.Equal(that1.Before) {
 		return false
 	}
-	if !this.OpenParen.Equal(that1.OpenParen) {
-		return false
-	}
-	if !this.BeforeName.Equal(that1.BeforeName) {
-		return false
-	}
 	if this.Name != that1.Name {
-		return false
-	}
-	if !this.CloseParen.Equal(that1.CloseParen) {
 		return false
 	}
 	return true
@@ -1083,7 +1066,13 @@ func (this *LeafNode) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
+	if !this.OpenCurly.Equal(that1.OpenCurly) {
+		return false
+	}
 	if !this.Expr.Equal(that1.Expr) {
+		return false
+	}
+	if !this.CloseCurly.Equal(that1.CloseCurly) {
 		return false
 	}
 	return true
@@ -1219,9 +1208,6 @@ func (this *ZeroOrMore) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if !this.Before.Equal(that1.Before) {
-		return false
-	}
 	if !this.OpenParen.Equal(that1.OpenParen) {
 		return false
 	}
@@ -1229,6 +1215,9 @@ func (this *ZeroOrMore) Equal(that interface{}) bool {
 		return false
 	}
 	if !this.CloseParen.Equal(that1.CloseParen) {
+		return false
+	}
+	if !this.Star.Equal(that1.Star) {
 		return false
 	}
 	return true
@@ -1332,10 +1321,7 @@ func (this *Name) GoString() string {
 	}
 	s := strings.Join([]string{`&relapse.Name{` +
 		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
-		`BeforeName:` + fmt.Sprintf("%#v", this.BeforeName),
-		`Name:` + fmt.Sprintf("%#v", this.Name),
-		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
+		`Name:` + fmt.Sprintf("%#v", this.Name) + `}`}, ", ")
 	return s
 }
 func (this *AnyName) GoString() string {
@@ -1418,7 +1404,9 @@ func (this *LeafNode) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.LeafNode{` +
-		`Expr:` + fmt.Sprintf("%#v", this.Expr) + `}`}, ", ")
+		`OpenCurly:` + fmt.Sprintf("%#v", this.OpenCurly),
+		`Expr:` + fmt.Sprintf("%#v", this.Expr),
+		`CloseCurly:` + fmt.Sprintf("%#v", this.CloseCurly) + `}`}, ", ")
 	return s
 }
 func (this *Concat) GoString() string {
@@ -1462,10 +1450,10 @@ func (this *ZeroOrMore) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.ZeroOrMore{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
 		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
 		`Pattern:` + fmt.Sprintf("%#v", this.Pattern),
-		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
+		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen),
+		`Star:` + fmt.Sprintf("%#v", this.Star) + `}`}, ", ")
 	return s
 }
 func (this *Reference) GoString() string {

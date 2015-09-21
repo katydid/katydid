@@ -41,9 +41,7 @@ func (this *NameExpr) String() string {
 }
 
 func (this *Name) String() string {
-	return this.Before.String() + "Name" + this.OpenParen.String() +
-		this.BeforeName.String() + strconv.Quote(this.Name) +
-		this.CloseParen.String()
+	return this.Before.String() + strconv.Quote(this.Name)
 }
 
 func (this *AnyName) String() string {
@@ -82,7 +80,8 @@ func (this *TreeNode) String() string {
 }
 
 func (this *LeafNode) String() string {
-	return this.Expr.String()
+	return this.OpenCurly.String() + this.Expr.String() +
+		this.CloseCurly.String()
 }
 
 func (this *Concat) String() string {
@@ -104,9 +103,8 @@ func (this *And) String() string {
 }
 
 func (this *ZeroOrMore) String() string {
-	return this.Before.String() + "ZeroOrMore" +
-		this.OpenParen.String() + this.Pattern.String() +
-		this.CloseParen.String()
+	return this.OpenParen.String() + this.Pattern.String() +
+		this.CloseParen.String() + this.Star.String()
 }
 
 func (this *Reference) String() string {

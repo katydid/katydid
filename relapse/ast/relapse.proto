@@ -46,10 +46,7 @@ message NameExpr {
 
 message Name {
 	optional expr.Space Before = 1;
-	optional expr.Keyword OpenParen = 2;
-	optional expr.Space BeforeName = 3;
-	optional string Name = 4 [(gogoproto.nullable) = false];
-	optional expr.Keyword CloseParen = 5;
+	optional string Name = 2 [(gogoproto.nullable) = false];
 }
 
 message AnyName {
@@ -101,7 +98,9 @@ message TreeNode {
 }
 
 message LeafNode {
-	optional expr.Expr Expr = 1;
+	optional expr.Keyword OpenCurly = 1;
+	optional expr.Expr Expr = 2;
+	optional expr.Keyword CloseCurly = 3;
 }
 
 message Concat {
@@ -129,10 +128,10 @@ message And {
 }
 
 message ZeroOrMore {
-	optional expr.Space Before = 1;
-	optional expr.Keyword OpenParen = 2;
-	optional Pattern Pattern = 3;
-	optional expr.Keyword CloseParen = 4;
+	optional expr.Keyword OpenParen = 1;
+	optional Pattern Pattern = 2;
+	optional expr.Keyword CloseParen = 3;
+	optional expr.Keyword Star = 4;
 }
 
 message Reference {

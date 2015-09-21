@@ -95,12 +95,6 @@ func formatName(name *Name, first bool, tabs int) {
 	if first {
 		addSpace(name.Before)
 	}
-	formatKeyword(name.OpenParen, tabs)
-	if name.BeforeName == nil {
-		name.BeforeName = &expr.Space{}
-	}
-	formatTrim(name.BeforeName, true, tabs)
-	formatKeyword(name.CloseParen, tabs)
 }
 
 // func formatNewline(space *expr.Space, tabs int) {

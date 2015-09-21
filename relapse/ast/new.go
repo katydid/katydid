@@ -104,12 +104,22 @@ func newExclamation() *expr.Keyword {
 	return &expr.Keyword{Value: "!"}
 }
 
+func newOpenCurly() *expr.Keyword {
+	return &expr.Keyword{Value: "{"}
+}
+
+func newCloseCurly() *expr.Keyword {
+	return &expr.Keyword{Value: "}"}
+}
+
+func newStar() *expr.Keyword {
+	return &expr.Keyword{Value: "*"}
+}
+
 func NewName(name string) *NameExpr {
 	return &NameExpr{
 		Name: &Name{
-			OpenParen:  newOpenParen(),
-			Name:       name,
-			CloseParen: newCloseParen(),
+			Name: name,
 		},
 	}
 }
@@ -155,7 +165,9 @@ func NewTreeNode(name *NameExpr, pattern *Pattern) *Pattern {
 func NewLeafNode(expr *expr.Expr) *Pattern {
 	return &Pattern{
 		LeafNode: &LeafNode{
-			Expr: expr,
+			OpenCurly:  newOpenCurly(),
+			Expr:       expr,
+			CloseCurly: newCloseCurly(),
 		},
 	}
 }
@@ -259,6 +271,7 @@ func NewZeroOrMore(pattern *Pattern) *Pattern {
 			OpenParen:  newOpenParen(),
 			Pattern:    pattern,
 			CloseParen: newCloseParen(),
+			Star:       newStar(),
 		},
 	}
 }

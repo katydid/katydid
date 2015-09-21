@@ -55,36 +55,15 @@ PatternDecl
 NameExpr
   : Space "AnyName"     << &NameExpr{AnyName: &AnyName{$0.(*expr.Space)}}, nil >>
   | "AnyName"           << &NameExpr{AnyName: &AnyName{}}, nil >>
-  | Space "Name" OpenParen Space string_lit CloseParen <<
+  | Space string_lit <<
     &NameExpr{Name: &Name{
       Before: $0.(*expr.Space),
-      OpenParen: $2.(*expr.Keyword),
-      BeforeName: $3.(*expr.Space),
-      Name: unquote(newString($4)),
-      CloseParen: $5.(*expr.Keyword),
+      Name: unquote(newString($1)),
     }}, nil
   >>
-  | "Name" OpenParen Space string_lit CloseParen <<
+  | string_lit <<
     &NameExpr{Name: &Name{
-      OpenParen: $1.(*expr.Keyword),
-      BeforeName: $2.(*expr.Space),
-      Name: unquote(newString($3)),
-      CloseParen: $4.(*expr.Keyword),
-    }}, nil
-  >>
-  | Space "Name" OpenParen string_lit CloseParen <<
-    &NameExpr{Name: &Name{
-      Before: $0.(*expr.Space),
-      OpenParen: $2.(*expr.Keyword),
-      Name: unquote(newString($3)),
-      CloseParen: $4.(*expr.Keyword),
-    }}, nil
-  >>
-  | "Name" OpenParen string_lit CloseParen <<
-    &NameExpr{Name: &Name{
-      OpenParen: $1.(*expr.Keyword),
-      Name: unquote(newString($2)),
-      CloseParen: $3.(*expr.Keyword),
+      Name: unquote(newString($0)),
     }}, nil
   >>
   | Space "AnyNameExcept" OpenParen NameExpr CloseParen <<
@@ -135,27 +114,30 @@ Pattern
       Pattern: $2.(*Pattern),
     }}, nil
   >>
-  | Expr <<
+  | OpenCurly Expr CloseCurly <<
     &Pattern{LeafNode: &LeafNode{
-      Expr: $0.(*expr.Expr),
+      OpenCurly: $0.(*expr.Keyword),
+      Expr: $1.(*expr.Expr),
+      CloseCurly: $2.(*expr.Keyword),
     }}, nil
   >>
   | StartConcat
   | StartOr
   | StartAnd
-  | Space "ZeroOrMore" OpenParen Pattern CloseParen <<
+  | OpenParen Pattern CloseParen Star <<
     &Pattern{ZeroOrMore: &ZeroOrMore{
-      Before: $0.(*expr.Space),
-      OpenParen: $2.(*expr.Keyword),
-      Pattern: $3.(*Pattern),
-      CloseParen: $4.(*expr.Keyword),
+      OpenParen: $0.(*expr.Keyword),
+      Pattern: $1.(*Pattern),
+      CloseParen: $2.(*expr.Keyword),
+      Star: $3.(*expr.Keyword),
     }}, nil
   >>
-  | "ZeroOrMore" OpenParen Pattern CloseParen <<
+  | OpenParen Pattern CloseParen Star <<
     &Pattern{ZeroOrMore: &ZeroOrMore{
-      OpenParen: $1.(*expr.Keyword),
-      Pattern: $2.(*Pattern),
-      CloseParen: $3.(*expr.Keyword),
+      OpenParen: $0.(*expr.Keyword),
+      Pattern: $1.(*Pattern),
+      CloseParen: $2.(*expr.Keyword),
+      Star: $3.(*expr.Keyword),
     }}, nil
   >>
   | HashTag id <<

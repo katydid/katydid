@@ -65,13 +65,13 @@ other = EmptySet`)
 		`main = Empty
 		other = EmptySet
 
-		more = ZeroOrMore(Empty)`,
+		more = (Empty)*`,
 		`main = Empty
 other = EmptySet
-more = ZeroOrMore(Empty)`)
+more = (Empty)*`)
 	//treenode
 	testFormat(t,
 		`main = 
-			Name("a"):Empty`,
-		`main = Name("a"): Empty`)
+			"a":Empty`,
+		`main = "a": Empty`)
 }

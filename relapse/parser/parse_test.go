@@ -22,67 +22,67 @@ import (
 
 func TestParse(t *testing.T) {
 	patternDecls := []string{
-		`main = "string_lit"`,
+		`main = {"string_lit"}`,
 		`main = #ref1
-		ref1 = eq($int, int(123))
+		ref1 = {eq($int, int(123))}
 		`,
-		`main = Name("MyParent"): [
-			eq($string, "123"), 
-			eq($string, "456")
+		`main = "MyParent": [
+			{eq($string, "123")}, 
+			{eq($string, "456")}
 		]`,
-		`main = Name("A") : [
-			Name("a"): eq($string, "aa"),
-			Name("b"): eq($int, int(123))
+		`main = "A" : [
+			"a": {eq($string, "aa")},
+			"b": {eq($int, int(123))}
 		]`,
-		`main = Name("A"): [
+		`main = "A": [
 			!(EmptySet),
 			[
-				Name("a"): eq($string, "aa"),
+				"a": {eq($string, "aa")},
 				!(EmptySet)
 			]
 		]`,
-		`main = Name("Desc"): [
+		`main = "Desc": [
 			!(EmptySet),
 			[
-				Name("Src"): contains($string, "1"),
+				"Src": { contains($string, "1") },
 				[
-					Name("Src"): contains($string, "2"),
-					ZeroOrMore(AnyNameExcept(Name("Src")): !(EmptySet))
+					"Src": { contains($string, "2") },
+					(AnyNameExcept("Src"): !(EmptySet))*
 				]
 			]
 		]`,
-		`main = (Name("MyParent"): int(1) &  Name( "MyParent"): int(2))`,
-		`main = Name("A"): [
+		`main = ("MyParent": { int(1) } &  "MyParent": { int(2)})`,
+		`main = "A": [
 			!(EmptySet),
-			Name("a"): eq($string, "aa"),
+			"a": { eq($string, "aa") },
 			!(EmptySet)
 		]`,
-		`main = Name("A"): (
+		`main = "A": (
 			!(EmptySet) &
-			Name("a"): eq($string, "aa") &
+			"a": { eq($string, "aa") } &
 			!(EmptySet)
 		)`,
-		`main = Name("A"): (
+		`main = "A": (
 			!(EmptySet) |
-			Name("a"): eq($string, "aa") |
+			"a": { eq($string, "aa") } |
 			!(EmptySet) |
 			!(EmptySet) |
 			!(EmptySet)
 		)`,
-		`main = Name("A"): [
+		`main ="A": [
 			!(EmptySet),
-			Name("a"): eq($string, "aa"),
+			"a": { eq($string, "aa") },
 			( 
-			  Name("b"): contains($string, "bb")
+			  "b": { contains($string, "bb") }
 			  | (
-			  	Name("c"): contains($string, "cc") &
-			  	Name("c"): contains($string, "see") &
+			  	"c": { contains($string, "cc") } &
+			  	"c": { contains($string, "see") } &
 			  	(
-			  		Name("c"): contains($string, "sea") |
-			  		Name("c"): contains($string, "ocean")
+			  		"c": { contains($string, "sea") } |
+			  		"c": { contains($string, "ocean") }
 			  	)
 			  )
-			  | Name("d"): contains($string, "dd")
+			  | "d": { contains($string, "dd") }
 			)
 		]`,
 	}
@@ -92,11 +92,11 @@ func TestParse(t *testing.T) {
 		scanner := lexer.NewLexer([]byte(patternDecl))
 		st, err := p.ParseGrammar(scanner)
 		if err != nil {
-			t.Fatalf("err = %v, input = %s", err, patternDecl)
+			t.Errorf("err = %v, input = %s", err, patternDecl)
 		}
 		s := st.String()
 		if s != patternDecl {
-			t.Fatalf("String function output = %s\n expected output = %s\n", s, patternDecl)
+			t.Errorf("String function output = %s\n expected output = %s\n", s, patternDecl)
 		}
 	}
 }
