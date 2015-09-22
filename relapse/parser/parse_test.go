@@ -22,79 +22,79 @@ import (
 
 func TestParse(t *testing.T) {
 	patternDecls := []string{
-		`{"string_lit"}`,
+		`a > hasQuotes("string_lit")`,
 		`#ref1
-		@ref1 = {eq($int, int(123))}
+		@ref1 = a > eq($int, int(123))
 		`,
 		`#main`,
 		`MyParent: [
-			{eq($string, "123")}, 
-			{eq($string, "456")}
+			a > eq($string, "123"), 
+			b > eq($string, "456")
 		]`,
 		`A : [
-			a: {eq($string, "aa")},
-			b: {eq($int, int(123))}
+			a > eq($string, "aa"),
+			b > eq($int, int(123))
 		]`,
 		`A: [
 			!(~),
 			[
-				a: {eq($string, "aa")},
+				a > eq($string, "aa"),
 				!(~)
 			]
 		]`,
 		`Desc: [
 			!(~),
 			[
-				Src: { contains($string, "1") },
+				Src >  contains($string, "1") ,
 				[
-					Src: { contains($string, "2") },
+					Src > contains($string, "2") ,
 					(!(Src): !(~))*
 				]
 			]
 		]`,
-		`(MyParent: { int(1) } &  MyParent: { int(2)})`,
+		`(MyParent > any() &  MyParent > any())`,
 		`A: [
 			*,
-			a: { eq($string, "aa") },
+			a > eq($string, "aa"),
 			*
 		]`,
 		`A: (
 			!(~) &
-			a: { eq($string, "aa") } &
+			a > eq($string, "aa") &
 			!(~)
 		)`,
 		`A: (
 			* |
-			a: { eq($string, "aa") } |
+			a > eq($string, "aa") |
 			* |
 			!(~) |
-			!(~)
+			_
 		)`,
 		`[
-			!(~),
-			_,
-			a: { eq($string, "aa") },
+			*,
+			a > eq($string, "aa") ,
+			*,
 			( 
-			  b: { contains($string, "bb") }
+			  b > contains($string, "bb") 
 			  | (
-			  	c: { contains($string, "cc") } &
-			  	c: { contains($string, "see") } &
+			  	c > contains($string, "cc")  &
+			  	c > contains($string, "see")  &
 			  	(
-			  		c: { contains($string, "sea") } |
-			  		c: { contains($string, "ocean") }
+			  		c > contains($string, "sea")  |
+			  		c > contains($string, "ocean") 
 			  	)
 			  )
-			  | d: { contains($string, "dd") }
+			  | d > contains($string, "dd") 
 			)
 		]`,
-		`.: { int(1) }`,
+		`. > greaterThanOne(int(1)) `,
 		`[
-			(.: { eq($int, int(1)) })*,
-			bla: { true }
+			(. > eq($int, int(1)) )*,
+			bla > any() 
 		]`,
-		`( a|b ): { eq($int, int(1)) }`,
-		`( a|.|!(b) ): { eq($int, int(1)) }`,
-		`"\"a": { true }`,
+		`( a|b ) > eq($int, int(1)) `,
+		`( a|.|!(b) ) > eq($int, int(1)) `,
+		`"\"a" > any() `,
 	}
 	p := parser.NewParser()
 	for i, patternDecl := range patternDecls {

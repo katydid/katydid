@@ -131,11 +131,13 @@ Pattern
       Pattern: $2.(*Pattern),
     }}, nil
   >>
-  | OpenCurly Expr CloseCurly <<
-    &Pattern{LeafNode: &LeafNode{
-      OpenCurly: $0.(*expr.Keyword),
-      Expr: $1.(*expr.Expr),
-      CloseCurly: $2.(*expr.Keyword),
+  | NameExpr RightArrow Function <<
+    &Pattern{TreeNode: &TreeNode{
+      Name: $0.(*NameExpr),
+      Pattern: &Pattern{LeafNode: &LeafNode{
+        RightArrow: $1.(*expr.Keyword),
+        Expr: &expr.Expr{Function: $2.(*expr.Function)},
+      }},
     }}, nil
   >>
   | StartConcat
@@ -171,7 +173,6 @@ Pattern
       CloseParen: $3.(*expr.Keyword),
     }}, nil
   >>
-  // | Interleave Pattern Pattern -- New 
   ;
 
 StartConcat

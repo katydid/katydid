@@ -435,17 +435,16 @@ func (m *TreeNode) GetPattern() *Pattern {
 }
 
 type LeafNode struct {
-	OpenCurly  *expr.Keyword `protobuf:"bytes,1,opt" json:"OpenCurly,omitempty"`
+	RightArrow *expr.Keyword `protobuf:"bytes,1,opt" json:"RightArrow,omitempty"`
 	Expr       *expr.Expr    `protobuf:"bytes,2,opt" json:"Expr,omitempty"`
-	CloseCurly *expr.Keyword `protobuf:"bytes,3,opt" json:"CloseCurly,omitempty"`
 }
 
 func (m *LeafNode) Reset()      { *m = LeafNode{} }
 func (*LeafNode) ProtoMessage() {}
 
-func (m *LeafNode) GetOpenCurly() *expr.Keyword {
+func (m *LeafNode) GetRightArrow() *expr.Keyword {
 	if m != nil {
-		return m.OpenCurly
+		return m.RightArrow
 	}
 	return nil
 }
@@ -453,13 +452,6 @@ func (m *LeafNode) GetOpenCurly() *expr.Keyword {
 func (m *LeafNode) GetExpr() *expr.Expr {
 	if m != nil {
 		return m.Expr
-	}
-	return nil
-}
-
-func (m *LeafNode) GetCloseCurly() *expr.Keyword {
-	if m != nil {
-		return m.CloseCurly
 	}
 	return nil
 }
@@ -1103,13 +1095,10 @@ func (this *LeafNode) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if !this.OpenCurly.Equal(that1.OpenCurly) {
+	if !this.RightArrow.Equal(that1.RightArrow) {
 		return false
 	}
 	if !this.Expr.Equal(that1.Expr) {
-		return false
-	}
-	if !this.CloseCurly.Equal(that1.CloseCurly) {
 		return false
 	}
 	return true
@@ -1468,9 +1457,8 @@ func (this *LeafNode) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.LeafNode{` +
-		`OpenCurly:` + fmt.Sprintf("%#v", this.OpenCurly),
-		`Expr:` + fmt.Sprintf("%#v", this.Expr),
-		`CloseCurly:` + fmt.Sprintf("%#v", this.CloseCurly) + `}`}, ", ")
+		`RightArrow:` + fmt.Sprintf("%#v", this.RightArrow),
+		`Expr:` + fmt.Sprintf("%#v", this.Expr) + `}`}, ", ")
 	return s
 }
 func (this *Concat) GoString() string {

@@ -100,9 +100,8 @@ message TreeNode {
 }
 
 message LeafNode {
-	optional expr.Keyword OpenCurly = 1;
+	optional expr.Keyword RightArrow = 1;
 	optional expr.Expr Expr = 2;
-	optional expr.Keyword CloseCurly = 3;
 }
 
 message Concat {

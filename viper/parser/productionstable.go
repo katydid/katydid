@@ -1232,10 +1232,36 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Space : Space space	<< expr.AppendSpace(X[0], newString(X[1])), nil >>`,
-		Id:         "Space",
+		String: `RightArrow : ">"	<< &expr.Keyword{Value: ">"}, nil >>`,
+		Id:         "RightArrow",
 		NTType:     37,
 		Index:      97,
+		NumSymbols: 1,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &expr.Keyword{Value: ">"}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `RightArrow : Space ">"	<< &expr.Keyword{
+      Before: X[0].(*expr.Space),
+      Value: ">",
+    }, nil >>`,
+		Id:         "RightArrow",
+		NTType:     37,
+		Index:      98,
+		NumSymbols: 2,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &expr.Keyword{
+				Before: X[0].(*expr.Space),
+				Value:  ">",
+			}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `Space : Space space	<< expr.AppendSpace(X[0], newString(X[1])), nil >>`,
+		Id:         "Space",
+		NTType:     38,
+		Index:      99,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.AppendSpace(X[0], newString(X[1])), nil
@@ -1244,8 +1270,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Space : space	<< &expr.Space{Space: []string{newString(X[0])}}, nil >>`,
 		Id:         "Space",
-		NTType:     37,
-		Index:      98,
+		NTType:     38,
+		Index:      100,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Space{Space: []string{newString(X[0])}}, nil

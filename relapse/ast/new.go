@@ -141,6 +141,10 @@ func newAt() *expr.Keyword {
 	return &expr.Keyword{Value: "@"}
 }
 
+func newRightArrow() *expr.Keyword {
+	return &expr.Keyword{Value: ">"}
+}
+
 func NewName(name string) *NameExpr {
 	return &NameExpr{
 		Name: &Name{
@@ -210,9 +214,8 @@ func NewTreeNode(name *NameExpr, pattern *Pattern) *Pattern {
 func NewLeafNode(expr *expr.Expr) *Pattern {
 	return &Pattern{
 		LeafNode: &LeafNode{
-			OpenCurly:  newOpenCurly(),
+			RightArrow: newRightArrow(),
 			Expr:       expr,
-			CloseCurly: newCloseCurly(),
 		},
 	}
 }

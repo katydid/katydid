@@ -99,8 +99,7 @@ func (this *TreeNode) String() string {
 }
 
 func (this *LeafNode) String() string {
-	return this.OpenCurly.String() + this.Expr.String() +
-		this.CloseCurly.String()
+	return this.RightArrow.String() + this.Expr.String()
 }
 
 func (this *Concat) String() string {
