@@ -230,7 +230,7 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `NameExpr : Dot	<< &NameExpr{AnyName: &AnyName{X[0].(*expr.Keyword)}}, nil >>`,
+		String: `NameExpr : Underscore	<< &NameExpr{AnyName: &AnyName{X[0].(*expr.Keyword)}}, nil >>`,
 		Id:         "NameExpr",
 		NTType:     5,
 		Index:      15,
@@ -330,20 +330,72 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Pattern : Underscore	<< &Pattern{Empty: &Empty{X[0].(*expr.Keyword)}}, nil >>`,
-		Id:         "Pattern",
+		String: `Empty : "<empty>"	<< &expr.Keyword{Value: "<empty>"}, nil >>`,
+		Id:         "Empty",
 		NTType:     8,
 		Index:      22,
+		NumSymbols: 1,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &expr.Keyword{Value: "<empty>"}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `Empty : Space "<empty>"	<< &expr.Keyword{
+      Before: X[0].(*expr.Space),
+      Value: "<empty>",
+    }, nil >>`,
+		Id:         "Empty",
+		NTType:     8,
+		Index:      23,
+		NumSymbols: 2,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &expr.Keyword{
+				Before: X[0].(*expr.Space),
+				Value:  "<empty>",
+			}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `EmptySet : "<emptyset>"	<< &expr.Keyword{Value: "<emptyset>"}, nil >>`,
+		Id:         "EmptySet",
+		NTType:     9,
+		Index:      24,
+		NumSymbols: 1,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &expr.Keyword{Value: "<emptyset>"}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `EmptySet : Space "<emptyset>"	<< &expr.Keyword{
+      Before: X[0].(*expr.Space),
+      Value: "<emptyset>",
+    }, nil >>`,
+		Id:         "EmptySet",
+		NTType:     9,
+		Index:      25,
+		NumSymbols: 2,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &expr.Keyword{
+				Before: X[0].(*expr.Space),
+				Value:  "<emptyset>",
+			}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `Pattern : Empty	<< &Pattern{Empty: &Empty{X[0].(*expr.Keyword)}}, nil >>`,
+		Id:         "Pattern",
+		NTType:     10,
+		Index:      26,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Pattern{Empty: &Empty{X[0].(*expr.Keyword)}}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `Pattern : Tilde	<< &Pattern{EmptySet: &EmptySet{X[0].(*expr.Keyword)}}, nil >>`,
+		String: `Pattern : EmptySet	<< &Pattern{EmptySet: &EmptySet{X[0].(*expr.Keyword)}}, nil >>`,
 		Id:         "Pattern",
-		NTType:     8,
-		Index:      23,
+		NTType:     10,
+		Index:      27,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Pattern{EmptySet: &EmptySet{X[0].(*expr.Keyword)}}, nil
@@ -352,8 +404,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Pattern : Star	<< &Pattern{ZAny: &ZAny{Star: X[0].(*expr.Keyword)}}, nil >>`,
 		Id:         "Pattern",
-		NTType:     8,
-		Index:      24,
+		NTType:     10,
+		Index:      28,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Pattern{ZAny: &ZAny{Star: X[0].(*expr.Keyword)}}, nil
@@ -366,8 +418,8 @@ var productionsTable = ProdTab{
       Pattern: X[2].(*Pattern),
     }}, nil >>`,
 		Id:         "Pattern",
-		NTType:     8,
-		Index:      25,
+		NTType:     10,
+		Index:      29,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Pattern{TreeNode: &TreeNode{
@@ -383,8 +435,8 @@ var productionsTable = ProdTab{
       Pattern: X[1].(*Pattern),
     }}, nil >>`,
 		Id:         "Pattern",
-		NTType:     8,
-		Index:      26,
+		NTType:     10,
+		Index:      30,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Pattern{TreeNode: &TreeNode{
@@ -402,8 +454,8 @@ var productionsTable = ProdTab{
       }},
     }}, nil >>`,
 		Id:         "Pattern",
-		NTType:     8,
-		Index:      27,
+		NTType:     10,
+		Index:      31,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Pattern{TreeNode: &TreeNode{
@@ -418,8 +470,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Pattern : StartConcat	<<  >>`,
 		Id:         "Pattern",
-		NTType:     8,
-		Index:      28,
+		NTType:     10,
+		Index:      32,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return X[0], nil
@@ -428,8 +480,18 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Pattern : StartOr	<<  >>`,
 		Id:         "Pattern",
-		NTType:     8,
-		Index:      29,
+		NTType:     10,
+		Index:      33,
+		NumSymbols: 1,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return X[0], nil
+		},
+	},
+	ProdTabEntry{
+		String: `Pattern : StartWithSomeOr	<<  >>`,
+		Id:         "Pattern",
+		NTType:     10,
+		Index:      34,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return X[0], nil
@@ -438,8 +500,18 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Pattern : StartAnd	<<  >>`,
 		Id:         "Pattern",
-		NTType:     8,
-		Index:      30,
+		NTType:     10,
+		Index:      35,
+		NumSymbols: 1,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return X[0], nil
+		},
+	},
+	ProdTabEntry{
+		String: `Pattern : StartWithSomeAnd	<<  >>`,
+		Id:         "Pattern",
+		NTType:     10,
+		Index:      36,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return X[0], nil
@@ -453,8 +525,8 @@ var productionsTable = ProdTab{
       Star: X[3].(*expr.Keyword),
     }}, nil >>`,
 		Id:         "Pattern",
-		NTType:     8,
-		Index:      31,
+		NTType:     10,
+		Index:      37,
 		NumSymbols: 4,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Pattern{ZeroOrMore: &ZeroOrMore{
@@ -473,8 +545,8 @@ var productionsTable = ProdTab{
       Star: X[3].(*expr.Keyword),
     }}, nil >>`,
 		Id:         "Pattern",
-		NTType:     8,
-		Index:      32,
+		NTType:     10,
+		Index:      38,
 		NumSymbols: 4,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Pattern{ZeroOrMore: &ZeroOrMore{
@@ -491,8 +563,8 @@ var productionsTable = ProdTab{
       Name: newString(X[1]),
     }}, nil >>`,
 		Id:         "Pattern",
-		NTType:     8,
-		Index:      33,
+		NTType:     10,
+		Index:      39,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Pattern{Reference: &Reference{
@@ -509,8 +581,8 @@ var productionsTable = ProdTab{
       CloseParen: X[3].(*expr.Keyword),
     }}, nil >>`,
 		Id:         "Pattern",
-		NTType:     8,
-		Index:      34,
+		NTType:     10,
+		Index:      40,
 		NumSymbols: 4,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Pattern{Not: &Not{
@@ -530,8 +602,8 @@ var productionsTable = ProdTab{
       CloseBracket: X[4].(*expr.Keyword),
     }}, nil >>`,
 		Id:         "StartConcat",
-		NTType:     9,
-		Index:      35,
+		NTType:     11,
+		Index:      41,
 		NumSymbols: 5,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Pattern{Concat: &Concat{
@@ -546,8 +618,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ContinueConcat : Pattern	<<  >>`,
 		Id:         "ContinueConcat",
-		NTType:     10,
-		Index:      36,
+		NTType:     12,
+		Index:      42,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return X[0], nil
@@ -560,8 +632,8 @@ var productionsTable = ProdTab{
       RightPattern: X[2].(*Pattern),
     }}, nil >>`,
 		Id:         "ContinueConcat",
-		NTType:     10,
-		Index:      37,
+		NTType:     12,
+		Index:      43,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Pattern{Concat: &Concat{
@@ -580,8 +652,8 @@ var productionsTable = ProdTab{
       CloseParen: X[4].(*expr.Keyword),
     }}, nil >>`,
 		Id:         "StartOr",
-		NTType:     11,
-		Index:      38,
+		NTType:     13,
+		Index:      44,
 		NumSymbols: 5,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Pattern{Or: &Or{
@@ -596,8 +668,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ContinueOr : Pattern	<<  >>`,
 		Id:         "ContinueOr",
-		NTType:     12,
-		Index:      39,
+		NTType:     14,
+		Index:      45,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return X[0], nil
@@ -610,11 +682,61 @@ var productionsTable = ProdTab{
       RightPattern: X[2].(*Pattern),
     }}, nil >>`,
 		Id:         "ContinueOr",
-		NTType:     12,
-		Index:      40,
+		NTType:     14,
+		Index:      46,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Pattern{Or: &Or{
+				LeftPattern:  X[0].(*Pattern),
+				Pipe:         X[1].(*expr.Keyword),
+				RightPattern: X[2].(*Pattern),
+			}}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `StartWithSomeOr : OpenCurly Pattern Pipe ContinueWithSomeOr CloseCurly	<< &Pattern{WithSomeOr: &WithSomeOr{
+      OpenCurly: X[0].(*expr.Keyword),
+      LeftPattern: X[1].(*Pattern),
+      Pipe: X[2].(*expr.Keyword),
+      RightPattern: X[3].(*Pattern),
+      CloseCurly: X[4].(*expr.Keyword),
+    }}, nil >>`,
+		Id:         "StartWithSomeOr",
+		NTType:     15,
+		Index:      47,
+		NumSymbols: 5,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &Pattern{WithSomeOr: &WithSomeOr{
+				OpenCurly:    X[0].(*expr.Keyword),
+				LeftPattern:  X[1].(*Pattern),
+				Pipe:         X[2].(*expr.Keyword),
+				RightPattern: X[3].(*Pattern),
+				CloseCurly:   X[4].(*expr.Keyword),
+			}}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `ContinueWithSomeOr : Pattern	<<  >>`,
+		Id:         "ContinueWithSomeOr",
+		NTType:     16,
+		Index:      48,
+		NumSymbols: 1,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return X[0], nil
+		},
+	},
+	ProdTabEntry{
+		String: `ContinueWithSomeOr : ContinueWithSomeOr Pipe Pattern	<< &Pattern{WithSomeOr: &WithSomeOr{
+      LeftPattern: X[0].(*Pattern),
+      Pipe: X[1].(*expr.Keyword),
+      RightPattern: X[2].(*Pattern),
+    }}, nil >>`,
+		Id:         "ContinueWithSomeOr",
+		NTType:     16,
+		Index:      49,
+		NumSymbols: 3,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &Pattern{WithSomeOr: &WithSomeOr{
 				LeftPattern:  X[0].(*Pattern),
 				Pipe:         X[1].(*expr.Keyword),
 				RightPattern: X[2].(*Pattern),
@@ -630,8 +752,8 @@ var productionsTable = ProdTab{
       CloseParen: X[4].(*expr.Keyword),
     }}, nil >>`,
 		Id:         "StartAnd",
-		NTType:     13,
-		Index:      41,
+		NTType:     17,
+		Index:      50,
 		NumSymbols: 5,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Pattern{And: &And{
@@ -646,8 +768,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ContinueAnd : Pattern	<<  >>`,
 		Id:         "ContinueAnd",
-		NTType:     14,
-		Index:      42,
+		NTType:     18,
+		Index:      51,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return X[0], nil
@@ -660,8 +782,8 @@ var productionsTable = ProdTab{
       RightPattern: X[2].(*Pattern),
     }}, nil >>`,
 		Id:         "ContinueAnd",
-		NTType:     14,
-		Index:      43,
+		NTType:     18,
+		Index:      52,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Pattern{And: &And{
@@ -672,10 +794,60 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
+		String: `StartWithSomeAnd : OpenCurly Pattern Ampersand ContinueWithSomeAnd CloseCurly	<< &Pattern{WithSomeAnd: &WithSomeAnd{
+      OpenCurly: X[0].(*expr.Keyword),
+      LeftPattern: X[1].(*Pattern),
+      Ampersand: X[2].(*expr.Keyword),
+      RightPattern: X[3].(*Pattern),
+      CloseCurly: X[4].(*expr.Keyword),
+    }}, nil >>`,
+		Id:         "StartWithSomeAnd",
+		NTType:     19,
+		Index:      53,
+		NumSymbols: 5,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &Pattern{WithSomeAnd: &WithSomeAnd{
+				OpenCurly:    X[0].(*expr.Keyword),
+				LeftPattern:  X[1].(*Pattern),
+				Ampersand:    X[2].(*expr.Keyword),
+				RightPattern: X[3].(*Pattern),
+				CloseCurly:   X[4].(*expr.Keyword),
+			}}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `ContinueWithSomeAnd : Pattern	<<  >>`,
+		Id:         "ContinueWithSomeAnd",
+		NTType:     20,
+		Index:      54,
+		NumSymbols: 1,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return X[0], nil
+		},
+	},
+	ProdTabEntry{
+		String: `ContinueWithSomeAnd : ContinueWithSomeAnd Ampersand Pattern	<< &Pattern{WithSomeAnd: &WithSomeAnd{
+      LeftPattern: X[0].(*Pattern),
+      Ampersand: X[1].(*expr.Keyword),
+      RightPattern: X[2].(*Pattern),
+    }}, nil >>`,
+		Id:         "ContinueWithSomeAnd",
+		NTType:     20,
+		Index:      55,
+		NumSymbols: 3,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &Pattern{WithSomeAnd: &WithSomeAnd{
+				LeftPattern:  X[0].(*Pattern),
+				Ampersand:    X[1].(*expr.Keyword),
+				RightPattern: X[2].(*Pattern),
+			}}, nil
+		},
+	},
+	ProdTabEntry{
 		String: `Expr : SpaceTerminal	<< &expr.Expr{Terminal: X[0].(*expr.Terminal)}, nil >>`,
 		Id:         "Expr",
-		NTType:     15,
-		Index:      44,
+		NTType:     21,
+		Index:      56,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Expr{Terminal: X[0].(*expr.Terminal)}, nil
@@ -684,8 +856,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Expr : Function	<< &expr.Expr{Function: X[0].(*expr.Function)}, nil >>`,
 		Id:         "Expr",
-		NTType:     15,
-		Index:      45,
+		NTType:     21,
+		Index:      57,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Expr{Function: X[0].(*expr.Function)}, nil
@@ -694,8 +866,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Expr : List	<< &expr.Expr{List: X[0].(*expr.List)}, nil >>`,
 		Id:         "Expr",
-		NTType:     15,
-		Index:      46,
+		NTType:     21,
+		Index:      58,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Expr{List: X[0].(*expr.List)}, nil
@@ -704,8 +876,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Function : Space id OpenParen Exprs CloseParen	<< &expr.Function{Before: X[0].(*expr.Space), Name: newString(X[1]), OpenParen: X[2].(*expr.Keyword), Params: X[3].([]*expr.Expr), CloseParen: X[4].(*expr.Keyword)}, nil >>`,
 		Id:         "Function",
-		NTType:     16,
-		Index:      47,
+		NTType:     22,
+		Index:      59,
 		NumSymbols: 5,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Function{Before: X[0].(*expr.Space), Name: newString(X[1]), OpenParen: X[2].(*expr.Keyword), Params: X[3].([]*expr.Expr), CloseParen: X[4].(*expr.Keyword)}, nil
@@ -714,8 +886,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Function : Space id OpenParen CloseParen	<< &expr.Function{Before: X[0].(*expr.Space), Name: newString(X[1]), OpenParen: X[2].(*expr.Keyword), CloseParen: X[3].(*expr.Keyword)}, nil >>`,
 		Id:         "Function",
-		NTType:     16,
-		Index:      48,
+		NTType:     22,
+		Index:      60,
 		NumSymbols: 4,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Function{Before: X[0].(*expr.Space), Name: newString(X[1]), OpenParen: X[2].(*expr.Keyword), CloseParen: X[3].(*expr.Keyword)}, nil
@@ -724,8 +896,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Function : id OpenParen Exprs CloseParen	<< &expr.Function{Name: newString(X[0]), OpenParen: X[1].(*expr.Keyword), Params: X[2].([]*expr.Expr), CloseParen: X[3].(*expr.Keyword)}, nil >>`,
 		Id:         "Function",
-		NTType:     16,
-		Index:      49,
+		NTType:     22,
+		Index:      61,
 		NumSymbols: 4,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Function{Name: newString(X[0]), OpenParen: X[1].(*expr.Keyword), Params: X[2].([]*expr.Expr), CloseParen: X[3].(*expr.Keyword)}, nil
@@ -734,8 +906,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Function : id OpenParen CloseParen	<< &expr.Function{Name: newString(X[0]), OpenParen: X[1].(*expr.Keyword), CloseParen: X[2].(*expr.Keyword)}, nil >>`,
 		Id:         "Function",
-		NTType:     16,
-		Index:      50,
+		NTType:     22,
+		Index:      62,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Function{Name: newString(X[0]), OpenParen: X[1].(*expr.Keyword), CloseParen: X[2].(*expr.Keyword)}, nil
@@ -744,8 +916,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `List : Space ListType OpenCurly Exprs CloseCurly	<< &expr.List{Before: X[0].(*expr.Space), Type: X[1].(types.Type), OpenCurly: X[2].(*expr.Keyword), Elems: X[3].([]*expr.Expr), CloseCurly: X[4].(*expr.Keyword)}, nil >>`,
 		Id:         "List",
-		NTType:     17,
-		Index:      51,
+		NTType:     23,
+		Index:      63,
 		NumSymbols: 5,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.List{Before: X[0].(*expr.Space), Type: X[1].(types.Type), OpenCurly: X[2].(*expr.Keyword), Elems: X[3].([]*expr.Expr), CloseCurly: X[4].(*expr.Keyword)}, nil
@@ -754,8 +926,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `List : ListType OpenCurly Exprs CloseCurly	<< &expr.List{Type: X[0].(types.Type), OpenCurly: X[1].(*expr.Keyword), Elems: X[2].([]*expr.Expr), CloseCurly: X[3].(*expr.Keyword)}, nil >>`,
 		Id:         "List",
-		NTType:     17,
-		Index:      52,
+		NTType:     23,
+		Index:      64,
 		NumSymbols: 4,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.List{Type: X[0].(types.Type), OpenCurly: X[1].(*expr.Keyword), Elems: X[2].([]*expr.Expr), CloseCurly: X[3].(*expr.Keyword)}, nil
@@ -764,8 +936,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `List : Space ListType OpenCurly CloseCurly	<< &expr.List{Before: X[0].(*expr.Space), Type: X[1].(types.Type), OpenCurly: X[2].(*expr.Keyword), CloseCurly: X[3].(*expr.Keyword)}, nil >>`,
 		Id:         "List",
-		NTType:     17,
-		Index:      53,
+		NTType:     23,
+		Index:      65,
 		NumSymbols: 4,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.List{Before: X[0].(*expr.Space), Type: X[1].(types.Type), OpenCurly: X[2].(*expr.Keyword), CloseCurly: X[3].(*expr.Keyword)}, nil
@@ -774,8 +946,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `List : ListType OpenCurly CloseCurly	<< &expr.List{Type: X[0].(types.Type), OpenCurly: X[1].(*expr.Keyword), CloseCurly: X[2].(*expr.Keyword)}, nil >>`,
 		Id:         "List",
-		NTType:     17,
-		Index:      54,
+		NTType:     23,
+		Index:      66,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.List{Type: X[0].(types.Type), OpenCurly: X[1].(*expr.Keyword), CloseCurly: X[2].(*expr.Keyword)}, nil
@@ -784,8 +956,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Exprs : Expr	<< []*expr.Expr{X[0].(*expr.Expr)}, nil >>`,
 		Id:         "Exprs",
-		NTType:     18,
-		Index:      55,
+		NTType:     24,
+		Index:      67,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return []*expr.Expr{X[0].(*expr.Expr)}, nil
@@ -794,8 +966,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Exprs : Exprs Comma Expr	<< append(X[0].([]*expr.Expr), expr.SetExprComma(X[2], X[1])), nil >>`,
 		Id:         "Exprs",
-		NTType:     18,
-		Index:      56,
+		NTType:     24,
+		Index:      68,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return append(X[0].([]*expr.Expr), expr.SetExprComma(X[2], X[1])), nil
@@ -804,8 +976,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ListType : "[]bool"	<< types.LIST_BOOL, nil >>`,
 		Id:         "ListType",
-		NTType:     19,
-		Index:      57,
+		NTType:     25,
+		Index:      69,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return types.LIST_BOOL, nil
@@ -814,8 +986,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ListType : "[]int"	<< types.LIST_INT, nil >>`,
 		Id:         "ListType",
-		NTType:     19,
-		Index:      58,
+		NTType:     25,
+		Index:      70,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return types.LIST_INT, nil
@@ -824,8 +996,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ListType : "[]uint"	<< types.LIST_UINT, nil >>`,
 		Id:         "ListType",
-		NTType:     19,
-		Index:      59,
+		NTType:     25,
+		Index:      71,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return types.LIST_UINT, nil
@@ -834,8 +1006,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ListType : "[]double"	<< types.LIST_DOUBLE, nil >>`,
 		Id:         "ListType",
-		NTType:     19,
-		Index:      60,
+		NTType:     25,
+		Index:      72,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return types.LIST_DOUBLE, nil
@@ -844,8 +1016,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ListType : "[]string"	<< types.LIST_STRING, nil >>`,
 		Id:         "ListType",
-		NTType:     19,
-		Index:      61,
+		NTType:     25,
+		Index:      73,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return types.LIST_STRING, nil
@@ -854,8 +1026,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ListType : "[][]byte"	<< types.LIST_BYTES, nil >>`,
 		Id:         "ListType",
-		NTType:     19,
-		Index:      62,
+		NTType:     25,
+		Index:      74,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return types.LIST_BYTES, nil
@@ -864,8 +1036,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `SpaceTerminal : Terminal	<< X[0], nil >>`,
 		Id:         "SpaceTerminal",
-		NTType:     20,
-		Index:      63,
+		NTType:     26,
+		Index:      75,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return X[0], nil
@@ -874,8 +1046,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `SpaceTerminal : Space Terminal	<< expr.SetTerminalSpace(X[1], X[0]), nil >>`,
 		Id:         "SpaceTerminal",
-		NTType:     20,
-		Index:      64,
+		NTType:     26,
+		Index:      76,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.SetTerminalSpace(X[1], X[0]), nil
@@ -884,8 +1056,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Terminal : Bool	<< expr.NewBoolTerminal(X[0]), nil >>`,
 		Id:         "Terminal",
-		NTType:     21,
-		Index:      65,
+		NTType:     27,
+		Index:      77,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.NewBoolTerminal(X[0]), nil
@@ -894,8 +1066,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Terminal : int_lit	<< expr.NewIntTerminal(newString(X[0])) >>`,
 		Id:         "Terminal",
-		NTType:     21,
-		Index:      66,
+		NTType:     27,
+		Index:      78,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.NewIntTerminal(newString(X[0]))
@@ -904,8 +1076,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Terminal : uint_lit	<< expr.NewUintTerminal(newString(X[0])) >>`,
 		Id:         "Terminal",
-		NTType:     21,
-		Index:      67,
+		NTType:     27,
+		Index:      79,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.NewUintTerminal(newString(X[0]))
@@ -914,8 +1086,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Terminal : double_lit	<< expr.NewDoubleTerminal(newString(X[0])) >>`,
 		Id:         "Terminal",
-		NTType:     21,
-		Index:      68,
+		NTType:     27,
+		Index:      80,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.NewDoubleTerminal(newString(X[0]))
@@ -924,8 +1096,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Terminal : string_lit	<< expr.NewStringTerminal(newString(X[0])) >>`,
 		Id:         "Terminal",
-		NTType:     21,
-		Index:      69,
+		NTType:     27,
+		Index:      81,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.NewStringTerminal(newString(X[0]))
@@ -934,8 +1106,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Terminal : bytes_lit	<< expr.NewBytesTerminal(newString(X[0])) >>`,
 		Id:         "Terminal",
-		NTType:     21,
-		Index:      70,
+		NTType:     27,
+		Index:      82,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.NewBytesTerminal(newString(X[0]))
@@ -944,8 +1116,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Terminal : bool_var	<< expr.NewVariableTerminal(types.SINGLE_BOOL) >>`,
 		Id:         "Terminal",
-		NTType:     21,
-		Index:      71,
+		NTType:     27,
+		Index:      83,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.NewVariableTerminal(types.SINGLE_BOOL)
@@ -954,8 +1126,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Terminal : int_var	<< expr.NewVariableTerminal(types.SINGLE_INT) >>`,
 		Id:         "Terminal",
-		NTType:     21,
-		Index:      72,
+		NTType:     27,
+		Index:      84,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.NewVariableTerminal(types.SINGLE_INT)
@@ -964,8 +1136,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Terminal : uint_var	<< expr.NewVariableTerminal(types.SINGLE_UINT) >>`,
 		Id:         "Terminal",
-		NTType:     21,
-		Index:      73,
+		NTType:     27,
+		Index:      85,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.NewVariableTerminal(types.SINGLE_UINT)
@@ -974,8 +1146,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Terminal : double_var	<< expr.NewVariableTerminal(types.SINGLE_DOUBLE) >>`,
 		Id:         "Terminal",
-		NTType:     21,
-		Index:      74,
+		NTType:     27,
+		Index:      86,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.NewVariableTerminal(types.SINGLE_DOUBLE)
@@ -984,8 +1156,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Terminal : string_var	<< expr.NewVariableTerminal(types.SINGLE_STRING) >>`,
 		Id:         "Terminal",
-		NTType:     21,
-		Index:      75,
+		NTType:     27,
+		Index:      87,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.NewVariableTerminal(types.SINGLE_STRING)
@@ -994,8 +1166,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Terminal : bytes_var	<< expr.NewVariableTerminal(types.SINGLE_BYTES) >>`,
 		Id:         "Terminal",
-		NTType:     21,
-		Index:      76,
+		NTType:     27,
+		Index:      88,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.NewVariableTerminal(types.SINGLE_BYTES)
@@ -1004,8 +1176,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Bool : "true"	<< true, nil >>`,
 		Id:         "Bool",
-		NTType:     22,
-		Index:      77,
+		NTType:     28,
+		Index:      89,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return true, nil
@@ -1014,8 +1186,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Bool : "false"	<< false, nil >>`,
 		Id:         "Bool",
-		NTType:     22,
-		Index:      78,
+		NTType:     28,
+		Index:      90,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return false, nil
@@ -1024,8 +1196,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Equal : "="	<< &expr.Keyword{Value: "="}, nil >>`,
 		Id:         "Equal",
-		NTType:     23,
-		Index:      79,
+		NTType:     29,
+		Index:      91,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: "="}, nil
@@ -1037,8 +1209,8 @@ var productionsTable = ProdTab{
       Value: "=",
     }, nil >>`,
 		Id:         "Equal",
-		NTType:     23,
-		Index:      80,
+		NTType:     29,
+		Index:      92,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -1050,8 +1222,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `OpenParen : "("	<< &expr.Keyword{Value: "("}, nil >>`,
 		Id:         "OpenParen",
-		NTType:     24,
-		Index:      81,
+		NTType:     30,
+		Index:      93,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: "("}, nil
@@ -1063,8 +1235,8 @@ var productionsTable = ProdTab{
       Value: "(",
     }, nil >>`,
 		Id:         "OpenParen",
-		NTType:     24,
-		Index:      82,
+		NTType:     30,
+		Index:      94,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -1076,8 +1248,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `CloseParen : ")"	<< &expr.Keyword{Value: ")"}, nil >>`,
 		Id:         "CloseParen",
-		NTType:     25,
-		Index:      83,
+		NTType:     31,
+		Index:      95,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: ")"}, nil
@@ -1089,8 +1261,8 @@ var productionsTable = ProdTab{
       Value: ")",
     }, nil >>`,
 		Id:         "CloseParen",
-		NTType:     25,
-		Index:      84,
+		NTType:     31,
+		Index:      96,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -1102,8 +1274,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `OpenCurly : "{"	<< &expr.Keyword{Value: "{"}, nil >>`,
 		Id:         "OpenCurly",
-		NTType:     26,
-		Index:      85,
+		NTType:     32,
+		Index:      97,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: "{"}, nil
@@ -1115,8 +1287,8 @@ var productionsTable = ProdTab{
       Value: "{",
     }, nil >>`,
 		Id:         "OpenCurly",
-		NTType:     26,
-		Index:      86,
+		NTType:     32,
+		Index:      98,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -1128,8 +1300,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `CloseCurly : "}"	<< &expr.Keyword{Value: "}"}, nil >>`,
 		Id:         "CloseCurly",
-		NTType:     27,
-		Index:      87,
+		NTType:     33,
+		Index:      99,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: "}"}, nil
@@ -1141,8 +1313,8 @@ var productionsTable = ProdTab{
       Value: "}",
     }, nil >>`,
 		Id:         "CloseCurly",
-		NTType:     27,
-		Index:      88,
+		NTType:     33,
+		Index:      100,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -1154,8 +1326,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Comma : ","	<< &expr.Keyword{Value: ","}, nil >>`,
 		Id:         "Comma",
-		NTType:     28,
-		Index:      89,
+		NTType:     34,
+		Index:      101,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: ","}, nil
@@ -1167,8 +1339,8 @@ var productionsTable = ProdTab{
       Value: ",",
     }, nil >>`,
 		Id:         "Comma",
-		NTType:     28,
-		Index:      90,
+		NTType:     34,
+		Index:      102,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -1180,8 +1352,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `SemiColon : ";"	<< &expr.Keyword{Value: ";"}, nil >>`,
 		Id:         "SemiColon",
-		NTType:     29,
-		Index:      91,
+		NTType:     35,
+		Index:      103,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: ";"}, nil
@@ -1193,8 +1365,8 @@ var productionsTable = ProdTab{
       Value: ";",
     }, nil >>`,
 		Id:         "SemiColon",
-		NTType:     29,
-		Index:      92,
+		NTType:     35,
+		Index:      104,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -1206,8 +1378,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `HashTag : "#"	<< &expr.Keyword{Value: "#"}, nil >>`,
 		Id:         "HashTag",
-		NTType:     30,
-		Index:      93,
+		NTType:     36,
+		Index:      105,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: "#"}, nil
@@ -1219,8 +1391,8 @@ var productionsTable = ProdTab{
       Value: "#",
     }, nil >>`,
 		Id:         "HashTag",
-		NTType:     30,
-		Index:      94,
+		NTType:     36,
+		Index:      106,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -1232,8 +1404,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Ampersand : "&"	<< &expr.Keyword{Value: "&"}, nil >>`,
 		Id:         "Ampersand",
-		NTType:     31,
-		Index:      95,
+		NTType:     37,
+		Index:      107,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: "&"}, nil
@@ -1245,8 +1417,8 @@ var productionsTable = ProdTab{
       Value: "&",
     }, nil >>`,
 		Id:         "Ampersand",
-		NTType:     31,
-		Index:      96,
+		NTType:     37,
+		Index:      108,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -1258,8 +1430,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Pipe : "|"	<< &expr.Keyword{Value: "|"}, nil >>`,
 		Id:         "Pipe",
-		NTType:     32,
-		Index:      97,
+		NTType:     38,
+		Index:      109,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: "|"}, nil
@@ -1271,8 +1443,8 @@ var productionsTable = ProdTab{
       Value: "|",
     }, nil >>`,
 		Id:         "Pipe",
-		NTType:     32,
-		Index:      98,
+		NTType:     38,
+		Index:      110,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -1284,8 +1456,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `OpenBracket : "["	<< &expr.Keyword{Value: "["}, nil >>`,
 		Id:         "OpenBracket",
-		NTType:     33,
-		Index:      99,
+		NTType:     39,
+		Index:      111,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: "["}, nil
@@ -1297,8 +1469,8 @@ var productionsTable = ProdTab{
       Value: "[",
     }, nil >>`,
 		Id:         "OpenBracket",
-		NTType:     33,
-		Index:      100,
+		NTType:     39,
+		Index:      112,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -1310,8 +1482,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `CloseBracket : "]"	<< &expr.Keyword{Value: "]"}, nil >>`,
 		Id:         "CloseBracket",
-		NTType:     34,
-		Index:      101,
+		NTType:     40,
+		Index:      113,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: "]"}, nil
@@ -1323,8 +1495,8 @@ var productionsTable = ProdTab{
       Value: "]",
     }, nil >>`,
 		Id:         "CloseBracket",
-		NTType:     34,
-		Index:      102,
+		NTType:     40,
+		Index:      114,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -1336,8 +1508,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Colon : ":"	<< &expr.Keyword{Value: ":"}, nil >>`,
 		Id:         "Colon",
-		NTType:     35,
-		Index:      103,
+		NTType:     41,
+		Index:      115,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: ":"}, nil
@@ -1349,8 +1521,8 @@ var productionsTable = ProdTab{
       Value: ":",
     }, nil >>`,
 		Id:         "Colon",
-		NTType:     35,
-		Index:      104,
+		NTType:     41,
+		Index:      116,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -1362,8 +1534,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Exclamation : "!"	<< &expr.Keyword{Value: "!"}, nil >>`,
 		Id:         "Exclamation",
-		NTType:     36,
-		Index:      105,
+		NTType:     42,
+		Index:      117,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: "!"}, nil
@@ -1375,8 +1547,8 @@ var productionsTable = ProdTab{
       Value: "!",
     }, nil >>`,
 		Id:         "Exclamation",
-		NTType:     36,
-		Index:      106,
+		NTType:     42,
+		Index:      118,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -1388,8 +1560,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Star : "*"	<< &expr.Keyword{Value: "*"}, nil >>`,
 		Id:         "Star",
-		NTType:     37,
-		Index:      107,
+		NTType:     43,
+		Index:      119,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: "*"}, nil
@@ -1401,8 +1573,8 @@ var productionsTable = ProdTab{
       Value: "*",
     }, nil >>`,
 		Id:         "Star",
-		NTType:     37,
-		Index:      108,
+		NTType:     43,
+		Index:      120,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -1414,8 +1586,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Underscore : "_"	<< &expr.Keyword{Value: "_"}, nil >>`,
 		Id:         "Underscore",
-		NTType:     38,
-		Index:      109,
+		NTType:     44,
+		Index:      121,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: "_"}, nil
@@ -1427,8 +1599,8 @@ var productionsTable = ProdTab{
       Value: "_",
     }, nil >>`,
 		Id:         "Underscore",
-		NTType:     38,
-		Index:      110,
+		NTType:     44,
+		Index:      122,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -1440,8 +1612,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Tilde : "~"	<< &expr.Keyword{Value: "~"}, nil >>`,
 		Id:         "Tilde",
-		NTType:     39,
-		Index:      111,
+		NTType:     45,
+		Index:      123,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: "~"}, nil
@@ -1453,8 +1625,8 @@ var productionsTable = ProdTab{
       Value: "~",
     }, nil >>`,
 		Id:         "Tilde",
-		NTType:     39,
-		Index:      112,
+		NTType:     45,
+		Index:      124,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -1466,8 +1638,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Dot : "."	<< &expr.Keyword{Value: "."}, nil >>`,
 		Id:         "Dot",
-		NTType:     40,
-		Index:      113,
+		NTType:     46,
+		Index:      125,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: "."}, nil
@@ -1479,8 +1651,8 @@ var productionsTable = ProdTab{
       Value: ".",
     }, nil >>`,
 		Id:         "Dot",
-		NTType:     40,
-		Index:      114,
+		NTType:     46,
+		Index:      126,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -1492,8 +1664,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `At : "@"	<< &expr.Keyword{Value: "@"}, nil >>`,
 		Id:         "At",
-		NTType:     41,
-		Index:      115,
+		NTType:     47,
+		Index:      127,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: "@"}, nil
@@ -1505,8 +1677,8 @@ var productionsTable = ProdTab{
       Value: "@",
     }, nil >>`,
 		Id:         "At",
-		NTType:     41,
-		Index:      116,
+		NTType:     47,
+		Index:      128,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -1518,8 +1690,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `RightArrow : "->"	<< &expr.Keyword{Value: "->"}, nil >>`,
 		Id:         "RightArrow",
-		NTType:     42,
-		Index:      117,
+		NTType:     48,
+		Index:      129,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{Value: "->"}, nil
@@ -1531,8 +1703,8 @@ var productionsTable = ProdTab{
       Value: "->",
     }, nil >>`,
 		Id:         "RightArrow",
-		NTType:     42,
-		Index:      118,
+		NTType:     48,
+		Index:      130,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
@@ -1544,8 +1716,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Space : Space space	<< expr.AppendSpace(X[0], newString(X[1])), nil >>`,
 		Id:         "Space",
-		NTType:     43,
-		Index:      119,
+		NTType:     49,
+		Index:      131,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return expr.AppendSpace(X[0], newString(X[1])), nil
@@ -1554,8 +1726,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Space : space	<< &expr.Space{Space: []string{newString(X[0])}}, nil >>`,
 		Id:         "Space",
-		NTType:     43,
-		Index:      120,
+		NTType:     49,
+		Index:      132,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Space{Space: []string{newString(X[0])}}, nil

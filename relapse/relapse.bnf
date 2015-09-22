@@ -84,7 +84,7 @@ Name
   ;
 
 NameExpr
-  : Dot     << &NameExpr{AnyName: &AnyName{$0.(*expr.Keyword)}}, nil >>
+  : Underscore   << &NameExpr{AnyName: &AnyName{$0.(*expr.Keyword)}}, nil >>
   | Name
   | Exclamation OpenParen NameExpr CloseParen <<
     &NameExpr{AnyNameExcept: &AnyNameExcept{
@@ -120,9 +120,29 @@ ContinueNameChoice
   >>
   ;
 
+Empty
+  : "<empty>" << &expr.Keyword{Value: "<empty>"}, nil >>
+  | Space "<empty>" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "<empty>",
+    }, nil
+  >>
+  ;
+
+EmptySet
+  : "<emptyset>" << &expr.Keyword{Value: "<emptyset>"}, nil >>
+  | Space "<emptyset>" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "<emptyset>",
+    }, nil
+  >>
+  ;
+
 Pattern
-  : Underscore << &Pattern{Empty: &Empty{$0.(*expr.Keyword)}}, nil >>
-  | Tilde  << &Pattern{EmptySet: &EmptySet{$0.(*expr.Keyword)}}, nil >>
+  : Empty << &Pattern{Empty: &Empty{$0.(*expr.Keyword)}}, nil >>
+  | EmptySet  << &Pattern{EmptySet: &EmptySet{$0.(*expr.Keyword)}}, nil >>
   | Star   << &Pattern{ZAny: &ZAny{Star: $0.(*expr.Keyword)}}, nil >>
   | NameExpr Colon Pattern <<
     &Pattern{TreeNode: &TreeNode{
@@ -148,7 +168,9 @@ Pattern
   >>
   | StartConcat
   | StartOr
+  | StartWithSomeOr
   | StartAnd
+  | StartWithSomeAnd
   | OpenParen Pattern CloseParen Star <<
     &Pattern{ZeroOrMore: &ZeroOrMore{
       OpenParen: $0.(*expr.Keyword),
@@ -227,6 +249,29 @@ ContinueOr
   >>
   ;
 
+StartWithSomeOr
+  : OpenCurly Pattern Pipe ContinueWithSomeOr CloseCurly <<
+    &Pattern{WithSomeOr: &WithSomeOr{
+      OpenCurly: $0.(*expr.Keyword),
+      LeftPattern: $1.(*Pattern),
+      Pipe: $2.(*expr.Keyword),
+      RightPattern: $3.(*Pattern),
+      CloseCurly: $4.(*expr.Keyword),
+    }}, nil
+  >>
+  ;
+
+ContinueWithSomeOr
+  : Pattern
+  | ContinueWithSomeOr Pipe Pattern <<
+    &Pattern{WithSomeOr: &WithSomeOr{
+      LeftPattern: $0.(*Pattern),
+      Pipe: $1.(*expr.Keyword),
+      RightPattern: $2.(*Pattern),
+    }}, nil
+  >>
+  ;
+
 StartAnd
   : OpenParen Pattern Ampersand ContinueAnd CloseParen <<
     &Pattern{And: &And{
@@ -250,4 +295,26 @@ ContinueAnd
   >>
   ;
 
+StartWithSomeAnd
+  : OpenCurly Pattern Ampersand ContinueWithSomeAnd CloseCurly <<
+    &Pattern{WithSomeAnd: &WithSomeAnd{
+      OpenCurly: $0.(*expr.Keyword),
+      LeftPattern: $1.(*Pattern),
+      Ampersand: $2.(*expr.Keyword),
+      RightPattern: $3.(*Pattern),
+      CloseCurly: $4.(*expr.Keyword),
+    }}, nil
+  >>
+  ;
+
+ContinueWithSomeAnd
+  : Pattern
+  | ContinueWithSomeAnd Ampersand Pattern <<
+    &Pattern{WithSomeAnd: &WithSomeAnd{
+      LeftPattern: $0.(*Pattern),
+      Ampersand: $1.(*expr.Keyword),
+      RightPattern: $2.(*Pattern),
+    }}, nil
+  >>
+  ;
 

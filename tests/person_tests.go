@@ -260,17 +260,9 @@ func init() {
 //Is this person's name David and telephone number 0123456789
 var AndNameTelephonePerson = G{
 	"main": MatchInOrder(
-		AllOf(
-			MatchInOrder(
-				Any(),
-				MatchField("Name", Sprint(StringEq(StringVar(), StringConst("David")))),
-				Any(),
-			),
-			MatchInOrder(
-				Any(),
-				MatchField("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
-				Any(),
-			),
+		IncludingAllOf(
+			MatchField("Name", Sprint(StringEq(StringVar(), StringConst("David")))),
+			MatchField("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
 		),
 	),
 }
@@ -285,17 +277,9 @@ func init() {
 //Is this person's name David or telephone number 0123456789
 var OrNameTelephonePerson = G{
 	"main": MatchInOrder(
-		AnyOf(
-			MatchInOrder(
-				Any(),
-				MatchField("Name", Sprint(StringEq(StringVar(), StringConst("David")))),
-				Any(),
-			),
-			MatchInOrder(
-				Any(),
-				MatchField("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
-				Any(),
-			),
+		IncludingAnyOf(
+			MatchField("Name", Sprint(StringEq(StringVar(), StringConst("David")))),
+			MatchField("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
 		),
 	),
 }

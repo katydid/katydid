@@ -111,10 +111,11 @@ func convertPattern(visited map[*Pattern]string, p *Pattern, newStr func() strin
 	case *EmptySet:
 		return relapse.NewEmptySet()
 	case *TreeNode:
+		if v.Pattern.Lookahead().LeafNode != nil {
+			return relapse.NewLeafNode(v.Name, v.Pattern.Lookahead().LeafNode.Expr)
+		}
 		c := convertPattern(visited, v.Pattern, newStr)
 		return relapse.NewTreeNode(v.Name, c)
-	case *LeafNode:
-		return relapse.NewLeafNode(v.Expr)
 	case *Concat:
 		left := convertPattern(visited, v.Left, newStr)
 		right := convertPattern(visited, v.Right, newStr)

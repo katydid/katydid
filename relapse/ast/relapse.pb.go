@@ -23,7 +23,9 @@
 		LeafNode
 		Concat
 		Or
+		WithSomeOr
 		And
+		WithSomeAnd
 		ZeroOrMore
 		Reference
 		Not
@@ -185,15 +187,15 @@ func (m *Name) GetName() string {
 }
 
 type AnyName struct {
-	Dot *expr.Keyword `protobuf:"bytes,1,opt" json:"Dot,omitempty"`
+	Underscore *expr.Keyword `protobuf:"bytes,1,opt" json:"Underscore,omitempty"`
 }
 
 func (m *AnyName) Reset()      { *m = AnyName{} }
 func (*AnyName) ProtoMessage() {}
 
-func (m *AnyName) GetDot() *expr.Keyword {
+func (m *AnyName) GetUnderscore() *expr.Keyword {
 	if m != nil {
-		return m.Dot
+		return m.Underscore
 	}
 	return nil
 }
@@ -283,17 +285,19 @@ func (m *NameChoice) GetCloseParen() *expr.Keyword {
 }
 
 type Pattern struct {
-	Empty      *Empty      `protobuf:"bytes,1,opt" json:"Empty,omitempty"`
-	EmptySet   *EmptySet   `protobuf:"bytes,2,opt" json:"EmptySet,omitempty"`
-	TreeNode   *TreeNode   `protobuf:"bytes,3,opt" json:"TreeNode,omitempty"`
-	LeafNode   *LeafNode   `protobuf:"bytes,4,opt" json:"LeafNode,omitempty"`
-	Concat     *Concat     `protobuf:"bytes,5,opt" json:"Concat,omitempty"`
-	Or         *Or         `protobuf:"bytes,6,opt" json:"Or,omitempty"`
-	And        *And        `protobuf:"bytes,7,opt" json:"And,omitempty"`
-	ZeroOrMore *ZeroOrMore `protobuf:"bytes,8,opt" json:"ZeroOrMore,omitempty"`
-	Reference  *Reference  `protobuf:"bytes,9,opt" json:"Reference,omitempty"`
-	Not        *Not        `protobuf:"bytes,10,opt" json:"Not,omitempty"`
-	ZAny       *ZAny       `protobuf:"bytes,11,opt" json:"ZAny,omitempty"`
+	Empty       *Empty       `protobuf:"bytes,1,opt" json:"Empty,omitempty"`
+	EmptySet    *EmptySet    `protobuf:"bytes,2,opt" json:"EmptySet,omitempty"`
+	TreeNode    *TreeNode    `protobuf:"bytes,3,opt" json:"TreeNode,omitempty"`
+	LeafNode    *LeafNode    `protobuf:"bytes,4,opt" json:"LeafNode,omitempty"`
+	Concat      *Concat      `protobuf:"bytes,5,opt" json:"Concat,omitempty"`
+	Or          *Or          `protobuf:"bytes,6,opt" json:"Or,omitempty"`
+	And         *And         `protobuf:"bytes,7,opt" json:"And,omitempty"`
+	ZeroOrMore  *ZeroOrMore  `protobuf:"bytes,8,opt" json:"ZeroOrMore,omitempty"`
+	Reference   *Reference   `protobuf:"bytes,9,opt" json:"Reference,omitempty"`
+	Not         *Not         `protobuf:"bytes,10,opt" json:"Not,omitempty"`
+	ZAny        *ZAny        `protobuf:"bytes,11,opt" json:"ZAny,omitempty"`
+	WithSomeOr  *WithSomeOr  `protobuf:"bytes,12,opt" json:"WithSomeOr,omitempty"`
+	WithSomeAnd *WithSomeAnd `protobuf:"bytes,13,opt" json:"WithSomeAnd,omitempty"`
 }
 
 func (m *Pattern) Reset()      { *m = Pattern{} }
@@ -376,30 +380,44 @@ func (m *Pattern) GetZAny() *ZAny {
 	return nil
 }
 
+func (m *Pattern) GetWithSomeOr() *WithSomeOr {
+	if m != nil {
+		return m.WithSomeOr
+	}
+	return nil
+}
+
+func (m *Pattern) GetWithSomeAnd() *WithSomeAnd {
+	if m != nil {
+		return m.WithSomeAnd
+	}
+	return nil
+}
+
 type Empty struct {
-	Underscore *expr.Keyword `protobuf:"bytes,1,opt" json:"Underscore,omitempty"`
+	Empty *expr.Keyword `protobuf:"bytes,1,opt" json:"Empty,omitempty"`
 }
 
 func (m *Empty) Reset()      { *m = Empty{} }
 func (*Empty) ProtoMessage() {}
 
-func (m *Empty) GetUnderscore() *expr.Keyword {
+func (m *Empty) GetEmpty() *expr.Keyword {
 	if m != nil {
-		return m.Underscore
+		return m.Empty
 	}
 	return nil
 }
 
 type EmptySet struct {
-	Tilde *expr.Keyword `protobuf:"bytes,1,opt" json:"Tilde,omitempty"`
+	EmptySet *expr.Keyword `protobuf:"bytes,1,opt" json:"EmptySet,omitempty"`
 }
 
 func (m *EmptySet) Reset()      { *m = EmptySet{} }
 func (*EmptySet) ProtoMessage() {}
 
-func (m *EmptySet) GetTilde() *expr.Keyword {
+func (m *EmptySet) GetEmptySet() *expr.Keyword {
 	if m != nil {
-		return m.Tilde
+		return m.EmptySet
 	}
 	return nil
 }
@@ -548,6 +566,52 @@ func (m *Or) GetCloseParen() *expr.Keyword {
 	return nil
 }
 
+type WithSomeOr struct {
+	OpenCurly    *expr.Keyword `protobuf:"bytes,1,opt" json:"OpenCurly,omitempty"`
+	LeftPattern  *Pattern      `protobuf:"bytes,2,opt" json:"LeftPattern,omitempty"`
+	Pipe         *expr.Keyword `protobuf:"bytes,3,opt" json:"Pipe,omitempty"`
+	RightPattern *Pattern      `protobuf:"bytes,4,opt" json:"RightPattern,omitempty"`
+	CloseCurly   *expr.Keyword `protobuf:"bytes,5,opt" json:"CloseCurly,omitempty"`
+}
+
+func (m *WithSomeOr) Reset()      { *m = WithSomeOr{} }
+func (*WithSomeOr) ProtoMessage() {}
+
+func (m *WithSomeOr) GetOpenCurly() *expr.Keyword {
+	if m != nil {
+		return m.OpenCurly
+	}
+	return nil
+}
+
+func (m *WithSomeOr) GetLeftPattern() *Pattern {
+	if m != nil {
+		return m.LeftPattern
+	}
+	return nil
+}
+
+func (m *WithSomeOr) GetPipe() *expr.Keyword {
+	if m != nil {
+		return m.Pipe
+	}
+	return nil
+}
+
+func (m *WithSomeOr) GetRightPattern() *Pattern {
+	if m != nil {
+		return m.RightPattern
+	}
+	return nil
+}
+
+func (m *WithSomeOr) GetCloseCurly() *expr.Keyword {
+	if m != nil {
+		return m.CloseCurly
+	}
+	return nil
+}
+
 type And struct {
 	OpenParen    *expr.Keyword `protobuf:"bytes,1,opt" json:"OpenParen,omitempty"`
 	LeftPattern  *Pattern      `protobuf:"bytes,2,opt" json:"LeftPattern,omitempty"`
@@ -590,6 +654,52 @@ func (m *And) GetRightPattern() *Pattern {
 func (m *And) GetCloseParen() *expr.Keyword {
 	if m != nil {
 		return m.CloseParen
+	}
+	return nil
+}
+
+type WithSomeAnd struct {
+	OpenCurly    *expr.Keyword `protobuf:"bytes,1,opt" json:"OpenCurly,omitempty"`
+	LeftPattern  *Pattern      `protobuf:"bytes,2,opt" json:"LeftPattern,omitempty"`
+	Ampersand    *expr.Keyword `protobuf:"bytes,3,opt" json:"Ampersand,omitempty"`
+	RightPattern *Pattern      `protobuf:"bytes,4,opt" json:"RightPattern,omitempty"`
+	CloseCurly   *expr.Keyword `protobuf:"bytes,5,opt" json:"CloseCurly,omitempty"`
+}
+
+func (m *WithSomeAnd) Reset()      { *m = WithSomeAnd{} }
+func (*WithSomeAnd) ProtoMessage() {}
+
+func (m *WithSomeAnd) GetOpenCurly() *expr.Keyword {
+	if m != nil {
+		return m.OpenCurly
+	}
+	return nil
+}
+
+func (m *WithSomeAnd) GetLeftPattern() *Pattern {
+	if m != nil {
+		return m.LeftPattern
+	}
+	return nil
+}
+
+func (m *WithSomeAnd) GetAmpersand() *expr.Keyword {
+	if m != nil {
+		return m.Ampersand
+	}
+	return nil
+}
+
+func (m *WithSomeAnd) GetRightPattern() *Pattern {
+	if m != nil {
+		return m.RightPattern
+	}
+	return nil
+}
+
+func (m *WithSomeAnd) GetCloseCurly() *expr.Keyword {
+	if m != nil {
+		return m.CloseCurly
 	}
 	return nil
 }
@@ -863,7 +973,7 @@ func (this *AnyName) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if !this.Dot.Equal(that1.Dot) {
+	if !this.Underscore.Equal(that1.Underscore) {
 		return false
 	}
 	return true
@@ -992,6 +1102,12 @@ func (this *Pattern) Equal(that interface{}) bool {
 	if !this.ZAny.Equal(that1.ZAny) {
 		return false
 	}
+	if !this.WithSomeOr.Equal(that1.WithSomeOr) {
+		return false
+	}
+	if !this.WithSomeAnd.Equal(that1.WithSomeAnd) {
+		return false
+	}
 	return true
 }
 func (this *Empty) Equal(that interface{}) bool {
@@ -1014,7 +1130,7 @@ func (this *Empty) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if !this.Underscore.Equal(that1.Underscore) {
+	if !this.Empty.Equal(that1.Empty) {
 		return false
 	}
 	return true
@@ -1039,7 +1155,7 @@ func (this *EmptySet) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if !this.Tilde.Equal(that1.Tilde) {
+	if !this.EmptySet.Equal(that1.EmptySet) {
 		return false
 	}
 	return true
@@ -1177,6 +1293,43 @@ func (this *Or) Equal(that interface{}) bool {
 	}
 	return true
 }
+func (this *WithSomeOr) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*WithSomeOr)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.OpenCurly.Equal(that1.OpenCurly) {
+		return false
+	}
+	if !this.LeftPattern.Equal(that1.LeftPattern) {
+		return false
+	}
+	if !this.Pipe.Equal(that1.Pipe) {
+		return false
+	}
+	if !this.RightPattern.Equal(that1.RightPattern) {
+		return false
+	}
+	if !this.CloseCurly.Equal(that1.CloseCurly) {
+		return false
+	}
+	return true
+}
 func (this *And) Equal(that interface{}) bool {
 	if that == nil {
 		if this == nil {
@@ -1210,6 +1363,43 @@ func (this *And) Equal(that interface{}) bool {
 		return false
 	}
 	if !this.CloseParen.Equal(that1.CloseParen) {
+		return false
+	}
+	return true
+}
+func (this *WithSomeAnd) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*WithSomeAnd)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.OpenCurly.Equal(that1.OpenCurly) {
+		return false
+	}
+	if !this.LeftPattern.Equal(that1.LeftPattern) {
+		return false
+	}
+	if !this.Ampersand.Equal(that1.Ampersand) {
+		return false
+	}
+	if !this.RightPattern.Equal(that1.RightPattern) {
+		return false
+	}
+	if !this.CloseCurly.Equal(that1.CloseCurly) {
 		return false
 	}
 	return true
@@ -1382,7 +1572,7 @@ func (this *AnyName) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.AnyName{` +
-		`Dot:` + fmt.Sprintf("%#v", this.Dot) + `}`}, ", ")
+		`Underscore:` + fmt.Sprintf("%#v", this.Underscore) + `}`}, ", ")
 	return s
 }
 func (this *AnyNameExcept) GoString() string {
@@ -1423,7 +1613,9 @@ func (this *Pattern) GoString() string {
 		`ZeroOrMore:` + fmt.Sprintf("%#v", this.ZeroOrMore),
 		`Reference:` + fmt.Sprintf("%#v", this.Reference),
 		`Not:` + fmt.Sprintf("%#v", this.Not),
-		`ZAny:` + fmt.Sprintf("%#v", this.ZAny) + `}`}, ", ")
+		`ZAny:` + fmt.Sprintf("%#v", this.ZAny),
+		`WithSomeOr:` + fmt.Sprintf("%#v", this.WithSomeOr),
+		`WithSomeAnd:` + fmt.Sprintf("%#v", this.WithSomeAnd) + `}`}, ", ")
 	return s
 }
 func (this *Empty) GoString() string {
@@ -1431,7 +1623,7 @@ func (this *Empty) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.Empty{` +
-		`Underscore:` + fmt.Sprintf("%#v", this.Underscore) + `}`}, ", ")
+		`Empty:` + fmt.Sprintf("%#v", this.Empty) + `}`}, ", ")
 	return s
 }
 func (this *EmptySet) GoString() string {
@@ -1439,7 +1631,7 @@ func (this *EmptySet) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.EmptySet{` +
-		`Tilde:` + fmt.Sprintf("%#v", this.Tilde) + `}`}, ", ")
+		`EmptySet:` + fmt.Sprintf("%#v", this.EmptySet) + `}`}, ", ")
 	return s
 }
 func (this *TreeNode) GoString() string {
@@ -1485,6 +1677,18 @@ func (this *Or) GoString() string {
 		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
 	return s
 }
+func (this *WithSomeOr) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.WithSomeOr{` +
+		`OpenCurly:` + fmt.Sprintf("%#v", this.OpenCurly),
+		`LeftPattern:` + fmt.Sprintf("%#v", this.LeftPattern),
+		`Pipe:` + fmt.Sprintf("%#v", this.Pipe),
+		`RightPattern:` + fmt.Sprintf("%#v", this.RightPattern),
+		`CloseCurly:` + fmt.Sprintf("%#v", this.CloseCurly) + `}`}, ", ")
+	return s
+}
 func (this *And) GoString() string {
 	if this == nil {
 		return "nil"
@@ -1495,6 +1699,18 @@ func (this *And) GoString() string {
 		`Ampersand:` + fmt.Sprintf("%#v", this.Ampersand),
 		`RightPattern:` + fmt.Sprintf("%#v", this.RightPattern),
 		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
+	return s
+}
+func (this *WithSomeAnd) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.WithSomeAnd{` +
+		`OpenCurly:` + fmt.Sprintf("%#v", this.OpenCurly),
+		`LeftPattern:` + fmt.Sprintf("%#v", this.LeftPattern),
+		`Ampersand:` + fmt.Sprintf("%#v", this.Ampersand),
+		`RightPattern:` + fmt.Sprintf("%#v", this.RightPattern),
+		`CloseCurly:` + fmt.Sprintf("%#v", this.CloseCurly) + `}`}, ", ")
 	return s
 }
 func (this *ZeroOrMore) GoString() string {
@@ -1626,6 +1842,12 @@ func (this *Pattern) GetValue() interface{} {
 	if this.ZAny != nil {
 		return this.ZAny
 	}
+	if this.WithSomeOr != nil {
+		return this.WithSomeOr
+	}
+	if this.WithSomeAnd != nil {
+		return this.WithSomeAnd
+	}
 	return nil
 }
 
@@ -1653,6 +1875,10 @@ func (this *Pattern) SetValue(value interface{}) bool {
 		this.Not = vt
 	case *ZAny:
 		this.ZAny = vt
+	case *WithSomeOr:
+		this.WithSomeOr = vt
+	case *WithSomeAnd:
+		this.WithSomeAnd = vt
 	default:
 		return false
 	}

@@ -52,7 +52,7 @@ message Name {
 }
 
 message AnyName {
-	optional expr.Keyword Dot = 1;
+	optional expr.Keyword Underscore = 1;
 }
 
 message AnyNameExcept {
@@ -83,14 +83,16 @@ message Pattern {
 	optional Reference Reference = 9;
 	optional Not Not = 10;
 	optional ZAny ZAny = 11;
+	optional WithSomeOr WithSomeOr = 12;
+	optional WithSomeAnd WithSomeAnd = 13;
 }
 
 message Empty {
-	optional expr.Keyword Underscore = 1;
+	optional expr.Keyword Empty = 1;
 }
 
 message EmptySet {
-	optional expr.Keyword Tilde = 1;
+	optional expr.Keyword EmptySet = 1;
 }
 
 message TreeNode {
@@ -120,12 +122,28 @@ message Or {
 	optional expr.Keyword CloseParen = 5;
 }
 
+message WithSomeOr {
+	optional expr.Keyword OpenCurly = 1;
+	optional Pattern LeftPattern = 2;
+	optional expr.Keyword Pipe = 3;
+	optional Pattern RightPattern = 4;
+	optional expr.Keyword CloseCurly = 5;
+}
+
 message And {
 	optional expr.Keyword OpenParen = 1;
 	optional Pattern LeftPattern = 2;
 	optional expr.Keyword Ampersand = 3;
 	optional Pattern RightPattern = 4;
 	optional expr.Keyword CloseParen = 5;
+}
+
+message WithSomeAnd {
+	optional expr.Keyword OpenCurly = 1;
+	optional Pattern LeftPattern = 2;
+	optional expr.Keyword Ampersand = 3;
+	optional Pattern RightPattern = 4;
+	optional expr.Keyword CloseCurly = 5;
 }
 
 message ZeroOrMore {

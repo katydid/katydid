@@ -20,6 +20,7 @@ import (
 )
 
 //TODO what about derived left recursion
+//TODO what about right recursion when left is nullable
 func HasLeftRecursion(g *relapse.Grammar) bool {
 	refs := relapse.NewRefsLookup(g)
 	visited := make(map[*relapse.Pattern]bool)
@@ -55,6 +56,10 @@ func hasLeftRecursion(visited map[*relapse.Pattern]bool, refs relapse.RefLookup,
 		return hasLeftRecursion(visited, refs, v.GetPattern())
 	case *relapse.ZAny:
 		return false
+	case *relapse.WithSomeAnd:
+		return hasLeftRecursion(visited, refs, v.GetLeftPattern())
+	case *relapse.WithSomeOr:
+		return hasLeftRecursion(visited, refs, v.GetLeftPattern())
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }

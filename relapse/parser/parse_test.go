@@ -35,16 +35,16 @@ func TestParse(t *testing.T) {
 			a->eq($string, "aa"),
 			b->eq($int, int(123))
 		]`,
-		`A  [
-			!(~),
+		`A[
+			*,
 			[
 				a->eq($string, "aa"),
-				!(~)
+				*
 			]
 		]`,
 		`A: (a->eq($string, "aa"))*`,
 		`Desc [
-			!(~),
+			*,
 			[
 				Src->contains($string, "1") ,
 				[
@@ -54,22 +54,22 @@ func TestParse(t *testing.T) {
 			]
 		]`,
 		`(MyParent->any() &  MyParent->any())`,
-		`A [
+		`A :[
 			*,
 			a->eq($string, "aa"),
 			*
 		]`,
 		`A: (
-			!(~) &
+			* &
 			a -> eq($string, "aa") &
-			!(~)
+			*
 		)`,
 		`A: (
 			* |
 			a -> eq($string, "aa") |
 			* |
-			!(~) |
-			_
+			!(<emptyset>) |
+			<empty>
 		)`,
 		`[
 			*,
@@ -80,24 +80,34 @@ func TestParse(t *testing.T) {
 			  | (
 			  	c -> contains($string, "cc")  &
 			  	c -> contains($string, "see")  &
-			  	(
+			  	{
 			  		c -> contains($string, "sea")  |
 			  		c -> contains($string, "ocean") 
-			  	)
+			  	}
 			  )
 			  | d -> contains($string, "dd") 
 			  | d -> contains($string, "dd") 
 			  | d -> contains($string, "dd") 
 			)
 		]`,
-		`.->greaterThanOne(int(1)) `,
+		`_->greaterThanOne(int(1)) `,
 		`[
-			(. -> eq($int, int(1)) )*,
+			(_ -> eq($int, int(1)) )*,
 			bla -> any() 
 		]`,
 		`( a|b ) -> eq($int, int(1)) `,
-		`( a|.|!(b) ) -> eq($int, int(1)) `,
+		`( a|_|!(b) ) -> eq($int, int(1)) `,
 		`"\"a" -> any() `,
+		`{
+			a->any() |
+			b->any()
+		}`,
+		`{
+			a->any() &
+			b [ a->any(), b->any() ] &
+			c->any() &
+			d->any()
+		}`,
 	}
 	p := parser.NewParser()
 	for i, patternDecl := range patternDecls {

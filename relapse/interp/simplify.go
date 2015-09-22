@@ -62,6 +62,10 @@ func Simplify(refs relapse.RefLookup, p *relapse.Pattern) *relapse.Pattern {
 		return checkRef(refs, simplifyNot(Simplify(refs, v.GetPattern())))
 	case *relapse.ZAny:
 		return p
+	case *relapse.WithSomeAnd:
+		return p //TODO we can do better
+	case *relapse.WithSomeOr:
+		return p //TODO we can do better
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }

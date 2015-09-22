@@ -32,6 +32,13 @@ func (this *Pattern) Head() *PatternHead {
 	return this.head
 }
 
+func (this *Pattern) Lookahead() *PatternHead {
+	if this.head == nil {
+		return this.thunk()
+	}
+	return this.head
+}
+
 func (this *Pattern) HasNullable() bool {
 	return this.nullable != nil
 }

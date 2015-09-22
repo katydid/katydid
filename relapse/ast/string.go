@@ -64,7 +64,7 @@ func (this *Name) String() string {
 }
 
 func (this *AnyName) String() string {
-	return this.Dot.String()
+	return this.Underscore.String()
 }
 
 func (this *AnyNameExcept) String() string {
@@ -86,11 +86,11 @@ func (this *Pattern) String() string {
 }
 
 func (this *Empty) String() string {
-	return this.Underscore.String()
+	return this.Empty.String()
 }
 
 func (this *EmptySet) String() string {
-	return this.Tilde.String()
+	return this.EmptySet.String()
 }
 
 func (this *TreeNode) String() string {
@@ -114,10 +114,22 @@ func (this *Or) String() string {
 		this.CloseParen.String()
 }
 
+func (this *WithSomeOr) String() string {
+	return this.OpenCurly.String() + this.LeftPattern.String() +
+		this.Pipe.String() + this.RightPattern.String() +
+		this.CloseCurly.String()
+}
+
 func (this *And) String() string {
 	return this.OpenParen.String() + this.LeftPattern.String() +
 		this.Ampersand.String() + this.RightPattern.String() +
 		this.CloseParen.String()
+}
+
+func (this *WithSomeAnd) String() string {
+	return this.OpenCurly.String() + this.LeftPattern.String() +
+		this.Ampersand.String() + this.RightPattern.String() +
+		this.CloseCurly.String()
 }
 
 func (this *ZeroOrMore) String() string {

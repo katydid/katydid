@@ -68,7 +68,7 @@ func MatchField(name string, exprStr string) *relapse.Pattern {
 	if err != nil {
 		panic(err)
 	}
-	return relapse.NewTreeNode(relapse.NewName(name), relapse.NewLeafNode(expr))
+	return relapse.NewLeafNode(relapse.NewName(name), expr)
 }
 
 func MatchAnyField(exprStr string) *relapse.Pattern {
@@ -76,7 +76,7 @@ func MatchAnyField(exprStr string) *relapse.Pattern {
 	if err != nil {
 		panic(err)
 	}
-	return relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewLeafNode(expr))
+	return relapse.NewLeafNode(relapse.NewAnyName(), expr)
 }
 
 func MatchAnyFieldExcept(name string, exprStr string) *relapse.Pattern {
@@ -84,7 +84,7 @@ func MatchAnyFieldExcept(name string, exprStr string) *relapse.Pattern {
 	if err != nil {
 		panic(err)
 	}
-	return relapse.NewTreeNode(relapse.NewAnyNameExcept(relapse.NewName(name)), relapse.NewLeafNode(expr))
+	return relapse.NewLeafNode(relapse.NewAnyNameExcept(relapse.NewName(name)), expr)
 }
 
 func MatchAnyFields(names []string, exprStr string) *relapse.Pattern {
@@ -95,7 +95,7 @@ func MatchAnyFields(names []string, exprStr string) *relapse.Pattern {
 	if err != nil {
 		panic(err)
 	}
-	return relapse.NewTreeNode(nameChoice(names[0], names[1:]...), relapse.NewLeafNode(expr))
+	return relapse.NewLeafNode(nameChoice(names[0], names[1:]...), expr)
 }
 
 func None() *relapse.Pattern {
@@ -114,8 +114,16 @@ func AllOf(patterns ...*relapse.Pattern) *relapse.Pattern {
 	return relapse.NewAnd(patterns...)
 }
 
+func IncludingAllOf(patterns ...*relapse.Pattern) *relapse.Pattern {
+	return relapse.NewWithSomeAnd(patterns...)
+}
+
 func AnyOf(patterns ...*relapse.Pattern) *relapse.Pattern {
 	return relapse.NewOr(patterns...)
+}
+
+func IncludingAnyOf(patterns ...*relapse.Pattern) *relapse.Pattern {
+	return relapse.NewWithSomeOr(patterns...)
 }
 
 func OppositeOf(p *relapse.Pattern) *relapse.Pattern {

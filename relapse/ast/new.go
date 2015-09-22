@@ -59,13 +59,13 @@ func NewGrammar(m map[string]*Pattern) *Grammar {
 
 func NewEmpty() *Pattern {
 	return &Pattern{
-		Empty: &Empty{newUnderscore()},
+		Empty: &Empty{&expr.Keyword{Value: "<empty>"}},
 	}
 }
 
 func NewEmptySet() *Pattern {
 	return &Pattern{
-		EmptySet: &EmptySet{newTilde()},
+		EmptySet: &EmptySet{&expr.Keyword{Value: "<emptyset>"}},
 	}
 }
 
@@ -142,7 +142,7 @@ func newAt() *expr.Keyword {
 }
 
 func newRightArrow() *expr.Keyword {
-	return &expr.Keyword{Value: ">"}
+	return &expr.Keyword{Value: "->"}
 }
 
 func NewName(name string) *NameExpr {
@@ -155,7 +155,7 @@ func NewName(name string) *NameExpr {
 
 func NewAnyName() *NameExpr {
 	return &NameExpr{
-		AnyName: &AnyName{Dot: newDot()},
+		AnyName: &AnyName{Underscore: newUnderscore()},
 	}
 }
 
@@ -202,6 +202,15 @@ func newNameChoice(names []*NameExpr) *NameExpr {
 }
 
 func NewTreeNode(name *NameExpr, pattern *Pattern) *Pattern {
+	switch pattern.GetValue().(type) {
+	case *Concat, *WithSomeOr, *WithSomeAnd:
+		return &Pattern{
+			TreeNode: &TreeNode{
+				Name:    name,
+				Pattern: pattern,
+			},
+		}
+	}
 	return &Pattern{
 		TreeNode: &TreeNode{
 			Name:    name,
@@ -211,11 +220,16 @@ func NewTreeNode(name *NameExpr, pattern *Pattern) *Pattern {
 	}
 }
 
-func NewLeafNode(expr *expr.Expr) *Pattern {
+func NewLeafNode(name *NameExpr, expr *expr.Expr) *Pattern {
 	return &Pattern{
-		LeafNode: &LeafNode{
-			RightArrow: newRightArrow(),
-			Expr:       expr,
+		TreeNode: &TreeNode{
+			Name: name,
+			Pattern: &Pattern{
+				LeafNode: &LeafNode{
+					RightArrow: newRightArrow(),
+					Expr:       expr,
+				},
+			},
 		},
 	}
 }
@@ -282,6 +296,37 @@ func newOr(patterns []*Pattern) *Pattern {
 	}
 }
 
+func NewWithSomeOr(patterns ...*Pattern) *Pattern {
+	if len(patterns) == 0 {
+		return nil
+	}
+	if len(patterns) == 1 {
+		return patterns[0]
+	}
+	return &Pattern{
+		WithSomeOr: &WithSomeOr{
+			OpenCurly:    newOpenCurly(),
+			LeftPattern:  patterns[0],
+			Pipe:         newPipe(),
+			RightPattern: newWithSomeOr(patterns[1:]),
+			CloseCurly:   newCloseCurly(),
+		},
+	}
+}
+
+func newWithSomeOr(patterns []*Pattern) *Pattern {
+	if len(patterns) == 1 {
+		return patterns[0]
+	}
+	return &Pattern{
+		WithSomeOr: &WithSomeOr{
+			LeftPattern:  patterns[0],
+			Pipe:         newPipe(),
+			RightPattern: newWithSomeOr(patterns[1:]),
+		},
+	}
+}
+
 func NewAnd(patterns ...*Pattern) *Pattern {
 	if len(patterns) == 0 {
 		return nil
@@ -309,6 +354,37 @@ func newAnd(patterns []*Pattern) *Pattern {
 			LeftPattern:  patterns[0],
 			Ampersand:    newAmpersand(),
 			RightPattern: newAnd(patterns[1:]),
+		},
+	}
+}
+
+func NewWithSomeAnd(patterns ...*Pattern) *Pattern {
+	if len(patterns) == 0 {
+		return nil
+	}
+	if len(patterns) == 1 {
+		return patterns[0]
+	}
+	return &Pattern{
+		WithSomeAnd: &WithSomeAnd{
+			OpenCurly:    newOpenCurly(),
+			LeftPattern:  patterns[0],
+			Ampersand:    newAmpersand(),
+			RightPattern: newWithSomeAnd(patterns[1:]),
+			CloseCurly:   newCloseCurly(),
+		},
+	}
+}
+
+func newWithSomeAnd(patterns []*Pattern) *Pattern {
+	if len(patterns) == 1 {
+		return patterns[0]
+	}
+	return &Pattern{
+		WithSomeAnd: &WithSomeAnd{
+			LeftPattern:  patterns[0],
+			Ampersand:    newAmpersand(),
+			RightPattern: newWithSomeAnd(patterns[1:]),
 		},
 	}
 }
