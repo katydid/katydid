@@ -57,6 +57,8 @@ func newPattern(refs map[string]*Pattern, p *relapse.Pattern) *Pattern {
 		return NewNot(newPattern(refs, v.GetPattern()))
 	case *relapse.Reference:
 		return NewLazyPattern(refs[v.GetName()])
+	case *relapse.ZAny:
+		return newPattern(refs, relapse.NewNot(relapse.NewEmptySet()))
 	}
 	panic(fmt.Sprintf("unknown Pattern typ %T", typ))
 }

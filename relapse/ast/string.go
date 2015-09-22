@@ -45,7 +45,7 @@ func (this *Name) String() string {
 }
 
 func (this *AnyName) String() string {
-	return this.Star.String()
+	return this.Dot.String()
 }
 
 func (this *AnyNameExcept) String() string {
@@ -115,4 +115,8 @@ func (this *Not) String() string {
 	return this.Exclamation.String() +
 		this.OpenParen.String() + this.Pattern.String() +
 		this.CloseParen.String()
+}
+
+func (this *ZAny) String() string {
+	return this.Star.String()
 }

@@ -67,6 +67,8 @@ func Nullable(refs relapse.RefLookup, p *relapse.Pattern) bool {
 		return Nullable(refs, refs[v.GetName()])
 	case *relapse.Not:
 		return !(Nullable(refs, v.GetPattern()))
+	case *relapse.ZAny:
+		return true
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
@@ -174,6 +176,8 @@ func deriv(refs relapse.RefLookup, p *relapse.Pattern, tree serialize.Scanner) *
 		return sderiv(refs, refs[v.GetName()], tree)
 	case *relapse.Not:
 		return relapse.NewNot(sderiv(refs, v.GetPattern(), tree))
+	case *relapse.ZAny:
+		return deriv(refs, relapse.NewNot(relapse.NewEmptySet()), tree)
 	}
 	panic(fmt.Sprintf("unknown typ %T", typ))
 }

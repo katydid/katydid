@@ -78,6 +78,8 @@ func sat(refs relapse.RefLookup, p *relapse.Pattern) bool {
 		return sat(refs, refs[v.GetName()])
 	case *relapse.Not:
 		return true // TODO
+	case *relapse.ZAny:
+		return true
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }

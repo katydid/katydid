@@ -69,6 +69,8 @@ func getLeafs(refs relapse.RefLookup, p *relapse.Pattern, path []string) []*expr
 		return getLeafs(refs, refs[v.GetName()], path)
 	case *relapse.Not:
 		return getLeafs(refs, v.GetPattern(), path)
+	case *relapse.ZAny:
+		return getLeafs(refs, relapse.NewNot(relapse.NewEmptySet()), path)
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
@@ -175,6 +177,8 @@ func replace(refs relapse.RefLookup, p *relapse.Pattern, path []string, current 
 		return
 	case *relapse.Not:
 		replace(refs, v.GetPattern(), path, current, replacement)
+		return
+	case *relapse.ZAny:
 		return
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))

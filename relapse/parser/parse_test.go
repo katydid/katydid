@@ -53,9 +53,9 @@ func TestParse(t *testing.T) {
 		]`,
 		`main = ("MyParent": { int(1) } &  "MyParent": { int(2)})`,
 		`main = "A": [
-			!(~),
+			*,
 			"a": { eq($string, "aa") },
-			!(~)
+			*
 		]`,
 		`main = "A": (
 			!(~) &
@@ -65,7 +65,7 @@ func TestParse(t *testing.T) {
 		`main = "A": (
 			!(~) |
 			"a": { eq($string, "aa") } |
-			!(~) |
+			* |
 			!(~) |
 			!(~)
 		)`,
@@ -86,13 +86,13 @@ func TestParse(t *testing.T) {
 			  | "d": { contains($string, "dd") }
 			)
 		]`,
-		`main = *: { int(1) }`,
+		`main = .: { int(1) }`,
 		`main = [
-			(*: { eq($int, int(1)) })*,
+			(.: { eq($int, int(1)) })*,
 			"bla": { true }
 		]`,
 		`main = ( "a"|"b" ): { eq($int, int(1)) }`,
-		`main =( "a"|*|!("b") ): { eq($int, int(1)) }`,
+		`main =( "a"|.|!("b") ): { eq($int, int(1)) }`,
 	}
 	p := parser.NewParser()
 	for i, patternDecl := range patternDecls {

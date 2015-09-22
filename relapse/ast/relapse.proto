@@ -50,7 +50,7 @@ message Name {
 }
 
 message AnyName {
-	optional expr.Keyword Star = 1;
+	optional expr.Keyword Dot = 1;
 }
 
 message AnyNameExcept {
@@ -80,6 +80,7 @@ message Pattern {
 	optional ZeroOrMore ZeroOrMore = 8;
 	optional Reference Reference = 9;
 	optional Not Not = 10;
+	optional ZAny ZAny = 11;
 }
 
 message Empty {
@@ -143,4 +144,8 @@ message Not {
 	optional expr.Keyword OpenParen = 2;
 	optional Pattern Pattern = 3;
 	optional expr.Keyword CloseParen = 4;
+}
+
+message ZAny {
+	optional expr.Keyword Star = 1;
 }

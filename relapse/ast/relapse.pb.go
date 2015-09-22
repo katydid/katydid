@@ -27,6 +27,7 @@
 		ZeroOrMore
 		Reference
 		Not
+		ZAny
 */
 package relapse
 
@@ -168,15 +169,15 @@ func (m *Name) GetName() string {
 }
 
 type AnyName struct {
-	Star *expr.Keyword `protobuf:"bytes,1,opt" json:"Star,omitempty"`
+	Dot *expr.Keyword `protobuf:"bytes,1,opt" json:"Dot,omitempty"`
 }
 
 func (m *AnyName) Reset()      { *m = AnyName{} }
 func (*AnyName) ProtoMessage() {}
 
-func (m *AnyName) GetStar() *expr.Keyword {
+func (m *AnyName) GetDot() *expr.Keyword {
 	if m != nil {
-		return m.Star
+		return m.Dot
 	}
 	return nil
 }
@@ -276,6 +277,7 @@ type Pattern struct {
 	ZeroOrMore *ZeroOrMore `protobuf:"bytes,8,opt" json:"ZeroOrMore,omitempty"`
 	Reference  *Reference  `protobuf:"bytes,9,opt" json:"Reference,omitempty"`
 	Not        *Not        `protobuf:"bytes,10,opt" json:"Not,omitempty"`
+	ZAny       *ZAny       `protobuf:"bytes,11,opt" json:"ZAny,omitempty"`
 }
 
 func (m *Pattern) Reset()      { *m = Pattern{} }
@@ -347,6 +349,13 @@ func (m *Pattern) GetReference() *Reference {
 func (m *Pattern) GetNot() *Not {
 	if m != nil {
 		return m.Not
+	}
+	return nil
+}
+
+func (m *Pattern) GetZAny() *ZAny {
+	if m != nil {
+		return m.ZAny
 	}
 	return nil
 }
@@ -675,6 +684,20 @@ func (m *Not) GetCloseParen() *expr.Keyword {
 	return nil
 }
 
+type ZAny struct {
+	Star *expr.Keyword `protobuf:"bytes,1,opt" json:"Star,omitempty"`
+}
+
+func (m *ZAny) Reset()      { *m = ZAny{} }
+func (*ZAny) ProtoMessage() {}
+
+func (m *ZAny) GetStar() *expr.Keyword {
+	if m != nil {
+		return m.Star
+	}
+	return nil
+}
+
 func init() {
 }
 func (this *Grammar) Equal(that interface{}) bool {
@@ -826,7 +849,7 @@ func (this *AnyName) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if !this.Star.Equal(that1.Star) {
+	if !this.Dot.Equal(that1.Dot) {
 		return false
 	}
 	return true
@@ -950,6 +973,9 @@ func (this *Pattern) Equal(that interface{}) bool {
 		return false
 	}
 	if !this.Not.Equal(that1.Not) {
+		return false
+	}
+	if !this.ZAny.Equal(that1.ZAny) {
 		return false
 	}
 	return true
@@ -1273,6 +1299,31 @@ func (this *Not) Equal(that interface{}) bool {
 	}
 	return true
 }
+func (this *ZAny) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*ZAny)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Star.Equal(that1.Star) {
+		return false
+	}
+	return true
+}
 func (this *Grammar) GoString() string {
 	if this == nil {
 		return "nil"
@@ -1318,7 +1369,7 @@ func (this *AnyName) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.AnyName{` +
-		`Star:` + fmt.Sprintf("%#v", this.Star) + `}`}, ", ")
+		`Dot:` + fmt.Sprintf("%#v", this.Dot) + `}`}, ", ")
 	return s
 }
 func (this *AnyNameExcept) GoString() string {
@@ -1358,7 +1409,8 @@ func (this *Pattern) GoString() string {
 		`And:` + fmt.Sprintf("%#v", this.And),
 		`ZeroOrMore:` + fmt.Sprintf("%#v", this.ZeroOrMore),
 		`Reference:` + fmt.Sprintf("%#v", this.Reference),
-		`Not:` + fmt.Sprintf("%#v", this.Not) + `}`}, ", ")
+		`Not:` + fmt.Sprintf("%#v", this.Not),
+		`ZAny:` + fmt.Sprintf("%#v", this.ZAny) + `}`}, ", ")
 	return s
 }
 func (this *Empty) GoString() string {
@@ -1464,6 +1516,14 @@ func (this *Not) GoString() string {
 		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
 	return s
 }
+func (this *ZAny) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.ZAny{` +
+		`Star:` + fmt.Sprintf("%#v", this.Star) + `}`}, ", ")
+	return s
+}
 func valueToGoStringRelapse(v interface{}, typ string) string {
 	rv := reflect.ValueOf(v)
 	if rv.IsNil() {
@@ -1551,6 +1611,9 @@ func (this *Pattern) GetValue() interface{} {
 	if this.Not != nil {
 		return this.Not
 	}
+	if this.ZAny != nil {
+		return this.ZAny
+	}
 	return nil
 }
 
@@ -1576,6 +1639,8 @@ func (this *Pattern) SetValue(value interface{}) bool {
 		this.Reference = vt
 	case *Not:
 		this.Not = vt
+	case *ZAny:
+		this.ZAny = vt
 	default:
 		return false
 	}

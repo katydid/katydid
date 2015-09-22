@@ -124,6 +124,10 @@ func newTilde() *expr.Keyword {
 	return &expr.Keyword{Value: "~"}
 }
 
+func newDot() *expr.Keyword {
+	return &expr.Keyword{Value: "."}
+}
+
 func NewName(name string) *NameExpr {
 	return &NameExpr{
 		Name: &Name{
@@ -134,7 +138,7 @@ func NewName(name string) *NameExpr {
 
 func NewAnyName() *NameExpr {
 	return &NameExpr{
-		AnyName: &AnyName{Star: newStar()},
+		AnyName: &AnyName{Dot: newDot()},
 	}
 }
 
@@ -320,6 +324,14 @@ func NewNot(pattern *Pattern) *Pattern {
 			OpenParen:   newOpenParen(),
 			Pattern:     pattern,
 			CloseParen:  newCloseParen(),
+		},
+	}
+}
+
+func NewZAny() *Pattern {
+	return &Pattern{
+		ZAny: &ZAny{
+			Star: newStar(),
 		},
 	}
 }

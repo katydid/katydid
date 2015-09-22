@@ -148,7 +148,7 @@ PatternDecl
   ;
 
 NameExpr
-  : Star     << &NameExpr{AnyName: &AnyName{$0.(*expr.Keyword)}}, nil >>
+  : Dot     << &NameExpr{AnyName: &AnyName{$0.(*expr.Keyword)}}, nil >>
   | Space string_lit <<
     &NameExpr{Name: &Name{
       Before: $0.(*expr.Space),
@@ -197,6 +197,7 @@ ContinueNameChoice
 Pattern
   : Underscore << &Pattern{Empty: &Empty{$0.(*expr.Keyword)}}, nil >>
   | Tilde  << &Pattern{EmptySet: &EmptySet{$0.(*expr.Keyword)}}, nil >>
+  | Star   << &Pattern{ZAny: &ZAny{Star: $0.(*expr.Keyword)}}, nil >>
   | NameExpr Colon Pattern <<
     &Pattern{TreeNode: &TreeNode{
       Name: $0.(*NameExpr),
@@ -541,6 +542,16 @@ Tilde
     &expr.Keyword{
       Before: $0.(*expr.Space),
       Value: "~",
+    }, nil
+  >>
+  ;
+
+Dot
+  : "." << &expr.Keyword{Value: "."}, nil >>
+  | Space "." << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: ".",
     }, nil
   >>
   ;

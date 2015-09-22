@@ -287,6 +287,8 @@ func getAllExprs(bookKeepingRefs relapse.RefLookup, allRefs relapse.RefLookup, p
 		return getAllExprs(bookKeepingRefs, allRefs, r)
 	case *relapse.Not:
 		return getAllExprs(bookKeepingRefs, allRefs, v.GetPattern())
+	case *relapse.ZAny:
+		return getAllExprs(bookKeepingRefs, allRefs, relapse.NewNot(relapse.NewEmptySet()))
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }

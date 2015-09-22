@@ -26,7 +26,7 @@ func (g G) Grammar() *relapse.Grammar {
 }
 
 func Any() *relapse.Pattern {
-	return relapse.NewNot(relapse.NewEmptySet())
+	return relapse.NewZAny()
 }
 
 func concat(p *relapse.Pattern, ps ...*relapse.Pattern) *relapse.Pattern {
