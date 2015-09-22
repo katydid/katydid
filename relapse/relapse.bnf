@@ -131,6 +131,12 @@ Pattern
       Pattern: $2.(*Pattern),
     }}, nil
   >>
+  | NameExpr Pattern <<
+    &Pattern{TreeNode: &TreeNode{
+      Name: $0.(*NameExpr),
+      Pattern: $1.(*Pattern),
+    }}, nil
+  >>
   | NameExpr RightArrow Function <<
     &Pattern{TreeNode: &TreeNode{
       Name: $0.(*NameExpr),

@@ -882,19 +882,19 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `RightArrow : ">"	<< &expr.Keyword{Value: ">"}, nil >>`,
+		String: `RightArrow : "->"	<< &expr.Keyword{Value: "->"}, nil >>`,
 		Id:         "RightArrow",
 		NTType:     28,
 		Index:      74,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &expr.Keyword{Value: ">"}, nil
+			return &expr.Keyword{Value: "->"}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `RightArrow : Space ">"	<< &expr.Keyword{
+		String: `RightArrow : Space "->"	<< &expr.Keyword{
       Before: X[0].(*expr.Space),
-      Value: ">",
+      Value: "->",
     }, nil >>`,
 		Id:         "RightArrow",
 		NTType:     28,
@@ -903,7 +903,7 @@ var productionsTable = ProdTab{
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &expr.Keyword{
 				Before: X[0].(*expr.Space),
-				Value:  ">",
+				Value:  "->",
 			}, nil
 		},
 	},

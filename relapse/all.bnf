@@ -226,6 +226,12 @@ Pattern
       Pattern: $2.(*Pattern),
     }}, nil
   >>
+  | NameExpr Pattern <<
+    &Pattern{TreeNode: &TreeNode{
+      Name: $0.(*NameExpr),
+      Pattern: $1.(*Pattern),
+    }}, nil
+  >>
   | NameExpr RightArrow Function <<
     &Pattern{TreeNode: &TreeNode{
       Name: $0.(*NameExpr),
@@ -589,11 +595,11 @@ At
   ;
 
 RightArrow
-  : ">" << &expr.Keyword{Value: ">"}, nil >>
-  | Space ">" << 
+  : "->" << &expr.Keyword{Value: "->"}, nil >>
+  | Space "->" << 
     &expr.Keyword{
       Before: $0.(*expr.Space),
-      Value: ">",
+      Value: "->",
     }, nil
   >>
   ;

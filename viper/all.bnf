@@ -496,11 +496,11 @@ At
   ;
 
 RightArrow
-  : ">" << &expr.Keyword{Value: ">"}, nil >>
-  | Space ">" << 
+  : "->" << &expr.Keyword{Value: "->"}, nil >>
+  | Space "->" << 
     &expr.Keyword{
       Before: $0.(*expr.Space),
-      Value: ">",
+      Value: "->",
     }, nil
   >>
   ;
