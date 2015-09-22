@@ -26,11 +26,14 @@ func (this *Grammar) String() string {
 		ss[i] = p.String()
 	}
 	ss[len(ss)-1] = this.After.String()
+	if this.TopPattern != nil {
+		return this.TopPattern.String() + strings.Join(ss, "")
+	}
 	return strings.Join(ss, "")
 }
 
 func (this *PatternDecl) String() string {
-	return this.Before.String() + this.Name +
+	return this.At.String() + this.Before.String() + this.Name +
 		this.Eq.String() + this.Pattern.String()
 }
 

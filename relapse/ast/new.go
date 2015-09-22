@@ -26,26 +26,35 @@ func NewRefsLookup(g *Grammar) RefLookup {
 	for _, d := range decls {
 		refs[d.Name] = d.Pattern
 	}
+	if g.TopPattern != nil {
+		refs["main"] = g.TopPattern
+	}
 	return refs
 }
 
 func NewGrammar(m map[string]*Pattern) *Grammar {
 	ps := make([]*PatternDecl, 0, len(m))
 	first := true
-	for name, p := range m {
+	g := &Grammar{}
+	for name, _ := range m {
+		if name == "main" {
+			g.TopPattern = m[name]
+		}
 		before := &expr.Space{Space: []string{"\n"}}
 		if first {
 			before = nil
 			first = false
 		}
 		ps = append(ps, &PatternDecl{
+			At:      newAt(),
 			Before:  before,
 			Name:    name,
 			Eq:      newEqual(),
-			Pattern: p,
+			Pattern: m[name],
 		})
 	}
-	return &Grammar{PatternDecls: ps}
+	g.PatternDecls = ps
+	return g
 }
 
 func NewEmpty() *Pattern {
@@ -126,6 +135,10 @@ func newTilde() *expr.Keyword {
 
 func newDot() *expr.Keyword {
 	return &expr.Keyword{Value: "."}
+}
+
+func newAt() *expr.Keyword {
+	return &expr.Keyword{Value: "@"}
 }
 
 func NewName(name string) *NameExpr {

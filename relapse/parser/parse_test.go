@@ -22,26 +22,27 @@ import (
 
 func TestParse(t *testing.T) {
 	patternDecls := []string{
-		`main = {"string_lit"}`,
-		`main = #ref1
-		ref1 = {eq($int, int(123))}
+		`{"string_lit"}`,
+		`#ref1
+		@ref1 = {eq($int, int(123))}
 		`,
-		`main = MyParent: [
+		`#main`,
+		`MyParent: [
 			{eq($string, "123")}, 
 			{eq($string, "456")}
 		]`,
-		`main = A : [
+		`A : [
 			a: {eq($string, "aa")},
 			b: {eq($int, int(123))}
 		]`,
-		`main = A: [
+		`A: [
 			!(~),
 			[
 				a: {eq($string, "aa")},
 				!(~)
 			]
 		]`,
-		`main = Desc: [
+		`Desc: [
 			!(~),
 			[
 				Src: { contains($string, "1") },
@@ -51,25 +52,25 @@ func TestParse(t *testing.T) {
 				]
 			]
 		]`,
-		`main = (MyParent: { int(1) } &  MyParent: { int(2)})`,
-		`main = A: [
+		`(MyParent: { int(1) } &  MyParent: { int(2)})`,
+		`A: [
 			*,
 			a: { eq($string, "aa") },
 			*
 		]`,
-		`main = A: (
+		`A: (
 			!(~) &
 			a: { eq($string, "aa") } &
 			!(~)
 		)`,
-		`main = A: (
+		`A: (
 			* |
 			a: { eq($string, "aa") } |
 			* |
 			!(~) |
 			!(~)
 		)`,
-		`main = [
+		`[
 			!(~),
 			_,
 			a: { eq($string, "aa") },
@@ -86,14 +87,14 @@ func TestParse(t *testing.T) {
 			  | d: { contains($string, "dd") }
 			)
 		]`,
-		`main = .: { int(1) }`,
-		`main = [
+		`.: { int(1) }`,
+		`[
 			(.: { eq($int, int(1)) })*,
 			bla: { true }
 		]`,
-		`main = ( a|b ): { eq($int, int(1)) }`,
-		`main =( a|.|!(b) ): { eq($int, int(1)) }`,
-		`main = "\"a": { true }`,
+		`( a|b ): { eq($int, int(1)) }`,
+		`( a|.|!(b) ): { eq($int, int(1)) }`,
+		`"\"a": { true }`,
 	}
 	p := parser.NewParser()
 	for i, patternDecl := range patternDecls {

@@ -49,12 +49,20 @@ var _ = proto.Marshal
 var _ = math.Inf
 
 type Grammar struct {
-	PatternDecls []*PatternDecl `protobuf:"bytes,1,rep" json:"PatternDecls,omitempty"`
-	After        *expr.Space    `protobuf:"bytes,2,opt" json:"After,omitempty"`
+	TopPattern   *Pattern       `protobuf:"bytes,1,opt" json:"TopPattern,omitempty"`
+	PatternDecls []*PatternDecl `protobuf:"bytes,2,rep" json:"PatternDecls,omitempty"`
+	After        *expr.Space    `protobuf:"bytes,3,opt" json:"After,omitempty"`
 }
 
 func (m *Grammar) Reset()      { *m = Grammar{} }
 func (*Grammar) ProtoMessage() {}
+
+func (m *Grammar) GetTopPattern() *Pattern {
+	if m != nil {
+		return m.TopPattern
+	}
+	return nil
+}
 
 func (m *Grammar) GetPatternDecls() []*PatternDecl {
 	if m != nil {
@@ -71,14 +79,22 @@ func (m *Grammar) GetAfter() *expr.Space {
 }
 
 type PatternDecl struct {
-	Before  *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Name    string        `protobuf:"bytes,2,opt" json:"Name"`
-	Eq      *expr.Keyword `protobuf:"bytes,3,opt" json:"Eq,omitempty"`
-	Pattern *Pattern      `protobuf:"bytes,4,opt" json:"Pattern,omitempty"`
+	At      *expr.Keyword `protobuf:"bytes,1,opt" json:"At,omitempty"`
+	Before  *expr.Space   `protobuf:"bytes,2,opt" json:"Before,omitempty"`
+	Name    string        `protobuf:"bytes,3,opt" json:"Name"`
+	Eq      *expr.Keyword `protobuf:"bytes,4,opt" json:"Eq,omitempty"`
+	Pattern *Pattern      `protobuf:"bytes,5,opt" json:"Pattern,omitempty"`
 }
 
 func (m *PatternDecl) Reset()      { *m = PatternDecl{} }
 func (*PatternDecl) ProtoMessage() {}
+
+func (m *PatternDecl) GetAt() *expr.Keyword {
+	if m != nil {
+		return m.At
+	}
+	return nil
+}
 
 func (m *PatternDecl) GetBefore() *expr.Space {
 	if m != nil {
@@ -720,6 +736,9 @@ func (this *Grammar) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
+	if !this.TopPattern.Equal(that1.TopPattern) {
+		return false
+	}
 	if len(this.PatternDecls) != len(that1.PatternDecls) {
 		return false
 	}
@@ -751,6 +770,9 @@ func (this *PatternDecl) Equal(that interface{}) bool {
 		}
 		return false
 	} else if this == nil {
+		return false
+	}
+	if !this.At.Equal(that1.At) {
 		return false
 	}
 	if !this.Before.Equal(that1.Before) {
@@ -1329,6 +1351,7 @@ func (this *Grammar) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.Grammar{` +
+		`TopPattern:` + fmt.Sprintf("%#v", this.TopPattern),
 		`PatternDecls:` + fmt.Sprintf("%#v", this.PatternDecls),
 		`After:` + fmt.Sprintf("%#v", this.After) + `}`}, ", ")
 	return s
@@ -1338,6 +1361,7 @@ func (this *PatternDecl) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.PatternDecl{` +
+		`At:` + fmt.Sprintf("%#v", this.At),
 		`Before:` + fmt.Sprintf("%#v", this.Before),
 		`Name:` + fmt.Sprintf("%#v", this.Name),
 		`Eq:` + fmt.Sprintf("%#v", this.Eq),

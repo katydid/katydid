@@ -178,6 +178,16 @@ Dot
   >>
   ;
 
+At
+  : "@" << &expr.Keyword{Value: "@"}, nil >>
+  | Space "@" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "@",
+    }, nil
+  >>
+  ;
+
 Space
   : Space space << expr.AppendSpace($0, newString($1)), nil >>
   | space << &expr.Space{Space: []string{newString($0)}}, nil >>

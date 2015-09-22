@@ -23,8 +23,12 @@ func unquote(s1 string) string {
 >>
 
 Grammar
-  : PatternDecls       << &Grammar{$0.([]*PatternDecl), nil}, nil >>
-  | PatternDecls Space << &Grammar{$0.([]*PatternDecl), $1.(*expr.Space)}, nil >>
+  : Pattern                     << &Grammar{$0.(*Pattern), nil, nil}, nil >>
+  | Pattern Space               << &Grammar{$0.(*Pattern), nil, $1.(*expr.Space)}, nil >>
+  | Pattern PatternDecls        << &Grammar{$0.(*Pattern), $1.([]*PatternDecl), nil}, nil >>
+  | Pattern PatternDecls Space  << &Grammar{$0.(*Pattern), $1.([]*PatternDecl), $2.(*expr.Space)}, nil >>
+  | PatternDecls                << &Grammar{nil, $0.([]*PatternDecl), nil}, nil >>
+  | PatternDecls Space          << &Grammar{nil, $0.([]*PatternDecl), $1.(*expr.Space)}, nil >>
   ;
 
 PatternDecls
@@ -33,21 +37,23 @@ PatternDecls
   ;
 
 PatternDecl
-  : Space id Equal Pattern
+  : At Space id Equal Pattern
   <<
     &PatternDecl{
-      Before: $0.(*expr.Space),
+      At: $0.(*expr.Keyword),
+      Before: $1.(*expr.Space),
+      Name: newString($2),
+      Eq: $3.(*expr.Keyword),
+      Pattern: $4.(*Pattern),
+    }, nil
+  >>
+  | At id Equal Pattern
+  <<
+    &PatternDecl{
+      At: $0.(*expr.Keyword),
       Name: newString($1),
       Eq: $2.(*expr.Keyword),
       Pattern: $3.(*Pattern),
-    }, nil
-  >>
-  | id Equal Pattern
-  <<
-    &PatternDecl{
-      Name: newString($0),
-      Eq: $1.(*expr.Keyword),
-      Pattern: $2.(*Pattern),
     }, nil
   >>
   ;

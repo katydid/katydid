@@ -25,15 +25,17 @@ option (gogoproto.equal_all) = true;
 option (gogoproto.goproto_unrecognized_all) = false;
 
 message Grammar {
-	repeated PatternDecl PatternDecls = 1;
-	optional expr.Space After = 2;
+	optional Pattern TopPattern = 1;
+	repeated PatternDecl PatternDecls = 2;
+	optional expr.Space After = 3;
 }
 
 message PatternDecl {
-	optional expr.Space Before = 1;
-	optional string Name = 2 [(gogoproto.nullable) = false];
-	optional expr.Keyword Eq = 3;
-	optional Pattern Pattern = 4;
+	optional expr.Keyword At = 1;
+	optional expr.Space Before = 2;
+	optional string Name = 3 [(gogoproto.nullable) = false];
+	optional expr.Keyword Eq = 4;
+	optional Pattern Pattern = 5;
 }
 
 message NameExpr {

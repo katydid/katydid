@@ -23,7 +23,7 @@ import (
 func format(t *testing.T, s string) string {
 	g, err := parser.ParseGrammar(s)
 	if err != nil {
-		t.Fatal(err)
+		t.Fatalf("err: %v given %s", err, s)
 	}
 	relapse.Format(g)
 	return g.String()
@@ -41,37 +41,37 @@ func testFormat(t *testing.T, in string, expected string) {
 }
 
 func TestFormat(t *testing.T) {
-	testFormat(t, " main =  _", "main = _")
+	testFormat(t, " @main =  _", "_")
 	testFormat(t,
 		`//attachedcomment
-    main = ~`,
+    ~`,
 		`//attachedcomment
-main = ~`)
+~`)
 	testFormat(t,
 		`//unattachedcomment
 
-    main = ~`,
+    ~`,
 		`//unattachedcomment
 
-main = ~`)
+~`)
 	//2 pattern declarations
 	testFormat(t,
-		`main = _
-		other = ~`,
-		`main = _
-other = ~`)
+		`@main = _
+		@other = ~`,
+		`_
+@other = ~`)
 	//3 pattern declarations
 	testFormat(t,
-		`main = _
-		other = ~
+		`_
+		@other = ~
 
-		more = (_)*`,
-		`main = _
-other = ~
-more = (_)*`)
+		@more = (_)*`,
+		`_
+@other = ~
+@more = (_)*`)
 	//treenode
 	testFormat(t,
-		`main = 
+		`@main = 
 			"a":_`,
-		`main = "a": _`)
+		`"a": _`)
 }
