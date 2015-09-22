@@ -26,45 +26,45 @@ func TestParse(t *testing.T) {
 		`main = #ref1
 		ref1 = {eq($int, int(123))}
 		`,
-		`main = "MyParent": [
+		`main = MyParent: [
 			{eq($string, "123")}, 
 			{eq($string, "456")}
 		]`,
-		`main = "A" : [
-			"a": {eq($string, "aa")},
-			"b": {eq($int, int(123))}
+		`main = A : [
+			a: {eq($string, "aa")},
+			b: {eq($int, int(123))}
 		]`,
-		`main = "A": [
+		`main = A: [
 			!(~),
 			[
-				"a": {eq($string, "aa")},
+				a: {eq($string, "aa")},
 				!(~)
 			]
 		]`,
-		`main = "Desc": [
+		`main = Desc: [
 			!(~),
 			[
-				"Src": { contains($string, "1") },
+				Src: { contains($string, "1") },
 				[
-					"Src": { contains($string, "2") },
-					(!("Src"): !(~))*
+					Src: { contains($string, "2") },
+					(!(Src): !(~))*
 				]
 			]
 		]`,
-		`main = ("MyParent": { int(1) } &  "MyParent": { int(2)})`,
-		`main = "A": [
+		`main = (MyParent: { int(1) } &  MyParent: { int(2)})`,
+		`main = A: [
 			*,
-			"a": { eq($string, "aa") },
+			a: { eq($string, "aa") },
 			*
 		]`,
-		`main = "A": (
+		`main = A: (
 			!(~) &
-			"a": { eq($string, "aa") } &
+			a: { eq($string, "aa") } &
 			!(~)
 		)`,
-		`main = "A": (
-			!(~) |
-			"a": { eq($string, "aa") } |
+		`main = A: (
+			* |
+			a: { eq($string, "aa") } |
 			* |
 			!(~) |
 			!(~)
@@ -72,27 +72,28 @@ func TestParse(t *testing.T) {
 		`main = [
 			!(~),
 			_,
-			"a": { eq($string, "aa") },
+			a: { eq($string, "aa") },
 			( 
-			  "b": { contains($string, "bb") }
+			  b: { contains($string, "bb") }
 			  | (
-			  	"c": { contains($string, "cc") } &
-			  	"c": { contains($string, "see") } &
+			  	c: { contains($string, "cc") } &
+			  	c: { contains($string, "see") } &
 			  	(
-			  		"c": { contains($string, "sea") } |
-			  		"c": { contains($string, "ocean") }
+			  		c: { contains($string, "sea") } |
+			  		c: { contains($string, "ocean") }
 			  	)
 			  )
-			  | "d": { contains($string, "dd") }
+			  | d: { contains($string, "dd") }
 			)
 		]`,
 		`main = .: { int(1) }`,
 		`main = [
 			(.: { eq($int, int(1)) })*,
-			"bla": { true }
+			bla: { true }
 		]`,
-		`main = ( "a"|"b" ): { eq($int, int(1)) }`,
-		`main =( "a"|.|!("b") ): { eq($int, int(1)) }`,
+		`main = ( a|b ): { eq($int, int(1)) }`,
+		`main =( a|.|!(b) ): { eq($int, int(1)) }`,
+		`main = "\"a": { true }`,
 	}
 	p := parser.NewParser()
 	for i, patternDecl := range patternDecls {

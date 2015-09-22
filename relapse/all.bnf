@@ -147,9 +147,8 @@ PatternDecl
   >>
   ;
 
-NameExpr
-  : Dot     << &NameExpr{AnyName: &AnyName{$0.(*expr.Keyword)}}, nil >>
-  | Space string_lit <<
+Name
+  : Space string_lit <<
     &NameExpr{Name: &Name{
       Before: $0.(*expr.Space),
       Name: unquote(newString($1)),
@@ -160,6 +159,22 @@ NameExpr
       Name: unquote(newString($0)),
     }}, nil
   >>
+  | Space id <<
+    &NameExpr{Name: &Name{
+      Before: $0.(*expr.Space),
+      Name: newString($1),
+    }}, nil
+  >>
+  | id <<
+    &NameExpr{Name: &Name{
+      Name: newString($0),
+    }}, nil
+  >>
+  ;
+
+NameExpr
+  : Dot     << &NameExpr{AnyName: &AnyName{$0.(*expr.Keyword)}}, nil >>
+  | Name
   | Exclamation OpenParen NameExpr CloseParen <<
     &NameExpr{AnyNameExcept: &AnyNameExcept{
       Exclamation: $0.(*expr.Keyword),

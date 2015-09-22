@@ -15,6 +15,7 @@
 package relapse
 
 import (
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -40,7 +41,22 @@ func (this *NameExpr) String() string {
 	}).String()
 }
 
+// _decimal_digit : '0' - '9' ;
+// _upcase : 'A'-'Z' ;
+// _lowcase : 'a'-'z' ;
+// _id_char : _upcase | _lowcase | '_' | _decimal_digit ;
+// _id : (_upcase | _lowcase | '_' ) {_id_char} ;
+// id : _id ;
+var idRegexp = regexp.MustCompile("^[a-zA-Z_][_a-zA-Z0-9]*$")
+
+func isId(s string) bool {
+	return idRegexp.MatchString(s)
+}
+
 func (this *Name) String() string {
+	if isId(this.Name) {
+		return this.Before.String() + this.Name
+	}
 	return this.Before.String() + strconv.Quote(this.Name)
 }
 
