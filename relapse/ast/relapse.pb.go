@@ -20,6 +20,7 @@
 		Empty
 		EmptySet
 		TreeNode
+		WithSomeTreeNode
 		LeafNode
 		Concat
 		Or
@@ -285,19 +286,20 @@ func (m *NameChoice) GetCloseParen() *expr.Keyword {
 }
 
 type Pattern struct {
-	Empty       *Empty       `protobuf:"bytes,1,opt" json:"Empty,omitempty"`
-	EmptySet    *EmptySet    `protobuf:"bytes,2,opt" json:"EmptySet,omitempty"`
-	TreeNode    *TreeNode    `protobuf:"bytes,3,opt" json:"TreeNode,omitempty"`
-	LeafNode    *LeafNode    `protobuf:"bytes,4,opt" json:"LeafNode,omitempty"`
-	Concat      *Concat      `protobuf:"bytes,5,opt" json:"Concat,omitempty"`
-	Or          *Or          `protobuf:"bytes,6,opt" json:"Or,omitempty"`
-	And         *And         `protobuf:"bytes,7,opt" json:"And,omitempty"`
-	ZeroOrMore  *ZeroOrMore  `protobuf:"bytes,8,opt" json:"ZeroOrMore,omitempty"`
-	Reference   *Reference   `protobuf:"bytes,9,opt" json:"Reference,omitempty"`
-	Not         *Not         `protobuf:"bytes,10,opt" json:"Not,omitempty"`
-	ZAny        *ZAny        `protobuf:"bytes,11,opt" json:"ZAny,omitempty"`
-	WithSomeOr  *WithSomeOr  `protobuf:"bytes,12,opt" json:"WithSomeOr,omitempty"`
-	WithSomeAnd *WithSomeAnd `protobuf:"bytes,13,opt" json:"WithSomeAnd,omitempty"`
+	Empty            *Empty            `protobuf:"bytes,1,opt" json:"Empty,omitempty"`
+	EmptySet         *EmptySet         `protobuf:"bytes,2,opt" json:"EmptySet,omitempty"`
+	TreeNode         *TreeNode         `protobuf:"bytes,3,opt" json:"TreeNode,omitempty"`
+	LeafNode         *LeafNode         `protobuf:"bytes,4,opt" json:"LeafNode,omitempty"`
+	Concat           *Concat           `protobuf:"bytes,5,opt" json:"Concat,omitempty"`
+	Or               *Or               `protobuf:"bytes,6,opt" json:"Or,omitempty"`
+	And              *And              `protobuf:"bytes,7,opt" json:"And,omitempty"`
+	ZeroOrMore       *ZeroOrMore       `protobuf:"bytes,8,opt" json:"ZeroOrMore,omitempty"`
+	Reference        *Reference        `protobuf:"bytes,9,opt" json:"Reference,omitempty"`
+	Not              *Not              `protobuf:"bytes,10,opt" json:"Not,omitempty"`
+	ZAny             *ZAny             `protobuf:"bytes,11,opt" json:"ZAny,omitempty"`
+	WithSomeOr       *WithSomeOr       `protobuf:"bytes,12,opt" json:"WithSomeOr,omitempty"`
+	WithSomeAnd      *WithSomeAnd      `protobuf:"bytes,13,opt" json:"WithSomeAnd,omitempty"`
+	WithSomeTreeNode *WithSomeTreeNode `protobuf:"bytes,14,opt" json:"WithSomeTreeNode,omitempty"`
 }
 
 func (m *Pattern) Reset()      { *m = Pattern{} }
@@ -394,6 +396,13 @@ func (m *Pattern) GetWithSomeAnd() *WithSomeAnd {
 	return nil
 }
 
+func (m *Pattern) GetWithSomeTreeNode() *WithSomeTreeNode {
+	if m != nil {
+		return m.WithSomeTreeNode
+	}
+	return nil
+}
+
 type Empty struct {
 	Empty *expr.Keyword `protobuf:"bytes,1,opt" json:"Empty,omitempty"`
 }
@@ -446,6 +455,28 @@ func (m *TreeNode) GetColon() *expr.Keyword {
 }
 
 func (m *TreeNode) GetPattern() *Pattern {
+	if m != nil {
+		return m.Pattern
+	}
+	return nil
+}
+
+type WithSomeTreeNode struct {
+	Dot     *expr.Keyword `protobuf:"bytes,1,opt" json:"Dot,omitempty"`
+	Pattern *Pattern      `protobuf:"bytes,2,opt" json:"Pattern,omitempty"`
+}
+
+func (m *WithSomeTreeNode) Reset()      { *m = WithSomeTreeNode{} }
+func (*WithSomeTreeNode) ProtoMessage() {}
+
+func (m *WithSomeTreeNode) GetDot() *expr.Keyword {
+	if m != nil {
+		return m.Dot
+	}
+	return nil
+}
+
+func (m *WithSomeTreeNode) GetPattern() *Pattern {
 	if m != nil {
 		return m.Pattern
 	}
@@ -1108,6 +1139,9 @@ func (this *Pattern) Equal(that interface{}) bool {
 	if !this.WithSomeAnd.Equal(that1.WithSomeAnd) {
 		return false
 	}
+	if !this.WithSomeTreeNode.Equal(that1.WithSomeTreeNode) {
+		return false
+	}
 	return true
 }
 func (this *Empty) Equal(that interface{}) bool {
@@ -1184,6 +1218,34 @@ func (this *TreeNode) Equal(that interface{}) bool {
 		return false
 	}
 	if !this.Colon.Equal(that1.Colon) {
+		return false
+	}
+	if !this.Pattern.Equal(that1.Pattern) {
+		return false
+	}
+	return true
+}
+func (this *WithSomeTreeNode) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*WithSomeTreeNode)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Dot.Equal(that1.Dot) {
 		return false
 	}
 	if !this.Pattern.Equal(that1.Pattern) {
@@ -1615,7 +1677,8 @@ func (this *Pattern) GoString() string {
 		`Not:` + fmt.Sprintf("%#v", this.Not),
 		`ZAny:` + fmt.Sprintf("%#v", this.ZAny),
 		`WithSomeOr:` + fmt.Sprintf("%#v", this.WithSomeOr),
-		`WithSomeAnd:` + fmt.Sprintf("%#v", this.WithSomeAnd) + `}`}, ", ")
+		`WithSomeAnd:` + fmt.Sprintf("%#v", this.WithSomeAnd),
+		`WithSomeTreeNode:` + fmt.Sprintf("%#v", this.WithSomeTreeNode) + `}`}, ", ")
 	return s
 }
 func (this *Empty) GoString() string {
@@ -1641,6 +1704,15 @@ func (this *TreeNode) GoString() string {
 	s := strings.Join([]string{`&relapse.TreeNode{` +
 		`Name:` + fmt.Sprintf("%#v", this.Name),
 		`Colon:` + fmt.Sprintf("%#v", this.Colon),
+		`Pattern:` + fmt.Sprintf("%#v", this.Pattern) + `}`}, ", ")
+	return s
+}
+func (this *WithSomeTreeNode) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.WithSomeTreeNode{` +
+		`Dot:` + fmt.Sprintf("%#v", this.Dot),
 		`Pattern:` + fmt.Sprintf("%#v", this.Pattern) + `}`}, ", ")
 	return s
 }
@@ -1848,6 +1920,9 @@ func (this *Pattern) GetValue() interface{} {
 	if this.WithSomeAnd != nil {
 		return this.WithSomeAnd
 	}
+	if this.WithSomeTreeNode != nil {
+		return this.WithSomeTreeNode
+	}
 	return nil
 }
 
@@ -1879,6 +1954,8 @@ func (this *Pattern) SetValue(value interface{}) bool {
 		this.WithSomeOr = vt
 	case *WithSomeAnd:
 		this.WithSomeAnd = vt
+	case *WithSomeTreeNode:
+		this.WithSomeTreeNode = vt
 	default:
 		return false
 	}

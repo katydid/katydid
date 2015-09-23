@@ -85,6 +85,7 @@ message Pattern {
 	optional ZAny ZAny = 11;
 	optional WithSomeOr WithSomeOr = 12;
 	optional WithSomeAnd WithSomeAnd = 13;
+	optional WithSomeTreeNode WithSomeTreeNode = 14;
 }
 
 message Empty {
@@ -99,6 +100,11 @@ message TreeNode {
 	optional NameExpr Name = 1;
 	optional expr.Keyword Colon = 2;
 	optional Pattern Pattern = 3;
+}
+
+message WithSomeTreeNode {
+	optional expr.Keyword Dot = 1;
+	optional Pattern Pattern = 2;
 }
 
 message LeafNode {

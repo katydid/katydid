@@ -220,6 +220,15 @@ func NewTreeNode(name *NameExpr, pattern *Pattern) *Pattern {
 	}
 }
 
+func NewWithSomeTreeNode(name *NameExpr, pattern *Pattern) *Pattern {
+	return &Pattern{
+		WithSomeTreeNode: &WithSomeTreeNode{
+			Dot:     newDot(),
+			Pattern: NewTreeNode(name, pattern),
+		},
+	}
+}
+
 func NewLeafNode(name *NameExpr, expr *expr.Expr) *Pattern {
 	return &Pattern{
 		TreeNode: &TreeNode{

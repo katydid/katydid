@@ -617,6 +617,8 @@ func deriv(refs relapse.RefLookup, p *relapse.Pattern, expr *expr.Expr, name *re
 		return d(refs[v.GetName()])
 	case *relapse.Not:
 		return not(d(v.GetPattern()))
+	case *relapse.ZAny:
+		return deriv(refs, relapse.NewNot(relapse.NewEmptySet()), expr, name)
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }

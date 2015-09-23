@@ -98,6 +98,10 @@ func (this *TreeNode) String() string {
 		this.Pattern.String()
 }
 
+func (this *WithSomeTreeNode) String() string {
+	return this.Dot.String() + this.Pattern.String()
+}
+
 func (this *LeafNode) String() string {
 	return this.RightArrow.String() + this.Expr.String()
 }

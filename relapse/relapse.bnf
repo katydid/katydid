@@ -140,18 +140,26 @@ EmptySet
   >>
   ;
 
-Pattern
-  : Empty << &Pattern{Empty: &Empty{$0.(*expr.Keyword)}}, nil >>
-  | EmptySet  << &Pattern{EmptySet: &EmptySet{$0.(*expr.Keyword)}}, nil >>
-  | Star   << &Pattern{ZAny: &ZAny{Star: $0.(*expr.Keyword)}}, nil >>
-  | NameExpr Colon Pattern <<
+DepthPattern
+  : StartConcat
+  | StartWithSomeOr
+  | StartWithSomeAnd
+  | Dot TreeNode << &Pattern{WithSomeTreeNode: &WithSomeTreeNode{
+      Dot: $0.(*expr.Keyword),
+      Pattern: $1.(*Pattern),
+    }}, nil
+  >>
+  ;
+
+TreeNode
+  : NameExpr Colon Pattern <<
     &Pattern{TreeNode: &TreeNode{
       Name: $0.(*NameExpr),
       Colon: $1.(*expr.Keyword),
       Pattern: $2.(*Pattern),
     }}, nil
   >>
-  | NameExpr Pattern <<
+  | NameExpr DepthPattern <<
     &Pattern{TreeNode: &TreeNode{
       Name: $0.(*NameExpr),
       Pattern: $1.(*Pattern),
@@ -165,12 +173,17 @@ Pattern
         Expr: &expr.Expr{Function: $2.(*expr.Function)},
       }},
     }}, nil
-  >>
-  | StartConcat
+  >> 
+  ;
+
+Pattern
+  : Empty << &Pattern{Empty: &Empty{$0.(*expr.Keyword)}}, nil >>
+  | EmptySet  << &Pattern{EmptySet: &EmptySet{$0.(*expr.Keyword)}}, nil >>
+  | Star   << &Pattern{ZAny: &ZAny{Star: $0.(*expr.Keyword)}}, nil >>
+  | TreeNode
+  | DepthPattern
   | StartOr
-  | StartWithSomeOr
   | StartAnd
-  | StartWithSomeAnd
   | OpenParen Pattern CloseParen Star <<
     &Pattern{ZeroOrMore: &ZeroOrMore{
       OpenParen: $0.(*expr.Keyword),

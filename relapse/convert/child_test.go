@@ -32,7 +32,6 @@ func child(t *testing.T, refs relapse.RefLookup, name *relapse.NameExpr, expecte
 	t.Logf("child = %s", du.child)
 	if du.child != nil {
 		child := interp.Simplify(refs, du.child)
-		relapse.Format(child)
 		t.Logf("simplified child = %s", child)
 		if !child.Equal(expected) {
 			t.Fatalf("expected %s\n, but got %s", expected, child)

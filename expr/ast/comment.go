@@ -44,6 +44,9 @@ func isComment(s string) bool {
 }
 
 func (this *Space) HasComment() bool {
+	if this == nil {
+		return false
+	}
 	for _, s := range this.Space {
 		if isComment(s) {
 			return true

@@ -20,6 +20,22 @@ import (
 
 func Format(g *Grammar) {
 	first := true
+	if g.TopPattern == nil {
+		for i := range g.PatternDecls {
+			if g.PatternDecls[i].Name == "main" {
+				if !g.PatternDecls[i].Before.HasComment() &&
+					!g.PatternDecls[i].At.Before.HasComment() &&
+					!g.PatternDecls[i].Eq.Before.HasComment() {
+					g.TopPattern = g.PatternDecls[i].Pattern
+					g.PatternDecls = append(g.PatternDecls[:i], g.PatternDecls[i+1:]...)
+					break
+				}
+			}
+		}
+	}
+	if g.TopPattern != nil {
+		formatPattern(g.TopPattern, true, 0)
+	}
 	for i := range g.PatternDecls {
 		formatPatternDecl(g.PatternDecls[i], first)
 		first = false
@@ -53,6 +69,11 @@ func formatPattern(pattern *Pattern, first bool, tabs int) {
 	if pattern.TreeNode != nil {
 		formatTreeNode(pattern.TreeNode, true, tabs)
 	}
+	if pattern.ZAny != nil {
+		if !pattern.ZAny.Star.Before.HasComment() {
+			pattern.ZAny.Star.Before = nil
+		}
+	}
 }
 
 func formatEmpty(e *Empty, first bool, tabs int) {
@@ -65,7 +86,9 @@ func formatEmptySet(e *EmptySet, first bool, tabs int) {
 
 func formatTreeNode(t *TreeNode, first bool, tabs int) {
 	formatNameExpr(t.Name, first, tabs)
-	formatKeyword(t.Colon, tabs)
+	if t.Colon != nil {
+		formatKeyword(t.Colon, tabs)
+	}
 	formatPattern(t.Pattern, true, tabs)
 }
 
