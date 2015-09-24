@@ -19,18 +19,6 @@ import (
 	"github.com/katydid/katydid/types"
 )
 
-func NewTrue() *Expr {
-	return &Expr{
-		Terminal: NewBoolTerminal(true),
-	}
-}
-
-func NewFalse() *Expr {
-	return &Expr{
-		Terminal: NewBoolTerminal(false),
-	}
-}
-
 func NewNestedFunction(name string, params ...*Expr) *Expr {
 	return &Expr{Function: &Function{
 		Name:       name,
@@ -38,14 +26,6 @@ func NewNestedFunction(name string, params ...*Expr) *Expr {
 		Params:     params,
 		CloseParen: newCloseParen(),
 	}}
-}
-
-func NewStringVar() *Expr {
-	return NewVar(types.SINGLE_STRING)
-}
-
-func NewBytesVar() *Expr {
-	return NewVar(types.SINGLE_BYTES)
 }
 
 func NewVar(typ types.Type) *Expr {
@@ -58,10 +38,34 @@ func NewVar(typ types.Type) *Expr {
 	}
 }
 
-func NewStringConst(s string) *Expr {
+func NewDoubleVar() *Expr {
+	return NewVar(types.SINGLE_DOUBLE)
+}
+
+func NewIntVar() *Expr {
+	return NewVar(types.SINGLE_INT)
+}
+
+func NewUintVar() *Expr {
+	return NewVar(types.SINGLE_UINT)
+}
+
+func NewBoolVar() *Expr {
+	return NewVar(types.SINGLE_BOOL)
+}
+
+func NewStringVar() *Expr {
+	return NewVar(types.SINGLE_STRING)
+}
+
+func NewBytesVar() *Expr {
+	return NewVar(types.SINGLE_BYTES)
+}
+
+func NewDoubleConst(d float64) *Expr {
 	return &Expr{
 		Terminal: &Terminal{
-			StringValue: proto.String(s),
+			DoubleValue: proto.Float64(d),
 		},
 	}
 }
@@ -74,6 +78,34 @@ func NewIntConst(i int64) *Expr {
 	}
 }
 
+func NewUintConst(i uint64) *Expr {
+	return &Expr{
+		Terminal: &Terminal{
+			UintValue: proto.Uint64(i),
+		},
+	}
+}
+
+func NewTrue() *Expr {
+	return &Expr{
+		Terminal: NewBoolTerminal(true),
+	}
+}
+
+func NewFalse() *Expr {
+	return &Expr{
+		Terminal: NewBoolTerminal(false),
+	}
+}
+
+func NewStringConst(s string) *Expr {
+	return &Expr{
+		Terminal: &Terminal{
+			StringValue: proto.String(s),
+		},
+	}
+}
+
 func NewBytesConst(buf []byte) *Expr {
 	return &Expr{
 		Terminal: &Terminal{
@@ -82,110 +114,35 @@ func NewBytesConst(buf []byte) *Expr {
 	}
 }
 
-func NewBoolList(elems ...*Expr) *Expr {
+func NewList(typ types.Type, elems ...*Expr) *Expr {
 	return &Expr{
 		List: &List{
-			Type:  types.LIST_BOOL,
+			Type:  typ,
 			Elems: elems,
 		},
 	}
 }
 
-func NewStringList(elems ...*Expr) *Expr {
-	return &Expr{
-		List: &List{
-			Type:  types.LIST_STRING,
-			Elems: elems,
-		},
-	}
+func NewDoubleList(elems ...*Expr) *Expr {
+	return NewList(types.LIST_DOUBLE, elems...)
 }
 
 func NewIntList(elems ...*Expr) *Expr {
-	return &Expr{
-		List: &List{
-			Type:  types.LIST_INT,
-			Elems: elems,
-		},
-	}
+	return NewList(types.LIST_INT, elems...)
 }
 
-func NewEqual(e *Expr) *Expr {
-	return &Expr{
-		BuiltIn: &BuiltIn{
-			Symbol: newDoubleEqual(),
-			Expr:   e,
-		},
-	}
+func NewUintList(elems ...*Expr) *Expr {
+	return NewList(types.LIST_UINT, elems...)
 }
 
-func NewLessThan(e *Expr) *Expr {
-	return &Expr{
-		BuiltIn: &BuiltIn{
-			Symbol: newLessThan(),
-			Expr:   e,
-		},
-	}
+func NewBoolList(elems ...*Expr) *Expr {
+	return NewList(types.LIST_BOOL, elems...)
 }
 
-func NewGreaterThan(e *Expr) *Expr {
-	return &Expr{
-		BuiltIn: &BuiltIn{
-			Symbol: newGreaterThan(),
-			Expr:   e,
-		},
-	}
+func NewStringList(elems ...*Expr) *Expr {
+	return NewList(types.LIST_STRING, elems...)
 }
 
-func NewLessEqual(e *Expr) *Expr {
-	return &Expr{
-		BuiltIn: &BuiltIn{
-			Symbol: newLessEqual(),
-			Expr:   e,
-		},
-	}
-}
-
-func NewGreaterEqual(e *Expr) *Expr {
-	return &Expr{
-		BuiltIn: &BuiltIn{
-			Symbol: newGreaterEqual(),
-			Expr:   e,
-		},
-	}
-}
-
-func NewRegex(e *Expr) *Expr {
-	return &Expr{
-		BuiltIn: &BuiltIn{
-			Symbol: newTildeEqual(),
-			Expr:   e,
-		},
-	}
-}
-
-func NewContains(e *Expr) *Expr {
-	return &Expr{
-		BuiltIn: &BuiltIn{
-			Symbol: newStarEqual(),
-			Expr:   e,
-		},
-	}
-}
-
-func NewHasPrefix(e *Expr) *Expr {
-	return &Expr{
-		BuiltIn: &BuiltIn{
-			Symbol: newCaretEqual(),
-			Expr:   e,
-		},
-	}
-}
-
-func NewHasSuffix(e *Expr) *Expr {
-	return &Expr{
-		BuiltIn: &BuiltIn{
-			Symbol: newDollarEqual(),
-			Expr:   e,
-		},
-	}
+func NewBytesList(elems ...*Expr) *Expr {
+	return NewList(types.LIST_BYTES, elems...)
 }

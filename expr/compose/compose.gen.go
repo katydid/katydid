@@ -4,10 +4,11 @@
 package compose
 
 import (
-	"github.com/katydid/katydid/expr/ast"
-	"github.com/katydid/katydid/funcs"
-	"github.com/katydid/katydid/types"
+"github.com/katydid/katydid/expr/ast"
+"github.com/katydid/katydid/funcs"
+"github.com/katydid/katydid/types"
 )
+
 
 func composeDouble(expr *expr.Expr) (funcs.Double, error) {
 	uniq, err := prep(expr, types.SINGLE_DOUBLE)
