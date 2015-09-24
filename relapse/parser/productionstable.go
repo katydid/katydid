@@ -488,7 +488,7 @@ var productionsTable = ProdTab{
       Name: X[0].(*NameExpr),
       Pattern: &Pattern{LeafNode: &LeafNode{
         RightArrow: X[1].(*expr.Keyword),
-        Expr: &expr.Expr{Function: X[2].(*expr.Function)},
+        Expr: &expr.Expr{BuiltIn: X[2].(*expr.BuiltIn)},
       }},
     }}, nil >>`,
 		Id:         "TreeNode",
@@ -500,7 +500,7 @@ var productionsTable = ProdTab{
 				Name: X[0].(*NameExpr),
 				Pattern: &Pattern{LeafNode: &LeafNode{
 					RightArrow: X[1].(*expr.Keyword),
-					Expr:       &expr.Expr{Function: X[2].(*expr.Function)},
+					Expr:       &expr.Expr{BuiltIn: X[2].(*expr.BuiltIn)},
 				}},
 			}}, nil
 		},
