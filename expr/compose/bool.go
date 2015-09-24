@@ -59,7 +59,11 @@ var (
 )
 
 func NewBool(expr *expr.Expr) (*composedBool, error) {
-	e, err := composeBool(expr)
+	expr2, err := rewriteBuiltIn(expr)
+	if err != nil {
+		return nil, err
+	}
+	e, err := composeBool(expr2)
 	if err != nil {
 		return nil, err
 	}

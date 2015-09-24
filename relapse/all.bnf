@@ -269,6 +269,15 @@ TreeNode
       }},
     }}, nil
   >> 
+  | NameExpr BuiltIn <<
+    &Pattern{TreeNode: &TreeNode{
+      Name: $0.(*NameExpr),
+      Pattern: &Pattern{LeafNode: &LeafNode{
+        RightArrow: $1.(*expr.Keyword),
+        Expr: &expr.Expr{Function: $2.(*expr.Function)},
+      }},
+    }}, nil
+  >> 
   ;
 
 Pattern
@@ -426,6 +435,11 @@ ContinueWithSomeAnd
   >>
   ;
 
+Start
+  : Expr
+  | BuiltIn << &expr.Expr{BuiltIn: $0.(*expr.BuiltIn)}, nil >>
+  ;
+
 Expr
   : SpaceTerminal << &expr.Expr{Terminal: $0.(*expr.Terminal)}, nil >>
   | Function << &expr.Expr{Function: $0.(*expr.Function)}, nil >>
@@ -437,6 +451,18 @@ Function
   | Space id OpenParen CloseParen << &expr.Function{Before: $0.(*expr.Space), Name: newString($1), OpenParen: $2.(*expr.Keyword), CloseParen: $3.(*expr.Keyword)}, nil >>
   | id OpenParen Exprs CloseParen << &expr.Function{Name: newString($0), OpenParen: $1.(*expr.Keyword), Params: $2.([]*expr.Expr), CloseParen: $3.(*expr.Keyword)}, nil >>
   | id OpenParen CloseParen << &expr.Function{Name: newString($0), OpenParen: $1.(*expr.Keyword), CloseParen: $2.(*expr.Keyword)}, nil >>
+  ;
+
+BuiltIn
+  : DoubleEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
+  | LessThan Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
+  | GreaterThan Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
+  | GreaterEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
+  | LessEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
+  | TildeEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
+  | StarEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
+  | CaretEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
+  | DollarEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
   ;
 
 List
@@ -465,13 +491,17 @@ SpaceTerminal
   | Space Terminal << expr.SetTerminalSpace($1, $0), nil >>
   ;
 
-Terminal
+Literal
   : Bool << expr.NewBoolTerminal($0), nil >>
   | int_lit << expr.NewIntTerminal(newString($0)) >>
   | uint_lit << expr.NewUintTerminal(newString($0)) >>
   | double_lit << expr.NewDoubleTerminal(newString($0)) >>
   | string_lit << expr.NewStringTerminal(newString($0)) >>
   | bytes_lit << expr.NewBytesTerminal(newString($0)) >>
+  ;
+
+Terminal
+  : Literal
   | bool_var << expr.NewVariableTerminal(types.SINGLE_BOOL) >>
   | int_var << expr.NewVariableTerminal(types.SINGLE_INT) >>
   | uint_var << expr.NewVariableTerminal(types.SINGLE_UINT) >>
@@ -680,6 +710,96 @@ RightArrow
     &expr.Keyword{
       Before: $0.(*expr.Space),
       Value: "->",
+    }, nil
+  >>
+  ;
+
+DoubleEqual
+  : "=="  << &expr.Keyword{Value: "=="}, nil >>
+  | Space "==" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "==",
+    }, nil
+  >>
+  ;
+
+LessThan
+  : "<"  << &expr.Keyword{Value: "<"}, nil >>
+  | Space "<" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "<",
+    }, nil
+  >>
+  ;
+
+GreaterThan
+  : ">"  << &expr.Keyword{Value: ">"}, nil >>
+  | Space ">" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: ">",
+    }, nil
+  >>
+  ;
+
+LessEqual
+  : "<="  << &expr.Keyword{Value: "<="}, nil >>
+  | Space "<=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "<=",
+    }, nil
+  >>
+  ;
+
+GreaterEqual
+  : ">="  << &expr.Keyword{Value: ">="}, nil >>
+  | Space ">=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: ">=",
+    }, nil
+  >>
+  ;
+
+TildeEqual
+  : "~="  << &expr.Keyword{Value: "~="}, nil >>
+  | Space "~=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "~=",
+    }, nil
+  >>
+  ;
+
+StarEqual
+  : "*="  << &expr.Keyword{Value: "*="}, nil >>
+  | Space "*=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "*=",
+    }, nil
+  >>
+  ;
+
+CaretEqual
+  : "^="  << &expr.Keyword{Value: "^="}, nil >>
+  | Space "^=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "^=",
+    }, nil
+  >>
+  ;
+
+DollarEqual
+  : "$="  << &expr.Keyword{Value: "$="}, nil >>
+  | Space "$=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "$=",
     }, nil
   >>
   ;

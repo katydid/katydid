@@ -77,10 +77,10 @@ func getLeafs(refs relapse.RefLookup, p *relapse.Pattern, path []string) []*expr
 
 //Experimental
 func CompareVarExpr(a, b *expr.Expr) bool {
-	if !hasVar(a) && !hasVar(b) {
+	if !a.HasVar() && !b.HasVar() {
 		return true
 	}
-	if !hasVar(a) || !hasVar(b) {
+	if !a.HasVar() || !b.HasVar() {
 		return false
 	}
 	//both have a var somewhere, so lets continue comparing
@@ -112,11 +112,6 @@ func compareVarExprs(as, bs []*expr.Expr) bool {
 		}
 	}
 	return true
-}
-
-func hasVar(e *expr.Expr) bool {
-	v, _ := e.GetTerminalVariable()
-	return v != nil
 }
 
 //Experimental

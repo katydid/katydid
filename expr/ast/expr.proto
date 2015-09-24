@@ -28,6 +28,7 @@ message Expr {
 	optional Terminal Terminal = 2;
 	optional List List = 3;
 	optional Function Function = 4;
+	optional BuiltIn BuiltIn = 5;
 }
 
 message List {
@@ -44,6 +45,11 @@ message Function {
 	optional Keyword OpenParen = 3;
 	repeated Expr Params = 4;
 	optional Keyword CloseParen = 5;
+}
+
+message BuiltIn {
+	optional Keyword Symbol = 1;
+	optional Expr Expr = 2;
 }
 
 message Terminal {

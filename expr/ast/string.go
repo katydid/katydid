@@ -29,7 +29,10 @@ func (this *Expr) String() string {
 	if this.List != nil {
 		return space + this.GetList().String()
 	}
-	return space + this.GetFunction().String()
+	if this.Function != nil {
+		return space + this.GetFunction().String()
+	}
+	return this.BuiltIn.String()
 }
 
 func (this *List) String() string {
@@ -64,6 +67,10 @@ func (this *Function) String() string {
 		ps[i] = v.String()
 	}
 	return this.Before.String() + this.GetName() + this.OpenParen.String() + strings.Join(ps, "") + this.CloseParen.String()
+}
+
+func (this *BuiltIn) String() string {
+	return this.Symbol.String() + this.Expr.String()
 }
 
 func (this *Terminal) String() string {

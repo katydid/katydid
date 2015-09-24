@@ -2,7 +2,7 @@
  */
 package parser
 
-const numNTSymbols = 30
+const numNTSymbols = 42
 
 type (
 	gotoTable [numStates]gotoRow
@@ -13,14 +13,17 @@ var gotoTab = gotoTable{
 	gotoRow{ // S0
 
 		-1, // S'
-		1,  // Expr
-		3,  // Function
-		4,  // List
+		1,  // Start
+		2,  // Expr
+		5,  // Function
+		3,  // BuiltIn
+		6,  // List
 		-1, // Exprs
-		7,  // ListType
-		2,  // SpaceTerminal
-		14, // Terminal
-		15, // Bool
+		18, // ListType
+		4,  // SpaceTerminal
+		26, // Literal
+		25, // Terminal
+		27, // Bool
 		-1, // Equal
 		-1, // OpenParen
 		-1, // CloseParen
@@ -41,18 +44,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
-		5,  // Space
+		9,  // DoubleEqual
+		10, // LessThan
+		11, // GreaterThan
+		13, // LessEqual
+		12, // GreaterEqual
+		14, // TildeEqual
+		15, // StarEqual
+		16, // CaretEqual
+		17, // DollarEqual
+		7,  // Space
 
 	},
 	gotoRow{ // S1
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -75,18 +90,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S2
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -109,18 +136,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S3
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -143,18 +182,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S4
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -177,20 +228,32 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S5
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
-		31, // ListType
+		-1, // ListType
 		-1, // SpaceTerminal
-		32, // Terminal
-		15, // Bool
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
 		-1, // Equal
 		-1, // OpenParen
 		-1, // CloseParen
@@ -211,22 +274,34 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S6
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
-		35, // OpenParen
+		-1, // OpenParen
 		-1, // CloseParen
 		-1, // OpenCurly
 		-1, // CloseCurly
@@ -245,24 +320,36 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
-		34, // Space
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
 
 	},
 	gotoRow{ // S7
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
-		-1, // ListType
+		52, // ListType
 		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
+		26, // Literal
+		53, // Terminal
+		27, // Bool
 		-1, // Equal
 		-1, // OpenParen
 		-1, // CloseParen
-		39, // OpenCurly
+		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
 		-1, // SemiColon
@@ -279,22 +366,34 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
-		38, // Space
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
 
 	},
 	gotoRow{ // S8
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
-		-1, // OpenParen
+		65, // OpenParen
 		-1, // CloseParen
 		-1, // OpenCurly
 		-1, // CloseCurly
@@ -313,20 +412,32 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
-		-1, // Space
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		64, // Space
 
 	},
 	gotoRow{ // S9
 
 		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
+		-1, // Start
+		68, // Expr
+		5,  // Function
+		-1, // BuiltIn
+		6,  // List
 		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
+		18, // ListType
+		4,  // SpaceTerminal
+		26, // Literal
+		25, // Terminal
+		27, // Bool
 		-1, // Equal
 		-1, // OpenParen
 		-1, // CloseParen
@@ -347,20 +458,32 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
-		-1, // Space
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		69, // Space
 
 	},
 	gotoRow{ // S10
 
 		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
+		-1, // Start
+		71, // Expr
+		5,  // Function
+		-1, // BuiltIn
+		6,  // List
 		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
+		18, // ListType
+		4,  // SpaceTerminal
+		26, // Literal
+		25, // Terminal
+		27, // Bool
 		-1, // Equal
 		-1, // OpenParen
 		-1, // CloseParen
@@ -381,20 +504,32 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
-		-1, // Space
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		69, // Space
 
 	},
 	gotoRow{ // S11
 
 		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
+		-1, // Start
+		72, // Expr
+		5,  // Function
+		-1, // BuiltIn
+		6,  // List
 		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
+		18, // ListType
+		4,  // SpaceTerminal
+		26, // Literal
+		25, // Terminal
+		27, // Bool
 		-1, // Equal
 		-1, // OpenParen
 		-1, // CloseParen
@@ -415,20 +550,32 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
-		-1, // Space
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		69, // Space
 
 	},
 	gotoRow{ // S12
 
 		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
+		-1, // Start
+		73, // Expr
+		5,  // Function
+		-1, // BuiltIn
+		6,  // List
 		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
+		18, // ListType
+		4,  // SpaceTerminal
+		26, // Literal
+		25, // Terminal
+		27, // Bool
 		-1, // Equal
 		-1, // OpenParen
 		-1, // CloseParen
@@ -449,20 +596,32 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
-		-1, // Space
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		69, // Space
 
 	},
 	gotoRow{ // S13
 
 		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
+		-1, // Start
+		74, // Expr
+		5,  // Function
+		-1, // BuiltIn
+		6,  // List
 		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
+		18, // ListType
+		4,  // SpaceTerminal
+		26, // Literal
+		25, // Terminal
+		27, // Bool
 		-1, // Equal
 		-1, // OpenParen
 		-1, // CloseParen
@@ -483,20 +642,32 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
-		-1, // Space
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		69, // Space
 
 	},
 	gotoRow{ // S14
 
 		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
+		-1, // Start
+		75, // Expr
+		5,  // Function
+		-1, // BuiltIn
+		6,  // List
 		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
+		18, // ListType
+		4,  // SpaceTerminal
+		26, // Literal
+		25, // Terminal
+		27, // Bool
 		-1, // Equal
 		-1, // OpenParen
 		-1, // CloseParen
@@ -517,20 +688,32 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
-		-1, // Space
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		69, // Space
 
 	},
 	gotoRow{ // S15
 
 		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
+		-1, // Start
+		76, // Expr
+		5,  // Function
+		-1, // BuiltIn
+		6,  // List
 		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
+		18, // ListType
+		4,  // SpaceTerminal
+		26, // Literal
+		25, // Terminal
+		27, // Bool
 		-1, // Equal
 		-1, // OpenParen
 		-1, // CloseParen
@@ -551,20 +734,32 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
-		-1, // Space
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		69, // Space
 
 	},
 	gotoRow{ // S16
 
 		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
+		-1, // Start
+		77, // Expr
+		5,  // Function
+		-1, // BuiltIn
+		6,  // List
 		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
+		18, // ListType
+		4,  // SpaceTerminal
+		26, // Literal
+		25, // Terminal
+		27, // Bool
 		-1, // Equal
 		-1, // OpenParen
 		-1, // CloseParen
@@ -585,20 +780,32 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
-		-1, // Space
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		69, // Space
 
 	},
 	gotoRow{ // S17
 
 		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
+		-1, // Start
+		78, // Expr
+		5,  // Function
+		-1, // BuiltIn
+		6,  // List
 		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
+		18, // ListType
+		4,  // SpaceTerminal
+		26, // Literal
+		25, // Terminal
+		27, // Bool
 		-1, // Equal
 		-1, // OpenParen
 		-1, // CloseParen
@@ -619,24 +826,36 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
-		-1, // Space
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		69, // Space
 
 	},
 	gotoRow{ // S18
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
 		-1, // OpenParen
 		-1, // CloseParen
-		-1, // OpenCurly
+		80, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
 		-1, // SemiColon
@@ -653,18 +872,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
-		-1, // Space
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		79, // Space
 
 	},
 	gotoRow{ // S19
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -687,18 +918,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S20
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -721,18 +964,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S21
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -755,18 +1010,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S22
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -789,18 +1056,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S23
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -823,18 +1102,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S24
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -857,18 +1148,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S25
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -891,18 +1194,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S26
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -925,18 +1240,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S27
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -959,18 +1286,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S28
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -993,18 +1332,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S29
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -1027,22 +1378,34 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S30
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
-		42, // OpenParen
+		-1, // OpenParen
 		-1, // CloseParen
 		-1, // OpenCurly
 		-1, // CloseCurly
@@ -1061,52 +1424,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
-		34, // Space
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
 
 	},
 	gotoRow{ // S31
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		43, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		38, // Space
-
-	},
-	gotoRow{ // S32
-
-		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -1129,18 +1470,76 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S32
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S33
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -1163,18 +1562,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S34
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -1197,52 +1608,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S35
 
 		-1, // S'
-		46, // Expr
-		48, // Function
-		49, // List
-		52, // Exprs
-		54, // ListType
-		47, // SpaceTerminal
-		55, // Terminal
-		56, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		53, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		50, // Space
-
-	},
-	gotoRow{ // S36
-
-		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -1265,18 +1654,76 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S36
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S37
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -1299,18 +1746,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S38
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -1333,52 +1792,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S39
 
 		-1, // S'
-		74, // Expr
-		76, // Function
-		77, // List
-		80, // Exprs
-		81, // ListType
-		75, // SpaceTerminal
-		83, // Terminal
-		84, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		82, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		78, // Space
-
-	},
-	gotoRow{ // S40
-
-		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -1401,18 +1838,76 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S40
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S41
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -1435,86 +1930,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S42
 
-		-1,  // S'
-		46,  // Expr
-		48,  // Function
-		49,  // List
-		100, // Exprs
-		54,  // ListType
-		47,  // SpaceTerminal
-		55,  // Terminal
-		56,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		101, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		50,  // Space
-
-	},
-	gotoRow{ // S43
-
-		-1,  // S'
-		74,  // Expr
-		76,  // Function
-		77,  // List
-		102, // Exprs
-		81,  // ListType
-		75,  // SpaceTerminal
-		83,  // Terminal
-		84,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		103, // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		78,  // Space
-
-	},
-	gotoRow{ // S44
-
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -1537,18 +1976,122 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S43
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S44
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S45
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -1571,18 +2114,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S46
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -1605,18 +2160,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S47
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -1639,18 +2206,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S48
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -1673,18 +2252,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S49
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -1707,120 +2298,168 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S50
 
-		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		105, // ListType
-		-1,  // SpaceTerminal
-		106, // Terminal
-		56,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		-1,  // Space
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
 
 	},
 	gotoRow{ // S51
 
-		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		109, // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		34,  // Space
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		83, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		64, // Space
 
 	},
 	gotoRow{ // S52
 
-		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		111, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		112, // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		110, // Space
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		84, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		79, // Space
 
 	},
 	gotoRow{ // S53
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -1843,52 +2482,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S54
 
-		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		115, // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		38,  // Space
-
-	},
-	gotoRow{ // S55
-
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -1911,18 +2528,76 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S55
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S56
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -1945,18 +2620,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S57
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -1979,18 +2666,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S58
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -2013,18 +2712,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S59
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -2047,18 +2758,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S60
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -2081,18 +2804,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S61
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -2115,18 +2850,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S62
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -2149,18 +2896,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S63
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -2183,18 +2942,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S64
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -2217,23 +2988,35 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S65
 
 		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
+		-1, // Start
+		87, // Expr
+		89, // Function
+		-1, // BuiltIn
+		90, // List
+		93, // Exprs
+		95, // ListType
+		88, // SpaceTerminal
+		97, // Literal
+		96, // Terminal
+		98, // Bool
 		-1, // Equal
 		-1, // OpenParen
-		-1, // CloseParen
+		94, // CloseParen
 		-1, // OpenCurly
 		-1, // CloseCurly
 		-1, // Comma
@@ -2251,18 +3034,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
-		-1, // Space
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		91, // Space
 
 	},
 	gotoRow{ // S66
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -2285,18 +3080,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S67
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -2319,18 +3126,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S68
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -2353,20 +3172,32 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S69
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
-		-1, // ListType
+		52, // ListType
 		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
+		26, // Literal
+		53, // Terminal
+		27, // Bool
 		-1, // Equal
 		-1, // OpenParen
 		-1, // CloseParen
@@ -2387,18 +3218,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S70
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -2421,18 +3264,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S71
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -2455,18 +3310,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S72
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -2489,18 +3356,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S73
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -2523,18 +3402,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S74
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -2557,18 +3448,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S75
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -2591,18 +3494,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S76
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -2625,18 +3540,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S77
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -2659,94 +3586,130 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S78
 
-		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		117, // ListType
-		-1,  // SpaceTerminal
-		118, // Terminal
-		84,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		-1,  // Space
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
 
 	},
 	gotoRow{ // S79
 
-		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		121, // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		34,  // Space
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
 
 	},
 	gotoRow{ // S80
 
 		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
+		-1,  // Start
+		117, // Expr
+		119, // Function
+		-1,  // BuiltIn
+		120, // List
+		123, // Exprs
+		124, // ListType
+		118, // SpaceTerminal
+		127, // Literal
+		126, // Terminal
+		128, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
 		-1,  // CloseParen
 		-1,  // OpenCurly
-		123, // CloseCurly
-		124, // Comma
+		125, // CloseCurly
+		-1,  // Comma
 		-1,  // SemiColon
 		-1,  // HashTag
 		-1,  // Ampersand
@@ -2761,24 +3724,128 @@ var gotoTab = gotoTable{
 		-1,  // Dot
 		-1,  // At
 		-1,  // RightArrow
-		122, // Space
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		121, // Space
 
 	},
 	gotoRow{ // S81
 
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S82
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S83
+
 		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
+		-1,  // Start
+		87,  // Expr
+		89,  // Function
+		-1,  // BuiltIn
+		90,  // List
+		144, // Exprs
+		95,  // ListType
+		88,  // SpaceTerminal
+		97,  // Literal
+		96,  // Terminal
+		98,  // Bool
 		-1,  // Equal
 		-1,  // OpenParen
-		-1,  // CloseParen
-		126, // OpenCurly
+		145, // CloseParen
+		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
 		-1,  // SemiColon
@@ -2795,120 +3862,76 @@ var gotoTab = gotoTable{
 		-1,  // Dot
 		-1,  // At
 		-1,  // RightArrow
-		38,  // Space
-
-	},
-	gotoRow{ // S82
-
-		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		-1, // Space
-
-	},
-	gotoRow{ // S83
-
-		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		-1, // Space
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		91,  // Space
 
 	},
 	gotoRow{ // S84
 
-		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		-1, // Space
+		-1,  // S'
+		-1,  // Start
+		117, // Expr
+		119, // Function
+		-1,  // BuiltIn
+		120, // List
+		146, // Exprs
+		124, // ListType
+		118, // SpaceTerminal
+		127, // Literal
+		126, // Terminal
+		128, // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		147, // CloseCurly
+		-1,  // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		121, // Space
 
 	},
 	gotoRow{ // S85
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -2931,18 +3954,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S86
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -2965,18 +4000,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S87
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -2999,18 +4046,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S88
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -3033,18 +4092,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S89
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -3067,18 +4138,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S90
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -3101,120 +4184,168 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S91
 
-		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		-1, // Space
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		149, // ListType
+		-1,  // SpaceTerminal
+		97,  // Literal
+		150, // Terminal
+		98,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		-1,  // Space
 
 	},
 	gotoRow{ // S92
 
-		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		-1, // Space
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		153, // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		64,  // Space
 
 	},
 	gotoRow{ // S93
 
-		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		-1, // Space
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		155, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		156, // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		154, // Space
 
 	},
 	gotoRow{ // S94
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -3237,52 +4368,76 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S95
 
-		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		-1, // Space
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		159, // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		79,  // Space
 
 	},
 	gotoRow{ // S96
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -3305,18 +4460,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S97
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -3339,18 +4506,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S98
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -3373,18 +4552,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S99
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -3407,52 +4598,76 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S100
 
-		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		127, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		112, // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		110, // Space
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
 
 	},
 	gotoRow{ // S101
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -3475,52 +4690,76 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S102
 
-		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		128, // CloseCurly
-		124, // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		122, // Space
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
 
 	},
 	gotoRow{ // S103
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -3543,86 +4782,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S104
 
-		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		129, // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		34,  // Space
-
-	},
-	gotoRow{ // S105
-
-		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		130, // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		38,  // Space
-
-	},
-	gotoRow{ // S106
-
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -3645,18 +4828,122 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S105
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S106
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S107
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -3679,18 +4966,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S108
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -3713,52 +5012,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S109
 
-		-1,  // S'
-		46,  // Expr
-		48,  // Function
-		49,  // List
-		132, // Exprs
-		54,  // ListType
-		47,  // SpaceTerminal
-		55,  // Terminal
-		56,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		133, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		131, // Space
-
-	},
-	gotoRow{ // S110
-
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -3781,18 +5058,76 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S110
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S111
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -3815,52 +5150,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S112
 
-		-1,  // S'
-		137, // Expr
-		48,  // Function
-		49,  // List
-		-1,  // Exprs
-		54,  // ListType
-		47,  // SpaceTerminal
-		55,  // Terminal
-		56,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		138, // Space
-
-	},
-	gotoRow{ // S113
-
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -3883,18 +5196,76 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S113
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S114
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -3917,120 +5288,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S115
 
-		-1,  // S'
-		74,  // Expr
-		76,  // Function
-		77,  // List
-		140, // Exprs
-		81,  // ListType
-		75,  // SpaceTerminal
-		83,  // Terminal
-		84,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		141, // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		139, // Space
-
-	},
-	gotoRow{ // S116
-
-		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		143, // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		34,  // Space
-
-	},
-	gotoRow{ // S117
-
-		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		144, // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		38,  // Space
-
-	},
-	gotoRow{ // S118
-
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -4053,18 +5334,168 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S116
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S117
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S118
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S119
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -4087,18 +5518,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S120
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -4121,23 +5564,35 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S121
 
 		-1,  // S'
-		46,  // Expr
-		48,  // Function
-		49,  // List
-		146, // Exprs
-		54,  // ListType
-		47,  // SpaceTerminal
-		55,  // Terminal
-		56,  // Bool
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		161, // ListType
+		-1,  // SpaceTerminal
+		127, // Literal
+		162, // Terminal
+		128, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
-		147, // CloseParen
+		-1,  // CloseParen
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
@@ -4155,92 +5610,128 @@ var gotoTab = gotoTable{
 		-1,  // Dot
 		-1,  // At
 		-1,  // RightArrow
-		145, // Space
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		-1,  // Space
 
 	},
 	gotoRow{ // S122
 
-		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		-1, // Space
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		165, // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		64,  // Space
 
 	},
 	gotoRow{ // S123
 
-		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		-1, // Space
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		167, // CloseCurly
+		168, // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		166, // Space
 
 	},
 	gotoRow{ // S124
 
 		-1,  // S'
-		150, // Expr
-		76,  // Function
-		77,  // List
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
 		-1,  // Exprs
-		81,  // ListType
-		75,  // SpaceTerminal
-		83,  // Terminal
-		84,  // Bool
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
 		-1,  // Equal
 		-1,  // OpenParen
 		-1,  // CloseParen
-		-1,  // OpenCurly
+		170, // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
 		-1,  // SemiColon
@@ -4257,18 +5748,30 @@ var gotoTab = gotoTable{
 		-1,  // Dot
 		-1,  // At
 		-1,  // RightArrow
-		151, // Space
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		79,  // Space
 
 	},
 	gotoRow{ // S125
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -4291,52 +5794,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S126
 
-		-1,  // S'
-		74,  // Expr
-		76,  // Function
-		77,  // List
-		153, // Exprs
-		81,  // ListType
-		75,  // SpaceTerminal
-		83,  // Terminal
-		84,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		154, // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		152, // Space
-
-	},
-	gotoRow{ // S127
-
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -4359,18 +5840,76 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S127
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S128
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -4393,154 +5932,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S129
 
-		-1,  // S'
-		46,  // Expr
-		48,  // Function
-		49,  // List
-		156, // Exprs
-		54,  // ListType
-		47,  // SpaceTerminal
-		55,  // Terminal
-		56,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		157, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		131, // Space
-
-	},
-	gotoRow{ // S130
-
-		-1,  // S'
-		74,  // Expr
-		76,  // Function
-		77,  // List
-		158, // Exprs
-		81,  // ListType
-		75,  // SpaceTerminal
-		83,  // Terminal
-		84,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		159, // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		139, // Space
-
-	},
-	gotoRow{ // S131
-
-		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		105, // ListType
-		-1,  // SpaceTerminal
-		106, // Terminal
-		56,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		-1,  // Space
-
-	},
-	gotoRow{ // S132
-
-		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		162, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		112, // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		161, // Space
-
-	},
-	gotoRow{ // S133
-
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -4563,18 +5978,214 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S130
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S131
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S132
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S133
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S134
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -4597,18 +6208,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S135
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -4631,18 +6254,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S136
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -4665,18 +6300,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S137
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -4699,120 +6346,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S138
 
-		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		105, // ListType
-		-1,  // SpaceTerminal
-		106, // Terminal
-		56,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		-1,  // Space
-
-	},
-	gotoRow{ // S139
-
-		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		117, // ListType
-		-1,  // SpaceTerminal
-		118, // Terminal
-		84,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		-1,  // Space
-
-	},
-	gotoRow{ // S140
-
-		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		165, // CloseCurly
-		124, // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		164, // Space
-
-	},
-	gotoRow{ // S141
-
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -4835,18 +6392,168 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S139
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S140
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S141
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S142
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -4869,60 +6576,84 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S143
 
-		-1,  // S'
-		46,  // Expr
-		48,  // Function
-		49,  // List
-		166, // Exprs
-		54,  // ListType
-		47,  // SpaceTerminal
-		55,  // Terminal
-		56,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		167, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		145, // Space
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
 
 	},
 	gotoRow{ // S144
 
 		-1,  // S'
-		74,  // Expr
-		76,  // Function
-		77,  // List
-		168, // Exprs
-		81,  // ListType
-		75,  // SpaceTerminal
-		83,  // Terminal
-		84,  // Bool
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
 		-1,  // Equal
 		-1,  // OpenParen
-		-1,  // CloseParen
+		171, // CloseParen
 		-1,  // OpenCurly
-		169, // CloseCurly
-		-1,  // Comma
+		-1,  // CloseCurly
+		156, // Comma
 		-1,  // SemiColon
 		-1,  // HashTag
 		-1,  // Ampersand
@@ -4937,60 +6668,84 @@ var gotoTab = gotoTable{
 		-1,  // Dot
 		-1,  // At
 		-1,  // RightArrow
-		152, // Space
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		154, // Space
 
 	},
 	gotoRow{ // S145
 
-		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		105, // ListType
-		-1,  // SpaceTerminal
-		106, // Terminal
-		56,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		-1,  // Space
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
 
 	},
 	gotoRow{ // S146
 
 		-1,  // S'
+		-1,  // Start
 		-1,  // Expr
 		-1,  // Function
+		-1,  // BuiltIn
 		-1,  // List
 		-1,  // Exprs
 		-1,  // ListType
 		-1,  // SpaceTerminal
+		-1,  // Literal
 		-1,  // Terminal
 		-1,  // Bool
 		-1,  // Equal
 		-1,  // OpenParen
-		172, // CloseParen
+		-1,  // CloseParen
 		-1,  // OpenCurly
-		-1,  // CloseCurly
-		112, // Comma
+		172, // CloseCurly
+		168, // Comma
 		-1,  // SemiColon
 		-1,  // HashTag
 		-1,  // Ampersand
@@ -5005,18 +6760,30 @@ var gotoTab = gotoTable{
 		-1,  // Dot
 		-1,  // At
 		-1,  // RightArrow
-		171, // Space
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		166, // Space
 
 	},
 	gotoRow{ // S147
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -5039,196 +6806,84 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S148
 
-		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		-1, // Space
-
-	},
-	gotoRow{ // S149
-
-		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		-1, // Space
-
-	},
-	gotoRow{ // S150
-
-		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		-1, // Space
-
-	},
-	gotoRow{ // S151
-
 		-1,  // S'
+		-1,  // Start
 		-1,  // Expr
 		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		117, // ListType
-		-1,  // SpaceTerminal
-		118, // Terminal
-		84,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		-1,  // Space
-
-	},
-	gotoRow{ // S152
-
-		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		117, // ListType
-		-1,  // SpaceTerminal
-		118, // Terminal
-		84,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // HashTag
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		-1,  // Space
-
-	},
-	gotoRow{ // S153
-
-		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
+		-1,  // BuiltIn
 		-1,  // List
 		-1,  // Exprs
 		-1,  // ListType
 		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		173, // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		64,  // Space
+
+	},
+	gotoRow{ // S149
+
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
 		-1,  // Terminal
 		-1,  // Bool
 		-1,  // Equal
 		-1,  // OpenParen
 		-1,  // CloseParen
-		-1,  // OpenCurly
-		175, // CloseCurly
-		124, // Comma
+		174, // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
 		-1,  // SemiColon
 		-1,  // HashTag
 		-1,  // Ampersand
@@ -5243,18 +6898,30 @@ var gotoTab = gotoTable{
 		-1,  // Dot
 		-1,  // At
 		-1,  // RightArrow
-		174, // Space
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		79,  // Space
 
 	},
-	gotoRow{ // S154
+	gotoRow{ // S150
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -5277,18 +6944,214 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S151
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S152
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S153
+
+		-1,  // S'
+		-1,  // Start
+		87,  // Expr
+		89,  // Function
+		-1,  // BuiltIn
+		90,  // List
+		176, // Exprs
+		95,  // ListType
+		88,  // SpaceTerminal
+		97,  // Literal
+		96,  // Terminal
+		98,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		177, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		175, // Space
+
+	},
+	gotoRow{ // S154
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S155
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -5311,26 +7174,38 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S156
 
 		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
+		-1,  // Start
+		181, // Expr
+		89,  // Function
+		-1,  // BuiltIn
+		90,  // List
 		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
+		95,  // ListType
+		88,  // SpaceTerminal
+		97,  // Literal
+		96,  // Terminal
+		98,  // Bool
 		-1,  // Equal
 		-1,  // OpenParen
-		176, // CloseParen
+		-1,  // CloseParen
 		-1,  // OpenCurly
 		-1,  // CloseCurly
-		112, // Comma
+		-1,  // Comma
 		-1,  // SemiColon
 		-1,  // HashTag
 		-1,  // Ampersand
@@ -5345,18 +7220,30 @@ var gotoTab = gotoTable{
 		-1,  // Dot
 		-1,  // At
 		-1,  // RightArrow
-		161, // Space
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		182, // Space
 
 	},
 	gotoRow{ // S157
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -5379,26 +7266,84 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S158
 
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S159
+
 		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
+		-1,  // Start
+		117, // Expr
+		119, // Function
+		-1,  // BuiltIn
+		120, // List
+		184, // Exprs
+		124, // ListType
+		118, // SpaceTerminal
+		127, // Literal
+		126, // Terminal
+		128, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
 		-1,  // CloseParen
 		-1,  // OpenCurly
-		177, // CloseCurly
-		124, // Comma
+		185, // CloseCurly
+		-1,  // Comma
 		-1,  // SemiColon
 		-1,  // HashTag
 		-1,  // Ampersand
@@ -5413,120 +7358,122 @@ var gotoTab = gotoTable{
 		-1,  // Dot
 		-1,  // At
 		-1,  // RightArrow
-		164, // Space
-
-	},
-	gotoRow{ // S159
-
-		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		-1, // Space
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		183, // Space
 
 	},
 	gotoRow{ // S160
 
-		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		-1, // Space
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		187, // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		64,  // Space
 
 	},
 	gotoRow{ // S161
 
-		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		-1, // Space
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		188, // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		79,  // Space
 
 	},
 	gotoRow{ // S162
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -5549,18 +7496,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S163
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -5583,18 +7542,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S164
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -5617,60 +7588,38 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S165
 
-		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		-1, // Space
-
-	},
-	gotoRow{ // S166
-
 		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
+		-1,  // Start
+		87,  // Expr
+		89,  // Function
+		-1,  // BuiltIn
+		90,  // List
+		190, // Exprs
+		95,  // ListType
+		88,  // SpaceTerminal
+		97,  // Literal
+		96,  // Terminal
+		98,  // Bool
 		-1,  // Equal
 		-1,  // OpenParen
-		178, // CloseParen
+		191, // CloseParen
 		-1,  // OpenCurly
 		-1,  // CloseCurly
-		112, // Comma
+		-1,  // Comma
 		-1,  // SemiColon
 		-1,  // HashTag
 		-1,  // Ampersand
@@ -5685,18 +7634,30 @@ var gotoTab = gotoTable{
 		-1,  // Dot
 		-1,  // At
 		-1,  // RightArrow
-		171, // Space
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		189, // Space
 
 	},
-	gotoRow{ // S167
+	gotoRow{ // S166
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -5719,26 +7680,84 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S167
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S168
 
 		-1,  // S'
-		-1,  // Expr
-		-1,  // Function
-		-1,  // List
+		-1,  // Start
+		194, // Expr
+		119, // Function
+		-1,  // BuiltIn
+		120, // List
 		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Terminal
-		-1,  // Bool
+		124, // ListType
+		118, // SpaceTerminal
+		127, // Literal
+		126, // Terminal
+		128, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
 		-1,  // CloseParen
 		-1,  // OpenCurly
-		179, // CloseCurly
-		124, // Comma
+		-1,  // CloseCurly
+		-1,  // Comma
 		-1,  // SemiColon
 		-1,  // HashTag
 		-1,  // Ampersand
@@ -5753,18 +7772,30 @@ var gotoTab = gotoTable{
 		-1,  // Dot
 		-1,  // At
 		-1,  // RightArrow
-		174, // Space
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		195, // Space
 
 	},
 	gotoRow{ // S169
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -5787,52 +7818,76 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S170
 
-		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		-1, // Space
+		-1,  // S'
+		-1,  // Start
+		117, // Expr
+		119, // Function
+		-1,  // BuiltIn
+		120, // List
+		197, // Exprs
+		124, // ListType
+		118, // SpaceTerminal
+		127, // Literal
+		126, // Terminal
+		128, // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		198, // CloseCurly
+		-1,  // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		196, // Space
 
 	},
 	gotoRow{ // S171
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -5855,18 +7910,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S172
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -5889,154 +7956,214 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S173
 
-		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		-1, // Space
+		-1,  // S'
+		-1,  // Start
+		87,  // Expr
+		89,  // Function
+		-1,  // BuiltIn
+		90,  // List
+		200, // Exprs
+		95,  // ListType
+		88,  // SpaceTerminal
+		97,  // Literal
+		96,  // Terminal
+		98,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		201, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		175, // Space
 
 	},
 	gotoRow{ // S174
 
-		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		-1, // Space
+		-1,  // S'
+		-1,  // Start
+		117, // Expr
+		119, // Function
+		-1,  // BuiltIn
+		120, // List
+		202, // Exprs
+		124, // ListType
+		118, // SpaceTerminal
+		127, // Literal
+		126, // Terminal
+		128, // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		203, // CloseCurly
+		-1,  // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		183, // Space
 
 	},
 	gotoRow{ // S175
 
-		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		-1, // Space
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		149, // ListType
+		-1,  // SpaceTerminal
+		97,  // Literal
+		150, // Terminal
+		98,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		-1,  // Space
 
 	},
 	gotoRow{ // S176
 
-		-1, // S'
-		-1, // Expr
-		-1, // Function
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // HashTag
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		-1, // Space
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		206, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		156, // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		205, // Space
 
 	},
 	gotoRow{ // S177
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -6059,18 +8186,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S178
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -6093,18 +8232,30 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},
 	gotoRow{ // S179
 
 		-1, // S'
+		-1, // Start
 		-1, // Expr
 		-1, // Function
+		-1, // BuiltIn
 		-1, // List
 		-1, // Exprs
 		-1, // ListType
 		-1, // SpaceTerminal
+		-1, // Literal
 		-1, // Terminal
 		-1, // Bool
 		-1, // Equal
@@ -6127,6 +8278,2039 @@ var gotoTab = gotoTable{
 		-1, // Dot
 		-1, // At
 		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S180
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S181
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S182
+
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		149, // ListType
+		-1,  // SpaceTerminal
+		97,  // Literal
+		150, // Terminal
+		98,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		-1,  // Space
+
+	},
+	gotoRow{ // S183
+
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		161, // ListType
+		-1,  // SpaceTerminal
+		127, // Literal
+		162, // Terminal
+		128, // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		-1,  // Space
+
+	},
+	gotoRow{ // S184
+
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		209, // CloseCurly
+		168, // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		208, // Space
+
+	},
+	gotoRow{ // S185
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S186
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S187
+
+		-1,  // S'
+		-1,  // Start
+		87,  // Expr
+		89,  // Function
+		-1,  // BuiltIn
+		90,  // List
+		210, // Exprs
+		95,  // ListType
+		88,  // SpaceTerminal
+		97,  // Literal
+		96,  // Terminal
+		98,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		211, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		189, // Space
+
+	},
+	gotoRow{ // S188
+
+		-1,  // S'
+		-1,  // Start
+		117, // Expr
+		119, // Function
+		-1,  // BuiltIn
+		120, // List
+		212, // Exprs
+		124, // ListType
+		118, // SpaceTerminal
+		127, // Literal
+		126, // Terminal
+		128, // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		213, // CloseCurly
+		-1,  // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		196, // Space
+
+	},
+	gotoRow{ // S189
+
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		149, // ListType
+		-1,  // SpaceTerminal
+		97,  // Literal
+		150, // Terminal
+		98,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		-1,  // Space
+
+	},
+	gotoRow{ // S190
+
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		216, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		156, // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		215, // Space
+
+	},
+	gotoRow{ // S191
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S192
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S193
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S194
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S195
+
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		161, // ListType
+		-1,  // SpaceTerminal
+		127, // Literal
+		162, // Terminal
+		128, // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		-1,  // Space
+
+	},
+	gotoRow{ // S196
+
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		161, // ListType
+		-1,  // SpaceTerminal
+		127, // Literal
+		162, // Terminal
+		128, // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		-1,  // Space
+
+	},
+	gotoRow{ // S197
+
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		219, // CloseCurly
+		168, // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		218, // Space
+
+	},
+	gotoRow{ // S198
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S199
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S200
+
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		220, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		156, // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		205, // Space
+
+	},
+	gotoRow{ // S201
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S202
+
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		221, // CloseCurly
+		168, // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		208, // Space
+
+	},
+	gotoRow{ // S203
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S204
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S205
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S206
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S207
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S208
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S209
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S210
+
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		222, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		156, // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		215, // Space
+
+	},
+	gotoRow{ // S211
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S212
+
+		-1,  // S'
+		-1,  // Start
+		-1,  // Expr
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		223, // CloseCurly
+		168, // Comma
+		-1,  // SemiColon
+		-1,  // HashTag
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // DoubleEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		218, // Space
+
+	},
+	gotoRow{ // S213
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S214
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S215
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S216
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S217
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S218
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S219
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S220
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S221
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S222
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // Space
+
+	},
+	gotoRow{ // S223
+
+		-1, // S'
+		-1, // Start
+		-1, // Expr
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // HashTag
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // DoubleEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
 		-1, // Space
 
 	},

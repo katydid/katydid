@@ -22,9 +22,12 @@ func TestParse(t *testing.T) {
 	positives := []string{
 		`"String"`,
 		"false",
+		`== "bla"`,
+		`eq($string, "bla")`,
 	}
 	negatives := []string{
 		"a",
+		`= "bla"`,
 	}
 	for _, in := range positives {
 		_, err := NewParser().ParseExpr(in)

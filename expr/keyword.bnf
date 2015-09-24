@@ -198,6 +198,96 @@ RightArrow
   >>
   ;
 
+DoubleEqual
+  : "=="  << &expr.Keyword{Value: "=="}, nil >>
+  | Space "==" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "==",
+    }, nil
+  >>
+  ;
+
+LessThan
+  : "<"  << &expr.Keyword{Value: "<"}, nil >>
+  | Space "<" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "<",
+    }, nil
+  >>
+  ;
+
+GreaterThan
+  : ">"  << &expr.Keyword{Value: ">"}, nil >>
+  | Space ">" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: ">",
+    }, nil
+  >>
+  ;
+
+LessEqual
+  : "<="  << &expr.Keyword{Value: "<="}, nil >>
+  | Space "<=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "<=",
+    }, nil
+  >>
+  ;
+
+GreaterEqual
+  : ">="  << &expr.Keyword{Value: ">="}, nil >>
+  | Space ">=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: ">=",
+    }, nil
+  >>
+  ;
+
+TildeEqual
+  : "~="  << &expr.Keyword{Value: "~="}, nil >>
+  | Space "~=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "~=",
+    }, nil
+  >>
+  ;
+
+StarEqual
+  : "*="  << &expr.Keyword{Value: "*="}, nil >>
+  | Space "*=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "*=",
+    }, nil
+  >>
+  ;
+
+CaretEqual
+  : "^="  << &expr.Keyword{Value: "^="}, nil >>
+  | Space "^=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "^=",
+    }, nil
+  >>
+  ;
+
+DollarEqual
+  : "$="  << &expr.Keyword{Value: "$="}, nil >>
+  | Space "$=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "$=",
+    }, nil
+  >>
+  ;
+
 Space
   : Space space << expr.AppendSpace($0, newString($1)), nil >>
   | space << &expr.Space{Space: []string{newString($0)}}, nil >>

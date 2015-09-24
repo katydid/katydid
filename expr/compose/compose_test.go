@@ -19,7 +19,6 @@ import (
 	"github.com/katydid/katydid/expr/ast"
 	"github.com/katydid/katydid/funcs"
 	"github.com/katydid/katydid/serialize"
-	"github.com/katydid/katydid/types"
 	"strings"
 	"testing"
 )
@@ -57,39 +56,10 @@ func TestComposeNot(t *testing.T) {
 //contains(toLower(decString(test.Address.Street.value)), toLower("TheStreet"))
 
 func TestComposeContains(t *testing.T) {
-	expr := &expr.Expr{
-		Function: &expr.Function{
-			Name: "contains",
-			Params: []*expr.Expr{
-				{
-					Function: &expr.Function{
-						Name: "toLower",
-						Params: []*expr.Expr{
-							{
-								Terminal: &expr.Terminal{
-									Variable: &expr.Variable{
-										Type: types.SINGLE_STRING,
-									},
-								},
-							},
-						},
-					},
-				},
-				{
-					Function: &expr.Function{
-						Name: "toLower",
-						Params: []*expr.Expr{
-							{
-								Terminal: &expr.Terminal{
-									StringValue: proto.String("TheStreet"),
-								},
-							},
-						},
-					},
-				},
-			},
-		},
-	}
+	expr := expr.NewNestedFunction("contains",
+		expr.NewNestedFunction("toLower", expr.NewStringVar()),
+		expr.NewNestedFunction("toLower", expr.NewStringConst("TheStreet")),
+	)
 	b, err := NewBool(expr)
 	if err != nil {
 		panic(err)
@@ -114,39 +84,10 @@ func TestComposeContains(t *testing.T) {
 }
 
 func TestComposeStringEq(t *testing.T) {
-	expr := &expr.Expr{
-		Function: &expr.Function{
-			Name: "eq",
-			Params: []*expr.Expr{
-				{
-					Function: &expr.Function{
-						Name: "toLower",
-						Params: []*expr.Expr{
-							{
-								Terminal: &expr.Terminal{
-									Variable: &expr.Variable{
-										Type: types.SINGLE_STRING,
-									},
-								},
-							},
-						},
-					},
-				},
-				{
-					Function: &expr.Function{
-						Name: "toLower",
-						Params: []*expr.Expr{
-							{
-								Terminal: &expr.Terminal{
-									StringValue: proto.String("TheStreet"),
-								},
-							},
-						},
-					},
-				},
-			},
-		},
-	}
+	expr := expr.NewNestedFunction("eq",
+		expr.NewNestedFunction("toLower", expr.NewStringVar()),
+		expr.NewNestedFunction("toLower", expr.NewStringConst("TheStreet")),
+	)
 	b, err := NewBool(expr)
 	if err != nil {
 		panic(err)
@@ -161,42 +102,15 @@ func TestComposeStringEq(t *testing.T) {
 }
 
 func TestComposeListBool(t *testing.T) {
-	expr := &expr.Expr{
-		Function: &expr.Function{
-			Name: "eq",
-			Params: []*expr.Expr{
-				{
-					Function: &expr.Function{
-						Name: "length",
-						Params: []*expr.Expr{
-							{
-								List: &expr.List{
-									Type: types.LIST_BOOL,
-									Elems: []*expr.Expr{
-										{
-											Terminal: &expr.Terminal{
-												BoolValue: proto.Bool(true),
-											},
-										},
-										{
-											Terminal: &expr.Terminal{
-												BoolValue: proto.Bool(false),
-											},
-										},
-									},
-								},
-							},
-						},
-					},
-				},
-				{
-					Terminal: &expr.Terminal{
-						IntValue: proto.Int64(2),
-					},
-				},
-			},
-		},
-	}
+	expr := expr.NewNestedFunction("eq",
+		expr.NewNestedFunction("length",
+			expr.NewBoolList(
+				expr.NewTrue(),
+				expr.NewFalse(),
+			),
+		),
+		expr.NewIntConst(2),
+	)
 	b, err := NewBool(expr)
 	if err != nil {
 		panic(err)
@@ -215,54 +129,18 @@ func TestComposeListBool(t *testing.T) {
 }
 
 func TestComposeListInt64(t *testing.T) {
-	expr := &expr.Expr{
-		Function: &expr.Function{
-			Name: "eq",
-			Params: []*expr.Expr{
-				{
-					Function: &expr.Function{
-						Name: "elem",
-						Params: []*expr.Expr{
-							{
-								Function: &expr.Function{
-									Name: "print",
-									Params: []*expr.Expr{
-										{
-											List: &expr.List{
-												Type: types.LIST_INT,
-												Elems: []*expr.Expr{
-													{
-														Terminal: &expr.Terminal{
-															IntValue: proto.Int64(1),
-														},
-													},
-													{
-														Terminal: &expr.Terminal{
-															IntValue: proto.Int64(2),
-														},
-													},
-												},
-											},
-										},
-									},
-								},
-							},
-							{
-								Terminal: &expr.Terminal{
-									IntValue: proto.Int64(1),
-								},
-							},
-						},
-					},
-				},
-				{
-					Terminal: &expr.Terminal{
-						IntValue: proto.Int64(2),
-					},
-				},
-			},
-		},
-	}
+	expr := expr.NewNestedFunction("eq",
+		expr.NewNestedFunction("elem",
+			expr.NewNestedFunction("print",
+				expr.NewIntList(
+					expr.NewIntConst(1),
+					expr.NewIntConst(2),
+				),
+			),
+			expr.NewIntConst(1),
+		),
+		expr.NewIntConst(2),
+	)
 	b, err := NewBool(expr)
 	if err != nil {
 		panic(err)
@@ -278,25 +156,10 @@ func TestComposeListInt64(t *testing.T) {
 }
 
 func TestComposeRegex(t *testing.T) {
-	expr := &expr.Expr{
-		Function: &expr.Function{
-			Name: "regex",
-			Params: []*expr.Expr{
-				{
-					Terminal: &expr.Terminal{
-						StringValue: proto.String("ab"),
-					},
-				},
-				{
-					Terminal: &expr.Terminal{
-						Variable: &expr.Variable{
-							Type: types.SINGLE_BYTES,
-						},
-					},
-				},
-			},
-		},
-	}
+	expr := expr.NewNestedFunction("regex",
+		expr.NewStringConst("ab"),
+		expr.NewBytesVar(),
+	)
 	b, err := NewBool(expr)
 	if err != nil {
 		panic(err)
@@ -311,25 +174,10 @@ func TestComposeRegex(t *testing.T) {
 }
 
 func TestConst(t *testing.T) {
-	expr := &expr.Expr{
-		Function: &expr.Function{
-			Name: "regex",
-			Params: []*expr.Expr{
-				{
-					Terminal: &expr.Terminal{
-						Variable: &expr.Variable{
-							Type: types.SINGLE_STRING,
-						},
-					},
-				},
-				{
-					Terminal: &expr.Terminal{
-						BytesValue: []byte{1, 2},
-					},
-				},
-			},
-		},
-	}
+	expr := expr.NewNestedFunction("regex",
+		expr.NewStringVar(),
+		expr.NewBytesConst([]byte{1, 2}),
+	)
 	_, err := NewBool(expr)
 	if err == nil {
 		t.Fatalf("expected error")
@@ -340,23 +188,10 @@ func TestConst(t *testing.T) {
 }
 
 func TestTrimInit(t *testing.T) {
-	expr := &expr.Expr{
-		Function: &expr.Function{
-			Name: "regex",
-			Params: []*expr.Expr{
-				{
-					Terminal: &expr.Terminal{
-						StringValue: proto.String("ab"),
-					},
-				},
-				{
-					Terminal: &expr.Terminal{
-						BytesValue: []byte{'a', 'b'},
-					},
-				},
-			},
-		},
-	}
+	expr := expr.NewNestedFunction("regex",
+		expr.NewStringConst("ab"),
+		expr.NewBytesConst([]byte{'a', 'b'}),
+	)
 	b, err := NewBool(expr)
 	if err != nil {
 		panic(err)
@@ -371,51 +206,17 @@ func TestTrimInit(t *testing.T) {
 }
 
 func TestNoTrim(t *testing.T) {
-	expr := &expr.Expr{
-		Function: &expr.Function{
-			Name: "eq",
-			Params: []*expr.Expr{
-				{
-					Function: &expr.Function{
-						Name: "elem",
-						Params: []*expr.Expr{
-							{
-								List: &expr.List{
-									Type: types.LIST_STRING,
-									Elems: []*expr.Expr{
-										{
-											Function: &expr.Function{
-												Name: "print",
-												Params: []*expr.Expr{
-													{
-														Terminal: &expr.Terminal{
-															Variable: &expr.Variable{
-																Type: types.SINGLE_STRING,
-															},
-														},
-													},
-												},
-											},
-										},
-									},
-								},
-							},
-							{
-								Terminal: &expr.Terminal{
-									IntValue: proto.Int64(0),
-								},
-							},
-						},
-					},
-				},
-				{
-					Terminal: &expr.Terminal{
-						StringValue: proto.String("abc"),
-					},
-				},
-			},
-		},
-	}
+	expr := expr.NewNestedFunction("eq",
+		expr.NewNestedFunction("elem",
+			expr.NewStringList(
+				expr.NewNestedFunction("print",
+					expr.NewStringVar(),
+				),
+			),
+			expr.NewIntConst(0),
+		),
+		expr.NewStringConst("abc"),
+	)
 	b, err := NewBool(expr)
 	if err != nil {
 		panic(err)
@@ -435,42 +236,15 @@ func TestNoTrim(t *testing.T) {
 }
 
 func TestList(t *testing.T) {
-	expr := &expr.Expr{
-		Function: &expr.Function{
-			Name: "eq",
-			Params: []*expr.Expr{
-				{
-					Function: &expr.Function{
-						Name: "elem",
-						Params: []*expr.Expr{
-							{
-								List: &expr.List{
-									Type: types.LIST_STRING,
-									Elems: []*expr.Expr{
-										{
-											Terminal: &expr.Terminal{
-												StringValue: proto.String("abc"),
-											},
-										},
-									},
-								},
-							},
-							{
-								Terminal: &expr.Terminal{
-									IntValue: proto.Int64(0),
-								},
-							},
-						},
-					},
-				},
-				{
-					Terminal: &expr.Terminal{
-						StringValue: proto.String("abc"),
-					},
-				},
-			},
-		},
-	}
+	expr := expr.NewNestedFunction("eq",
+		expr.NewNestedFunction("elem",
+			expr.NewStringList(
+				expr.NewStringConst("abc"),
+			),
+			expr.NewIntConst(0),
+		),
+		expr.NewStringConst("abc"),
+	)
 	b, err := NewBool(expr)
 	if err != nil {
 		panic(err)
@@ -485,5 +259,39 @@ func TestList(t *testing.T) {
 	}
 	if r != true {
 		t.Fatalf("expected true")
+	}
+}
+
+func TestComposeBuiltInRegex(t *testing.T) {
+	expr := expr.NewRegex(
+		expr.NewStringConst("ab"),
+	)
+	b, err := NewBool(expr)
+	if err != nil {
+		panic(err)
+	}
+	r, err := b.Eval(serialize.NewBytesValue([]byte("ab")))
+	if err != nil {
+		panic(err)
+	}
+	if r != true {
+		t.Fatalf("expected true")
+	}
+}
+
+func TestComposeBuiltInEqual(t *testing.T) {
+	expr := expr.NewEqual(
+		expr.NewIntConst(123),
+	)
+	b, err := NewBool(expr)
+	if err != nil {
+		panic(err)
+	}
+	r, err := b.Eval(serialize.NewIntValue(124))
+	if err != nil {
+		panic(err)
+	}
+	if r != false {
+		t.Fatalf("expected false")
 	}
 }

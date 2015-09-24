@@ -29,6 +29,9 @@ func (this *Expr) Walk(v Visitor) {
 	if this.Function != nil {
 		this.GetFunction().Walk(v)
 	}
+	if this.BuiltIn != nil {
+		this.GetBuiltIn().Walk(v)
+	}
 }
 
 func (this *List) Walk(v Visitor) {
@@ -43,6 +46,11 @@ func (this *Function) Walk(v Visitor) {
 	for _, e := range this.GetParams() {
 		e.Walk(v)
 	}
+}
+
+func (this *BuiltIn) Walk(v Visitor) {
+	v = v.Visit(this)
+	this.Expr.Walk(v)
 }
 
 func (this *Terminal) Walk(v Visitor) {

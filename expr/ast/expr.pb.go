@@ -12,6 +12,7 @@ It has these top-level messages:
 	Expr
 	List
 	Function
+	BuiltIn
 	Terminal
 	Variable
 	Keyword
@@ -43,6 +44,7 @@ type Expr struct {
 	Terminal         *Terminal `protobuf:"bytes,2,opt" json:"Terminal,omitempty"`
 	List             *List     `protobuf:"bytes,3,opt" json:"List,omitempty"`
 	Function         *Function `protobuf:"bytes,4,opt" json:"Function,omitempty"`
+	BuiltIn          *BuiltIn  `protobuf:"bytes,5,opt" json:"BuiltIn,omitempty"`
 	XXX_unrecognized []byte    `json:"-"`
 }
 
@@ -73,6 +75,13 @@ func (m *Expr) GetList() *List {
 func (m *Expr) GetFunction() *Function {
 	if m != nil {
 		return m.Function
+	}
+	return nil
+}
+
+func (m *Expr) GetBuiltIn() *BuiltIn {
+	if m != nil {
+		return m.BuiltIn
 	}
 	return nil
 }
@@ -167,6 +176,29 @@ func (m *Function) GetParams() []*Expr {
 func (m *Function) GetCloseParen() *Keyword {
 	if m != nil {
 		return m.CloseParen
+	}
+	return nil
+}
+
+type BuiltIn struct {
+	Symbol           *Keyword `protobuf:"bytes,1,opt" json:"Symbol,omitempty"`
+	Expr             *Expr    `protobuf:"bytes,2,opt" json:"Expr,omitempty"`
+	XXX_unrecognized []byte   `json:"-"`
+}
+
+func (m *BuiltIn) Reset()      { *m = BuiltIn{} }
+func (*BuiltIn) ProtoMessage() {}
+
+func (m *BuiltIn) GetSymbol() *Keyword {
+	if m != nil {
+		return m.Symbol
+	}
+	return nil
+}
+
+func (m *BuiltIn) GetExpr() *Expr {
+	if m != nil {
+		return m.Expr
 	}
 	return nil
 }
@@ -337,6 +369,9 @@ func (this *Expr) Equal(that interface{}) bool {
 	if !this.Function.Equal(that1.Function) {
 		return false
 	}
+	if !this.BuiltIn.Equal(that1.BuiltIn) {
+		return false
+	}
 	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
@@ -425,6 +460,37 @@ func (this *Function) Equal(that interface{}) bool {
 		}
 	}
 	if !this.CloseParen.Equal(that1.CloseParen) {
+		return false
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *BuiltIn) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*BuiltIn)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Symbol.Equal(that1.Symbol) {
+		return false
+	}
+	if !this.Expr.Equal(that1.Expr) {
 		return false
 	}
 	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
@@ -615,6 +681,7 @@ func (this *Expr) GoString() string {
 		`Terminal:` + fmt.Sprintf("%#v", this.Terminal),
 		`List:` + fmt.Sprintf("%#v", this.List),
 		`Function:` + fmt.Sprintf("%#v", this.Function),
+		`BuiltIn:` + fmt.Sprintf("%#v", this.BuiltIn),
 		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }
@@ -641,6 +708,16 @@ func (this *Function) GoString() string {
 		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
 		`Params:` + fmt.Sprintf("%#v", this.Params),
 		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen),
+		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
+	return s
+}
+func (this *BuiltIn) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&expr.BuiltIn{` +
+		`Symbol:` + fmt.Sprintf("%#v", this.Symbol),
+		`Expr:` + fmt.Sprintf("%#v", this.Expr),
 		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }

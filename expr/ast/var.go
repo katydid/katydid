@@ -15,45 +15,39 @@
 package expr
 
 import (
-	"errors"
+	"fmt"
 )
 
-func (this *Expr) GetTerminalVariable() (*Variable, error) {
+func (this *Expr) HasVar() bool {
 	if this.Terminal != nil {
-		return this.GetTerminal().GetVariable(), nil
+		return this.GetTerminal().Variable != nil
 	}
 	if this.List != nil {
-		return this.GetList().GetTerminalVariable()
+		return this.GetList().HasVar()
 	}
-	return this.GetFunction().GetTerminalVariable()
+	if this.Function != nil {
+		return this.GetFunction().HasVar()
+	}
+	if this.BuiltIn != nil {
+		return true
+	}
+	panic(fmt.Sprintf("unknown expr %#v", this))
 }
 
-func (this *List) GetTerminalVariable() (*Variable, error) {
-	var res *Variable
+func (this *List) HasVar() bool {
 	for _, e := range this.GetElems() {
-		if v, err := e.GetTerminalVariable(); err != nil {
-			return nil, err
-		} else if v != nil {
-			if res != nil {
-				return nil, errors.New("Two Terminal Variables")
-			}
-			res = v
+		if e.HasVar() {
+			return true
 		}
 	}
-	return res, nil
+	return false
 }
 
-func (this *Function) GetTerminalVariable() (*Variable, error) {
-	var res *Variable
+func (this *Function) HasVar() bool {
 	for _, p := range this.GetParams() {
-		if v, err := p.GetTerminalVariable(); err != nil {
-			return nil, err
-		} else if v != nil {
-			if res != nil {
-				return nil, errors.New("Two Terminal Variables")
-			}
-			res = v
+		if p.HasVar() {
+			return true
 		}
 	}
-	return res, nil
+	return false
 }
