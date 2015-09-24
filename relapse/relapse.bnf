@@ -178,8 +178,7 @@ TreeNode
     &Pattern{TreeNode: &TreeNode{
       Name: $0.(*NameExpr),
       Pattern: &Pattern{LeafNode: &LeafNode{
-        RightArrow: $1.(*expr.Keyword),
-        Expr: &expr.Expr{BuiltIn: $2.(*expr.BuiltIn)},
+        Expr: &expr.Expr{BuiltIn: $1.(*expr.BuiltIn)},
       }},
     }}, nil
   >> 

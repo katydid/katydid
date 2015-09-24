@@ -110,6 +110,7 @@ func TestParse(t *testing.T) {
 		}`,
 		`a.b->any()`,
 		`.a._.D.b123->any()`,
+		`"Whats Up" == "E"`,
 	}
 	p := parser.NewParser()
 	for i, patternDecl := range patternDecls {
