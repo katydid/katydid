@@ -403,6 +403,9 @@ func (s *jsonScanner) Next() error {
 	if err != nil {
 		if err == io.EOF {
 			s.offset++
+			if err := s.skipSpace(); err != nil {
+				return err
+			}
 			return s.nextValueInObject()
 		}
 		return err

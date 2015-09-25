@@ -56,6 +56,7 @@ func TestEscapedChar(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	t.Logf("%s", string(data))
 	scanner := sjson.NewJsonScanner()
 	scanner.Init(data)
 	jout := debug.Walk(scanner)
@@ -66,4 +67,14 @@ func TestEscapedChar(t *testing.T) {
 	if !bytes.Equal(data, data2) {
 		t.Error("bytes not equal")
 	}
+}
+
+func TestMultiLineArray(t *testing.T) {
+	s := `{
+		"A":[1]
+	}`
+	scanner := sjson.NewJsonScanner()
+	scanner.Init([]byte(s))
+	jout := debug.Walk(scanner)
+	t.Logf("%#v", jout)
 }
