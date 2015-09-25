@@ -101,11 +101,11 @@ func BenchmarkOrNameTelephone(b *testing.B) {
 }
 
 var scarBusStop = G{
-	"main": MatchInOrder(
+	"main": InOrder(
 		Any(),
-		MatchIn("PocketRoses",
+		In("PocketRoses",
 			Any(),
-			MatchField("ScarBusStop", Sprint(Contains(StringVar(), StringConst("a")))),
+			Field("ScarBusStop", Sprint(Contains(StringVar(), StringConst("a")))),
 			Any(),
 		),
 		Any(),
@@ -122,11 +122,11 @@ func BenchmarkTypewriterPrisonScarBusStop(b *testing.B) {
 }
 
 var daisySled = G{
-	"main": MatchInOrder(
+	"main": InOrder(
 		Any(),
-		MatchIn("PocketRoses",
+		In("PocketRoses",
 			Any(),
-			MatchField("DaisySled", Sprint(IntEq(IntVar(), IntConst(1)))),
+			Field("DaisySled", Sprint(IntEq(IntVar(), IntConst(1)))),
 			Any(),
 		),
 		Any(),
@@ -143,11 +143,11 @@ func BenchmarkTypewriterPrisonDaisySled(b *testing.B) {
 }
 
 var smileLetter = G{
-	"main": MatchInOrder(
+	"main": InOrder(
 		Any(),
-		MatchIn("PocketRoses",
+		In("PocketRoses",
 			Any(),
-			MatchField("SmileLetter", Sprint(BoolVar())),
+			Field("SmileLetter", Sprint(BoolVar())),
 			Any(),
 		),
 		Any(),
@@ -164,11 +164,11 @@ func BenchmarkTypewriterPrisonSmileLetter(b *testing.B) {
 }
 
 var menuPaperClip = G{
-	"main": MatchInOrder(
+	"main": InOrder(
 		Any(),
-		MatchIn("PocketRoses",
+		In("PocketRoses",
 			Any(),
-			MatchField("MenuPaperclip", Sprint(Contains(StringVar(), StringConst("a")))),
+			Field("MenuPaperclip", Sprint(Contains(StringVar(), StringConst("a")))),
 			Any(),
 		),
 		Any(),
@@ -185,11 +185,11 @@ func BenchmarkTypewriterPrisonMenuPaperclip(b *testing.B) {
 }
 
 var mapShark = G{
-	"main": MatchInOrder(
+	"main": InOrder(
 		Any(),
-		MatchIn("PocketRoses",
+		In("PocketRoses",
 			Any(),
-			MatchField("MapShark", Sprint(Contains(StringVar(), StringConst("a")))),
+			Field("MapShark", Sprint(Contains(StringVar(), StringConst("a")))),
 			Any(),
 		),
 		Any(),
@@ -206,15 +206,15 @@ func BenchmarkTypewriterPrisonMapShark(b *testing.B) {
 }
 
 var bridgePepper = G{
-	"main": MatchInOrder(
+	"main": InOrder(
 		Any(),
-		MatchIn("FinanceJudo",
+		In("FinanceJudo",
 			Any(),
-			MatchIn("SaladWorry",
+			In("SaladWorry",
 				Any(),
-				MatchIn("SpyCarpenter",
+				In("SpyCarpenter",
 					Any(),
-					MatchField("BridgePepper", Sprint(Contains(StringVar(), StringConst("a")))),
+					Field("BridgePepper", Sprint(Contains(StringVar(), StringConst("a")))),
 					Any(),
 				),
 				Any(),
@@ -235,24 +235,16 @@ func BenchmarkBridgePepper(b *testing.B) {
 }
 
 var bridgePepperAndFountainTarget = G{
-	"main": MatchInOrder(
+	"main": InOrder(
 		Any(),
-		MatchIn("FinanceJudo",
+		In("FinanceJudo",
 			Any(),
-			MatchIn("SaladWorry",
+			In("SaladWorry",
 				Any(),
-				MatchIn("SpyCarpenter",
-					AllOf(
-						MatchInOrder(
-							Any(),
-							MatchField("BridgePepper", Sprint(Contains(StringVar(), StringConst("a")))),
-							Any(),
-						),
-						MatchInOrder(
-							Any(),
-							MatchField("FountainTarget", Sprint(Contains(StringVar(), StringConst("a")))),
-							Any(),
-						),
+				In("SpyCarpenter",
+					MatchAllOf(
+						Field("BridgePepper", Sprint(Contains(StringVar(), StringConst("a")))),
+						Field("FountainTarget", Sprint(Contains(StringVar(), StringConst("a")))),
 					),
 				),
 				Any(),
@@ -273,24 +265,16 @@ func BenchmarkBridgePepperAndFountainTarget(b *testing.B) {
 }
 
 var bridgePepperOrFountainTarget = G{
-	"main": MatchInOrder(
+	"main": InOrder(
 		Any(),
-		MatchIn("FinanceJudo",
+		In("FinanceJudo",
 			Any(),
-			MatchIn("SaladWorry",
+			In("SaladWorry",
 				Any(),
-				MatchIn("SpyCarpenter",
-					AnyOf(
-						MatchInOrder(
-							Any(),
-							MatchField("BridgePepper", Sprint(Contains(StringVar(), StringConst("a")))),
-							Any(),
-						),
-						MatchInOrder(
-							Any(),
-							MatchField("FountainTarget", Sprint(Contains(StringVar(), StringConst("a")))),
-							Any(),
-						),
+				In("SpyCarpenter",
+					MatchAnyOf(
+						Field("BridgePepper", Sprint(Contains(StringVar(), StringConst("a")))),
+						Field("FountainTarget", Sprint(Contains(StringVar(), StringConst("a")))),
 					),
 				),
 				Any(),

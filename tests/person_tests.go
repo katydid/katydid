@@ -47,13 +47,9 @@ var RobertPerson = &Person{
 }
 
 //Has this person ever lived at 456 TheStreet
-var ContextPerson = G{"main": MatchInOrder(
-	Any(),
-	MatchIn("Addresses",
-		MatchField("Number", Sprint(IntVarEq(IntConst(456)))),
-		MatchField("Street", Sprint(StringVarEq(StringConst("TheStreet")))),
-	),
-	Any(),
+var ContextPerson = G{"main": InPath("Addresses",
+	Field("Number", Sprint(IntVarEq(IntConst(456)))),
+	Field("Street", Sprint(StringVarEq(StringConst("TheStreet")))),
 )}
 
 func init() {
@@ -162,19 +158,15 @@ var SmithPerson = &Person{
 //Assume that addresses are appended to the list, so the last address is the newest address.
 //find tests.Person where { tests.Person { Addresses[-2].Number == 2 && Addresses[-1].Number == 1 } }
 var ListIndexAddressPerson = G{
-	"main": MatchInOrder(
+	"main": InOrder(
 		Any(),
-		MatchIn("Addresses",
-			Any(),
-			MatchField("Number", Sprint(IntVarEq(IntConst(2)))),
-			Any(),
+		In("Addresses",
+			InFieldPath("Number", Sprint(IntVarEq(IntConst(2)))),
 		),
-		MatchIn("Addresses",
-			Any(),
-			MatchField("Number", Sprint(IntVarEq(IntConst(1)))),
-			Any(),
+		In("Addresses",
+			InFieldPath("Number", Sprint(IntVarEq(IntConst(1)))),
 		),
-		Many(MatchInAnyExcept("Addresses", Any())),
+		Many(InAnyExcept("Addresses", Any())),
 	),
 }
 
@@ -185,11 +177,9 @@ func init() {
 }
 
 //Is this person's name missing
-var NilNamePerson = G{"main": OppositeOf(MatchInOrder(
-	Any(),
-	MatchIn("Name", Any()),
-	Any(),
-))}
+var NilNamePerson = G{"main": OppositeOf(
+	InPath("Name", Any()),
+)}
 
 func init() {
 	Validate("NilNameNoname", NilNamePerson, AllCodecs(NonamePerson), true)
@@ -198,9 +188,9 @@ func init() {
 }
 
 //Is this person's name an empty string
-var LenNamePerson = G{"main": MatchInOrder(
+var LenNamePerson = G{"main": InOrder(
 	Any(),
-	MatchField("Name", Sprint(IntEq(LenString(StringVar()), IntConst(0)))),
+	Field("Name", Sprint(IntEq(LenString(StringVar()), IntConst(0)))),
 	Any(),
 )}
 
@@ -212,7 +202,7 @@ func init() {
 
 //Is this person's name empty or an empty string
 var EmptyOrNilPerson = G{
-	"main":  AnyOf(Eval("empty"), Eval("nil")),
+	"main":  ExactAnyOf(Eval("empty"), Eval("nil")),
 	"empty": LenNamePerson["main"],
 	"nil":   NilNamePerson["main"],
 }
@@ -225,9 +215,9 @@ func init() {
 
 //Is the person's name not David
 var NaiveNotNamePerson = G{
-	"main": MatchInOrder(
+	"main": InOrder(
 		Any(),
-		MatchField("Name", Sprint(Not(StringEq(StringVar(), StringConst("David"))))),
+		Field("Name", Sprint(Not(StringEq(StringVar(), StringConst("David"))))),
 		Any(),
 	),
 }
@@ -241,11 +231,11 @@ func init() {
 
 //Is the person's name not David and make sure that the case where the name does not exist is also covered
 var ProperNotNamePerson = G{
-	"main": AnyOf(Eval("name"), Eval("nil")),
+	"main": ExactAnyOf(Eval("name"), Eval("nil")),
 	"nil":  NilNamePerson["main"],
-	"name": MatchInOrder(
+	"name": InOrder(
 		Any(),
-		MatchField("Name", Sprint(Not(StringEq(StringVar(), StringConst("David"))))),
+		Field("Name", Sprint(Not(StringEq(StringVar(), StringConst("David"))))),
 		Any(),
 	),
 }
@@ -259,16 +249,16 @@ func init() {
 
 //Is this person's name David and telephone number 0123456789
 var AndNameTelephonePerson = G{
-	"main": MatchInOrder(
-		AllOf(
-			MatchInOrder(
+	"main": InOrder(
+		ExactAllOf(
+			InOrder(
 				Any(),
-				MatchField("Name", Sprint(StringEq(StringVar(), StringConst("David")))),
+				Field("Name", Sprint(StringEq(StringVar(), StringConst("David")))),
 				Any(),
 			),
-			MatchInOrder(
+			InOrder(
 				Any(),
-				MatchField("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
+				Field("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
 				Any(),
 			),
 		),
@@ -284,11 +274,9 @@ func init() {
 
 //Is this person's name David or telephone number 0123456789
 var OrNameTelephonePerson = G{
-	"main": MatchInOrder(
-		IncludingAnyOf(
-			MatchField("Name", Sprint(StringEq(StringVar(), StringConst("David")))),
-			MatchField("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
-		),
+	"main": MatchAnyOf(
+		Field("Name", Sprint(StringEq(StringVar(), StringConst("David")))),
+		Field("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
 	),
 }
 
@@ -301,9 +289,9 @@ func init() {
 
 //Is this person's telephone number 0123456789 or 0127897897
 var ListOfTelephonesPerson = G{
-	"main": MatchInOrder(
+	"main": InOrder(
 		Any(),
-		MatchField("Telephone", Sprint(Or(StringEq(StringVar(), StringConst("0123456789")), StringEq(StringVar(), StringConst("0127897897"))))),
+		Field("Telephone", Sprint(Or(StringEq(StringVar(), StringConst("0123456789")), StringEq(StringVar(), StringConst("0127897897"))))),
 		Any(),
 	),
 }
@@ -315,12 +303,12 @@ func init() {
 }
 
 var LeftRecursion = G{
-	"main": MatchInOrder(
-		AnyOf(
+	"main": InOrder(
+		ExactAnyOf(
 			Eval("main"),
-			MatchInOrder(
+			InOrder(
 				Any(),
-				MatchField("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
+				Field("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
 			),
 		),
 	),
@@ -332,12 +320,12 @@ func init() {
 }
 
 var HiddenLeftRecursion = G{
-	"main": MatchInOrder(
-		AnyOf(
+	"main": InOrder(
+		ExactAnyOf(
 			Eval("hidden"),
-			MatchInOrder(
+			InOrder(
 				Any(),
-				MatchField("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
+				Field("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
 			),
 		),
 	),
@@ -349,6 +337,7 @@ func init() {
 	Validate("HiddenLeftRecursionRobert", HiddenLeftRecursion, AllCodecs(RobertPerson), false)
 }
 
+// TODO
 // var NegativePerson = &Person{
 // 	Addresses: []*Address{
 // 		{
@@ -360,9 +349,9 @@ func init() {
 // }
 
 // var PositiveNumber = G{
-// 	"main": MatchInOrder(
-// 		MatchIn("Addresses",
-// 			MatchField("Number", Sprint(UintGE(UintVar(), UintConst(0)))),
+// 	"main": InOrder(
+// 		In("Addresses",
+// 			Field("Number", Sprint(UintGE(UintVar(), UintConst(0)))),
 // 			Any(),
 // 		),
 // 		Any(),

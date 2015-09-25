@@ -36,7 +36,7 @@ func TestAnal1(t *testing.T) {
 	f2 := Sprint(StringEq(StringVar(), StringConst("?")))
 	alwaysFalse := getExpr("false")
 	g := G{
-		"main": MatchIn("A", MatchIn("B", MatchField("c", f))),
+		"main": In("A", In("B", Field("c", f))),
 	}.Grammar()
 	leafs := interp.GetLeafs(g, "A", "B", "c")
 	if len(leafs) != 1 {
@@ -59,12 +59,12 @@ func TestAnal2(t *testing.T) {
 	f2 := Sprint(StringEq(StringVar(), StringConst("?")))
 	alwaysFalse := getExpr("false")
 	g := G{
-		"main": AnyOf(
-			MatchIn("A", AllOf(
-				MatchIn("B", MatchField("c", f)),
+		"main": ExactAnyOf(
+			In("A", ExactAllOf(
+				In("B", Field("c", f)),
 				Any()),
 			),
-			MatchIn("D", MatchField("c", f)),
+			In("D", Field("c", f)),
 		),
 	}.Grammar()
 	leafs := interp.GetLeafs(g, "A", "B", "c")
@@ -88,12 +88,12 @@ func TestAnal3(t *testing.T) {
 	f2 := Sprint(StringEq(StringVar(), StringConst("?")))
 	alwaysFalse := getExpr("false")
 	g := G{
-		"main": AnyOf(
-			MatchIn("A", AllOf(
-				Many(MatchIn("B", MatchField("c", f))),
-				MatchIn("B", MatchField("d", f)),
+		"main": ExactAnyOf(
+			In("A", ExactAllOf(
+				Many(In("B", Field("c", f))),
+				In("B", Field("d", f)),
 			)),
-			MatchIn("D", MatchField("c", f)),
+			In("D", Field("c", f)),
 		),
 	}.Grammar()
 	leafs := interp.GetLeafs(g, "A", "B", "c")
@@ -115,15 +115,15 @@ func TestAnal3(t *testing.T) {
 func TestAnal4(t *testing.T) {
 	f := Sprint(StringEq(StringVar(), StringConst("#")))
 	g := G{
-		"main": AnyOf(
-			MatchIn("A", AllOf(
-				Many(MatchIn("B", MatchField("c", f))),
-				MatchIn("B", AnyOf(
-					MatchField("d", f),
-					MatchField("c", f),
+		"main": ExactAnyOf(
+			In("A", ExactAllOf(
+				Many(In("B", Field("c", f))),
+				In("B", ExactAnyOf(
+					Field("d", f),
+					Field("c", f),
 				)),
 			)),
-			MatchIn("D", MatchField("c", f)),
+			In("D", Field("c", f)),
 		),
 	}.Grammar()
 	leafs := interp.GetLeafs(g, "A", "B", "c")

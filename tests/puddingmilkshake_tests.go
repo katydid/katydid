@@ -43,8 +43,8 @@ func init() {
 }
 
 var HasSpirit1FinanceJudo = G{
-	"main":   MatchInOrder(Any(), Eval("spirit"), Any()),
-	"spirit": MatchField("RumourSpirit", Sprint(IntEq(IntVar(), IntConst(1)))),
+	"main":   InOrder(Any(), Eval("spirit"), Any()),
+	"spirit": Field("RumourSpirit", Sprint(IntEq(IntVar(), IntConst(1)))),
 }
 
 func init() {
@@ -52,8 +52,8 @@ func init() {
 }
 
 var HasSpirit2FinanceJudo = G{
-	"main":   MatchInOrder(Any(), Eval("spirit"), Any()),
-	"spirit": MatchField("RumourSpirit", Sprint(IntEq(IntVar(), IntConst(2)))),
+	"main":   InOrder(Any(), Eval("spirit"), Any()),
+	"spirit": Field("RumourSpirit", Sprint(IntEq(IntVar(), IntConst(2)))),
 }
 
 func init() {
@@ -61,11 +61,11 @@ func init() {
 }
 
 var MagazineFrameAFinanceJudo = G{
-	"main": MatchInOrder(
-		MatchIn("SaladWorry",
-			MatchField("MagazineFrame", Sprint(StringEq(StringVar(), StringConst("a")))),
+	"main": InOrder(
+		In("SaladWorry",
+			Field("MagazineFrame", Sprint(StringEq(StringVar(), StringConst("a")))),
 			Any(),
-			MatchIn("XrayPilot", Any()),
+			In("XrayPilot", Any()),
 			Any(),
 		),
 		Any(),
@@ -77,10 +77,10 @@ func init() {
 }
 
 var MagazineFrameSingleAFinanceJudo = G{
-	"main": MatchInOrder(
-		MatchIn("SaladWorry",
-			MatchField("MagazineFrame", Sprint(StringEq(StringVar(), StringConst("a")))),
-			MatchIn("XrayPilot", Any()),
+	"main": InOrder(
+		In("SaladWorry",
+			Field("MagazineFrame", Sprint(StringEq(StringVar(), StringConst("a")))),
+			In("XrayPilot", Any()),
 			Any(),
 		),
 		Any(),
@@ -92,9 +92,9 @@ func init() {
 }
 
 var InAnyExceptNotAFieldNameFinanceJudo = G{
-	"main": MatchInOrder(
-		MatchInAnyExcept("NotAFieldName",
-			MatchField("MagazineFrame", Sprint(StringEq(StringVar(), StringConst("a")))),
+	"main": InOrder(
+		InAnyExcept("NotAFieldName",
+			Field("MagazineFrame", Sprint(StringEq(StringVar(), StringConst("a")))),
 			Any(),
 		),
 		Any(),
@@ -106,9 +106,9 @@ func init() {
 }
 
 var InAnyExceptSaladWorryFinanceJudo = G{
-	"main": MatchInOrder(
-		MatchInAnyExcept("SaladWorry",
-			MatchField("MagazineFrame", Sprint(StringEq(StringVar(), StringConst("a")))),
+	"main": InOrder(
+		InAnyExcept("SaladWorry",
+			Field("MagazineFrame", Sprint(StringEq(StringVar(), StringConst("a")))),
 			Any(),
 		),
 		Any(),

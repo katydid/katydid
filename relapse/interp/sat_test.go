@@ -36,14 +36,14 @@ func TestSatisfiability(t *testing.T) {
 		"main": None(),
 	}, t, false)
 	check(G{
-		"main": MatchInAny(
+		"main": InAny(
 			None(),
 		),
 	}, t, false)
 	check(G{
-		"main": MatchIn("A",
-			AnyOf(
-				MatchIn("B", Any()),
+		"main": In("A",
+			ExactAnyOf(
+				In("B", Any()),
 				None(),
 			),
 		),

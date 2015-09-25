@@ -37,15 +37,27 @@ func concat(p *relapse.Pattern, ps ...*relapse.Pattern) *relapse.Pattern {
 	return relapse.NewConcat(pss...)
 }
 
-func MatchIn(name string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
+func InPath(name string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
+	return relapse.NewWithSomeTreeNode(relapse.NewName(name), concat(child, children...))
+}
+
+func InFieldPath(name string, exprStr string) *relapse.Pattern {
+	expr, err := exprparser.NewParser().ParseExpr(exprStr)
+	if err != nil {
+		panic(err)
+	}
+	return relapse.NewWithSomeLeafNode(relapse.NewName(name), expr)
+}
+
+func In(name string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
 	return relapse.NewTreeNode(relapse.NewName(name), concat(child, children...))
 }
 
-func MatchInAny(child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
+func InAny(child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
 	return relapse.NewTreeNode(relapse.NewAnyName(), concat(child, children...))
 }
 
-func MatchInAnyExcept(name string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
+func InAnyExcept(name string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
 	return relapse.NewTreeNode(relapse.NewAnyNameExcept(relapse.NewName(name)), concat(child, children...))
 }
 
@@ -56,14 +68,14 @@ func nameChoice(p string, ps ...string) *relapse.NameExpr {
 	return relapse.NewNameChoice(relapse.NewName(p), nameChoice(ps[0], ps[1:]...))
 }
 
-func MatchInAnyOf(names []string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
+func InAnyOf(names []string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
 	if len(names) < 2 {
 		panic("less than two names is not really a choice, is it?")
 	}
 	return relapse.NewTreeNode(nameChoice(names[0], names[1:]...), concat(child, children...))
 }
 
-func MatchField(name string, exprStr string) *relapse.Pattern {
+func Field(name string, exprStr string) *relapse.Pattern {
 	expr, err := exprparser.NewParser().ParseExpr(exprStr)
 	if err != nil {
 		panic(err)
@@ -71,7 +83,7 @@ func MatchField(name string, exprStr string) *relapse.Pattern {
 	return relapse.NewLeafNode(relapse.NewName(name), expr)
 }
 
-func MatchAnyField(exprStr string) *relapse.Pattern {
+func AnyField(exprStr string) *relapse.Pattern {
 	expr, err := exprparser.NewParser().ParseExpr(exprStr)
 	if err != nil {
 		panic(err)
@@ -79,7 +91,7 @@ func MatchAnyField(exprStr string) *relapse.Pattern {
 	return relapse.NewLeafNode(relapse.NewAnyName(), expr)
 }
 
-func MatchAnyFieldExcept(name string, exprStr string) *relapse.Pattern {
+func AnyFieldExcept(name string, exprStr string) *relapse.Pattern {
 	expr, err := exprparser.NewParser().ParseExpr(exprStr)
 	if err != nil {
 		panic(err)
@@ -87,7 +99,7 @@ func MatchAnyFieldExcept(name string, exprStr string) *relapse.Pattern {
 	return relapse.NewLeafNode(relapse.NewAnyNameExcept(relapse.NewName(name)), expr)
 }
 
-func MatchAnyFields(names []string, exprStr string) *relapse.Pattern {
+func AnyFields(names []string, exprStr string) *relapse.Pattern {
 	if len(names) < 2 {
 		panic("less than two fieldnames is not really a choice, is it?")
 	}
@@ -106,23 +118,23 @@ func Eval(name string) *relapse.Pattern {
 	return relapse.NewReference(name)
 }
 
-func MatchInOrder(child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
+func InOrder(child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
 	return concat(child, children...)
 }
 
-func AllOf(patterns ...*relapse.Pattern) *relapse.Pattern {
+func ExactAllOf(patterns ...*relapse.Pattern) *relapse.Pattern {
 	return relapse.NewAnd(patterns...)
 }
 
-func IncludingAllOf(patterns ...*relapse.Pattern) *relapse.Pattern {
+func MatchAllOf(patterns ...*relapse.Pattern) *relapse.Pattern {
 	return relapse.NewWithSomeAnd(patterns...)
 }
 
-func AnyOf(patterns ...*relapse.Pattern) *relapse.Pattern {
+func ExactAnyOf(patterns ...*relapse.Pattern) *relapse.Pattern {
 	return relapse.NewOr(patterns...)
 }
 
-func IncludingAnyOf(patterns ...*relapse.Pattern) *relapse.Pattern {
+func MatchAnyOf(patterns ...*relapse.Pattern) *relapse.Pattern {
 	return relapse.NewWithSomeOr(patterns...)
 }
 

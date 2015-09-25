@@ -243,6 +243,15 @@ func NewLeafNode(name *NameExpr, expr *expr.Expr) *Pattern {
 	}
 }
 
+func NewWithSomeLeafNode(name *NameExpr, expr *expr.Expr) *Pattern {
+	return &Pattern{
+		WithSomeTreeNode: &WithSomeTreeNode{
+			Dot:     newDot(),
+			Pattern: NewLeafNode(name, expr),
+		},
+	}
+}
+
 func NewConcat(patterns ...*Pattern) *Pattern {
 	if len(patterns) == 0 {
 		return nil

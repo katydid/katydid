@@ -76,7 +76,7 @@ func TestChild4(t *testing.T) {
 }
 
 func TestChild5(t *testing.T) {
-	p := combinator.MatchInOrder(combinator.Any(), combinator.MatchField("Telephone", funcs.Sprint(funcs.StringVarEq(funcs.StringConst("01234")))))
+	p := combinator.InOrder(combinator.Any(), combinator.Field("Telephone", funcs.Sprint(funcs.StringVarEq(funcs.StringConst("01234")))))
 	refs := relapse.RefLookup{"main": p}
 	name := relapse.NewName("David")
 	child(t, refs, name, nil)
