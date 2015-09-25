@@ -47,3 +47,23 @@ func TestJsonScanner(t *testing.T) {
 		t.Error("bytes not equal")
 	}
 }
+
+func TestEscapedChar(t *testing.T) {
+	j := map[string][]interface{}{
+		`a\"`: {1},
+	}
+	data, err := json.Marshal(j)
+	if err != nil {
+		t.Fatal(err)
+	}
+	scanner := sjson.NewJsonScanner()
+	scanner.Init(data)
+	jout := debug.Walk(scanner)
+	data2, err := json.Marshal(jout)
+	if err != nil {
+		panic(err)
+	}
+	if !bytes.Equal(data, data2) {
+		t.Error("bytes not equal")
+	}
+}

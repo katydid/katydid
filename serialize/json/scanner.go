@@ -22,6 +22,8 @@ import (
 	"strconv"
 )
 
+var ErrUnquote = fmt.Errorf("json: error unquoting string")
+
 func errInString(buf []byte) error {
 	return fmt.Errorf("katydid/json error in json string: %s", string(buf))
 }
@@ -130,7 +132,11 @@ func (s *jsonScanner) scanName() error {
 		return err
 	}
 	s.offset += n
-	s.name = s.buf[startOffset+1 : s.offset-1]
+	var ok bool
+	s.name, ok = unquote(s.buf[startOffset:s.offset])
+	if !ok {
+		return ErrUnquote
+	}
 	return s.skipSpace()
 }
 
@@ -446,7 +452,11 @@ func (s *jsonScanner) String() (string, error) {
 	if v[0] != '"' {
 		return "", serialize.ErrNotString
 	}
-	return string(v[1 : len(v)-1]), nil
+	res, ok := unquote(v)
+	if !ok {
+		return "", ErrUnquote
+	}
+	return res, nil
 }
 
 func (s *jsonScanner) Bytes() ([]byte, error) {
@@ -483,7 +493,7 @@ type jsonScanner struct {
 type state struct {
 	buf              []byte
 	offset           int
-	name             []byte
+	name             string
 	startValueOffset int
 	endValueOffset   int
 	inArray          bool
@@ -495,12 +505,10 @@ type state struct {
 func (s state) Copy() state {
 	bufs := make([]byte, len(s.buf))
 	copy(bufs, s.buf)
-	names := make([]byte, len(s.name))
-	copy(names, s.name)
 	return state{
 		buf:              bufs,
 		offset:           s.offset,
-		name:             names,
+		name:             s.name,
 		startValueOffset: s.startValueOffset,
 		endValueOffset:   s.endValueOffset,
 		inArray:          s.inArray,
@@ -511,7 +519,7 @@ func (s state) Copy() state {
 }
 
 func (s *jsonScanner) Name() string {
-	return string(s.name)
+	return s.name
 }
 
 func (s *jsonScanner) Copy() serialize.Scanner {
