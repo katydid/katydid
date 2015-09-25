@@ -468,3 +468,129 @@ func BytesEq(a, b Bytes) Bool {
 func BytesVarEq(a Bytes) Bool {
 	return &bytesEq{V1: a, V2: BytesVar()}
 }
+
+type doubleNe struct {
+	V1 Double
+	V2 Double
+}
+
+func (this *doubleNe) Eval() bool {
+	return this.V1.Eval() != this.V2.Eval()
+}
+
+func init() {
+	Register("ne", new(doubleNe))
+}
+
+func DoubleNe(a, b Double) Bool {
+	return &doubleNe{V1: a, V2: b}
+}
+
+func DoubleVarNe(a Double) Bool {
+	return &doubleNe{V1: a, V2: DoubleVar()}
+}
+
+type intNe struct {
+	V1 Int
+	V2 Int
+}
+
+func (this *intNe) Eval() bool {
+	return this.V1.Eval() != this.V2.Eval()
+}
+
+func init() {
+	Register("ne", new(intNe))
+}
+
+func IntNe(a, b Int) Bool {
+	return &intNe{V1: a, V2: b}
+}
+
+func IntVarNe(a Int) Bool {
+	return &intNe{V1: a, V2: IntVar()}
+}
+
+type uintNe struct {
+	V1 Uint
+	V2 Uint
+}
+
+func (this *uintNe) Eval() bool {
+	return this.V1.Eval() != this.V2.Eval()
+}
+
+func init() {
+	Register("ne", new(uintNe))
+}
+
+func UintNe(a, b Uint) Bool {
+	return &uintNe{V1: a, V2: b}
+}
+
+func UintVarNe(a Uint) Bool {
+	return &uintNe{V1: a, V2: UintVar()}
+}
+
+type boolNe struct {
+	V1 Bool
+	V2 Bool
+}
+
+func (this *boolNe) Eval() bool {
+	return this.V1.Eval() != this.V2.Eval()
+}
+
+func init() {
+	Register("ne", new(boolNe))
+}
+
+func BoolNe(a, b Bool) Bool {
+	return &boolNe{V1: a, V2: b}
+}
+
+func BoolVarNe(a Bool) Bool {
+	return &boolNe{V1: a, V2: BoolVar()}
+}
+
+type stringNe struct {
+	V1 String
+	V2 String
+}
+
+func (this *stringNe) Eval() bool {
+	return this.V1.Eval() != this.V2.Eval()
+}
+
+func init() {
+	Register("ne", new(stringNe))
+}
+
+func StringNe(a, b String) Bool {
+	return &stringNe{V1: a, V2: b}
+}
+
+func StringVarNe(a String) Bool {
+	return &stringNe{V1: a, V2: StringVar()}
+}
+
+type bytesNe struct {
+	V1 Bytes
+	V2 Bytes
+}
+
+func (this *bytesNe) Eval() bool {
+	return !bytes.Equal(this.V1.Eval(), this.V2.Eval())
+}
+
+func init() {
+	Register("ne", new(bytesNe))
+}
+
+func BytesNe(a, b Bytes) Bool {
+	return &bytesNe{V1: a, V2: b}
+}
+
+func BytesVarNe(a Bytes) Bool {
+	return &bytesNe{V1: a, V2: BytesVar()}
+}

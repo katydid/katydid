@@ -158,13 +158,13 @@ func TestComposeListInt64(t *testing.T) {
 func TestComposeRegex(t *testing.T) {
 	expr := expr.NewNestedFunction("regex",
 		expr.NewStringConst("ab"),
-		expr.NewBytesVar(),
+		expr.NewStringVar(),
 	)
 	b, err := NewBool(expr)
 	if err != nil {
 		panic(err)
 	}
-	r, err := b.Eval(serialize.NewBytesValue([]byte("a")))
+	r, err := b.Eval(serialize.NewStringValue("a"))
 	if err != nil {
 		panic(err)
 	}
@@ -176,7 +176,7 @@ func TestComposeRegex(t *testing.T) {
 func TestConst(t *testing.T) {
 	expr := expr.NewNestedFunction("regex",
 		expr.NewStringVar(),
-		expr.NewBytesConst([]byte{1, 2}),
+		expr.NewStringConst("ab"),
 	)
 	_, err := NewBool(expr)
 	if err == nil {
@@ -189,8 +189,8 @@ func TestConst(t *testing.T) {
 
 func TestTrimInit(t *testing.T) {
 	expr := expr.NewNestedFunction("regex",
+		expr.NewStringConst(".*"),
 		expr.NewStringConst("ab"),
-		expr.NewBytesConst([]byte{'a', 'b'}),
 	)
 	b, err := NewBool(expr)
 	if err != nil {
@@ -270,7 +270,7 @@ func TestComposeBuiltInRegex(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	r, err := b.Eval(serialize.NewBytesValue([]byte("ab")))
+	r, err := b.Eval(serialize.NewStringValue("ab"))
 	if err != nil {
 		panic(err)
 	}

@@ -267,6 +267,7 @@ Function
 
 BuiltIn
   : DoubleEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
+  | ExclamationEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
   | LessThan Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
   | GreaterThan Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
   | GreaterEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
@@ -532,6 +533,16 @@ DoubleEqual
     &expr.Keyword{
       Before: $0.(*expr.Space),
       Value: "==",
+    }, nil
+  >>
+  ;
+
+ExclamationEqual
+  : "!="  << &expr.Keyword{Value: "!="}, nil >>
+  | Space "!=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "!=",
     }, nil
   >>
   ;

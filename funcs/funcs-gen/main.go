@@ -338,6 +338,12 @@ func main() {
 		&compare{"eq", "==", "bool", "", "Bool"},
 		&compare{"eq", "==", "string", "", "String"},
 		&compare{"eq", "", "bytes", "return bytes.Equal(this.V1.Eval(), this.V2.Eval())", "Bytes"},
+		&compare{"ne", "!=", "double", "", "Double"},
+		&compare{"ne", "!=", "int", "", "Int"},
+		&compare{"ne", "!=", "uint", "", "Uint"},
+		&compare{"ne", "!=", "bool", "", "Bool"},
+		&compare{"ne", "!=", "string", "", "String"},
+		&compare{"ne", "", "bytes", "return !bytes.Equal(this.V1.Eval(), this.V2.Eval())", "Bytes"},
 	}, `"bytes"`)
 	gen(newFuncStr, "newfunc.gen.go", []interface{}{
 		"Double",

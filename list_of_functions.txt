@@ -39,6 +39,12 @@ func lt(v1 []byte,v2 []byte) bool
 func lt(v1 double,v2 double) bool
 func lt(v1 int,v2 int) bool
 func lt(v1 uint,v2 uint) bool
+func ne(v1 []byte,v2 []byte) bool
+func ne(v1 bool,v2 bool) bool
+func ne(v1 double,v2 double) bool
+func ne(v1 int,v2 int) bool
+func ne(v1 string,v2 string) bool
+func ne(v1 uint,v2 uint) bool
 func not(v1 bool) bool
 func now() int
 func or(v1 bool,v2 bool) bool
@@ -60,6 +66,6 @@ func range(list []double,first int,last int) []double
 func range(list []int,first int,last int) []int
 func range(list []string,first int,last int) []string
 func range(list []uint,first int,last int) []uint
-func regex(expr const string,b []byte) bool
+func regex(expr const string,s string) bool
 func toLower(s string) string
 func toUpper(s string) string

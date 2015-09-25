@@ -23,6 +23,8 @@ func symbolToFunc(symbol string) string {
 	switch symbol {
 	case "==":
 		return "eq"
+	case "!=":
+		return "ne"
 	case "<":
 		return "lt"
 	case ">":
@@ -57,7 +59,7 @@ func rewriteBuiltIn(e *expr.Expr) (*expr.Expr, error) {
 	funcName := symbolToFunc(s)
 	e2 := expr.NewNestedFunction(funcName, left, right)
 	if funcName == "regex" {
-		e2 = expr.NewNestedFunction(funcName, right, expr.NewVar(types.SINGLE_BYTES))
+		e2 = expr.NewNestedFunction(funcName, right, expr.NewVar(types.SINGLE_STRING))
 	}
 	return e2, nil
 }

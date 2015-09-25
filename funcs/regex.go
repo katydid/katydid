@@ -18,14 +18,14 @@ import (
 	"regexp"
 )
 
-func Regex(e ConstString, b Bytes) Bool {
-	return &regex{Expr: e, B: b}
+func Regex(e ConstString, s String) Bool {
+	return &regex{Expr: e, S: s}
 }
 
 type regex struct {
 	r    *regexp.Regexp
 	Expr ConstString
-	B    Bytes
+	S    String
 }
 
 func (this *regex) Init() error {
@@ -38,7 +38,7 @@ func (this *regex) Init() error {
 }
 
 func (this *regex) Eval() bool {
-	return this.r.Match(this.B.Eval())
+	return this.r.MatchString(this.S.Eval())
 }
 
 func init() {

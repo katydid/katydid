@@ -23,6 +23,15 @@ func NewEqual(e *Expr) *Expr {
 	}
 }
 
+func NewNotEqual(e *Expr) *Expr {
+	return &Expr{
+		BuiltIn: &BuiltIn{
+			Symbol: newExclamationEqual(),
+			Expr:   e,
+		},
+	}
+}
+
 func NewLessThan(e *Expr) *Expr {
 	return &Expr{
 		BuiltIn: &BuiltIn{

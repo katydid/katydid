@@ -208,6 +208,16 @@ DoubleEqual
   >>
   ;
 
+ExclamationEqual
+  : "!="  << &expr.Keyword{Value: "!="}, nil >>
+  | Space "!=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "!=",
+    }, nil
+  >>
+  ;
+
 LessThan
   : "<"  << &expr.Keyword{Value: "<"}, nil >>
   | Space "<" << 

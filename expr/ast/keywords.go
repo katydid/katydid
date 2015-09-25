@@ -32,6 +32,12 @@ func newDoubleEqual() *Keyword {
 	}
 }
 
+func newExclamationEqual() *Keyword {
+	return &Keyword{
+		Value: "!=",
+	}
+}
+
 func newLessThan() *Keyword {
 	return &Keyword{
 		Value: "<",
