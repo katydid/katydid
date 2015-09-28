@@ -20,7 +20,7 @@ import (
 	"github.com/katydid/katydid/serialize"
 )
 
-func Interpret(g *relapse.Grammar, tree serialize.Scanner) bool {
+func Interpret(g *relapse.Grammar, tree serialize.Parser) bool {
 	fmt.Printf("BEFORE: %s\n", g)
 	p := ConvertGrammar(g)
 	pp := ConvertPattern(p)

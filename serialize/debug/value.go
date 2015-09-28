@@ -19,55 +19,55 @@ import (
 	"io"
 )
 
-func getValue(scanner serialize.Scanner) interface{} {
+func getValue(parser serialize.Parser) interface{} {
 	var v interface{}
 	var err error
-	v, err = scanner.Bool()
+	v, err = parser.Bool()
 	if err == nil {
 		return v
 	}
-	v, err = scanner.Bytes()
+	v, err = parser.Bytes()
 	if err == nil {
 		return v
 	}
-	v, err = scanner.String()
+	v, err = parser.String()
 	if err == nil {
 		return v
 	}
-	v, err = scanner.Int()
+	v, err = parser.Int()
 	if err == nil {
 		return v
 	}
-	v, err = scanner.Uint()
+	v, err = parser.Uint()
 	if err == nil {
 		return v
 	}
-	v, err = scanner.Double()
+	v, err = parser.Double()
 	if err == nil {
 		return v
 	}
 	return nil
 }
 
-func Walk(scanner serialize.Scanner) map[string][]interface{} {
+func Walk(parser serialize.Parser) map[string][]interface{} {
 	m := make(map[string][]interface{})
 	for {
-		if err := scanner.Next(); err != nil {
+		if err := parser.Next(); err != nil {
 			if err == io.EOF {
 				break
 			} else {
 				panic(err)
 			}
 		}
-		name := scanner.Name()
+		name := parser.Name()
 		var v interface{}
-		if !scanner.IsLeaf() {
-			scanner.Down()
-			mm := Walk(scanner)
-			scanner.Up()
+		if !parser.IsLeaf() {
+			parser.Down()
+			mm := Walk(parser)
+			parser.Up()
 			v = mm
 		} else {
-			v = getValue(scanner)
+			v = getValue(parser)
 		}
 		_, ok := m[name]
 		if !ok {

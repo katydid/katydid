@@ -24,7 +24,7 @@ import (
 )
 
 //This is a naive implementation and it does not handle left recursion
-func Interpret(g *relapse.Grammar, tree serialize.Scanner) bool {
+func Interpret(g *relapse.Grammar, tree serialize.Parser) bool {
 	refs := relapse.NewRefsLookup(g)
 	res := refs["main"]
 	res = refs["main"]
@@ -94,7 +94,7 @@ func evalName(nameExpr *relapse.NameExpr, name string) bool {
 	panic(fmt.Sprintf("unknown nameExpr typ %T", typ))
 }
 
-func derivTreeNode(refs relapse.RefLookup, p *relapse.TreeNode, tree serialize.Scanner) *relapse.Pattern {
+func derivTreeNode(refs relapse.RefLookup, p *relapse.TreeNode, tree serialize.Parser) *relapse.Pattern {
 	matched := evalName(p.GetName(), tree.Name())
 	if !matched {
 		return relapse.NewEmptySet()
@@ -125,13 +125,13 @@ func derivTreeNode(refs relapse.RefLookup, p *relapse.TreeNode, tree serialize.S
 	return relapse.NewEmpty()
 }
 
-func sderiv(refs relapse.RefLookup, p *relapse.Pattern, tree serialize.Scanner) *relapse.Pattern {
+func sderiv(refs relapse.RefLookup, p *relapse.Pattern, tree serialize.Parser) *relapse.Pattern {
 	d := deriv(refs, p, tree)
 	log.Printf("sderiv %s -> %s", p, d)
 	return Simplify(refs, d)
 }
 
-func deriv(refs relapse.RefLookup, p *relapse.Pattern, tree serialize.Scanner) *relapse.Pattern {
+func deriv(refs relapse.RefLookup, p *relapse.Pattern, tree serialize.Parser) *relapse.Pattern {
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *relapse.Empty:

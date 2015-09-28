@@ -20,21 +20,21 @@ import (
 	"github.com/katydid/katydid/expr/parser"
 	"github.com/katydid/katydid/funcs"
 	"github.com/katydid/katydid/serialize"
-	rscanner "github.com/katydid/katydid/serialize/reflect"
+	rparser "github.com/katydid/katydid/serialize/reflect"
 	"github.com/katydid/katydid/tests"
 	"github.com/katydid/katydid/viper/ast"
 	"reflect"
 	"testing"
 )
 
-func newReflectScanner(m interface{}) serialize.Scanner {
-	s := rscanner.NewReflectScanner()
+func newReflectParser(m interface{}) serialize.Parser {
+	s := rparser.NewReflectParser()
 	s.Init(reflect.ValueOf(m))
 	return s
 }
 
 func test(t *testing.T, rules *viper.Rules, m interface{}, expected bool) {
-	got := Eval(rules, newReflectScanner(m))
+	got := Eval(rules, newReflectParser(m))
 	if got != expected {
 		t.Fatalf("expected %v got %v", expected, got)
 	}

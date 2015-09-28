@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package scanner
+package parser
 
 import (
 	"encoding/binary"
@@ -83,14 +83,14 @@ type ProtoTokens interface {
 	LookupName(src int) string
 }
 
-type protoScanner struct {
+type protoParser struct {
 	tokens ProtoTokens
 	state
 	stack []state
 }
 
-func (this *protoScanner) Copy() serialize.Scanner {
-	s := &protoScanner{
+func (this *protoParser) Copy() serialize.Parser {
+	s := &protoParser{
 		tokens: this.tokens,
 		state:  this.state,
 		stack:  make([]state, len(this.stack)),
@@ -110,13 +110,13 @@ type state struct {
 	name        string
 }
 
-type BytesScanner interface {
-	serialize.Scanner
+type BytesParser interface {
+	serialize.Parser
 	Init(buf []byte) error
 	Value() []byte
 }
 
-func NewProtoScanner(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet) BytesScanner {
+func NewProtoParser(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet) BytesParser {
 	toks, err := tokens.New(srcPackage, srcMessage, desc)
 	if err != nil {
 		panic(err)
@@ -125,7 +125,7 @@ func NewProtoScanner(srcPackage, srcMessage string, desc *descriptor.FileDescrip
 	if err != nil {
 		panic(err)
 	}
-	return &protoScanner{
+	return &protoParser{
 		tokens: toks,
 		state: state{
 			parentToken: rootToken,
@@ -134,7 +134,7 @@ func NewProtoScanner(srcPackage, srcMessage string, desc *descriptor.FileDescrip
 	}
 }
 
-func (s *protoScanner) Init(buf []byte) error {
+func (s *protoParser) Init(buf []byte) error {
 	s.buf = buf
 	s.offset = 0
 	s.length = 0
@@ -143,7 +143,7 @@ func (s *protoScanner) Init(buf []byte) error {
 	return nil
 }
 
-func (s *protoScanner) Next() error {
+func (s *protoParser) Next() error {
 	//log.Printf("Next %d/%d", s.offset, len(s.buf))
 	s.offset += s.length
 	if s.offset >= len(s.buf) {
@@ -174,23 +174,23 @@ func (s *protoScanner) Next() error {
 	return s.Next()
 }
 
-func (s *protoScanner) Id() int {
+func (s *protoParser) Id() int {
 	return s.tokenId
 }
 
-func (s *protoScanner) IsLeaf() bool {
+func (s *protoParser) IsLeaf() bool {
 	return s.tokens.IsLeaf(s.tokenId)
 }
 
-func (s *protoScanner) Value() []byte {
+func (s *protoParser) Value() []byte {
 	return s.buf[s.offset : s.offset+s.length]
 }
 
-func (s *protoScanner) Name() string {
+func (s *protoParser) Name() string {
 	return s.name
 }
 
-func (s *protoScanner) Double() (float64, error) {
+func (s *protoParser) Double() (float64, error) {
 	buf := s.Value()
 	if len(buf) == 8 {
 		return *(*float64)(unsafe.Pointer(&buf[0])), nil
@@ -201,7 +201,7 @@ func (s *protoScanner) Double() (float64, error) {
 	return 0, fmt.Errorf("Double: wrong size buffer %d should be 4 or 8", len(buf))
 }
 
-func (s *protoScanner) Int() (int64, error) {
+func (s *protoParser) Int() (int64, error) {
 	typ := s.tokens.LookupType(s.tokenId)
 	switch typ {
 	case descriptor.FieldDescriptorProto_TYPE_INT64:
@@ -226,7 +226,7 @@ func (s *protoScanner) Int() (int64, error) {
 	return 0, serialize.ErrNotInt
 }
 
-func (s *protoScanner) Uint() (uint64, error) {
+func (s *protoParser) Uint() (uint64, error) {
 	typ := s.tokens.LookupType(s.tokenId)
 	switch typ {
 	case descriptor.FieldDescriptorProto_TYPE_UINT64:
@@ -243,7 +243,7 @@ func (s *protoScanner) Uint() (uint64, error) {
 	return 0, serialize.ErrNotUint
 }
 
-func (s *protoScanner) Bool() (bool, error) {
+func (s *protoParser) Bool() (bool, error) {
 	buf := s.Value()
 	v, n := binary.Uvarint(buf)
 	if n <= 0 {
@@ -252,18 +252,18 @@ func (s *protoScanner) Bool() (bool, error) {
 	return v != 0, nil
 }
 
-func (s *protoScanner) String() (string, error) {
+func (s *protoParser) String() (string, error) {
 	buf := s.Value()
 	header := (*reflect.SliceHeader)(unsafe.Pointer(&buf))
 	strHeader := reflect.StringHeader{Data: header.Data, Len: header.Len}
 	return *(*string)(unsafe.Pointer(&strHeader)), nil
 }
 
-func (s *protoScanner) Bytes() ([]byte, error) {
+func (s *protoParser) Bytes() ([]byte, error) {
 	return s.Value(), nil
 }
 
-func (s *protoScanner) decodeInt64() (int64, error) {
+func (s *protoParser) decodeInt64() (int64, error) {
 	v, n := binary.Uvarint(s.Value())
 	if n <= 0 {
 		return 0, fmt.Errorf("decodeVarint n = %d", n)
@@ -271,7 +271,7 @@ func (s *protoScanner) decodeInt64() (int64, error) {
 	return int64(v), nil
 }
 
-func (s *protoScanner) decodeUint64() (uint64, error) {
+func (s *protoParser) decodeUint64() (uint64, error) {
 	v, n := binary.Uvarint(s.Value())
 	if n <= 0 {
 		return 0, fmt.Errorf("decodeVarint n = %d", n)
@@ -279,7 +279,7 @@ func (s *protoScanner) decodeUint64() (uint64, error) {
 	return v, nil
 }
 
-func (s *protoScanner) decodeInt32() (int32, error) {
+func (s *protoParser) decodeInt32() (int32, error) {
 	v, n := binary.Uvarint(s.Value())
 	if n <= 0 {
 		return 0, fmt.Errorf("decodeVarint n = %d", n)
@@ -287,7 +287,7 @@ func (s *protoScanner) decodeInt32() (int32, error) {
 	return int32(v), nil
 }
 
-func (s *protoScanner) decodeFixed64() (uint64, error) {
+func (s *protoParser) decodeFixed64() (uint64, error) {
 	buf := s.Value()
 	if len(buf) < 8 {
 		return 0, fmt.Errorf("decodeDouble: buffer too short")
@@ -295,7 +295,7 @@ func (s *protoScanner) decodeFixed64() (uint64, error) {
 	return *(*uint64)(unsafe.Pointer(&buf[0])), nil
 }
 
-func (s *protoScanner) decodeFixed32() (uint32, error) {
+func (s *protoParser) decodeFixed32() (uint32, error) {
 	buf := s.Value()
 	if len(buf) < 4 {
 		return 0, fmt.Errorf("decodeDouble: buffer too short")
@@ -303,7 +303,7 @@ func (s *protoScanner) decodeFixed32() (uint32, error) {
 	return *(*uint32)(unsafe.Pointer(&buf[0])), nil
 }
 
-func (s *protoScanner) decodeUint32() (uint32, error) {
+func (s *protoParser) decodeUint32() (uint32, error) {
 	buf := s.Value()
 	v, n := binary.Uvarint(buf)
 	if n <= 0 {
@@ -312,7 +312,7 @@ func (s *protoScanner) decodeUint32() (uint32, error) {
 	return uint32(v), nil
 }
 
-func (s *protoScanner) decodeSfixed32() (int32, error) {
+func (s *protoParser) decodeSfixed32() (int32, error) {
 	buf := s.Value()
 	if len(buf) < 4 {
 		return 0, fmt.Errorf("decodeDouble: buffer too short")
@@ -320,7 +320,7 @@ func (s *protoScanner) decodeSfixed32() (int32, error) {
 	return *(*int32)(unsafe.Pointer(&buf[0])), nil
 }
 
-func (s *protoScanner) decodeSfixed64() (int64, error) {
+func (s *protoParser) decodeSfixed64() (int64, error) {
 	buf := s.Value()
 	if len(buf) < 8 {
 		return 0, fmt.Errorf("decodeDouble: buffer too short")
@@ -328,7 +328,7 @@ func (s *protoScanner) decodeSfixed64() (int64, error) {
 	return *(*int64)(unsafe.Pointer(&buf[0])), nil
 }
 
-func (s *protoScanner) decodeSint32() (int32, error) {
+func (s *protoParser) decodeSint32() (int32, error) {
 	buf := s.Value()
 	v, n := binary.Uvarint(buf)
 	if n <= 0 {
@@ -337,7 +337,7 @@ func (s *protoScanner) decodeSint32() (int32, error) {
 	return int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31)), nil
 }
 
-func (s *protoScanner) decodeSint64() (int64, error) {
+func (s *protoParser) decodeSint64() (int64, error) {
 	buf := s.Value()
 	v, n := binary.Uvarint(buf)
 	if n <= 0 {
@@ -346,13 +346,13 @@ func (s *protoScanner) decodeSint64() (int64, error) {
 	return int64((v >> 1) ^ uint64((int64(v&1)<<63)>>63)), nil
 }
 
-func (s *protoScanner) Up() {
+func (s *protoParser) Up() {
 	top := len(s.stack) - 1
 	s.state = s.stack[top]
 	s.stack = s.stack[:top]
 }
 
-func (s *protoScanner) Down() {
+func (s *protoParser) Down() {
 	s.stack = append(s.stack, s.state)
 	s.buf = s.buf[s.offset : s.offset+s.length]
 	s.parentToken = s.tokenId

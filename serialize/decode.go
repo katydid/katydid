@@ -27,8 +27,8 @@ type Decoder interface {
 
 type errValue struct{}
 
-type Scanner interface {
-	Copy() Scanner
+type Parser interface {
+	Copy() Parser
 	Next() error
 	IsLeaf() bool
 	Name() string

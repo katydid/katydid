@@ -13,7 +13,7 @@
 //  limitations under the License.
 
 // Work in Progress
-package scanner
+package parser
 
 import (
 	"io"
@@ -61,19 +61,19 @@ type state struct {
 	current walkCall
 }
 
-func NewScanner(root string) *scanner {
+func NewParser(root string) *parser {
 	w := newWalker(root)
 	w.goWalk()
-	return &scanner{root, state{walker: w}, make([]state, 0, 10)}
+	return &parser{root, state{walker: w}, make([]state, 0, 10)}
 }
 
-type scanner struct {
+type parser struct {
 	root string
 	state
 	stack []state
 }
 
-func (s *scanner) Next() error {
+func (s *parser) Next() error {
 	s.current = <-s.calls
 	if s.current.err != nil {
 		return s.current.err
@@ -81,21 +81,21 @@ func (s *scanner) Next() error {
 	return nil
 }
 
-func (s *scanner) IsLeaf() bool {
+func (s *parser) IsLeaf() bool {
 	return !s.current.info.IsDir()
 }
 
-func (s *scanner) Value() []byte {
+func (s *parser) Value() []byte {
 	return []byte(s.current.path)
 }
 
-func (s *scanner) Up() {
+func (s *parser) Up() {
 	top := len(s.stack) - 1
 	s.state = s.stack[top]
 	s.stack = s.stack[:top]
 }
 
-func (s *scanner) Down() {
+func (s *parser) Down() {
 	s.stack = append(s.stack, s.state)
 	w := newWalker(s.current.path)
 	s.state.walker = w

@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package scanner
+package parser
 
 import (
 	"fmt"
@@ -20,7 +20,7 @@ import (
 	"testing"
 )
 
-func print(s *scanner, tabs string) {
+func print(s *parser, tabs string) {
 	err := s.Next()
 	for err == nil {
 		fmt.Printf("%s%s\n", tabs, string(s.Value()))
@@ -40,5 +40,5 @@ func print(s *scanner, tabs string) {
 }
 
 func TestPrint(t *testing.T) {
-	print(NewScanner("."), "")
+	print(NewParser("."), "")
 }

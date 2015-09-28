@@ -23,10 +23,10 @@ import (
 	"testing"
 )
 
-func test(t *testing.T, g *relapse.Grammar, scanner serialize.Scanner, expected bool, desc string) {
+func test(t *testing.T, g *relapse.Grammar, parser serialize.Parser, expected bool, desc string) {
 	t.Skip()
-	scanner = debug.NewLogger(scanner, debug.NewLineLogger())
-	match := lazymem.Interpret(g, scanner)
+	parser = debug.NewLogger(parser, debug.NewLineLogger())
+	match := lazymem.Interpret(g, parser)
 	if match != expected {
 		t.Fatalf("Expected %v on given \n%s\n on \n%s", expected, g.String(), desc)
 	}

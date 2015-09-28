@@ -46,13 +46,13 @@ func (this state) Copy() state {
 	}
 }
 
-type scanner struct {
+type parser struct {
 	state
 	stack []state
 }
 
-func (this *scanner) Copy() serialize.Scanner {
-	s := &scanner{
+func (this *parser) Copy() serialize.Parser {
+	s := &parser{
 		state: this.state.Copy(),
 		stack: make([]state, len(this.stack)),
 	}
@@ -77,11 +77,11 @@ func newState(parent reflect.Value) state {
 	}
 }
 
-func NewReflectScanner() *scanner {
-	return &scanner{stack: make([]state, 0, 10)}
+func NewReflectParser() *parser {
+	return &parser{stack: make([]state, 0, 10)}
 }
 
-func (s *scanner) Init(value reflect.Value) *scanner {
+func (s *parser) Init(value reflect.Value) *parser {
 	s.state = newState(value)
 	return s
 }
@@ -90,7 +90,7 @@ func isSlice(v reflect.Value) bool {
 	return v.Kind() == reflect.Slice && v.Type().Elem().Kind() != reflect.Uint8
 }
 
-func (s *scanner) Next() error {
+func (s *parser) Next() error {
 	if s.field >= s.maxField {
 		return io.EOF
 	}
@@ -123,7 +123,7 @@ func (s *scanner) Next() error {
 	return nil
 }
 
-func (s *scanner) IsLeaf() bool {
+func (s *parser) IsLeaf() bool {
 	isLeaf := true
 	if s.typ.Type.Kind() == reflect.Struct {
 		isLeaf = false
@@ -146,11 +146,11 @@ func (s *scanner) IsLeaf() bool {
 	return isLeaf
 }
 
-func (s *scanner) Name() string {
+func (s *parser) Name() string {
 	return s.typ.Name
 }
 
-func (s *scanner) getValue() reflect.Value {
+func (s *parser) getValue() reflect.Value {
 	kind := s.value.Kind()
 	if kind == reflect.Slice {
 		childValue := s.value.Elem()
@@ -173,7 +173,7 @@ func (s *scanner) getValue() reflect.Value {
 	return s.value
 }
 
-func (s *scanner) Double() (float64, error) {
+func (s *parser) Double() (float64, error) {
 	value := s.getValue()
 	switch value.Kind() {
 	case reflect.Float64, reflect.Float32:
@@ -182,7 +182,7 @@ func (s *scanner) Double() (float64, error) {
 	return 0, serialize.ErrNotDouble
 }
 
-func (s *scanner) Int() (int64, error) {
+func (s *parser) Int() (int64, error) {
 	value := s.getValue()
 	switch value.Kind() {
 	case reflect.Int64, reflect.Int32:
@@ -191,7 +191,7 @@ func (s *scanner) Int() (int64, error) {
 	return 0, serialize.ErrNotInt
 }
 
-func (s *scanner) Uint() (uint64, error) {
+func (s *parser) Uint() (uint64, error) {
 	value := s.getValue()
 	switch value.Kind() {
 	case reflect.Uint64, reflect.Uint32:
@@ -200,7 +200,7 @@ func (s *scanner) Uint() (uint64, error) {
 	return 0, serialize.ErrNotUint
 }
 
-func (s *scanner) Bool() (bool, error) {
+func (s *parser) Bool() (bool, error) {
 	value := s.getValue()
 	switch value.Kind() {
 	case reflect.Bool:
@@ -209,7 +209,7 @@ func (s *scanner) Bool() (bool, error) {
 	return false, serialize.ErrNotBool
 }
 
-func (s *scanner) String() (string, error) {
+func (s *parser) String() (string, error) {
 	value := s.getValue()
 	switch value.Kind() {
 	case reflect.String:
@@ -218,7 +218,7 @@ func (s *scanner) String() (string, error) {
 	return "", serialize.ErrNotString
 }
 
-func (s *scanner) Bytes() ([]byte, error) {
+func (s *parser) Bytes() ([]byte, error) {
 	value := s.getValue()
 	switch value.Kind() {
 	case reflect.Slice, reflect.Uint8, reflect.Int8:
@@ -227,13 +227,13 @@ func (s *scanner) Bytes() ([]byte, error) {
 	return nil, serialize.ErrNotBytes
 }
 
-func (s *scanner) Up() {
+func (s *parser) Up() {
 	top := len(s.stack) - 1
 	s.state = s.stack[top]
 	s.stack = s.stack[:top]
 }
 
-func (s *scanner) Down() {
+func (s *parser) Down() {
 	s.stack = append(s.stack, s.state)
 	s.state = newState(s.state.value)
 }

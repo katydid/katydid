@@ -55,7 +55,7 @@ func isFinal(rules *viper.Rules, f string) bool {
 	return false
 }
 
-func Eval(rules *viper.Rules, tree serialize.Scanner) bool {
+func Eval(rules *viper.Rules, tree serialize.Parser) bool {
 	return isFinal(rules, eval(rules, tree, getStart(rules)))
 }
 
@@ -121,7 +121,7 @@ func evalInternal(rules *viper.Rules, src string, value serialize.Decoder) (dst 
 	panic("unknown internal " + src + " " + serialize.Sprint(value))
 }
 
-func eval(rules *viper.Rules, tree serialize.Scanner, current string) string {
+func eval(rules *viper.Rules, tree serialize.Parser, current string) string {
 	for {
 		fmt.Printf("state = %s\n", current)
 		if err := tree.Next(); err != nil {

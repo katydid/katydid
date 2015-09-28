@@ -351,7 +351,7 @@ func init() {
 // var PositiveNumber = G{
 // 	"main": InOrder(
 // 		In("Addresses",
-// 			Field("Number", Sprint(UintGE(UintVar(), UintConst(0)))),
+// 			Field("Number", Sprint(And(TypeUint(), UintGE(UintVar(), UintConst(0))))),
 // 			Any(),
 // 		),
 // 		Any(),

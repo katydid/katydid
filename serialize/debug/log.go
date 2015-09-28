@@ -79,13 +79,13 @@ func (d *d) Printf(format string, v ...interface{}) {
 
 type l struct {
 	name   string
-	s      serialize.Scanner
+	s      serialize.Parser
 	l      Logger
 	copies int
 }
 
-func NewLogger(s serialize.Scanner, logger Logger) serialize.Scanner {
-	return &l{"scanner", s, logger, 0}
+func NewLogger(s serialize.Parser, logger Logger) serialize.Parser {
+	return &l{"parser", s, logger, 0}
 }
 
 func (l *l) Double() (float64, error) {
@@ -124,7 +124,7 @@ func (l *l) Bytes() ([]byte, error) {
 	return v, err
 }
 
-func (this *l) Copy() serialize.Scanner {
+func (this *l) Copy() serialize.Parser {
 	s := this.s.Copy()
 	this.copies++
 	name := this.name + "->" + strconv.Itoa(this.copies)

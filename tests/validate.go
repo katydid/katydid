@@ -24,7 +24,7 @@ type Validator struct {
 	Name        string
 	CodecName   string
 	Grammar     *relapse.Grammar
-	Scanner     NewScanner
+	Parser      NewParser
 	Expected    bool
 	Description string
 }
@@ -66,12 +66,12 @@ func Validate(name string, grammar combinator.G, codecs Codecs, expected bool) {
 	if _, ok := Validators[name]; !ok {
 		Validators[name] = make(map[string]Validator)
 	}
-	for codecName, s := range codecs.Scanners {
+	for codecName, s := range codecs.Parsers {
 		Validators[name][codecName] = Validator{
 			Name:        name,
 			CodecName:   codecName,
 			Grammar:     grammar.Grammar(),
-			Scanner:     s,
+			Parser:      s,
 			Expected:    expected,
 			Description: codecs.Description,
 		}

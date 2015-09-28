@@ -20,7 +20,7 @@ import (
 	. "github.com/katydid/katydid/funcs"
 	. "github.com/katydid/katydid/relapse/combinator"
 	"github.com/katydid/katydid/relapse/interp"
-	pscanner "github.com/katydid/katydid/serialize/proto/scanner"
+	pparser "github.com/katydid/katydid/serialize/proto/parser"
 	"github.com/katydid/katydid/tests"
 	"testing"
 )
@@ -39,7 +39,7 @@ func bench(b *testing.B, patternDecls G, pkg string, msg string, gen func() prot
 	tmp := gen()
 	desc := tmp.(tests.ProtoMessage).Description()
 	g := patternDecls.Grammar()
-	s := pscanner.NewProtoScanner(pkg, msg, desc)
+	s := pparser.NewProtoParser(pkg, msg, desc)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		err := s.Init(datas[i%num])
@@ -53,8 +53,8 @@ func bench(b *testing.B, patternDecls G, pkg string, msg string, gen func() prot
 func benchTest(t *testing.T, patternDecls G, expected bool, pkg string, msg string, m tests.ProtoMessage) {
 	g := patternDecls.Grammar()
 	desc := fmt.Sprintf("%#v", m)
-	scanner := tests.NewProtoScanner(pkg, msg, m)
-	match := interp.Interpret(g, scanner)
+	parser := tests.NewProtoParser(pkg, msg, m)
+	match := interp.Interpret(g, parser)
 	if match != expected {
 		t.Fatalf("Expected %v on given \n%s\n on \n%s", expected, g.String(), desc)
 	}

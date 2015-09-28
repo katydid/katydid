@@ -24,12 +24,12 @@ import (
 	"testing"
 )
 
-func test(t *testing.T, g *relapse.Grammar, scanner serialize.Scanner, expected bool, desc string) {
+func test(t *testing.T, g *relapse.Grammar, parser serialize.Parser, expected bool, desc string) {
 	t.Skip("TODO")
-	scanner = debug.NewLogger(scanner, debug.NewLineLogger())
+	parser = debug.NewLogger(parser, debug.NewLineLogger())
 	rules := convert.ToRules(g)
 	//println("Rules:" + rules.String())
-	match := eval.Eval(rules, scanner)
+	match := eval.Eval(rules, parser)
 	if match != expected {
 		t.Fail()
 		t.Fatalf("Expected %v given %v converted to \n%s\n on \n%s", expected, g, rules, desc)
@@ -43,5 +43,5 @@ func TestNotNil(t *testing.T) {
 	refs["main"] = refs["nil"]
 	delete(refs, "nil")
 	delete(refs, "empty")
-	test(t, relapse.NewGrammar(refs), v.Scanner(), v.Expected, v.Description)
+	test(t, relapse.NewGrammar(refs), v.Parser(), v.Expected, v.Description)
 }

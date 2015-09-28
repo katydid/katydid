@@ -26,12 +26,12 @@ import (
 	"github.com/katydid/katydid/tests"
 )
 
-func test(t *testing.T, g *relapse.Grammar, scanner serialize.Scanner, expected bool, desc string) {
+func test(t *testing.T, g *relapse.Grammar, parser serialize.Parser, expected bool, desc string) {
 	if interp.HasLeftRecursion(g) {
 		t.Skipf("interp was not designed to handle left recursion")
 	}
-	scanner = debug.NewLogger(scanner, debug.NewLineLogger())
-	match := interp.Interpret(g, scanner)
+	parser = debug.NewLogger(parser, debug.NewLineLogger())
+	match := interp.Interpret(g, parser)
 	if match != expected {
 		t.Fatalf("Expected %v on given \n%s\n on \n%s", expected, g.String(), desc)
 	}
@@ -53,7 +53,7 @@ func TestWithSomeTreeNode(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	s := tests.Validators["ContextRobert"]["json"].Scanner()
+	s := tests.Validators["ContextRobert"]["json"].Parser()
 	g := relapse.NewGrammar(map[string]*relapse.Pattern{
 		"main": relapse.NewWithSomeTreeNode(relapse.NewName("Addresses"),
 			relapse.NewWithSomeLeafNode(relapse.NewName("Number"), expr)),

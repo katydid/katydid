@@ -22,7 +22,7 @@ import (
 	"testing"
 )
 
-func TestJsonScanner(t *testing.T) {
+func TestJsonParser(t *testing.T) {
 	j := map[string][]interface{}{
 		"a": {1},
 		"b": {
@@ -36,9 +36,9 @@ func TestJsonScanner(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	scanner := sjson.NewJsonScanner()
-	scanner.Init(data)
-	jout := debug.Walk(scanner)
+	parser := sjson.NewJsonParser()
+	parser.Init(data)
+	jout := debug.Walk(parser)
 	data2, err := json.Marshal(jout)
 	if err != nil {
 		panic(err)
@@ -57,9 +57,9 @@ func TestEscapedChar(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Logf("%s", string(data))
-	scanner := sjson.NewJsonScanner()
-	scanner.Init(data)
-	jout := debug.Walk(scanner)
+	parser := sjson.NewJsonParser()
+	parser.Init(data)
+	jout := debug.Walk(parser)
 	data2, err := json.Marshal(jout)
 	if err != nil {
 		panic(err)
@@ -73,8 +73,8 @@ func TestMultiLineArray(t *testing.T) {
 	s := `{
 		"A":[1]
 	}`
-	scanner := sjson.NewJsonScanner()
-	scanner.Init([]byte(s))
-	jout := debug.Walk(scanner)
+	parser := sjson.NewJsonParser()
+	parser.Init([]byte(s))
+	jout := debug.Walk(parser)
 	t.Logf("%#v", jout)
 }

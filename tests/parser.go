@@ -19,15 +19,15 @@ import (
 	"github.com/gogo/protobuf/proto"
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 	"github.com/katydid/katydid/serialize"
-	jscanner "github.com/katydid/katydid/serialize/json"
-	pscanner "github.com/katydid/katydid/serialize/proto/scanner"
-	rscanner "github.com/katydid/katydid/serialize/reflect"
+	jparser "github.com/katydid/katydid/serialize/json"
+	pparser "github.com/katydid/katydid/serialize/proto/parser"
+	rparser "github.com/katydid/katydid/serialize/reflect"
 	"reflect"
 )
 
 type Codecs struct {
 	Description string
-	Scanners    map[string]NewScanner
+	Parsers     map[string]NewParser
 }
 
 func getDesc(m interface{}) string {
@@ -41,10 +41,10 @@ func getDesc(m interface{}) string {
 func AllCodecs(m interface{}) Codecs {
 	return Codecs{
 		Description: getDesc(m),
-		Scanners: map[string]NewScanner{
-			"reflect": Reflect(m).Scanners["reflect"],
-			"json":    Json(m).Scanners["json"],
-			"proto":   Proto(m).Scanners["proto"],
+		Parsers: map[string]NewParser{
+			"reflect": Reflect(m).Parsers["reflect"],
+			"json":    Json(m).Parsers["json"],
+			"proto":   Proto(m).Parsers["proto"],
 		},
 	}
 }
@@ -52,9 +52,9 @@ func AllCodecs(m interface{}) Codecs {
 func Reflect(m interface{}) Codecs {
 	return Codecs{
 		Description: getDesc(m),
-		Scanners: map[string]NewScanner{
-			"reflect": func() serialize.Scanner {
-				return NewReflectScanner(m)
+		Parsers: map[string]NewParser{
+			"reflect": func() serialize.Parser {
+				return NewReflectParser(m)
 			},
 		},
 	}
@@ -63,9 +63,9 @@ func Reflect(m interface{}) Codecs {
 func Json(m interface{}) Codecs {
 	return Codecs{
 		Description: getDesc(m),
-		Scanners: map[string]NewScanner{
-			"json": func() serialize.Scanner {
-				return NewJsonScanner(m)
+		Parsers: map[string]NewParser{
+			"json": func() serialize.Parser {
+				return NewJsonParser(m)
 			},
 		},
 	}
@@ -76,28 +76,28 @@ func Proto(m interface{}) Codecs {
 	packageName := "tests"
 	return Codecs{
 		Description: getDesc(m),
-		Scanners: map[string]NewScanner{
-			"proto": func() serialize.Scanner {
-				return NewProtoScanner(packageName, messageName, m.(ProtoMessage))
+		Parsers: map[string]NewParser{
+			"proto": func() serialize.Parser {
+				return NewProtoParser(packageName, messageName, m.(ProtoMessage))
 			},
 		},
 	}
 }
 
-type NewScanner func() serialize.Scanner
+type NewParser func() serialize.Parser
 
-func NewReflectScanner(m interface{}) serialize.Scanner {
-	s := rscanner.NewReflectScanner()
+func NewReflectParser(m interface{}) serialize.Parser {
+	s := rparser.NewReflectParser()
 	s.Init(reflect.ValueOf(m))
 	return s
 }
 
-func NewJsonScanner(m interface{}) serialize.Scanner {
+func NewJsonParser(m interface{}) serialize.Parser {
 	data, err := json.Marshal(m)
 	if err != nil {
 		panic(err)
 	}
-	s := jscanner.NewJsonScanner()
+	s := jparser.NewJsonParser()
 	err = s.Init(data)
 	if err != nil {
 		panic(err)
@@ -110,12 +110,12 @@ type ProtoMessage interface {
 	proto.Message
 }
 
-func NewProtoScanner(pkg, msg string, m ProtoMessage) serialize.Scanner {
+func NewProtoParser(pkg, msg string, m ProtoMessage) serialize.Parser {
 	data, err := proto.Marshal(m)
 	if err != nil {
 		panic(err)
 	}
-	s := pscanner.NewProtoScanner(pkg, msg, m.Description())
+	s := pparser.NewProtoParser(pkg, msg, m.Description())
 	if err := s.Init(data); err != nil {
 		panic(err)
 	}

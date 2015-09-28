@@ -92,11 +92,11 @@ func skipSpace(buf []byte) int {
 	return len(buf)
 }
 
-func (s *jsonScanner) expected(expected string) error {
-	panic(fmt.Errorf("katydid/json/scanner: expected '%s' at offset %d, but got '%c'", expected, s.offset, s.buf[s.offset]))
+func (s *jsonParser) expected(expected string) error {
+	panic(fmt.Errorf("katydid/json/parser: expected '%s' at offset %d, but got '%c'", expected, s.offset, s.buf[s.offset]))
 }
 
-func (s *jsonScanner) scanOpenObject() error {
+func (s *jsonParser) scanOpenObject() error {
 	if s.buf[s.offset] == '{' {
 		s.offset++
 	} else {
@@ -105,7 +105,7 @@ func (s *jsonScanner) scanOpenObject() error {
 	return s.skipSpace()
 }
 
-func (s *jsonScanner) scanOpenArray() error {
+func (s *jsonParser) scanOpenArray() error {
 	if s.buf[s.offset] == '[' {
 		s.offset++
 	} else {
@@ -114,7 +114,7 @@ func (s *jsonScanner) scanOpenArray() error {
 	return s.skipSpace()
 }
 
-func (s *jsonScanner) scanString() error {
+func (s *jsonParser) scanString() error {
 	s.startValueOffset = s.offset
 	n, err := scanString(s.buf[s.offset:])
 	if err != nil {
@@ -125,7 +125,7 @@ func (s *jsonScanner) scanString() error {
 	return s.skipSpace()
 }
 
-func (s *jsonScanner) scanName() error {
+func (s *jsonParser) scanName() error {
 	startOffset := s.offset
 	n, err := scanString(s.buf[s.offset:])
 	if err != nil {
@@ -140,7 +140,7 @@ func (s *jsonScanner) scanName() error {
 	return s.skipSpace()
 }
 
-func (s *jsonScanner) skipSpace() error {
+func (s *jsonParser) skipSpace() error {
 	if s.offset >= len(s.buf) {
 		return io.ErrShortBuffer
 	}
@@ -151,7 +151,7 @@ func (s *jsonScanner) skipSpace() error {
 	return nil
 }
 
-func (s *jsonScanner) scanTrue() error {
+func (s *jsonParser) scanTrue() error {
 	if s.offset+4 >= len(s.buf) {
 		return io.ErrShortBuffer
 	}
@@ -164,7 +164,7 @@ func (s *jsonScanner) scanTrue() error {
 	return s.skipSpace()
 }
 
-func (s *jsonScanner) scanFalse() error {
+func (s *jsonParser) scanFalse() error {
 	if s.offset+5 >= len(s.buf) {
 		return io.ErrShortBuffer
 	}
@@ -177,7 +177,7 @@ func (s *jsonScanner) scanFalse() error {
 	return s.skipSpace()
 }
 
-func (s *jsonScanner) scanNull() error {
+func (s *jsonParser) scanNull() error {
 	if s.offset+4 >= len(s.buf) {
 		return io.ErrShortBuffer
 	}
@@ -190,7 +190,7 @@ func (s *jsonScanner) scanNull() error {
 	return s.skipSpace()
 }
 
-func (s *jsonScanner) scanObject() error {
+func (s *jsonParser) scanObject() error {
 	count := 0
 	index := 0
 	for i, c := range s.buf[s.offset:] {
@@ -223,7 +223,7 @@ func isDigit19(c byte) bool {
 	return c >= '1' && c <= '9'
 }
 
-func (s *jsonScanner) scanNumber() error {
+func (s *jsonParser) scanNumber() error {
 	s.startValueOffset = s.offset
 	if s.buf[s.offset] == '-' {
 		s.offset++
@@ -282,7 +282,7 @@ func (s *jsonScanner) scanNumber() error {
 	return nil
 }
 
-func (s *jsonScanner) scanValue() error {
+func (s *jsonParser) scanValue() error {
 	c := s.buf[s.offset]
 	if isNumber(c) {
 		return s.scanNumber()
@@ -305,7 +305,7 @@ func (s *jsonScanner) scanValue() error {
 	return s.expected("value")
 }
 
-func (s *jsonScanner) scanColon() error {
+func (s *jsonParser) scanColon() error {
 	if s.buf[s.offset] != ':' {
 		return s.expected(":")
 	}
@@ -313,21 +313,21 @@ func (s *jsonScanner) scanColon() error {
 	return s.skipSpace()
 }
 
-func (s *jsonScanner) scanCloseObject() error {
+func (s *jsonParser) scanCloseObject() error {
 	if s.buf[s.offset] == '}' {
 		return io.EOF
 	}
 	return s.expected("}")
 }
 
-func (s *jsonScanner) scanCloseArray() error {
+func (s *jsonParser) scanCloseArray() error {
 	if s.buf[s.offset] == ']' {
 		return io.EOF
 	}
 	return s.expected("]")
 }
 
-func (s *jsonScanner) scanComma() error {
+func (s *jsonParser) scanComma() error {
 	if s.buf[s.offset] != ',' {
 		return s.expected(",")
 	}
@@ -335,7 +335,7 @@ func (s *jsonScanner) scanComma() error {
 	return s.skipSpace()
 }
 
-func (s *jsonScanner) scanArray() error {
+func (s *jsonParser) scanArray() error {
 	s.inArray = true
 	if s.firstArrayValue {
 		if err := s.scanOpenArray(); err != nil {
@@ -359,7 +359,7 @@ func (s *jsonScanner) scanArray() error {
 	return s.scanValue()
 }
 
-func (s *jsonScanner) nextValueInObject() error {
+func (s *jsonParser) nextValueInObject() error {
 	if s.firstObjectValue {
 		if err := s.scanOpenObject(); err != nil {
 			return err
@@ -391,7 +391,7 @@ func (s *jsonScanner) nextValueInObject() error {
 	return s.scanCloseObject()
 }
 
-func (s *jsonScanner) Next() error {
+func (s *jsonParser) Next() error {
 	s.isValueObject = false
 	if err := s.skipSpace(); err != nil {
 		return err
@@ -413,33 +413,33 @@ func (s *jsonScanner) Next() error {
 	return nil
 }
 
-func (s *jsonScanner) IsLeaf() bool {
+func (s *jsonParser) IsLeaf() bool {
 	return !s.isValueObject
 }
 
-func (s *jsonScanner) Value() []byte {
+func (s *jsonParser) Value() []byte {
 	return s.buf[s.startValueOffset:s.endValueOffset]
 }
 
-func (s *jsonScanner) Double() (float64, error) {
+func (s *jsonParser) Double() (float64, error) {
 	v := string(s.Value())
 	i, err := strconv.ParseFloat(v, 64)
 	return i, err
 }
 
-func (s *jsonScanner) Int() (int64, error) {
+func (s *jsonParser) Int() (int64, error) {
 	v := string(s.Value())
 	i, err := strconv.ParseInt(v, 10, 64)
 	return int64(i), err
 }
 
-func (s *jsonScanner) Uint() (uint64, error) {
+func (s *jsonParser) Uint() (uint64, error) {
 	v := string(s.Value())
 	i, err := strconv.ParseUint(v, 10, 64)
 	return uint64(i), err
 }
 
-func (s *jsonScanner) Bool() (bool, error) {
+func (s *jsonParser) Bool() (bool, error) {
 	v := string(s.Value())
 	if v == "true" {
 		return true, nil
@@ -450,7 +450,7 @@ func (s *jsonScanner) Bool() (bool, error) {
 	return false, serialize.ErrNotBool
 }
 
-func (s *jsonScanner) String() (string, error) {
+func (s *jsonParser) String() (string, error) {
 	v := s.Value()
 	if v[0] != '"' {
 		return "", serialize.ErrNotString
@@ -462,12 +462,12 @@ func (s *jsonScanner) String() (string, error) {
 	return res, nil
 }
 
-func (s *jsonScanner) Bytes() ([]byte, error) {
+func (s *jsonParser) Bytes() ([]byte, error) {
 	return nil, serialize.ErrNotBytes
 }
 
-func NewJsonScanner() *jsonScanner {
-	return &jsonScanner{
+func NewJsonParser() *jsonParser {
+	return &jsonParser{
 		state: state{
 			firstObjectValue: true,
 		},
@@ -475,7 +475,7 @@ func NewJsonScanner() *jsonScanner {
 	}
 }
 
-func (s *jsonScanner) init(buf []byte) {
+func (s *jsonParser) init(buf []byte) {
 	s.state = state{
 		firstObjectValue: true,
 		buf:              buf,
@@ -483,12 +483,12 @@ func (s *jsonScanner) init(buf []byte) {
 	s.stack = s.stack[:0]
 }
 
-func (s *jsonScanner) Init(buf []byte) error {
+func (s *jsonParser) Init(buf []byte) error {
 	s.init(buf)
 	return nil
 }
 
-type jsonScanner struct {
+type jsonParser struct {
 	state
 	stack []state
 }
@@ -521,12 +521,12 @@ func (s state) Copy() state {
 	}
 }
 
-func (s *jsonScanner) Name() string {
+func (s *jsonParser) Name() string {
 	return s.name
 }
 
-func (s *jsonScanner) Copy() serialize.Scanner {
-	news := &jsonScanner{
+func (s *jsonParser) Copy() serialize.Parser {
+	news := &jsonParser{
 		state: s.state.Copy(),
 		stack: make([]state, len(s.stack)),
 	}
@@ -537,13 +537,13 @@ func (s *jsonScanner) Copy() serialize.Scanner {
 
 }
 
-func (s *jsonScanner) Up() {
+func (s *jsonParser) Up() {
 	top := len(s.stack) - 1
 	s.state = s.stack[top]
 	s.stack = s.stack[:top]
 }
 
-func (s *jsonScanner) Down() {
+func (s *jsonParser) Down() {
 	s.stack = append(s.stack, s.state)
 	s.state = state{
 		buf:              s.buf[s.startValueOffset:s.endValueOffset],
