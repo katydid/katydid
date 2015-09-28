@@ -26,8 +26,12 @@ type toLower struct {
 	S String
 }
 
-func (this *toLower) Eval() string {
-	return strings.ToLower(this.S.Eval())
+func (this *toLower) Eval() (string, error) {
+	s, err := this.S.Eval()
+	if err != nil {
+		return "", err
+	}
+	return strings.ToLower(s), nil
 }
 
 func init() {
@@ -42,8 +46,12 @@ type toUpper struct {
 	S String
 }
 
-func (this *toUpper) Eval() string {
-	return strings.ToUpper(this.S.Eval())
+func (this *toUpper) Eval() (string, error) {
+	s, err := this.S.Eval()
+	if err != nil {
+		return "", err
+	}
+	return strings.ToUpper(s), nil
 }
 
 func init() {
@@ -59,8 +67,16 @@ type contains struct {
 	Substr String
 }
 
-func (this *contains) Eval() bool {
-	return strings.Contains(this.S.Eval(), this.Substr.Eval())
+func (this *contains) Eval() (bool, error) {
+	s, err := this.S.Eval()
+	if err != nil {
+		return false, err
+	}
+	subStr, err := this.Substr.Eval()
+	if err != nil {
+		return false, err
+	}
+	return strings.Contains(s, subStr), nil
 }
 
 func init() {
@@ -76,10 +92,16 @@ type equalFold struct {
 	V2 String
 }
 
-func (this *equalFold) Eval() bool {
-	v1 := this.V1.Eval()
-	v2 := this.V2.Eval()
-	return strings.EqualFold(v1, v2)
+func (this *equalFold) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return false, err
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return false, err
+	}
+	return strings.EqualFold(v1, v2), nil
 }
 
 func init() {
@@ -95,10 +117,16 @@ type hasPrefix struct {
 	V2 String
 }
 
-func (this *hasPrefix) Eval() bool {
-	v1 := this.V1.Eval()
-	v2 := this.V2.Eval()
-	return strings.HasPrefix(v1, v2)
+func (this *hasPrefix) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return false, err
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return false, err
+	}
+	return strings.HasPrefix(v1, v2), nil
 }
 
 func init() {
@@ -114,10 +142,16 @@ type hasSuffix struct {
 	V2 String
 }
 
-func (this *hasSuffix) Eval() bool {
-	v1 := this.V1.Eval()
-	v2 := this.V2.Eval()
-	return strings.HasSuffix(v1, v2)
+func (this *hasSuffix) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return false, err
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return false, err
+	}
+	return strings.HasSuffix(v1, v2), nil
 }
 
 func init() {

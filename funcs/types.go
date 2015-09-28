@@ -15,49 +15,49 @@
 package funcs
 
 type Double interface {
-	Eval() float64
+	Eval() (float64, error)
 }
 
 type Int interface {
-	Eval() int64
+	Eval() (int64, error)
 }
 
 type Uint interface {
-	Eval() uint64
+	Eval() (uint64, error)
 }
 
 type Bool interface {
-	Eval() bool
+	Eval() (bool, error)
 }
 
 type String interface {
-	Eval() string
+	Eval() (string, error)
 }
 
 type Bytes interface {
-	Eval() []byte
+	Eval() ([]byte, error)
 }
 
 type Doubles interface {
-	Eval() []float64
+	Eval() ([]float64, error)
 }
 
 type Ints interface {
-	Eval() []int64
+	Eval() ([]int64, error)
 }
 
 type Uints interface {
-	Eval() []uint64
+	Eval() ([]uint64, error)
 }
 
 type Bools interface {
-	Eval() []bool
+	Eval() ([]bool, error)
 }
 
 type Strings interface {
-	Eval() []string
+	Eval() ([]string, error)
 }
 
 type ListOfBytes interface {
-	Eval() [][]byte
+	Eval() ([][]byte, error)
 }

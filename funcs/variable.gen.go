@@ -9,18 +9,17 @@ import (
 
 type varDouble struct {
 	Dec serialize.Decoder
-	Thrower
 }
 
 var _ Decoder = &varDouble{}
 var _ Variable = &varDouble{}
 
-func (this *varDouble) Eval() float64 {
+func (this *varDouble) Eval() (float64, error) {
 	v, err := this.Dec.Double()
 	if err != nil {
-		return this.ThrowDouble(err)
+		return 0, err
 	}
-	return v
+	return v, nil
 }
 
 func (this *varDouble) IsVariable() {}
@@ -39,18 +38,17 @@ func DoubleVar() *varDouble {
 
 type varInt struct {
 	Dec serialize.Decoder
-	Thrower
 }
 
 var _ Decoder = &varInt{}
 var _ Variable = &varInt{}
 
-func (this *varInt) Eval() int64 {
+func (this *varInt) Eval() (int64, error) {
 	v, err := this.Dec.Int()
 	if err != nil {
-		return this.ThrowInt(err)
+		return 0, err
 	}
-	return v
+	return v, nil
 }
 
 func (this *varInt) IsVariable() {}
@@ -69,18 +67,17 @@ func IntVar() *varInt {
 
 type varUint struct {
 	Dec serialize.Decoder
-	Thrower
 }
 
 var _ Decoder = &varUint{}
 var _ Variable = &varUint{}
 
-func (this *varUint) Eval() uint64 {
+func (this *varUint) Eval() (uint64, error) {
 	v, err := this.Dec.Uint()
 	if err != nil {
-		return this.ThrowUint(err)
+		return 0, err
 	}
-	return v
+	return v, nil
 }
 
 func (this *varUint) IsVariable() {}
@@ -99,18 +96,17 @@ func UintVar() *varUint {
 
 type varBool struct {
 	Dec serialize.Decoder
-	Thrower
 }
 
 var _ Decoder = &varBool{}
 var _ Variable = &varBool{}
 
-func (this *varBool) Eval() bool {
+func (this *varBool) Eval() (bool, error) {
 	v, err := this.Dec.Bool()
 	if err != nil {
-		return this.ThrowBool(err)
+		return false, err
 	}
-	return v
+	return v, nil
 }
 
 func (this *varBool) IsVariable() {}
@@ -129,18 +125,17 @@ func BoolVar() *varBool {
 
 type varString struct {
 	Dec serialize.Decoder
-	Thrower
 }
 
 var _ Decoder = &varString{}
 var _ Variable = &varString{}
 
-func (this *varString) Eval() string {
+func (this *varString) Eval() (string, error) {
 	v, err := this.Dec.String()
 	if err != nil {
-		return this.ThrowString(err)
+		return "", err
 	}
-	return v
+	return v, nil
 }
 
 func (this *varString) IsVariable() {}
@@ -159,18 +154,17 @@ func StringVar() *varString {
 
 type varBytes struct {
 	Dec serialize.Decoder
-	Thrower
 }
 
 var _ Decoder = &varBytes{}
 var _ Variable = &varBytes{}
 
-func (this *varBytes) Eval() []byte {
+func (this *varBytes) Eval() ([]byte, error) {
 	v, err := this.Dec.Bytes()
 	if err != nil {
-		return this.ThrowBytes(err)
+		return nil, err
 	}
-	return v
+	return v, nil
 }
 
 func (this *varBytes) IsVariable() {}

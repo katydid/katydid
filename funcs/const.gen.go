@@ -25,8 +25,8 @@ func DoubleConst(v float64) ConstDouble {
 
 func (this *constDouble) IsConst() {}
 
-func (this *constDouble) Eval() float64 {
-	return this.v
+func (this *constDouble) Eval() (float64, error) {
+	return this.v, nil
 }
 
 func (this *constDouble) String() string {
@@ -49,8 +49,8 @@ func IntConst(v int64) ConstInt {
 
 func (this *constInt) IsConst() {}
 
-func (this *constInt) Eval() int64 {
-	return this.v
+func (this *constInt) Eval() (int64, error) {
+	return this.v, nil
 }
 
 func (this *constInt) String() string {
@@ -73,8 +73,8 @@ func UintConst(v uint64) ConstUint {
 
 func (this *constUint) IsConst() {}
 
-func (this *constUint) Eval() uint64 {
-	return this.v
+func (this *constUint) Eval() (uint64, error) {
+	return this.v, nil
 }
 
 func (this *constUint) String() string {
@@ -97,8 +97,8 @@ func BoolConst(v bool) ConstBool {
 
 func (this *constBool) IsConst() {}
 
-func (this *constBool) Eval() bool {
-	return this.v
+func (this *constBool) Eval() (bool, error) {
+	return this.v, nil
 }
 
 func (this *constBool) String() string {
@@ -121,8 +121,8 @@ func StringConst(v string) ConstString {
 
 func (this *constString) IsConst() {}
 
-func (this *constString) Eval() string {
-	return this.v
+func (this *constString) Eval() (string, error) {
+	return this.v, nil
 }
 
 func (this *constString) String() string {
@@ -145,8 +145,8 @@ func BytesConst(v []byte) ConstBytes {
 
 func (this *constBytes) IsConst() {}
 
-func (this *constBytes) Eval() []byte {
-	return this.v
+func (this *constBytes) Eval() ([]byte, error) {
+	return this.v, nil
 }
 
 func (this *constBytes) String() string {
@@ -169,8 +169,8 @@ func DoublesConst(v []float64) ConstDoubles {
 
 func (this *constDoubles) IsConst() {}
 
-func (this *constDoubles) Eval() []float64 {
-	return this.v
+func (this *constDoubles) Eval() ([]float64, error) {
+	return this.v, nil
 }
 
 func (this *constDoubles) String() string {
@@ -197,8 +197,8 @@ func IntsConst(v []int64) ConstInts {
 
 func (this *constInts) IsConst() {}
 
-func (this *constInts) Eval() []int64 {
-	return this.v
+func (this *constInts) Eval() ([]int64, error) {
+	return this.v, nil
 }
 
 func (this *constInts) String() string {
@@ -225,8 +225,8 @@ func UintsConst(v []uint64) ConstUints {
 
 func (this *constUints) IsConst() {}
 
-func (this *constUints) Eval() []uint64 {
-	return this.v
+func (this *constUints) Eval() ([]uint64, error) {
+	return this.v, nil
 }
 
 func (this *constUints) String() string {
@@ -253,8 +253,8 @@ func BoolsConst(v []bool) ConstBools {
 
 func (this *constBools) IsConst() {}
 
-func (this *constBools) Eval() []bool {
-	return this.v
+func (this *constBools) Eval() ([]bool, error) {
+	return this.v, nil
 }
 
 func (this *constBools) String() string {
@@ -281,8 +281,8 @@ func StringsConst(v []string) ConstStrings {
 
 func (this *constStrings) IsConst() {}
 
-func (this *constStrings) Eval() []string {
-	return this.v
+func (this *constStrings) Eval() ([]string, error) {
+	return this.v, nil
 }
 
 func (this *constStrings) String() string {
@@ -309,8 +309,8 @@ func ListOfBytesConst(v [][]byte) ConstListOfBytes {
 
 func (this *constListOfBytes) IsConst() {}
 
-func (this *constListOfBytes) Eval() [][]byte {
-	return this.v
+func (this *constListOfBytes) Eval() ([][]byte, error) {
+	return this.v, nil
 }
 
 func (this *constListOfBytes) String() string {

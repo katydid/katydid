@@ -29,7 +29,11 @@ type regex struct {
 }
 
 func (this *regex) Init() error {
-	r, err := regexp.Compile(this.Expr.Eval())
+	e, err := this.Expr.Eval()
+	if err != nil {
+		return err
+	}
+	r, err := regexp.Compile(e)
 	if err != nil {
 		return err
 	}
@@ -37,8 +41,12 @@ func (this *regex) Init() error {
 	return nil
 }
 
-func (this *regex) Eval() bool {
-	return this.r.MatchString(this.S.Eval())
+func (this *regex) Eval() (bool, error) {
+	s, err := this.S.Eval()
+	if err != nil {
+		return false, err
+	}
+	return this.r.MatchString(s), nil
 }
 
 func init() {

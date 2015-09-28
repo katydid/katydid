@@ -15,12 +15,16 @@ func NewListOfDouble(v []Double) Doubles {
 	return &listOfDouble{v}
 }
 
-func (this *listOfDouble) Eval() []float64 {
+func (this *listOfDouble) Eval() ([]float64, error) {
 	res := make([]float64, len(this.List))
+	var err error
 	for i, e := range this.List {
-		res[i] = e.Eval()
+		res[i], err = e.Eval()
+		if err != nil {
+			return nil, err
+		}
 	}
-	return res
+	return res, nil
 }
 
 func (this *listOfDouble) String() string {
@@ -41,12 +45,16 @@ func NewListOfInt(v []Int) Ints {
 	return &listOfInt{v}
 }
 
-func (this *listOfInt) Eval() []int64 {
+func (this *listOfInt) Eval() ([]int64, error) {
 	res := make([]int64, len(this.List))
+	var err error
 	for i, e := range this.List {
-		res[i] = e.Eval()
+		res[i], err = e.Eval()
+		if err != nil {
+			return nil, err
+		}
 	}
-	return res
+	return res, nil
 }
 
 func (this *listOfInt) String() string {
@@ -67,12 +75,16 @@ func NewListOfUint(v []Uint) Uints {
 	return &listOfUint{v}
 }
 
-func (this *listOfUint) Eval() []uint64 {
+func (this *listOfUint) Eval() ([]uint64, error) {
 	res := make([]uint64, len(this.List))
+	var err error
 	for i, e := range this.List {
-		res[i] = e.Eval()
+		res[i], err = e.Eval()
+		if err != nil {
+			return nil, err
+		}
 	}
-	return res
+	return res, nil
 }
 
 func (this *listOfUint) String() string {
@@ -93,12 +105,16 @@ func NewListOfBool(v []Bool) Bools {
 	return &listOfBool{v}
 }
 
-func (this *listOfBool) Eval() []bool {
+func (this *listOfBool) Eval() ([]bool, error) {
 	res := make([]bool, len(this.List))
+	var err error
 	for i, e := range this.List {
-		res[i] = e.Eval()
+		res[i], err = e.Eval()
+		if err != nil {
+			return nil, err
+		}
 	}
-	return res
+	return res, nil
 }
 
 func (this *listOfBool) String() string {
@@ -119,12 +135,16 @@ func NewListOfString(v []String) Strings {
 	return &listOfString{v}
 }
 
-func (this *listOfString) Eval() []string {
+func (this *listOfString) Eval() ([]string, error) {
 	res := make([]string, len(this.List))
+	var err error
 	for i, e := range this.List {
-		res[i] = e.Eval()
+		res[i], err = e.Eval()
+		if err != nil {
+			return nil, err
+		}
 	}
-	return res
+	return res, nil
 }
 
 func (this *listOfString) String() string {
@@ -145,12 +165,16 @@ func NewListOfBytes(v []Bytes) ListOfBytes {
 	return &listOfBytes{v}
 }
 
-func (this *listOfBytes) Eval() [][]byte {
+func (this *listOfBytes) Eval() ([][]byte, error) {
 	res := make([][]byte, len(this.List))
+	var err error
 	for i, e := range this.List {
-		res[i] = e.Eval()
+		res[i], err = e.Eval()
+		if err != nil {
+			return nil, err
+		}
 	}
-	return res
+	return res, nil
 }
 
 func (this *listOfBytes) String() string {

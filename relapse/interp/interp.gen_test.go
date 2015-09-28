@@ -223,6 +223,21 @@ func TestDeepLeft811Json(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestDontErrorGivenWrongTypeJson(t *testing.T) {
+	v := tests.Validators["DontErrorGivenWrongType"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestDontErrorGivenWrongTypeProto(t *testing.T) {
+	v := tests.Validators["DontErrorGivenWrongType"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestDontErrorGivenWrongTypeReflect(t *testing.T) {
+	v := tests.Validators["DontErrorGivenWrongType"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestEmptyOrNilJohnJson(t *testing.T) {
 	v := tests.Validators["EmptyOrNilJohn"]["json"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)

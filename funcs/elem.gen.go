@@ -6,22 +6,28 @@ package funcs
 type elemDoubles struct {
 	List  Doubles
 	Index Int
-	Thrower
 }
 
-func (this *elemDoubles) Eval() float64 {
-	list := this.List.Eval()
-	index := int(this.Index.Eval())
+func (this *elemDoubles) Eval() (float64, error) {
+	list, err := this.List.Eval()
+	if err != nil {
+		return 0, err
+	}
+	index64, err := this.Index.Eval()
+	if err != nil {
+		return 0, err
+	}
+	index := int(index64)
 	if len(list) == 0 {
-		return this.ThrowDouble(NewRangeCheckErr(index, len(list)))
+		return 0, NewRangeCheckErr(index, len(list))
 	}
 	if index < 0 {
 		index = index % len(list)
 	}
 	if len(list) <= index {
-		return this.ThrowDouble(NewRangeCheckErr(index, len(list)))
+		return 0, NewRangeCheckErr(index, len(list))
 	}
-	return list[index]
+	return list[index], nil
 }
 
 func init() {
@@ -38,22 +44,28 @@ func ElemDoubles(list Doubles, index Int) Double {
 type elemInts struct {
 	List  Ints
 	Index Int
-	Thrower
 }
 
-func (this *elemInts) Eval() int64 {
-	list := this.List.Eval()
-	index := int(this.Index.Eval())
+func (this *elemInts) Eval() (int64, error) {
+	list, err := this.List.Eval()
+	if err != nil {
+		return 0, err
+	}
+	index64, err := this.Index.Eval()
+	if err != nil {
+		return 0, err
+	}
+	index := int(index64)
 	if len(list) == 0 {
-		return this.ThrowInt(NewRangeCheckErr(index, len(list)))
+		return 0, NewRangeCheckErr(index, len(list))
 	}
 	if index < 0 {
 		index = index % len(list)
 	}
 	if len(list) <= index {
-		return this.ThrowInt(NewRangeCheckErr(index, len(list)))
+		return 0, NewRangeCheckErr(index, len(list))
 	}
-	return list[index]
+	return list[index], nil
 }
 
 func init() {
@@ -70,22 +82,28 @@ func ElemInts(list Ints, index Int) Int {
 type elemUints struct {
 	List  Uints
 	Index Int
-	Thrower
 }
 
-func (this *elemUints) Eval() uint64 {
-	list := this.List.Eval()
-	index := int(this.Index.Eval())
+func (this *elemUints) Eval() (uint64, error) {
+	list, err := this.List.Eval()
+	if err != nil {
+		return 0, err
+	}
+	index64, err := this.Index.Eval()
+	if err != nil {
+		return 0, err
+	}
+	index := int(index64)
 	if len(list) == 0 {
-		return this.ThrowUint(NewRangeCheckErr(index, len(list)))
+		return 0, NewRangeCheckErr(index, len(list))
 	}
 	if index < 0 {
 		index = index % len(list)
 	}
 	if len(list) <= index {
-		return this.ThrowUint(NewRangeCheckErr(index, len(list)))
+		return 0, NewRangeCheckErr(index, len(list))
 	}
-	return list[index]
+	return list[index], nil
 }
 
 func init() {
@@ -102,22 +120,28 @@ func ElemUints(list Uints, index Int) Uint {
 type elemBools struct {
 	List  Bools
 	Index Int
-	Thrower
 }
 
-func (this *elemBools) Eval() bool {
-	list := this.List.Eval()
-	index := int(this.Index.Eval())
+func (this *elemBools) Eval() (bool, error) {
+	list, err := this.List.Eval()
+	if err != nil {
+		return false, err
+	}
+	index64, err := this.Index.Eval()
+	if err != nil {
+		return false, err
+	}
+	index := int(index64)
 	if len(list) == 0 {
-		return this.ThrowBool(NewRangeCheckErr(index, len(list)))
+		return false, NewRangeCheckErr(index, len(list))
 	}
 	if index < 0 {
 		index = index % len(list)
 	}
 	if len(list) <= index {
-		return this.ThrowBool(NewRangeCheckErr(index, len(list)))
+		return false, NewRangeCheckErr(index, len(list))
 	}
-	return list[index]
+	return list[index], nil
 }
 
 func init() {
@@ -134,22 +158,28 @@ func ElemBools(list Bools, index Int) Bool {
 type elemStrings struct {
 	List  Strings
 	Index Int
-	Thrower
 }
 
-func (this *elemStrings) Eval() string {
-	list := this.List.Eval()
-	index := int(this.Index.Eval())
+func (this *elemStrings) Eval() (string, error) {
+	list, err := this.List.Eval()
+	if err != nil {
+		return "", err
+	}
+	index64, err := this.Index.Eval()
+	if err != nil {
+		return "", err
+	}
+	index := int(index64)
 	if len(list) == 0 {
-		return this.ThrowString(NewRangeCheckErr(index, len(list)))
+		return "", NewRangeCheckErr(index, len(list))
 	}
 	if index < 0 {
 		index = index % len(list)
 	}
 	if len(list) <= index {
-		return this.ThrowString(NewRangeCheckErr(index, len(list)))
+		return "", NewRangeCheckErr(index, len(list))
 	}
-	return list[index]
+	return list[index], nil
 }
 
 func init() {
@@ -166,22 +196,28 @@ func ElemStrings(list Strings, index Int) String {
 type elemListOfBytes struct {
 	List  ListOfBytes
 	Index Int
-	Thrower
 }
 
-func (this *elemListOfBytes) Eval() []byte {
-	list := this.List.Eval()
-	index := int(this.Index.Eval())
+func (this *elemListOfBytes) Eval() ([]byte, error) {
+	list, err := this.List.Eval()
+	if err != nil {
+		return nil, err
+	}
+	index64, err := this.Index.Eval()
+	if err != nil {
+		return nil, err
+	}
+	index := int(index64)
 	if len(list) == 0 {
-		return this.ThrowBytes(NewRangeCheckErr(index, len(list)))
+		return nil, NewRangeCheckErr(index, len(list))
 	}
 	if index < 0 {
 		index = index % len(list)
 	}
 	if len(list) <= index {
-		return this.ThrowBytes(NewRangeCheckErr(index, len(list)))
+		return nil, NewRangeCheckErr(index, len(list))
 	}
-	return list[index]
+	return list[index], nil
 }
 
 func init() {

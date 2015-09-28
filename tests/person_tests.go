@@ -337,27 +337,26 @@ func init() {
 	Validate("HiddenLeftRecursionRobert", HiddenLeftRecursion, AllCodecs(RobertPerson), false)
 }
 
-// TODO
-// var NegativePerson = &Person{
-// 	Addresses: []*Address{
-// 		{
-// 			Number: proto.Int64(-1),
-// 			Street: proto.String("SomeStreet"),
-// 		},
-// 	},
-// 	Telephone: proto.String("0127897897"),
-// }
+var NegativePerson = &Person{
+	Addresses: []*Address{
+		{
+			Number: proto.Int64(-1),
+			Street: proto.String("SomeStreet"),
+		},
+	},
+	Telephone: proto.String("0127897897"),
+}
 
-// var PositiveNumber = G{
-// 	"main": InOrder(
-// 		In("Addresses",
-// 			Field("Number", Sprint(And(TypeUint(), UintGE(UintVar(), UintConst(0))))),
-// 			Any(),
-// 		),
-// 		Any(),
-// 	),
-// }
+var PositiveNumber = G{
+	"main": InOrder(
+		In("Addresses",
+			Field("Number", Sprint(UintGE(UintVar(), UintConst(0)))),
+			Any(),
+		),
+		Any(),
+	),
+}
 
-// func init() {
-// 	Validate("DontErrorGivenWrongType", PositiveNumber, AllCodecs(NegativePerson), false)
-// }
+func init() {
+	Validate("DontErrorGivenWrongType", PositiveNumber, AllCodecs(NegativePerson), false)
+}

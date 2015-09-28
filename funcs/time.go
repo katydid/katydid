@@ -22,8 +22,8 @@ func Now() Int {
 
 type now struct{}
 
-func (this *now) Eval() int64 {
-	return time.Now().UnixNano()
+func (this *now) Eval() (int64, error) {
+	return time.Now().UnixNano(), nil
 }
 
 func (this *now) IsVariable() {}

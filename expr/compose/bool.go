@@ -32,7 +32,6 @@ type Decoder interface {
 
 type composedBool struct {
 	Decoders []Decoder
-	Catcher  funcs.Catcher
 	Func     funcs.Bool
 }
 
@@ -46,12 +45,11 @@ func (this *errInit) Error() string {
 }
 
 var (
-	varTyp        = reflect.TypeOf((*funcs.Variable)(nil)).Elem()
-	decoderTyp    = reflect.TypeOf((*funcs.Decoder)(nil)).Elem()
-	constTyp      = reflect.TypeOf((*funcs.Const)(nil)).Elem()
-	initTyp       = reflect.TypeOf((*funcs.Init)(nil)).Elem()
-	setCatcherTyp = reflect.TypeOf((*funcs.SetCatcher)(nil)).Elem()
-	listOfTyp     = reflect.TypeOf((*funcs.ListOf)(nil)).Elem()
+	varTyp     = reflect.TypeOf((*funcs.Variable)(nil)).Elem()
+	decoderTyp = reflect.TypeOf((*funcs.Decoder)(nil)).Elem()
+	constTyp   = reflect.TypeOf((*funcs.Const)(nil)).Elem()
+	initTyp    = reflect.TypeOf((*funcs.Init)(nil)).Elem()
+	listOfTyp  = reflect.TypeOf((*funcs.ListOf)(nil)).Elem()
 )
 
 var (
@@ -67,17 +65,8 @@ func NewBool(expr *expr.Expr) (*composedBool, error) {
 	if err != nil {
 		return nil, err
 	}
-	c := funcs.NewCatcher(debug)
-	setCatcherImpls := FuncImplements(e, setCatcherTyp)
-	for _, t := range setCatcherImpls {
-		t.(funcs.SetCatcher).SetCatcher(c)
-	}
-	c.Clear()
 	e, err = TrimBool(e)
 	if err != nil {
-		return nil, err
-	}
-	if err := c.GetError(); err != nil {
 		return nil, err
 	}
 	initImpls := FuncImplements(e, initTyp)
@@ -92,15 +81,14 @@ func NewBool(expr *expr.Expr) (*composedBool, error) {
 	for i := range impls {
 		decs[i] = impls[i].(Decoder)
 	}
-	return &composedBool{decs, c, e}, nil
+	return &composedBool{decs, e}, nil
 }
 
 func (this *composedBool) Eval(dec serialize.Decoder) (bool, error) {
-	this.Catcher.Clear()
 	for _, v := range this.Decoders {
 		v.SetDecoder(dec)
 	}
-	return this.Func.Eval(), this.Catcher.GetError()
+	return this.Func.Eval()
 }
 
 func FuncImplements(i interface{}, typ reflect.Type) []interface{} {

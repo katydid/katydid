@@ -25,8 +25,16 @@ type {{.Type}}{{.CName}} struct {
 	V2 {{.CType}}
 }
 
-func (this *{{.Type}}{{.CName}}) Eval() bool {
-	{{if .Eval}}{{.Eval}}{{else}}return this.V1.Eval() {{.Operator}} this.V2.Eval(){{end}}
+func (this *{{.Type}}{{.CName}}) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return false, err
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return false, err
+	}
+	{{if .Eval}}{{.Eval}}{{else}}return v1 {{.Operator}} v2, nil{{end}}
 }
 
 func init() {
@@ -84,8 +92,8 @@ func {{.CType}}Const(v {{.GoType}}) Const{{.CType}} {
 
 func (this *const{{.CType}}) IsConst() {}
 
-func (this *const{{.CType}}) Eval() {{.GoType}} {
-	return this.v
+func (this *const{{.CType}}) Eval() ({{.GoType}}, error) {
+	return this.v, nil
 }
 
 func (this *const{{.CType}}) String() string {
@@ -113,12 +121,16 @@ func NewListOf{{.FuncType}}(v []{{.FuncType}}) {{.CType}} {
 	return &listOf{{.FuncType}}{v}
 }
 
-func (this *listOf{{.FuncType}}) Eval() []{{.GoType}} {
+func (this *listOf{{.FuncType}}) Eval() ([]{{.GoType}}, error) {
 	res := make([]{{.GoType}}, len(this.List))
+	var err error
 	for i, e := range this.List {
-		res[i] = e.Eval()
+		res[i], err = e.Eval()
+		if err != nil {
+			return nil, err
+		}
 	}
-	return res
+	return res, nil
 }
 
 func (this *listOf{{.FuncType}}) String() string {
@@ -143,10 +155,14 @@ type print{{.Name}} struct {
 	E {{.Name}}
 }
 
-func (this *print{{.Name}}) Eval() {{.GoType}} {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+func (this *print{{.Name}}) Eval() ({{.GoType}}, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
 }
 
 func (this *print{{.Name}}) IsVariable() {}
@@ -170,8 +186,12 @@ type len{{.}} struct {
 	E {{.}}
 }
 
-func (this *len{{.}}) Eval() int64 {
-	return int64(len(this.E.Eval()))
+func (this *len{{.}}) Eval() (int64, error) {
+	e, err := this.E.Eval()
+	if err != nil {
+		return 0, err
+	}
+	return int64(len(e)), nil
 }
 
 func init() {
@@ -187,22 +207,28 @@ const elemStr = `
 type elem{{.ListType}} struct {
 	List {{.ListType}}
 	Index Int
-	Thrower
 }
 
-func (this *elem{{.ListType}}) Eval() {{.ReturnType}} {
-	list := this.List.Eval()
-	index := int(this.Index.Eval())
+func (this *elem{{.ListType}}) Eval() ({{.ReturnType}}, error) {
+	list, err := this.List.Eval()
+	if err != nil {
+		return {{.Default}}, err
+	}
+	index64, err := this.Index.Eval()
+	if err != nil {
+		return {{.Default}}, err
+	}
+	index := int(index64)
 	if len(list) == 0 {
-		return this.Throw{{.ThrowType}}(NewRangeCheckErr(index, len(list)))
+		return {{.Default}}, NewRangeCheckErr(index, len(list))
 	}
 	if index < 0 {
 		index = index % len(list)	
 	}
 	if len(list) <= index {
-		return this.Throw{{.ThrowType}}(NewRangeCheckErr(index, len(list)))
+		return {{.Default}}, NewRangeCheckErr(index, len(list))
 	}
-	return list[index]
+	return list[index], nil
 }
 
 func init() {
@@ -221,6 +247,7 @@ type elemer struct {
 	ListType   string
 	ReturnType string
 	ThrowType  string
+	Default    string
 }
 
 const rangeStr = `
@@ -228,32 +255,42 @@ type range{{.ListType}} struct {
 	List {{.ListType}}
 	First Int
 	Last Int
-	Thrower
 }
 
-func (this *range{{.ListType}}) Eval() {{.ReturnType}} {
-	list := this.List.Eval()
-	first := int(this.First.Eval())
+func (this *range{{.ListType}}) Eval() ({{.ReturnType}}, error) {
+	list, err := this.List.Eval()
+	if err != nil {
+		return nil, err
+	}
+	first64, err := this.First.Eval()
+	if err != nil {
+		return nil, err
+	}
+	first := int(first64)
 	if len(list) == 0 {
-		return this.Throw{{.ListType}}(NewRangeCheckErr(first, len(list)))
+		return nil, NewRangeCheckErr(first, len(list))
 	}
 	if first < 0 {
 		first = first % len(list)	
 	}
 	if first > len(list) {
-		return this.Throw{{.ListType}}(NewRangeCheckErr(first, len(list)))
+		return nil, NewRangeCheckErr(first, len(list))
 	}
-	last := int(this.Last.Eval())
+	last64, err := this.Last.Eval()
+	if err != nil {
+		return nil, err
+	}
+	last := int(last64)
 	if last < 0 {
 		last = last % len(list)	
 	}
 	if last > len(list) {
-		return this.Throw{{.ListType}}(NewRangeCheckErr(last, len(list)))
+		return nil, NewRangeCheckErr(last, len(list))
 	}
 	if first > last {
-		return this.Throw{{.ListType}}(NewRangeErr(first, last))	
+		return nil, NewRangeErr(first, last)
 	}
-	return list[first:last]
+	return list[first:last], nil
 }
 
 func init() {
@@ -277,18 +314,17 @@ type ranger struct {
 const variableStr = `
 type var{{.Name}} struct {
 	Dec serialize.Decoder
-	Thrower
 }
 
 var _ Decoder = &var{{.Name}}{}
 var _ Variable = &var{{.Name}}{}
 
-func (this *var{{.Name}}) Eval() {{.GoType}} {
+func (this *var{{.Name}}) Eval() ({{.GoType}}, error) {
 	v, err := this.Dec.{{.Name}}()
 	if err != nil {
-		return this.Throw{{.Name}}(err)
+		return {{.Default}}, err
 	}
-	return v
+	return v, nil
 }
 
 func (this *var{{.Name}}) IsVariable() {}
@@ -308,9 +344,10 @@ func {{.Name}}Var() *var{{.Name}} {
 `
 
 type varer struct {
-	Name   string
-	Decode string
-	GoType string
+	Name    string
+	Decode  string
+	GoType  string
+	Default string
 }
 
 func main() {
@@ -319,31 +356,31 @@ func main() {
 		&compare{"ge", ">=", "double", "", "Double"},
 		&compare{"ge", ">=", "int", "", "Int"},
 		&compare{"ge", ">=", "uint", "", "Uint"},
-		&compare{"ge", "", "bytes", "return bytes.Compare(this.V1.Eval(), this.V2.Eval()) >= 0", "Bytes"},
+		&compare{"ge", "", "bytes", "return bytes.Compare(v1, v2) >= 0, nil", "Bytes"},
 		&compare{"gt", ">", "double", "", "Double"},
 		&compare{"gt", ">", "int", "", "Int"},
 		&compare{"gt", ">", "uint", "", "Uint"},
-		&compare{"gt", "", "bytes", "return bytes.Compare(this.V1.Eval(), this.V2.Eval()) > 0", "Bytes"},
+		&compare{"gt", "", "bytes", "return bytes.Compare(v1, v2) > 0, nil", "Bytes"},
 		&compare{"le", "<=", "double", "", "Double"},
 		&compare{"le", "<=", "int", "", "Int"},
 		&compare{"le", "<=", "uint", "", "Uint"},
-		&compare{"le", "", "bytes", "return bytes.Compare(this.V1.Eval(), this.V2.Eval()) <= 0", "Bytes"},
+		&compare{"le", "", "bytes", "return bytes.Compare(v1, v2) <= 0, nil", "Bytes"},
 		&compare{"lt", "<", "double", "", "Double"},
 		&compare{"lt", "<", "int", "", "Int"},
 		&compare{"lt", "<", "uint", "", "Uint"},
-		&compare{"lt", "", "bytes", "return bytes.Compare(this.V1.Eval(), this.V2.Eval()) < 0", "Bytes"},
+		&compare{"lt", "", "bytes", "return bytes.Compare(v1, v2) < 0, nil", "Bytes"},
 		&compare{"eq", "==", "double", "", "Double"},
 		&compare{"eq", "==", "int", "", "Int"},
 		&compare{"eq", "==", "uint", "", "Uint"},
 		&compare{"eq", "==", "bool", "", "Bool"},
 		&compare{"eq", "==", "string", "", "String"},
-		&compare{"eq", "", "bytes", "return bytes.Equal(this.V1.Eval(), this.V2.Eval())", "Bytes"},
+		&compare{"eq", "", "bytes", "return bytes.Equal(v1, v2), nil", "Bytes"},
 		&compare{"ne", "!=", "double", "", "Double"},
 		&compare{"ne", "!=", "int", "", "Int"},
 		&compare{"ne", "!=", "uint", "", "Uint"},
 		&compare{"ne", "!=", "bool", "", "Bool"},
 		&compare{"ne", "!=", "string", "", "String"},
-		&compare{"ne", "", "bytes", "return !bytes.Equal(this.V1.Eval(), this.V2.Eval())", "Bytes"},
+		&compare{"ne", "", "bytes", "return !bytes.Equal(v1, v2), nil", "Bytes"},
 	}, `"bytes"`)
 	gen(newFuncStr, "newfunc.gen.go", []interface{}{
 		"Double",
@@ -406,12 +443,12 @@ func main() {
 		"Bytes",
 	})
 	gen(elemStr, "elem.gen.go", []interface{}{
-		&elemer{"Doubles", "float64", "Double"},
-		&elemer{"Ints", "int64", "Int"},
-		&elemer{"Uints", "uint64", "Uint"},
-		&elemer{"Bools", "bool", "Bool"},
-		&elemer{"Strings", "string", "String"},
-		&elemer{"ListOfBytes", "[]byte", "Bytes"},
+		&elemer{"Doubles", "float64", "Double", "0"},
+		&elemer{"Ints", "int64", "Int", "0"},
+		&elemer{"Uints", "uint64", "Uint", "0"},
+		&elemer{"Bools", "bool", "Bool", "false"},
+		&elemer{"Strings", "string", "String", `""`},
+		&elemer{"ListOfBytes", "[]byte", "Bytes", "nil"},
 	})
 	gen(rangeStr, "range.gen.go", []interface{}{
 		&ranger{"Doubles", "[]float64"},
@@ -422,11 +459,11 @@ func main() {
 		&ranger{"ListOfBytes", "[][]byte"},
 	})
 	gen(variableStr, "variable.gen.go", []interface{}{
-		&varer{"Double", "double", "float64"},
-		&varer{"Int", "int", "int64"},
-		&varer{"Uint", "uint", "uint64"},
-		&varer{"Bool", "bool", "bool"},
-		&varer{"String", "string", "string"},
-		&varer{"Bytes", "[]byte", "[]byte"},
+		&varer{"Double", "double", "float64", "0"},
+		&varer{"Int", "int", "int64", "0"},
+		&varer{"Uint", "uint", "uint64", "0"},
+		&varer{"Bool", "bool", "bool", "false"},
+		&varer{"String", "string", "string", `""`},
+		&varer{"Bytes", "[]byte", "[]byte", "nil"},
 	}, `"github.com/katydid/katydid/serialize"`)
 }

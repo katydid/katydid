@@ -150,7 +150,7 @@ func deriv(refs relapse.RefLookup, p *relapse.Pattern, tree serialize.Parser) *r
 		}
 		res, err := f.Eval(tree)
 		if err != nil {
-			panic(err)
+			return relapse.NewEmptySet()
 		}
 		if res {
 			return relapse.NewEmpty()

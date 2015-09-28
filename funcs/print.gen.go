@@ -11,10 +11,14 @@ type printDouble struct {
 	E Double
 }
 
-func (this *printDouble) Eval() float64 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+func (this *printDouble) Eval() (float64, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
 }
 
 func (this *printDouble) IsVariable() {}
@@ -31,10 +35,14 @@ type printInt struct {
 	E Int
 }
 
-func (this *printInt) Eval() int64 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+func (this *printInt) Eval() (int64, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
 }
 
 func (this *printInt) IsVariable() {}
@@ -51,10 +59,14 @@ type printUint struct {
 	E Uint
 }
 
-func (this *printUint) Eval() uint64 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+func (this *printUint) Eval() (uint64, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
 }
 
 func (this *printUint) IsVariable() {}
@@ -71,10 +83,14 @@ type printBool struct {
 	E Bool
 }
 
-func (this *printBool) Eval() bool {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+func (this *printBool) Eval() (bool, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
 }
 
 func (this *printBool) IsVariable() {}
@@ -91,10 +107,14 @@ type printString struct {
 	E String
 }
 
-func (this *printString) Eval() string {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+func (this *printString) Eval() (string, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
 }
 
 func (this *printString) IsVariable() {}
@@ -111,10 +131,14 @@ type printBytes struct {
 	E Bytes
 }
 
-func (this *printBytes) Eval() []byte {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+func (this *printBytes) Eval() ([]byte, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
 }
 
 func (this *printBytes) IsVariable() {}
@@ -131,10 +155,14 @@ type printDoubles struct {
 	E Doubles
 }
 
-func (this *printDoubles) Eval() []float64 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+func (this *printDoubles) Eval() ([]float64, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
 }
 
 func (this *printDoubles) IsVariable() {}
@@ -151,10 +179,14 @@ type printInts struct {
 	E Ints
 }
 
-func (this *printInts) Eval() []int64 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+func (this *printInts) Eval() ([]int64, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
 }
 
 func (this *printInts) IsVariable() {}
@@ -171,10 +203,14 @@ type printUints struct {
 	E Uints
 }
 
-func (this *printUints) Eval() []uint64 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+func (this *printUints) Eval() ([]uint64, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
 }
 
 func (this *printUints) IsVariable() {}
@@ -191,10 +227,14 @@ type printBools struct {
 	E Bools
 }
 
-func (this *printBools) Eval() []bool {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+func (this *printBools) Eval() ([]bool, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
 }
 
 func (this *printBools) IsVariable() {}
@@ -211,10 +251,14 @@ type printStrings struct {
 	E Strings
 }
 
-func (this *printStrings) Eval() []string {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+func (this *printStrings) Eval() ([]string, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
 }
 
 func (this *printStrings) IsVariable() {}
@@ -231,10 +275,14 @@ type printListOfBytes struct {
 	E ListOfBytes
 }
 
-func (this *printListOfBytes) Eval() [][]byte {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+func (this *printListOfBytes) Eval() ([][]byte, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
 }
 
 func (this *printListOfBytes) IsVariable() {}
