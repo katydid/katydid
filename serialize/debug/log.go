@@ -144,12 +144,6 @@ func (l *l) IsLeaf() bool {
 	return v
 }
 
-func (l *l) Name() string {
-	v := l.s.Name()
-	l.l.Printf(l.name+".Name() (%v)", v)
-	return v
-}
-
 func (l *l) Up() {
 	l.s.Up()
 	l.l.Printf(l.name + ".Up()")

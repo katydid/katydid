@@ -31,7 +31,6 @@ type Parser interface {
 	Copy() Parser
 	Next() error
 	IsLeaf() bool
-	Name() string
 	Up()
 	Down()
 	Decoder

@@ -130,10 +130,15 @@ func eval(rules *viper.Rules, tree serialize.Parser, current string) string {
 			}
 			panic(err)
 		}
-		name := tree.Name()
+		name, err := tree.String()
+		if err != nil {
+			panic(err)
+		}
 		parent, child := evalCall(rules, current, name)
 		if tree.IsLeaf() {
+			tree.Down()
 			child = evalInternal(rules, child, tree)
+			tree.Up()
 		} else {
 			tree.Down()
 			child = eval(rules, tree, child)

@@ -30,6 +30,7 @@ type state struct {
 	sliceIndex    int
 	sliceMaxIndex int
 	inSlice       bool
+	isFieldValue  bool
 }
 
 func (this state) Copy() state {
@@ -43,6 +44,7 @@ func (this state) Copy() state {
 		sliceIndex:    this.sliceIndex,
 		sliceMaxIndex: this.sliceMaxIndex,
 		inSlice:       this.inSlice,
+		isFieldValue:  this.isFieldValue,
 	}
 }
 
@@ -77,6 +79,15 @@ func newState(parent reflect.Value) state {
 	}
 }
 
+func newFieldState(typ reflect.StructField, val reflect.Value) state {
+	return state{
+		typ:          typ,
+		value:        val,
+		isFieldValue: true,
+		maxField:     1,
+	}
+}
+
 func NewReflectParser() *parser {
 	return &parser{stack: make([]state, 0, 10)}
 }
@@ -94,60 +105,39 @@ func (s *parser) Next() error {
 	if s.field >= s.maxField {
 		return io.EOF
 	}
-	if s.inSlice {
-		if s.sliceIndex >= s.sliceMaxIndex {
-			s.inSlice = false
-			s.field++
+	if !s.isFieldValue {
+		if s.inSlice {
+			if s.sliceIndex >= s.sliceMaxIndex {
+				s.inSlice = false
+				s.field++
+				return s.Next()
+			}
+			s.value = s.sliceValue.Index(s.sliceIndex)
+			s.sliceIndex++
+			return nil
+		}
+		s.typ = s.parent.Type().Field(s.field)
+		s.value = s.parent.Field(s.field)
+		if s.value.Kind() == reflect.Ptr || s.value.Kind() == reflect.Slice {
+			if s.value.IsNil() {
+				s.field++
+				return s.Next()
+			}
+		}
+		if isSlice(s.value) {
+			s.sliceValue = s.value
+			s.sliceMaxIndex = s.value.Len()
+			s.sliceIndex = 0
+			s.inSlice = true
 			return s.Next()
 		}
-		s.value = s.sliceValue.Index(s.sliceIndex)
-		s.sliceIndex++
-		return nil
-	}
-	s.typ = s.parent.Type().Field(s.field)
-	s.value = s.parent.Field(s.field)
-	if s.value.Kind() == reflect.Ptr || s.value.Kind() == reflect.Slice {
-		if s.value.IsNil() {
-			s.field++
-			return s.Next()
-		}
-	}
-	if isSlice(s.value) {
-		s.sliceValue = s.value
-		s.sliceMaxIndex = s.value.Len()
-		s.sliceIndex = 0
-		s.inSlice = true
-		return s.Next()
 	}
 	s.field++
 	return nil
 }
 
 func (s *parser) IsLeaf() bool {
-	isLeaf := true
-	if s.typ.Type.Kind() == reflect.Struct {
-		isLeaf = false
-	}
-	if s.typ.Type.Kind() == reflect.Ptr {
-		if s.typ.Type.Elem().Kind() == reflect.Struct {
-			isLeaf = false
-		}
-	}
-	if s.typ.Type.Kind() == reflect.Slice {
-		if s.typ.Type.Elem().Kind() == reflect.Struct {
-			isLeaf = false
-		}
-		if s.typ.Type.Elem().Kind() == reflect.Ptr {
-			if s.typ.Type.Elem().Elem().Kind() == reflect.Struct {
-				isLeaf = false
-			}
-		}
-	}
-	return isLeaf
-}
-
-func (s *parser) Name() string {
-	return s.typ.Name
+	return s.isFieldValue
 }
 
 func (s *parser) getValue() reflect.Value {
@@ -174,42 +164,53 @@ func (s *parser) getValue() reflect.Value {
 }
 
 func (s *parser) Double() (float64, error) {
-	value := s.getValue()
-	switch value.Kind() {
-	case reflect.Float64, reflect.Float32:
-		return value.Float(), nil
+	if s.isFieldValue {
+		value := s.getValue()
+		switch value.Kind() {
+		case reflect.Float64, reflect.Float32:
+			return value.Float(), nil
+		}
 	}
 	return 0, serialize.ErrNotDouble
 }
 
 func (s *parser) Int() (int64, error) {
-	value := s.getValue()
-	switch value.Kind() {
-	case reflect.Int64, reflect.Int32:
-		return value.Int(), nil
+	if s.isFieldValue {
+		value := s.getValue()
+		switch value.Kind() {
+		case reflect.Int64, reflect.Int32:
+			return value.Int(), nil
+		}
 	}
 	return 0, serialize.ErrNotInt
 }
 
 func (s *parser) Uint() (uint64, error) {
-	value := s.getValue()
-	switch value.Kind() {
-	case reflect.Uint64, reflect.Uint32:
-		return value.Uint(), nil
+	if s.isFieldValue {
+		value := s.getValue()
+		switch value.Kind() {
+		case reflect.Uint64, reflect.Uint32:
+			return value.Uint(), nil
+		}
 	}
 	return 0, serialize.ErrNotUint
 }
 
 func (s *parser) Bool() (bool, error) {
-	value := s.getValue()
-	switch value.Kind() {
-	case reflect.Bool:
-		return value.Bool(), nil
+	if s.isFieldValue {
+		value := s.getValue()
+		switch value.Kind() {
+		case reflect.Bool:
+			return value.Bool(), nil
+		}
 	}
 	return false, serialize.ErrNotBool
 }
 
 func (s *parser) String() (string, error) {
+	if !s.isFieldValue {
+		return s.typ.Name, nil
+	}
 	value := s.getValue()
 	switch value.Kind() {
 	case reflect.String:
@@ -219,10 +220,12 @@ func (s *parser) String() (string, error) {
 }
 
 func (s *parser) Bytes() ([]byte, error) {
-	value := s.getValue()
-	switch value.Kind() {
-	case reflect.Slice, reflect.Uint8, reflect.Int8:
-		return value.Bytes(), nil
+	if s.isFieldValue {
+		value := s.getValue()
+		switch value.Kind() {
+		case reflect.Slice, reflect.Uint8, reflect.Int8:
+			return value.Bytes(), nil
+		}
 	}
 	return nil, serialize.ErrNotBytes
 }
@@ -233,7 +236,33 @@ func (s *parser) Up() {
 	s.stack = s.stack[:top]
 }
 
+func (s *parser) canDown() bool {
+	if s.typ.Type.Kind() == reflect.Struct {
+		return true
+	}
+	if s.typ.Type.Kind() == reflect.Ptr {
+		if s.typ.Type.Elem().Kind() == reflect.Struct {
+			return true
+		}
+	}
+	if s.typ.Type.Kind() == reflect.Slice {
+		if s.typ.Type.Elem().Kind() == reflect.Struct {
+			return true
+		}
+		if s.typ.Type.Elem().Kind() == reflect.Ptr {
+			if s.typ.Type.Elem().Elem().Kind() == reflect.Struct {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 func (s *parser) Down() {
 	s.stack = append(s.stack, s.state)
-	s.state = newState(s.state.value)
+	if s.canDown() {
+		s.state = newState(s.state.value)
+	} else {
+		s.state = newFieldState(s.typ, s.value)
+	}
 }

@@ -59,7 +59,10 @@ func Walk(parser serialize.Parser) map[string][]interface{} {
 				panic(err)
 			}
 		}
-		name := parser.Name()
+		name, err := parser.String()
+		if err != nil {
+			panic(err)
+		}
 		var v interface{}
 		if !parser.IsLeaf() {
 			parser.Down()
@@ -67,7 +70,9 @@ func Walk(parser serialize.Parser) map[string][]interface{} {
 			parser.Up()
 			v = mm
 		} else {
+			parser.Down()
 			v = getValue(parser)
+			parser.Up()
 		}
 		_, ok := m[name]
 		if !ok {

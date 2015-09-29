@@ -30,7 +30,11 @@ func Interpret(g *relapse.Grammar, tree serialize.Parser) bool {
 	res = refs["main"]
 	err := tree.Next()
 	for err == nil {
-		log.Printf("Interpret = %s given input %s", res, tree.Name())
+		name, nameErr := tree.String()
+		if nameErr != nil {
+			panic(nameErr)
+		}
+		log.Printf("Interpret = %s given input %s", res, name)
 		res = sderiv(refs, res, tree)
 		err = tree.Next()
 	}
@@ -95,22 +99,25 @@ func evalName(nameExpr *relapse.NameExpr, name string) bool {
 }
 
 func derivTreeNode(refs relapse.RefLookup, p *relapse.TreeNode, tree serialize.Parser) *relapse.Pattern {
-	matched := evalName(p.GetName(), tree.Name())
+	name, nameErr := tree.String()
+	if nameErr != nil {
+		panic(nameErr)
+	}
+	matched := evalName(p.GetName(), name)
 	if !matched {
 		return relapse.NewEmptySet()
-	}
-	if tree.IsLeaf() {
-		res := sderiv(refs, p.GetPattern(), tree)
-		if !Nullable(refs, res) {
-			return relapse.NewEmptySet()
-		}
-		return relapse.NewEmpty()
 	}
 	tree.Down()
 	res := p.GetPattern()
 	err := tree.Next()
 	for err == nil {
-		log.Printf("derivTreeNode = %s given input %s", res, tree.Name())
+		if !tree.IsLeaf() {
+			name1, nameErr1 := tree.String()
+			if nameErr1 != nil {
+				panic(nameErr1)
+			}
+			log.Printf("derivTreeNode = %s given input %s", res, name1)
+		}
 		res = sderiv(refs, res, tree)
 		err = tree.Next()
 	}
