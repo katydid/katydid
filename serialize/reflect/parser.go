@@ -30,7 +30,7 @@ type state struct {
 	sliceIndex    int
 	sliceMaxIndex int
 	inSlice       bool
-	isFieldValue  bool
+	isLeaf        bool
 }
 
 func (this state) Copy() state {
@@ -44,7 +44,7 @@ func (this state) Copy() state {
 		sliceIndex:    this.sliceIndex,
 		sliceMaxIndex: this.sliceMaxIndex,
 		inSlice:       this.inSlice,
-		isFieldValue:  this.isFieldValue,
+		isLeaf:        this.isLeaf,
 	}
 }
 
@@ -81,10 +81,10 @@ func newState(parent reflect.Value) state {
 
 func newFieldState(typ reflect.StructField, val reflect.Value) state {
 	return state{
-		typ:          typ,
-		value:        val,
-		isFieldValue: true,
-		maxField:     1,
+		typ:      typ,
+		value:    val,
+		isLeaf:   true,
+		maxField: 1,
 	}
 }
 
@@ -105,7 +105,7 @@ func (s *parser) Next() error {
 	if s.field >= s.maxField {
 		return io.EOF
 	}
-	if !s.isFieldValue {
+	if !s.isLeaf {
 		if s.inSlice {
 			if s.sliceIndex >= s.sliceMaxIndex {
 				s.inSlice = false
@@ -137,7 +137,7 @@ func (s *parser) Next() error {
 }
 
 func (s *parser) IsLeaf() bool {
-	return s.isFieldValue
+	return s.isLeaf
 }
 
 func (s *parser) getValue() reflect.Value {
@@ -164,7 +164,7 @@ func (s *parser) getValue() reflect.Value {
 }
 
 func (s *parser) Double() (float64, error) {
-	if s.isFieldValue {
+	if s.isLeaf {
 		value := s.getValue()
 		switch value.Kind() {
 		case reflect.Float64, reflect.Float32:
@@ -175,7 +175,7 @@ func (s *parser) Double() (float64, error) {
 }
 
 func (s *parser) Int() (int64, error) {
-	if s.isFieldValue {
+	if s.isLeaf {
 		value := s.getValue()
 		switch value.Kind() {
 		case reflect.Int64, reflect.Int32:
@@ -186,7 +186,7 @@ func (s *parser) Int() (int64, error) {
 }
 
 func (s *parser) Uint() (uint64, error) {
-	if s.isFieldValue {
+	if s.isLeaf {
 		value := s.getValue()
 		switch value.Kind() {
 		case reflect.Uint64, reflect.Uint32:
@@ -197,7 +197,7 @@ func (s *parser) Uint() (uint64, error) {
 }
 
 func (s *parser) Bool() (bool, error) {
-	if s.isFieldValue {
+	if s.isLeaf {
 		value := s.getValue()
 		switch value.Kind() {
 		case reflect.Bool:
@@ -208,7 +208,7 @@ func (s *parser) Bool() (bool, error) {
 }
 
 func (s *parser) String() (string, error) {
-	if !s.isFieldValue {
+	if !s.isLeaf {
 		return s.typ.Name, nil
 	}
 	value := s.getValue()
@@ -220,7 +220,7 @@ func (s *parser) String() (string, error) {
 }
 
 func (s *parser) Bytes() ([]byte, error) {
-	if s.isFieldValue {
+	if s.isLeaf {
 		value := s.getValue()
 		switch value.Kind() {
 		case reflect.Slice, reflect.Uint8, reflect.Int8:

@@ -392,6 +392,13 @@ func (s *jsonParser) nextValueInObject() error {
 }
 
 func (s *jsonParser) Next() error {
+	if s.isLeaf {
+		if s.firstObjectValue {
+			s.firstObjectValue = false
+			return nil
+		}
+		return io.EOF
+	}
 	s.isValueObject = false
 	if err := s.skipSpace(); err != nil {
 		return err
@@ -414,7 +421,7 @@ func (s *jsonParser) Next() error {
 }
 
 func (s *jsonParser) IsLeaf() bool {
-	return !s.isValueObject
+	return s.isLeaf
 }
 
 func (s *jsonParser) Value() []byte {
@@ -422,44 +429,58 @@ func (s *jsonParser) Value() []byte {
 }
 
 func (s *jsonParser) Double() (float64, error) {
-	v := string(s.Value())
-	i, err := strconv.ParseFloat(v, 64)
-	return i, err
+	if s.isLeaf {
+		v := string(s.Value())
+		i, err := strconv.ParseFloat(v, 64)
+		return i, err
+	}
+	return 0, serialize.ErrNotDouble
 }
 
 func (s *jsonParser) Int() (int64, error) {
-	v := string(s.Value())
-	i, err := strconv.ParseInt(v, 10, 64)
-	return int64(i), err
+	if s.isLeaf {
+		v := string(s.Value())
+		i, err := strconv.ParseInt(v, 10, 64)
+		return int64(i), err
+	}
+	return 0, serialize.ErrNotInt
 }
 
 func (s *jsonParser) Uint() (uint64, error) {
-	v := string(s.Value())
-	i, err := strconv.ParseUint(v, 10, 64)
-	return uint64(i), err
+	if s.isLeaf {
+		v := string(s.Value())
+		i, err := strconv.ParseUint(v, 10, 64)
+		return uint64(i), err
+	}
+	return 0, serialize.ErrNotUint
 }
 
 func (s *jsonParser) Bool() (bool, error) {
-	v := string(s.Value())
-	if v == "true" {
-		return true, nil
-	}
-	if v == "false" {
-		return false, nil
+	if s.isLeaf {
+		v := string(s.Value())
+		if v == "true" {
+			return true, nil
+		}
+		if v == "false" {
+			return false, nil
+		}
 	}
 	return false, serialize.ErrNotBool
 }
 
 func (s *jsonParser) String() (string, error) {
-	v := s.Value()
-	if v[0] != '"' {
-		return "", serialize.ErrNotString
+	if s.isLeaf {
+		v := s.Value()
+		if v[0] != '"' {
+			return "", serialize.ErrNotString
+		}
+		res, ok := unquote(v)
+		if !ok {
+			return "", ErrUnquote
+		}
+		return res, nil
 	}
-	res, ok := unquote(v)
-	if !ok {
-		return "", ErrUnquote
-	}
-	return res, nil
+	return s.name, nil
 }
 
 func (s *jsonParser) Bytes() ([]byte, error) {
@@ -503,6 +524,7 @@ type state struct {
 	firstObjectValue bool
 	firstArrayValue  bool
 	isValueObject    bool
+	isLeaf           bool
 }
 
 func (s state) Copy() state {
@@ -518,11 +540,8 @@ func (s state) Copy() state {
 		firstObjectValue: s.firstObjectValue,
 		firstArrayValue:  s.firstArrayValue,
 		isValueObject:    s.isValueObject,
+		isLeaf:           s.isLeaf,
 	}
-}
-
-func (s *jsonParser) Name() string {
-	return s.name
 }
 
 func (s *jsonParser) Copy() serialize.Parser {
@@ -544,9 +563,15 @@ func (s *jsonParser) Up() {
 }
 
 func (s *jsonParser) Down() {
-	s.stack = append(s.stack, s.state)
-	s.state = state{
-		buf:              s.buf[s.startValueOffset:s.endValueOffset],
-		firstObjectValue: true,
+	if s.isValueObject {
+		s.stack = append(s.stack, s.state)
+		s.state = state{
+			buf:              s.buf[s.startValueOffset:s.endValueOffset],
+			firstObjectValue: true,
+		}
+	} else {
+		s.stack = append(s.stack, s.state)
+		s.state.isLeaf = true
+		s.state.firstObjectValue = true
 	}
 }
