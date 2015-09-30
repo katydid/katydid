@@ -22,8 +22,8 @@ import (
 // Foundations of XML Processing: The Tree Automata Approach - Example 8.1.1
 // Without simplification rules the state space for the respective automata can be become very large
 var Example811 = G{
-	"main": ExactAnyOf(Eval("q1"), Eval("q2")),
-	"q1": ExactAnyOf(
+	"main": AnyOf(Eval("q1"), Eval("q2")),
+	"q1": AnyOf(
 		In("A",
 			In("Left", Eval("q1")),
 			In("Right", Eval("q2")),
@@ -33,7 +33,7 @@ var Example811 = G{
 			In("Right", Eval("q1")),
 		),
 	),
-	"q2": ExactAnyOf(
+	"q2": AnyOf(
 		In("A",
 			In("Left", Eval("q2")),
 			In("Right", Eval("q2")),

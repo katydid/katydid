@@ -122,20 +122,12 @@ func InOrder(child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Patt
 	return concat(child, children...)
 }
 
-func ExactAllOf(patterns ...*relapse.Pattern) *relapse.Pattern {
+func AllOf(patterns ...*relapse.Pattern) *relapse.Pattern {
 	return relapse.NewAnd(patterns...)
 }
 
-func MatchAllOf(patterns ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewWithSomeAnd(patterns...)
-}
-
-func ExactAnyOf(patterns ...*relapse.Pattern) *relapse.Pattern {
+func AnyOf(patterns ...*relapse.Pattern) *relapse.Pattern {
 	return relapse.NewOr(patterns...)
-}
-
-func MatchAnyOf(patterns ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewWithSomeOr(patterns...)
 }
 
 func OppositeOf(p *relapse.Pattern) *relapse.Pattern {

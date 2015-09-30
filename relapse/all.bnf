@@ -237,8 +237,6 @@ EmptySet
 
 DepthPattern
   : StartConcat
-  | StartWithSomeOr
-  | StartWithSomeAnd
   | Dot TreeNode << &Pattern{WithSomeTreeNode: &WithSomeTreeNode{
       Dot: $0.(*expr.Keyword),
       Pattern: $1.(*Pattern),
@@ -365,29 +363,6 @@ ContinueOr
   >>
   ;
 
-StartWithSomeOr
-  : OpenCurly Pattern Pipe ContinueWithSomeOr CloseCurly <<
-    &Pattern{WithSomeOr: &WithSomeOr{
-      OpenCurly: $0.(*expr.Keyword),
-      LeftPattern: $1.(*Pattern),
-      Pipe: $2.(*expr.Keyword),
-      RightPattern: $3.(*Pattern),
-      CloseCurly: $4.(*expr.Keyword),
-    }}, nil
-  >>
-  ;
-
-ContinueWithSomeOr
-  : Pattern
-  | ContinueWithSomeOr Pipe Pattern <<
-    &Pattern{WithSomeOr: &WithSomeOr{
-      LeftPattern: $0.(*Pattern),
-      Pipe: $1.(*expr.Keyword),
-      RightPattern: $2.(*Pattern),
-    }}, nil
-  >>
-  ;
-
 StartAnd
   : OpenParen Pattern Ampersand ContinueAnd CloseParen <<
     &Pattern{And: &And{
@@ -410,30 +385,6 @@ ContinueAnd
     }}, nil
   >>
   ;
-
-StartWithSomeAnd
-  : OpenCurly Pattern Ampersand ContinueWithSomeAnd CloseCurly <<
-    &Pattern{WithSomeAnd: &WithSomeAnd{
-      OpenCurly: $0.(*expr.Keyword),
-      LeftPattern: $1.(*Pattern),
-      Ampersand: $2.(*expr.Keyword),
-      RightPattern: $3.(*Pattern),
-      CloseCurly: $4.(*expr.Keyword),
-    }}, nil
-  >>
-  ;
-
-ContinueWithSomeAnd
-  : Pattern
-  | ContinueWithSomeAnd Ampersand Pattern <<
-    &Pattern{WithSomeAnd: &WithSomeAnd{
-      LeftPattern: $0.(*Pattern),
-      Ampersand: $1.(*expr.Keyword),
-      RightPattern: $2.(*Pattern),
-    }}, nil
-  >>
-  ;
-
 Start
   : Expr
   | BuiltIn << &expr.Expr{BuiltIn: $0.(*expr.BuiltIn)}, nil >>

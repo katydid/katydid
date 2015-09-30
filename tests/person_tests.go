@@ -202,7 +202,7 @@ func init() {
 
 //Is this person's name empty or an empty string
 var EmptyOrNilPerson = G{
-	"main":  ExactAnyOf(Eval("empty"), Eval("nil")),
+	"main":  AnyOf(Eval("empty"), Eval("nil")),
 	"empty": LenNamePerson["main"],
 	"nil":   NilNamePerson["main"],
 }
@@ -231,7 +231,7 @@ func init() {
 
 //Is the person's name not David and make sure that the case where the name does not exist is also covered
 var ProperNotNamePerson = G{
-	"main": ExactAnyOf(Eval("name"), Eval("nil")),
+	"main": AnyOf(Eval("name"), Eval("nil")),
 	"nil":  NilNamePerson["main"],
 	"name": InOrder(
 		Any(),
@@ -250,7 +250,7 @@ func init() {
 //Is this person's name David and telephone number 0123456789
 var AndNameTelephonePerson = G{
 	"main": InOrder(
-		ExactAllOf(
+		AllOf(
 			InOrder(
 				Any(),
 				Field("Name", Sprint(StringEq(StringVar(), StringConst("David")))),
@@ -274,9 +274,9 @@ func init() {
 
 //Is this person's name David or telephone number 0123456789
 var OrNameTelephonePerson = G{
-	"main": MatchAnyOf(
-		Field("Name", Sprint(StringEq(StringVar(), StringConst("David")))),
-		Field("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
+	"main": AnyOf(
+		InFieldPath("Name", Sprint(StringEq(StringVar(), StringConst("David")))),
+		InFieldPath("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
 	),
 }
 
@@ -304,7 +304,7 @@ func init() {
 
 var LeftRecursion = G{
 	"main": InOrder(
-		ExactAnyOf(
+		AnyOf(
 			Eval("main"),
 			InOrder(
 				Any(),
@@ -321,7 +321,7 @@ func init() {
 
 var HiddenLeftRecursion = G{
 	"main": InOrder(
-		ExactAnyOf(
+		AnyOf(
 			Eval("hidden"),
 			InOrder(
 				Any(),

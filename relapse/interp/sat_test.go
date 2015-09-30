@@ -42,7 +42,7 @@ func TestSatisfiability(t *testing.T) {
 	}, t, false)
 	check(G{
 		"main": In("A",
-			ExactAnyOf(
+			AnyOf(
 				In("B", Any()),
 				None(),
 			),

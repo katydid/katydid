@@ -118,22 +118,10 @@ func (this *Or) String() string {
 		this.CloseParen.String()
 }
 
-func (this *WithSomeOr) String() string {
-	return this.OpenCurly.String() + this.LeftPattern.String() +
-		this.Pipe.String() + this.RightPattern.String() +
-		this.CloseCurly.String()
-}
-
 func (this *And) String() string {
 	return this.OpenParen.String() + this.LeftPattern.String() +
 		this.Ampersand.String() + this.RightPattern.String() +
 		this.CloseParen.String()
-}
-
-func (this *WithSomeAnd) String() string {
-	return this.OpenCurly.String() + this.LeftPattern.String() +
-		this.Ampersand.String() + this.RightPattern.String() +
-		this.CloseCurly.String()
 }
 
 func (this *ZeroOrMore) String() string {

@@ -203,7 +203,7 @@ func newNameChoice(names []*NameExpr) *NameExpr {
 
 func NewTreeNode(name *NameExpr, pattern *Pattern) *Pattern {
 	switch pattern.GetValue().(type) {
-	case *Concat, *WithSomeOr, *WithSomeAnd:
+	case *Concat:
 		return &Pattern{
 			TreeNode: &TreeNode{
 				Name:    name,
@@ -314,37 +314,6 @@ func newOr(patterns []*Pattern) *Pattern {
 	}
 }
 
-func NewWithSomeOr(patterns ...*Pattern) *Pattern {
-	if len(patterns) == 0 {
-		return nil
-	}
-	if len(patterns) == 1 {
-		return patterns[0]
-	}
-	return &Pattern{
-		WithSomeOr: &WithSomeOr{
-			OpenCurly:    newOpenCurly(),
-			LeftPattern:  patterns[0],
-			Pipe:         newPipe(),
-			RightPattern: newWithSomeOr(patterns[1:]),
-			CloseCurly:   newCloseCurly(),
-		},
-	}
-}
-
-func newWithSomeOr(patterns []*Pattern) *Pattern {
-	if len(patterns) == 1 {
-		return patterns[0]
-	}
-	return &Pattern{
-		WithSomeOr: &WithSomeOr{
-			LeftPattern:  patterns[0],
-			Pipe:         newPipe(),
-			RightPattern: newWithSomeOr(patterns[1:]),
-		},
-	}
-}
-
 func NewAnd(patterns ...*Pattern) *Pattern {
 	if len(patterns) == 0 {
 		return nil
@@ -372,37 +341,6 @@ func newAnd(patterns []*Pattern) *Pattern {
 			LeftPattern:  patterns[0],
 			Ampersand:    newAmpersand(),
 			RightPattern: newAnd(patterns[1:]),
-		},
-	}
-}
-
-func NewWithSomeAnd(patterns ...*Pattern) *Pattern {
-	if len(patterns) == 0 {
-		return nil
-	}
-	if len(patterns) == 1 {
-		return patterns[0]
-	}
-	return &Pattern{
-		WithSomeAnd: &WithSomeAnd{
-			OpenCurly:    newOpenCurly(),
-			LeftPattern:  patterns[0],
-			Ampersand:    newAmpersand(),
-			RightPattern: newWithSomeAnd(patterns[1:]),
-			CloseCurly:   newCloseCurly(),
-		},
-	}
-}
-
-func newWithSomeAnd(patterns []*Pattern) *Pattern {
-	if len(patterns) == 1 {
-		return patterns[0]
-	}
-	return &Pattern{
-		WithSomeAnd: &WithSomeAnd{
-			LeftPattern:  patterns[0],
-			Ampersand:    newAmpersand(),
-			RightPattern: newWithSomeAnd(patterns[1:]),
 		},
 	}
 }

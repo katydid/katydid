@@ -297,9 +297,7 @@ type Pattern struct {
 	Reference        *Reference        `protobuf:"bytes,9,opt" json:"Reference,omitempty"`
 	Not              *Not              `protobuf:"bytes,10,opt" json:"Not,omitempty"`
 	ZAny             *ZAny             `protobuf:"bytes,11,opt" json:"ZAny,omitempty"`
-	WithSomeOr       *WithSomeOr       `protobuf:"bytes,12,opt" json:"WithSomeOr,omitempty"`
-	WithSomeAnd      *WithSomeAnd      `protobuf:"bytes,13,opt" json:"WithSomeAnd,omitempty"`
-	WithSomeTreeNode *WithSomeTreeNode `protobuf:"bytes,14,opt" json:"WithSomeTreeNode,omitempty"`
+	WithSomeTreeNode *WithSomeTreeNode `protobuf:"bytes,12,opt" json:"WithSomeTreeNode,omitempty"`
 }
 
 func (m *Pattern) Reset()      { *m = Pattern{} }
@@ -378,20 +376,6 @@ func (m *Pattern) GetNot() *Not {
 func (m *Pattern) GetZAny() *ZAny {
 	if m != nil {
 		return m.ZAny
-	}
-	return nil
-}
-
-func (m *Pattern) GetWithSomeOr() *WithSomeOr {
-	if m != nil {
-		return m.WithSomeOr
-	}
-	return nil
-}
-
-func (m *Pattern) GetWithSomeAnd() *WithSomeAnd {
-	if m != nil {
-		return m.WithSomeAnd
 	}
 	return nil
 }
@@ -1133,12 +1117,6 @@ func (this *Pattern) Equal(that interface{}) bool {
 	if !this.ZAny.Equal(that1.ZAny) {
 		return false
 	}
-	if !this.WithSomeOr.Equal(that1.WithSomeOr) {
-		return false
-	}
-	if !this.WithSomeAnd.Equal(that1.WithSomeAnd) {
-		return false
-	}
 	if !this.WithSomeTreeNode.Equal(that1.WithSomeTreeNode) {
 		return false
 	}
@@ -1676,8 +1654,6 @@ func (this *Pattern) GoString() string {
 		`Reference:` + fmt.Sprintf("%#v", this.Reference),
 		`Not:` + fmt.Sprintf("%#v", this.Not),
 		`ZAny:` + fmt.Sprintf("%#v", this.ZAny),
-		`WithSomeOr:` + fmt.Sprintf("%#v", this.WithSomeOr),
-		`WithSomeAnd:` + fmt.Sprintf("%#v", this.WithSomeAnd),
 		`WithSomeTreeNode:` + fmt.Sprintf("%#v", this.WithSomeTreeNode) + `}`}, ", ")
 	return s
 }
@@ -1914,12 +1890,6 @@ func (this *Pattern) GetValue() interface{} {
 	if this.ZAny != nil {
 		return this.ZAny
 	}
-	if this.WithSomeOr != nil {
-		return this.WithSomeOr
-	}
-	if this.WithSomeAnd != nil {
-		return this.WithSomeAnd
-	}
 	if this.WithSomeTreeNode != nil {
 		return this.WithSomeTreeNode
 	}
@@ -1950,10 +1920,6 @@ func (this *Pattern) SetValue(value interface{}) bool {
 		this.Not = vt
 	case *ZAny:
 		this.ZAny = vt
-	case *WithSomeOr:
-		this.WithSomeOr = vt
-	case *WithSomeAnd:
-		this.WithSomeAnd = vt
 	case *WithSomeTreeNode:
 		this.WithSomeTreeNode = vt
 	default:

@@ -80,10 +80,10 @@ func TestParse(t *testing.T) {
 			  | (
 			  	c -> contains($string, "cc")  &
 			  	c -> contains($string, "see")  &
-			  	{
+			  	(
 			  		c -> contains($string, "sea")  |
 			  		c -> contains($string, "ocean") 
-			  	}
+			  	)
 			  )
 			  | d -> contains($string, "dd") 
 			  | d -> contains($string, "dd") 
@@ -98,16 +98,16 @@ func TestParse(t *testing.T) {
 		`( a|b ) -> eq($int, int(1)) `,
 		`( a|_|!(b) ) -> eq($int, int(1)) `,
 		`"\"a" -> any() `,
-		`{
-			a->any() |
-			b->any()
-		}`,
-		`{
-			a->any() &
-			b [ a->any(), b->any() ] &
-			c->any() &
-			d->any()
-		}`,
+		`(
+			.a->any() |
+			.b->any()
+		)`,
+		`(
+			.a->any() &
+			.b [ a->any(), b->any() ] &
+			.c->any() &
+			.d->any()
+		)`,
 		`a.b->any()`,
 		`.a._.D.b123->any()`,
 		`"Whats Up" == "E"`,

@@ -59,8 +59,8 @@ func TestAnal2(t *testing.T) {
 	f2 := Sprint(StringEq(StringVar(), StringConst("?")))
 	alwaysFalse := getExpr("false")
 	g := G{
-		"main": ExactAnyOf(
-			In("A", ExactAllOf(
+		"main": AnyOf(
+			In("A", AllOf(
 				In("B", Field("c", f)),
 				Any()),
 			),
@@ -88,8 +88,8 @@ func TestAnal3(t *testing.T) {
 	f2 := Sprint(StringEq(StringVar(), StringConst("?")))
 	alwaysFalse := getExpr("false")
 	g := G{
-		"main": ExactAnyOf(
-			In("A", ExactAllOf(
+		"main": AnyOf(
+			In("A", AllOf(
 				Many(In("B", Field("c", f))),
 				In("B", Field("d", f)),
 			)),
@@ -115,10 +115,10 @@ func TestAnal3(t *testing.T) {
 func TestAnal4(t *testing.T) {
 	f := Sprint(StringEq(StringVar(), StringConst("#")))
 	g := G{
-		"main": ExactAnyOf(
-			In("A", ExactAllOf(
+		"main": AnyOf(
+			In("A", AllOf(
 				Many(In("B", Field("c", f))),
-				In("B", ExactAnyOf(
+				In("B", AnyOf(
 					Field("d", f),
 					Field("c", f),
 				)),

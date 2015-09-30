@@ -242,9 +242,9 @@ var bridgePepperAndFountainTarget = G{
 			In("SaladWorry",
 				Any(),
 				In("SpyCarpenter",
-					MatchAllOf(
-						Field("BridgePepper", Sprint(Contains(StringVar(), StringConst("a")))),
-						Field("FountainTarget", Sprint(Contains(StringVar(), StringConst("a")))),
+					AllOf(
+						InFieldPath("BridgePepper", Sprint(Contains(StringVar(), StringConst("a")))),
+						InFieldPath("FountainTarget", Sprint(Contains(StringVar(), StringConst("a")))),
 					),
 				),
 				Any(),
@@ -272,9 +272,9 @@ var bridgePepperOrFountainTarget = G{
 			In("SaladWorry",
 				Any(),
 				In("SpyCarpenter",
-					MatchAnyOf(
-						Field("BridgePepper", Sprint(Contains(StringVar(), StringConst("a")))),
-						Field("FountainTarget", Sprint(Contains(StringVar(), StringConst("a")))),
+					AnyOf(
+						InFieldPath("BridgePepper", Sprint(Contains(StringVar(), StringConst("a")))),
+						InFieldPath("FountainTarget", Sprint(Contains(StringVar(), StringConst("a")))),
 					),
 				),
 				Any(),

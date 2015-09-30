@@ -83,9 +83,7 @@ message Pattern {
 	optional Reference Reference = 9;
 	optional Not Not = 10;
 	optional ZAny ZAny = 11;
-	optional WithSomeOr WithSomeOr = 12;
-	optional WithSomeAnd WithSomeAnd = 13;
-	optional WithSomeTreeNode WithSomeTreeNode = 14;
+	optional WithSomeTreeNode WithSomeTreeNode = 12;
 }
 
 message Empty {
