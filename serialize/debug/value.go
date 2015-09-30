@@ -64,16 +64,14 @@ func Walk(parser serialize.Parser) map[string][]interface{} {
 			panic(err)
 		}
 		var v interface{}
+		parser.Down()
 		if !parser.IsLeaf() {
-			parser.Down()
 			mm := Walk(parser)
-			parser.Up()
 			v = mm
 		} else {
-			parser.Down()
 			v = getValue(parser)
-			parser.Up()
 		}
+		parser.Up()
 		_, ok := m[name]
 		if !ok {
 			m[name] = make([]interface{}, 0, 1)

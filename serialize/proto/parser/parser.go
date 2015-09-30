@@ -108,6 +108,8 @@ type state struct {
 	length      int
 	tokenId     int
 	name        string
+	isLeaf      bool
+	hadLeaf     bool
 }
 
 type BytesParser interface {
@@ -145,6 +147,13 @@ func (s *protoParser) Init(buf []byte) error {
 
 func (s *protoParser) Next() error {
 	//log.Printf("Next %d/%d", s.offset, len(s.buf))
+	if s.isLeaf {
+		if s.hadLeaf {
+			return io.EOF
+		}
+		s.hadLeaf = true
+		return nil
+	}
 	s.offset += s.length
 	if s.offset >= len(s.buf) {
 		if s.offset == len(s.buf) {
@@ -179,18 +188,17 @@ func (s *protoParser) Id() int {
 }
 
 func (s *protoParser) IsLeaf() bool {
-	return s.tokens.IsLeaf(s.tokenId)
+	return s.isLeaf
 }
 
 func (s *protoParser) Value() []byte {
 	return s.buf[s.offset : s.offset+s.length]
 }
 
-func (s *protoParser) Name() string {
-	return s.name
-}
-
 func (s *protoParser) Double() (float64, error) {
+	if !s.isLeaf {
+		return 0, serialize.ErrNotDouble
+	}
 	buf := s.Value()
 	if len(buf) == 8 {
 		return *(*float64)(unsafe.Pointer(&buf[0])), nil
@@ -202,6 +210,9 @@ func (s *protoParser) Double() (float64, error) {
 }
 
 func (s *protoParser) Int() (int64, error) {
+	if !s.isLeaf {
+		return 0, serialize.ErrNotInt
+	}
 	typ := s.tokens.LookupType(s.tokenId)
 	switch typ {
 	case descriptor.FieldDescriptorProto_TYPE_INT64:
@@ -227,6 +238,9 @@ func (s *protoParser) Int() (int64, error) {
 }
 
 func (s *protoParser) Uint() (uint64, error) {
+	if s.isLeaf {
+		return 0, serialize.ErrNotUint
+	}
 	typ := s.tokens.LookupType(s.tokenId)
 	switch typ {
 	case descriptor.FieldDescriptorProto_TYPE_UINT64:
@@ -244,6 +258,9 @@ func (s *protoParser) Uint() (uint64, error) {
 }
 
 func (s *protoParser) Bool() (bool, error) {
+	if !s.isLeaf {
+		return false, serialize.ErrNotBool
+	}
 	buf := s.Value()
 	v, n := binary.Uvarint(buf)
 	if n <= 0 {
@@ -253,6 +270,9 @@ func (s *protoParser) Bool() (bool, error) {
 }
 
 func (s *protoParser) String() (string, error) {
+	if !s.isLeaf {
+		return s.name, nil
+	}
 	buf := s.Value()
 	header := (*reflect.SliceHeader)(unsafe.Pointer(&buf))
 	strHeader := reflect.StringHeader{Data: header.Data, Len: header.Len}
@@ -260,6 +280,9 @@ func (s *protoParser) String() (string, error) {
 }
 
 func (s *protoParser) Bytes() ([]byte, error) {
+	if !s.isLeaf {
+		return nil, serialize.ErrNotBytes
+	}
 	return s.Value(), nil
 }
 
@@ -353,10 +376,15 @@ func (s *protoParser) Up() {
 }
 
 func (s *protoParser) Down() {
+	if !s.tokens.IsLeaf(s.tokenId) {
+		s.stack = append(s.stack, s.state)
+		s.buf = s.buf[s.offset : s.offset+s.length]
+		s.parentToken = s.tokenId
+		s.offset = 0
+		s.length = 0
+		s.tokenId = 0
+		return
+	}
 	s.stack = append(s.stack, s.state)
-	s.buf = s.buf[s.offset : s.offset+s.length]
-	s.parentToken = s.tokenId
-	s.offset = 0
-	s.length = 0
-	s.tokenId = 0
+	s.isLeaf = true
 }
