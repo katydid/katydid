@@ -12,25 +12,12 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package relapse
+package tests
 
 import (
-	"github.com/katydid/katydid/expr/ast"
-	"reflect"
 	"testing"
 )
 
-func TestClone(t *testing.T) {
-	in := NewGrammar(map[string]*Pattern{
-		"main": NewAnd(NewEmpty(), NewLeafNode(NewName("a"), &expr.Expr{})),
-	})
-	out := in.Clone()
-	if !reflect.DeepEqual(in, out) {
-		t.Fatalf("not cloned")
-	}
-	treeNode := in.GetTopPattern().GetAnd().GetRightPattern().GetTreeNode()
-	treeNode.Pattern = NewNot(NewEmptySet())
-	if reflect.DeepEqual(in, out) {
-		t.Fatalf("not cloned")
-	}
+func TestInit(t *testing.T) {
+	//checks whether nothing panics during init
 }

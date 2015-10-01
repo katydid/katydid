@@ -52,9 +52,16 @@ var ContextPerson = G{"main": InPath("Addresses",
 	Field("Street", Sprint(StringVarEq(StringConst("TheStreet")))),
 )}
 
+var XmlContextPerson = G{"main": In("Person", InPath("Addresses",
+	Field("Number", Sprint(IntVarEq(IntConst(456)))),
+	Field("Street", Sprint(StringVarEq(StringConst("TheStreet")))),
+))}
+
 func init() {
 	Validate("ContextDavid", ContextPerson, AllCodecs(DavidPerson), false)
 	Validate("ContextRobert", ContextPerson, AllCodecs(RobertPerson), true)
+	//TODO Validate("XmlContextDavid", XmlContextPerson, XML(DavidPerson), false)
+	//TODO Validate("XmlContextRobert", XmlContextPerson, XML(RobertPerson), true)
 }
 
 var MoverPerson = &Person{

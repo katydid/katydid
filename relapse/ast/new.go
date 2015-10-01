@@ -39,19 +39,20 @@ func NewGrammar(m map[string]*Pattern) *Grammar {
 	for name, _ := range m {
 		if name == "main" {
 			g.TopPattern = m[name]
+		} else {
+			before := &expr.Space{Space: []string{"\n"}}
+			if first {
+				before = nil
+				first = false
+			}
+			ps = append(ps, &PatternDecl{
+				At:      newAt(),
+				Before:  before,
+				Name:    name,
+				Eq:      newEqual(),
+				Pattern: m[name],
+			})
 		}
-		before := &expr.Space{Space: []string{"\n"}}
-		if first {
-			before = nil
-			first = false
-		}
-		ps = append(ps, &PatternDecl{
-			At:      newAt(),
-			Before:  before,
-			Name:    name,
-			Eq:      newEqual(),
-			Pattern: m[name],
-		})
 	}
 	g.PatternDecls = ps
 	return g

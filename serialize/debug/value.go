@@ -15,6 +15,7 @@
 package debug
 
 import (
+	"fmt"
 	"github.com/katydid/katydid/serialize"
 	"io"
 )
@@ -22,18 +23,6 @@ import (
 func getValue(parser serialize.Parser) interface{} {
 	var v interface{}
 	var err error
-	v, err = parser.Bool()
-	if err == nil {
-		return v
-	}
-	v, err = parser.Bytes()
-	if err == nil {
-		return v
-	}
-	v, err = parser.String()
-	if err == nil {
-		return v
-	}
 	v, err = parser.Int()
 	if err == nil {
 		return v
@@ -46,11 +35,24 @@ func getValue(parser serialize.Parser) interface{} {
 	if err == nil {
 		return v
 	}
+	v, err = parser.Bool()
+	if err == nil {
+		return v
+	}
+	v, err = parser.String()
+	if err == nil {
+		return v
+	}
+	v, err = parser.Bytes()
+	if err == nil {
+		return v
+	}
 	return nil
 }
 
-func Walk(parser serialize.Parser) map[string][]interface{} {
+func Walk(parser serialize.Parser) interface{} {
 	m := make(map[string][]interface{})
+	a := make([]interface{}, 0)
 	for {
 		if err := parser.Next(); err != nil {
 			if err == io.EOF {
@@ -59,26 +61,28 @@ func Walk(parser serialize.Parser) map[string][]interface{} {
 				panic(err)
 			}
 		}
-		name, err := parser.String()
-		if err != nil {
-			panic(err)
-		}
-		var v interface{}
-		parser.Down()
-		if !parser.IsLeaf() {
-			mm := Walk(parser)
-			v = mm
+		value := getValue(parser)
+		if parser.IsLeaf() {
+			a = append(a, value)
 		} else {
-			v = getValue(parser)
-		}
-		parser.Up()
-		_, ok := m[name]
-		if !ok {
-			m[name] = make([]interface{}, 0, 1)
-		}
-		if v != nil {
-			m[name] = append(m[name], v)
+			name := fmt.Sprintf("%s", value)
+			parser.Down()
+			v := Walk(parser)
+			parser.Up()
+			_, ok := m[name]
+			if !ok {
+				m[name] = make([]interface{}, 0, 1)
+			}
+			if v != nil {
+				m[name] = append(m[name], v)
+			}
 		}
 	}
-	return m
+	if len(m) > 0 {
+		return m
+	}
+	if len(a) == 1 {
+		return a[0]
+	}
+	return a
 }

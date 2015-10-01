@@ -146,6 +146,9 @@ func deriv(refs relapse.RefLookup, p *relapse.Pattern, tree serialize.Parser) *r
 	case *relapse.EmptySet:
 		return relapse.NewEmptySet()
 	case *relapse.TreeNode:
+		if tree.IsLeaf() {
+			return relapse.NewEmptySet()
+		}
 		return derivTreeNode(refs, v, tree)
 	case *relapse.LeafNode:
 		f, err := compose.NewBool(v.GetExpr())

@@ -16,12 +16,14 @@ package tests
 
 import (
 	"encoding/json"
+	"encoding/xml"
 	"github.com/gogo/protobuf/proto"
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 	"github.com/katydid/katydid/serialize"
 	jparser "github.com/katydid/katydid/serialize/json"
 	pparser "github.com/katydid/katydid/serialize/proto/parser"
 	rparser "github.com/katydid/katydid/serialize/reflect"
+	xparser "github.com/katydid/katydid/serialize/xml"
 	"reflect"
 )
 
@@ -84,6 +86,17 @@ func Proto(m interface{}) Codecs {
 	}
 }
 
+func XML(m interface{}) Codecs {
+	return Codecs{
+		Description: getDesc(m),
+		Parsers: map[string]NewParser{
+			"xml": func() serialize.Parser {
+				return NewXMLParser(m)
+			},
+		},
+	}
+}
+
 type NewParser func() serialize.Parser
 
 func NewReflectParser(m interface{}) serialize.Parser {
@@ -117,6 +130,19 @@ func NewProtoParser(pkg, msg string, m ProtoMessage) serialize.Parser {
 	}
 	s := pparser.NewProtoParser(pkg, msg, m.Description())
 	if err := s.Init(data); err != nil {
+		panic(err)
+	}
+	return s
+}
+
+func NewXMLParser(m interface{}) serialize.Parser {
+	data, err := xml.Marshal(m)
+	if err != nil {
+		panic(err)
+	}
+	s := xparser.NewXMLParser()
+	err = s.Init(data)
+	if err != nil {
 		panic(err)
 	}
 	return s
