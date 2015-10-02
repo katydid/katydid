@@ -328,6 +328,36 @@ func TestHiddenLeftRecursionRobertReflect(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestInSetPersonDavidJson(t *testing.T) {
+	v := tests.Validators["InSetPersonDavid"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestInSetPersonDavidProto(t *testing.T) {
+	v := tests.Validators["InSetPersonDavid"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestInSetPersonDavidReflect(t *testing.T) {
+	v := tests.Validators["InSetPersonDavid"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestInSetPersonRobertJson(t *testing.T) {
+	v := tests.Validators["InSetPersonRobert"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestInSetPersonRobertProto(t *testing.T) {
+	v := tests.Validators["InSetPersonRobert"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestInSetPersonRobertReflect(t *testing.T) {
+	v := tests.Validators["InSetPersonRobert"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestLeftRecursionDavidJson(t *testing.T) {
 	v := tests.Validators["LeftRecursionDavid"]["json"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)

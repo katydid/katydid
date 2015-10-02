@@ -1,4 +1,7 @@
 func and(v1 bool,v2 bool) bool
+func contains(elem int,list const []int) bool
+func contains(elem string,list const []string) bool
+func contains(elem uint,list const []uint) bool
 func contains(s string,substr string) bool
 func elem(list [][]byte,index int) []byte
 func elem(list []bool,index int) bool

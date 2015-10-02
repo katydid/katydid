@@ -46,21 +46,6 @@ var RobertPerson = &Person{
 	Telephone: proto.String("0127897897"),
 }
 
-var CorrectTypePerson = G{"main": InOrder(
-	Field("Name", Sprint(TypeString())),
-	Any(),
-)}
-
-var WrongTypePerson = G{"main": InOrder(
-	Field("Name", Sprint(TypeInt())),
-	Any(),
-)}
-
-func init() {
-	Validate("CorrectTypeRobert", CorrectTypePerson, AllCodecs(RobertPerson), true)
-	Validate("WrongTypeRobert", WrongTypePerson, AllCodecs(RobertPerson), false)
-}
-
 //Has this person ever lived at 456 TheStreet
 var ContextPerson = G{"main": InPath("Addresses",
 	Field("Number", Sprint(IntVarEq(IntConst(456)))),
@@ -381,4 +366,28 @@ var PositiveNumber = G{
 
 func init() {
 	Validate("DontErrorGivenWrongType", PositiveNumber, AllCodecs(NegativePerson), false)
+}
+
+var CorrectTypePerson = G{"main": InOrder(
+	Field("Name", Sprint(TypeString())),
+	Any(),
+)}
+
+var WrongTypePerson = G{"main": InOrder(
+	Field("Name", Sprint(TypeInt())),
+	Any(),
+)}
+
+func init() {
+	Validate("CorrectTypeRobert", CorrectTypePerson, AllCodecs(RobertPerson), true)
+	Validate("WrongTypeRobert", WrongTypePerson, AllCodecs(RobertPerson), false)
+}
+
+var InSetPerson = G{"main": InFieldPath("Name", Sprint(ContainsString(StringVar(),
+	StringsConst([]string{"The", "Robert", "Smith"}),
+)))}
+
+func init() {
+	Validate("InSetPersonRobert", InSetPerson, AllCodecs(RobertPerson), true)
+	Validate("InSetPersonDavid", InSetPerson, AllCodecs(DavidPerson), false)
 }

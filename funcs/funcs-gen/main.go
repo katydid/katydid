@@ -373,6 +373,49 @@ type typer struct {
 	Name string
 }
 
+const inSetStr = `
+type inSet{{.Name}} struct {
+	Elem {{.Name}}
+	List {{.ConstListType}}
+	set map[{{.Type}}]struct{}
+}
+
+func (this *inSet{{.Name}}) Init() error {
+	l, err := this.List.Eval()
+	if err != nil {
+		return err
+	}
+	this.set = make(map[{{.Type}}]struct{})
+	for i := range l {
+		this.set[l[i]] = struct{}{}
+	}
+	return nil
+}
+
+func (this *inSet{{.Name}}) Eval() (bool, error) {
+	v, err := this.Elem.Eval()
+	if err != nil {
+		return false, err
+	}
+	_, ok := this.set[v]
+	return ok, nil
+}
+
+func init() {
+	Register("contains", new(inSet{{.Name}}))
+}
+
+func Contains{{.Name}}(e {{.Name}}, l {{.ConstListType}}) Bool {
+	return &inSet{{.Name}}{e, l, nil}
+}
+`
+
+type inSeter struct {
+	Name          string
+	ConstListType string
+	Type          string
+}
+
 func main() {
 	gen := gen.NewFunc("funcs")
 	gen(compareStr, "compare.gen.go", []interface{}{
@@ -496,5 +539,10 @@ func main() {
 		&typer{"Bool"},
 		&typer{"String"},
 		&typer{"Bytes"},
+	})
+	gen(inSetStr, "inset.gen.go", []interface{}{
+		&inSeter{"Int", "ConstInts", "int64"},
+		&inSeter{"Uint", "ConstUints", "uint64"},
+		&inSeter{"String", "ConstStrings", "string"},
 	})
 }
