@@ -44,6 +44,7 @@ var exceptions = []string{
 	"bnf",
 	"doc.go",
 	".svg",
+	".txt",
 }
 
 func main() {
