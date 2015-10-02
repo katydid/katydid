@@ -30,11 +30,6 @@ Grammar
   | Pattern PatternDecls Space  << &Grammar{$0.(*Pattern), $1.([]*PatternDecl), $2.(*expr.Space)}, nil >>
   | PatternDecls                << &Grammar{nil, $0.([]*PatternDecl), nil}, nil >>
   | PatternDecls Space          << &Grammar{nil, $0.([]*PatternDecl), $1.(*expr.Space)}, nil >>
-  // These cause some LR-1 shift reduce conflicts.
-  | TopOr                       << &Grammar{$0.(*Pattern), nil, nil}, nil >>  
-  | TopOr Space                 << &Grammar{$0.(*Pattern), nil, $1.(*expr.Space)}, nil >>
-  | TopAnd                      << &Grammar{$0.(*Pattern), nil, nil}, nil >>  
-  | TopAnd Space                << &Grammar{$0.(*Pattern), nil, $1.(*expr.Space)}, nil >>
   ;
 
 PatternDecls
@@ -261,16 +256,6 @@ ContinueConcat
   >>
   ;
 
-TopOr
-  : Pattern Pipe ContinueOr <<
-    &Pattern{Or: &Or{
-      LeftPattern: $0.(*Pattern),
-      Pipe: $1.(*expr.Keyword),
-      RightPattern: $2.(*Pattern),
-    }}, nil
-  >>
-  ;
-
 StartOr
   : OpenParen Pattern Pipe ContinueOr CloseParen <<
     &Pattern{Or: &Or{
@@ -289,16 +274,6 @@ ContinueOr
     &Pattern{Or: &Or{
       LeftPattern: $0.(*Pattern),
       Pipe: $1.(*expr.Keyword),
-      RightPattern: $2.(*Pattern),
-    }}, nil
-  >>
-  ;
-
-TopAnd
-  : Pattern Ampersand ContinueAnd <<
-    &Pattern{And: &And{
-      LeftPattern: $0.(*Pattern),
-      Ampersand: $1.(*expr.Keyword),
       RightPattern: $2.(*Pattern),
     }}, nil
   >>
