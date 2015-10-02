@@ -115,6 +115,8 @@ func TestParse(t *testing.T) {
 		`(* | * | * | ( * & * & * ))`,
 		`* & * & *`,
 		`* | * | * | ( * & * & * )`,
+		`[ * , * , *]`,
+		`[ * , * , *,]`,
 	}
 	p := parser.NewParser()
 	for i, patternDecl := range patternDecls {

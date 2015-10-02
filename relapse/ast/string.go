@@ -109,7 +109,7 @@ func (this *LeafNode) String() string {
 func (this *Concat) String() string {
 	return this.OpenBracket.String() + this.LeftPattern.String() +
 		this.Comma.String() + this.RightPattern.String() +
-		this.CloseBracket.String()
+		this.ExtraComma.String() + this.CloseBracket.String()
 }
 
 func (this *Or) String() string {

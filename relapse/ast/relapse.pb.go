@@ -494,7 +494,8 @@ type Concat struct {
 	LeftPattern  *Pattern      `protobuf:"bytes,3,opt" json:"LeftPattern,omitempty"`
 	Comma        *expr.Keyword `protobuf:"bytes,4,opt" json:"Comma,omitempty"`
 	RightPattern *Pattern      `protobuf:"bytes,5,opt" json:"RightPattern,omitempty"`
-	CloseBracket *expr.Keyword `protobuf:"bytes,6,opt" json:"CloseBracket,omitempty"`
+	ExtraComma   *expr.Keyword `protobuf:"bytes,6,opt" json:"ExtraComma,omitempty"`
+	CloseBracket *expr.Keyword `protobuf:"bytes,7,opt" json:"CloseBracket,omitempty"`
 }
 
 func (m *Concat) Reset()      { *m = Concat{} }
@@ -524,6 +525,13 @@ func (m *Concat) GetComma() *expr.Keyword {
 func (m *Concat) GetRightPattern() *Pattern {
 	if m != nil {
 		return m.RightPattern
+	}
+	return nil
+}
+
+func (m *Concat) GetExtraComma() *expr.Keyword {
+	if m != nil {
+		return m.ExtraComma
 	}
 	return nil
 }
@@ -1291,6 +1299,9 @@ func (this *Concat) Equal(that interface{}) bool {
 	if !this.RightPattern.Equal(that1.RightPattern) {
 		return false
 	}
+	if !this.ExtraComma.Equal(that1.ExtraComma) {
+		return false
+	}
 	if !this.CloseBracket.Equal(that1.CloseBracket) {
 		return false
 	}
@@ -1710,6 +1721,7 @@ func (this *Concat) GoString() string {
 		`LeftPattern:` + fmt.Sprintf("%#v", this.LeftPattern),
 		`Comma:` + fmt.Sprintf("%#v", this.Comma),
 		`RightPattern:` + fmt.Sprintf("%#v", this.RightPattern),
+		`ExtraComma:` + fmt.Sprintf("%#v", this.ExtraComma),
 		`CloseBracket:` + fmt.Sprintf("%#v", this.CloseBracket) + `}`}, ", ")
 	return s
 }

@@ -333,6 +333,16 @@ StartConcat
       CloseBracket: $4.(*expr.Keyword),
     }}, nil
   >>
+  | OpenBracket Pattern Comma ContinueConcat Comma CloseBracket <<
+    &Pattern{Concat: &Concat{
+      OpenBracket: $0.(*expr.Keyword),
+      LeftPattern: $1.(*Pattern),
+      Comma: $2.(*expr.Keyword),
+      RightPattern: $3.(*Pattern),
+      ExtraComma: $4.(*expr.Keyword),
+      CloseBracket: $5.(*expr.Keyword),
+    }}, nil
+  >>
   ;
 
 ContinueConcat

@@ -115,7 +115,8 @@ message Concat {
 	optional Pattern LeftPattern = 3;
 	optional expr.Keyword Comma = 4;
 	optional Pattern RightPattern = 5;
-	optional expr.Keyword CloseBracket = 6;
+	optional expr.Keyword ExtraComma = 6;
+	optional expr.Keyword CloseBracket = 7;
 }
 
 message Or {
