@@ -17,7 +17,7 @@ package expr
 func NewEqual(e *Expr) *Expr {
 	return &Expr{
 		BuiltIn: &BuiltIn{
-			Symbol: newDoubleEqual(),
+			Symbol: newEqualEqual(),
 			Expr:   e,
 		},
 	}
@@ -99,6 +99,15 @@ func NewHasSuffix(e *Expr) *Expr {
 	return &Expr{
 		BuiltIn: &BuiltIn{
 			Symbol: newDollarEqual(),
+			Expr:   e,
+		},
+	}
+}
+
+func NewType(e *Expr) *Expr {
+	return &Expr{
+		BuiltIn: &BuiltIn{
+			Symbol: newColonColon(),
 			Expr:   e,
 		},
 	}

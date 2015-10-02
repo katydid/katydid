@@ -46,6 +46,21 @@ var RobertPerson = &Person{
 	Telephone: proto.String("0127897897"),
 }
 
+var CorrectTypePerson = G{"main": InOrder(
+	Field("Name", Sprint(TypeString())),
+	Any(),
+)}
+
+var WrongTypePerson = G{"main": InOrder(
+	Field("Name", Sprint(TypeInt())),
+	Any(),
+)}
+
+func init() {
+	Validate("CorrectTypeRobert", CorrectTypePerson, AllCodecs(RobertPerson), true)
+	Validate("WrongTypeRobert", WrongTypePerson, AllCodecs(RobertPerson), false)
+}
+
 //Has this person ever lived at 456 TheStreet
 var ContextPerson = G{"main": InPath("Addresses",
 	Field("Number", Sprint(IntVarEq(IntConst(456)))),

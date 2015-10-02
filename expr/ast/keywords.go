@@ -26,7 +26,7 @@ func newCloseParen() *Keyword {
 	}
 }
 
-func newDoubleEqual() *Keyword {
+func newEqualEqual() *Keyword {
 	return &Keyword{
 		Value: "==",
 	}
@@ -83,5 +83,11 @@ func newCaretEqual() *Keyword {
 func newDollarEqual() *Keyword {
 	return &Keyword{
 		Value: "*=",
+	}
+}
+
+func newColonColon() *Keyword {
+	return &Keyword{
+		Value: "::",
 	}
 }

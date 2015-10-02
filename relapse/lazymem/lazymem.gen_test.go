@@ -218,6 +218,21 @@ func TestContextRobertReflect(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestCorrectTypeRobertJson(t *testing.T) {
+	v := tests.Validators["CorrectTypeRobert"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestCorrectTypeRobertProto(t *testing.T) {
+	v := tests.Validators["CorrectTypeRobert"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestCorrectTypeRobertReflect(t *testing.T) {
+	v := tests.Validators["CorrectTypeRobert"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestDeepLeft811Json(t *testing.T) {
 	v := tests.Validators["DeepLeft811"]["json"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
@@ -765,5 +780,20 @@ func TestTwoHashes811Json(t *testing.T) {
 
 func TestTwoLeftAndOneRightHashes811Json(t *testing.T) {
 	v := tests.Validators["TwoLeftAndOneRightHashes811"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestWrongTypeRobertJson(t *testing.T) {
+	v := tests.Validators["WrongTypeRobert"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestWrongTypeRobertProto(t *testing.T) {
+	v := tests.Validators["WrongTypeRobert"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestWrongTypeRobertReflect(t *testing.T) {
+	v := tests.Validators["WrongTypeRobert"]["reflect"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }

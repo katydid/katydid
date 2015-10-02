@@ -198,7 +198,7 @@ RightArrow
   >>
   ;
 
-DoubleEqual
+EqualEqual
   : "=="  << &expr.Keyword{Value: "=="}, nil >>
   | Space "==" << 
     &expr.Keyword{
@@ -294,6 +294,16 @@ DollarEqual
     &expr.Keyword{
       Before: $0.(*expr.Space),
       Value: "$=",
+    }, nil
+  >>
+  ;
+
+ColonColon
+  : "::"  << &expr.Keyword{Value: "::"}, nil >>
+  | Space "::" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "::",
     }, nil
   >>
   ;

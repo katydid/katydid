@@ -69,3 +69,9 @@ func range(list []uint,first int,last int) []uint
 func regex(expr const string,s string) bool
 func toLower(s string) string
 func toUpper(s string) string
+func type(e []byte) bool
+func type(e bool) bool
+func type(e double) bool
+func type(e int) bool
+func type(e string) bool
+func type(e uint) bool

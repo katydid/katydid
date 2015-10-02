@@ -17,7 +17,7 @@ Function
   ;
 
 BuiltIn
-  : DoubleEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
+  : EqualEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
   | ExclamationEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
   | LessThan Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
   | GreaterThan Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
@@ -27,6 +27,7 @@ BuiltIn
   | StarEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
   | CaretEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
   | DollarEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
+  | ColonColon Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
   ;
 
 List

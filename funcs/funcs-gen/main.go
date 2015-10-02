@@ -350,6 +350,29 @@ type varer struct {
 	Default string
 }
 
+const typStr = `
+type typ{{.Name}} struct {
+	E {{.Name}}
+}
+
+func (this *typ{{.Name}}) Eval() (bool, error) {
+	_, err := this.E.Eval()
+	return (err == nil), nil
+}
+
+func init() {
+	Register("type", new(typ{{.Name}}))
+}
+
+func Type{{.Name}}() Bool {
+	return &typ{{.Name}}{E: {{.Name}}Var()}
+}
+`
+
+type typer struct {
+	Name string
+}
+
 func main() {
 	gen := gen.NewFunc("funcs")
 	gen(compareStr, "compare.gen.go", []interface{}{
@@ -466,4 +489,12 @@ func main() {
 		&varer{"String", "string", "string", `""`},
 		&varer{"Bytes", "[]byte", "[]byte", "nil"},
 	}, `"github.com/katydid/katydid/serialize"`)
+	gen(typStr, "type.gen.go", []interface{}{
+		&typer{"Double"},
+		&typer{"Int"},
+		&typer{"Uint"},
+		&typer{"Bool"},
+		&typer{"String"},
+		&typer{"Bytes"},
+	})
 }

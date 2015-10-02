@@ -23,7 +23,6 @@ func unquote(s1 string) string {
 >>
 
 Grammar
-  // These are pure LR-1
   : Pattern                     << &Grammar{$0.(*Pattern), nil, nil}, nil >>  
   | Pattern Space               << &Grammar{$0.(*Pattern), nil, $1.(*expr.Space)}, nil >>
   | Pattern PatternDecls        << &Grammar{$0.(*Pattern), $1.([]*PatternDecl), nil}, nil >>

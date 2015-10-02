@@ -41,6 +41,8 @@ func symbolToFunc(symbol string) string {
 		return "hasPrefix"
 	case "$=":
 		return "hasSuffix"
+	case "::":
+		return "type"
 	}
 	panic("unknown builtin symbol `" + symbol + "`")
 }
@@ -60,6 +62,8 @@ func rewriteBuiltIn(e *expr.Expr) (*expr.Expr, error) {
 	e2 := expr.NewNestedFunction(funcName, left, right)
 	if funcName == "regex" {
 		e2 = expr.NewNestedFunction(funcName, right, expr.NewVar(types.SINGLE_STRING))
+	} else if funcName == "type" {
+		e2 = expr.NewNestedFunction(funcName, right)
 	}
 	return e2, nil
 }
