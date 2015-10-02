@@ -57,6 +57,9 @@ func rewriteBuiltIn(e *expr.Expr) (*expr.Expr, error) {
 	if err != nil {
 		return nil, err
 	}
+	if types.IsList(typ) {
+		typ = types.ListToSingle(typ)
+	}
 	left := expr.NewVar(typ)
 	funcName := symbolToFunc(s)
 	e2 := expr.NewNestedFunction(funcName, left, right)
