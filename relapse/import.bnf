@@ -1,0 +1,23 @@
+<< 
+import (
+  . "github.com/katydid/katydid/relapse/ast"
+  "github.com/katydid/katydid/expr/ast"
+  "github.com/katydid/katydid/types"
+  "github.com/katydid/katydid/relapse/token"
+  "strconv"
+)
+
+func newString(v interface{}) string {
+  t := v.(*token.Token)
+  return string(t.Lit)
+}
+
+func unquote(s1 string) string {
+  s, err := strconv.Unquote(s1)
+  if err != nil {
+    return s1
+  }
+  return s
+}
+
+>>

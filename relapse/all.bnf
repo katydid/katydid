@@ -1,6 +1,6 @@
 //  DO NOT EDIT
 //  This is generated file, see build.sh
-//  Sources: ../expr/license.bnf ../expr/lexer.bnf, relapse.bnf, ../expr/expr.bnf, ../expr/keyword.bnf
+//  Sources: ../expr/license.bnf ../expr/lexer.bnf, import.bnf, relapse.bnf, ../expr/expr.bnf, ../expr/keyword.bnf
 
 //  Copyright 2013 Walter Schulze
 //
@@ -116,7 +116,6 @@ func unquote(s1 string) string {
 }
 
 >>
-
 Grammar
   : Pattern                     << &Grammar{$0.(*Pattern), nil, nil}, nil >>  
   | Pattern Space               << &Grammar{$0.(*Pattern), nil, $1.(*expr.Space)}, nil >>
