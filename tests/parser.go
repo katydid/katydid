@@ -21,7 +21,7 @@ import (
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 	"github.com/katydid/katydid/serialize"
 	jparser "github.com/katydid/katydid/serialize/json"
-	pparser "github.com/katydid/katydid/serialize/proto/parser"
+	pparser "github.com/katydid/katydid/serialize/proto"
 	rparser "github.com/katydid/katydid/serialize/reflect"
 	xparser "github.com/katydid/katydid/serialize/xml"
 	"reflect"

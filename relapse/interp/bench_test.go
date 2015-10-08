@@ -20,7 +20,7 @@ import (
 	. "github.com/katydid/katydid/funcs"
 	. "github.com/katydid/katydid/relapse/combinator"
 	"github.com/katydid/katydid/relapse/interp"
-	pparser "github.com/katydid/katydid/serialize/proto/parser"
+	pparser "github.com/katydid/katydid/serialize/proto"
 	"github.com/katydid/katydid/tests"
 	"testing"
 )
