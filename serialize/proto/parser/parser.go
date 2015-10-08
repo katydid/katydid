@@ -19,7 +19,6 @@ import (
 	"fmt"
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 	"github.com/katydid/katydid/serialize"
-	"github.com/katydid/katydid/serialize/proto/tokens"
 	"io"
 	//"log"
 	"reflect"
@@ -43,6 +42,14 @@ func (this *errVarint) Error() string {
 var errBufferOverlow = fmt.Errorf("buffer overflow")
 
 var errUnknownWireType = fmt.Errorf("unknown wire type")
+
+type errUnknown struct {
+	msg string
+}
+
+func (this *errUnknown) Error() string {
+	return "Could not find " + this.msg
+}
 
 func uvarint(buf []byte) (uint64, int, error) {
 	var uv uint64
@@ -76,6 +83,75 @@ func length(wireType int, buf []byte) (prefix int, l int, err error) {
 	return 0, 0, errUnknownWireType
 }
 
+type descMap struct {
+	desc       *descriptor.FileDescriptorSet
+	root       *descriptor.DescriptorProto
+	fieldToMsg map[*descriptor.FieldDescriptorProto]*descriptor.DescriptorProto
+	msgToField map[*descriptor.DescriptorProto]map[uint64]*descriptor.FieldDescriptorProto
+}
+
+func newDescriptorMap(pkgName, msgName string, desc *descriptor.FileDescriptorSet) (*descMap, error) {
+	root := desc.GetMessage(pkgName, msgName)
+	d := &descMap{
+		desc:       desc,
+		root:       root,
+		fieldToMsg: make(map[*descriptor.FieldDescriptorProto]*descriptor.DescriptorProto),
+		msgToField: make(map[*descriptor.DescriptorProto]map[uint64]*descriptor.FieldDescriptorProto),
+	}
+	err := d.visit(pkgName, root)
+	return d, err
+}
+
+func (this *descMap) visit(pkgName string, msg *descriptor.DescriptorProto) error {
+	if _, ok := this.msgToField[msg]; ok {
+		return nil
+	}
+	for i, f := range msg.GetField() {
+		if _, ok := this.msgToField[msg]; !ok {
+			this.msgToField[msg] = make(map[uint64]*descriptor.FieldDescriptorProto)
+		}
+		this.msgToField[msg][f.GetKeyUint64()] = msg.Field[i]
+		if f.GetType() == descriptor.FieldDescriptorProto_TYPE_MESSAGE {
+			newPkgName, newMsgName := this.desc.FindMessage(pkgName, msg.GetName(), f.GetName())
+			if len(newMsgName) == 0 {
+				return &errUnknown{pkgName + "." + msg.GetName() + "." + f.GetName()}
+			}
+			newMsg := this.desc.GetMessage(newPkgName, newMsgName)
+			if newMsg == nil {
+				return &errUnknown{newPkgName + "." + newMsgName}
+			}
+			this.fieldToMsg[msg.Field[i]] = newMsg
+			if _, ok := this.msgToField[newMsg]; ok {
+				continue
+			}
+			if err := this.visit(newPkgName, newMsg); err != nil {
+				return err
+			}
+		}
+	}
+	for i := range msg.GetNestedType() {
+		this.visit(pkgName, msg.GetNestedType()[i])
+	}
+	return nil
+}
+
+func (this *descMap) getRoot() *descriptor.DescriptorProto {
+	return this.root
+}
+
+func (this *descMap) lookupMessage(field *descriptor.FieldDescriptorProto) *descriptor.DescriptorProto {
+	return this.fieldToMsg[field]
+}
+
+func (this *descMap) lookupField(msg *descriptor.DescriptorProto, key uint64) (*descriptor.FieldDescriptorProto, bool) {
+	fields, ok := this.msgToField[msg]
+	if !ok {
+		return nil, false
+	}
+	f, ok := fields[key]
+	return f, ok
+}
+
 type ProtoTokens interface {
 	LookupKey(src int, key uint64) (int, string, bool)
 	IsLeaf(int) bool
@@ -84,16 +160,16 @@ type ProtoTokens interface {
 }
 
 type protoParser struct {
-	tokens ProtoTokens
+	descMap *descMap
 	state
 	stack []state
 }
 
 func (this *protoParser) Copy() serialize.Parser {
 	s := &protoParser{
-		tokens: this.tokens,
-		state:  this.state,
-		stack:  make([]state, len(this.stack)),
+		descMap: this.descMap,
+		state:   this.state,
+		stack:   make([]state, len(this.stack)),
 	}
 	for i := range this.stack {
 		s.stack[i] = this.stack[i]
@@ -102,35 +178,29 @@ func (this *protoParser) Copy() serialize.Parser {
 }
 
 type state struct {
-	buf         []byte
-	parentToken int
-	offset      int
-	length      int
-	tokenId     int
-	name        string
-	isLeaf      bool
-	hadLeaf     bool
+	buf     []byte
+	parent  *descriptor.DescriptorProto
+	offset  int
+	length  int
+	field   *descriptor.FieldDescriptorProto
+	isLeaf  bool
+	hadLeaf bool
 }
 
 type BytesParser interface {
 	serialize.Parser
 	Init(buf []byte) error
-	Value() []byte
 }
 
 func NewProtoParser(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet) BytesParser {
-	toks, err := tokens.New(srcPackage, srcMessage, desc)
-	if err != nil {
-		panic(err)
-	}
-	rootToken, err := toks.GetTokenId(srcPackage + "." + srcMessage)
+	descMap, err := newDescriptorMap(srcPackage, srcMessage, desc)
 	if err != nil {
 		panic(err)
 	}
 	return &protoParser{
-		tokens: toks,
+		descMap: descMap,
 		state: state{
-			parentToken: rootToken,
+			parent: descMap.getRoot(),
 		},
 		stack: make([]state, 0, 10),
 	}
@@ -140,7 +210,7 @@ func (s *protoParser) Init(buf []byte) error {
 	s.buf = buf
 	s.offset = 0
 	s.length = 0
-	s.tokenId = 0
+	s.field = nil
 	s.stack = s.stack[:0]
 	return nil
 }
@@ -173,18 +243,13 @@ func (s *protoParser) Next() error {
 	}
 	s.offset += n
 	s.length = l
-	tokenId, name, ok := s.tokens.LookupKey(s.parentToken, v)
+	field, ok := s.descMap.lookupField(s.parent, v)
 	if ok {
 		//log.Printf("Return %d", s.offset)
-		s.tokenId = tokenId
-		s.name = name
+		s.field = field
 		return nil
 	}
 	return s.Next()
-}
-
-func (s *protoParser) Id() int {
-	return s.tokenId
 }
 
 func (s *protoParser) IsLeaf() bool {
@@ -213,7 +278,7 @@ func (s *protoParser) Int() (int64, error) {
 	if !s.isLeaf {
 		return 0, serialize.ErrNotInt
 	}
-	typ := s.tokens.LookupType(s.tokenId)
+	typ := s.field.GetType()
 	switch typ {
 	case descriptor.FieldDescriptorProto_TYPE_INT64:
 		return s.decodeInt64()
@@ -241,7 +306,7 @@ func (s *protoParser) Uint() (uint64, error) {
 	if s.isLeaf {
 		return 0, serialize.ErrNotUint
 	}
-	typ := s.tokens.LookupType(s.tokenId)
+	typ := s.field.GetType()
 	switch typ {
 	case descriptor.FieldDescriptorProto_TYPE_UINT64:
 		return s.decodeUint64()
@@ -271,7 +336,7 @@ func (s *protoParser) Bool() (bool, error) {
 
 func (s *protoParser) String() (string, error) {
 	if !s.isLeaf {
-		return s.name, nil
+		return s.field.GetName(), nil
 	}
 	buf := s.Value()
 	header := (*reflect.SliceHeader)(unsafe.Pointer(&buf))
@@ -376,13 +441,13 @@ func (s *protoParser) Up() {
 }
 
 func (s *protoParser) Down() {
-	if !s.tokens.IsLeaf(s.tokenId) {
+	if s.field.IsMessage() {
 		s.stack = append(s.stack, s.state)
 		s.buf = s.buf[s.offset : s.offset+s.length]
-		s.parentToken = s.tokenId
+		s.parent = s.descMap.lookupMessage(s.field)
 		s.offset = 0
 		s.length = 0
-		s.tokenId = 0
+		s.field = nil
 		return
 	}
 	s.stack = append(s.stack, s.state)
