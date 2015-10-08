@@ -408,6 +408,36 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
+		String: `DepthPattern : RightArrow Function	<< &Pattern{LeafNode: &LeafNode{
+        RightArrow: X[0].(*expr.Keyword),
+        Expr: &expr.Expr{Function: X[1].(*expr.Function)},
+    }}, nil >>`,
+		Id:         "DepthPattern",
+		NTType:     10,
+		Index:      28,
+		NumSymbols: 2,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &Pattern{LeafNode: &LeafNode{
+				RightArrow: X[0].(*expr.Keyword),
+				Expr:       &expr.Expr{Function: X[1].(*expr.Function)},
+			}}, nil
+		},
+	},
+	ProdTabEntry{
+		String: `DepthPattern : BuiltIn	<< &Pattern{LeafNode: &LeafNode{
+        Expr: &expr.Expr{BuiltIn: X[0].(*expr.BuiltIn)},
+    }}, nil >>`,
+		Id:         "DepthPattern",
+		NTType:     10,
+		Index:      29,
+		NumSymbols: 1,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return &Pattern{LeafNode: &LeafNode{
+				Expr: &expr.Expr{BuiltIn: X[0].(*expr.BuiltIn)},
+			}}, nil
+		},
+	},
+	ProdTabEntry{
 		String: `TreeNode : NameExpr Colon Pattern	<< &Pattern{TreeNode: &TreeNode{
       Name: X[0].(*NameExpr),
       Colon: X[1].(*expr.Keyword),
@@ -415,7 +445,7 @@ var productionsTable = ProdTab{
     }}, nil >>`,
 		Id:         "TreeNode",
 		NTType:     11,
-		Index:      28,
+		Index:      30,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Pattern{TreeNode: &TreeNode{
@@ -432,54 +462,12 @@ var productionsTable = ProdTab{
     }}, nil >>`,
 		Id:         "TreeNode",
 		NTType:     11,
-		Index:      29,
+		Index:      31,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Pattern{TreeNode: &TreeNode{
 				Name:    X[0].(*NameExpr),
 				Pattern: X[1].(*Pattern),
-			}}, nil
-		},
-	},
-	ProdTabEntry{
-		String: `TreeNode : NameExpr RightArrow Function	<< &Pattern{TreeNode: &TreeNode{
-      Name: X[0].(*NameExpr),
-      Pattern: &Pattern{LeafNode: &LeafNode{
-        RightArrow: X[1].(*expr.Keyword),
-        Expr: &expr.Expr{Function: X[2].(*expr.Function)},
-      }},
-    }}, nil >>`,
-		Id:         "TreeNode",
-		NTType:     11,
-		Index:      30,
-		NumSymbols: 3,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &Pattern{TreeNode: &TreeNode{
-				Name: X[0].(*NameExpr),
-				Pattern: &Pattern{LeafNode: &LeafNode{
-					RightArrow: X[1].(*expr.Keyword),
-					Expr:       &expr.Expr{Function: X[2].(*expr.Function)},
-				}},
-			}}, nil
-		},
-	},
-	ProdTabEntry{
-		String: `TreeNode : NameExpr BuiltIn	<< &Pattern{TreeNode: &TreeNode{
-      Name: X[0].(*NameExpr),
-      Pattern: &Pattern{LeafNode: &LeafNode{
-        Expr: &expr.Expr{BuiltIn: X[1].(*expr.BuiltIn)},
-      }},
-    }}, nil >>`,
-		Id:         "TreeNode",
-		NTType:     11,
-		Index:      31,
-		NumSymbols: 2,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &Pattern{TreeNode: &TreeNode{
-				Name: X[0].(*NameExpr),
-				Pattern: &Pattern{LeafNode: &LeafNode{
-					Expr: &expr.Expr{BuiltIn: X[1].(*expr.BuiltIn)},
-				}},
 			}}, nil
 		},
 	},

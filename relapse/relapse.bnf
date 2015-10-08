@@ -123,6 +123,17 @@ DepthPattern
       Pattern: $1.(*Pattern),
     }}, nil
   >>
+  | RightArrow Function <<
+    &Pattern{LeafNode: &LeafNode{
+        RightArrow: $0.(*expr.Keyword),
+        Expr: &expr.Expr{Function: $1.(*expr.Function)},
+    }}, nil
+  >> 
+  | BuiltIn <<
+    &Pattern{LeafNode: &LeafNode{
+        Expr: &expr.Expr{BuiltIn: $0.(*expr.BuiltIn)},
+    }}, nil
+  >> 
   ;
 
 TreeNode
@@ -139,23 +150,6 @@ TreeNode
       Pattern: $1.(*Pattern),
     }}, nil
   >>
-  | NameExpr RightArrow Function <<
-    &Pattern{TreeNode: &TreeNode{
-      Name: $0.(*NameExpr),
-      Pattern: &Pattern{LeafNode: &LeafNode{
-        RightArrow: $1.(*expr.Keyword),
-        Expr: &expr.Expr{Function: $2.(*expr.Function)},
-      }},
-    }}, nil
-  >> 
-  | NameExpr BuiltIn <<
-    &Pattern{TreeNode: &TreeNode{
-      Name: $0.(*NameExpr),
-      Pattern: &Pattern{LeafNode: &LeafNode{
-        Expr: &expr.Expr{BuiltIn: $1.(*expr.BuiltIn)},
-      }},
-    }}, nil
-  >> 
   ;
 
 Pattern
