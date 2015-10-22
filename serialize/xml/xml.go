@@ -86,6 +86,7 @@ func (p *parser) Next() (err error) {
 			if s, ok := p.tok.(xml.StartElement); ok {
 				fmt.Printf("Skipping %s\n", s.Name)
 				if err := p.dec.Skip(); err != nil {
+					fmt.Printf("Skip err = %v\n", err)
 					return err
 				}
 				break
@@ -97,7 +98,7 @@ func (p *parser) Next() (err error) {
 				}
 			} else if _, ok := p.tok.(xml.Comment); ok {
 				p.tok, err = p.dec.Token()
-				fmt.Printf("Comment Next Token %#v\n", p.tok)
+				fmt.Printf("Comment Next Token %#v, err = %v\n", p.tok, err)
 				if err != nil {
 					return err
 				}
@@ -107,7 +108,7 @@ func (p *parser) Next() (err error) {
 		}
 	}
 	p.tok, err = p.dec.Token()
-	fmt.Printf("Next Token %#v\n", p.tok)
+	fmt.Printf("Next Token %#v, err %v\n", p.tok, err)
 	for err == nil {
 		if _, ok := p.tok.(xml.StartElement); ok {
 			break
@@ -119,7 +120,7 @@ func (p *parser) Next() (err error) {
 			return io.EOF
 		}
 		p.tok, err = p.dec.Token()
-		fmt.Printf("Next Next Token %#v\n", p.tok)
+		fmt.Printf("Next Next Token %#v, err = %v\n", p.tok, err)
 	}
 	return err
 }
