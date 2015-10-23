@@ -18,33 +18,28 @@ import (
 	"github.com/katydid/katydid/serialize"
 	"io"
 	"reflect"
+	"strconv"
 )
 
 type state struct {
-	parent        reflect.Value
-	typ           reflect.StructField
-	value         reflect.Value
-	field         int
-	maxField      int
-	sliceValue    reflect.Value
-	sliceIndex    int
-	sliceMaxIndex int
-	inSlice       bool
-	isLeaf        bool
+	parent   reflect.Value
+	typ      reflect.StructField
+	value    reflect.Value
+	field    int
+	maxField int
+	isLeaf   bool
+	isArray  bool
 }
 
 func (this state) Copy() state {
 	return state{
-		parent:        this.parent,
-		typ:           this.typ,
-		value:         this.value,
-		field:         this.field,
-		maxField:      this.maxField,
-		sliceValue:    this.sliceValue,
-		sliceIndex:    this.sliceIndex,
-		sliceMaxIndex: this.sliceMaxIndex,
-		inSlice:       this.inSlice,
-		isLeaf:        this.isLeaf,
+		parent:   this.parent,
+		typ:      this.typ,
+		value:    this.value,
+		field:    this.field,
+		maxField: this.maxField,
+		isLeaf:   this.isLeaf,
+		isArray:  this.isArray,
 	}
 }
 
@@ -71,21 +66,30 @@ func deref(v reflect.Value) reflect.Value {
 	return v
 }
 
-func newState(parent reflect.Value) state {
-	value := deref(parent)
-	return state{
-		parent:   value,
-		maxField: value.NumField(),
+func newState(val reflect.Value) state {
+	value := deref(val)
+	if value.Kind() == reflect.Struct {
+		return state{
+			parent:   value,
+			maxField: value.NumField(),
+		}
 	}
-}
-
-func newFieldState(typ reflect.StructField, val reflect.Value) state {
+	if isSlice(value) {
+		return state{
+			parent:   value,
+			maxField: value.Len(),
+			isArray:  true,
+		}
+	}
 	return state{
-		typ:      typ,
 		value:    val,
 		isLeaf:   true,
 		maxField: 1,
 	}
+}
+
+func isSlice(v reflect.Value) bool {
+	return v.Kind() == reflect.Slice && v.Type().Elem().Kind() != reflect.Uint8
 }
 
 func NewReflectParser() *parser {
@@ -97,25 +101,11 @@ func (s *parser) Init(value reflect.Value) *parser {
 	return s
 }
 
-func isSlice(v reflect.Value) bool {
-	return v.Kind() == reflect.Slice && v.Type().Elem().Kind() != reflect.Uint8
-}
-
 func (s *parser) Next() error {
 	if s.field >= s.maxField {
 		return io.EOF
 	}
-	if !s.isLeaf {
-		if s.inSlice {
-			if s.sliceIndex >= s.sliceMaxIndex {
-				s.inSlice = false
-				s.field++
-				return s.Next()
-			}
-			s.value = s.sliceValue.Index(s.sliceIndex)
-			s.sliceIndex++
-			return nil
-		}
+	if !s.isLeaf && !s.isArray {
 		s.typ = s.parent.Type().Field(s.field)
 		s.value = s.parent.Field(s.field)
 		if s.value.Kind() == reflect.Ptr || s.value.Kind() == reflect.Slice {
@@ -123,13 +113,6 @@ func (s *parser) Next() error {
 				s.field++
 				return s.Next()
 			}
-		}
-		if isSlice(s.value) {
-			s.sliceValue = s.value
-			s.sliceMaxIndex = s.value.Len()
-			s.sliceIndex = 0
-			s.inSlice = true
-			return s.Next()
 		}
 	}
 	s.field++
@@ -141,26 +124,7 @@ func (s *parser) IsLeaf() bool {
 }
 
 func (s *parser) getValue() reflect.Value {
-	kind := s.value.Kind()
-	if kind == reflect.Slice {
-		childValue := s.value.Elem()
-		childKind := childValue.Kind()
-		switch childKind {
-		case reflect.Uint8, reflect.Int8:
-			return s.value
-		case reflect.Slice:
-			switch childValue.Elem().Kind() {
-			case reflect.Uint8, reflect.Int8:
-				return childValue
-			}
-		default:
-			return childValue
-		}
-	}
-	if kind == reflect.Ptr {
-		return s.value.Elem()
-	}
-	return s.value
+	return deref(s.value)
 }
 
 func (s *parser) Double() (float64, error) {
@@ -208,7 +172,9 @@ func (s *parser) Bool() (bool, error) {
 }
 
 func (s *parser) String() (string, error) {
-	if !s.isLeaf {
+	if s.isArray {
+		return strconv.Itoa(s.field - 1), nil
+	} else if !s.isLeaf {
 		return s.typ.Name, nil
 	}
 	value := s.getValue()
@@ -236,33 +202,11 @@ func (s *parser) Up() {
 	s.stack = s.stack[:top]
 }
 
-func (s *parser) canDown() bool {
-	if s.typ.Type.Kind() == reflect.Struct {
-		return true
-	}
-	if s.typ.Type.Kind() == reflect.Ptr {
-		if s.typ.Type.Elem().Kind() == reflect.Struct {
-			return true
-		}
-	}
-	if s.typ.Type.Kind() == reflect.Slice {
-		if s.typ.Type.Elem().Kind() == reflect.Struct {
-			return true
-		}
-		if s.typ.Type.Elem().Kind() == reflect.Ptr {
-			if s.typ.Type.Elem().Elem().Kind() == reflect.Struct {
-				return true
-			}
-		}
-	}
-	return false
-}
-
 func (s *parser) Down() {
 	s.stack = append(s.stack, s.state)
-	if s.canDown() {
-		s.state = newState(s.state.value)
+	if s.isArray {
+		s.state = newState(s.state.parent.Index(s.field - 1))
 	} else {
-		s.state = newFieldState(s.typ, s.value)
+		s.state = newState(s.state.value)
 	}
 }

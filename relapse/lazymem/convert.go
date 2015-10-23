@@ -112,7 +112,7 @@ func convertPattern(visited map[*Pattern]string, p *Pattern, newStr func() strin
 		return relapse.NewEmptySet()
 	case *TreeNode:
 		if v.Pattern.Lookahead().LeafNode != nil {
-			return relapse.NewLeafNode(v.Name, v.Pattern.Lookahead().LeafNode.Expr)
+			return relapse.NewTreeNode(v.Name, relapse.NewLeafNode(v.Pattern.Lookahead().LeafNode.Expr))
 		}
 		c := convertPattern(visited, v.Pattern, newStr)
 		return relapse.NewTreeNode(v.Name, c)

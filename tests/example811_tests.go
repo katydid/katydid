@@ -39,7 +39,7 @@ var Example811 = G{
 			In("Right", Eval("q2")),
 		),
 		In("A",
-			Field("Value", Sprint(StringEq(StringVar(), StringConst("#")))),
+			In("Value", Value(StringEq(StringVar(), StringConst("#")))),
 		),
 	),
 }

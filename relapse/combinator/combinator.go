@@ -16,6 +16,7 @@ package combinator
 
 import (
 	exprparser "github.com/katydid/katydid/expr/parser"
+	"github.com/katydid/katydid/funcs"
 	"github.com/katydid/katydid/relapse/ast"
 )
 
@@ -39,14 +40,6 @@ func concat(p *relapse.Pattern, ps ...*relapse.Pattern) *relapse.Pattern {
 
 func InPath(name string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
 	return relapse.NewWithSomeTreeNode(relapse.NewName(name), concat(child, children...))
-}
-
-func InFieldPath(name string, exprStr string) *relapse.Pattern {
-	expr, err := exprparser.NewParser().ParseExpr(exprStr)
-	if err != nil {
-		panic(err)
-	}
-	return relapse.NewWithSomeLeafNode(relapse.NewName(name), expr)
 }
 
 func In(name string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
@@ -75,39 +68,13 @@ func InAnyOf(names []string, child *relapse.Pattern, children ...*relapse.Patter
 	return relapse.NewTreeNode(nameChoice(names[0], names[1:]...), concat(child, children...))
 }
 
-func Field(name string, exprStr string) *relapse.Pattern {
+func Value(f funcs.Bool) *relapse.Pattern {
+	exprStr := funcs.Sprint(f)
 	expr, err := exprparser.NewParser().ParseExpr(exprStr)
 	if err != nil {
 		panic(err)
 	}
-	return relapse.NewLeafNode(relapse.NewName(name), expr)
-}
-
-func AnyField(exprStr string) *relapse.Pattern {
-	expr, err := exprparser.NewParser().ParseExpr(exprStr)
-	if err != nil {
-		panic(err)
-	}
-	return relapse.NewLeafNode(relapse.NewAnyName(), expr)
-}
-
-func AnyFieldExcept(name string, exprStr string) *relapse.Pattern {
-	expr, err := exprparser.NewParser().ParseExpr(exprStr)
-	if err != nil {
-		panic(err)
-	}
-	return relapse.NewLeafNode(relapse.NewAnyNameExcept(relapse.NewName(name)), expr)
-}
-
-func AnyFields(names []string, exprStr string) *relapse.Pattern {
-	if len(names) < 2 {
-		panic("less than two fieldnames is not really a choice, is it?")
-	}
-	expr, err := exprparser.NewParser().ParseExpr(exprStr)
-	if err != nil {
-		panic(err)
-	}
-	return relapse.NewLeafNode(nameChoice(names[0], names[1:]...), expr)
+	return relapse.NewLeafNode(expr)
 }
 
 func None() *relapse.Pattern {

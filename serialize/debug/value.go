@@ -18,6 +18,7 @@ import (
 	"fmt"
 	"github.com/katydid/katydid/serialize"
 	"io"
+	"strings"
 )
 
 func getValue(parser serialize.Parser) interface{} {
@@ -50,9 +51,52 @@ func getValue(parser serialize.Parser) interface{} {
 	return nil
 }
 
-func Walk(parser serialize.Parser) interface{} {
-	m := make(map[string][]interface{})
-	a := make([]interface{}, 0)
+type Node struct {
+	Label    string
+	Children Nodes
+}
+
+func (this Node) String() string {
+	if len(this.Children) == 0 {
+		return this.Label
+	}
+	return this.Label + ":" + this.Children.String()
+}
+
+func (this Node) Equal(that Node) bool {
+	if this.Label != that.Label {
+		return false
+	}
+	if !this.Children.Equal(that.Children) {
+		return false
+	}
+	return true
+}
+
+type Nodes []Node
+
+func (this Nodes) String() string {
+	ss := make([]string, len(this))
+	for i := range this {
+		ss[i] = this[i].String()
+	}
+	return "{" + strings.Join(ss, ",") + "}"
+}
+
+func (this Nodes) Equal(that Nodes) bool {
+	if len(this) != len(that) {
+		return false
+	}
+	for i := range this {
+		if !this[i].Equal(that[i]) {
+			return false
+		}
+	}
+	return true
+}
+
+func Walk(parser serialize.Parser) Nodes {
+	a := make(Nodes, 0)
 	for {
 		if err := parser.Next(); err != nil {
 			if err == io.EOF {
@@ -63,26 +107,14 @@ func Walk(parser serialize.Parser) interface{} {
 		}
 		value := getValue(parser)
 		if parser.IsLeaf() {
-			a = append(a, value)
+			a = append(a, Node{fmt.Sprintf("%#v", value), nil})
 		} else {
-			name := fmt.Sprintf("%s", value)
+			name := fmt.Sprintf("%#v", value)
 			parser.Down()
 			v := Walk(parser)
 			parser.Up()
-			_, ok := m[name]
-			if !ok {
-				m[name] = make([]interface{}, 0, 1)
-			}
-			if v != nil {
-				m[name] = append(m[name], v)
-			}
+			a = append(a, Node{name, v})
 		}
-	}
-	if len(m) > 0 {
-		return m
-	}
-	if len(a) == 1 {
-		return a[0]
 	}
 	return a
 }

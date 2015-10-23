@@ -230,25 +230,11 @@ func NewWithSomeTreeNode(name *NameExpr, pattern *Pattern) *Pattern {
 	}
 }
 
-func NewLeafNode(name *NameExpr, expr *expr.Expr) *Pattern {
+func NewLeafNode(expr *expr.Expr) *Pattern {
 	return &Pattern{
-		TreeNode: &TreeNode{
-			Name: name,
-			Pattern: &Pattern{
-				LeafNode: &LeafNode{
-					RightArrow: newRightArrow(),
-					Expr:       expr,
-				},
-			},
-		},
-	}
-}
-
-func NewWithSomeLeafNode(name *NameExpr, expr *expr.Expr) *Pattern {
-	return &Pattern{
-		WithSomeTreeNode: &WithSomeTreeNode{
-			Dot:     newDot(),
-			Pattern: NewLeafNode(name, expr),
+		LeafNode: &LeafNode{
+			RightArrow: newRightArrow(),
+			Expr:       expr,
 		},
 	}
 }

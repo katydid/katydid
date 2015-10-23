@@ -1,5 +1,7 @@
 Start
-  : Expr
+  : Expr Space
+  | Expr
+  | BuiltIn Space << &expr.Expr{BuiltIn: $0.(*expr.BuiltIn)}, nil >>
   | BuiltIn << &expr.Expr{BuiltIn: $0.(*expr.BuiltIn)}, nil >>
   ;
 

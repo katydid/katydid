@@ -47,19 +47,22 @@ var RobertPerson = &Person{
 }
 
 //Has this person ever lived at 456 TheStreet
-var ContextPerson = G{"main": InPath("Addresses",
-	Field("Number", Sprint(IntVarEq(IntConst(456)))),
-	Field("Street", Sprint(StringVarEq(StringConst("TheStreet")))),
-)}
-
-var XmlContextPerson = G{"main": In("Person", InPath("Addresses",
-	Field("Number", Sprint(IntVarEq(IntConst(456)))),
-	Field("Street", Sprint(StringVarEq(StringConst("TheStreet")))),
-))}
+var ContextPerson = G{"main": InPath("Addresses", InAny(InOrder(
+	In("Number", Value(IntVarEq(IntConst(456)))),
+	In("Street", Value(StringVarEq(StringConst("TheStreet")))),
+)))}
 
 func init() {
 	Validate("ContextDavid", ContextPerson, AllCodecs(DavidPerson), false)
 	Validate("ContextRobert", ContextPerson, AllCodecs(RobertPerson), true)
+}
+
+var XmlContextPerson = G{"main": In("Person", InPath("Addresses",
+	In("Number", Value(IntVarEq(IntConst(456)))),
+	In("Street", Value(StringVarEq(StringConst("TheStreet")))),
+))}
+
+func init() {
 	//TODO Validate("XmlContextDavid", XmlContextPerson, XML(DavidPerson), false)
 	//TODO Validate("XmlContextRobert", XmlContextPerson, XML(RobertPerson), true)
 }
@@ -168,12 +171,11 @@ var ListIndexAddressPerson = G{
 	"main": InOrder(
 		Any(),
 		In("Addresses",
-			InFieldPath("Number", Sprint(IntVarEq(IntConst(2)))),
+			Any(),
+			InAny(InPath("Number", Value(IntVarEq(IntConst(2))))),
+			InAny(InPath("Number", Value(IntVarEq(IntConst(1))))),
 		),
-		In("Addresses",
-			InFieldPath("Number", Sprint(IntVarEq(IntConst(1)))),
-		),
-		Many(InAnyExcept("Addresses", Any())),
+		Any(),
 	),
 }
 
@@ -197,7 +199,7 @@ func init() {
 //Is this person's name an empty string
 var LenNamePerson = G{"main": InOrder(
 	Any(),
-	Field("Name", Sprint(IntEq(LenString(StringVar()), IntConst(0)))),
+	In("Name", Value(IntEq(LenString(StringVar()), IntConst(0)))),
 	Any(),
 )}
 
@@ -224,7 +226,7 @@ func init() {
 var NaiveNotNamePerson = G{
 	"main": InOrder(
 		Any(),
-		Field("Name", Sprint(Not(StringEq(StringVar(), StringConst("David"))))),
+		In("Name", Value(Not(StringEq(StringVar(), StringConst("David"))))),
 		Any(),
 	),
 }
@@ -242,7 +244,7 @@ var ProperNotNamePerson = G{
 	"nil":  NilNamePerson["main"],
 	"name": InOrder(
 		Any(),
-		Field("Name", Sprint(Not(StringEq(StringVar(), StringConst("David"))))),
+		In("Name", Value(Not(StringEq(StringVar(), StringConst("David"))))),
 		Any(),
 	),
 }
@@ -260,12 +262,12 @@ var AndNameTelephonePerson = G{
 		AllOf(
 			InOrder(
 				Any(),
-				Field("Name", Sprint(StringEq(StringVar(), StringConst("David")))),
+				In("Name", Value(StringEq(StringVar(), StringConst("David")))),
 				Any(),
 			),
 			InOrder(
 				Any(),
-				Field("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
+				In("Telephone", Value(StringEq(StringVar(), StringConst("0123456789")))),
 				Any(),
 			),
 		),
@@ -282,8 +284,8 @@ func init() {
 //Is this person's name David or telephone number 0123456789
 var OrNameTelephonePerson = G{
 	"main": AnyOf(
-		InFieldPath("Name", Sprint(StringEq(StringVar(), StringConst("David")))),
-		InFieldPath("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
+		InPath("Name", Value(StringEq(StringVar(), StringConst("David")))),
+		InPath("Telephone", Value(StringEq(StringVar(), StringConst("0123456789")))),
 	),
 }
 
@@ -298,7 +300,7 @@ func init() {
 var ListOfTelephonesPerson = G{
 	"main": InOrder(
 		Any(),
-		Field("Telephone", Sprint(Or(StringEq(StringVar(), StringConst("0123456789")), StringEq(StringVar(), StringConst("0127897897"))))),
+		In("Telephone", Value(Or(StringEq(StringVar(), StringConst("0123456789")), StringEq(StringVar(), StringConst("0127897897"))))),
 		Any(),
 	),
 }
@@ -315,7 +317,7 @@ var LeftRecursion = G{
 			Eval("main"),
 			InOrder(
 				Any(),
-				Field("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
+				In("Telephone", Value(StringEq(StringVar(), StringConst("0123456789")))),
 			),
 		),
 	),
@@ -332,7 +334,7 @@ var HiddenLeftRecursion = G{
 			Eval("hidden"),
 			InOrder(
 				Any(),
-				Field("Telephone", Sprint(StringEq(StringVar(), StringConst("0123456789")))),
+				In("Telephone", Value(StringEq(StringVar(), StringConst("0123456789")))),
 			),
 		),
 	),
@@ -357,7 +359,7 @@ var NegativePerson = &Person{
 var PositiveNumber = G{
 	"main": InOrder(
 		In("Addresses",
-			Field("Number", Sprint(UintGE(UintVar(), UintConst(0)))),
+			In("Number", Value(UintGE(UintVar(), UintConst(0)))),
 			Any(),
 		),
 		Any(),
@@ -369,12 +371,12 @@ func init() {
 }
 
 var CorrectTypePerson = G{"main": InOrder(
-	Field("Name", Sprint(TypeString())),
+	In("Name", Value(TypeString())),
 	Any(),
 )}
 
 var WrongTypePerson = G{"main": InOrder(
-	Field("Name", Sprint(TypeInt())),
+	In("Name", Value(TypeInt())),
 	Any(),
 )}
 
@@ -383,7 +385,7 @@ func init() {
 	Validate("WrongTypeRobert", WrongTypePerson, AllCodecs(RobertPerson), false)
 }
 
-var InSetPerson = G{"main": InFieldPath("Name", Sprint(ContainsString(StringVar(),
+var InSetPerson = G{"main": InPath("Name", Value(ContainsString(StringVar(),
 	StringsConst([]string{"The", "Robert", "Smith"}),
 )))}
 

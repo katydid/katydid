@@ -7,7 +7,7 @@ _comment : _lineComment | _blockComment ;
 
 _ws : ' ' | '\t' | '\n' | '\r' ; //whitespace
 
-space : _comment | _ws ;
+space : _comment | _ws { _ws } ;
 
 _decimal_digit : '0' - '9' ;
 _octal_digit : '0' - '7' ;

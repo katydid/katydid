@@ -16,27 +16,23 @@ package interp_test
 
 import (
 	"github.com/katydid/katydid/expr/ast"
-	exprparser "github.com/katydid/katydid/expr/parser"
 	. "github.com/katydid/katydid/funcs"
+	"github.com/katydid/katydid/relapse/ast"
 	. "github.com/katydid/katydid/relapse/combinator"
 	"github.com/katydid/katydid/relapse/interp"
 	"testing"
 )
 
-func getExpr(exprStr string) *expr.Expr {
-	expr, err := exprparser.NewParser().ParseExpr(exprStr)
-	if err != nil {
-		panic(err)
-	}
-	return expr
+func getExpr(pattern *relapse.Pattern) *expr.Expr {
+	return pattern.GetLeafNode().GetExpr()
 }
 
 func TestAnal1(t *testing.T) {
-	f := Sprint(StringEq(StringVar(), StringConst("#")))
-	f2 := Sprint(StringEq(StringVar(), StringConst("?")))
-	alwaysFalse := getExpr("false")
+	f := Value(StringEq(StringVar(), StringConst("#")))
+	f2 := Value(StringEq(StringVar(), StringConst("?")))
+	alwaysFalse := getExpr(Value(BoolConst(false)))
 	g := G{
-		"main": In("A", In("B", Field("c", f))),
+		"main": In("A", In("B", In("c", f))),
 	}.Grammar()
 	leafs := interp.GetLeafs(g, "A", "B", "c")
 	if len(leafs) != 1 {
@@ -55,16 +51,16 @@ func TestAnal1(t *testing.T) {
 }
 
 func TestAnal2(t *testing.T) {
-	f := Sprint(StringEq(StringVar(), StringConst("#")))
-	f2 := Sprint(StringEq(StringVar(), StringConst("?")))
-	alwaysFalse := getExpr("false")
+	f := Value(StringEq(StringVar(), StringConst("#")))
+	f2 := Value(StringEq(StringVar(), StringConst("?")))
+	alwaysFalse := getExpr(Value(BoolConst(false)))
 	g := G{
 		"main": AnyOf(
 			In("A", AllOf(
-				In("B", Field("c", f)),
+				In("B", In("c", f)),
 				Any()),
 			),
-			In("D", Field("c", f)),
+			In("D", In("c", f)),
 		),
 	}.Grammar()
 	leafs := interp.GetLeafs(g, "A", "B", "c")
@@ -84,16 +80,16 @@ func TestAnal2(t *testing.T) {
 }
 
 func TestAnal3(t *testing.T) {
-	f := Sprint(StringEq(StringVar(), StringConst("#")))
-	f2 := Sprint(StringEq(StringVar(), StringConst("?")))
-	alwaysFalse := getExpr("false")
+	f := Value(StringEq(StringVar(), StringConst("#")))
+	f2 := Value(StringEq(StringVar(), StringConst("?")))
+	alwaysFalse := getExpr(Value(BoolConst(false)))
 	g := G{
 		"main": AnyOf(
 			In("A", AllOf(
-				Many(In("B", Field("c", f))),
-				In("B", Field("d", f)),
+				Many(In("B", In("c", f))),
+				In("B", In("d", f)),
 			)),
-			In("D", Field("c", f)),
+			In("D", In("c", f)),
 		),
 	}.Grammar()
 	leafs := interp.GetLeafs(g, "A", "B", "c")
@@ -113,17 +109,17 @@ func TestAnal3(t *testing.T) {
 }
 
 func TestAnal4(t *testing.T) {
-	f := Sprint(StringEq(StringVar(), StringConst("#")))
+	f := Value(StringEq(StringVar(), StringConst("#")))
 	g := G{
 		"main": AnyOf(
 			In("A", AllOf(
-				Many(In("B", Field("c", f))),
+				Many(In("B", In("c", f))),
 				In("B", AnyOf(
-					Field("d", f),
-					Field("c", f),
+					In("d", f),
+					In("c", f),
 				)),
 			)),
-			In("D", Field("c", f)),
+			In("D", In("c", f)),
 		),
 	}.Grammar()
 	leafs := interp.GetLeafs(g, "A", "B", "c")

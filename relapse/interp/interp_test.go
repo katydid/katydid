@@ -56,7 +56,7 @@ func TestWithSomeTreeNode(t *testing.T) {
 	s := tests.Validators["ContextRobert"]["json"].Parser()
 	g := relapse.NewGrammar(map[string]*relapse.Pattern{
 		"main": relapse.NewWithSomeTreeNode(relapse.NewName("Addresses"),
-			relapse.NewWithSomeLeafNode(relapse.NewName("Number"), expr)),
+			relapse.NewWithSomeTreeNode(relapse.NewName("Number"), relapse.NewLeafNode(expr))),
 	})
 	test(t, g, s, true, "WithSomeTreeNode")
 }

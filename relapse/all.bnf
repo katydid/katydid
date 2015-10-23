@@ -24,7 +24,7 @@ _comment : _lineComment | _blockComment ;
 
 _ws : ' ' | '\t' | '\n' | '\r' ; //whitespace
 
-space : _comment | _ws ;
+space : _comment | _ws { _ws } ;
 
 _decimal_digit : '0' - '9' ;
 _octal_digit : '0' - '7' ;
@@ -389,7 +389,9 @@ ContinueAnd
   >>
   ;
 Start
-  : Expr
+  : Expr Space
+  | Expr
+  | BuiltIn Space << &expr.Expr{BuiltIn: $0.(*expr.BuiltIn)}, nil >>
   | BuiltIn << &expr.Expr{BuiltIn: $0.(*expr.BuiltIn)}, nil >>
   ;
 

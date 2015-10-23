@@ -44,7 +44,7 @@ func init() {
 
 var HasSpirit1FinanceJudo = G{
 	"main":   InOrder(Any(), Eval("spirit"), Any()),
-	"spirit": Field("RumourSpirit", Sprint(IntEq(IntVar(), IntConst(1)))),
+	"spirit": In("RumourSpirit", Value(IntEq(IntVar(), IntConst(1)))),
 }
 
 func init() {
@@ -53,7 +53,7 @@ func init() {
 
 var HasSpirit2FinanceJudo = G{
 	"main":   InOrder(Any(), Eval("spirit"), Any()),
-	"spirit": Field("RumourSpirit", Sprint(IntEq(IntVar(), IntConst(2)))),
+	"spirit": In("RumourSpirit", Value(IntEq(IntVar(), IntConst(2)))),
 }
 
 func init() {
@@ -63,8 +63,10 @@ func init() {
 var MagazineFrameAFinanceJudo = G{
 	"main": InOrder(
 		In("SaladWorry",
-			Field("MagazineFrame", Sprint(StringEq(StringVar(), StringConst("a")))),
-			Any(),
+			In("MagazineFrame", InOrder(
+				InAny(Value(StringEq(StringVar(), StringConst("a")))),
+				Any()),
+			),
 			In("XrayPilot", Any()),
 			Any(),
 		),
@@ -79,7 +81,7 @@ func init() {
 var MagazineFrameSingleAFinanceJudo = G{
 	"main": InOrder(
 		In("SaladWorry",
-			Field("MagazineFrame", Sprint(StringEq(StringVar(), StringConst("a")))),
+			In("MagazineFrame", Value(StringEq(StringVar(), StringConst("a")))),
 			In("XrayPilot", Any()),
 			Any(),
 		),
@@ -94,7 +96,11 @@ func init() {
 var InAnyExceptNotAFieldNameFinanceJudo = G{
 	"main": InOrder(
 		InAnyExcept("NotAFieldName",
-			Field("MagazineFrame", Sprint(StringEq(StringVar(), StringConst("a")))),
+			In("MagazineFrame",
+				InOrder(
+					InAny(Value(StringEq(StringVar(), StringConst("a")))),
+					Any()),
+			),
 			Any(),
 		),
 		Any(),
@@ -108,7 +114,7 @@ func init() {
 var InAnyExceptSaladWorryFinanceJudo = G{
 	"main": InOrder(
 		InAnyExcept("SaladWorry",
-			Field("MagazineFrame", Sprint(StringEq(StringVar(), StringConst("a")))),
+			In("MagazineFrame", Value(StringEq(StringVar(), StringConst("a")))),
 			Any(),
 		),
 		Any(),

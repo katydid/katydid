@@ -22,7 +22,7 @@ import (
 
 func TestClone(t *testing.T) {
 	in := NewGrammar(map[string]*Pattern{
-		"main": NewAnd(NewEmpty(), NewLeafNode(NewName("a"), &expr.Expr{})),
+		"main": NewAnd(NewEmpty(), NewTreeNode(NewName("a"), NewLeafNode(&expr.Expr{}))),
 	})
 	out := in.Clone()
 	if !reflect.DeepEqual(in, out) {

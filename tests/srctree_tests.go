@@ -117,13 +117,19 @@ var SyscallSrcTree = &SrcTree{
 
 //Does this SrcTree depend on io or is its package name io
 var RecursiveSrcTree = G{
-	"main": InOrder(
-		Any(),
-		AnyOf(
-			Field("PackageName", Sprint(StringVarEq(StringConst("io")))),
-			In("Imports", Eval("main")),
+	"main": AnyOf(
+		InOrder(
+			In("PackageName", Value(StringVarEq(StringConst("io")))),
+			Any(),
 		),
-		Any(),
+		InOrder(
+			Any(),
+			In("Imports",
+				Any(),
+				InAny(Eval("main")),
+				Any(),
+			),
+		),
 	),
 }
 

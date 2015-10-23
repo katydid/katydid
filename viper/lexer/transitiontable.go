@@ -111,6 +111,14 @@ var TransTab = TransitionTable{
 	// S1
 	func(r rune) int {
 		switch {
+		case r == 9: // ['\t','\t']
+			return 1
+		case r == 10: // ['\n','\n']
+			return 1
+		case r == 13: // ['\r','\r']
+			return 1
+		case r == 32: // [' ',' ']
+			return 1
 
 		}
 		return NoState
