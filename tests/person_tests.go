@@ -371,12 +371,12 @@ func init() {
 }
 
 var CorrectTypePerson = G{"main": InOrder(
-	In("Name", Value(TypeString())),
+	In("Name", Value(TypeString(StringVar()))),
 	Any(),
 )}
 
 var WrongTypePerson = G{"main": InOrder(
-	In("Name", Value(TypeInt())),
+	In("Name", Value(TypeInt(IntVar()))),
 	Any(),
 )}
 

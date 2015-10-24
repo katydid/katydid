@@ -16,8 +16,8 @@ func init() {
 	Register("type", new(typDouble))
 }
 
-func TypeDouble() Bool {
-	return &typDouble{E: DoubleVar()}
+func TypeDouble(v Double) Bool {
+	return &typDouble{E: v}
 }
 
 type typInt struct {
@@ -33,8 +33,8 @@ func init() {
 	Register("type", new(typInt))
 }
 
-func TypeInt() Bool {
-	return &typInt{E: IntVar()}
+func TypeInt(v Int) Bool {
+	return &typInt{E: v}
 }
 
 type typUint struct {
@@ -50,8 +50,8 @@ func init() {
 	Register("type", new(typUint))
 }
 
-func TypeUint() Bool {
-	return &typUint{E: UintVar()}
+func TypeUint(v Uint) Bool {
+	return &typUint{E: v}
 }
 
 type typBool struct {
@@ -67,8 +67,8 @@ func init() {
 	Register("type", new(typBool))
 }
 
-func TypeBool() Bool {
-	return &typBool{E: BoolVar()}
+func TypeBool(v Bool) Bool {
+	return &typBool{E: v}
 }
 
 type typString struct {
@@ -84,8 +84,8 @@ func init() {
 	Register("type", new(typString))
 }
 
-func TypeString() Bool {
-	return &typString{E: StringVar()}
+func TypeString(v String) Bool {
+	return &typString{E: v}
 }
 
 type typBytes struct {
@@ -101,6 +101,6 @@ func init() {
 	Register("type", new(typBytes))
 }
 
-func TypeBytes() Bool {
-	return &typBytes{E: BytesVar()}
+func TypeBytes(v Bytes) Bool {
+	return &typBytes{E: v}
 }

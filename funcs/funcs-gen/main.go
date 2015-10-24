@@ -364,8 +364,8 @@ func init() {
 	Register("type", new(typ{{.Name}}))
 }
 
-func Type{{.Name}}() Bool {
-	return &typ{{.Name}}{E: {{.Name}}Var()}
+func Type{{.Name}}(v {{.Name}}) Bool {
+	return &typ{{.Name}}{E: v}
 }
 `
 
