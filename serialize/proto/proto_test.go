@@ -12,17 +12,21 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package reflect
+package proto
 
 import (
+	"github.com/gogo/protobuf/proto"
 	"github.com/katydid/katydid/serialize/debug"
-	"reflect"
 	"testing"
 )
 
 func TestDebug(t *testing.T) {
-	p := NewReflectParser()
-	p.Init(reflect.ValueOf(debug.Input))
+	p := NewProtoParser("debug", "Debug", debug.DebugDescription())
+	data, err := proto.Marshal(debug.Input)
+	if err != nil {
+		panic(err)
+	}
+	p.Init(data)
 	m := debug.Walk(p)
 	if !m.Equal(debug.Output) {
 		t.Fatalf("expected %s but got %s", debug.Output, m)

@@ -22,48 +22,16 @@ import (
 	"testing"
 )
 
-type TheStruct struct {
-	A int64
-	B []string     `json:",omitempty"`
-	C *TheStruct   `json:",omitempty"`
-	D *int32       `json:",omitempty"`
-	E []*TheStruct `json:",omitempty"`
-}
-
-func TestJson(t *testing.T) {
+func TestDebug(t *testing.T) {
 	p := sjson.NewJsonParser()
-	three := int32(3)
-	four := int32(4)
-	s := &TheStruct{
-		A: int64(1),
-		B: []string{"b2", "b3"},
-		C: &TheStruct{
-			A: int64(2),
-			D: &three,
-			E: []*TheStruct{
-				&TheStruct{
-					B: []string{"b4"},
-				},
-				&TheStruct{
-					B: []string{"b5"},
-				},
-			},
-		},
-		D: &four,
-	}
-	data, err := json.Marshal(s)
+	data, err := json.Marshal(debug.Input)
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Logf("%s", string(data))
 	p.Init(data)
 	m := debug.Walk(p)
-	t.Logf("%v", m)
-	if len(m[1].Children) != 2 {
-		t.Fatalf("expected list of length 2")
-	}
-	if m[2].Children[2].Children[0].Label != "\"0\"" {
-		t.Fatalf("expected child in slices of structs got %v", m[2].Children[2].Children[0].Label)
+	if !m.Equal(debug.Output) {
+		t.Fatalf("expected %s but got %s", debug.Output, m)
 	}
 }
 

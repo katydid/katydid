@@ -1,0 +1,16 @@
+syntax = "proto2";
+
+package debug;
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+option (gogoproto.gostring_all) = true;
+
+message Debug {
+  option (gogoproto.description) = true;
+  optional int64 A = 1 [(gogoproto.nullable) = false];
+  repeated string B = 2;
+  optional Debug C = 3;
+  optional int32 D = 4;
+  repeated Debug E = 5;
+}

@@ -13,9 +13,4 @@
 # limitations under the License.
 
 regenerate:
-	go install github.com/katydid/katydid/serialize/serialize-gen
-	serialize-gen ./
-	cd debug && make regenerate
-
-nuke:
-	rm value.gen.go || true
+	(protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf debug.proto)
