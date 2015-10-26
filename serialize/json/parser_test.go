@@ -15,36 +15,55 @@
 package json_test
 
 import (
-	"bytes"
 	"encoding/json"
 	"github.com/katydid/katydid/serialize/debug"
 	sjson "github.com/katydid/katydid/serialize/json"
+	"strconv"
 	"testing"
 )
 
-func TestJsonParser(t *testing.T) {
-	j := map[string][]interface{}{
-		"a": {1},
-		"b": {
-			map[string][]interface{}{
-				"ba": {1, 2, 3},
-				"bb": {"string"},
+type TheStruct struct {
+	A int64
+	B []string     `json:",omitempty"`
+	C *TheStruct   `json:",omitempty"`
+	D *int32       `json:",omitempty"`
+	E []*TheStruct `json:",omitempty"`
+}
+
+func TestJson(t *testing.T) {
+	p := sjson.NewJsonParser()
+	three := int32(3)
+	four := int32(4)
+	s := &TheStruct{
+		A: int64(1),
+		B: []string{"b2", "b3"},
+		C: &TheStruct{
+			A: int64(2),
+			D: &three,
+			E: []*TheStruct{
+				&TheStruct{
+					B: []string{"b4"},
+				},
+				&TheStruct{
+					B: []string{"b5"},
+				},
 			},
 		},
+		D: &four,
 	}
-	data, err := json.Marshal(j)
+	data, err := json.Marshal(s)
 	if err != nil {
 		t.Fatal(err)
 	}
-	parser := sjson.NewJsonParser()
-	parser.Init(data)
-	jout := debug.Walk(parser)
-	data2, err := json.Marshal(jout)
-	if err != nil {
-		panic(err)
+	t.Logf("%s", string(data))
+	p.Init(data)
+	m := debug.Walk(p)
+	t.Logf("%v", m)
+	if len(m[1].Children) != 2 {
+		t.Fatalf("expected list of length 2")
 	}
-	if !bytes.Equal(data, data2) {
-		t.Error("bytes not equal")
+	if m[2].Children[2].Children[0].Label != "\"0\"" {
+		t.Fatalf("expected child in slices of structs got %v", m[2].Children[2].Children[0].Label)
 	}
 }
 
@@ -59,13 +78,13 @@ func TestEscapedChar(t *testing.T) {
 	t.Logf("%s", string(data))
 	parser := sjson.NewJsonParser()
 	parser.Init(data)
-	jout := debug.Walk(parser)
-	data2, err := json.Marshal(jout)
+	m := debug.Walk(parser)
+	name, err := strconv.Unquote(m[0].Label)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
-	if !bytes.Equal(data, data2) {
-		t.Error("bytes not equal")
+	if name != `a\"` {
+		t.Fatalf("wrong escaped name %s", name)
 	}
 }
 
@@ -76,5 +95,5 @@ func TestMultiLineArray(t *testing.T) {
 	parser := sjson.NewJsonParser()
 	parser.Init([]byte(s))
 	jout := debug.Walk(parser)
-	t.Logf("%#v", jout)
+	t.Logf("%v", jout)
 }

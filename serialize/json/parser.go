@@ -190,6 +190,31 @@ func (s *jsonParser) scanNull() error {
 	return s.skipSpace()
 }
 
+func (s *jsonParser) scanArray() error {
+	count := 0
+	index := 0
+	for i, c := range s.buf[s.offset:] {
+		if c == '[' {
+			count++
+		}
+		if c == ']' {
+			count--
+		}
+		if count == 0 {
+			index = i
+			break
+		}
+	}
+	if count != 0 {
+		s.expected("]")
+	}
+	s.startValueOffset = s.offset
+	s.endValueOffset = s.offset + index + 1
+	s.offset += index + 1
+	s.isValueArray = true
+	return s.skipSpace()
+}
+
 func (s *jsonParser) scanObject() error {
 	count := 0
 	index := 0
@@ -293,7 +318,6 @@ func (s *jsonParser) scanValue() error {
 	case '{':
 		return s.scanObject()
 	case '[':
-		s.firstArrayValue = true
 		return s.scanArray()
 	case 't':
 		return s.scanTrue()
@@ -335,8 +359,7 @@ func (s *jsonParser) scanComma() error {
 	return s.skipSpace()
 }
 
-func (s *jsonParser) scanArray() error {
-	s.inArray = true
+func (s *jsonParser) nextValueInArray() error {
 	if s.firstArrayValue {
 		if err := s.scanOpenArray(); err != nil {
 			return err
@@ -348,12 +371,10 @@ func (s *jsonParser) scanArray() error {
 				return err
 			}
 		} else {
-			s.inArray = false
 			return s.scanCloseArray()
 		}
 	}
 	if s.buf[s.offset] == ']' {
-		s.inArray = false
 		return s.scanCloseArray()
 	}
 	return s.scanValue()
@@ -400,24 +421,17 @@ func (s *jsonParser) Next() error {
 		return io.EOF
 	}
 	s.isValueObject = false
+	s.isValueArray = false
 	if err := s.skipSpace(); err != nil {
 		return err
 	}
-	if !s.inArray {
-		return s.nextValueInObject()
-	}
-	err := s.scanArray()
-	if err != nil {
-		if err == io.EOF {
-			s.offset++
-			if err := s.skipSpace(); err != nil {
-				return err
-			}
-			return s.nextValueInObject()
+	if s.inArray {
+		if !s.firstArrayValue {
+			s.arrayIndex++
 		}
-		return err
+		return s.nextValueInArray()
 	}
-	return nil
+	return s.nextValueInObject()
 }
 
 func (s *jsonParser) IsLeaf() bool {
@@ -480,6 +494,9 @@ func (s *jsonParser) String() (string, error) {
 		}
 		return res, nil
 	}
+	if s.inArray {
+		return strconv.Itoa(s.arrayIndex), nil
+	}
 	return s.name, nil
 }
 
@@ -524,7 +541,9 @@ type state struct {
 	firstObjectValue bool
 	firstArrayValue  bool
 	isValueObject    bool
+	isValueArray     bool
 	isLeaf           bool
+	arrayIndex       int
 }
 
 func (s state) Copy() state {
@@ -540,7 +559,9 @@ func (s state) Copy() state {
 		firstObjectValue: s.firstObjectValue,
 		firstArrayValue:  s.firstArrayValue,
 		isValueObject:    s.isValueObject,
+		isValueArray:     s.isValueArray,
 		isLeaf:           s.isLeaf,
+		arrayIndex:       s.arrayIndex,
 	}
 }
 
@@ -568,6 +589,13 @@ func (s *jsonParser) Down() {
 		s.state = state{
 			buf:              s.buf[s.startValueOffset:s.endValueOffset],
 			firstObjectValue: true,
+		}
+	} else if s.isValueArray {
+		s.stack = append(s.stack, s.state)
+		s.state = state{
+			buf:             s.buf[s.startValueOffset:s.endValueOffset],
+			firstArrayValue: true,
+			inArray:         true,
 		}
 	} else {
 		s.stack = append(s.stack, s.state)
