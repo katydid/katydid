@@ -20,8 +20,8 @@ import (
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 	"github.com/katydid/katydid/serialize"
 	"io"
-	//"log"
 	"reflect"
+	"strconv"
 	"unsafe"
 )
 
@@ -152,13 +152,6 @@ func (this *descMap) lookupField(msg *descriptor.DescriptorProto, key uint64) (*
 	return f, ok
 }
 
-type ProtoTokens interface {
-	LookupKey(src int, key uint64) (int, string, bool)
-	IsLeaf(int) bool
-	LookupType(src int) descriptor.FieldDescriptorProto_Type
-	LookupName(src int) string
-}
-
 type protoParser struct {
 	descMap *descMap
 	state
@@ -178,13 +171,16 @@ func (this *protoParser) Copy() serialize.Parser {
 }
 
 type state struct {
-	buf     []byte
-	parent  *descriptor.DescriptorProto
-	offset  int
-	length  int
-	field   *descriptor.FieldDescriptorProto
-	isLeaf  bool
-	hadLeaf bool
+	buf           []byte
+	parent        *descriptor.DescriptorProto
+	offset        int
+	length        int
+	field         *descriptor.FieldDescriptorProto
+	isLeaf        bool
+	hadLeaf       bool
+	isRepeated    bool
+	inRepeated    bool
+	indexRepeated int
 }
 
 type BytesParser interface {
@@ -216,7 +212,6 @@ func (s *protoParser) Init(buf []byte) error {
 }
 
 func (s *protoParser) Next() error {
-	//log.Printf("Next %d/%d", s.offset, len(s.buf))
 	if s.isLeaf {
 		if s.hadLeaf {
 			return io.EOF
@@ -224,32 +219,91 @@ func (s *protoParser) Next() error {
 		s.hadLeaf = true
 		return nil
 	}
+	// This field is repeated, but Next is called,
+	//   => all elements in the repeated field should be skipped
+	//   and the Next field should be retrieved.
+	if s.isRepeated && !s.inRepeated {
+		if err := s.skipRepeated(); err != nil {
+			return err
+		}
+		s.isRepeated = false
+		s.length = 0
+	}
+
 	s.offset += s.length
 	if s.offset >= len(s.buf) {
 		if s.offset == len(s.buf) {
+			s.length = 0
 			return io.EOF
 		}
 		return io.ErrShortBuffer
 	}
+
+	if s.inRepeated {
+		v, n, err := uvarint(s.buf[s.offset:])
+		if err != nil {
+			return err
+		}
+		field, ok := s.descMap.lookupField(s.parent, v)
+		if !ok {
+			s.length = 0
+			s.isRepeated = false
+			return io.EOF
+		}
+		if field.GetNumber() != s.field.GetNumber() {
+			s.length = 0
+			s.isRepeated = false
+			return io.EOF
+		}
+		s.offset += n
+		wireType := int(v & 0x7)
+		n, l, err := length(wireType, s.buf[s.offset:])
+		if err != nil {
+			return err
+		}
+		s.offset += n
+		s.length = l
+		s.indexRepeated++
+		return nil
+	}
+
 	v, n, err := uvarint(s.buf[s.offset:])
 	if err != nil {
 		return err
 	}
-	s.offset += n
-	wireType := int(v & 0x7)
-	n, l, err := length(wireType, s.buf[s.offset:])
-	if err != nil {
-		return err
-	}
-	s.offset += n
-	s.length = l
 	field, ok := s.descMap.lookupField(s.parent, v)
+	if !ok || !field.IsRepeated() {
+		s.offset += n
+		wireType := int(v & 0x7)
+		n, l, err := length(wireType, s.buf[s.offset:])
+		if err != nil {
+			return err
+		}
+		s.offset += n
+		s.length = l
+	}
 	if ok {
-		//log.Printf("Return %d", s.offset)
+		if field.IsRepeated() {
+			s.isRepeated = true
+			s.length = 0
+		}
 		s.field = field
 		return nil
 	}
 	return s.Next()
+}
+
+func (s *protoParser) skipRepeated() error {
+	s.Down()
+	err := s.Next()
+	for err == nil {
+		err = s.Next()
+	}
+	if err != io.EOF {
+		return err
+	}
+	s.Up()
+	return nil
 }
 
 func (s *protoParser) IsLeaf() bool {
@@ -262,6 +316,10 @@ func (s *protoParser) Value() []byte {
 
 func (s *protoParser) Double() (float64, error) {
 	if !s.isLeaf {
+		return 0, serialize.ErrNotDouble
+	}
+	if s.field.GetType() != descriptor.FieldDescriptorProto_TYPE_DOUBLE &&
+		s.field.GetType() != descriptor.FieldDescriptorProto_TYPE_FLOAT {
 		return 0, serialize.ErrNotDouble
 	}
 	buf := s.Value()
@@ -326,6 +384,9 @@ func (s *protoParser) Bool() (bool, error) {
 	if !s.isLeaf {
 		return false, serialize.ErrNotBool
 	}
+	if s.field.GetType() != descriptor.FieldDescriptorProto_TYPE_BOOL {
+		return false, serialize.ErrNotBool
+	}
 	buf := s.Value()
 	v, n := binary.Uvarint(buf)
 	if n <= 0 {
@@ -336,6 +397,9 @@ func (s *protoParser) Bool() (bool, error) {
 
 func (s *protoParser) String() (string, error) {
 	if !s.isLeaf {
+		if s.inRepeated {
+			return strconv.Itoa(s.indexRepeated - 1), nil
+		}
 		return s.field.GetName(), nil
 	}
 	buf := s.Value()
@@ -436,20 +500,35 @@ func (s *protoParser) decodeSint64() (int64, error) {
 
 func (s *protoParser) Up() {
 	top := len(s.stack) - 1
+	offset := s.offset
+	length := s.length
+	inRepeated := s.inRepeated
 	s.state = s.stack[top]
 	s.stack = s.stack[:top]
+	if inRepeated {
+		s.offset = offset + length
+	}
 }
 
 func (s *protoParser) Down() {
-	if s.field.IsMessage() {
+	if s.isRepeated && !s.inRepeated {
+		s.stack = append(s.stack, s.state)
+		s.inRepeated = true
+		s.indexRepeated = 0
+		s.length = 0
+	} else if s.field.IsMessage() {
 		s.stack = append(s.stack, s.state)
 		s.buf = s.buf[s.offset : s.offset+s.length]
 		s.parent = s.descMap.lookupMessage(s.field)
 		s.offset = 0
 		s.length = 0
 		s.field = nil
-		return
+		s.inRepeated = false
+		s.isRepeated = false
+	} else {
+		s.stack = append(s.stack, s.state)
+		s.isLeaf = true
+		s.inRepeated = false
+		s.isRepeated = false
 	}
-	s.stack = append(s.stack, s.state)
-	s.isLeaf = true
 }

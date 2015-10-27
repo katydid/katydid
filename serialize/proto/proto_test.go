@@ -16,7 +16,9 @@ package proto
 
 import (
 	"github.com/gogo/protobuf/proto"
+	"github.com/katydid/katydid/serialize"
 	"github.com/katydid/katydid/serialize/debug"
+	"io"
 	"testing"
 )
 
@@ -27,8 +29,73 @@ func TestDebug(t *testing.T) {
 		panic(err)
 	}
 	p.Init(data)
-	m := debug.Walk(p)
+	parser := debug.NewLogger(p, debug.NewLineLogger())
+	m := debug.Walk(parser)
 	if !m.Equal(debug.Output) {
 		t.Fatalf("expected %s but got %s", debug.Output, m)
 	}
+}
+
+func TestRandomDebug(t *testing.T) {
+	p := NewProtoParser("debug", "Debug", debug.DebugDescription())
+	data, err := proto.Marshal(debug.Input)
+	if err != nil {
+		panic(err)
+	}
+	for i := 0; i < 10; i++ {
+		p.Init(data)
+		//l := debug.NewLogger(p, debug.NewLineLogger())
+		debug.RandomWalk(p, debug.NewRand(), 10, 3)
+		//t.Logf("original %v vs random %v", debug.Output, m)
+	}
+}
+
+func next(t *testing.T, parser serialize.Parser) {
+	if err := parser.Next(); err != nil {
+		if err != io.EOF {
+			t.Fatal(err)
+		}
+	}
+}
+
+func TestSkipRepeated1(t *testing.T) {
+	p := NewProtoParser("debug", "Debug", debug.DebugDescription())
+	data, err := proto.Marshal(debug.Input)
+	if err != nil {
+		panic(err)
+	}
+	p.Init(data)
+	parser := debug.NewLogger(p, debug.NewLineLogger())
+	next(t, parser)
+	next(t, parser)
+	parser.Down()
+	next(t, parser)
+	parser.Down()
+	parser.Up()
+	next(t, parser)
+	parser.Down()
+	next(t, parser)
+	next(t, parser)
+	parser.Up()
+	parser.Up()
+	next(t, parser)
+}
+
+func TestSkipRepeated2(t *testing.T) {
+	p := NewProtoParser("debug", "Debug", debug.DebugDescription())
+	data, err := proto.Marshal(debug.Input)
+	if err != nil {
+		panic(err)
+	}
+	p.Init(data)
+	parser := debug.NewLogger(p, debug.NewLineLogger())
+	next(t, parser)
+	parser.String()
+	next(t, parser)
+	parser.String()
+	parser.Down()
+	next(t, parser)
+	parser.String()
+	parser.Up()
+	next(t, parser)
 }

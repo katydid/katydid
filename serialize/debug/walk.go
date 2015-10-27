@@ -18,7 +18,9 @@ import (
 	"fmt"
 	"github.com/katydid/katydid/serialize"
 	"io"
+	"math/rand"
 	"strings"
+	"time"
 )
 
 func getValue(parser serialize.Parser) interface{} {
@@ -113,6 +115,44 @@ func Walk(parser serialize.Parser) Nodes {
 			parser.Down()
 			v := Walk(parser)
 			parser.Up()
+			a = append(a, Node{name, v})
+		}
+	}
+	return a
+}
+
+func NewRand() Rand {
+	return rand.New(rand.NewSource(time.Now().UnixNano()))
+}
+
+type Rand interface {
+	Intn(n int) int
+}
+
+func RandomWalk(parser serialize.Parser, r Rand, next, down int) Nodes {
+	a := make(Nodes, 0)
+	for {
+		if r.Intn(next) == 0 {
+			break
+		}
+		if err := parser.Next(); err != nil {
+			if err == io.EOF {
+				break
+			} else {
+				panic(err)
+			}
+		}
+		value := getValue(parser)
+		if parser.IsLeaf() {
+			a = append(a, Node{fmt.Sprintf("%#v", value), nil})
+		} else {
+			name := fmt.Sprintf("%#v", value)
+			var v Nodes
+			if r.Intn(down) != 0 {
+				parser.Down()
+				v = RandomWalk(parser, r, next, down)
+				parser.Up()
+			}
 			a = append(a, Node{name, v})
 		}
 	}
