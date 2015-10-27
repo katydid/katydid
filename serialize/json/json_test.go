@@ -35,6 +35,20 @@ func TestDebug(t *testing.T) {
 	}
 }
 
+func TestRandomDebug(t *testing.T) {
+	p := sjson.NewJsonParser()
+	data, err := json.Marshal(debug.Input)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i := 0; i < 10; i++ {
+		p.Init(data)
+		//l := debug.NewLogger(p, debug.NewLineLogger())
+		debug.RandomWalk(p, debug.NewRand(), 10, 3)
+		//t.Logf("original %v vs random %v", debug.Output, m)
+	}
+}
+
 func TestEscapedChar(t *testing.T) {
 	j := map[string][]interface{}{
 		`a\"`: {1},

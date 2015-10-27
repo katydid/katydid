@@ -20,10 +20,6 @@ import (
 	"github.com/katydid/katydid/serialize"
 	"github.com/katydid/katydid/serialize/debug"
 	"testing"
-
-	exprparser "github.com/katydid/katydid/expr/parser"
-	"github.com/katydid/katydid/funcs"
-	"github.com/katydid/katydid/tests"
 )
 
 func test(t *testing.T, g *relapse.Grammar, parser serialize.Parser, expected bool, desc string) {
@@ -35,28 +31,4 @@ func test(t *testing.T, g *relapse.Grammar, parser serialize.Parser, expected bo
 	if match != expected {
 		t.Fatalf("Expected %v on given \n%s\n on \n%s", expected, g.String(), desc)
 	}
-}
-
-// var RobertPerson = &Person{
-// 	Name: proto.String("Robert"),
-// 	Addresses: []*Address{
-// 		{
-// 			Number: proto.Int64(456),
-// 			Street: proto.String("TheStreet"),
-// 		},
-// 	},
-// 	Telephone: proto.String("0127897897"),
-// }
-
-func TestWithSomeTreeNode(t *testing.T) {
-	expr, err := exprparser.NewParser().ParseExpr(funcs.Sprint(funcs.IntVarEq(funcs.IntConst(456))))
-	if err != nil {
-		panic(err)
-	}
-	s := tests.Validators["ContextRobert"]["json"].Parser()
-	g := relapse.NewGrammar(map[string]*relapse.Pattern{
-		"main": relapse.NewWithSomeTreeNode(relapse.NewName("Addresses"),
-			relapse.NewWithSomeTreeNode(relapse.NewName("Number"), relapse.NewLeafNode(expr))),
-	})
-	test(t, g, s, true, "WithSomeTreeNode")
 }

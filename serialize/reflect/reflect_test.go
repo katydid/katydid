@@ -28,3 +28,13 @@ func TestDebug(t *testing.T) {
 		t.Fatalf("expected %s but got %s", debug.Output, m)
 	}
 }
+
+func TestRandomDebug(t *testing.T) {
+	p := NewReflectParser()
+	for i := 0; i < 10; i++ {
+		p.Init(reflect.ValueOf(debug.Input))
+		//l := debug.NewLogger(p, debug.NewLineLogger())
+		debug.RandomWalk(p, debug.NewRand(), 10, 3)
+		//t.Logf("original %v vs random %v", debug.Output, m)
+	}
+}

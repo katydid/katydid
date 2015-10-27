@@ -41,6 +41,7 @@ var exceptions = []string{
 	"typewriterprison.proto",
 	"list_of_functions.txt",
 	"proto/tokens/test.proto",
+	"serialize/debug/debug.proto",
 	"bnf",
 	"doc.go",
 	".svg",
