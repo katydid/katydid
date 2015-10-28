@@ -82,7 +82,7 @@ func (m *Grammar) GetAfter() *expr.Space {
 }
 
 type PatternDecl struct {
-	At      *expr.Keyword `protobuf:"bytes,1,opt" json:"At,omitempty"`
+	Hash    *expr.Keyword `protobuf:"bytes,1,opt" json:"Hash,omitempty"`
 	Before  *expr.Space   `protobuf:"bytes,2,opt" json:"Before,omitempty"`
 	Name    string        `protobuf:"bytes,3,opt" json:"Name"`
 	Eq      *expr.Keyword `protobuf:"bytes,4,opt" json:"Eq,omitempty"`
@@ -92,9 +92,9 @@ type PatternDecl struct {
 func (m *PatternDecl) Reset()      { *m = PatternDecl{} }
 func (*PatternDecl) ProtoMessage() {}
 
-func (m *PatternDecl) GetAt() *expr.Keyword {
+func (m *PatternDecl) GetHash() *expr.Keyword {
 	if m != nil {
-		return m.At
+		return m.Hash
 	}
 	return nil
 }
@@ -766,16 +766,16 @@ func (m *ZeroOrMore) GetStar() *expr.Keyword {
 }
 
 type Reference struct {
-	HashTag *expr.Keyword `protobuf:"bytes,1,opt" json:"HashTag,omitempty"`
-	Name    string        `protobuf:"bytes,2,opt" json:"Name"`
+	At   *expr.Keyword `protobuf:"bytes,1,opt" json:"At,omitempty"`
+	Name string        `protobuf:"bytes,2,opt" json:"Name"`
 }
 
 func (m *Reference) Reset()      { *m = Reference{} }
 func (*Reference) ProtoMessage() {}
 
-func (m *Reference) GetHashTag() *expr.Keyword {
+func (m *Reference) GetAt() *expr.Keyword {
 	if m != nil {
-		return m.HashTag
+		return m.At
 	}
 	return nil
 }
@@ -897,7 +897,7 @@ func (this *PatternDecl) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if !this.At.Equal(that1.At) {
+	if !this.Hash.Equal(that1.Hash) {
 		return false
 	}
 	if !this.Before.Equal(that1.Before) {
@@ -1509,7 +1509,7 @@ func (this *Reference) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if !this.HashTag.Equal(that1.HashTag) {
+	if !this.At.Equal(that1.At) {
 		return false
 	}
 	if this.Name != that1.Name {
@@ -1591,7 +1591,7 @@ func (this *PatternDecl) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.PatternDecl{` +
-		`At:` + fmt.Sprintf("%#v", this.At),
+		`Hash:` + fmt.Sprintf("%#v", this.Hash),
 		`Before:` + fmt.Sprintf("%#v", this.Before),
 		`Name:` + fmt.Sprintf("%#v", this.Name),
 		`Eq:` + fmt.Sprintf("%#v", this.Eq),
@@ -1789,7 +1789,7 @@ func (this *Reference) GoString() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&relapse.Reference{` +
-		`HashTag:` + fmt.Sprintf("%#v", this.HashTag),
+		`At:` + fmt.Sprintf("%#v", this.At),
 		`Name:` + fmt.Sprintf("%#v", this.Name) + `}`}, ", ")
 	return s
 }

@@ -33,7 +33,7 @@ func (this *Grammar) String() string {
 }
 
 func (this *PatternDecl) String() string {
-	return this.At.String() + this.Before.String() + this.Name +
+	return this.Hash.String() + this.Before.String() + this.Name +
 		this.Eq.String() + this.Pattern.String()
 }
 
@@ -130,7 +130,7 @@ func (this *ZeroOrMore) String() string {
 }
 
 func (this *Reference) String() string {
-	return this.HashTag.String() + this.Name
+	return this.At.String() + this.Name
 }
 
 func (this *Not) String() string {

@@ -23,10 +23,10 @@ import (
 func TestParse(t *testing.T) {
 	patternDecls := []string{
 		`a->hasQuotes("string_lit")`,
-		`#ref1
-		@ref1 = a->eq($int, int(123))
+		`@ref1
+		#ref1 = a->eq($int, int(123))
 		`,
-		`#main`,
+		`@main`,
 		`A [
 			a->eq($string, "123"), 
 			b->eq($string, "456")

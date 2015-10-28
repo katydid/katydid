@@ -31,7 +31,7 @@ message Grammar {
 }
 
 message PatternDecl {
-	optional expr.Keyword At = 1;
+	optional expr.Keyword Hash = 1;
 	optional expr.Space Before = 2;
 	optional string Name = 3 [(gogoproto.nullable) = false];
 	optional expr.Keyword Eq = 4;
@@ -159,7 +159,7 @@ message ZeroOrMore {
 }
 
 message Reference {
-	optional expr.Keyword HashTag = 1;
+	optional expr.Keyword At = 1;
 	optional string Name = 2 [(gogoproto.nullable) = false];
 }
 

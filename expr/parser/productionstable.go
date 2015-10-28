@@ -730,8 +730,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `HashTag : "#"	<< &expr.Keyword{Value: "#"}, nil >>`,
-		Id:         "HashTag",
+		String: `Hash : "#"	<< &expr.Keyword{Value: "#"}, nil >>`,
+		Id:         "Hash",
 		NTType:     19,
 		Index:      66,
 		NumSymbols: 1,
@@ -740,11 +740,11 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `HashTag : Space "#"	<< &expr.Keyword{
+		String: `Hash : Space "#"	<< &expr.Keyword{
       Before: X[0].(*expr.Space),
       Value: "#",
     }, nil >>`,
-		Id:         "HashTag",
+		Id:         "Hash",
 		NTType:     19,
 		Index:      67,
 		NumSymbols: 2,

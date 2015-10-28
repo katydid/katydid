@@ -46,7 +46,7 @@ func NewGrammar(m map[string]*Pattern) *Grammar {
 				first = false
 			}
 			ps = append(ps, &PatternDecl{
-				At:      newAt(),
+				Hash:    newHash(),
 				Before:  before,
 				Name:    name,
 				Eq:      newEqual(),
@@ -86,7 +86,7 @@ func newEqual() *expr.Keyword {
 	return &expr.Keyword{Value: "="}
 }
 
-func newHashTag() *expr.Keyword {
+func newHash() *expr.Keyword {
 	return &expr.Keyword{Value: "#"}
 }
 
@@ -346,8 +346,8 @@ func NewZeroOrMore(pattern *Pattern) *Pattern {
 func NewReference(name string) *Pattern {
 	return &Pattern{
 		Reference: &Reference{
-			HashTag: newHashTag(),
-			Name:    name,
+			At:   newAt(),
+			Name: name,
 		},
 	}
 }

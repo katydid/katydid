@@ -400,7 +400,7 @@ SemiColon
   >>
   ;
 
-HashTag
+Hash
   : "#" << &expr.Keyword{Value: "#"}, nil >>
   | Space "#" << 
     &expr.Keyword{

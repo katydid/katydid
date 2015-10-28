@@ -24,7 +24,7 @@ func Format(g *Grammar) {
 		for i := range g.PatternDecls {
 			if g.PatternDecls[i].Name == "main" {
 				if !g.PatternDecls[i].Before.HasComment() &&
-					!g.PatternDecls[i].At.Before.HasComment() &&
+					!g.PatternDecls[i].Hash.Before.HasComment() &&
 					!g.PatternDecls[i].Eq.Before.HasComment() {
 					g.TopPattern = g.PatternDecls[i].Pattern
 					g.PatternDecls = append(g.PatternDecls[:i], g.PatternDecls[i+1:]...)

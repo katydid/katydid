@@ -128,8 +128,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `PatternDecl : At Space id Equal Pattern	<< &PatternDecl{
-      At: X[0].(*expr.Keyword),
+		String: `PatternDecl : Hash Space id Equal Pattern	<< &PatternDecl{
+      Hash: X[0].(*expr.Keyword),
       Before: X[1].(*expr.Space),
       Name: newString(X[2]),
       Eq: X[3].(*expr.Keyword),
@@ -141,7 +141,7 @@ var productionsTable = ProdTab{
 		NumSymbols: 5,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &PatternDecl{
-				At:      X[0].(*expr.Keyword),
+				Hash:    X[0].(*expr.Keyword),
 				Before:  X[1].(*expr.Space),
 				Name:    newString(X[2]),
 				Eq:      X[3].(*expr.Keyword),
@@ -150,8 +150,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `PatternDecl : At id Equal Pattern	<< &PatternDecl{
-      At: X[0].(*expr.Keyword),
+		String: `PatternDecl : Hash id Equal Pattern	<< &PatternDecl{
+      Hash: X[0].(*expr.Keyword),
       Name: newString(X[1]),
       Eq: X[2].(*expr.Keyword),
       Pattern: X[3].(*Pattern),
@@ -162,7 +162,7 @@ var productionsTable = ProdTab{
 		NumSymbols: 4,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &PatternDecl{
-				At:      X[0].(*expr.Keyword),
+				Hash:    X[0].(*expr.Keyword),
 				Name:    newString(X[1]),
 				Eq:      X[2].(*expr.Keyword),
 				Pattern: X[3].(*Pattern),
@@ -582,8 +582,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Pattern : HashTag id	<< &Pattern{Reference: &Reference{
-      HashTag: X[0].(*expr.Keyword),
+		String: `Pattern : At id	<< &Pattern{Reference: &Reference{
+      At: X[0].(*expr.Keyword),
       Name: newString(X[1]),
     }}, nil >>`,
 		Id:         "Pattern",
@@ -592,8 +592,8 @@ var productionsTable = ProdTab{
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Pattern{Reference: &Reference{
-				HashTag: X[0].(*expr.Keyword),
-				Name:    newString(X[1]),
+				At:   X[0].(*expr.Keyword),
+				Name: newString(X[1]),
 			}}, nil
 		},
 	},
@@ -1484,8 +1484,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `HashTag : "#"	<< &expr.Keyword{Value: "#"}, nil >>`,
-		Id:         "HashTag",
+		String: `Hash : "#"	<< &expr.Keyword{Value: "#"}, nil >>`,
+		Id:         "Hash",
 		NTType:     37,
 		Index:      118,
 		NumSymbols: 1,
@@ -1494,11 +1494,11 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `HashTag : Space "#"	<< &expr.Keyword{
+		String: `Hash : Space "#"	<< &expr.Keyword{
       Before: X[0].(*expr.Space),
       Value: "#",
     }, nil >>`,
-		Id:         "HashTag",
+		Id:         "Hash",
 		NTType:     37,
 		Index:      119,
 		NumSymbols: 2,

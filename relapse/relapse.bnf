@@ -13,20 +13,20 @@ PatternDecls
   ;
 
 PatternDecl
-  : At Space id Equal Pattern
+  : Hash Space id Equal Pattern
   <<
     &PatternDecl{
-      At: $0.(*expr.Keyword),
+      Hash: $0.(*expr.Keyword),
       Before: $1.(*expr.Space),
       Name: newString($2),
       Eq: $3.(*expr.Keyword),
       Pattern: $4.(*Pattern),
     }, nil
   >>
-  | At id Equal Pattern
+  | Hash id Equal Pattern
   <<
     &PatternDecl{
-      At: $0.(*expr.Keyword),
+      Hash: $0.(*expr.Keyword),
       Name: newString($1),
       Eq: $2.(*expr.Keyword),
       Pattern: $3.(*Pattern),
@@ -176,9 +176,9 @@ Pattern
       Star: $3.(*expr.Keyword),
     }}, nil
   >>
-  | HashTag id <<
+  | At id <<
     &Pattern{Reference: &Reference{
-      HashTag: $0.(*expr.Keyword),
+      At: $0.(*expr.Keyword),
       Name: newString($1),
     }}, nil
   >>
