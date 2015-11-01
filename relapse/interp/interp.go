@@ -30,11 +30,11 @@ func Interpret(g *relapse.Grammar, tree serialize.Parser) bool {
 	res = refs["main"]
 	err := tree.Next()
 	for err == nil {
-		name, nameErr := tree.String()
-		if nameErr != nil {
-			panic(nameErr)
-		}
-		log.Printf("Interpret = %s given input %s", res, name)
+		// name, nameErr := tree.String()
+		// if nameErr != nil {
+		// 	panic(nameErr)
+		// }
+		// log.Printf("Interpret = %s given input %s", res, name)
 		res = sderiv(refs, res, tree)
 		err = tree.Next()
 	}
@@ -107,13 +107,13 @@ func derivTreeNode(refs relapse.RefLookup, p *relapse.TreeNode, tree serialize.P
 	res := p.GetPattern()
 	err := tree.Next()
 	for err == nil {
-		if !tree.IsLeaf() {
-			name1, nameErr1 := tree.String()
-			if nameErr1 != nil {
-				panic(nameErr1)
-			}
-			log.Printf("derivTreeNode = %s given input %s", res, name1)
-		}
+		// if !tree.IsLeaf() {
+		// 	name1, nameErr1 := tree.String()
+		// 	if nameErr1 != nil {
+		// 		panic(nameErr1)
+		// 	}
+		// 	log.Printf("derivTreeNode = %s given input %s", res, name1)
+		// }
 		res = sderiv(refs, res, tree)
 		err = tree.Next()
 	}
@@ -173,14 +173,16 @@ func deriv(refs relapse.RefLookup, p *relapse.Pattern, tree serialize.Parser) *r
 			return leftDeriv
 		}
 	case *relapse.Or:
+		treeCopy := tree.Copy()
 		return relapse.NewOr(
 			sderiv(refs, v.GetLeftPattern(), tree),
-			sderiv(refs, v.GetRightPattern(), tree.Copy()),
+			sderiv(refs, v.GetRightPattern(), treeCopy),
 		)
 	case *relapse.And:
+		treeCopy := tree.Copy()
 		return relapse.NewAnd(
 			sderiv(refs, v.GetLeftPattern(), tree),
-			sderiv(refs, v.GetRightPattern(), tree.Copy()),
+			sderiv(refs, v.GetRightPattern(), treeCopy),
 		)
 	case *relapse.ZeroOrMore:
 		return relapse.NewConcat(sderiv(refs, v.Pattern, tree), relapse.NewZeroOrMore(v.Pattern))
