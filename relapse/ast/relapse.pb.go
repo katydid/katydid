@@ -24,9 +24,7 @@
 		LeafNode
 		Concat
 		Or
-		WithSomeOr
 		And
-		WithSomeAnd
 		ZeroOrMore
 		Reference
 		Not
@@ -589,52 +587,6 @@ func (m *Or) GetCloseParen() *expr.Keyword {
 	return nil
 }
 
-type WithSomeOr struct {
-	OpenCurly    *expr.Keyword `protobuf:"bytes,1,opt" json:"OpenCurly,omitempty"`
-	LeftPattern  *Pattern      `protobuf:"bytes,2,opt" json:"LeftPattern,omitempty"`
-	Pipe         *expr.Keyword `protobuf:"bytes,3,opt" json:"Pipe,omitempty"`
-	RightPattern *Pattern      `protobuf:"bytes,4,opt" json:"RightPattern,omitempty"`
-	CloseCurly   *expr.Keyword `protobuf:"bytes,5,opt" json:"CloseCurly,omitempty"`
-}
-
-func (m *WithSomeOr) Reset()      { *m = WithSomeOr{} }
-func (*WithSomeOr) ProtoMessage() {}
-
-func (m *WithSomeOr) GetOpenCurly() *expr.Keyword {
-	if m != nil {
-		return m.OpenCurly
-	}
-	return nil
-}
-
-func (m *WithSomeOr) GetLeftPattern() *Pattern {
-	if m != nil {
-		return m.LeftPattern
-	}
-	return nil
-}
-
-func (m *WithSomeOr) GetPipe() *expr.Keyword {
-	if m != nil {
-		return m.Pipe
-	}
-	return nil
-}
-
-func (m *WithSomeOr) GetRightPattern() *Pattern {
-	if m != nil {
-		return m.RightPattern
-	}
-	return nil
-}
-
-func (m *WithSomeOr) GetCloseCurly() *expr.Keyword {
-	if m != nil {
-		return m.CloseCurly
-	}
-	return nil
-}
-
 type And struct {
 	OpenParen    *expr.Keyword `protobuf:"bytes,1,opt" json:"OpenParen,omitempty"`
 	LeftPattern  *Pattern      `protobuf:"bytes,2,opt" json:"LeftPattern,omitempty"`
@@ -677,52 +629,6 @@ func (m *And) GetRightPattern() *Pattern {
 func (m *And) GetCloseParen() *expr.Keyword {
 	if m != nil {
 		return m.CloseParen
-	}
-	return nil
-}
-
-type WithSomeAnd struct {
-	OpenCurly    *expr.Keyword `protobuf:"bytes,1,opt" json:"OpenCurly,omitempty"`
-	LeftPattern  *Pattern      `protobuf:"bytes,2,opt" json:"LeftPattern,omitempty"`
-	Ampersand    *expr.Keyword `protobuf:"bytes,3,opt" json:"Ampersand,omitempty"`
-	RightPattern *Pattern      `protobuf:"bytes,4,opt" json:"RightPattern,omitempty"`
-	CloseCurly   *expr.Keyword `protobuf:"bytes,5,opt" json:"CloseCurly,omitempty"`
-}
-
-func (m *WithSomeAnd) Reset()      { *m = WithSomeAnd{} }
-func (*WithSomeAnd) ProtoMessage() {}
-
-func (m *WithSomeAnd) GetOpenCurly() *expr.Keyword {
-	if m != nil {
-		return m.OpenCurly
-	}
-	return nil
-}
-
-func (m *WithSomeAnd) GetLeftPattern() *Pattern {
-	if m != nil {
-		return m.LeftPattern
-	}
-	return nil
-}
-
-func (m *WithSomeAnd) GetAmpersand() *expr.Keyword {
-	if m != nil {
-		return m.Ampersand
-	}
-	return nil
-}
-
-func (m *WithSomeAnd) GetRightPattern() *Pattern {
-	if m != nil {
-		return m.RightPattern
-	}
-	return nil
-}
-
-func (m *WithSomeAnd) GetCloseCurly() *expr.Keyword {
-	if m != nil {
-		return m.CloseCurly
 	}
 	return nil
 }
@@ -1344,43 +1250,6 @@ func (this *Or) Equal(that interface{}) bool {
 	}
 	return true
 }
-func (this *WithSomeOr) Equal(that interface{}) bool {
-	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
-	}
-
-	that1, ok := that.(*WithSomeOr)
-	if !ok {
-		return false
-	}
-	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
-	} else if this == nil {
-		return false
-	}
-	if !this.OpenCurly.Equal(that1.OpenCurly) {
-		return false
-	}
-	if !this.LeftPattern.Equal(that1.LeftPattern) {
-		return false
-	}
-	if !this.Pipe.Equal(that1.Pipe) {
-		return false
-	}
-	if !this.RightPattern.Equal(that1.RightPattern) {
-		return false
-	}
-	if !this.CloseCurly.Equal(that1.CloseCurly) {
-		return false
-	}
-	return true
-}
 func (this *And) Equal(that interface{}) bool {
 	if that == nil {
 		if this == nil {
@@ -1414,43 +1283,6 @@ func (this *And) Equal(that interface{}) bool {
 		return false
 	}
 	if !this.CloseParen.Equal(that1.CloseParen) {
-		return false
-	}
-	return true
-}
-func (this *WithSomeAnd) Equal(that interface{}) bool {
-	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
-	}
-
-	that1, ok := that.(*WithSomeAnd)
-	if !ok {
-		return false
-	}
-	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
-	} else if this == nil {
-		return false
-	}
-	if !this.OpenCurly.Equal(that1.OpenCurly) {
-		return false
-	}
-	if !this.LeftPattern.Equal(that1.LeftPattern) {
-		return false
-	}
-	if !this.Ampersand.Equal(that1.Ampersand) {
-		return false
-	}
-	if !this.RightPattern.Equal(that1.RightPattern) {
-		return false
-	}
-	if !this.CloseCurly.Equal(that1.CloseCurly) {
 		return false
 	}
 	return true
@@ -1737,18 +1569,6 @@ func (this *Or) GoString() string {
 		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
 	return s
 }
-func (this *WithSomeOr) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&relapse.WithSomeOr{` +
-		`OpenCurly:` + fmt.Sprintf("%#v", this.OpenCurly),
-		`LeftPattern:` + fmt.Sprintf("%#v", this.LeftPattern),
-		`Pipe:` + fmt.Sprintf("%#v", this.Pipe),
-		`RightPattern:` + fmt.Sprintf("%#v", this.RightPattern),
-		`CloseCurly:` + fmt.Sprintf("%#v", this.CloseCurly) + `}`}, ", ")
-	return s
-}
 func (this *And) GoString() string {
 	if this == nil {
 		return "nil"
@@ -1759,18 +1579,6 @@ func (this *And) GoString() string {
 		`Ampersand:` + fmt.Sprintf("%#v", this.Ampersand),
 		`RightPattern:` + fmt.Sprintf("%#v", this.RightPattern),
 		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen) + `}`}, ", ")
-	return s
-}
-func (this *WithSomeAnd) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&relapse.WithSomeAnd{` +
-		`OpenCurly:` + fmt.Sprintf("%#v", this.OpenCurly),
-		`LeftPattern:` + fmt.Sprintf("%#v", this.LeftPattern),
-		`Ampersand:` + fmt.Sprintf("%#v", this.Ampersand),
-		`RightPattern:` + fmt.Sprintf("%#v", this.RightPattern),
-		`CloseCurly:` + fmt.Sprintf("%#v", this.CloseCurly) + `}`}, ", ")
 	return s
 }
 func (this *ZeroOrMore) GoString() string {

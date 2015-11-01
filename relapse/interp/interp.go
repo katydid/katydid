@@ -73,10 +73,6 @@ func Nullable(refs relapse.RefLookup, p *relapse.Pattern) bool {
 		return !(Nullable(refs, v.GetPattern()))
 	case *relapse.ZAny:
 		return true
-	case *relapse.WithSomeOr:
-		return Nullable(refs, v.GetLeftPattern()) || Nullable(refs, v.GetRightPattern())
-	case *relapse.WithSomeAnd:
-		return Nullable(refs, v.GetLeftPattern()) && Nullable(refs, v.GetRightPattern())
 	case *relapse.WithSomeTreeNode:
 		return Nullable(refs, v.GetPattern())
 	}
@@ -194,16 +190,6 @@ func deriv(refs relapse.RefLookup, p *relapse.Pattern, tree serialize.Parser) *r
 		return relapse.NewNot(sderiv(refs, v.GetPattern(), tree))
 	case *relapse.ZAny:
 		return deriv(refs, relapse.NewNot(relapse.NewEmptySet()), tree)
-	case *relapse.WithSomeOr:
-		left := relapse.NewConcat(relapse.NewZAny(), v.GetLeftPattern(), relapse.NewZAny())
-		right := relapse.NewConcat(relapse.NewZAny(), v.GetRightPattern(), relapse.NewZAny())
-		newor := relapse.NewOr(left, right)
-		return deriv(refs, newor, tree)
-	case *relapse.WithSomeAnd:
-		left := relapse.NewConcat(relapse.NewZAny(), v.GetLeftPattern(), relapse.NewZAny())
-		right := relapse.NewConcat(relapse.NewZAny(), v.GetRightPattern(), relapse.NewZAny())
-		newand := relapse.NewAnd(left, right)
-		return deriv(refs, newand, tree)
 	case *relapse.WithSomeTreeNode:
 		newp := relapse.NewConcat(relapse.NewZAny(), v.GetPattern(), relapse.NewZAny())
 		return deriv(refs, newp, tree)

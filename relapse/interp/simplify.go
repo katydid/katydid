@@ -62,10 +62,6 @@ func Simplify(refs relapse.RefLookup, p *relapse.Pattern) *relapse.Pattern {
 		return checkRef(refs, simplifyNot(Simplify(refs, v.GetPattern())))
 	case *relapse.ZAny:
 		return p
-	case *relapse.WithSomeAnd:
-		return p //TODO we can do better
-	case *relapse.WithSomeOr:
-		return p //TODO we can do better
 	case *relapse.WithSomeTreeNode:
 		return p //TODO we can do better
 	}
@@ -166,6 +162,12 @@ func simplifyAnd(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Patte
 func simplifyNot(p *relapse.Pattern) *relapse.Pattern {
 	if p.Not != nil {
 		return p.Not.GetPattern()
+	}
+	if p.EmptySet != nil {
+		return relapse.NewZAny()
+	}
+	if p.ZAny != nil {
+		return relapse.NewEmptySet()
 	}
 	return relapse.NewNot(p)
 }
