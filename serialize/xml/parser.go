@@ -166,7 +166,7 @@ func (p *parser) String() (string, error) {
 		if p.attrValue {
 			return p.attrs[p.attrIndex].Value, nil
 		} else {
-			return p.attrs[p.attrIndex].Name.Local, nil
+			return "@" + p.attrs[p.attrIndex].Name.Local, nil
 		}
 	}
 	if s, ok := p.tok.(StartElement); ok {

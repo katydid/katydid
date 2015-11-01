@@ -46,6 +46,7 @@ var exceptions = []string{
 	"doc.go",
 	".svg",
 	".txt",
+	"COPIED_FROM_GO",
 }
 
 func main() {
