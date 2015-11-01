@@ -15,7 +15,6 @@
 package xml
 
 import (
-	"bytes"
 	"fmt"
 	"github.com/katydid/katydid/serialize"
 	"io"
@@ -40,23 +39,22 @@ func NewXMLParser() *parser {
 
 func (p *parser) Init(buf []byte) error {
 	p.buf = buf
-	p.dec = NewDecoder(bytes.NewBuffer(buf))
+	p.dec = NewDecoder(NewBuffer(buf))
 	p.dec.Strict = false
 	return nil
 }
 
 func (p *parser) Copy() serialize.Parser {
-	offset := p.dec.InputOffset()
-	newp := NewXMLParser()
-	err := newp.Init(p.buf[offset:])
-	if err != nil {
-		panic(err)
+	return &parser{
+		buf:       p.buf,
+		dec:       p.dec.Copy(),
+		tok:       CopyToken(p.tok),
+		isLeaf:    p.isLeaf,
+		attrs:     copyAttrs(p.attrs),
+		attrIndex: p.attrIndex,
+		attrValue: p.attrValue,
+		attrFirst: p.attrFirst,
 	}
-	newp.tok, err = newp.dec.Token()
-	if err != nil {
-		panic(err)
-	}
-	return newp
 }
 
 func hasContent(c CharData) bool {

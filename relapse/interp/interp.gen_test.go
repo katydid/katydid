@@ -827,3 +827,13 @@ func TestWrongTypeRobertReflect(t *testing.T) {
 	v := tests.Validators["WrongTypeRobert"]["reflect"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
+
+func TestXmlContextDavidXml(t *testing.T) {
+	v := tests.Validators["XmlContextDavid"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestXmlContextRobertXml(t *testing.T) {
+	v := tests.Validators["XmlContextRobert"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}

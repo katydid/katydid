@@ -60,11 +60,12 @@ func init() {
 var XmlContextPerson = G{"main": In("Person", InPath("Addresses",
 	In("Number", Value(IntVarEq(IntConst(456)))),
 	In("Street", Value(StringVarEq(StringConst("TheStreet")))),
+	Any(),
 ))}
 
 func init() {
-	//TODO Validate("XmlContextDavid", XmlContextPerson, XML(DavidPerson), false)
-	//TODO Validate("XmlContextRobert", XmlContextPerson, XML(RobertPerson), true)
+	Validate("XmlContextDavid", XmlContextPerson, XML(DavidPerson), false)
+	Validate("XmlContextRobert", XmlContextPerson, XML(RobertPerson), true)
 }
 
 var MoverPerson = &Person{
