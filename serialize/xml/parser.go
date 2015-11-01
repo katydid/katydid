@@ -16,7 +16,6 @@ package xml
 
 import (
 	"bytes"
-	"encoding/xml"
 	"fmt"
 	"github.com/katydid/katydid/serialize"
 	"io"
@@ -26,10 +25,10 @@ import (
 
 type parser struct {
 	buf       []byte
-	dec       *xml.Decoder
-	tok       xml.Token
+	dec       *Decoder
+	tok       Token
 	isLeaf    bool
-	attrs     []xml.Attr
+	attrs     []Attr
 	attrIndex int
 	attrValue bool
 	attrFirst bool
@@ -41,7 +40,7 @@ func NewXMLParser() *parser {
 
 func (p *parser) Init(buf []byte) error {
 	p.buf = buf
-	p.dec = xml.NewDecoder(bytes.NewBuffer(buf))
+	p.dec = NewDecoder(bytes.NewBuffer(buf))
 	p.dec.Strict = false
 	return nil
 }
@@ -60,7 +59,7 @@ func (p *parser) Copy() serialize.Parser {
 	return newp
 }
 
-func hasContent(c xml.CharData) bool {
+func hasContent(c CharData) bool {
 	return len(strings.TrimSpace(string(c))) > 0
 }
 
@@ -83,20 +82,20 @@ func (p *parser) Next() (err error) {
 	}
 	if p.tok != nil {
 		for {
-			if s, ok := p.tok.(xml.StartElement); ok {
+			if s, ok := p.tok.(StartElement); ok {
 				fmt.Printf("Skipping %s\n", s.Name)
 				if err := p.dec.Skip(); err != nil {
 					fmt.Printf("Skip err = %v\n", err)
 					return err
 				}
 				break
-			} else if _, ok := p.tok.(xml.EndElement); ok {
+			} else if _, ok := p.tok.(EndElement); ok {
 				return io.EOF
-			} else if c, ok := p.tok.(xml.CharData); ok {
+			} else if c, ok := p.tok.(CharData); ok {
 				if hasContent(c) {
 					break
 				}
-			} else if _, ok := p.tok.(xml.Comment); ok {
+			} else if _, ok := p.tok.(Comment); ok {
 				p.tok, err = p.dec.Token()
 				fmt.Printf("Comment Next Token %#v, err = %v\n", p.tok, err)
 				if err != nil {
@@ -110,13 +109,13 @@ func (p *parser) Next() (err error) {
 	p.tok, err = p.dec.Token()
 	fmt.Printf("Next Token %#v, err %v\n", p.tok, err)
 	for err == nil {
-		if _, ok := p.tok.(xml.StartElement); ok {
+		if _, ok := p.tok.(StartElement); ok {
 			break
-		} else if c, ok := p.tok.(xml.CharData); ok {
+		} else if c, ok := p.tok.(CharData); ok {
 			if hasContent(c) {
 				break
 			}
-		} else if _, ok := p.tok.(xml.EndElement); ok {
+		} else if _, ok := p.tok.(EndElement); ok {
 			return io.EOF
 		}
 		p.tok, err = p.dec.Token()
@@ -132,7 +131,7 @@ func (p *parser) IsLeaf() bool {
 		}
 		return false
 	}
-	_, ok := p.tok.(xml.CharData)
+	_, ok := p.tok.(CharData)
 	return ok
 }
 
@@ -140,7 +139,7 @@ func (p *parser) getValue() string {
 	if p.tok == nil && p.attrValue {
 		return p.attrs[p.attrIndex].Value
 	}
-	if c, ok := p.tok.(xml.CharData); ok {
+	if c, ok := p.tok.(CharData); ok {
 		return string(c)
 	}
 	return ""
@@ -172,17 +171,17 @@ func (p *parser) String() (string, error) {
 			return p.attrs[p.attrIndex].Name.Local, nil
 		}
 	}
-	if s, ok := p.tok.(xml.StartElement); ok {
+	if s, ok := p.tok.(StartElement); ok {
 		return s.Name.Local, nil
 	}
-	if c, ok := p.tok.(xml.CharData); ok {
+	if c, ok := p.tok.(CharData); ok {
 		return string(c), nil
 	}
 	return "", serialize.ErrNotString
 }
 
 func (p *parser) Bytes() ([]byte, error) {
-	if c, ok := p.tok.(xml.CharData); ok {
+	if c, ok := p.tok.(CharData); ok {
 		return []byte(c), nil
 	}
 	return nil, serialize.ErrNotBytes
@@ -196,7 +195,7 @@ func (p *parser) Up() {
 			return
 		}
 	}
-	if _, ok := p.tok.(xml.EndElement); ok {
+	if _, ok := p.tok.(EndElement); ok {
 		p.tok = nil
 		p.attrs = nil
 		p.attrIndex = 0
@@ -217,7 +216,7 @@ func (p *parser) Down() {
 			return
 		}
 	}
-	if s, ok := p.tok.(xml.StartElement); ok {
+	if s, ok := p.tok.(StartElement); ok {
 		p.tok = nil
 		p.attrs = s.Attr
 		p.attrIndex = -1
