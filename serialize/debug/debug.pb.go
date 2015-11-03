@@ -37,6 +37,7 @@ type Debug struct {
 	C                *Debug   `protobuf:"bytes,3,opt" json:"C,omitempty"`
 	D                *int32   `protobuf:"varint,4,opt" json:"D,omitempty"`
 	E                []*Debug `protobuf:"bytes,5,rep" json:"E,omitempty"`
+	F                []uint32 `protobuf:"fixed32,6,rep" json:"F,omitempty"`
 	XXX_unrecognized []byte   `json:"-"`
 }
 
@@ -75,6 +76,13 @@ func (m *Debug) GetD() int32 {
 func (m *Debug) GetE() []*Debug {
 	if m != nil {
 		return m.E
+	}
+	return nil
+}
+
+func (m *Debug) GetF() []uint32 {
+	if m != nil {
+		return m.F
 	}
 	return nil
 }
@@ -693,7 +701,11 @@ func DebugDescription() (desc *google_protobuf.FileDescriptorSet) {
 		return &v
 	}(3), Type: func(v google_protobuf.FieldDescriptorProto_Type) *google_protobuf.FieldDescriptorProto_Type {
 		return &v
-	}(11), TypeName: func(v string) *string { return &v }(".debug.Debug"), Extendee: nil, DefaultValue: nil, OneofIndex: nil, Options: nil, XXX_unrecognized: []byte(nil)}}, Extension: []*google_protobuf.FieldDescriptorProto(nil), NestedType: []*google_protobuf.DescriptorProto(nil), EnumType: []*google_protobuf.EnumDescriptorProto(nil), ExtensionRange: []*google_protobuf.DescriptorProto_ExtensionRange(nil), OneofDecl: []*google_protobuf.OneofDescriptorProto(nil), Options: nil, XXX_unrecognized: []byte(nil)}}, EnumType: []*google_protobuf.EnumDescriptorProto(nil), Service: []*google_protobuf.ServiceDescriptorProto(nil), Extension: []*google_protobuf.FieldDescriptorProto(nil), Options: &google_protobuf.FileOptions{JavaPackage: nil, JavaOuterClassname: nil, JavaMultipleFiles: nil, JavaGenerateEqualsAndHash: nil, JavaStringCheckUtf8: nil, OptimizeFor: nil, GoPackage: nil, CcGenericServices: nil, JavaGenericServices: nil, PyGenericServices: nil, Deprecated: nil, CcEnableArenas: nil, UninterpretedOption: []*google_protobuf.UninterpretedOption(nil), XXX_extensions: map[int32]proto.Extension{63006: proto.NewExtension([]byte{0xf0, 0xe1, 0x1e, 0x1}), 63014: proto.NewExtension([]byte{0xb0, 0xe2, 0x1e, 0x1})}, XXX_unrecognized: []byte(nil)}, SourceCodeInfo: nil, Syntax: nil, XXX_unrecognized: []byte(nil)}}, XXX_unrecognized: []byte(nil)}
+	}(11), TypeName: func(v string) *string { return &v }(".debug.Debug"), Extendee: nil, DefaultValue: nil, OneofIndex: nil, Options: nil, XXX_unrecognized: []byte(nil)}, {Name: func(v string) *string { return &v }("F"), Number: func(v int32) *int32 { return &v }(6), Label: func(v google_protobuf.FieldDescriptorProto_Label) *google_protobuf.FieldDescriptorProto_Label {
+		return &v
+	}(3), Type: func(v google_protobuf.FieldDescriptorProto_Type) *google_protobuf.FieldDescriptorProto_Type {
+		return &v
+	}(7), TypeName: nil, Extendee: nil, DefaultValue: nil, OneofIndex: nil, Options: nil, XXX_unrecognized: []byte(nil)}}, Extension: []*google_protobuf.FieldDescriptorProto(nil), NestedType: []*google_protobuf.DescriptorProto(nil), EnumType: []*google_protobuf.EnumDescriptorProto(nil), ExtensionRange: []*google_protobuf.DescriptorProto_ExtensionRange(nil), OneofDecl: []*google_protobuf.OneofDescriptorProto(nil), Options: nil, XXX_unrecognized: []byte(nil)}}, EnumType: []*google_protobuf.EnumDescriptorProto(nil), Service: []*google_protobuf.ServiceDescriptorProto(nil), Extension: []*google_protobuf.FieldDescriptorProto(nil), Options: &google_protobuf.FileOptions{JavaPackage: nil, JavaOuterClassname: nil, JavaMultipleFiles: nil, JavaGenerateEqualsAndHash: nil, JavaStringCheckUtf8: nil, OptimizeFor: nil, GoPackage: nil, CcGenericServices: nil, JavaGenericServices: nil, PyGenericServices: nil, Deprecated: nil, CcEnableArenas: nil, UninterpretedOption: []*google_protobuf.UninterpretedOption(nil), XXX_extensions: map[int32]proto.Extension{63006: proto.NewExtension([]byte{0xf0, 0xe1, 0x1e, 0x1}), 63014: proto.NewExtension([]byte{0xb0, 0xe2, 0x1e, 0x1})}, XXX_unrecognized: []byte(nil)}, SourceCodeInfo: nil, Syntax: nil, XXX_unrecognized: []byte(nil)}}, XXX_unrecognized: []byte(nil)}
 }
 func (this *Debug) GoString() string {
 	if this == nil {
@@ -705,6 +717,7 @@ func (this *Debug) GoString() string {
 		`C:` + fmt.Sprintf("%#v", this.C),
 		`D:` + valueToGoStringDebug(this.D, "int32"),
 		`E:` + fmt.Sprintf("%#v", this.E),
+		`F:` + fmt.Sprintf("%#v", this.F),
 		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
 	return s
 }

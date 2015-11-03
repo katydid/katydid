@@ -34,6 +34,7 @@ var Input = &Debug{
 		},
 	},
 	D: proto.Int32(4),
+	F: []uint32{5},
 }
 
 func Field(name string, value string) Node {
@@ -79,4 +80,7 @@ var Output = Nodes{
 		),
 	),
 	Field(`"D"`, `4`),
+	Nested(`"F"`,
+		Field(`"0"`, `0x5`),
+	),
 }

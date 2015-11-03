@@ -361,7 +361,7 @@ func (s *protoParser) Int() (int64, error) {
 }
 
 func (s *protoParser) Uint() (uint64, error) {
-	if s.isLeaf {
+	if !s.isLeaf {
 		return 0, serialize.ErrNotUint
 	}
 	typ := s.field.GetType()

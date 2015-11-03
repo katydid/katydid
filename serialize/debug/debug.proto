@@ -13,4 +13,5 @@ message Debug {
   optional Debug C = 3;
   optional int32 D = 4;
   repeated Debug E = 5;
+  repeated fixed32 F = 6;
 }
