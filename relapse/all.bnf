@@ -117,12 +117,20 @@ func unquote(s1 string) string {
 }
 
 >>
+AllGrammar
+  : Grammar
+  | GrammarWithEndingSpace
+  ;
+
 Grammar
   : Pattern                     << &Grammar{$0.(*Pattern), nil, nil}, nil >>  
-  | Pattern Space               << &Grammar{$0.(*Pattern), nil, $1.(*expr.Space)}, nil >>
   | Pattern PatternDecls        << &Grammar{$0.(*Pattern), $1.([]*PatternDecl), nil}, nil >>
-  | Pattern PatternDecls Space  << &Grammar{$0.(*Pattern), $1.([]*PatternDecl), $2.(*expr.Space)}, nil >>
   | PatternDecls                << &Grammar{nil, $0.([]*PatternDecl), nil}, nil >>
+  ;
+
+GrammarWithEndingSpace
+  : Pattern Space               << &Grammar{$0.(*Pattern), nil, $1.(*expr.Space)}, nil >>
+  | Pattern PatternDecls Space  << &Grammar{$0.(*Pattern), $1.([]*PatternDecl), $2.(*expr.Space)}, nil >>
   | PatternDecls Space          << &Grammar{nil, $0.([]*PatternDecl), $1.(*expr.Space)}, nil >>
   ;
 
@@ -371,7 +379,7 @@ ContinueAnd
     }}, nil
   >>
   ;
-Start
+AllExpr
   : Expr Space
   | Expr
   | BuiltIn Space << &expr.Expr{BuiltIn: $0.(*expr.BuiltIn)}, nil >>

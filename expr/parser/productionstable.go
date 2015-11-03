@@ -28,7 +28,7 @@ type (
 
 var productionsTable = ProdTab{
 	ProdTabEntry{
-		String: `S' : Start	<<  >>`,
+		String: `S' : AllExpr	<<  >>`,
 		Id:         "S'",
 		NTType:     0,
 		Index:      0,
@@ -38,8 +38,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Start : Expr Space	<<  >>`,
-		Id:         "Start",
+		String: `AllExpr : Expr Space	<<  >>`,
+		Id:         "AllExpr",
 		NTType:     1,
 		Index:      1,
 		NumSymbols: 2,
@@ -48,8 +48,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Start : Expr	<<  >>`,
-		Id:         "Start",
+		String: `AllExpr : Expr	<<  >>`,
+		Id:         "AllExpr",
 		NTType:     1,
 		Index:      2,
 		NumSymbols: 1,
@@ -58,8 +58,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Start : BuiltIn Space	<< &expr.Expr{BuiltIn: X[0].(*expr.BuiltIn)}, nil >>`,
-		Id:         "Start",
+		String: `AllExpr : BuiltIn Space	<< &expr.Expr{BuiltIn: X[0].(*expr.BuiltIn)}, nil >>`,
+		Id:         "AllExpr",
 		NTType:     1,
 		Index:      3,
 		NumSymbols: 2,
@@ -68,8 +68,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Start : BuiltIn	<< &expr.Expr{BuiltIn: X[0].(*expr.BuiltIn)}, nil >>`,
-		Id:         "Start",
+		String: `AllExpr : BuiltIn	<< &expr.Expr{BuiltIn: X[0].(*expr.BuiltIn)}, nil >>`,
+		Id:         "AllExpr",
 		NTType:     1,
 		Index:      4,
 		NumSymbols: 1,

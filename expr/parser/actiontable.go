@@ -133,7 +133,7 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,       /* INVALID */
-			reduce(2), /* $, reduce: Start */
+			reduce(2), /* $, reduce: AllExpr */
 			nil,       /* id */
 			nil,       /* []bool */
 			nil,       /* []int */
@@ -253,7 +253,7 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,       /* INVALID */
-			reduce(4), /* $, reduce: Start */
+			reduce(4), /* $, reduce: AllExpr */
 			nil,       /* id */
 			nil,       /* []bool */
 			nil,       /* []int */
@@ -3313,7 +3313,7 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,       /* INVALID */
-			reduce(1), /* $, reduce: Start */
+			reduce(1), /* $, reduce: AllExpr */
 			nil,       /* id */
 			nil,       /* []bool */
 			nil,       /* []int */
@@ -4333,7 +4333,7 @@ var actionTab = actionTable{
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,       /* INVALID */
-			reduce(3), /* $, reduce: Start */
+			reduce(3), /* $, reduce: AllExpr */
 			nil,       /* id */
 			nil,       /* []bool */
 			nil,       /* []int */
