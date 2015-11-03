@@ -75,10 +75,10 @@ func (this *BuiltIn) String() string {
 
 func (this *Terminal) String() string {
 	if this.DoubleValue != nil {
-		return this.Before.String() + "double(" + strconv.FormatFloat(this.GetDoubleValue(), 'f', -1, 10) + ")"
+		return this.Before.String() + strconv.FormatFloat(this.GetDoubleValue(), 'f', -1, 10)
 	}
 	if this.IntValue != nil {
-		return this.Before.String() + "int(" + strconv.FormatInt(this.GetIntValue(), 10) + ")"
+		return this.Before.String() + strconv.FormatInt(this.GetIntValue(), 10)
 	}
 	if this.UintValue != nil {
 		return this.Before.String() + "uint(" + strconv.FormatUint(this.GetUintValue(), 10) + ")"

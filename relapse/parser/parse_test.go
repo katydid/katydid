@@ -24,7 +24,7 @@ func TestParse(t *testing.T) {
 	patternDecls := []string{
 		`a->hasQuotes("string_lit")`,
 		`@ref1
-		#ref1 = a->eq($int, int(123))
+		#ref1 = a->eq($int, 123)
 		`,
 		`@main`,
 		`A [
@@ -33,7 +33,7 @@ func TestParse(t *testing.T) {
 		]`,
 		`A [
 			a->eq($string, "aa"),
-			b->eq($int, int(123))
+			b->eq($int, 123)
 		]`,
 		`A[
 			*,
@@ -90,13 +90,13 @@ func TestParse(t *testing.T) {
 			  | d -> contains($string, "dd") 
 			)
 		]`,
-		`_->greaterThanOne(int(1)) `,
+		`_->greaterThanOne(1) `,
 		`[
-			(_ -> eq($int, int(1)) )*,
+			(_ -> eq($int, 1) )*,
 			bla -> any() 
 		]`,
-		`( a|b ) -> eq($int, int(1)) `,
-		`( a|_|!(b) ) -> eq($int, int(1)) `,
+		`( a|b ) -> eq($int, 1) `,
+		`( a|_|!(b) ) -> eq($int, 1) `,
 		`"\"a" -> any() `,
 		`(
 			.a->any() |
@@ -115,8 +115,8 @@ func TestParse(t *testing.T) {
 		`(* | * | * | ( * & * & * ))`,
 		`[ * , * , *]`,
 		`[ * , * , *,]`,
-		`[(*)*, == "a", > int(1), :: $string]`,
-		`[(*)*, ->eq($string, "a"), > int(1), :: $string]`,
+		`[(*)*, == "a", > 1, :: $string]`,
+		`[(*)*, ->eq($string, "a"), > 1, :: $string]`,
 	}
 	p := parser.NewParser()
 	for i, patternDecl := range patternDecls {

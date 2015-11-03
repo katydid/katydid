@@ -60,6 +60,9 @@ func SetExprComma(e interface{}, c interface{}) *Expr {
 
 func Strip(slit string, sub string) []byte {
 	slit = strings.Replace(slit, sub, "", -1)
+	if slit[0] != '(' {
+		return []byte(slit)
+	}
 	return []byte(slit[1 : len(slit)-1])
 }
 
