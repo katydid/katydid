@@ -11,9 +11,10 @@ JsonSchema is a validation language for JSON.
 A tree is a structure, record, class that does not contain any loops.
 
 Katydid supports multiple types of trees:
- - [Protocol Buffers](http://code.google.com/p/protobuf/)
+ - [Protocol Buffers](https://developers.google.com/protocol-buffers/)
  - [Json](http://json.org/)
  - [Reflected structures in Go](http://golang.org/pkg/reflect)
+ - and even XML for the giant lizards
  - Easy to add your own. Simply implement a parser ...
 
 ##Status
@@ -39,14 +40,17 @@ http://katydid.github.io/examples/
 Tree Automata have been found to be very applicable to XML processing.
 Katydid tries to apply Tree Automata to different types of trees.
 
+##Tools
+
+ - [Translate RelaxNG](https://github.com/katydid/relanxg) to Katydid
+ - [Translate JsonSchema](https://github.com/katydid/jsonschema) to Katydid
+
 ##Possible Futures
 
- - Tool to translate RelaxNG to Katydid
- - Tool to translate JsonSchema to Katydid
  - Capturing (like Regular Expression Capturing, but for trees)
  - Dynamic Transcoding between different Tree Types
  - Optionally enable Javascript/Lua user defined functions.
- - More serialization formats: XML, CapnProto?, Bson, Yaml ...
+ - More serialization formats: CapnProto?, Bson, Yaml, Toml ...
  - Remove all dependencies from core Katydid repo and move all other extra functionality into richer feature set repos that extend the core of Katydid.
 
 
