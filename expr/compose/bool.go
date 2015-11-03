@@ -65,7 +65,11 @@ func NewBool(expr *expr.Expr) (*composedBool, error) {
 	if err != nil {
 		return nil, err
 	}
-	e, err = TrimBool(e)
+	return NewBoolFunc(e)
+}
+
+func NewBoolFunc(f funcs.Bool) (*composedBool, error) {
+	e, err := TrimBool(f)
 	if err != nil {
 		return nil, err
 	}

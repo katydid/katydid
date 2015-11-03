@@ -81,7 +81,7 @@ func TestChild5(t *testing.T) {
 	t.Skip("TODO")
 	p := combinator.InOrder(combinator.Any(), combinator.In("Telephone", combinator.Value(funcs.StringVarEq(funcs.StringConst("01234")))))
 	refs := relapse.RefLookup{"main": p}
-	name := relapse.NewName("David")
+	name := relapse.NewStringName("David")
 	child(t, refs, name, nil)
 }
 

@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"github.com/gogo/protobuf/proto"
 	"github.com/katydid/katydid/expr/ast"
 	. "github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/token"
@@ -170,63 +171,43 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Name : Space string_lit	<< &NameExpr{Name: &Name{
-      Before: X[0].(*expr.Space),
-      Name: unquote(newString(X[1])),
-    }}, nil >>`,
+		String: `Name : Space Literal	<< NewSDTName(X[0].(*expr.Space), X[1].(*expr.Terminal)), nil >>`,
 		Id:         "Name",
 		NTType:     4,
 		Index:      11,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &NameExpr{Name: &Name{
-				Before: X[0].(*expr.Space),
-				Name:   unquote(newString(X[1])),
-			}}, nil
+			return NewSDTName(X[0].(*expr.Space), X[1].(*expr.Terminal)), nil
 		},
 	},
 	ProdTabEntry{
-		String: `Name : string_lit	<< &NameExpr{Name: &Name{
-      Name: unquote(newString(X[0])),
-    }}, nil >>`,
+		String: `Name : Literal	<< NewSDTName(nil, X[0].(*expr.Terminal)), nil >>`,
 		Id:         "Name",
 		NTType:     4,
 		Index:      12,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &NameExpr{Name: &Name{
-				Name: unquote(newString(X[0])),
-			}}, nil
+			return NewSDTName(nil, X[0].(*expr.Terminal)), nil
 		},
 	},
 	ProdTabEntry{
-		String: `Name : Space id	<< &NameExpr{Name: &Name{
-      Before: X[0].(*expr.Space),
-      Name: newString(X[1]),
-    }}, nil >>`,
+		String: `Name : Space id	<< NewSDTName(X[0].(*expr.Space), &expr.Terminal{StringValue: proto.String(newString(X[1]))}), nil >>`,
 		Id:         "Name",
 		NTType:     4,
 		Index:      13,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &NameExpr{Name: &Name{
-				Before: X[0].(*expr.Space),
-				Name:   newString(X[1]),
-			}}, nil
+			return NewSDTName(X[0].(*expr.Space), &expr.Terminal{StringValue: proto.String(newString(X[1]))}), nil
 		},
 	},
 	ProdTabEntry{
-		String: `Name : id	<< &NameExpr{Name: &Name{
-      Name: newString(X[0]),
-    }}, nil >>`,
+		String: `Name : id	<< NewSDTName(nil, &expr.Terminal{StringValue: proto.String(newString(X[0]))}), nil >>`,
 		Id:         "Name",
 		NTType:     4,
 		Index:      14,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &NameExpr{Name: &Name{
-				Name: newString(X[0]),
-			}}, nil
+			return NewSDTName(nil, &expr.Terminal{StringValue: proto.String(newString(X[0]))}), nil
 		},
 	},
 	ProdTabEntry{

@@ -79,27 +79,8 @@ func Nullable(refs relapse.RefLookup, p *relapse.Pattern) bool {
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
 
-func evalName(nameExpr *relapse.NameExpr, name string) bool {
-	typ := nameExpr.GetValue()
-	switch v := typ.(type) {
-	case *relapse.Name:
-		return name == v.GetName()
-	case *relapse.AnyName:
-		return true
-	case *relapse.AnyNameExcept:
-		return !evalName(v.GetExcept(), name)
-	case *relapse.NameChoice:
-		return evalName(v.GetLeft(), name) || evalName(v.GetRight(), name)
-	}
-	panic(fmt.Sprintf("unknown nameExpr typ %T", typ))
-}
-
 func derivTreeNode(refs relapse.RefLookup, p *relapse.TreeNode, tree serialize.Parser) *relapse.Pattern {
-	name, nameErr := tree.String()
-	if nameErr != nil {
-		panic(nameErr)
-	}
-	matched := evalName(p.GetName(), name)
+	matched := EvalName(p.GetName(), tree)
 	if !matched {
 		return relapse.NewEmptySet()
 	}

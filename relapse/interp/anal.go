@@ -42,7 +42,8 @@ func getLeafs(refs relapse.RefLookup, p *relapse.Pattern, path []string) []*expr
 		if !ok {
 			return nil
 		}
-		if n.GetName() != path[0] {
+		//TODO can be other values not just strings
+		if n.GetStringValue() != path[0] {
 			return nil
 		}
 		return getLeafs(refs, v.GetPattern(), path[1:])
@@ -138,7 +139,8 @@ func replace(refs relapse.RefLookup, p *relapse.Pattern, path []string, current 
 		if !ok {
 			return
 		}
-		if n.GetName() != path[0] {
+		//TODO can be other values not just strings
+		if n.GetStringValue() != path[0] {
 			return
 		}
 		replace(refs, v.GetPattern(), path[1:], current, replacement)

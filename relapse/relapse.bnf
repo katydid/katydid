@@ -35,28 +35,10 @@ PatternDecl
   ;
 
 Name
-  : Space string_lit <<
-    &NameExpr{Name: &Name{
-      Before: $0.(*expr.Space),
-      Name: unquote(newString($1)),
-    }}, nil
-  >>
-  | string_lit <<
-    &NameExpr{Name: &Name{
-      Name: unquote(newString($0)),
-    }}, nil
-  >>
-  | Space id <<
-    &NameExpr{Name: &Name{
-      Before: $0.(*expr.Space),
-      Name: newString($1),
-    }}, nil
-  >>
-  | id <<
-    &NameExpr{Name: &Name{
-      Name: newString($0),
-    }}, nil
-  >>
+  : Space Literal << NewSDTName($0.(*expr.Space), $1.(*expr.Terminal)), nil >>
+  | Literal       << NewSDTName(nil, $0.(*expr.Terminal)), nil >>
+  | Space id      << NewSDTName($0.(*expr.Space), &expr.Terminal{StringValue: proto.String(newString($1))}), nil >>
+  | id            << NewSDTName(nil, &expr.Terminal{StringValue: proto.String(newString($0))}), nil >>
   ;
 
 NameExpr

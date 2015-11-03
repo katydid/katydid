@@ -294,28 +294,13 @@ func getAllExprs(bookKeepingRefs relapse.RefLookup, allRefs relapse.RefLookup, p
 }
 
 func nameToExpr(n *relapse.NameExpr) *expr.Expr {
-	f := nameToFunc(n)
+	f := interp.NameToFunc(n)
 	fs := funcs.Sprint(f)
 	ex, err := eparser.NewParser().ParseExpr(fs)
 	if err != nil {
 		panic(err)
 	}
 	return ex
-}
-
-func nameToFunc(n *relapse.NameExpr) funcs.Bool {
-	typ := n.GetValue()
-	switch v := typ.(type) {
-	case *relapse.Name:
-		return funcs.StringEq(funcs.StringVar(), funcs.StringConst(v.GetName()))
-	case *relapse.AnyName:
-		return funcs.BoolConst(true)
-	case *relapse.AnyNameExcept:
-		return funcs.Not(nameToFunc(v.GetExcept()))
-	case *relapse.NameChoice:
-		return funcs.Or(nameToFunc(v.GetLeft()), nameToFunc(v.GetRight()))
-	}
-	panic(fmt.Sprintf("unknown name expr typ %T", typ))
 }
 
 type transSet []trans

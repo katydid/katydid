@@ -39,11 +39,11 @@ func concat(p *relapse.Pattern, ps ...*relapse.Pattern) *relapse.Pattern {
 }
 
 func InPath(name string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewWithSomeTreeNode(relapse.NewName(name), concat(child, children...))
+	return relapse.NewWithSomeTreeNode(relapse.NewStringName(name), concat(child, children...))
 }
 
 func In(name string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewTreeNode(relapse.NewName(name), concat(child, children...))
+	return relapse.NewTreeNode(relapse.NewStringName(name), concat(child, children...))
 }
 
 func InAny(child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
@@ -51,14 +51,14 @@ func InAny(child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Patter
 }
 
 func InAnyExcept(name string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewTreeNode(relapse.NewAnyNameExcept(relapse.NewName(name)), concat(child, children...))
+	return relapse.NewTreeNode(relapse.NewAnyNameExcept(relapse.NewStringName(name)), concat(child, children...))
 }
 
 func nameChoice(p string, ps ...string) *relapse.NameExpr {
 	if len(ps) == 0 {
-		return relapse.NewName(p)
+		return relapse.NewStringName(p)
 	}
-	return relapse.NewNameChoice(relapse.NewName(p), nameChoice(ps[0], ps[1:]...))
+	return relapse.NewNameChoice(relapse.NewStringName(p), nameChoice(ps[0], ps[1:]...))
 }
 
 func InAnyOf(names []string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {

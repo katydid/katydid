@@ -38,6 +38,8 @@ import math "math"
 // discarding unused import gogoproto "github.com/gogo/protobuf/gogoproto/gogo.pb"
 import expr "github.com/katydid/katydid/expr/ast"
 
+import bytes "bytes"
+
 import fmt "fmt"
 import strings "strings"
 import github_com_gogo_protobuf_proto "github.com/gogo/protobuf/proto"
@@ -164,8 +166,13 @@ func (m *NameExpr) GetNameChoice() *NameChoice {
 }
 
 type Name struct {
-	Before *expr.Space `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Name   string      `protobuf:"bytes,2,opt" json:"Name"`
+	Before      *expr.Space `protobuf:"bytes,1,opt" json:"Before,omitempty"`
+	DoubleValue *float64    `protobuf:"fixed64,3,opt" json:"DoubleValue,omitempty"`
+	IntValue    *int64      `protobuf:"varint,5,opt" json:"IntValue,omitempty"`
+	UintValue   *uint64     `protobuf:"varint,6,opt" json:"UintValue,omitempty"`
+	BoolValue   *bool       `protobuf:"varint,8,opt" json:"BoolValue,omitempty"`
+	StringValue *string     `protobuf:"bytes,9,opt" json:"StringValue,omitempty"`
+	BytesValue  []byte      `protobuf:"bytes,10,opt" json:"BytesValue,omitempty"`
 }
 
 func (m *Name) Reset()      { *m = Name{} }
@@ -178,11 +185,46 @@ func (m *Name) GetBefore() *expr.Space {
 	return nil
 }
 
-func (m *Name) GetName() string {
-	if m != nil {
-		return m.Name
+func (m *Name) GetDoubleValue() float64 {
+	if m != nil && m.DoubleValue != nil {
+		return *m.DoubleValue
+	}
+	return 0
+}
+
+func (m *Name) GetIntValue() int64 {
+	if m != nil && m.IntValue != nil {
+		return *m.IntValue
+	}
+	return 0
+}
+
+func (m *Name) GetUintValue() uint64 {
+	if m != nil && m.UintValue != nil {
+		return *m.UintValue
+	}
+	return 0
+}
+
+func (m *Name) GetBoolValue() bool {
+	if m != nil && m.BoolValue != nil {
+		return *m.BoolValue
+	}
+	return false
+}
+
+func (m *Name) GetStringValue() string {
+	if m != nil && m.StringValue != nil {
+		return *m.StringValue
 	}
 	return ""
+}
+
+func (m *Name) GetBytesValue() []byte {
+	if m != nil {
+		return m.BytesValue
+	}
+	return nil
 }
 
 type AnyName struct {
@@ -877,7 +919,52 @@ func (this *Name) Equal(that interface{}) bool {
 	if !this.Before.Equal(that1.Before) {
 		return false
 	}
-	if this.Name != that1.Name {
+	if this.DoubleValue != nil && that1.DoubleValue != nil {
+		if *this.DoubleValue != *that1.DoubleValue {
+			return false
+		}
+	} else if this.DoubleValue != nil {
+		return false
+	} else if that1.DoubleValue != nil {
+		return false
+	}
+	if this.IntValue != nil && that1.IntValue != nil {
+		if *this.IntValue != *that1.IntValue {
+			return false
+		}
+	} else if this.IntValue != nil {
+		return false
+	} else if that1.IntValue != nil {
+		return false
+	}
+	if this.UintValue != nil && that1.UintValue != nil {
+		if *this.UintValue != *that1.UintValue {
+			return false
+		}
+	} else if this.UintValue != nil {
+		return false
+	} else if that1.UintValue != nil {
+		return false
+	}
+	if this.BoolValue != nil && that1.BoolValue != nil {
+		if *this.BoolValue != *that1.BoolValue {
+			return false
+		}
+	} else if this.BoolValue != nil {
+		return false
+	} else if that1.BoolValue != nil {
+		return false
+	}
+	if this.StringValue != nil && that1.StringValue != nil {
+		if *this.StringValue != *that1.StringValue {
+			return false
+		}
+	} else if this.StringValue != nil {
+		return false
+	} else if that1.StringValue != nil {
+		return false
+	}
+	if !bytes.Equal(this.BytesValue, that1.BytesValue) {
 		return false
 	}
 	return true
@@ -1447,7 +1534,12 @@ func (this *Name) GoString() string {
 	}
 	s := strings.Join([]string{`&relapse.Name{` +
 		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Name:` + fmt.Sprintf("%#v", this.Name) + `}`}, ", ")
+		`DoubleValue:` + valueToGoStringRelapse(this.DoubleValue, "float64"),
+		`IntValue:` + valueToGoStringRelapse(this.IntValue, "int64"),
+		`UintValue:` + valueToGoStringRelapse(this.UintValue, "uint64"),
+		`BoolValue:` + valueToGoStringRelapse(this.BoolValue, "bool"),
+		`StringValue:` + valueToGoStringRelapse(this.StringValue, "string"),
+		`BytesValue:` + valueToGoStringRelapse(this.BytesValue, "byte") + `}`}, ", ")
 	return s
 }
 func (this *AnyName) GoString() string {

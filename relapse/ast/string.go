@@ -15,6 +15,7 @@
 package relapse
 
 import (
+	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
@@ -57,10 +58,28 @@ func isId(s string) bool {
 }
 
 func (this *Name) String() string {
-	if isId(this.Name) {
-		return this.Before.String() + this.Name
+	if this.DoubleValue != nil {
+		return this.Before.String() + strconv.FormatFloat(this.GetDoubleValue(), 'f', -1, 10)
 	}
-	return this.Before.String() + strconv.Quote(this.Name)
+	if this.IntValue != nil {
+		return this.Before.String() + strconv.FormatInt(this.GetIntValue(), 10)
+	}
+	if this.UintValue != nil {
+		return this.Before.String() + "uint(" + strconv.FormatUint(this.GetUintValue(), 10) + ")"
+	}
+	if this.BoolValue != nil {
+		return this.Before.String() + strconv.FormatBool(this.GetBoolValue())
+	}
+	if this.StringValue != nil {
+		if isId(this.GetStringValue()) {
+			return this.Before.String() + this.GetStringValue()
+		}
+		return this.Before.String() + strconv.Quote(this.GetStringValue())
+	}
+	if this.BytesValue != nil {
+		return this.Before.String() + fmt.Sprintf("%#v", this.GetBytesValue())
+	}
+	panic("unreachable")
 }
 
 func (this *AnyName) String() string {
