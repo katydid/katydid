@@ -31,6 +31,10 @@ Documentation is a work in progress http://katydid.github.io
  - Decidable (excluding User Defined Functions)
  - Expressive
 
+##Playground
+
+http://katydid.github.io/play
+
 ##Examples
 
 http://katydid.github.io/examples/
