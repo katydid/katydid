@@ -402,6 +402,9 @@ func (s *protoParser) String() (string, error) {
 		}
 		return s.field.GetName(), nil
 	}
+	if s.field.GetType() != descriptor.FieldDescriptorProto_TYPE_STRING {
+		return "", serialize.ErrNotString
+	}
 	buf := s.Value()
 	header := (*reflect.SliceHeader)(unsafe.Pointer(&buf))
 	strHeader := reflect.StringHeader{Data: header.Data, Len: header.Len}
@@ -410,6 +413,9 @@ func (s *protoParser) String() (string, error) {
 
 func (s *protoParser) Bytes() ([]byte, error) {
 	if !s.isLeaf {
+		return nil, serialize.ErrNotBytes
+	}
+	if s.field.GetType() != descriptor.FieldDescriptorProto_TYPE_BYTES {
 		return nil, serialize.ErrNotBytes
 	}
 	return s.Value(), nil

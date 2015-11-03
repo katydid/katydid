@@ -18,7 +18,6 @@ import (
 	"encoding/json"
 	"github.com/katydid/katydid/serialize/debug"
 	sjson "github.com/katydid/katydid/serialize/json"
-	"strconv"
 	"testing"
 )
 
@@ -61,10 +60,7 @@ func TestEscapedChar(t *testing.T) {
 	parser := sjson.NewJsonParser()
 	parser.Init(data)
 	m := debug.Walk(parser)
-	name, err := strconv.Unquote(m[0].Label)
-	if err != nil {
-		t.Fatal(err)
-	}
+	name := m[0].Label
 	if name != `a\"` {
 		t.Fatalf("wrong escaped name %s", name)
 	}

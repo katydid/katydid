@@ -109,9 +109,9 @@ func Walk(parser serialize.Parser) Nodes {
 		}
 		value := getValue(parser)
 		if parser.IsLeaf() {
-			a = append(a, Node{fmt.Sprintf("%#v", value), nil})
+			a = append(a, Node{fmt.Sprintf("%v", value), nil})
 		} else {
-			name := fmt.Sprintf("%#v", value)
+			name := fmt.Sprintf("%v", value)
 			parser.Down()
 			v := Walk(parser)
 			parser.Up()
