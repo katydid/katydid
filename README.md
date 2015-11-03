@@ -42,7 +42,7 @@ Katydid tries to apply Tree Automata to different types of trees.
 
 ##Tools
 
- - [Translate RelaxNG](https://github.com/katydid/relanxg) to Katydid
+ - [Translate RelaxNG](https://github.com/katydid/relaxng) to Katydid
  - [Translate JsonSchema](https://github.com/katydid/jsonschema) to Katydid
 
 ##Possible Futures
