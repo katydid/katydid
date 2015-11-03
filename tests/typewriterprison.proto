@@ -17,6 +17,7 @@ message TypewriterPrison {
 }
 
 message PocketRoses {
+	option (gogoproto.description) = true;
     optional string ScarBusStop = 1;
     optional int64 BadgeShopping = 2;
     optional int64 DaisySled = 3;

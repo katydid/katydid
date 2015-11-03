@@ -21,7 +21,6 @@ import (
 	"github.com/katydid/katydid/serialize"
 	"io"
 	"reflect"
-	"strconv"
 	"unsafe"
 )
 
@@ -334,6 +333,9 @@ func (s *protoParser) Double() (float64, error) {
 
 func (s *protoParser) Int() (int64, error) {
 	if !s.isLeaf {
+		if s.inRepeated {
+			return int64(s.indexRepeated - 1), nil
+		}
 		return 0, serialize.ErrNotInt
 	}
 	typ := s.field.GetType()
@@ -397,9 +399,6 @@ func (s *protoParser) Bool() (bool, error) {
 
 func (s *protoParser) String() (string, error) {
 	if !s.isLeaf {
-		if s.inRepeated {
-			return strconv.Itoa(s.indexRepeated - 1), nil
-		}
 		return s.field.GetName(), nil
 	}
 	if s.field.GetType() != descriptor.FieldDescriptorProto_TYPE_STRING {

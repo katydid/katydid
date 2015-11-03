@@ -18,7 +18,6 @@ import (
 	"github.com/katydid/katydid/serialize"
 	"io"
 	"reflect"
-	"strconv"
 )
 
 type state struct {
@@ -139,6 +138,9 @@ func (s *parser) Double() (float64, error) {
 }
 
 func (s *parser) Int() (int64, error) {
+	if s.isArray {
+		return int64(s.field - 1), nil
+	}
 	if s.isLeaf {
 		value := s.getValue()
 		switch value.Kind() {
@@ -172,9 +174,7 @@ func (s *parser) Bool() (bool, error) {
 }
 
 func (s *parser) String() (string, error) {
-	if s.isArray {
-		return strconv.Itoa(s.field - 1), nil
-	} else if !s.isLeaf {
+	if !s.isLeaf {
 		return s.typ.Name, nil
 	}
 	value := s.getValue()

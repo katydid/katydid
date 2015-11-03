@@ -8,6 +8,21 @@ import (
 	"testing"
 )
 
+func TestAPocketRosesJson(t *testing.T) {
+	v := tests.Validators["APocketRoses"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestAPocketRosesProto(t *testing.T) {
+	v := tests.Validators["APocketRoses"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestAPocketRosesReflect(t *testing.T) {
+	v := tests.Validators["APocketRoses"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestAb21AnyJson(t *testing.T) {
 	v := tests.Validators["Ab21Any"]["json"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
@@ -128,6 +143,21 @@ func TestAb21Spirit2Reflect(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestAbcPocketRosesJson(t *testing.T) {
+	v := tests.Validators["AbcPocketRoses"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestAbcPocketRosesProto(t *testing.T) {
+	v := tests.Validators["AbcPocketRoses"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestAbcPocketRosesReflect(t *testing.T) {
+	v := tests.Validators["AbcPocketRoses"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestAndNameTelephoneDavidJson(t *testing.T) {
 	v := tests.Validators["AndNameTelephoneDavid"]["json"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
@@ -233,6 +263,21 @@ func TestCorrectTypeRobertReflect(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestDPocketRosesJson(t *testing.T) {
+	v := tests.Validators["DPocketRoses"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestDPocketRosesProto(t *testing.T) {
+	v := tests.Validators["DPocketRoses"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestDPocketRosesReflect(t *testing.T) {
+	v := tests.Validators["DPocketRoses"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestDeepLeft811Json(t *testing.T) {
 	v := tests.Validators["DeepLeft811"]["json"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
@@ -295,6 +340,21 @@ func TestEmptyOrNilSmithProto(t *testing.T) {
 
 func TestEmptyOrNilSmithReflect(t *testing.T) {
 	v := tests.Validators["EmptyOrNilSmith"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestFinalCPocketRosesJson(t *testing.T) {
+	v := tests.Validators["FinalCPocketRoses"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestFinalCPocketRosesProto(t *testing.T) {
+	v := tests.Validators["FinalCPocketRoses"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestFinalCPocketRosesReflect(t *testing.T) {
+	v := tests.Validators["FinalCPocketRoses"]["reflect"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -580,6 +640,21 @@ func TestNaiveNotNameSmithProto(t *testing.T) {
 
 func TestNaiveNotNameSmithReflect(t *testing.T) {
 	v := tests.Validators["NaiveNotNameSmith"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestNextAPocketRosesJson(t *testing.T) {
+	v := tests.Validators["NextAPocketRoses"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestNextAPocketRosesProto(t *testing.T) {
+	v := tests.Validators["NextAPocketRoses"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestNextAPocketRosesReflect(t *testing.T) {
+	v := tests.Validators["NextAPocketRoses"]["reflect"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 

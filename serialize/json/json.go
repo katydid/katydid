@@ -457,6 +457,9 @@ func (s *jsonParser) Int() (int64, error) {
 		i, err := strconv.ParseInt(v, 10, 64)
 		return int64(i), err
 	}
+	if s.inArray {
+		return int64(s.arrayIndex), nil
+	}
 	return 0, serialize.ErrNotInt
 }
 
@@ -493,9 +496,6 @@ func (s *jsonParser) String() (string, error) {
 			return "", ErrUnquote
 		}
 		return res, nil
-	}
-	if s.inArray {
-		return strconv.Itoa(s.arrayIndex), nil
 	}
 	return s.name, nil
 }
