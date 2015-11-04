@@ -147,6 +147,10 @@ func newRightArrow() *expr.Keyword {
 	return &expr.Keyword{Value: "->"}
 }
 
+func newQuestionMark() *expr.Keyword {
+	return &expr.Keyword{Value: "?"}
+}
+
 func NewSDTName(space *expr.Space, term *expr.Terminal) *NameExpr {
 	name := &NameExpr{
 		Name: &Name{
@@ -404,6 +408,17 @@ func NewZeroOrMore(pattern *Pattern) *Pattern {
 			Pattern:    pattern,
 			CloseParen: newCloseParen(),
 			Star:       newStar(),
+		},
+	}
+}
+
+func NewOptional(pattern *Pattern) *Pattern {
+	return &Pattern{
+		Optional: &Optional{
+			OpenParen:    newOpenParen(),
+			Pattern:      pattern,
+			CloseParen:   newCloseParen(),
+			QuestionMark: newQuestionMark(),
 		},
 	}
 }

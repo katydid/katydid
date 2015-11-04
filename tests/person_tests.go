@@ -394,3 +394,28 @@ func init() {
 	Validate("InSetPersonRobert", InSetPerson, AllCodecs(RobertPerson), true)
 	Validate("InSetPersonDavid", InSetPerson, AllCodecs(DavidPerson), false)
 }
+
+var OptionalName = G{"main": InOrder(
+	Maybe(In("Name", Any())),
+	In("Addresses", Any()),
+	In("Telephone", Value(StringEq(StringVar(), StringConst("0127897897")))),
+)}
+
+func init() {
+	Validate("OptionalNameShakerPerson", OptionalName, AllCodecs(ShakerPerson), true)
+	Validate("OptionalNameNonamePerson", OptionalName, AllCodecs(NonamePerson), true)
+	Validate("OptionalNameSmithPerson", OptionalName, AllCodecs(SmithPerson), true)
+	Validate("OptionalNameRoutinePerson", OptionalName, AllCodecs(RoutinePerson), false)
+	Validate("OptionalNameJohnPerson", OptionalName, AllCodecs(JohnPerson), false)
+}
+
+var OptionalAddress = G{"main": InPath("Addresses",
+	Maybe(InAny(In("Number", Any()), In("Street", Any()))),
+	InAny(In("Number", Value(IntEq(IntVar(), IntConst(456)))), In("Street", Any())),
+)}
+
+func init() {
+	Validate("OptionalAddressRobertPerson", OptionalAddress, AllCodecs(RobertPerson), true)
+	Validate("OptionalAddressDavidPerson", OptionalAddress, AllCodecs(DavidPerson), true)
+	Validate("OptionalAddressMoverPerson", OptionalAddress, AllCodecs(MoverPerson), false)
+}

@@ -713,6 +713,126 @@ func TestOneLeftAndTwoRightHashes811Json(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestOptionalAddressDavidPersonJson(t *testing.T) {
+	v := tests.Validators["OptionalAddressDavidPerson"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalAddressDavidPersonProto(t *testing.T) {
+	v := tests.Validators["OptionalAddressDavidPerson"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalAddressDavidPersonReflect(t *testing.T) {
+	v := tests.Validators["OptionalAddressDavidPerson"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalAddressMoverPersonJson(t *testing.T) {
+	v := tests.Validators["OptionalAddressMoverPerson"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalAddressMoverPersonProto(t *testing.T) {
+	v := tests.Validators["OptionalAddressMoverPerson"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalAddressMoverPersonReflect(t *testing.T) {
+	v := tests.Validators["OptionalAddressMoverPerson"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalAddressRobertPersonJson(t *testing.T) {
+	v := tests.Validators["OptionalAddressRobertPerson"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalAddressRobertPersonProto(t *testing.T) {
+	v := tests.Validators["OptionalAddressRobertPerson"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalAddressRobertPersonReflect(t *testing.T) {
+	v := tests.Validators["OptionalAddressRobertPerson"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalNameJohnPersonJson(t *testing.T) {
+	v := tests.Validators["OptionalNameJohnPerson"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalNameJohnPersonProto(t *testing.T) {
+	v := tests.Validators["OptionalNameJohnPerson"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalNameJohnPersonReflect(t *testing.T) {
+	v := tests.Validators["OptionalNameJohnPerson"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalNameNonamePersonJson(t *testing.T) {
+	v := tests.Validators["OptionalNameNonamePerson"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalNameNonamePersonProto(t *testing.T) {
+	v := tests.Validators["OptionalNameNonamePerson"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalNameNonamePersonReflect(t *testing.T) {
+	v := tests.Validators["OptionalNameNonamePerson"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalNameRoutinePersonJson(t *testing.T) {
+	v := tests.Validators["OptionalNameRoutinePerson"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalNameRoutinePersonProto(t *testing.T) {
+	v := tests.Validators["OptionalNameRoutinePerson"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalNameRoutinePersonReflect(t *testing.T) {
+	v := tests.Validators["OptionalNameRoutinePerson"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalNameShakerPersonJson(t *testing.T) {
+	v := tests.Validators["OptionalNameShakerPerson"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalNameShakerPersonProto(t *testing.T) {
+	v := tests.Validators["OptionalNameShakerPerson"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalNameShakerPersonReflect(t *testing.T) {
+	v := tests.Validators["OptionalNameShakerPerson"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalNameSmithPersonJson(t *testing.T) {
+	v := tests.Validators["OptionalNameSmithPerson"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalNameSmithPersonProto(t *testing.T) {
+	v := tests.Validators["OptionalNameSmithPerson"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestOptionalNameSmithPersonReflect(t *testing.T) {
+	v := tests.Validators["OptionalNameSmithPerson"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestOrNameTelephoneDavidJson(t *testing.T) {
 	v := tests.Validators["OrNameTelephoneDavid"]["json"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)

@@ -108,3 +108,7 @@ func OppositeOf(p *relapse.Pattern) *relapse.Pattern {
 func Many(p *relapse.Pattern) *relapse.Pattern {
 	return relapse.NewZeroOrMore(p)
 }
+
+func Maybe(p *relapse.Pattern) *relapse.Pattern {
+	return relapse.NewOptional(p)
+}

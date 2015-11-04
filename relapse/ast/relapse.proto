@@ -90,6 +90,7 @@ message Pattern {
 	optional Not Not = 10;
 	optional ZAny ZAny = 11;
 	optional WithSomeTreeNode WithSomeTreeNode = 12;
+	optional Optional Optional = 13;
 }
 
 message Empty {
@@ -146,6 +147,13 @@ message ZeroOrMore {
 	optional Pattern Pattern = 2;
 	optional expr.Keyword CloseParen = 3;
 	optional expr.Keyword Star = 4;
+}
+
+message Optional {
+	optional expr.Keyword OpenParen = 1;
+	optional Pattern Pattern = 2;
+	optional expr.Keyword CloseParen = 3;
+	optional expr.Keyword QuestionMark = 4;
 }
 
 message Reference {

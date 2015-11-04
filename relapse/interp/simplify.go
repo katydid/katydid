@@ -64,6 +64,8 @@ func Simplify(refs relapse.RefLookup, p *relapse.Pattern) *relapse.Pattern {
 		return p
 	case *relapse.WithSomeTreeNode:
 		return p //TODO we can do better
+	case *relapse.Optional:
+		return simplifyOptional(Simplify(refs, v.GetPattern()))
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
@@ -179,4 +181,12 @@ func simplifyNot(p *relapse.Pattern) *relapse.Pattern {
 		return relapse.NewEmptySet()
 	}
 	return relapse.NewNot(p)
+}
+
+//TODO we can do better
+func simplifyOptional(p *relapse.Pattern) *relapse.Pattern {
+	if isEmpty(p) {
+		return relapse.NewEmpty()
+	}
+	return relapse.NewOptional(p)
 }

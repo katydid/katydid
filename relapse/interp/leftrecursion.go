@@ -58,6 +58,8 @@ func hasLeftRecursion(visited map[*relapse.Pattern]bool, refs relapse.RefLookup,
 		return false
 	case *relapse.WithSomeTreeNode:
 		return hasLeftRecursion(visited, refs, v.GetPattern())
+	case *relapse.Optional:
+		return false //TODO
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }

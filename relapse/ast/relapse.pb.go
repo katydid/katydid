@@ -26,6 +26,7 @@
 		Or
 		And
 		ZeroOrMore
+		Optional
 		Reference
 		Not
 		ZAny
@@ -338,6 +339,7 @@ type Pattern struct {
 	Not              *Not              `protobuf:"bytes,10,opt" json:"Not,omitempty"`
 	ZAny             *ZAny             `protobuf:"bytes,11,opt" json:"ZAny,omitempty"`
 	WithSomeTreeNode *WithSomeTreeNode `protobuf:"bytes,12,opt" json:"WithSomeTreeNode,omitempty"`
+	Optional         *Optional         `protobuf:"bytes,13,opt" json:"Optional,omitempty"`
 }
 
 func (m *Pattern) Reset()      { *m = Pattern{} }
@@ -423,6 +425,13 @@ func (m *Pattern) GetZAny() *ZAny {
 func (m *Pattern) GetWithSomeTreeNode() *WithSomeTreeNode {
 	if m != nil {
 		return m.WithSomeTreeNode
+	}
+	return nil
+}
+
+func (m *Pattern) GetOptional() *Optional {
+	if m != nil {
+		return m.Optional
 	}
 	return nil
 }
@@ -709,6 +718,44 @@ func (m *ZeroOrMore) GetCloseParen() *expr.Keyword {
 func (m *ZeroOrMore) GetStar() *expr.Keyword {
 	if m != nil {
 		return m.Star
+	}
+	return nil
+}
+
+type Optional struct {
+	OpenParen    *expr.Keyword `protobuf:"bytes,1,opt" json:"OpenParen,omitempty"`
+	Pattern      *Pattern      `protobuf:"bytes,2,opt" json:"Pattern,omitempty"`
+	CloseParen   *expr.Keyword `protobuf:"bytes,3,opt" json:"CloseParen,omitempty"`
+	QuestionMark *expr.Keyword `protobuf:"bytes,4,opt" json:"QuestionMark,omitempty"`
+}
+
+func (m *Optional) Reset()      { *m = Optional{} }
+func (*Optional) ProtoMessage() {}
+
+func (m *Optional) GetOpenParen() *expr.Keyword {
+	if m != nil {
+		return m.OpenParen
+	}
+	return nil
+}
+
+func (m *Optional) GetPattern() *Pattern {
+	if m != nil {
+		return m.Pattern
+	}
+	return nil
+}
+
+func (m *Optional) GetCloseParen() *expr.Keyword {
+	if m != nil {
+		return m.CloseParen
+	}
+	return nil
+}
+
+func (m *Optional) GetQuestionMark() *expr.Keyword {
+	if m != nil {
+		return m.QuestionMark
 	}
 	return nil
 }
@@ -1121,6 +1168,9 @@ func (this *Pattern) Equal(that interface{}) bool {
 	if !this.WithSomeTreeNode.Equal(that1.WithSomeTreeNode) {
 		return false
 	}
+	if !this.Optional.Equal(that1.Optional) {
+		return false
+	}
 	return true
 }
 func (this *Empty) Equal(that interface{}) bool {
@@ -1408,6 +1458,40 @@ func (this *ZeroOrMore) Equal(that interface{}) bool {
 	}
 	return true
 }
+func (this *Optional) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Optional)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.OpenParen.Equal(that1.OpenParen) {
+		return false
+	}
+	if !this.Pattern.Equal(that1.Pattern) {
+		return false
+	}
+	if !this.CloseParen.Equal(that1.CloseParen) {
+		return false
+	}
+	if !this.QuestionMark.Equal(that1.QuestionMark) {
+		return false
+	}
+	return true
+}
 func (this *Reference) Equal(that interface{}) bool {
 	if that == nil {
 		if this == nil {
@@ -1589,7 +1673,8 @@ func (this *Pattern) GoString() string {
 		`Reference:` + fmt.Sprintf("%#v", this.Reference),
 		`Not:` + fmt.Sprintf("%#v", this.Not),
 		`ZAny:` + fmt.Sprintf("%#v", this.ZAny),
-		`WithSomeTreeNode:` + fmt.Sprintf("%#v", this.WithSomeTreeNode) + `}`}, ", ")
+		`WithSomeTreeNode:` + fmt.Sprintf("%#v", this.WithSomeTreeNode),
+		`Optional:` + fmt.Sprintf("%#v", this.Optional) + `}`}, ", ")
 	return s
 }
 func (this *Empty) GoString() string {
@@ -1682,6 +1767,17 @@ func (this *ZeroOrMore) GoString() string {
 		`Pattern:` + fmt.Sprintf("%#v", this.Pattern),
 		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen),
 		`Star:` + fmt.Sprintf("%#v", this.Star) + `}`}, ", ")
+	return s
+}
+func (this *Optional) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.Optional{` +
+		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
+		`Pattern:` + fmt.Sprintf("%#v", this.Pattern),
+		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen),
+		`QuestionMark:` + fmt.Sprintf("%#v", this.QuestionMark) + `}`}, ", ")
 	return s
 }
 func (this *Reference) GoString() string {
@@ -1805,6 +1901,9 @@ func (this *Pattern) GetValue() interface{} {
 	if this.WithSomeTreeNode != nil {
 		return this.WithSomeTreeNode
 	}
+	if this.Optional != nil {
+		return this.Optional
+	}
 	return nil
 }
 
@@ -1834,6 +1933,8 @@ func (this *Pattern) SetValue(value interface{}) bool {
 		this.ZAny = vt
 	case *WithSomeTreeNode:
 		this.WithSomeTreeNode = vt
+	case *Optional:
+		this.Optional = vt
 	default:
 		return false
 	}

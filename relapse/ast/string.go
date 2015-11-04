@@ -148,6 +148,11 @@ func (this *ZeroOrMore) String() string {
 		this.CloseParen.String() + this.Star.String()
 }
 
+func (this *Optional) String() string {
+	return this.OpenParen.String() + this.Pattern.String() +
+		this.CloseParen.String() + this.QuestionMark.String()
+}
+
 func (this *Reference) String() string {
 	return this.At.String() + this.Name
 }

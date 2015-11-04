@@ -110,6 +110,7 @@ var TokMap = TokenMap{
 		"^=",
 		"$=",
 		"::",
+		"?",
 		"space",
 	},
 
@@ -167,6 +168,7 @@ var TokMap = TokenMap{
 		"^=":         50,
 		"$=":         51,
 		"::":         52,
-		"space":      53,
+		"?":          53,
+		"space":      54,
 	},
 }

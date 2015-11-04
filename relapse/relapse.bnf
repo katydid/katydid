@@ -158,12 +158,12 @@ Pattern
       Star: $3.(*expr.Keyword),
     }}, nil
   >>
-  | OpenParen Pattern CloseParen Star <<
-    &Pattern{ZeroOrMore: &ZeroOrMore{
+  | OpenParen Pattern CloseParen QuestionMark <<
+    &Pattern{Optional: &Optional{
       OpenParen: $0.(*expr.Keyword),
       Pattern: $1.(*Pattern),
       CloseParen: $2.(*expr.Keyword),
-      Star: $3.(*expr.Keyword),
+      QuestionMark: $3.(*expr.Keyword),
     }}, nil
   >>
   | At id <<
