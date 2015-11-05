@@ -112,3 +112,15 @@ func Many(p *relapse.Pattern) *relapse.Pattern {
 func Maybe(p *relapse.Pattern) *relapse.Pattern {
 	return relapse.NewOptional(p)
 }
+
+func interleave(p *relapse.Pattern, ps ...*relapse.Pattern) *relapse.Pattern {
+	if len(ps) == 0 {
+		return p
+	}
+	pss := append([]*relapse.Pattern{p}, ps...)
+	return relapse.NewInterleave(pss...)
+}
+
+func Interleave(child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
+	return interleave(child, children...)
+}

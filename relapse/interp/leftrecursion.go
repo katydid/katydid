@@ -60,6 +60,8 @@ func hasLeftRecursion(visited map[*relapse.Pattern]bool, refs relapse.RefLookup,
 		return hasLeftRecursion(visited, refs, v.GetPattern())
 	case *relapse.Optional:
 		return false //TODO
+	case *relapse.Interleave:
+		return false //TODO
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }

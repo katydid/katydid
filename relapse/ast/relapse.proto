@@ -91,6 +91,7 @@ message Pattern {
 	optional ZAny ZAny = 11;
 	optional WithSomeTreeNode WithSomeTreeNode = 12;
 	optional Optional Optional = 13;
+	optional Interleave Interleave = 14;
 }
 
 message Empty {
@@ -149,13 +150,6 @@ message ZeroOrMore {
 	optional expr.Keyword Star = 4;
 }
 
-message Optional {
-	optional expr.Keyword OpenParen = 1;
-	optional Pattern Pattern = 2;
-	optional expr.Keyword CloseParen = 3;
-	optional expr.Keyword QuestionMark = 4;
-}
-
 message Reference {
 	optional expr.Keyword At = 1;
 	optional string Name = 2 [(gogoproto.nullable) = false];
@@ -170,4 +164,20 @@ message Not {
 
 message ZAny {
 	optional expr.Keyword Star = 1;
+}
+
+message Optional {
+	optional expr.Keyword OpenParen = 1;
+	optional Pattern Pattern = 2;
+	optional expr.Keyword CloseParen = 3;
+	optional expr.Keyword QuestionMark = 4;
+}
+
+message Interleave {
+	optional expr.Keyword OpenCurly = 2;
+	optional Pattern LeftPattern = 3;
+	optional expr.Keyword Ampersand = 4;
+	optional Pattern RightPattern = 5;
+	optional expr.Keyword ExtraAmpersand = 6;
+	optional expr.Keyword CloseCurly = 7;
 }

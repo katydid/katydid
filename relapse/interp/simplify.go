@@ -66,6 +66,11 @@ func Simplify(refs relapse.RefLookup, p *relapse.Pattern) *relapse.Pattern {
 		return p //TODO we can do better
 	case *relapse.Optional:
 		return simplifyOptional(Simplify(refs, v.GetPattern()))
+	case *relapse.Interleave:
+		return checkRef(refs, simplifyInterleave(refs,
+			Simplify(refs, v.GetLeftPattern()),
+			Simplify(refs, v.GetRightPattern()),
+		))
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
@@ -189,4 +194,17 @@ func simplifyOptional(p *relapse.Pattern) *relapse.Pattern {
 		return relapse.NewEmpty()
 	}
 	return relapse.NewOptional(p)
+}
+
+func simplifyInterleave(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
+	if isEmptySet(p1) || isEmptySet(p2) {
+		return relapse.NewEmptySet()
+	}
+	if isEmpty(p1) {
+		return p2
+	}
+	if isEmpty(p2) {
+		return p1
+	}
+	return relapse.NewInterleave(p1, p2)
 }

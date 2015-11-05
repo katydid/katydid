@@ -73,6 +73,17 @@ func Json(m interface{}) Codecs {
 	}
 }
 
+func JsonString(s string) Codecs {
+	return Codecs{
+		Description: s,
+		Parsers: map[string]NewParser{
+			"json": func() serialize.Parser {
+				return NewJsonStringParser(s)
+			},
+		},
+	}
+}
+
 func Proto(m interface{}) Codecs {
 	messageName := reflect.TypeOf(m).Elem().Name()
 	packageName := "tests"
@@ -97,6 +108,17 @@ func XML(m interface{}) Codecs {
 	}
 }
 
+func XMLString(s string) Codecs {
+	return Codecs{
+		Description: s,
+		Parsers: map[string]NewParser{
+			"xml": func() serialize.Parser {
+				return NewXMLStringParser(s)
+			},
+		},
+	}
+}
+
 type NewParser func() serialize.Parser
 
 func NewReflectParser(m interface{}) serialize.Parser {
@@ -116,6 +138,15 @@ func NewJsonParser(m interface{}) serialize.Parser {
 		panic(err)
 	}
 	return s
+}
+
+func NewJsonStringParser(s string) serialize.Parser {
+	p := jparser.NewJsonParser()
+	err := p.Init([]byte(s))
+	if err != nil {
+		panic(err)
+	}
+	return p
 }
 
 type ProtoMessage interface {
@@ -146,4 +177,13 @@ func NewXMLParser(m interface{}) serialize.Parser {
 		panic(err)
 	}
 	return s
+}
+
+func NewXMLStringParser(s string) serialize.Parser {
+	p := xparser.NewXMLParser()
+	err := p.Init([]byte(s))
+	if err != nil {
+		panic(err)
+	}
+	return p
 }

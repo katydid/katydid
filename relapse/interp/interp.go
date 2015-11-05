@@ -23,6 +23,10 @@ import (
 	"log"
 )
 
+func init() {
+	log.SetFlags(log.Lshortfile)
+}
+
 //This is a naive implementation and it does not handle left recursion
 func Interpret(g *relapse.Grammar, tree serialize.Parser) bool {
 	refs := relapse.NewRefsLookup(g)
@@ -77,12 +81,15 @@ func Nullable(refs relapse.RefLookup, p *relapse.Pattern) bool {
 		return Nullable(refs, v.GetPattern())
 	case *relapse.Optional:
 		return true
+	case *relapse.Interleave:
+		return Nullable(refs, v.GetLeftPattern()) && Nullable(refs, v.GetRightPattern())
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
 
 func derivTreeNode(refs relapse.RefLookup, p *relapse.TreeNode, tree serialize.Parser) *relapse.Pattern {
 	matched := EvalName(p.GetName(), tree)
+	log.Printf("name %s -> %v", p, matched)
 	if !matched {
 		return relapse.NewEmptySet()
 	}
@@ -90,13 +97,6 @@ func derivTreeNode(refs relapse.RefLookup, p *relapse.TreeNode, tree serialize.P
 	res := p.GetPattern()
 	err := tree.Next()
 	for err == nil {
-		// if !tree.IsLeaf() {
-		// 	name1, nameErr1 := tree.String()
-		// 	if nameErr1 != nil {
-		// 		panic(nameErr1)
-		// 	}
-		// 	log.Printf("derivTreeNode = %s given input %s", res, name1)
-		// }
 		res = sderiv(refs, res, tree)
 		err = tree.Next()
 	}
@@ -113,8 +113,9 @@ func derivTreeNode(refs relapse.RefLookup, p *relapse.TreeNode, tree serialize.P
 
 func sderiv(refs relapse.RefLookup, p *relapse.Pattern, tree serialize.Parser) *relapse.Pattern {
 	d := deriv(refs, p, tree)
-	log.Printf("sderiv %s -> %s", p, d)
-	return Simplify(refs, d)
+	s := Simplify(refs, d)
+	log.Printf("sderiv %s -> %s -> %s", p, d, s)
+	return s
 }
 
 func deriv(refs relapse.RefLookup, p *relapse.Pattern, tree serialize.Parser) *relapse.Pattern {
@@ -181,6 +182,12 @@ func deriv(refs relapse.RefLookup, p *relapse.Pattern, tree serialize.Parser) *r
 	case *relapse.Optional:
 		newp := relapse.NewOr(relapse.NewEmpty(), v.GetPattern())
 		return deriv(refs, newp, tree)
+	case *relapse.Interleave:
+		treeCopy := tree.Copy()
+		return relapse.NewOr(
+			Simplify(refs, relapse.NewInterleave(sderiv(refs, v.GetLeftPattern(), tree), v.GetRightPattern())),
+			Simplify(refs, relapse.NewInterleave(v.GetLeftPattern(), sderiv(refs, v.GetRightPattern(), treeCopy))),
+		)
 	}
 	panic(fmt.Sprintf("unknown typ %T", typ))
 }

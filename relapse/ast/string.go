@@ -148,11 +148,6 @@ func (this *ZeroOrMore) String() string {
 		this.CloseParen.String() + this.Star.String()
 }
 
-func (this *Optional) String() string {
-	return this.OpenParen.String() + this.Pattern.String() +
-		this.CloseParen.String() + this.QuestionMark.String()
-}
-
 func (this *Reference) String() string {
 	return this.At.String() + this.Name
 }
@@ -165,4 +160,15 @@ func (this *Not) String() string {
 
 func (this *ZAny) String() string {
 	return this.Star.String()
+}
+
+func (this *Optional) String() string {
+	return this.OpenParen.String() + this.Pattern.String() +
+		this.CloseParen.String() + this.QuestionMark.String()
+}
+
+func (this *Interleave) String() string {
+	return this.OpenCurly.String() + this.LeftPattern.String() +
+		this.Ampersand.String() + this.RightPattern.String() +
+		this.ExtraAmpersand.String() + this.CloseCurly.String()
 }

@@ -412,17 +412,6 @@ func NewZeroOrMore(pattern *Pattern) *Pattern {
 	}
 }
 
-func NewOptional(pattern *Pattern) *Pattern {
-	return &Pattern{
-		Optional: &Optional{
-			OpenParen:    newOpenParen(),
-			Pattern:      pattern,
-			CloseParen:   newCloseParen(),
-			QuestionMark: newQuestionMark(),
-		},
-	}
-}
-
 func NewReference(name string) *Pattern {
 	return &Pattern{
 		Reference: &Reference{
@@ -447,6 +436,48 @@ func NewZAny() *Pattern {
 	return &Pattern{
 		ZAny: &ZAny{
 			Star: newStar(),
+		},
+	}
+}
+
+func NewOptional(pattern *Pattern) *Pattern {
+	return &Pattern{
+		Optional: &Optional{
+			OpenParen:    newOpenParen(),
+			Pattern:      pattern,
+			CloseParen:   newCloseParen(),
+			QuestionMark: newQuestionMark(),
+		},
+	}
+}
+
+func NewInterleave(patterns ...*Pattern) *Pattern {
+	if len(patterns) == 0 {
+		return nil
+	}
+	if len(patterns) == 1 {
+		return patterns[0]
+	}
+	return &Pattern{
+		Interleave: &Interleave{
+			OpenCurly:    newOpenCurly(),
+			LeftPattern:  patterns[0],
+			Ampersand:    newAmpersand(),
+			RightPattern: newInterleave(patterns[1:]),
+			CloseCurly:   newCloseCurly(),
+		},
+	}
+}
+
+func newInterleave(patterns []*Pattern) *Pattern {
+	if len(patterns) == 1 {
+		return patterns[0]
+	}
+	return &Pattern{
+		Interleave: &Interleave{
+			LeftPattern:  patterns[0],
+			Ampersand:    newAmpersand(),
+			RightPattern: newInterleave(patterns[1:]),
 		},
 	}
 }

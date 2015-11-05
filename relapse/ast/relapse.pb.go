@@ -26,10 +26,11 @@
 		Or
 		And
 		ZeroOrMore
-		Optional
 		Reference
 		Not
 		ZAny
+		Optional
+		Interleave
 */
 package relapse
 
@@ -340,6 +341,7 @@ type Pattern struct {
 	ZAny             *ZAny             `protobuf:"bytes,11,opt" json:"ZAny,omitempty"`
 	WithSomeTreeNode *WithSomeTreeNode `protobuf:"bytes,12,opt" json:"WithSomeTreeNode,omitempty"`
 	Optional         *Optional         `protobuf:"bytes,13,opt" json:"Optional,omitempty"`
+	Interleave       *Interleave       `protobuf:"bytes,14,opt" json:"Interleave,omitempty"`
 }
 
 func (m *Pattern) Reset()      { *m = Pattern{} }
@@ -432,6 +434,13 @@ func (m *Pattern) GetWithSomeTreeNode() *WithSomeTreeNode {
 func (m *Pattern) GetOptional() *Optional {
 	if m != nil {
 		return m.Optional
+	}
+	return nil
+}
+
+func (m *Pattern) GetInterleave() *Interleave {
+	if m != nil {
+		return m.Interleave
 	}
 	return nil
 }
@@ -722,44 +731,6 @@ func (m *ZeroOrMore) GetStar() *expr.Keyword {
 	return nil
 }
 
-type Optional struct {
-	OpenParen    *expr.Keyword `protobuf:"bytes,1,opt" json:"OpenParen,omitempty"`
-	Pattern      *Pattern      `protobuf:"bytes,2,opt" json:"Pattern,omitempty"`
-	CloseParen   *expr.Keyword `protobuf:"bytes,3,opt" json:"CloseParen,omitempty"`
-	QuestionMark *expr.Keyword `protobuf:"bytes,4,opt" json:"QuestionMark,omitempty"`
-}
-
-func (m *Optional) Reset()      { *m = Optional{} }
-func (*Optional) ProtoMessage() {}
-
-func (m *Optional) GetOpenParen() *expr.Keyword {
-	if m != nil {
-		return m.OpenParen
-	}
-	return nil
-}
-
-func (m *Optional) GetPattern() *Pattern {
-	if m != nil {
-		return m.Pattern
-	}
-	return nil
-}
-
-func (m *Optional) GetCloseParen() *expr.Keyword {
-	if m != nil {
-		return m.CloseParen
-	}
-	return nil
-}
-
-func (m *Optional) GetQuestionMark() *expr.Keyword {
-	if m != nil {
-		return m.QuestionMark
-	}
-	return nil
-}
-
 type Reference struct {
 	At   *expr.Keyword `protobuf:"bytes,1,opt" json:"At,omitempty"`
 	Name string        `protobuf:"bytes,2,opt" json:"Name"`
@@ -830,6 +801,98 @@ func (*ZAny) ProtoMessage() {}
 func (m *ZAny) GetStar() *expr.Keyword {
 	if m != nil {
 		return m.Star
+	}
+	return nil
+}
+
+type Optional struct {
+	OpenParen    *expr.Keyword `protobuf:"bytes,1,opt" json:"OpenParen,omitempty"`
+	Pattern      *Pattern      `protobuf:"bytes,2,opt" json:"Pattern,omitempty"`
+	CloseParen   *expr.Keyword `protobuf:"bytes,3,opt" json:"CloseParen,omitempty"`
+	QuestionMark *expr.Keyword `protobuf:"bytes,4,opt" json:"QuestionMark,omitempty"`
+}
+
+func (m *Optional) Reset()      { *m = Optional{} }
+func (*Optional) ProtoMessage() {}
+
+func (m *Optional) GetOpenParen() *expr.Keyword {
+	if m != nil {
+		return m.OpenParen
+	}
+	return nil
+}
+
+func (m *Optional) GetPattern() *Pattern {
+	if m != nil {
+		return m.Pattern
+	}
+	return nil
+}
+
+func (m *Optional) GetCloseParen() *expr.Keyword {
+	if m != nil {
+		return m.CloseParen
+	}
+	return nil
+}
+
+func (m *Optional) GetQuestionMark() *expr.Keyword {
+	if m != nil {
+		return m.QuestionMark
+	}
+	return nil
+}
+
+type Interleave struct {
+	OpenCurly      *expr.Keyword `protobuf:"bytes,2,opt" json:"OpenCurly,omitempty"`
+	LeftPattern    *Pattern      `protobuf:"bytes,3,opt" json:"LeftPattern,omitempty"`
+	Ampersand      *expr.Keyword `protobuf:"bytes,4,opt" json:"Ampersand,omitempty"`
+	RightPattern   *Pattern      `protobuf:"bytes,5,opt" json:"RightPattern,omitempty"`
+	ExtraAmpersand *expr.Keyword `protobuf:"bytes,6,opt" json:"ExtraAmpersand,omitempty"`
+	CloseCurly     *expr.Keyword `protobuf:"bytes,7,opt" json:"CloseCurly,omitempty"`
+}
+
+func (m *Interleave) Reset()      { *m = Interleave{} }
+func (*Interleave) ProtoMessage() {}
+
+func (m *Interleave) GetOpenCurly() *expr.Keyword {
+	if m != nil {
+		return m.OpenCurly
+	}
+	return nil
+}
+
+func (m *Interleave) GetLeftPattern() *Pattern {
+	if m != nil {
+		return m.LeftPattern
+	}
+	return nil
+}
+
+func (m *Interleave) GetAmpersand() *expr.Keyword {
+	if m != nil {
+		return m.Ampersand
+	}
+	return nil
+}
+
+func (m *Interleave) GetRightPattern() *Pattern {
+	if m != nil {
+		return m.RightPattern
+	}
+	return nil
+}
+
+func (m *Interleave) GetExtraAmpersand() *expr.Keyword {
+	if m != nil {
+		return m.ExtraAmpersand
+	}
+	return nil
+}
+
+func (m *Interleave) GetCloseCurly() *expr.Keyword {
+	if m != nil {
+		return m.CloseCurly
 	}
 	return nil
 }
@@ -1171,6 +1234,9 @@ func (this *Pattern) Equal(that interface{}) bool {
 	if !this.Optional.Equal(that1.Optional) {
 		return false
 	}
+	if !this.Interleave.Equal(that1.Interleave) {
+		return false
+	}
 	return true
 }
 func (this *Empty) Equal(that interface{}) bool {
@@ -1458,40 +1524,6 @@ func (this *ZeroOrMore) Equal(that interface{}) bool {
 	}
 	return true
 }
-func (this *Optional) Equal(that interface{}) bool {
-	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
-	}
-
-	that1, ok := that.(*Optional)
-	if !ok {
-		return false
-	}
-	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
-	} else if this == nil {
-		return false
-	}
-	if !this.OpenParen.Equal(that1.OpenParen) {
-		return false
-	}
-	if !this.Pattern.Equal(that1.Pattern) {
-		return false
-	}
-	if !this.CloseParen.Equal(that1.CloseParen) {
-		return false
-	}
-	if !this.QuestionMark.Equal(that1.QuestionMark) {
-		return false
-	}
-	return true
-}
 func (this *Reference) Equal(that interface{}) bool {
 	if that == nil {
 		if this == nil {
@@ -1575,6 +1607,80 @@ func (this *ZAny) Equal(that interface{}) bool {
 		return false
 	}
 	if !this.Star.Equal(that1.Star) {
+		return false
+	}
+	return true
+}
+func (this *Optional) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Optional)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.OpenParen.Equal(that1.OpenParen) {
+		return false
+	}
+	if !this.Pattern.Equal(that1.Pattern) {
+		return false
+	}
+	if !this.CloseParen.Equal(that1.CloseParen) {
+		return false
+	}
+	if !this.QuestionMark.Equal(that1.QuestionMark) {
+		return false
+	}
+	return true
+}
+func (this *Interleave) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Interleave)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.OpenCurly.Equal(that1.OpenCurly) {
+		return false
+	}
+	if !this.LeftPattern.Equal(that1.LeftPattern) {
+		return false
+	}
+	if !this.Ampersand.Equal(that1.Ampersand) {
+		return false
+	}
+	if !this.RightPattern.Equal(that1.RightPattern) {
+		return false
+	}
+	if !this.ExtraAmpersand.Equal(that1.ExtraAmpersand) {
+		return false
+	}
+	if !this.CloseCurly.Equal(that1.CloseCurly) {
 		return false
 	}
 	return true
@@ -1674,7 +1780,8 @@ func (this *Pattern) GoString() string {
 		`Not:` + fmt.Sprintf("%#v", this.Not),
 		`ZAny:` + fmt.Sprintf("%#v", this.ZAny),
 		`WithSomeTreeNode:` + fmt.Sprintf("%#v", this.WithSomeTreeNode),
-		`Optional:` + fmt.Sprintf("%#v", this.Optional) + `}`}, ", ")
+		`Optional:` + fmt.Sprintf("%#v", this.Optional),
+		`Interleave:` + fmt.Sprintf("%#v", this.Interleave) + `}`}, ", ")
 	return s
 }
 func (this *Empty) GoString() string {
@@ -1769,17 +1876,6 @@ func (this *ZeroOrMore) GoString() string {
 		`Star:` + fmt.Sprintf("%#v", this.Star) + `}`}, ", ")
 	return s
 }
-func (this *Optional) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&relapse.Optional{` +
-		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
-		`Pattern:` + fmt.Sprintf("%#v", this.Pattern),
-		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen),
-		`QuestionMark:` + fmt.Sprintf("%#v", this.QuestionMark) + `}`}, ", ")
-	return s
-}
 func (this *Reference) GoString() string {
 	if this == nil {
 		return "nil"
@@ -1806,6 +1902,30 @@ func (this *ZAny) GoString() string {
 	}
 	s := strings.Join([]string{`&relapse.ZAny{` +
 		`Star:` + fmt.Sprintf("%#v", this.Star) + `}`}, ", ")
+	return s
+}
+func (this *Optional) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.Optional{` +
+		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
+		`Pattern:` + fmt.Sprintf("%#v", this.Pattern),
+		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen),
+		`QuestionMark:` + fmt.Sprintf("%#v", this.QuestionMark) + `}`}, ", ")
+	return s
+}
+func (this *Interleave) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&relapse.Interleave{` +
+		`OpenCurly:` + fmt.Sprintf("%#v", this.OpenCurly),
+		`LeftPattern:` + fmt.Sprintf("%#v", this.LeftPattern),
+		`Ampersand:` + fmt.Sprintf("%#v", this.Ampersand),
+		`RightPattern:` + fmt.Sprintf("%#v", this.RightPattern),
+		`ExtraAmpersand:` + fmt.Sprintf("%#v", this.ExtraAmpersand),
+		`CloseCurly:` + fmt.Sprintf("%#v", this.CloseCurly) + `}`}, ", ")
 	return s
 }
 func valueToGoStringRelapse(v interface{}, typ string) string {
@@ -1904,6 +2024,9 @@ func (this *Pattern) GetValue() interface{} {
 	if this.Optional != nil {
 		return this.Optional
 	}
+	if this.Interleave != nil {
+		return this.Interleave
+	}
 	return nil
 }
 
@@ -1935,6 +2058,8 @@ func (this *Pattern) SetValue(value interface{}) bool {
 		this.WithSomeTreeNode = vt
 	case *Optional:
 		this.Optional = vt
+	case *Interleave:
+		this.Interleave = vt
 	default:
 		return false
 	}

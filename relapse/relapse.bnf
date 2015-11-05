@@ -108,6 +108,7 @@ EmptySet
 
 DepthPattern
   : StartConcat
+  | StartInterleave
   | Dot TreeNode << &Pattern{WithSomeTreeNode: &WithSomeTreeNode{
       Dot: $0.(*expr.Keyword),
       Pattern: $1.(*Pattern),
@@ -254,6 +255,39 @@ ContinueAnd
   : Pattern
   | ContinueAnd Ampersand Pattern <<
     &Pattern{And: &And{
+      LeftPattern: $0.(*Pattern),
+      Ampersand: $1.(*expr.Keyword),
+      RightPattern: $2.(*Pattern),
+    }}, nil
+  >>
+  ;
+
+StartInterleave
+  : OpenCurly Pattern Ampersand ContinueInterleave CloseCurly <<
+    &Pattern{Interleave: &Interleave{
+      OpenCurly: $0.(*expr.Keyword),
+      LeftPattern: $1.(*Pattern),
+      Ampersand: $2.(*expr.Keyword),
+      RightPattern: $3.(*Pattern),
+      CloseCurly: $4.(*expr.Keyword),
+    }}, nil
+  >>
+  | OpenCurly Pattern Ampersand ContinueInterleave Ampersand CloseCurly <<
+    &Pattern{Interleave: &Interleave{
+      OpenCurly: $0.(*expr.Keyword),
+      LeftPattern: $1.(*Pattern),
+      Ampersand: $2.(*expr.Keyword),
+      RightPattern: $3.(*Pattern),
+      ExtraAmpersand: $4.(*expr.Keyword),
+      CloseCurly: $5.(*expr.Keyword),
+    }}, nil
+  >>
+  ;
+
+ContinueInterleave
+  : Pattern
+  | ContinueInterleave Ampersand Pattern <<
+    &Pattern{Interleave: &Interleave{
       LeftPattern: $0.(*Pattern),
       Ampersand: $1.(*expr.Keyword),
       RightPattern: $2.(*Pattern),

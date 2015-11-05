@@ -121,6 +121,7 @@ func TestParse(t *testing.T) {
 		`[0 ->eq($string, "a"),1 > 1,2 :: $string]`,
 		`(0|1) == "a"`,
 		`(*)?`,
+		`{a:* & b:*}`,
 	}
 	p := parser.NewParser()
 	for i, patternDecl := range patternDecls {

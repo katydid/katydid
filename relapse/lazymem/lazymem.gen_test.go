@@ -8,6 +8,46 @@ import (
 	"testing"
 )
 
+func TestABStarAAAXml(t *testing.T) {
+	v := tests.Validators["ABStarAAA"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestABStarABCXml(t *testing.T) {
+	v := tests.Validators["ABStarABC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestABStarBBXml(t *testing.T) {
+	v := tests.Validators["ABStarBB"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestABStarBBAAAXml(t *testing.T) {
+	v := tests.Validators["ABStarBBAAA"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestABStarBBCXml(t *testing.T) {
+	v := tests.Validators["ABStarBBC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestABStarBBCACXml(t *testing.T) {
+	v := tests.Validators["ABStarBBCAC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestABStarCACBCXml(t *testing.T) {
+	v := tests.Validators["ABStarCACBC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestABStarCBCACXml(t *testing.T) {
+	v := tests.Validators["ABStarCBCAC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestAPocketRosesJson(t *testing.T) {
 	v := tests.Validators["APocketRoses"]["json"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
@@ -890,6 +930,276 @@ func TestOrNameTelephoneSmithProto(t *testing.T) {
 
 func TestOrNameTelephoneSmithReflect(t *testing.T) {
 	v := tests.Validators["OrNameTelephoneSmith"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194abcdJson(t *testing.T) {
+	v := tests.Validators["Page194abcd"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194abdcJson(t *testing.T) {
+	v := tests.Validators["Page194abdc"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194acbdJson(t *testing.T) {
+	v := tests.Validators["Page194acbd"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194acdbJson(t *testing.T) {
+	v := tests.Validators["Page194acdb"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194adbcJson(t *testing.T) {
+	v := tests.Validators["Page194adbc"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194adcbJson(t *testing.T) {
+	v := tests.Validators["Page194adcb"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194bacdJson(t *testing.T) {
+	v := tests.Validators["Page194bacd"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194badcJson(t *testing.T) {
+	v := tests.Validators["Page194badc"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194bcadJson(t *testing.T) {
+	v := tests.Validators["Page194bcad"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194bcdaJson(t *testing.T) {
+	v := tests.Validators["Page194bcda"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194bdacJson(t *testing.T) {
+	v := tests.Validators["Page194bdac"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194bdcaJson(t *testing.T) {
+	v := tests.Validators["Page194bdca"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194cabdJson(t *testing.T) {
+	v := tests.Validators["Page194cabd"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194cadbJson(t *testing.T) {
+	v := tests.Validators["Page194cadb"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194cbadJson(t *testing.T) {
+	v := tests.Validators["Page194cbad"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194cbdaJson(t *testing.T) {
+	v := tests.Validators["Page194cbda"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194cdabJson(t *testing.T) {
+	v := tests.Validators["Page194cdab"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194cdbaJson(t *testing.T) {
+	v := tests.Validators["Page194cdba"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194dabcJson(t *testing.T) {
+	v := tests.Validators["Page194dabc"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194dacbJson(t *testing.T) {
+	v := tests.Validators["Page194dacb"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194dbacJson(t *testing.T) {
+	v := tests.Validators["Page194dbac"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194dbcaJson(t *testing.T) {
+	v := tests.Validators["Page194dbca"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194dcabJson(t *testing.T) {
+	v := tests.Validators["Page194dcab"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage194dcbaJson(t *testing.T) {
+	v := tests.Validators["Page194dcba"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E0Xml(t *testing.T) {
+	v := tests.Validators["Page195E0"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E0AddrE0Xml(t *testing.T) {
+	v := tests.Validators["Page195E0AddrE0"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E0AddrE0NameE0Xml(t *testing.T) {
+	v := tests.Validators["Page195E0AddrE0NameE0"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E0NameE0Xml(t *testing.T) {
+	v := tests.Validators["Page195E0NameE0"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E0NameE0AddrE0Xml(t *testing.T) {
+	v := tests.Validators["Page195E0NameE0AddrE0"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E0NameE0NameE0Xml(t *testing.T) {
+	v := tests.Validators["Page195E0NameE0NameE0"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E0NameE0NameE0TelE0Xml(t *testing.T) {
+	v := tests.Validators["Page195E0NameE0NameE0TelE0"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E0NameE0NameE2Xml(t *testing.T) {
+	v := tests.Validators["Page195E0NameE0NameE2"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E0NameE0NameE2TelE0Xml(t *testing.T) {
+	v := tests.Validators["Page195E0NameE0NameE2TelE0"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E0NameE0TelE0NameE2Xml(t *testing.T) {
+	v := tests.Validators["Page195E0NameE0TelE0NameE2"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E0NameE0TelE2NameE0Xml(t *testing.T) {
+	v := tests.Validators["Page195E0NameE0TelE2NameE0"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E0NameE0TelE2NameE2Xml(t *testing.T) {
+	v := tests.Validators["Page195E0NameE0TelE2NameE2"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E0NameE2NameE0Xml(t *testing.T) {
+	v := tests.Validators["Page195E0NameE2NameE0"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E0NameE2NameE0TelE0Xml(t *testing.T) {
+	v := tests.Validators["Page195E0NameE2NameE0TelE0"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E0NameE2TelE0NameE0Xml(t *testing.T) {
+	v := tests.Validators["Page195E0NameE2TelE0NameE0"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E0NameE2TelE0NameE2Xml(t *testing.T) {
+	v := tests.Validators["Page195E0NameE2TelE0NameE2"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E0NameE2TelE2NameE2Xml(t *testing.T) {
+	v := tests.Validators["Page195E0NameE2TelE2NameE2"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E0TelE0NameE0NameE0Xml(t *testing.T) {
+	v := tests.Validators["Page195E0TelE0NameE0NameE0"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E0TelE0NameE0NameE2Xml(t *testing.T) {
+	v := tests.Validators["Page195E0TelE0NameE0NameE2"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E1Xml(t *testing.T) {
+	v := tests.Validators["Page195E1"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E1AddrE1Xml(t *testing.T) {
+	v := tests.Validators["Page195E1AddrE1"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E1AddrE1NameE1Xml(t *testing.T) {
+	v := tests.Validators["Page195E1AddrE1NameE1"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E1NameE1Xml(t *testing.T) {
+	v := tests.Validators["Page195E1NameE1"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E1NameE1AddrE1Xml(t *testing.T) {
+	v := tests.Validators["Page195E1NameE1AddrE1"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E2Xml(t *testing.T) {
+	v := tests.Validators["Page195E2"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E2AddrE2Xml(t *testing.T) {
+	v := tests.Validators["Page195E2AddrE2"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E2AddrE2NameE2Xml(t *testing.T) {
+	v := tests.Validators["Page195E2AddrE2NameE2"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E2NameE0TelE0NameE2Xml(t *testing.T) {
+	v := tests.Validators["Page195E2NameE0TelE0NameE2"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E2NameE2Xml(t *testing.T) {
+	v := tests.Validators["Page195E2NameE2"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPage195E2NameE2AddrE2Xml(t *testing.T) {
+	v := tests.Validators["Page195E2NameE2AddrE2"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
