@@ -169,6 +169,6 @@ func (this *Optional) String() string {
 
 func (this *Interleave) String() string {
 	return this.OpenCurly.String() + this.LeftPattern.String() +
-		this.Ampersand.String() + this.RightPattern.String() +
-		this.ExtraAmpersand.String() + this.CloseCurly.String()
+		this.SemiColon.String() + this.RightPattern.String() +
+		this.ExtraSemiColon.String() + this.CloseCurly.String()
 }

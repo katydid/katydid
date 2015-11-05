@@ -846,9 +846,9 @@ func (m *Optional) GetQuestionMark() *expr.Keyword {
 type Interleave struct {
 	OpenCurly      *expr.Keyword `protobuf:"bytes,2,opt" json:"OpenCurly,omitempty"`
 	LeftPattern    *Pattern      `protobuf:"bytes,3,opt" json:"LeftPattern,omitempty"`
-	Ampersand      *expr.Keyword `protobuf:"bytes,4,opt" json:"Ampersand,omitempty"`
+	SemiColon      *expr.Keyword `protobuf:"bytes,4,opt" json:"SemiColon,omitempty"`
 	RightPattern   *Pattern      `protobuf:"bytes,5,opt" json:"RightPattern,omitempty"`
-	ExtraAmpersand *expr.Keyword `protobuf:"bytes,6,opt" json:"ExtraAmpersand,omitempty"`
+	ExtraSemiColon *expr.Keyword `protobuf:"bytes,6,opt" json:"ExtraSemiColon,omitempty"`
 	CloseCurly     *expr.Keyword `protobuf:"bytes,7,opt" json:"CloseCurly,omitempty"`
 }
 
@@ -869,9 +869,9 @@ func (m *Interleave) GetLeftPattern() *Pattern {
 	return nil
 }
 
-func (m *Interleave) GetAmpersand() *expr.Keyword {
+func (m *Interleave) GetSemiColon() *expr.Keyword {
 	if m != nil {
-		return m.Ampersand
+		return m.SemiColon
 	}
 	return nil
 }
@@ -883,9 +883,9 @@ func (m *Interleave) GetRightPattern() *Pattern {
 	return nil
 }
 
-func (m *Interleave) GetExtraAmpersand() *expr.Keyword {
+func (m *Interleave) GetExtraSemiColon() *expr.Keyword {
 	if m != nil {
-		return m.ExtraAmpersand
+		return m.ExtraSemiColon
 	}
 	return nil
 }
@@ -1671,13 +1671,13 @@ func (this *Interleave) Equal(that interface{}) bool {
 	if !this.LeftPattern.Equal(that1.LeftPattern) {
 		return false
 	}
-	if !this.Ampersand.Equal(that1.Ampersand) {
+	if !this.SemiColon.Equal(that1.SemiColon) {
 		return false
 	}
 	if !this.RightPattern.Equal(that1.RightPattern) {
 		return false
 	}
-	if !this.ExtraAmpersand.Equal(that1.ExtraAmpersand) {
+	if !this.ExtraSemiColon.Equal(that1.ExtraSemiColon) {
 		return false
 	}
 	if !this.CloseCurly.Equal(that1.CloseCurly) {
@@ -1922,9 +1922,9 @@ func (this *Interleave) GoString() string {
 	s := strings.Join([]string{`&relapse.Interleave{` +
 		`OpenCurly:` + fmt.Sprintf("%#v", this.OpenCurly),
 		`LeftPattern:` + fmt.Sprintf("%#v", this.LeftPattern),
-		`Ampersand:` + fmt.Sprintf("%#v", this.Ampersand),
+		`SemiColon:` + fmt.Sprintf("%#v", this.SemiColon),
 		`RightPattern:` + fmt.Sprintf("%#v", this.RightPattern),
-		`ExtraAmpersand:` + fmt.Sprintf("%#v", this.ExtraAmpersand),
+		`ExtraSemiColon:` + fmt.Sprintf("%#v", this.ExtraSemiColon),
 		`CloseCurly:` + fmt.Sprintf("%#v", this.CloseCurly) + `}`}, ", ")
 	return s
 }

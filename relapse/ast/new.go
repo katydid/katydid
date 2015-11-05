@@ -151,6 +151,10 @@ func newQuestionMark() *expr.Keyword {
 	return &expr.Keyword{Value: "?"}
 }
 
+func newSemiColon() *expr.Keyword {
+	return &expr.Keyword{Value: ";"}
+}
+
 func NewSDTName(space *expr.Space, term *expr.Terminal) *NameExpr {
 	name := &NameExpr{
 		Name: &Name{
@@ -462,7 +466,7 @@ func NewInterleave(patterns ...*Pattern) *Pattern {
 		Interleave: &Interleave{
 			OpenCurly:    newOpenCurly(),
 			LeftPattern:  patterns[0],
-			Ampersand:    newAmpersand(),
+			SemiColon:    newSemiColon(),
 			RightPattern: newInterleave(patterns[1:]),
 			CloseCurly:   newCloseCurly(),
 		},
@@ -476,7 +480,7 @@ func newInterleave(patterns []*Pattern) *Pattern {
 	return &Pattern{
 		Interleave: &Interleave{
 			LeftPattern:  patterns[0],
-			Ampersand:    newAmpersand(),
+			SemiColon:    newSemiColon(),
 			RightPattern: newInterleave(patterns[1:]),
 		},
 	}

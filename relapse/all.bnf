@@ -382,22 +382,22 @@ ContinueAnd
   ;
 
 StartInterleave
-  : OpenCurly Pattern Ampersand ContinueInterleave CloseCurly <<
+  : OpenCurly Pattern SemiColon ContinueInterleave CloseCurly <<
     &Pattern{Interleave: &Interleave{
       OpenCurly: $0.(*expr.Keyword),
       LeftPattern: $1.(*Pattern),
-      Ampersand: $2.(*expr.Keyword),
+      SemiColon: $2.(*expr.Keyword),
       RightPattern: $3.(*Pattern),
       CloseCurly: $4.(*expr.Keyword),
     }}, nil
   >>
-  | OpenCurly Pattern Ampersand ContinueInterleave Ampersand CloseCurly <<
+  | OpenCurly Pattern SemiColon ContinueInterleave SemiColon CloseCurly <<
     &Pattern{Interleave: &Interleave{
       OpenCurly: $0.(*expr.Keyword),
       LeftPattern: $1.(*Pattern),
-      Ampersand: $2.(*expr.Keyword),
+      SemiColon: $2.(*expr.Keyword),
       RightPattern: $3.(*Pattern),
-      ExtraAmpersand: $4.(*expr.Keyword),
+      ExtraSemiColon: $4.(*expr.Keyword),
       CloseCurly: $5.(*expr.Keyword),
     }}, nil
   >>
@@ -405,10 +405,10 @@ StartInterleave
 
 ContinueInterleave
   : Pattern
-  | ContinueInterleave Ampersand Pattern <<
+  | ContinueInterleave SemiColon Pattern <<
     &Pattern{Interleave: &Interleave{
       LeftPattern: $0.(*Pattern),
-      Ampersand: $1.(*expr.Keyword),
+      SemiColon: $1.(*expr.Keyword),
       RightPattern: $2.(*Pattern),
     }}, nil
   >>

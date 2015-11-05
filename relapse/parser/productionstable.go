@@ -803,10 +803,10 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `StartInterleave : OpenCurly Pattern Ampersand ContinueInterleave CloseCurly	<< &Pattern{Interleave: &Interleave{
+		String: `StartInterleave : OpenCurly Pattern SemiColon ContinueInterleave CloseCurly	<< &Pattern{Interleave: &Interleave{
       OpenCurly: X[0].(*expr.Keyword),
       LeftPattern: X[1].(*Pattern),
-      Ampersand: X[2].(*expr.Keyword),
+      SemiColon: X[2].(*expr.Keyword),
       RightPattern: X[3].(*Pattern),
       CloseCurly: X[4].(*expr.Keyword),
     }}, nil >>`,
@@ -818,19 +818,19 @@ var productionsTable = ProdTab{
 			return &Pattern{Interleave: &Interleave{
 				OpenCurly:    X[0].(*expr.Keyword),
 				LeftPattern:  X[1].(*Pattern),
-				Ampersand:    X[2].(*expr.Keyword),
+				SemiColon:    X[2].(*expr.Keyword),
 				RightPattern: X[3].(*Pattern),
 				CloseCurly:   X[4].(*expr.Keyword),
 			}}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `StartInterleave : OpenCurly Pattern Ampersand ContinueInterleave Ampersand CloseCurly	<< &Pattern{Interleave: &Interleave{
+		String: `StartInterleave : OpenCurly Pattern SemiColon ContinueInterleave SemiColon CloseCurly	<< &Pattern{Interleave: &Interleave{
       OpenCurly: X[0].(*expr.Keyword),
       LeftPattern: X[1].(*Pattern),
-      Ampersand: X[2].(*expr.Keyword),
+      SemiColon: X[2].(*expr.Keyword),
       RightPattern: X[3].(*Pattern),
-      ExtraAmpersand: X[4].(*expr.Keyword),
+      ExtraSemiColon: X[4].(*expr.Keyword),
       CloseCurly: X[5].(*expr.Keyword),
     }}, nil >>`,
 		Id:         "StartInterleave",
@@ -841,9 +841,9 @@ var productionsTable = ProdTab{
 			return &Pattern{Interleave: &Interleave{
 				OpenCurly:      X[0].(*expr.Keyword),
 				LeftPattern:    X[1].(*Pattern),
-				Ampersand:      X[2].(*expr.Keyword),
+				SemiColon:      X[2].(*expr.Keyword),
 				RightPattern:   X[3].(*Pattern),
-				ExtraAmpersand: X[4].(*expr.Keyword),
+				ExtraSemiColon: X[4].(*expr.Keyword),
 				CloseCurly:     X[5].(*expr.Keyword),
 			}}, nil
 		},
@@ -859,9 +859,9 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `ContinueInterleave : ContinueInterleave Ampersand Pattern	<< &Pattern{Interleave: &Interleave{
+		String: `ContinueInterleave : ContinueInterleave SemiColon Pattern	<< &Pattern{Interleave: &Interleave{
       LeftPattern: X[0].(*Pattern),
-      Ampersand: X[1].(*expr.Keyword),
+      SemiColon: X[1].(*expr.Keyword),
       RightPattern: X[2].(*Pattern),
     }}, nil >>`,
 		Id:         "ContinueInterleave",
@@ -871,7 +871,7 @@ var productionsTable = ProdTab{
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return &Pattern{Interleave: &Interleave{
 				LeftPattern:  X[0].(*Pattern),
-				Ampersand:    X[1].(*expr.Keyword),
+				SemiColon:    X[1].(*expr.Keyword),
 				RightPattern: X[2].(*Pattern),
 			}}, nil
 		},

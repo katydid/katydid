@@ -176,8 +176,8 @@ message Optional {
 message Interleave {
 	optional expr.Keyword OpenCurly = 2;
 	optional Pattern LeftPattern = 3;
-	optional expr.Keyword Ampersand = 4;
+	optional expr.Keyword SemiColon = 4;
 	optional Pattern RightPattern = 5;
-	optional expr.Keyword ExtraAmpersand = 6;
+	optional expr.Keyword ExtraSemiColon = 6;
 	optional expr.Keyword CloseCurly = 7;
 }
