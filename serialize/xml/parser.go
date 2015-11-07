@@ -134,7 +134,7 @@ func (p *parser) IsLeaf() bool {
 		return false
 	}
 	_, ok := p.tok.(CharData)
-	fmt.Printf("IsLeaf %#v\n", p.tok)
+	//fmt.Printf("IsLeaf %#v\n", p.tok)
 	return ok
 }
 
