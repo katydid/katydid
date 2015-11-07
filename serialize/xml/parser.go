@@ -15,9 +15,11 @@
 package xml
 
 import (
+	"bytes"
 	"fmt"
 	"github.com/katydid/katydid/serialize"
 	"io"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -26,7 +28,6 @@ type parser struct {
 	buf       []byte
 	dec       *Decoder
 	tok       Token
-	isLeaf    bool
 	attrs     []Attr
 	attrIndex int
 	attrValue bool
@@ -37,7 +38,11 @@ func NewXMLParser() *parser {
 	return &parser{}
 }
 
+var procInstPattern = regexp.MustCompile(`<\?.*\?>`)
+
 func (p *parser) Init(buf []byte) error {
+	buf = procInstPattern.ReplaceAll(buf, []byte{})
+	buf = bytes.TrimSpace(buf)
 	p.buf = buf
 	p.dec = NewDecoder(NewBuffer(buf))
 	p.dec.Strict = false
@@ -49,7 +54,6 @@ func (p *parser) Copy() serialize.Parser {
 		buf:       p.buf,
 		dec:       p.dec.Copy(),
 		tok:       CopyToken(p.tok),
-		isLeaf:    p.isLeaf,
 		attrs:     copyAttrs(p.attrs),
 		attrIndex: p.attrIndex,
 		attrValue: p.attrValue,
