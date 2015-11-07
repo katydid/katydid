@@ -62,7 +62,7 @@ func (p *parser) Copy() serialize.Parser {
 }
 
 func hasContent(c CharData) bool {
-	return len(strings.TrimSpace(string(c))) > 0
+	return len(string(c)) > 0
 }
 
 func (p *parser) Next() (err error) {
@@ -134,6 +134,7 @@ func (p *parser) IsLeaf() bool {
 		return false
 	}
 	_, ok := p.tok.(CharData)
+	fmt.Printf("IsLeaf %#v\n", p.tok)
 	return ok
 }
 

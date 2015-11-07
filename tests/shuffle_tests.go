@@ -248,11 +248,14 @@ func init() {
 	Validate("Page194dcba", Page194, JsonString(Page194dcba), false)
 }
 
+var whitespace = Many(Value(Regex(StringConst("^(\\s)+$"), StringVar())))
+
 //Name && Address? && Email*
 var Page195NameAddrEmail = G{"main": In("Person", Interleave(
 	In("Name", Any()),
 	Maybe(In("Addr", Any())),
 	Many(In("Email", Any())),
+	whitespace,
 ))}
 
 //Email*, Name, Email*, Address?, Email*
@@ -396,6 +399,7 @@ var Page195NameTelNameEmail = G{"main": In("Person", Interleave(
 		In("Name", Any()),
 		Many(In("Email", Any())),
 	),
+	whitespace,
 ))}
 
 var Page195E2NameE0TelE0NameE2 = `
