@@ -120,8 +120,11 @@ func (s *jsonParser) scanString() error {
 	if err != nil {
 		return err
 	}
-	s.endValueOffset = s.offset + n
 	s.offset += n
+	if s.offset >= len(s.buf) {
+		s.offset = len(s.buf)
+	}
+	s.endValueOffset = s.offset
 	return s.skipSpace()
 }
 
@@ -141,18 +144,18 @@ func (s *jsonParser) scanName() error {
 }
 
 func (s *jsonParser) skipSpace() error {
-	if s.offset >= len(s.buf) {
+	if s.offset > len(s.buf) {
 		return io.ErrShortBuffer
 	}
 	s.offset += skipSpace(s.buf[s.offset:])
-	if s.offset >= len(s.buf) {
+	if s.offset > len(s.buf) {
 		return io.ErrShortBuffer
 	}
 	return nil
 }
 
 func (s *jsonParser) scanTrue() error {
-	if s.offset+4 >= len(s.buf) {
+	if s.offset+4 > len(s.buf) {
 		return io.ErrShortBuffer
 	}
 	if !bytes.Equal(s.buf[s.offset:s.offset+4], []byte("true")) {
@@ -165,7 +168,7 @@ func (s *jsonParser) scanTrue() error {
 }
 
 func (s *jsonParser) scanFalse() error {
-	if s.offset+5 >= len(s.buf) {
+	if s.offset+5 > len(s.buf) {
 		return io.ErrShortBuffer
 	}
 	if !bytes.Equal(s.buf[s.offset:s.offset+5], []byte("false")) {
@@ -178,7 +181,7 @@ func (s *jsonParser) scanFalse() error {
 }
 
 func (s *jsonParser) scanNull() error {
-	if s.offset+4 >= len(s.buf) {
+	if s.offset+4 > len(s.buf) {
 		return io.ErrShortBuffer
 	}
 	if !bytes.Equal(s.buf[s.offset:s.offset+4], []byte("null")) {
@@ -258,47 +261,50 @@ func (s *jsonParser) scanNumber() error {
 	}
 	if s.buf[s.offset] == '0' {
 		s.offset++
-		if s.offset >= len(s.buf) {
+		if s.offset > len(s.buf) {
 			return io.ErrShortBuffer
 		}
 	} else if isDigit19(s.buf[s.offset]) {
 		s.offset++
-		if s.offset >= len(s.buf) {
+		if s.offset > len(s.buf) {
 			return io.ErrShortBuffer
 		}
-		for isDigit(s.buf[s.offset]) {
+		for s.offset < len(s.buf) && isDigit(s.buf[s.offset]) {
 			s.offset++
-			if s.offset >= len(s.buf) {
+			if s.offset > len(s.buf) {
 				return io.ErrShortBuffer
 			}
 		}
 	}
-	if s.buf[s.offset] == '.' {
+	if s.offset < len(s.buf) && s.buf[s.offset] == '.' {
 		s.offset++
-		if s.offset >= len(s.buf) {
+		if s.offset > len(s.buf) {
 			return io.ErrShortBuffer
 		}
-		for isDigit(s.buf[s.offset]) {
+		for s.offset < len(s.buf) && isDigit(s.buf[s.offset]) {
 			s.offset++
-			if s.offset >= len(s.buf) {
+			if s.offset > len(s.buf) {
 				return io.ErrShortBuffer
 			}
 		}
 	}
-	if s.buf[s.offset] == 'e' || s.buf[s.offset] == 'E' {
+	if s.offset < len(s.buf) &&
+		(s.buf[s.offset] == 'e' || s.buf[s.offset] == 'E') {
 		s.offset++
-		if s.offset >= len(s.buf) {
+		if s.offset > len(s.buf) {
 			return io.ErrShortBuffer
 		}
-		if s.buf[s.offset] == '+' || s.buf[s.offset] == '-' {
-			s.offset++
-			if s.offset >= len(s.buf) {
-				return io.ErrShortBuffer
+		if s.offset < len(s.buf) {
+			if s.buf[s.offset] == '+' || s.buf[s.offset] == '-' {
+				s.offset++
+				if s.offset > len(s.buf) {
+					return io.ErrShortBuffer
+				}
 			}
 		}
-		for isDigit(s.buf[s.offset]) {
+		for s.offset < len(s.buf) && isDigit(s.buf[s.offset]) {
 			s.offset++
-			if s.offset >= len(s.buf) {
+			if s.offset > len(s.buf) {
 				return io.ErrShortBuffer
 			}
 		}
@@ -513,16 +519,32 @@ func NewJsonParser() *jsonParser {
 	}
 }
 
-func (s *jsonParser) init(buf []byte) {
+func (s *jsonParser) Init(buf []byte) error {
 	s.state = state{
 		firstObjectValue: true,
 		buf:              buf,
 	}
 	s.stack = s.stack[:0]
-}
-
-func (s *jsonParser) Init(buf []byte) error {
-	s.init(buf)
+	if err := s.skipSpace(); err != nil {
+		return err
+	}
+	if s.buf[s.offset] == '{' {
+		//do nothing
+	} else if s.buf[s.offset] == '[' {
+		if err := s.scanValue(); err != nil {
+			return err
+		}
+		s.inArray = true
+		s.firstArrayValue = true
+		s.buf = s.buf[s.startValueOffset:s.endValueOffset]
+		s.offset = 0
+	} else {
+		if err := s.scanValue(); err != nil {
+			return err
+		}
+		s.state.isLeaf = true
+		s.state.firstObjectValue = true
+	}
 	return nil
 }
 

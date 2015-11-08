@@ -75,3 +75,57 @@ func TestMultiLineArray(t *testing.T) {
 	jout := debug.Walk(parser)
 	t.Logf("%v", jout)
 }
+
+func testValue(t *testing.T, input, output string) {
+	parser := sjson.NewJsonParser()
+	if err := parser.Init([]byte(input)); err != nil {
+		t.Fatalf("init error: %v", err)
+	}
+	jout := debug.Walk(parser)
+	if len(jout) != 1 {
+		t.Fatalf("expected one node")
+	}
+	if len(jout[0].Children) != 0 {
+		t.Fatalf("did not expected any children")
+	}
+	if jout[0].Label != output {
+		t.Fatalf("expected %s got %s", output, jout[0].Label)
+	}
+}
+
+func TestValues(t *testing.T) {
+	testValue(t, "0", "0")
+	testValue(t, "1", "1")
+	testValue(t, "-1", "-1")
+	testValue(t, "123", "123")
+	testValue(t, "1.1", "1.1")
+	testValue(t, "1.123", "1.123")
+	testValue(t, "1.1e1", "11")
+	testValue(t, "1.1e-1", "0.11")
+	testValue(t, "1.1e10", "1.1e+10")
+	testValue(t, "1.1e+10", "1.1e+10")
+	testValue(t, `"a"`, "a")
+	testValue(t, `"abc"`, "abc")
+	testValue(t, `""`, "")
+	testValue(t, `"\b"`, "\b")
+	testValue(t, `true`, "true")
+	testValue(t, `false`, "false")
+	testValue(t, `null`, "<nil>")
+}
+
+func testArray(t *testing.T, s string) {
+	parser := sjson.NewJsonParser()
+	if err := parser.Init([]byte(s)); err != nil {
+		t.Fatal(err)
+	}
+	jout := debug.Walk(parser)
+	t.Logf("%v", jout)
+}
+
+func TestArray(t *testing.T) {
+	testArray(t, `[1]`)
+	testArray(t, `[1,2.3e5]`)
+	testArray(t, `[1,"a"]`)
+	testArray(t, `[true, false, null]`)
+	testArray(t, `[{"a": true, "b": [1,2]}]`)
+}
