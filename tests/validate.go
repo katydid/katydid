@@ -17,6 +17,8 @@ package tests
 import (
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/combinator"
+	"github.com/katydid/katydid/relapse/protokey"
+	"reflect"
 	"sort"
 )
 
@@ -60,6 +62,17 @@ func ValidatorList() []interface{} {
 	}
 	sort.Sort(vs)
 	return vs
+}
+
+func ValidateProto(name string, grammar combinator.G, m interface{}, expected bool) {
+	packageName := "tests"
+	messageName := reflect.TypeOf(m).Elem().Name()
+	codecs := Proto(m)
+	g, err := protokey.KeyTheGrammar(packageName, messageName, m.(ProtoMessage).Description(), grammar.Grammar())
+	if err != nil {
+		panic(err)
+	}
+	Validate(name, combinator.G(relapse.NewRefsLookup(g)), codecs, expected)
 }
 
 func Validate(name string, grammar combinator.G, codecs Codecs, expected bool) {

@@ -18,6 +18,7 @@ import (
 	"fmt"
 	"github.com/katydid/katydid/expr/compose"
 	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse/nameexpr"
 	"github.com/katydid/katydid/serialize"
 	"io"
 	"log"
@@ -88,7 +89,7 @@ func Nullable(refs relapse.RefLookup, p *relapse.Pattern) bool {
 }
 
 func derivTreeNode(refs relapse.RefLookup, p *relapse.TreeNode, tree serialize.Parser) *relapse.Pattern {
-	matched := EvalName(p.GetName(), tree)
+	matched := nameexpr.EvalName(p.GetName(), tree)
 	log.Printf("name %s -> %v", p, matched)
 	if !matched {
 		return relapse.NewEmptySet()

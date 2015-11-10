@@ -42,14 +42,6 @@ var errBufferOverlow = fmt.Errorf("buffer overflow")
 
 var errUnknownWireType = fmt.Errorf("unknown wire type")
 
-type errUnknown struct {
-	msg string
-}
-
-func (this *errUnknown) Error() string {
-	return "Could not find " + this.msg
-}
-
 func uvarint(buf []byte) (uint64, int, error) {
 	var uv uint64
 	var shift uint
@@ -82,79 +74,11 @@ func length(wireType int, buf []byte) (prefix int, l int, err error) {
 	return 0, 0, errUnknownWireType
 }
 
-type descMap struct {
-	desc       *descriptor.FileDescriptorSet
-	root       *descriptor.DescriptorProto
-	fieldToMsg map[*descriptor.FieldDescriptorProto]*descriptor.DescriptorProto
-	msgToField map[*descriptor.DescriptorProto]map[uint64]*descriptor.FieldDescriptorProto
-}
-
-func newDescriptorMap(pkgName, msgName string, desc *descriptor.FileDescriptorSet) (*descMap, error) {
-	root := desc.GetMessage(pkgName, msgName)
-	d := &descMap{
-		desc:       desc,
-		root:       root,
-		fieldToMsg: make(map[*descriptor.FieldDescriptorProto]*descriptor.DescriptorProto),
-		msgToField: make(map[*descriptor.DescriptorProto]map[uint64]*descriptor.FieldDescriptorProto),
-	}
-	err := d.visit(pkgName, root)
-	return d, err
-}
-
-func (this *descMap) visit(pkgName string, msg *descriptor.DescriptorProto) error {
-	if _, ok := this.msgToField[msg]; ok {
-		return nil
-	}
-	for i, f := range msg.GetField() {
-		if _, ok := this.msgToField[msg]; !ok {
-			this.msgToField[msg] = make(map[uint64]*descriptor.FieldDescriptorProto)
-		}
-		this.msgToField[msg][f.GetKeyUint64()] = msg.Field[i]
-		if f.GetType() == descriptor.FieldDescriptorProto_TYPE_MESSAGE {
-			newPkgName, newMsgName := this.desc.FindMessage(pkgName, msg.GetName(), f.GetName())
-			if len(newMsgName) == 0 {
-				return &errUnknown{pkgName + "." + msg.GetName() + "." + f.GetName()}
-			}
-			newMsg := this.desc.GetMessage(newPkgName, newMsgName)
-			if newMsg == nil {
-				return &errUnknown{newPkgName + "." + newMsgName}
-			}
-			this.fieldToMsg[msg.Field[i]] = newMsg
-			if _, ok := this.msgToField[newMsg]; ok {
-				continue
-			}
-			if err := this.visit(newPkgName, newMsg); err != nil {
-				return err
-			}
-		}
-	}
-	for i := range msg.GetNestedType() {
-		this.visit(pkgName, msg.GetNestedType()[i])
-	}
-	return nil
-}
-
-func (this *descMap) getRoot() *descriptor.DescriptorProto {
-	return this.root
-}
-
-func (this *descMap) lookupMessage(field *descriptor.FieldDescriptorProto) *descriptor.DescriptorProto {
-	return this.fieldToMsg[field]
-}
-
-func (this *descMap) lookupField(msg *descriptor.DescriptorProto, key uint64) (*descriptor.FieldDescriptorProto, bool) {
-	fields, ok := this.msgToField[msg]
-	if !ok {
-		return nil, false
-	}
-	f, ok := fields[key]
-	return f, ok
-}
-
 type protoParser struct {
-	descMap *descMap
+	descMap DescMap
 	state
 	stack []state
+	debug bool
 }
 
 func (this *protoParser) Copy() serialize.Parser {
@@ -162,6 +86,7 @@ func (this *protoParser) Copy() serialize.Parser {
 		descMap: this.descMap,
 		state:   this.state,
 		stack:   make([]state, len(this.stack)),
+		debug:   this.debug,
 	}
 	for i := range this.stack {
 		s.stack[i] = this.stack[i]
@@ -187,15 +112,17 @@ type BytesParser interface {
 	Init(buf []byte) error
 }
 
-func NewProtoParser(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet) BytesParser {
-	descMap, err := newDescriptorMap(srcPackage, srcMessage, desc)
+//Merging of fields and splitting of arrays are not supported by this parser for optimization reasons.
+//TODO: defaults and proto3
+func NewProtoParser(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet) *protoParser {
+	descMap, err := NewDescriptorMap(srcPackage, srcMessage, desc)
 	if err != nil {
 		panic(err)
 	}
 	return &protoParser{
 		descMap: descMap,
 		state: state{
-			parent: descMap.getRoot(),
+			parent: descMap.GetRoot(),
 		},
 		stack: make([]state, 0, 10),
 	}
@@ -243,7 +170,7 @@ func (s *protoParser) Next() error {
 		if err != nil {
 			return err
 		}
-		field, ok := s.descMap.lookupField(s.parent, v)
+		field, ok := s.descMap.LookupField(s.parent, v)
 		if !ok {
 			s.length = 0
 			s.isRepeated = false
@@ -270,7 +197,7 @@ func (s *protoParser) Next() error {
 	if err != nil {
 		return err
 	}
-	field, ok := s.descMap.lookupField(s.parent, v)
+	field, ok := s.descMap.LookupField(s.parent, v)
 	if !ok || !field.IsRepeated() {
 		s.offset += n
 		wireType := int(v & 0x7)
@@ -364,6 +291,9 @@ func (s *protoParser) Int() (int64, error) {
 
 func (s *protoParser) Uint() (uint64, error) {
 	if !s.isLeaf {
+		if !s.debug {
+			return uint64(s.field.GetNumber()), nil
+		}
 		return 0, serialize.ErrNotUint
 	}
 	typ := s.field.GetType()
@@ -524,7 +454,7 @@ func (s *protoParser) Down() {
 	} else if s.field.IsMessage() {
 		s.stack = append(s.stack, s.state)
 		s.buf = s.buf[s.offset : s.offset+s.length]
-		s.parent = s.descMap.lookupMessage(s.field)
+		s.parent = s.descMap.LookupMessage(s.field)
 		s.offset = 0
 		s.length = 0
 		s.field = nil

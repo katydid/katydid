@@ -34,12 +34,14 @@ var AnyFinanceJudo = G{"main": Any()}
 
 func init() {
 	Validate("Ab21Any", AnyFinanceJudo, AllCodecs(Ab21FinanceJudo), true)
+	ValidateProto("ProtoAb21Any", AnyFinanceJudo, Ab21FinanceJudo, true)
 }
 
 var NoneFinanceJudo = G{"main": None()}
 
 func init() {
 	Validate("Ab21None", NoneFinanceJudo, AllCodecs(Ab21FinanceJudo), false)
+	ValidateProto("ProtoAb21None", NoneFinanceJudo, Ab21FinanceJudo, false)
 }
 
 var HasSpirit1FinanceJudo = G{
@@ -49,6 +51,7 @@ var HasSpirit1FinanceJudo = G{
 
 func init() {
 	Validate("Ab21Spirit1", HasSpirit1FinanceJudo, AllCodecs(Ab21FinanceJudo), true)
+	ValidateProto("ProtoAb21Spirit1", HasSpirit1FinanceJudo, Ab21FinanceJudo, true)
 }
 
 var HasSpirit2FinanceJudo = G{
@@ -109,6 +112,7 @@ var InAnyExceptNotAFieldNameFinanceJudo = G{
 
 func init() {
 	Validate("Ab21NotAFieldName", InAnyExceptNotAFieldNameFinanceJudo, AllCodecs(Ab21FinanceJudo), true)
+	ValidateProto("ProtoAb21NotAFieldName", InAnyExceptNotAFieldNameFinanceJudo, Ab21FinanceJudo, true)
 }
 
 var InAnyExceptSaladWorryFinanceJudo = G{

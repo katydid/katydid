@@ -21,6 +21,7 @@ import (
 	"github.com/katydid/katydid/funcs"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/interp"
+	"github.com/katydid/katydid/relapse/nameexpr"
 	"github.com/katydid/katydid/viper/ast"
 	"strconv"
 )
@@ -294,7 +295,7 @@ func getAllExprs(bookKeepingRefs relapse.RefLookup, allRefs relapse.RefLookup, p
 }
 
 func nameToExpr(n *relapse.NameExpr) *expr.Expr {
-	f := interp.NameToFunc(n)
+	f := nameexpr.NameToFunc(n)
 	fs := funcs.Sprint(f)
 	ex, err := eparser.NewParser().ParseExpr(fs)
 	if err != nil {

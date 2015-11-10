@@ -1248,6 +1248,161 @@ func TestProperNotNamePersonSmithReflect(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestProtoAb21AnyProto(t *testing.T) {
+	v := tests.Validators["ProtoAb21Any"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoAb21NoneProto(t *testing.T) {
+	v := tests.Validators["ProtoAb21None"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoAb21NotAFieldNameProto(t *testing.T) {
+	v := tests.Validators["ProtoAb21NotAFieldName"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoAb21Spirit1Proto(t *testing.T) {
+	v := tests.Validators["ProtoAb21Spirit1"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoAbcPocketRosesProto(t *testing.T) {
+	v := tests.Validators["ProtoAbcPocketRoses"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoContextDavidProto(t *testing.T) {
+	v := tests.Validators["ProtoContextDavid"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoContextRobertProto(t *testing.T) {
+	v := tests.Validators["ProtoContextRobert"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoDPocketRosesProto(t *testing.T) {
+	v := tests.Validators["ProtoDPocketRoses"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoEmptyOrNilJohnProto(t *testing.T) {
+	v := tests.Validators["ProtoEmptyOrNilJohn"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoEmptyOrNilNonameProto(t *testing.T) {
+	v := tests.Validators["ProtoEmptyOrNilNoname"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoEmptyOrNilSmithProto(t *testing.T) {
+	v := tests.Validators["ProtoEmptyOrNilSmith"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoLenNameJohnProto(t *testing.T) {
+	v := tests.Validators["ProtoLenNameJohn"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoLenNameNonameProto(t *testing.T) {
+	v := tests.Validators["ProtoLenNameNoname"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoLenNameSmithProto(t *testing.T) {
+	v := tests.Validators["ProtoLenNameSmith"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoListIndexAddressMoverProto(t *testing.T) {
+	v := tests.Validators["ProtoListIndexAddressMover"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoListIndexAddressRoutineProto(t *testing.T) {
+	v := tests.Validators["ProtoListIndexAddressRoutine"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoListIndexAddressShakerProto(t *testing.T) {
+	v := tests.Validators["ProtoListIndexAddressShaker"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoNaiveNotNameDavidProto(t *testing.T) {
+	v := tests.Validators["ProtoNaiveNotNameDavid"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoNaiveNotNameNonameProto(t *testing.T) {
+	v := tests.Validators["ProtoNaiveNotNameNoname"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoNaiveNotNameRobertProto(t *testing.T) {
+	v := tests.Validators["ProtoNaiveNotNameRobert"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoNaiveNotNameSmithProto(t *testing.T) {
+	v := tests.Validators["ProtoNaiveNotNameSmith"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoNilNameJohnProto(t *testing.T) {
+	v := tests.Validators["ProtoNilNameJohn"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoNilNameNonameProto(t *testing.T) {
+	v := tests.Validators["ProtoNilNameNoname"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoNilNameSmithProto(t *testing.T) {
+	v := tests.Validators["ProtoNilNameSmith"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoProperNotNamePersonNonameProto(t *testing.T) {
+	v := tests.Validators["ProtoProperNotNamePersonNoname"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoProperNotNamePersonRobertProto(t *testing.T) {
+	v := tests.Validators["ProtoProperNotNamePersonRobert"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoProperNotNamePersonSmithProto(t *testing.T) {
+	v := tests.Validators["ProtoProperNotNamePersonSmith"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoRecursiveIoUtilProto(t *testing.T) {
+	v := tests.Validators["ProtoRecursiveIoUtil"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoRecursivePathProto(t *testing.T) {
+	v := tests.Validators["ProtoRecursivePath"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoRecursiveRuntimeProto(t *testing.T) {
+	v := tests.Validators["ProtoRecursiveRuntime"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoRecursiveSyscallProto(t *testing.T) {
+	v := tests.Validators["ProtoRecursiveSyscall"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestRecursiveIoUtilJson(t *testing.T) {
 	v := tests.Validators["RecursiveIoUtil"]["json"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)

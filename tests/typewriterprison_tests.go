@@ -41,6 +41,8 @@ func init() {
 	Validate("APocketRoses", AStringArray, AllCodecs(AbcPocketRoses), true)
 	Validate("FinalCPocketRoses", FinalCStringArray, AllCodecs(AbcPocketRoses), true)
 	Validate("AbcPocketRoses", AbcStringArray, AllCodecs(AbcPocketRoses), true)
+	ValidateProto("ProtoAbcPocketRoses", AbcStringArray, AbcPocketRoses, true)
 	Validate("NextAPocketRoses", NextAStringArray, AllCodecs(AbcPocketRoses), false)
 	Validate("DPocketRoses", DStringArray, AllCodecs(AbcPocketRoses), false)
+	ValidateProto("ProtoDPocketRoses", DStringArray, AbcPocketRoses, false)
 }

@@ -24,6 +24,7 @@ import (
 
 func TestDebug(t *testing.T) {
 	p := NewProtoParser("debug", "Debug", debug.DebugDescription())
+	p.debug = true
 	data, err := proto.Marshal(debug.Input)
 	if err != nil {
 		panic(err)
@@ -38,6 +39,7 @@ func TestDebug(t *testing.T) {
 
 func TestRandomDebug(t *testing.T) {
 	p := NewProtoParser("debug", "Debug", debug.DebugDescription())
+	p.debug = true
 	data, err := proto.Marshal(debug.Input)
 	if err != nil {
 		panic(err)
@@ -60,6 +62,7 @@ func next(t *testing.T, parser serialize.Parser) {
 
 func TestSkipRepeated1(t *testing.T) {
 	p := NewProtoParser("debug", "Debug", debug.DebugDescription())
+	p.debug = true
 	data, err := proto.Marshal(debug.Input)
 	if err != nil {
 		panic(err)
@@ -83,6 +86,7 @@ func TestSkipRepeated1(t *testing.T) {
 
 func TestSkipRepeated2(t *testing.T) {
 	p := NewProtoParser("debug", "Debug", debug.DebugDescription())
+	p.debug = true
 	data, err := proto.Marshal(debug.Input)
 	if err != nil {
 		panic(err)

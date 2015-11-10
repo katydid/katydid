@@ -13,29 +13,4 @@
 # limitations under the License.
 
 regenerate:
-	./build.sh
-	(cd ast && make regenerate)
-	rm ./util/litconv.go
-	rm ./util/rune.go
-	rmdir util
-	(cd interp && make regenerate)
-	(cd convert && make regenerate)
-	(cd lazymem && make regenerate)
-	(cd protokey && make regenerate)
-
-clean:
-	rm *.txt || true
-
-nuke: clean
-	rm -rf ./errors
-	rm -rf ./lexer
-	rm -rf ./parser/action.go
-	rm -rf ./parser/actiontable.go
-	rm -rf ./parser/gototable.go
-	rm -rf ./parser/parser.go
-	rm -rf ./parser/productionstable.go
-	rm -rf ./token
-	rm -rf ./util
-	(cd interp && make nuke)
-	(cd convert && make nuke)
-	(cd lazymem && make nuke)
+	(protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf protokey.proto)

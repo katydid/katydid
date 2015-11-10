@@ -54,7 +54,9 @@ var ContextPerson = G{"main": InPath("Addresses", InAny(InOrder(
 
 func init() {
 	Validate("ContextDavid", ContextPerson, AllCodecs(DavidPerson), false)
+	ValidateProto("ProtoContextDavid", ContextPerson, DavidPerson, false)
 	Validate("ContextRobert", ContextPerson, AllCodecs(RobertPerson), true)
+	ValidateProto("ProtoContextRobert", ContextPerson, RobertPerson, true)
 }
 
 var XmlContextPerson = G{"main": In("Person", InPath("Addresses",
@@ -182,8 +184,11 @@ var ListIndexAddressPerson = G{
 
 func init() {
 	Validate("ListIndexAddressMover", ListIndexAddressPerson, AllCodecs(MoverPerson), false)
+	ValidateProto("ProtoListIndexAddressMover", ListIndexAddressPerson, MoverPerson, false)
 	Validate("ListIndexAddressShaker", ListIndexAddressPerson, AllCodecs(ShakerPerson), true)
+	ValidateProto("ProtoListIndexAddressShaker", ListIndexAddressPerson, ShakerPerson, true)
 	Validate("ListIndexAddressRoutine", ListIndexAddressPerson, AllCodecs(RoutinePerson), false)
+	ValidateProto("ProtoListIndexAddressRoutine", ListIndexAddressPerson, RoutinePerson, false)
 }
 
 //Is this person's name missing
@@ -193,8 +198,11 @@ var NilNamePerson = G{"main": OppositeOf(
 
 func init() {
 	Validate("NilNameNoname", NilNamePerson, AllCodecs(NonamePerson), true)
+	ValidateProto("ProtoNilNameNoname", NilNamePerson, NonamePerson, true)
 	Validate("NilNameJohn", NilNamePerson, AllCodecs(JohnPerson), false)
+	ValidateProto("ProtoNilNameJohn", NilNamePerson, JohnPerson, false)
 	Validate("NilNameSmith", NilNamePerson, AllCodecs(SmithPerson), false)
+	ValidateProto("ProtoNilNameSmith", NilNamePerson, SmithPerson, false)
 }
 
 //Is this person's name an empty string
@@ -206,8 +214,11 @@ var LenNamePerson = G{"main": InOrder(
 
 func init() {
 	Validate("LenNameNoname", LenNamePerson, AllCodecs(NonamePerson), false)
+	ValidateProto("ProtoLenNameNoname", LenNamePerson, NonamePerson, false)
 	Validate("LenNameJohn", LenNamePerson, AllCodecs(JohnPerson), false)
+	ValidateProto("ProtoLenNameJohn", LenNamePerson, JohnPerson, false)
 	Validate("LenNameSmith", LenNamePerson, AllCodecs(SmithPerson), true)
+	ValidateProto("ProtoLenNameSmith", LenNamePerson, SmithPerson, true)
 }
 
 //Is this person's name empty or an empty string
@@ -219,8 +230,11 @@ var EmptyOrNilPerson = G{
 
 func init() {
 	Validate("EmptyOrNilNoname", EmptyOrNilPerson, AllCodecs(NonamePerson), true)
+	ValidateProto("ProtoEmptyOrNilNoname", EmptyOrNilPerson, NonamePerson, true)
 	Validate("EmptyOrNilJohn", EmptyOrNilPerson, AllCodecs(JohnPerson), false)
+	ValidateProto("ProtoEmptyOrNilJohn", EmptyOrNilPerson, JohnPerson, false)
 	Validate("EmptyOrNilSmith", EmptyOrNilPerson, AllCodecs(SmithPerson), true)
+	ValidateProto("ProtoEmptyOrNilSmith", EmptyOrNilPerson, SmithPerson, true)
 }
 
 //Is the person's name not David
@@ -234,9 +248,13 @@ var NaiveNotNamePerson = G{
 
 func init() {
 	Validate("NaiveNotNameNoname", NaiveNotNamePerson, AllCodecs(NonamePerson), false)
+	ValidateProto("ProtoNaiveNotNameNoname", NaiveNotNamePerson, NonamePerson, false)
 	Validate("NaiveNotNameRobert", NaiveNotNamePerson, AllCodecs(RobertPerson), true)
+	ValidateProto("ProtoNaiveNotNameRobert", NaiveNotNamePerson, RobertPerson, true)
 	Validate("NaiveNotNameSmith", NaiveNotNamePerson, AllCodecs(SmithPerson), true)
+	ValidateProto("ProtoNaiveNotNameSmith", NaiveNotNamePerson, SmithPerson, true)
 	Validate("NaiveNotNameDavid", NaiveNotNamePerson, AllCodecs(DavidPerson), false)
+	ValidateProto("ProtoNaiveNotNameDavid", NaiveNotNamePerson, DavidPerson, false)
 }
 
 //Is the person's name not David and make sure that the case where the name does not exist is also covered
@@ -252,9 +270,13 @@ var ProperNotNamePerson = G{
 
 func init() {
 	Validate("ProperNotNamePersonNoname", ProperNotNamePerson, AllCodecs(NonamePerson), true)
+	ValidateProto("ProtoProperNotNamePersonNoname", ProperNotNamePerson, NonamePerson, true)
 	Validate("ProperNotNamePersonRobert", ProperNotNamePerson, AllCodecs(RobertPerson), true)
+	ValidateProto("ProtoProperNotNamePersonRobert", ProperNotNamePerson, RobertPerson, true)
 	Validate("ProperNotNamePersonSmith", ProperNotNamePerson, AllCodecs(SmithPerson), true)
+	ValidateProto("ProtoProperNotNamePersonSmith", ProperNotNamePerson, SmithPerson, true)
 	Validate("ProperNotNamePersonRobert", ProperNotNamePerson, AllCodecs(DavidPerson), false)
+	ValidateProto("ProtoProperNotNamePersonRobert", ProperNotNamePerson, DavidPerson, false)
 }
 
 //Is this person's name David and telephone number 0123456789

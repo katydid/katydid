@@ -75,7 +75,7 @@ func (this *BuiltIn) String() string {
 
 func (this *Terminal) String() string {
 	if this.DoubleValue != nil {
-		return this.Before.String() + strconv.FormatFloat(this.GetDoubleValue(), 'f', -1, 10)
+		return this.Before.String() + strconv.FormatFloat(this.GetDoubleValue(), 'f', -1, 64)
 	}
 	if this.IntValue != nil {
 		return this.Before.String() + strconv.FormatInt(this.GetIntValue(), 10)

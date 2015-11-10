@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package interp
+package nameexpr
 
 import (
 	"fmt"
@@ -22,7 +22,7 @@ import (
 	"github.com/katydid/katydid/serialize"
 )
 
-func EvalName(nameExpr *relapse.NameExpr, tree serialize.Parser) bool {
+func EvalName(nameExpr *relapse.NameExpr, tree serialize.Decoder) bool {
 	f := NameToFunc(nameExpr)
 	b, err := compose.NewBoolFunc(f)
 	if err != nil {
@@ -52,6 +52,7 @@ func NameToFunc(n *relapse.NameExpr) funcs.Bool {
 		} else if v.BytesValue != nil {
 			return funcs.BytesEq(funcs.BytesVar(), funcs.BytesConst(v.GetBytesValue()))
 		}
+		panic(fmt.Sprintf("unknown name expr name %#v", v))
 	case *relapse.AnyName:
 		return funcs.BoolConst(true)
 	case *relapse.AnyNameExcept:
