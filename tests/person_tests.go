@@ -53,10 +53,8 @@ var ContextPerson = G{"main": InPath("Addresses", InAny(InOrder(
 )))}
 
 func init() {
-	Validate("ContextDavid", ContextPerson, AllCodecs(DavidPerson), false)
-	ValidateProto("ProtoContextDavid", ContextPerson, DavidPerson, false)
-	Validate("ContextRobert", ContextPerson, AllCodecs(RobertPerson), true)
-	ValidateProto("ProtoContextRobert", ContextPerson, RobertPerson, true)
+	ValidateProtoEtc("ContextDavid", ContextPerson, DavidPerson, false)
+	ValidateProtoEtc("ContextRobert", ContextPerson, RobertPerson, true)
 }
 
 var XmlContextPerson = G{"main": In("Person", InPath("Addresses",
@@ -183,12 +181,9 @@ var ListIndexAddressPerson = G{
 }
 
 func init() {
-	Validate("ListIndexAddressMover", ListIndexAddressPerson, AllCodecs(MoverPerson), false)
-	ValidateProto("ProtoListIndexAddressMover", ListIndexAddressPerson, MoverPerson, false)
-	Validate("ListIndexAddressShaker", ListIndexAddressPerson, AllCodecs(ShakerPerson), true)
-	ValidateProto("ProtoListIndexAddressShaker", ListIndexAddressPerson, ShakerPerson, true)
-	Validate("ListIndexAddressRoutine", ListIndexAddressPerson, AllCodecs(RoutinePerson), false)
-	ValidateProto("ProtoListIndexAddressRoutine", ListIndexAddressPerson, RoutinePerson, false)
+	ValidateProtoEtc("ListIndexAddressMover", ListIndexAddressPerson, MoverPerson, false)
+	ValidateProtoEtc("ListIndexAddressShaker", ListIndexAddressPerson, ShakerPerson, true)
+	ValidateProtoEtc("ListIndexAddressRoutine", ListIndexAddressPerson, RoutinePerson, false)
 }
 
 //Is this person's name missing
@@ -197,12 +192,9 @@ var NilNamePerson = G{"main": OppositeOf(
 )}
 
 func init() {
-	Validate("NilNameNoname", NilNamePerson, AllCodecs(NonamePerson), true)
-	ValidateProto("ProtoNilNameNoname", NilNamePerson, NonamePerson, true)
-	Validate("NilNameJohn", NilNamePerson, AllCodecs(JohnPerson), false)
-	ValidateProto("ProtoNilNameJohn", NilNamePerson, JohnPerson, false)
-	Validate("NilNameSmith", NilNamePerson, AllCodecs(SmithPerson), false)
-	ValidateProto("ProtoNilNameSmith", NilNamePerson, SmithPerson, false)
+	ValidateProtoEtc("NilNameNoname", NilNamePerson, NonamePerson, true)
+	ValidateProtoEtc("NilNameJohn", NilNamePerson, JohnPerson, false)
+	ValidateProtoEtc("NilNameSmith", NilNamePerson, SmithPerson, false)
 }
 
 //Is this person's name an empty string
@@ -213,12 +205,9 @@ var LenNamePerson = G{"main": InOrder(
 )}
 
 func init() {
-	Validate("LenNameNoname", LenNamePerson, AllCodecs(NonamePerson), false)
-	ValidateProto("ProtoLenNameNoname", LenNamePerson, NonamePerson, false)
-	Validate("LenNameJohn", LenNamePerson, AllCodecs(JohnPerson), false)
-	ValidateProto("ProtoLenNameJohn", LenNamePerson, JohnPerson, false)
-	Validate("LenNameSmith", LenNamePerson, AllCodecs(SmithPerson), true)
-	ValidateProto("ProtoLenNameSmith", LenNamePerson, SmithPerson, true)
+	ValidateProtoEtc("LenNameNoname", LenNamePerson, NonamePerson, false)
+	ValidateProtoEtc("LenNameJohn", LenNamePerson, JohnPerson, false)
+	ValidateProtoEtc("LenNameSmith", LenNamePerson, SmithPerson, true)
 }
 
 //Is this person's name empty or an empty string
@@ -229,12 +218,9 @@ var EmptyOrNilPerson = G{
 }
 
 func init() {
-	Validate("EmptyOrNilNoname", EmptyOrNilPerson, AllCodecs(NonamePerson), true)
-	ValidateProto("ProtoEmptyOrNilNoname", EmptyOrNilPerson, NonamePerson, true)
-	Validate("EmptyOrNilJohn", EmptyOrNilPerson, AllCodecs(JohnPerson), false)
-	ValidateProto("ProtoEmptyOrNilJohn", EmptyOrNilPerson, JohnPerson, false)
-	Validate("EmptyOrNilSmith", EmptyOrNilPerson, AllCodecs(SmithPerson), true)
-	ValidateProto("ProtoEmptyOrNilSmith", EmptyOrNilPerson, SmithPerson, true)
+	ValidateProtoEtc("EmptyOrNilNoname", EmptyOrNilPerson, NonamePerson, true)
+	ValidateProtoEtc("EmptyOrNilJohn", EmptyOrNilPerson, JohnPerson, false)
+	ValidateProtoEtc("EmptyOrNilSmith", EmptyOrNilPerson, SmithPerson, true)
 }
 
 //Is the person's name not David
@@ -247,14 +233,10 @@ var NaiveNotNamePerson = G{
 }
 
 func init() {
-	Validate("NaiveNotNameNoname", NaiveNotNamePerson, AllCodecs(NonamePerson), false)
-	ValidateProto("ProtoNaiveNotNameNoname", NaiveNotNamePerson, NonamePerson, false)
-	Validate("NaiveNotNameRobert", NaiveNotNamePerson, AllCodecs(RobertPerson), true)
-	ValidateProto("ProtoNaiveNotNameRobert", NaiveNotNamePerson, RobertPerson, true)
-	Validate("NaiveNotNameSmith", NaiveNotNamePerson, AllCodecs(SmithPerson), true)
-	ValidateProto("ProtoNaiveNotNameSmith", NaiveNotNamePerson, SmithPerson, true)
-	Validate("NaiveNotNameDavid", NaiveNotNamePerson, AllCodecs(DavidPerson), false)
-	ValidateProto("ProtoNaiveNotNameDavid", NaiveNotNamePerson, DavidPerson, false)
+	ValidateProtoEtc("NaiveNotNameNoname", NaiveNotNamePerson, NonamePerson, false)
+	ValidateProtoEtc("NaiveNotNameRobert", NaiveNotNamePerson, RobertPerson, true)
+	ValidateProtoEtc("NaiveNotNameSmith", NaiveNotNamePerson, SmithPerson, true)
+	ValidateProtoEtc("NaiveNotNameDavid", NaiveNotNamePerson, DavidPerson, false)
 }
 
 //Is the person's name not David and make sure that the case where the name does not exist is also covered
@@ -269,14 +251,10 @@ var ProperNotNamePerson = G{
 }
 
 func init() {
-	Validate("ProperNotNamePersonNoname", ProperNotNamePerson, AllCodecs(NonamePerson), true)
-	ValidateProto("ProtoProperNotNamePersonNoname", ProperNotNamePerson, NonamePerson, true)
-	Validate("ProperNotNamePersonRobert", ProperNotNamePerson, AllCodecs(RobertPerson), true)
-	ValidateProto("ProtoProperNotNamePersonRobert", ProperNotNamePerson, RobertPerson, true)
-	Validate("ProperNotNamePersonSmith", ProperNotNamePerson, AllCodecs(SmithPerson), true)
-	ValidateProto("ProtoProperNotNamePersonSmith", ProperNotNamePerson, SmithPerson, true)
-	Validate("ProperNotNamePersonRobert", ProperNotNamePerson, AllCodecs(DavidPerson), false)
-	ValidateProto("ProtoProperNotNamePersonRobert", ProperNotNamePerson, DavidPerson, false)
+	ValidateProtoEtc("ProperNotNamePersonNoname", ProperNotNamePerson, NonamePerson, true)
+	ValidateProtoEtc("ProperNotNamePersonRobert", ProperNotNamePerson, RobertPerson, true)
+	ValidateProtoEtc("ProperNotNamePersonSmith", ProperNotNamePerson, SmithPerson, true)
+	ValidateProtoEtc("ProperNotNamePersonRobert", ProperNotNamePerson, DavidPerson, false)
 }
 
 //Is this person's name David and telephone number 0123456789
@@ -298,10 +276,10 @@ var AndNameTelephonePerson = G{
 }
 
 func init() {
-	Validate("AndNameTelephoneDavid", AndNameTelephonePerson, AllCodecs(DavidPerson), true)
-	Validate("AndNameTelephoneJohn", AndNameTelephonePerson, AllCodecs(JohnPerson), false)
-	Validate("AndNameTelephoneMover", AndNameTelephonePerson, AllCodecs(MoverPerson), false)
-	Validate("AndNameTelephoneSmith", AndNameTelephonePerson, AllCodecs(SmithPerson), false)
+	ValidateProtoEtc("AndNameTelephoneDavid", AndNameTelephonePerson, DavidPerson, true)
+	ValidateProtoEtc("AndNameTelephoneJohn", AndNameTelephonePerson, JohnPerson, false)
+	ValidateProtoEtc("AndNameTelephoneMover", AndNameTelephonePerson, MoverPerson, false)
+	ValidateProtoEtc("AndNameTelephoneSmith", AndNameTelephonePerson, SmithPerson, false)
 }
 
 //Is this person's name David or telephone number 0123456789
@@ -313,10 +291,10 @@ var OrNameTelephonePerson = G{
 }
 
 func init() {
-	Validate("OrNameTelephoneDavid", OrNameTelephonePerson, AllCodecs(DavidPerson), true)
-	Validate("OrNameTelephoneJohn", OrNameTelephonePerson, AllCodecs(JohnPerson), true)
-	Validate("OrNameTelephoneMover", OrNameTelephonePerson, AllCodecs(MoverPerson), true)
-	Validate("OrNameTelephoneSmith", OrNameTelephonePerson, AllCodecs(SmithPerson), false)
+	ValidateProtoEtc("OrNameTelephoneDavid", OrNameTelephonePerson, DavidPerson, true)
+	ValidateProtoEtc("OrNameTelephoneJohn", OrNameTelephonePerson, JohnPerson, true)
+	ValidateProtoEtc("OrNameTelephoneMover", OrNameTelephonePerson, MoverPerson, true)
+	ValidateProtoEtc("OrNameTelephoneSmith", OrNameTelephonePerson, SmithPerson, false)
 }
 
 //Is this person's telephone number 0123456789 or 0127897897
@@ -329,9 +307,9 @@ var ListOfTelephonesPerson = G{
 }
 
 func init() {
-	Validate("ListOfTelephonesDavid", ListOfTelephonesPerson, AllCodecs(DavidPerson), true)
-	Validate("ListOfTelephonesShaker", ListOfTelephonesPerson, AllCodecs(ShakerPerson), true)
-	Validate("ListOfTelephonesRoutine", ListOfTelephonesPerson, AllCodecs(RoutinePerson), false)
+	ValidateProtoEtc("ListOfTelephonesDavid", ListOfTelephonesPerson, DavidPerson, true)
+	ValidateProtoEtc("ListOfTelephonesShaker", ListOfTelephonesPerson, ShakerPerson, true)
+	ValidateProtoEtc("ListOfTelephonesRoutine", ListOfTelephonesPerson, RoutinePerson, false)
 }
 
 var LeftRecursion = G{
@@ -347,8 +325,8 @@ var LeftRecursion = G{
 }
 
 func init() {
-	Validate("LeftRecursionDavid", LeftRecursion, AllCodecs(DavidPerson), true)
-	Validate("LeftRecursionRobert", LeftRecursion, AllCodecs(RobertPerson), false)
+	ValidateProtoEtc("LeftRecursionDavid", LeftRecursion, DavidPerson, true)
+	ValidateProtoEtc("LeftRecursionRobert", LeftRecursion, RobertPerson, false)
 }
 
 var HiddenLeftRecursion = G{
@@ -365,8 +343,8 @@ var HiddenLeftRecursion = G{
 }
 
 func init() {
-	Validate("HiddenLeftRecursionDavid", HiddenLeftRecursion, AllCodecs(DavidPerson), true)
-	Validate("HiddenLeftRecursionRobert", HiddenLeftRecursion, AllCodecs(RobertPerson), false)
+	ValidateProtoEtc("HiddenLeftRecursionDavid", HiddenLeftRecursion, DavidPerson, true)
+	ValidateProtoEtc("HiddenLeftRecursionRobert", HiddenLeftRecursion, RobertPerson, false)
 }
 
 var NegativePerson = &Person{
@@ -390,7 +368,7 @@ var PositiveNumber = G{
 }
 
 func init() {
-	Validate("DontErrorGivenWrongType", PositiveNumber, AllCodecs(NegativePerson), false)
+	ValidateProtoEtc("DontErrorGivenWrongType", PositiveNumber, NegativePerson, false)
 }
 
 var CorrectTypePerson = G{"main": InOrder(
@@ -404,8 +382,8 @@ var WrongTypePerson = G{"main": InOrder(
 )}
 
 func init() {
-	Validate("CorrectTypeRobert", CorrectTypePerson, AllCodecs(RobertPerson), true)
-	Validate("WrongTypeRobert", WrongTypePerson, AllCodecs(RobertPerson), false)
+	ValidateProtoEtc("CorrectTypeRobert", CorrectTypePerson, RobertPerson, true)
+	ValidateProtoEtc("WrongTypeRobert", WrongTypePerson, RobertPerson, false)
 }
 
 var InSetPerson = G{"main": InPath("Name", Value(ContainsString(StringVar(),
@@ -413,8 +391,8 @@ var InSetPerson = G{"main": InPath("Name", Value(ContainsString(StringVar(),
 )))}
 
 func init() {
-	Validate("InSetPersonRobert", InSetPerson, AllCodecs(RobertPerson), true)
-	Validate("InSetPersonDavid", InSetPerson, AllCodecs(DavidPerson), false)
+	ValidateProtoEtc("InSetPersonRobert", InSetPerson, RobertPerson, true)
+	ValidateProtoEtc("InSetPersonDavid", InSetPerson, DavidPerson, false)
 }
 
 var OptionalName = G{"main": InOrder(
@@ -424,11 +402,11 @@ var OptionalName = G{"main": InOrder(
 )}
 
 func init() {
-	Validate("OptionalNameShakerPerson", OptionalName, AllCodecs(ShakerPerson), true)
-	Validate("OptionalNameNonamePerson", OptionalName, AllCodecs(NonamePerson), true)
-	Validate("OptionalNameSmithPerson", OptionalName, AllCodecs(SmithPerson), true)
-	Validate("OptionalNameRoutinePerson", OptionalName, AllCodecs(RoutinePerson), false)
-	Validate("OptionalNameJohnPerson", OptionalName, AllCodecs(JohnPerson), false)
+	ValidateProtoEtc("OptionalNameShakerPerson", OptionalName, ShakerPerson, true)
+	ValidateProtoEtc("OptionalNameNonamePerson", OptionalName, NonamePerson, true)
+	ValidateProtoEtc("OptionalNameSmithPerson", OptionalName, SmithPerson, true)
+	ValidateProtoEtc("OptionalNameRoutinePerson", OptionalName, RoutinePerson, false)
+	ValidateProtoEtc("OptionalNameJohnPerson", OptionalName, JohnPerson, false)
 }
 
 var OptionalAddress = G{"main": InPath("Addresses",
@@ -437,7 +415,7 @@ var OptionalAddress = G{"main": InPath("Addresses",
 )}
 
 func init() {
-	Validate("OptionalAddressRobertPerson", OptionalAddress, AllCodecs(RobertPerson), true)
-	Validate("OptionalAddressDavidPerson", OptionalAddress, AllCodecs(DavidPerson), true)
-	Validate("OptionalAddressMoverPerson", OptionalAddress, AllCodecs(MoverPerson), false)
+	ValidateProtoEtc("OptionalAddressRobertPerson", OptionalAddress, RobertPerson, true)
+	ValidateProtoEtc("OptionalAddressDavidPerson", OptionalAddress, DavidPerson, true)
+	ValidateProtoEtc("OptionalAddressMoverPerson", OptionalAddress, MoverPerson, false)
 }

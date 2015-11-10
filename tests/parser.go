@@ -40,7 +40,7 @@ func getDesc(m interface{}) string {
 	return string(data)
 }
 
-func AllCodecs(m interface{}) Codecs {
+func ProtoEtc(m interface{}) Codecs {
 	return Codecs{
 		Description: getDesc(m),
 		Parsers: map[string]NewParser{

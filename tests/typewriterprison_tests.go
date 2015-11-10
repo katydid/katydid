@@ -38,11 +38,9 @@ var NextAStringArray = G{"main": In("MenuPaperclip",
 var DStringArray = G{"main": In("MenuPaperclip", Elem(0, Value(StringEq(StringVar(), StringConst("d")))), Any())}
 
 func init() {
-	Validate("APocketRoses", AStringArray, AllCodecs(AbcPocketRoses), true)
-	Validate("FinalCPocketRoses", FinalCStringArray, AllCodecs(AbcPocketRoses), true)
-	Validate("AbcPocketRoses", AbcStringArray, AllCodecs(AbcPocketRoses), true)
-	ValidateProto("ProtoAbcPocketRoses", AbcStringArray, AbcPocketRoses, true)
-	Validate("NextAPocketRoses", NextAStringArray, AllCodecs(AbcPocketRoses), false)
-	Validate("DPocketRoses", DStringArray, AllCodecs(AbcPocketRoses), false)
-	ValidateProto("ProtoDPocketRoses", DStringArray, AbcPocketRoses, false)
+	ValidateProtoEtc("APocketRoses", AStringArray, AbcPocketRoses, true)
+	ValidateProtoEtc("FinalCPocketRoses", FinalCStringArray, AbcPocketRoses, true)
+	ValidateProtoEtc("AbcPocketRoses", AbcStringArray, AbcPocketRoses, true)
+	ValidateProtoEtc("NextAPocketRoses", NextAStringArray, AbcPocketRoses, false)
+	ValidateProtoEtc("DPocketRoses", DStringArray, AbcPocketRoses, false)
 }

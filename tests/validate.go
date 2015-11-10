@@ -64,6 +64,11 @@ func ValidatorList() []interface{} {
 	return vs
 }
 
+func ValidateProtoEtc(name string, grammar combinator.G, m interface{}, expected bool) {
+	Validate(name, grammar, ProtoEtc(m), expected)
+	ValidateProto("Proto"+name, grammar, m, expected)
+}
+
 func ValidateProto(name string, grammar combinator.G, m interface{}, expected bool) {
 	packageName := "tests"
 	messageName := reflect.TypeOf(m).Elem().Name()

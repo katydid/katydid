@@ -1248,8 +1248,28 @@ func TestProperNotNamePersonSmithReflect(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestProtoAPocketRosesProto(t *testing.T) {
+	v := tests.Validators["ProtoAPocketRoses"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestProtoAb21AnyProto(t *testing.T) {
 	v := tests.Validators["ProtoAb21Any"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoAb21InAnyExceptSaladWorryProto(t *testing.T) {
+	v := tests.Validators["ProtoAb21InAnyExceptSaladWorry"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoAb21MagazineFrameAProto(t *testing.T) {
+	v := tests.Validators["ProtoAb21MagazineFrameA"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoAb21MagazineFrameSingleAProto(t *testing.T) {
+	v := tests.Validators["ProtoAb21MagazineFrameSingleA"]["proto"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1268,8 +1288,33 @@ func TestProtoAb21Spirit1Proto(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestProtoAb21Spirit2Proto(t *testing.T) {
+	v := tests.Validators["ProtoAb21Spirit2"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestProtoAbcPocketRosesProto(t *testing.T) {
 	v := tests.Validators["ProtoAbcPocketRoses"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoAndNameTelephoneDavidProto(t *testing.T) {
+	v := tests.Validators["ProtoAndNameTelephoneDavid"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoAndNameTelephoneJohnProto(t *testing.T) {
+	v := tests.Validators["ProtoAndNameTelephoneJohn"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoAndNameTelephoneMoverProto(t *testing.T) {
+	v := tests.Validators["ProtoAndNameTelephoneMover"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoAndNameTelephoneSmithProto(t *testing.T) {
+	v := tests.Validators["ProtoAndNameTelephoneSmith"]["proto"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1283,8 +1328,18 @@ func TestProtoContextRobertProto(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestProtoCorrectTypeRobertProto(t *testing.T) {
+	v := tests.Validators["ProtoCorrectTypeRobert"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestProtoDPocketRosesProto(t *testing.T) {
 	v := tests.Validators["ProtoDPocketRoses"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoDontErrorGivenWrongTypeProto(t *testing.T) {
+	v := tests.Validators["ProtoDontErrorGivenWrongType"]["proto"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1300,6 +1355,41 @@ func TestProtoEmptyOrNilNonameProto(t *testing.T) {
 
 func TestProtoEmptyOrNilSmithProto(t *testing.T) {
 	v := tests.Validators["ProtoEmptyOrNilSmith"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoFinalCPocketRosesProto(t *testing.T) {
+	v := tests.Validators["ProtoFinalCPocketRoses"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoHiddenLeftRecursionDavidProto(t *testing.T) {
+	v := tests.Validators["ProtoHiddenLeftRecursionDavid"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoHiddenLeftRecursionRobertProto(t *testing.T) {
+	v := tests.Validators["ProtoHiddenLeftRecursionRobert"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoInSetPersonDavidProto(t *testing.T) {
+	v := tests.Validators["ProtoInSetPersonDavid"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoInSetPersonRobertProto(t *testing.T) {
+	v := tests.Validators["ProtoInSetPersonRobert"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoLeftRecursionDavidProto(t *testing.T) {
+	v := tests.Validators["ProtoLeftRecursionDavid"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoLeftRecursionRobertProto(t *testing.T) {
+	v := tests.Validators["ProtoLeftRecursionRobert"]["proto"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1333,6 +1423,21 @@ func TestProtoListIndexAddressShakerProto(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestProtoListOfTelephonesDavidProto(t *testing.T) {
+	v := tests.Validators["ProtoListOfTelephonesDavid"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoListOfTelephonesRoutineProto(t *testing.T) {
+	v := tests.Validators["ProtoListOfTelephonesRoutine"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoListOfTelephonesShakerProto(t *testing.T) {
+	v := tests.Validators["ProtoListOfTelephonesShaker"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestProtoNaiveNotNameDavidProto(t *testing.T) {
 	v := tests.Validators["ProtoNaiveNotNameDavid"]["proto"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
@@ -1353,6 +1458,11 @@ func TestProtoNaiveNotNameSmithProto(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestProtoNextAPocketRosesProto(t *testing.T) {
+	v := tests.Validators["ProtoNextAPocketRoses"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestProtoNilNameJohnProto(t *testing.T) {
 	v := tests.Validators["ProtoNilNameJohn"]["proto"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
@@ -1365,6 +1475,66 @@ func TestProtoNilNameNonameProto(t *testing.T) {
 
 func TestProtoNilNameSmithProto(t *testing.T) {
 	v := tests.Validators["ProtoNilNameSmith"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoOptionalAddressDavidPersonProto(t *testing.T) {
+	v := tests.Validators["ProtoOptionalAddressDavidPerson"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoOptionalAddressMoverPersonProto(t *testing.T) {
+	v := tests.Validators["ProtoOptionalAddressMoverPerson"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoOptionalAddressRobertPersonProto(t *testing.T) {
+	v := tests.Validators["ProtoOptionalAddressRobertPerson"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoOptionalNameJohnPersonProto(t *testing.T) {
+	v := tests.Validators["ProtoOptionalNameJohnPerson"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoOptionalNameNonamePersonProto(t *testing.T) {
+	v := tests.Validators["ProtoOptionalNameNonamePerson"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoOptionalNameRoutinePersonProto(t *testing.T) {
+	v := tests.Validators["ProtoOptionalNameRoutinePerson"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoOptionalNameShakerPersonProto(t *testing.T) {
+	v := tests.Validators["ProtoOptionalNameShakerPerson"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoOptionalNameSmithPersonProto(t *testing.T) {
+	v := tests.Validators["ProtoOptionalNameSmithPerson"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoOrNameTelephoneDavidProto(t *testing.T) {
+	v := tests.Validators["ProtoOrNameTelephoneDavid"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoOrNameTelephoneJohnProto(t *testing.T) {
+	v := tests.Validators["ProtoOrNameTelephoneJohn"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoOrNameTelephoneMoverProto(t *testing.T) {
+	v := tests.Validators["ProtoOrNameTelephoneMover"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoOrNameTelephoneSmithProto(t *testing.T) {
+	v := tests.Validators["ProtoOrNameTelephoneSmith"]["proto"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1400,6 +1570,11 @@ func TestProtoRecursiveRuntimeProto(t *testing.T) {
 
 func TestProtoRecursiveSyscallProto(t *testing.T) {
 	v := tests.Validators["ProtoRecursiveSyscall"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoWrongTypeRobertProto(t *testing.T) {
+	v := tests.Validators["ProtoWrongTypeRobert"]["proto"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
