@@ -14,45 +14,24 @@
 
 syntax = "proto2";
 
-package protokey;
+package tests;
 
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
 option (gogoproto.gostring_all) = true;
 option (gogoproto.description_all) = true;
 
-message ProtoKey {
-	repeated KeyValue KeyValue = 2;
-}
-
-message KeyValue {
-	optional string Key = 1;
-	optional string Value = 2;
-}
-
 message TopsyTurvy {
-	optional Topsy Topsy = 1;
-	optional Turvy Turvy = 2;
+	optional Topsy Top = 1;
+	optional Turvy Turf = 2;
 }
 
 message Topsy {
-	optional int64 A = 1;
-	optional int64 B = 2;
+	optional int64 Top = 1;
+	optional int64 Turf = 2;
 }
 
 message Turvy {
-	optional int64 B = 1;
-	optional int64 A = 2;
+	optional int64 Turf = 1;
+	optional int64 Top = 2;
 }
-
-message Knot {
-	repeated BightKnot Bight = 1;
-	optional bool Elbow = 2;
-	optional Knot BitterEnd = 3;
-}
-
-message BightKnot {
-	optional Knot Loop = 1;
-	optional bool Turn = 2;
-}
-

@@ -19,3 +19,5 @@ regenerate:
 	(protoc --gogo_out=. -I=.:../../../../:../../../../github.com/gogo/protobuf/protobuf treeregister.proto)
 	(protoc --gogo_out=. -I=.:../../../../:../../../../github.com/gogo/protobuf/protobuf typewriterprison.proto)
 	(protoc --gogo_out=. -I=.:../../../../:../../../../github.com/gogo/protobuf/protobuf puddingmilkshake.proto)
+	(protoc --gogo_out=. -I=.:../../../../:../../../../github.com/gogo/protobuf/protobuf topsyturvy.proto)
+	(protoc --gogo_out=. -I=.:../../../../:../../../../github.com/gogo/protobuf/protobuf knot.proto)

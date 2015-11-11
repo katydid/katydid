@@ -59,6 +59,15 @@ func NewGrammar(m map[string]*Pattern) *Grammar {
 	return g
 }
 
+func NewPatternDecl(name string, p *Pattern) *PatternDecl {
+	return &PatternDecl{
+		Hash:    newHash(),
+		Name:    name,
+		Eq:      newEqual(),
+		Pattern: p,
+	}
+}
+
 func NewEmpty() *Pattern {
 	return &Pattern{
 		Empty: &Empty{&expr.Keyword{Value: "<empty>"}},

@@ -258,6 +258,21 @@ func TestAndNameTelephoneSmithReflect(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestBightTurnJson(t *testing.T) {
+	v := tests.Validators["BightTurn"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBightTurnProto(t *testing.T) {
+	v := tests.Validators["BightTurn"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBightTurnReflect(t *testing.T) {
+	v := tests.Validators["BightTurn"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestContextDavidJson(t *testing.T) {
 	v := tests.Validators["ContextDavid"]["json"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
@@ -455,6 +470,21 @@ func TestInSetPersonRobertProto(t *testing.T) {
 
 func TestInSetPersonRobertReflect(t *testing.T) {
 	v := tests.Validators["InSetPersonRobert"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestKnotKnotElbowJson(t *testing.T) {
+	v := tests.Validators["KnotKnotElbow"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestKnotKnotElbowProto(t *testing.T) {
+	v := tests.Validators["KnotKnotElbow"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestKnotKnotElbowReflect(t *testing.T) {
+	v := tests.Validators["KnotKnotElbow"]["reflect"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1318,6 +1348,11 @@ func TestProtoAndNameTelephoneSmithProto(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestProtoBightTurnProto(t *testing.T) {
+	v := tests.Validators["ProtoBightTurn"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestProtoContextDavidProto(t *testing.T) {
 	v := tests.Validators["ProtoContextDavid"]["proto"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
@@ -1380,6 +1415,11 @@ func TestProtoInSetPersonDavidProto(t *testing.T) {
 
 func TestProtoInSetPersonRobertProto(t *testing.T) {
 	v := tests.Validators["ProtoInSetPersonRobert"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoKnotKnotElbowProto(t *testing.T) {
+	v := tests.Validators["ProtoKnotKnotElbow"]["proto"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1553,6 +1593,16 @@ func TestProtoProperNotNamePersonSmithProto(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestProtoRecursiveElbowBightTurnProto(t *testing.T) {
+	v := tests.Validators["ProtoRecursiveElbowBightTurn"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoRecursiveElbowKnotKnotElbowProto(t *testing.T) {
+	v := tests.Validators["ProtoRecursiveElbowKnotKnotElbow"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestProtoRecursiveIoUtilProto(t *testing.T) {
 	v := tests.Validators["ProtoRecursiveIoUtil"]["proto"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
@@ -1573,8 +1623,53 @@ func TestProtoRecursiveSyscallProto(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestProtoRecursiveTurnBightTurnProto(t *testing.T) {
+	v := tests.Validators["ProtoRecursiveTurnBightTurn"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoRecursiveTurnKnotKnotElbowProto(t *testing.T) {
+	v := tests.Validators["ProtoRecursiveTurnKnotKnotElbow"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoTopTop1Proto(t *testing.T) {
+	v := tests.Validators["ProtoTopTop1"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestProtoWrongTypeRobertProto(t *testing.T) {
 	v := tests.Validators["ProtoWrongTypeRobert"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestRecursiveElbowBightTurnJson(t *testing.T) {
+	v := tests.Validators["RecursiveElbowBightTurn"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestRecursiveElbowBightTurnProto(t *testing.T) {
+	v := tests.Validators["RecursiveElbowBightTurn"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestRecursiveElbowBightTurnReflect(t *testing.T) {
+	v := tests.Validators["RecursiveElbowBightTurn"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestRecursiveElbowKnotKnotElbowJson(t *testing.T) {
+	v := tests.Validators["RecursiveElbowKnotKnotElbow"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestRecursiveElbowKnotKnotElbowProto(t *testing.T) {
+	v := tests.Validators["RecursiveElbowKnotKnotElbow"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestRecursiveElbowKnotKnotElbowReflect(t *testing.T) {
+	v := tests.Validators["RecursiveElbowKnotKnotElbow"]["reflect"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1635,6 +1730,51 @@ func TestRecursiveSyscallProto(t *testing.T) {
 
 func TestRecursiveSyscallReflect(t *testing.T) {
 	v := tests.Validators["RecursiveSyscall"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestRecursiveTurnBightTurnJson(t *testing.T) {
+	v := tests.Validators["RecursiveTurnBightTurn"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestRecursiveTurnBightTurnProto(t *testing.T) {
+	v := tests.Validators["RecursiveTurnBightTurn"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestRecursiveTurnBightTurnReflect(t *testing.T) {
+	v := tests.Validators["RecursiveTurnBightTurn"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestRecursiveTurnKnotKnotElbowJson(t *testing.T) {
+	v := tests.Validators["RecursiveTurnKnotKnotElbow"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestRecursiveTurnKnotKnotElbowProto(t *testing.T) {
+	v := tests.Validators["RecursiveTurnKnotKnotElbow"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestRecursiveTurnKnotKnotElbowReflect(t *testing.T) {
+	v := tests.Validators["RecursiveTurnKnotKnotElbow"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestTopTop1Json(t *testing.T) {
+	v := tests.Validators["TopTop1"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestTopTop1Proto(t *testing.T) {
+	v := tests.Validators["TopTop1"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestTopTop1Reflect(t *testing.T) {
+	v := tests.Validators["TopTop1"]["reflect"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 

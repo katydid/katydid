@@ -144,7 +144,7 @@ func (this *keyer) pattern(current *msgs, p *relapse.Pattern) bool {
 			}
 		}
 		if current.Len() == 0 {
-			//the query has specified an unreachable path
+			//the query has specified an unreachable path or its an array of base types
 			this.msgs[p.TreeNode.Name] = &msgs{}
 			if evalAnyInt(p.TreeNode.Name) {
 				this.names[p.TreeNode.Name] = p.TreeNode.Name
@@ -159,7 +159,6 @@ func (this *keyer) pattern(current *msgs, p *relapse.Pattern) bool {
 		newName := keyTheName(fields, p.TreeNode.Name)
 		this.names[p.TreeNode.Name] = newName
 		nextMsgs := getMsgs(this.descMap, current, newName)
-		fmt.Printf("%d:%v:%d:%v\n", current.Len(), p.TreeNode.Name, nextMsgs.Len(), newName)
 		this.pattern(nextMsgs, p.TreeNode.Pattern)
 		return true
 	case *relapse.Concat:
