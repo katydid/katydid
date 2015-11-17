@@ -21,12 +21,11 @@
 package viper
 
 import proto "github.com/gogo/protobuf/proto"
+import fmt "fmt"
 import math "math"
-
-// discarding unused import gogoproto "github.com/gogo/protobuf/gogoproto/gogo.pb"
+import _ "github.com/gogo/protobuf/gogoproto"
 import expr "github.com/katydid/katydid/expr/ast"
 
-import fmt "fmt"
 import strings "strings"
 import github_com_gogo_protobuf_proto "github.com/gogo/protobuf/proto"
 import sort "sort"
@@ -35,11 +34,12 @@ import reflect "reflect"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
+var _ = fmt.Errorf
 var _ = math.Inf
 
 type Rules struct {
-	Rules []*Rule     `protobuf:"bytes,1,rep" json:"Rules,omitempty"`
-	After *expr.Space `protobuf:"bytes,2,opt" json:"After,omitempty"`
+	Rules []*Rule     `protobuf:"bytes,1,rep,name=Rules" json:"Rules,omitempty"`
+	After *expr.Space `protobuf:"bytes,2,opt,name=After" json:"After,omitempty"`
 }
 
 func (m *Rules) Reset()      { *m = Rules{} }
@@ -60,11 +60,11 @@ func (m *Rules) GetAfter() *expr.Space {
 }
 
 type Rule struct {
-	Start    *Start    `protobuf:"bytes,1,opt" json:"Start,omitempty"`
-	Final    *Final    `protobuf:"bytes,2,opt" json:"Final,omitempty"`
-	Internal *Internal `protobuf:"bytes,3,opt" json:"Internal,omitempty"`
-	Call     *Call     `protobuf:"bytes,4,opt" json:"Call,omitempty"`
-	Return   *Return   `protobuf:"bytes,5,opt" json:"Return,omitempty"`
+	Start    *Start    `protobuf:"bytes,1,opt,name=Start" json:"Start,omitempty"`
+	Final    *Final    `protobuf:"bytes,2,opt,name=Final" json:"Final,omitempty"`
+	Internal *Internal `protobuf:"bytes,3,opt,name=Internal" json:"Internal,omitempty"`
+	Call     *Call     `protobuf:"bytes,4,opt,name=Call" json:"Call,omitempty"`
+	Return   *Return   `protobuf:"bytes,5,opt,name=Return" json:"Return,omitempty"`
 }
 
 func (m *Rule) Reset()      { *m = Rule{} }
@@ -106,10 +106,10 @@ func (m *Rule) GetReturn() *Return {
 }
 
 type Start struct {
-	Before    *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Eq        *expr.Keyword `protobuf:"bytes,2,opt" json:"Eq,omitempty"`
-	State     *State        `protobuf:"bytes,3,opt" json:"State,omitempty"`
-	SemiColon *expr.Keyword `protobuf:"bytes,4,opt" json:"SemiColon,omitempty"`
+	Before    *expr.Space   `protobuf:"bytes,1,opt,name=Before" json:"Before,omitempty"`
+	Eq        *expr.Keyword `protobuf:"bytes,2,opt,name=Eq" json:"Eq,omitempty"`
+	State     *State        `protobuf:"bytes,3,opt,name=State" json:"State,omitempty"`
+	SemiColon *expr.Keyword `protobuf:"bytes,4,opt,name=SemiColon" json:"SemiColon,omitempty"`
 }
 
 func (m *Start) Reset()      { *m = Start{} }
@@ -144,10 +144,10 @@ func (m *Start) GetSemiColon() *expr.Keyword {
 }
 
 type Final struct {
-	Before    *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Eq        *expr.Keyword `protobuf:"bytes,2,opt" json:"Eq,omitempty"`
-	State     *State        `protobuf:"bytes,3,opt" json:"State,omitempty"`
-	SemiColon *expr.Keyword `protobuf:"bytes,4,opt" json:"SemiColon,omitempty"`
+	Before    *expr.Space   `protobuf:"bytes,1,opt,name=Before" json:"Before,omitempty"`
+	Eq        *expr.Keyword `protobuf:"bytes,2,opt,name=Eq" json:"Eq,omitempty"`
+	State     *State        `protobuf:"bytes,3,opt,name=State" json:"State,omitempty"`
+	SemiColon *expr.Keyword `protobuf:"bytes,4,opt,name=SemiColon" json:"SemiColon,omitempty"`
 }
 
 func (m *Final) Reset()      { *m = Final{} }
@@ -182,11 +182,11 @@ func (m *Final) GetSemiColon() *expr.Keyword {
 }
 
 type Internal struct {
-	Before    *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Src       *State        `protobuf:"bytes,2,opt" json:"Src,omitempty"`
-	Expr      *expr.Expr    `protobuf:"bytes,3,opt" json:"Expr,omitempty"`
-	Dst       *State        `protobuf:"bytes,4,opt" json:"Dst,omitempty"`
-	SemiColon *expr.Keyword `protobuf:"bytes,5,opt" json:"SemiColon,omitempty"`
+	Before    *expr.Space   `protobuf:"bytes,1,opt,name=Before" json:"Before,omitempty"`
+	Src       *State        `protobuf:"bytes,2,opt,name=Src" json:"Src,omitempty"`
+	Expr      *expr.Expr    `protobuf:"bytes,3,opt,name=Expr" json:"Expr,omitempty"`
+	Dst       *State        `protobuf:"bytes,4,opt,name=Dst" json:"Dst,omitempty"`
+	SemiColon *expr.Keyword `protobuf:"bytes,5,opt,name=SemiColon" json:"SemiColon,omitempty"`
 }
 
 func (m *Internal) Reset()      { *m = Internal{} }
@@ -228,12 +228,12 @@ func (m *Internal) GetSemiColon() *expr.Keyword {
 }
 
 type Call struct {
-	Before    *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Src       *State        `protobuf:"bytes,2,opt" json:"Src,omitempty"`
-	Expr      *expr.Expr    `protobuf:"bytes,3,opt" json:"Expr,omitempty"`
-	ParentDst *State        `protobuf:"bytes,4,opt" json:"ParentDst,omitempty"`
-	ChildDst  *State        `protobuf:"bytes,5,opt" json:"ChildDst,omitempty"`
-	SemiColon *expr.Keyword `protobuf:"bytes,6,opt" json:"SemiColon,omitempty"`
+	Before    *expr.Space   `protobuf:"bytes,1,opt,name=Before" json:"Before,omitempty"`
+	Src       *State        `protobuf:"bytes,2,opt,name=Src" json:"Src,omitempty"`
+	Expr      *expr.Expr    `protobuf:"bytes,3,opt,name=Expr" json:"Expr,omitempty"`
+	ParentDst *State        `protobuf:"bytes,4,opt,name=ParentDst" json:"ParentDst,omitempty"`
+	ChildDst  *State        `protobuf:"bytes,5,opt,name=ChildDst" json:"ChildDst,omitempty"`
+	SemiColon *expr.Keyword `protobuf:"bytes,6,opt,name=SemiColon" json:"SemiColon,omitempty"`
 }
 
 func (m *Call) Reset()      { *m = Call{} }
@@ -282,12 +282,12 @@ func (m *Call) GetSemiColon() *expr.Keyword {
 }
 
 type Return struct {
-	Before    *expr.Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	ParentSrc *State        `protobuf:"bytes,2,opt" json:"ParentSrc,omitempty"`
-	ChildSrc  *State        `protobuf:"bytes,3,opt" json:"ChildSrc,omitempty"`
-	Expr      *expr.Expr    `protobuf:"bytes,4,opt" json:"Expr,omitempty"`
-	Dst       *State        `protobuf:"bytes,5,opt" json:"Dst,omitempty"`
-	SemiColon *expr.Keyword `protobuf:"bytes,6,opt" json:"SemiColon,omitempty"`
+	Before    *expr.Space   `protobuf:"bytes,1,opt,name=Before" json:"Before,omitempty"`
+	ParentSrc *State        `protobuf:"bytes,2,opt,name=ParentSrc" json:"ParentSrc,omitempty"`
+	ChildSrc  *State        `protobuf:"bytes,3,opt,name=ChildSrc" json:"ChildSrc,omitempty"`
+	Expr      *expr.Expr    `protobuf:"bytes,4,opt,name=Expr" json:"Expr,omitempty"`
+	Dst       *State        `protobuf:"bytes,5,opt,name=Dst" json:"Dst,omitempty"`
+	SemiColon *expr.Keyword `protobuf:"bytes,6,opt,name=SemiColon" json:"SemiColon,omitempty"`
 }
 
 func (m *Return) Reset()      { *m = Return{} }
@@ -336,8 +336,8 @@ func (m *Return) GetSemiColon() *expr.Keyword {
 }
 
 type State struct {
-	Before *expr.Space `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Name   string      `protobuf:"bytes,2,opt" json:"Name"`
+	Before *expr.Space `protobuf:"bytes,1,opt,name=Before" json:"Before,omitempty"`
+	Name   string      `protobuf:"bytes,2,opt,name=Name" json:"Name"`
 }
 
 func (m *State) Reset()      { *m = State{} }
@@ -358,96 +358,186 @@ func (m *State) GetName() string {
 }
 
 func init() {
+	proto.RegisterType((*Rules)(nil), "viper.Rules")
+	proto.RegisterType((*Rule)(nil), "viper.Rule")
+	proto.RegisterType((*Start)(nil), "viper.Start")
+	proto.RegisterType((*Final)(nil), "viper.Final")
+	proto.RegisterType((*Internal)(nil), "viper.Internal")
+	proto.RegisterType((*Call)(nil), "viper.Call")
+	proto.RegisterType((*Return)(nil), "viper.Return")
+	proto.RegisterType((*State)(nil), "viper.State")
 }
 func (this *Rules) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&viper.Rules{` +
-		`Rules:` + fmt.Sprintf("%#v", this.Rules),
-		`After:` + fmt.Sprintf("%#v", this.After) + `}`}, ", ")
-	return s
+	s := make([]string, 0, 6)
+	s = append(s, "&viper.Rules{")
+	if this.Rules != nil {
+		s = append(s, "Rules: "+fmt.Sprintf("%#v", this.Rules)+",\n")
+	}
+	if this.After != nil {
+		s = append(s, "After: "+fmt.Sprintf("%#v", this.After)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
 }
 func (this *Rule) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&viper.Rule{` +
-		`Start:` + fmt.Sprintf("%#v", this.Start),
-		`Final:` + fmt.Sprintf("%#v", this.Final),
-		`Internal:` + fmt.Sprintf("%#v", this.Internal),
-		`Call:` + fmt.Sprintf("%#v", this.Call),
-		`Return:` + fmt.Sprintf("%#v", this.Return) + `}`}, ", ")
-	return s
+	s := make([]string, 0, 9)
+	s = append(s, "&viper.Rule{")
+	if this.Start != nil {
+		s = append(s, "Start: "+fmt.Sprintf("%#v", this.Start)+",\n")
+	}
+	if this.Final != nil {
+		s = append(s, "Final: "+fmt.Sprintf("%#v", this.Final)+",\n")
+	}
+	if this.Internal != nil {
+		s = append(s, "Internal: "+fmt.Sprintf("%#v", this.Internal)+",\n")
+	}
+	if this.Call != nil {
+		s = append(s, "Call: "+fmt.Sprintf("%#v", this.Call)+",\n")
+	}
+	if this.Return != nil {
+		s = append(s, "Return: "+fmt.Sprintf("%#v", this.Return)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
 }
 func (this *Start) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&viper.Start{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Eq:` + fmt.Sprintf("%#v", this.Eq),
-		`State:` + fmt.Sprintf("%#v", this.State),
-		`SemiColon:` + fmt.Sprintf("%#v", this.SemiColon) + `}`}, ", ")
-	return s
+	s := make([]string, 0, 8)
+	s = append(s, "&viper.Start{")
+	if this.Before != nil {
+		s = append(s, "Before: "+fmt.Sprintf("%#v", this.Before)+",\n")
+	}
+	if this.Eq != nil {
+		s = append(s, "Eq: "+fmt.Sprintf("%#v", this.Eq)+",\n")
+	}
+	if this.State != nil {
+		s = append(s, "State: "+fmt.Sprintf("%#v", this.State)+",\n")
+	}
+	if this.SemiColon != nil {
+		s = append(s, "SemiColon: "+fmt.Sprintf("%#v", this.SemiColon)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
 }
 func (this *Final) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&viper.Final{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Eq:` + fmt.Sprintf("%#v", this.Eq),
-		`State:` + fmt.Sprintf("%#v", this.State),
-		`SemiColon:` + fmt.Sprintf("%#v", this.SemiColon) + `}`}, ", ")
-	return s
+	s := make([]string, 0, 8)
+	s = append(s, "&viper.Final{")
+	if this.Before != nil {
+		s = append(s, "Before: "+fmt.Sprintf("%#v", this.Before)+",\n")
+	}
+	if this.Eq != nil {
+		s = append(s, "Eq: "+fmt.Sprintf("%#v", this.Eq)+",\n")
+	}
+	if this.State != nil {
+		s = append(s, "State: "+fmt.Sprintf("%#v", this.State)+",\n")
+	}
+	if this.SemiColon != nil {
+		s = append(s, "SemiColon: "+fmt.Sprintf("%#v", this.SemiColon)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
 }
 func (this *Internal) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&viper.Internal{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Src:` + fmt.Sprintf("%#v", this.Src),
-		`Expr:` + fmt.Sprintf("%#v", this.Expr),
-		`Dst:` + fmt.Sprintf("%#v", this.Dst),
-		`SemiColon:` + fmt.Sprintf("%#v", this.SemiColon) + `}`}, ", ")
-	return s
+	s := make([]string, 0, 9)
+	s = append(s, "&viper.Internal{")
+	if this.Before != nil {
+		s = append(s, "Before: "+fmt.Sprintf("%#v", this.Before)+",\n")
+	}
+	if this.Src != nil {
+		s = append(s, "Src: "+fmt.Sprintf("%#v", this.Src)+",\n")
+	}
+	if this.Expr != nil {
+		s = append(s, "Expr: "+fmt.Sprintf("%#v", this.Expr)+",\n")
+	}
+	if this.Dst != nil {
+		s = append(s, "Dst: "+fmt.Sprintf("%#v", this.Dst)+",\n")
+	}
+	if this.SemiColon != nil {
+		s = append(s, "SemiColon: "+fmt.Sprintf("%#v", this.SemiColon)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
 }
 func (this *Call) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&viper.Call{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Src:` + fmt.Sprintf("%#v", this.Src),
-		`Expr:` + fmt.Sprintf("%#v", this.Expr),
-		`ParentDst:` + fmt.Sprintf("%#v", this.ParentDst),
-		`ChildDst:` + fmt.Sprintf("%#v", this.ChildDst),
-		`SemiColon:` + fmt.Sprintf("%#v", this.SemiColon) + `}`}, ", ")
-	return s
+	s := make([]string, 0, 10)
+	s = append(s, "&viper.Call{")
+	if this.Before != nil {
+		s = append(s, "Before: "+fmt.Sprintf("%#v", this.Before)+",\n")
+	}
+	if this.Src != nil {
+		s = append(s, "Src: "+fmt.Sprintf("%#v", this.Src)+",\n")
+	}
+	if this.Expr != nil {
+		s = append(s, "Expr: "+fmt.Sprintf("%#v", this.Expr)+",\n")
+	}
+	if this.ParentDst != nil {
+		s = append(s, "ParentDst: "+fmt.Sprintf("%#v", this.ParentDst)+",\n")
+	}
+	if this.ChildDst != nil {
+		s = append(s, "ChildDst: "+fmt.Sprintf("%#v", this.ChildDst)+",\n")
+	}
+	if this.SemiColon != nil {
+		s = append(s, "SemiColon: "+fmt.Sprintf("%#v", this.SemiColon)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
 }
 func (this *Return) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&viper.Return{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`ParentSrc:` + fmt.Sprintf("%#v", this.ParentSrc),
-		`ChildSrc:` + fmt.Sprintf("%#v", this.ChildSrc),
-		`Expr:` + fmt.Sprintf("%#v", this.Expr),
-		`Dst:` + fmt.Sprintf("%#v", this.Dst),
-		`SemiColon:` + fmt.Sprintf("%#v", this.SemiColon) + `}`}, ", ")
-	return s
+	s := make([]string, 0, 10)
+	s = append(s, "&viper.Return{")
+	if this.Before != nil {
+		s = append(s, "Before: "+fmt.Sprintf("%#v", this.Before)+",\n")
+	}
+	if this.ParentSrc != nil {
+		s = append(s, "ParentSrc: "+fmt.Sprintf("%#v", this.ParentSrc)+",\n")
+	}
+	if this.ChildSrc != nil {
+		s = append(s, "ChildSrc: "+fmt.Sprintf("%#v", this.ChildSrc)+",\n")
+	}
+	if this.Expr != nil {
+		s = append(s, "Expr: "+fmt.Sprintf("%#v", this.Expr)+",\n")
+	}
+	if this.Dst != nil {
+		s = append(s, "Dst: "+fmt.Sprintf("%#v", this.Dst)+",\n")
+	}
+	if this.SemiColon != nil {
+		s = append(s, "SemiColon: "+fmt.Sprintf("%#v", this.SemiColon)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
 }
 func (this *State) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&viper.State{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Name:` + fmt.Sprintf("%#v", this.Name) + `}`}, ", ")
-	return s
+	s := make([]string, 0, 6)
+	s = append(s, "&viper.State{")
+	if this.Before != nil {
+		s = append(s, "Before: "+fmt.Sprintf("%#v", this.Before)+",\n")
+	}
+	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
+	s = append(s, "}")
+	return strings.Join(s, "")
 }
 func valueToGoStringViper(v interface{}, typ string) string {
 	rv := reflect.ValueOf(v)

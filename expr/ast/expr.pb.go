@@ -21,14 +21,13 @@ It has these top-level messages:
 package expr
 
 import proto "github.com/gogo/protobuf/proto"
+import fmt "fmt"
 import math "math"
-
-// discarding unused import gogoproto "github.com/gogo/protobuf/gogoproto/gogo.pb"
+import _ "github.com/gogo/protobuf/gogoproto"
 import types "github.com/katydid/katydid/types"
 
 import bytes "bytes"
 
-import fmt "fmt"
 import strings "strings"
 import github_com_gogo_protobuf_proto "github.com/gogo/protobuf/proto"
 import sort "sort"
@@ -37,14 +36,15 @@ import reflect "reflect"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
+var _ = fmt.Errorf
 var _ = math.Inf
 
 type Expr struct {
-	Comma            *Keyword  `protobuf:"bytes,1,opt" json:"Comma,omitempty"`
-	Terminal         *Terminal `protobuf:"bytes,2,opt" json:"Terminal,omitempty"`
-	List             *List     `protobuf:"bytes,3,opt" json:"List,omitempty"`
-	Function         *Function `protobuf:"bytes,4,opt" json:"Function,omitempty"`
-	BuiltIn          *BuiltIn  `protobuf:"bytes,5,opt" json:"BuiltIn,omitempty"`
+	Comma            *Keyword  `protobuf:"bytes,1,opt,name=Comma" json:"Comma,omitempty"`
+	Terminal         *Terminal `protobuf:"bytes,2,opt,name=Terminal" json:"Terminal,omitempty"`
+	List             *List     `protobuf:"bytes,3,opt,name=List" json:"List,omitempty"`
+	Function         *Function `protobuf:"bytes,4,opt,name=Function" json:"Function,omitempty"`
+	BuiltIn          *BuiltIn  `protobuf:"bytes,5,opt,name=BuiltIn" json:"BuiltIn,omitempty"`
 	XXX_unrecognized []byte    `json:"-"`
 }
 
@@ -87,11 +87,11 @@ func (m *Expr) GetBuiltIn() *BuiltIn {
 }
 
 type List struct {
-	Before           *Space     `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Type             types.Type `protobuf:"varint,2,opt,enum=types.Type" json:"Type"`
-	OpenCurly        *Keyword   `protobuf:"bytes,3,opt" json:"OpenCurly,omitempty"`
-	Elems            []*Expr    `protobuf:"bytes,4,rep" json:"Elems,omitempty"`
-	CloseCurly       *Keyword   `protobuf:"bytes,5,opt" json:"CloseCurly,omitempty"`
+	Before           *Space     `protobuf:"bytes,1,opt,name=Before" json:"Before,omitempty"`
+	Type             types.Type `protobuf:"varint,2,opt,name=Type,enum=types.Type" json:"Type"`
+	OpenCurly        *Keyword   `protobuf:"bytes,3,opt,name=OpenCurly" json:"OpenCurly,omitempty"`
+	Elems            []*Expr    `protobuf:"bytes,4,rep,name=Elems" json:"Elems,omitempty"`
+	CloseCurly       *Keyword   `protobuf:"bytes,5,opt,name=CloseCurly" json:"CloseCurly,omitempty"`
 	XXX_unrecognized []byte     `json:"-"`
 }
 
@@ -134,11 +134,11 @@ func (m *List) GetCloseCurly() *Keyword {
 }
 
 type Function struct {
-	Before           *Space   `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Name             string   `protobuf:"bytes,2,opt" json:"Name"`
-	OpenParen        *Keyword `protobuf:"bytes,3,opt" json:"OpenParen,omitempty"`
-	Params           []*Expr  `protobuf:"bytes,4,rep" json:"Params,omitempty"`
-	CloseParen       *Keyword `protobuf:"bytes,5,opt" json:"CloseParen,omitempty"`
+	Before           *Space   `protobuf:"bytes,1,opt,name=Before" json:"Before,omitempty"`
+	Name             string   `protobuf:"bytes,2,opt,name=Name" json:"Name"`
+	OpenParen        *Keyword `protobuf:"bytes,3,opt,name=OpenParen" json:"OpenParen,omitempty"`
+	Params           []*Expr  `protobuf:"bytes,4,rep,name=Params" json:"Params,omitempty"`
+	CloseParen       *Keyword `protobuf:"bytes,5,opt,name=CloseParen" json:"CloseParen,omitempty"`
 	XXX_unrecognized []byte   `json:"-"`
 }
 
@@ -181,8 +181,8 @@ func (m *Function) GetCloseParen() *Keyword {
 }
 
 type BuiltIn struct {
-	Symbol           *Keyword `protobuf:"bytes,1,opt" json:"Symbol,omitempty"`
-	Expr             *Expr    `protobuf:"bytes,2,opt" json:"Expr,omitempty"`
+	Symbol           *Keyword `protobuf:"bytes,1,opt,name=Symbol" json:"Symbol,omitempty"`
+	Expr             *Expr    `protobuf:"bytes,2,opt,name=Expr" json:"Expr,omitempty"`
 	XXX_unrecognized []byte   `json:"-"`
 }
 
@@ -204,15 +204,15 @@ func (m *BuiltIn) GetExpr() *Expr {
 }
 
 type Terminal struct {
-	Before           *Space    `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Literal          string    `protobuf:"bytes,2,opt" json:"Literal"`
-	DoubleValue      *float64  `protobuf:"fixed64,3,opt" json:"DoubleValue,omitempty"`
-	IntValue         *int64    `protobuf:"varint,5,opt" json:"IntValue,omitempty"`
-	UintValue        *uint64   `protobuf:"varint,6,opt" json:"UintValue,omitempty"`
-	BoolValue        *bool     `protobuf:"varint,8,opt" json:"BoolValue,omitempty"`
-	StringValue      *string   `protobuf:"bytes,9,opt" json:"StringValue,omitempty"`
-	BytesValue       []byte    `protobuf:"bytes,10,opt" json:"BytesValue,omitempty"`
-	Variable         *Variable `protobuf:"bytes,50,opt" json:"Variable,omitempty"`
+	Before           *Space    `protobuf:"bytes,1,opt,name=Before" json:"Before,omitempty"`
+	Literal          string    `protobuf:"bytes,2,opt,name=Literal" json:"Literal"`
+	DoubleValue      *float64  `protobuf:"fixed64,3,opt,name=DoubleValue" json:"DoubleValue,omitempty"`
+	IntValue         *int64    `protobuf:"varint,5,opt,name=IntValue" json:"IntValue,omitempty"`
+	UintValue        *uint64   `protobuf:"varint,6,opt,name=UintValue" json:"UintValue,omitempty"`
+	BoolValue        *bool     `protobuf:"varint,8,opt,name=BoolValue" json:"BoolValue,omitempty"`
+	StringValue      *string   `protobuf:"bytes,9,opt,name=StringValue" json:"StringValue,omitempty"`
+	BytesValue       []byte    `protobuf:"bytes,10,opt,name=BytesValue" json:"BytesValue,omitempty"`
+	Variable         *Variable `protobuf:"bytes,50,opt,name=Variable" json:"Variable,omitempty"`
 	XXX_unrecognized []byte    `json:"-"`
 }
 
@@ -283,7 +283,7 @@ func (m *Terminal) GetVariable() *Variable {
 }
 
 type Variable struct {
-	Type             types.Type `protobuf:"varint,2,opt,enum=types.Type" json:"Type"`
+	Type             types.Type `protobuf:"varint,2,opt,name=Type,enum=types.Type" json:"Type"`
 	XXX_unrecognized []byte     `json:"-"`
 }
 
@@ -298,8 +298,8 @@ func (m *Variable) GetType() types.Type {
 }
 
 type Keyword struct {
-	Before           *Space `protobuf:"bytes,1,opt" json:"Before,omitempty"`
-	Value            string `protobuf:"bytes,2,opt" json:"Value"`
+	Before           *Space `protobuf:"bytes,1,opt,name=Before" json:"Before,omitempty"`
+	Value            string `protobuf:"bytes,2,opt,name=Value" json:"Value"`
 	XXX_unrecognized []byte `json:"-"`
 }
 
@@ -321,7 +321,7 @@ func (m *Keyword) GetValue() string {
 }
 
 type Space struct {
-	Space            []string `protobuf:"bytes,1,rep" json:"Space,omitempty"`
+	Space            []string `protobuf:"bytes,1,rep,name=Space" json:"Space,omitempty"`
 	XXX_unrecognized []byte   `json:"-"`
 }
 
@@ -336,6 +336,14 @@ func (m *Space) GetSpace() []string {
 }
 
 func init() {
+	proto.RegisterType((*Expr)(nil), "expr.Expr")
+	proto.RegisterType((*List)(nil), "expr.List")
+	proto.RegisterType((*Function)(nil), "expr.Function")
+	proto.RegisterType((*BuiltIn)(nil), "expr.BuiltIn")
+	proto.RegisterType((*Terminal)(nil), "expr.Terminal")
+	proto.RegisterType((*Variable)(nil), "expr.Variable")
+	proto.RegisterType((*Keyword)(nil), "expr.Keyword")
+	proto.RegisterType((*Space)(nil), "expr.Space")
 }
 func (this *Expr) Equal(that interface{}) bool {
 	if that == nil {
@@ -676,95 +684,177 @@ func (this *Expr) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&expr.Expr{` +
-		`Comma:` + fmt.Sprintf("%#v", this.Comma),
-		`Terminal:` + fmt.Sprintf("%#v", this.Terminal),
-		`List:` + fmt.Sprintf("%#v", this.List),
-		`Function:` + fmt.Sprintf("%#v", this.Function),
-		`BuiltIn:` + fmt.Sprintf("%#v", this.BuiltIn),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
+	s := make([]string, 0, 9)
+	s = append(s, "&expr.Expr{")
+	if this.Comma != nil {
+		s = append(s, "Comma: "+fmt.Sprintf("%#v", this.Comma)+",\n")
+	}
+	if this.Terminal != nil {
+		s = append(s, "Terminal: "+fmt.Sprintf("%#v", this.Terminal)+",\n")
+	}
+	if this.List != nil {
+		s = append(s, "List: "+fmt.Sprintf("%#v", this.List)+",\n")
+	}
+	if this.Function != nil {
+		s = append(s, "Function: "+fmt.Sprintf("%#v", this.Function)+",\n")
+	}
+	if this.BuiltIn != nil {
+		s = append(s, "BuiltIn: "+fmt.Sprintf("%#v", this.BuiltIn)+",\n")
+	}
+	if this.XXX_unrecognized != nil {
+		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
 }
 func (this *List) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&expr.List{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Type:` + fmt.Sprintf("%#v", this.Type),
-		`OpenCurly:` + fmt.Sprintf("%#v", this.OpenCurly),
-		`Elems:` + fmt.Sprintf("%#v", this.Elems),
-		`CloseCurly:` + fmt.Sprintf("%#v", this.CloseCurly),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
+	s := make([]string, 0, 9)
+	s = append(s, "&expr.List{")
+	if this.Before != nil {
+		s = append(s, "Before: "+fmt.Sprintf("%#v", this.Before)+",\n")
+	}
+	s = append(s, "Type: "+fmt.Sprintf("%#v", this.Type)+",\n")
+	if this.OpenCurly != nil {
+		s = append(s, "OpenCurly: "+fmt.Sprintf("%#v", this.OpenCurly)+",\n")
+	}
+	if this.Elems != nil {
+		s = append(s, "Elems: "+fmt.Sprintf("%#v", this.Elems)+",\n")
+	}
+	if this.CloseCurly != nil {
+		s = append(s, "CloseCurly: "+fmt.Sprintf("%#v", this.CloseCurly)+",\n")
+	}
+	if this.XXX_unrecognized != nil {
+		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
 }
 func (this *Function) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&expr.Function{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Name:` + fmt.Sprintf("%#v", this.Name),
-		`OpenParen:` + fmt.Sprintf("%#v", this.OpenParen),
-		`Params:` + fmt.Sprintf("%#v", this.Params),
-		`CloseParen:` + fmt.Sprintf("%#v", this.CloseParen),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
+	s := make([]string, 0, 9)
+	s = append(s, "&expr.Function{")
+	if this.Before != nil {
+		s = append(s, "Before: "+fmt.Sprintf("%#v", this.Before)+",\n")
+	}
+	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
+	if this.OpenParen != nil {
+		s = append(s, "OpenParen: "+fmt.Sprintf("%#v", this.OpenParen)+",\n")
+	}
+	if this.Params != nil {
+		s = append(s, "Params: "+fmt.Sprintf("%#v", this.Params)+",\n")
+	}
+	if this.CloseParen != nil {
+		s = append(s, "CloseParen: "+fmt.Sprintf("%#v", this.CloseParen)+",\n")
+	}
+	if this.XXX_unrecognized != nil {
+		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
 }
 func (this *BuiltIn) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&expr.BuiltIn{` +
-		`Symbol:` + fmt.Sprintf("%#v", this.Symbol),
-		`Expr:` + fmt.Sprintf("%#v", this.Expr),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
+	s := make([]string, 0, 6)
+	s = append(s, "&expr.BuiltIn{")
+	if this.Symbol != nil {
+		s = append(s, "Symbol: "+fmt.Sprintf("%#v", this.Symbol)+",\n")
+	}
+	if this.Expr != nil {
+		s = append(s, "Expr: "+fmt.Sprintf("%#v", this.Expr)+",\n")
+	}
+	if this.XXX_unrecognized != nil {
+		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
 }
 func (this *Terminal) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&expr.Terminal{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Literal:` + fmt.Sprintf("%#v", this.Literal),
-		`DoubleValue:` + valueToGoStringExpr(this.DoubleValue, "float64"),
-		`IntValue:` + valueToGoStringExpr(this.IntValue, "int64"),
-		`UintValue:` + valueToGoStringExpr(this.UintValue, "uint64"),
-		`BoolValue:` + valueToGoStringExpr(this.BoolValue, "bool"),
-		`StringValue:` + valueToGoStringExpr(this.StringValue, "string"),
-		`BytesValue:` + valueToGoStringExpr(this.BytesValue, "byte"),
-		`Variable:` + fmt.Sprintf("%#v", this.Variable),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
+	s := make([]string, 0, 13)
+	s = append(s, "&expr.Terminal{")
+	if this.Before != nil {
+		s = append(s, "Before: "+fmt.Sprintf("%#v", this.Before)+",\n")
+	}
+	s = append(s, "Literal: "+fmt.Sprintf("%#v", this.Literal)+",\n")
+	if this.DoubleValue != nil {
+		s = append(s, "DoubleValue: "+valueToGoStringExpr(this.DoubleValue, "float64")+",\n")
+	}
+	if this.IntValue != nil {
+		s = append(s, "IntValue: "+valueToGoStringExpr(this.IntValue, "int64")+",\n")
+	}
+	if this.UintValue != nil {
+		s = append(s, "UintValue: "+valueToGoStringExpr(this.UintValue, "uint64")+",\n")
+	}
+	if this.BoolValue != nil {
+		s = append(s, "BoolValue: "+valueToGoStringExpr(this.BoolValue, "bool")+",\n")
+	}
+	if this.StringValue != nil {
+		s = append(s, "StringValue: "+valueToGoStringExpr(this.StringValue, "string")+",\n")
+	}
+	if this.BytesValue != nil {
+		s = append(s, "BytesValue: "+valueToGoStringExpr(this.BytesValue, "byte")+",\n")
+	}
+	if this.Variable != nil {
+		s = append(s, "Variable: "+fmt.Sprintf("%#v", this.Variable)+",\n")
+	}
+	if this.XXX_unrecognized != nil {
+		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
 }
 func (this *Variable) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&expr.Variable{` +
-		`Type:` + fmt.Sprintf("%#v", this.Type),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
+	s := make([]string, 0, 5)
+	s = append(s, "&expr.Variable{")
+	s = append(s, "Type: "+fmt.Sprintf("%#v", this.Type)+",\n")
+	if this.XXX_unrecognized != nil {
+		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
 }
 func (this *Keyword) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&expr.Keyword{` +
-		`Before:` + fmt.Sprintf("%#v", this.Before),
-		`Value:` + fmt.Sprintf("%#v", this.Value),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
+	s := make([]string, 0, 6)
+	s = append(s, "&expr.Keyword{")
+	if this.Before != nil {
+		s = append(s, "Before: "+fmt.Sprintf("%#v", this.Before)+",\n")
+	}
+	s = append(s, "Value: "+fmt.Sprintf("%#v", this.Value)+",\n")
+	if this.XXX_unrecognized != nil {
+		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
 }
 func (this *Space) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&expr.Space{` +
-		`Space:` + fmt.Sprintf("%#v", this.Space),
-		`XXX_unrecognized:` + fmt.Sprintf("%#v", this.XXX_unrecognized) + `}`}, ", ")
-	return s
+	s := make([]string, 0, 5)
+	s = append(s, "&expr.Space{")
+	if this.Space != nil {
+		s = append(s, "Space: "+fmt.Sprintf("%#v", this.Space)+",\n")
+	}
+	if this.XXX_unrecognized != nil {
+		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
 }
 func valueToGoStringExpr(v interface{}, typ string) string {
 	rv := reflect.ValueOf(v)
