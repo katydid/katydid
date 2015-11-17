@@ -287,3 +287,15 @@ func TestRecursiveKnotElbow(t *testing.T) {
 	//TODO more checks
 	t.Logf("%v", gkey)
 }
+
+func TestAnyIndex(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("KeyValue"), relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewConcat(
+		relapse.NewTreeNode(relapse.NewStringName("Key"), relapse.NewZAny()),
+		relapse.NewTreeNode(relapse.NewStringName("Value"), relapse.NewZAny()),
+	)))
+	gkey, err := KeyTheGrammar("protokey", "ProtoKey", ProtokeyDescription(), p.Grammar())
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("%v", gkey)
+}

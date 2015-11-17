@@ -74,10 +74,10 @@ func ValidateProto(name string, grammar combinator.G, m interface{}, expected bo
 	messageName := reflect.TypeOf(m).Elem().Name()
 	codecs := Proto(m)
 	g, err := protokey.KeyTheGrammar(packageName, messageName, m.(ProtoMessage).Description(), grammar.Grammar())
-	if err != nil {
-		panic(err)
+	if err == nil {
+		Validate(name, combinator.G(relapse.NewRefsLookup(g)), codecs, expected)
 	}
-	Validate(name, combinator.G(relapse.NewRefsLookup(g)), codecs, expected)
+	//TODO maybe there should be a different Validate function for when protokey is not possible
 }
 
 func Validate(name string, grammar combinator.G, codecs Codecs, expected bool) {

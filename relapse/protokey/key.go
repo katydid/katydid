@@ -18,8 +18,6 @@ import (
 	"fmt"
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 	"github.com/katydid/katydid/relapse/ast"
-	"github.com/katydid/katydid/relapse/nameexpr"
-	"github.com/katydid/katydid/serialize"
 	"github.com/katydid/katydid/serialize/proto"
 )
 
@@ -32,245 +30,208 @@ func KeyTheGrammar(pkgName, msgName string, desc *descriptor.FileDescriptorSet, 
 	root := descMap.GetRoot()
 	refs := relapse.NewRefsLookup(g)
 	keyer := &keyer{
-		names:   make(map[*relapse.NameExpr]*relapse.NameExpr),
-		msgs:    make(map[*relapse.NameExpr]*msgs),
+		refs:    make(map[string]*context),
 		descMap: descMap,
-		refs:    refs,
 	}
-	changed := true
-	topMsg := &msgs{map[*descriptor.DescriptorProto]struct{}{root: struct{}{}}, nil}
-	for changed {
-		keyer.reset()
-		changed = keyer.pattern(topMsg, refs["main"])
-	}
-	keyer.replace(g.TopPattern)
-	for i := range g.PatternDecls {
-		keyer.replace(g.PatternDecls[i].GetPattern())
-	}
-	return g, nil
-}
-
-func (this *keyer) replace(p *relapse.Pattern) {
-	typ := p.GetValue()
-	switch v := typ.(type) {
-	case *relapse.Empty, *relapse.EmptySet, *relapse.LeafNode, *relapse.ZAny:
-		//do nothing
-	case *relapse.TreeNode:
-		name, ok := this.names[v.Name]
-		if !ok {
-			panic("unreachable")
+	keyer.refs["main"] = &context{root, false}
+	newRefs := make(map[string]*relapse.Pattern)
+	oldContexts := 0
+	newContexts := 1
+	for oldContexts != newContexts {
+		oldContexts = newContexts
+		for name, context := range keyer.refs {
+			newp, err := keyer.translate(context, refs[name])
+			if err != nil {
+				return nil, err
+			}
+			newRefs[name] = newp
 		}
-		v.Name = name
-		this.replace(v.GetPattern())
-	case *relapse.Concat:
-		this.replace(v.GetLeftPattern())
-		this.replace(v.GetRightPattern())
-	case *relapse.Or:
-		this.replace(v.GetLeftPattern())
-		this.replace(v.GetRightPattern())
-	case *relapse.And:
-		this.replace(v.GetLeftPattern())
-		this.replace(v.GetRightPattern())
-	case *relapse.ZeroOrMore:
-		this.replace(v.GetPattern())
-	case *relapse.Reference:
-		//do nothing
-	case *relapse.Not:
-		this.replace(v.GetPattern())
-	case *relapse.WithSomeTreeNode:
-		this.replace(v.GetPattern())
-	case *relapse.Optional:
-		this.replace(v.GetPattern())
-	case *relapse.Interleave:
-		this.replace(v.GetLeftPattern())
-		this.replace(v.GetRightPattern())
-	default:
-		panic(fmt.Sprintf("unknown pattern typ %T", typ))
+		newContexts = len(keyer.refs)
 	}
-}
-
-type msgs struct {
-	optional map[*descriptor.DescriptorProto]struct{}
-	repeated map[*descriptor.DescriptorProto]struct{}
-}
-
-func (this *msgs) Len() int {
-	return len(this.optional) + len(this.repeated)
-}
-
-func same(prev, next map[*descriptor.DescriptorProto]struct{}) bool {
-	if len(prev) != len(next) {
-		return false
-	}
-	for p := range prev {
-		_, ok := next[p]
-		if !ok {
-			return false
-		}
-	}
-	return true
-}
-
-func (this *msgs) Equal(that *msgs) bool {
-	return same(this.optional, that.optional) && same(this.repeated, that.repeated)
+	return relapse.NewGrammar(newRefs), nil
 }
 
 type keyer struct {
-	names   map[*relapse.NameExpr]*relapse.NameExpr
-	msgs    map[*relapse.NameExpr]*msgs
-	visited map[*relapse.Pattern]struct{}
+	refs    map[string]*context
 	descMap proto.DescMap
-	refs    relapse.RefLookup
 }
 
-func (this *keyer) reset() {
-	this.visited = make(map[*relapse.Pattern]struct{})
+type context struct {
+	msg   *descriptor.DescriptorProto
+	index bool
 }
 
-func (this *keyer) pattern(current *msgs, p *relapse.Pattern) bool {
-	if _, ok := this.visited[p]; ok {
-		return false
+func (this *context) Equal(that *context) bool {
+	return this.msg == that.msg && this.index == that.index
+}
+
+func anyErr(err1, err2 error) error {
+	if err1 != nil {
+		return err1
 	}
-	this.visited[p] = struct{}{}
+	if err2 != nil {
+		return err2
+	}
+	return nil
+}
+
+type ErrDup struct {
+	name string
+	c1   *context
+	c2   *context
+}
+
+func (this *ErrDup) Error() string {
+	return fmt.Sprintf("Duplicate Reference Error: Name: %v, Context1: %v, Context2: %v", this.name, this.c1.msg.GetName(), this.c2.msg.GetName())
+}
+
+func (this *keyer) translate(context *context, p *relapse.Pattern) (*relapse.Pattern, error) {
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *relapse.Empty, *relapse.EmptySet, *relapse.LeafNode, *relapse.ZAny:
-		//do nothing
-		return false
+		return p, nil
 	case *relapse.TreeNode:
-		if _, ok := this.msgs[v.Name]; ok {
-			if this.msgs[v.Name].Equal(current) {
-				return false
-			}
-		}
-		if current.Len() == 0 {
-			//the query has specified an unreachable path or its an array of base types
-			this.msgs[p.TreeNode.Name] = &msgs{}
-			if evalAnyInt(p.TreeNode.Name) {
-				this.names[p.TreeNode.Name] = p.TreeNode.Name
-			} else {
-				this.names[p.TreeNode.Name] = relapse.NewAnyNameExcept(relapse.NewAnyName())
-			}
-			this.pattern(&msgs{}, p.TreeNode.Pattern)
-			return true
-		}
-		this.msgs[p.TreeNode.Name] = current
-		fields := fieldsMap(current.optional)
-		newName := keyTheName(fields, p.TreeNode.Name)
-		this.names[p.TreeNode.Name] = newName
-		nextMsgs := getMsgs(this.descMap, current, newName)
-		this.pattern(nextMsgs, p.TreeNode.Pattern)
-		return true
+		return this.translateName(context, v.GetName(), v.GetPattern())
 	case *relapse.Concat:
-		leftChanged := this.pattern(current, v.GetLeftPattern())
-		rightChanged := this.pattern(current, v.GetRightPattern())
-		return leftChanged || rightChanged
+		l, err1 := this.translate(context, v.GetLeftPattern())
+		r, err2 := this.translate(context, v.GetRightPattern())
+		return relapse.NewConcat(l, r), anyErr(err1, err2)
 	case *relapse.Or:
-		leftChanged := this.pattern(current, v.GetLeftPattern())
-		rightChanged := this.pattern(current, v.GetRightPattern())
-		return leftChanged || rightChanged
+		l, err1 := this.translate(context, v.GetLeftPattern())
+		r, err2 := this.translate(context, v.GetRightPattern())
+		return relapse.NewOr(l, r), anyErr(err1, err2)
 	case *relapse.And:
-		leftChanged := this.pattern(current, v.GetLeftPattern())
-		rightChanged := this.pattern(current, v.GetRightPattern())
-		return leftChanged || rightChanged
+		l, err1 := this.translate(context, v.GetLeftPattern())
+		r, err2 := this.translate(context, v.GetRightPattern())
+		return relapse.NewAnd(l, r), anyErr(err1, err2)
 	case *relapse.ZeroOrMore:
-		return this.pattern(current, v.GetPattern())
+		p, err := this.translate(context, v.GetPattern())
+		return relapse.NewZeroOrMore(p), err
 	case *relapse.Reference:
-		return this.pattern(current, this.refs[v.GetName()])
+		c, ok := this.refs[v.GetName()]
+		if !ok {
+			this.refs[v.GetName()] = context
+			return p, nil
+		}
+		if !c.Equal(context) {
+			return nil, &ErrDup{v.GetName(), c, context}
+		}
+		return p, nil
 	case *relapse.Not:
-		return this.pattern(current, v.GetPattern())
+		p, err := this.translate(context, v.GetPattern())
+		return relapse.NewNot(p), err
 	case *relapse.WithSomeTreeNode:
-		return this.pattern(current, v.GetPattern())
+		return nil, fmt.Errorf("todo")
 	case *relapse.Optional:
-		return this.pattern(current, v.GetPattern())
+		p, err := this.translate(context, v.GetPattern())
+		return relapse.NewOptional(p), err
 	case *relapse.Interleave:
-		leftChanged := this.pattern(current, v.GetLeftPattern())
-		rightChanged := this.pattern(current, v.GetRightPattern())
-		return leftChanged || rightChanged
+		l, err1 := this.translate(context, v.GetLeftPattern())
+		r, err2 := this.translate(context, v.GetRightPattern())
+		return relapse.NewInterleave(l, r), anyErr(err1, err2)
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
 
-func fieldsMap(msgs map[*descriptor.DescriptorProto]struct{}) map[string][]*relapse.NameExpr {
-	fields := make(map[string][]*relapse.NameExpr)
-	for msg, _ := range msgs {
-		for _, field := range msg.Field {
-			_, ok := fields[field.GetName()]
-			if !ok {
-				fields[field.GetName()] = []*relapse.NameExpr{}
-			}
-			fields[field.GetName()] = append(fields[field.GetName()], relapse.NewUintName(uint64(field.GetNumber())))
-		}
-	}
-	return fields
+type ErrExpectedArray struct {
+	name string
+	c    *context
 }
 
-func keyTheName(msg map[string][]*relapse.NameExpr, name *relapse.NameExpr) *relapse.NameExpr {
-	v := name.GetValue()
-	switch n := v.(type) {
+func (this *ErrExpectedArray) Error() string {
+	return fmt.Sprintf("Expected Array Error: Name: %v, Msg: %v", this.name, this.c.msg.GetName())
+}
+
+type ErrExpectedField struct {
+	name string
+	c    *context
+}
+
+func (this *ErrExpectedField) Error() string {
+	return fmt.Sprintf("Expected Field Error: Name: %v, Msg: %v", this.name, this.c.msg.GetName())
+}
+
+type ErrAnyFieldNotSupported struct {
+	name string
+}
+
+func (this *ErrAnyFieldNotSupported) Error() string {
+	return fmt.Sprintf("Any Field Not Supported: Name: %v", this.name)
+}
+
+type ErrAnyNameExceptNotSupported struct {
+	name string
+}
+
+func (this *ErrAnyNameExceptNotSupported) Error() string {
+	return fmt.Sprintf("AnyNameExcept Not Supported Error: Name: %v", this.name)
+}
+
+type ErrUnknownField struct {
+	name string
+	c    *context
+}
+
+func (this *ErrUnknownField) Error() string {
+	return fmt.Sprintf("Unknown Field Error: Name: %v, Msg: %v", this.name, this.c.msg.GetName())
+}
+
+func getField(msg *descriptor.DescriptorProto, name string) *descriptor.FieldDescriptorProto {
+	for i, f := range msg.Field {
+		if f.GetName() != name {
+			continue
+		}
+		return msg.Field[i]
+	}
+	return nil
+}
+
+func (this *keyer) translateName(current *context, name *relapse.NameExpr, child *relapse.Pattern) (*relapse.Pattern, error) {
+	switch n := name.GetValue().(type) {
 	case *relapse.Name:
+		if current.index {
+			if n.IntValue == nil {
+				return nil, &ErrExpectedArray{name.String(), current}
+			}
+			c := &context{current.msg, false}
+			newp, err := this.translate(c, child)
+			if err != nil {
+				return nil, err
+			}
+			return relapse.NewTreeNode(name, newp), nil
+		}
 		if n.StringValue == nil {
-			//do nothing
-			return name
+			return nil, &ErrExpectedField{name.String(), current}
 		}
-		keys, found := msg[n.GetStringValue()]
-		if found {
-			return relapse.NewNameChoice(keys...)
+		f := getField(current.msg, n.GetStringValue())
+		if f == nil {
+			return nil, &ErrUnknownField{name.String(), current}
 		}
-		return relapse.NewAnyNameExcept(relapse.NewAnyName())
+		msg := this.descMap.LookupMessage(f)
+		c := &context{msg, f.IsRepeated()}
+		newp, err := this.translate(c, child)
+		if err != nil {
+			return nil, err
+		}
+		newName := relapse.NewUintName(uint64(f.GetNumber()))
+		return relapse.NewTreeNode(newName, newp), nil
 	case *relapse.AnyName:
-		return relapse.NewAnyName()
-	case *relapse.AnyNameExcept:
-		return relapse.NewAnyNameExcept(keyTheName(msg, n.GetExcept()))
-	case *relapse.NameChoice:
-		return relapse.NewNameChoice(
-			keyTheName(msg, n.GetLeft()),
-			keyTheName(msg, n.GetRight()),
-		)
-	}
-	panic(fmt.Sprintf("unknown name expression typ %T", v))
-}
-
-func evalAnyInt(name *relapse.NameExpr) bool {
-	v := name.GetValue()
-	switch n := v.(type) {
-	case *relapse.Name:
-		return n.IntValue != nil
-	case *relapse.AnyName:
-		return true
-	case *relapse.AnyNameExcept:
-		return !evalAnyInt(n.GetExcept())
-	case *relapse.NameChoice:
-		return evalAnyInt(n.GetLeft()) || evalAnyInt(n.GetRight())
-	}
-	panic(fmt.Sprintf("unknown name expression typ %T", v))
-}
-
-func getMsgs(descMap proto.DescMap, oldMsgs *msgs, name *relapse.NameExpr) *msgs {
-	optMsgs := make(map[*descriptor.DescriptorProto]struct{})
-	repMsgs := make(map[*descriptor.DescriptorProto]struct{})
-	for oldMsg := range oldMsgs.optional {
-		for i, field := range oldMsg.GetField() {
-			if field.IsMessage() {
-				if nameexpr.EvalName(name, serialize.NewUintValue(uint64(field.GetNumber()))) {
-					msg := descMap.LookupMessage(oldMsg.Field[i])
-					if msg == nil {
-						panic("unreachable")
-					}
-					if !field.IsRepeated() {
-						optMsgs[msg] = struct{}{}
-					} else {
-						repMsgs[msg] = struct{}{}
-					}
-
-				}
+		if current.index {
+			c := &context{current.msg, false}
+			newp, err := this.translate(c, child)
+			if err != nil {
+				return nil, err
 			}
+			return relapse.NewTreeNode(name, newp), nil
+		} else {
+			return nil, &ErrAnyFieldNotSupported{name.String()}
 		}
+	case *relapse.AnyNameExcept:
+		return nil, &ErrAnyNameExceptNotSupported{name.String()}
+	case *relapse.NameChoice:
+		l, err1 := this.translateName(current, n.GetLeft(), child)
+		r, err2 := this.translateName(current, n.GetRight(), child)
+		return relapse.NewOr(l, r), anyErr(err1, err2)
 	}
-	for msg := range oldMsgs.repeated {
-		if evalAnyInt(name) {
-			optMsgs[msg] = struct{}{}
-		}
-	}
-	return &msgs{optMsgs, repMsgs}
+	panic(fmt.Sprintf("unknown name typ %T", name))
 }

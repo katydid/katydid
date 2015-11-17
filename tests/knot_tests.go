@@ -59,6 +59,6 @@ var RecursiveElbow = G{"main": AnyOf(
 )}
 
 func init() {
-	ValidateProtoEtc("RecursiveElbowKnotKnotElbow", RecursiveTurn, KnotKnotElbow, true)
-	ValidateProtoEtc("RecursiveElbowBightTurn", RecursiveTurn, BightTurn, false)
+	ValidateProtoEtc("RecursiveElbowKnotKnotElbow", RecursiveElbow, KnotKnotElbow, true)
+	ValidateProtoEtc("RecursiveElbowBightTurn", RecursiveElbow, BightTurn, false)
 }
