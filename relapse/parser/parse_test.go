@@ -68,7 +68,7 @@ func TestParse(t *testing.T) {
 			* |
 			a -> eq($string, "aa") |
 			* |
-			!(<emptyset>) |
+			!(*) |
 			<empty>
 		)`,
 		`[

@@ -63,9 +63,6 @@ func formatPattern(pattern *Pattern, first bool, tabs int) {
 	if pattern.Empty != nil {
 		formatEmpty(pattern.Empty, first, tabs)
 	}
-	if pattern.EmptySet != nil {
-		formatEmptySet(pattern.EmptySet, first, tabs)
-	}
 	if pattern.TreeNode != nil {
 		formatTreeNode(pattern.TreeNode, true, tabs)
 	}
@@ -78,10 +75,6 @@ func formatPattern(pattern *Pattern, first bool, tabs int) {
 
 func formatEmpty(e *Empty, first bool, tabs int) {
 	formatKeyword(e.Empty, tabs)
-}
-
-func formatEmptySet(e *EmptySet, first bool, tabs int) {
-	formatKeyword(e.EmptySet, tabs)
 }
 
 func formatTreeNode(t *TreeNode, first bool, tabs int) {

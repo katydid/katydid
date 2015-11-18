@@ -96,16 +96,6 @@ Empty
   >>
   ;
 
-EmptySet
-  : "<emptyset>" << &expr.Keyword{Value: "<emptyset>"}, nil >>
-  | Space "<emptyset>" << 
-    &expr.Keyword{
-      Before: $0.(*expr.Space),
-      Value: "<emptyset>",
-    }, nil
-  >>
-  ;
-
 DepthPattern
   : StartConcat
   | StartInterleave
@@ -145,7 +135,6 @@ TreeNode
 
 Pattern
   : Empty << &Pattern{Empty: &Empty{$0.(*expr.Keyword)}}, nil >>
-  | EmptySet  << &Pattern{EmptySet: &EmptySet{$0.(*expr.Keyword)}}, nil >>
   | Star   << &Pattern{ZAny: &ZAny{Star: $0.(*expr.Keyword)}}, nil >>
   | TreeNode
   | DepthPattern

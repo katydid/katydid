@@ -29,7 +29,7 @@ func TestClone(t *testing.T) {
 		t.Fatalf("not cloned")
 	}
 	treeNode := in.GetTopPattern().GetAnd().GetRightPattern().GetTreeNode()
-	treeNode.Pattern = NewNot(NewEmptySet())
+	treeNode.Pattern = NewZAny()
 	if reflect.DeepEqual(in, out) {
 		t.Fatalf("not cloned")
 	}

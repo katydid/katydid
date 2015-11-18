@@ -22,10 +22,10 @@ import (
 )
 
 func TestSimplify1(t *testing.T) {
-	c := relapse.NewConcat(relapse.NewEmptySet(), relapse.NewNot(relapse.NewEmptySet()))
+	c := relapse.NewConcat(relapse.NewNot(relapse.NewZAny()), relapse.NewZAny())
 	refs := relapse.RefLookup{"main": c}
 	s := Simplify(refs, c)
-	if !s.Equal(relapse.NewEmptySet()) {
+	if !s.Equal(relapse.NewNot(relapse.NewZAny())) {
 		t.Fatalf("Expected EmptySet, but got %s", s)
 	}
 }
@@ -33,7 +33,7 @@ func TestSimplify1(t *testing.T) {
 func TestSimplify2(t *testing.T) {
 	refs := relapse.NewRefsLookup(tests.AndNameTelephonePerson.Grammar())
 	s := Simplify(refs, refs["main"])
-	if s.Equal(relapse.NewEmptySet()) {
+	if s.Equal(relapse.NewNot(relapse.NewZAny())) {
 		t.Fatalf("Did not expected EmptySet")
 	}
 }

@@ -79,7 +79,6 @@ message NameChoice {
 message Pattern {
 	option (gogoproto.onlyone) = true;
 	optional Empty Empty = 1;
-	optional EmptySet EmptySet = 2;
 	optional TreeNode TreeNode = 3;
 	optional LeafNode LeafNode = 4;
 	optional Concat Concat = 5;
@@ -96,10 +95,6 @@ message Pattern {
 
 message Empty {
 	optional expr.Keyword Empty = 1;
-}
-
-message EmptySet {
-	optional expr.Keyword EmptySet = 1;
 }
 
 message TreeNode {

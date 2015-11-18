@@ -58,8 +58,6 @@ func Nullable(refs relapse.RefLookup, p *relapse.Pattern) bool {
 	switch v := typ.(type) {
 	case *relapse.Empty:
 		return true
-	case *relapse.EmptySet:
-		return false
 	case *relapse.TreeNode:
 		return false
 	case *relapse.LeafNode:
@@ -92,7 +90,7 @@ func derivTreeNode(refs relapse.RefLookup, p *relapse.TreeNode, tree serialize.P
 	matched := nameexpr.EvalName(p.GetName(), tree)
 	log.Printf("name %s -> %v", p, matched)
 	if !matched {
-		return relapse.NewEmptySet()
+		return relapse.NewNot(relapse.NewZAny())
 	}
 	tree.Down()
 	res := p.GetPattern()
@@ -107,7 +105,7 @@ func derivTreeNode(refs relapse.RefLookup, p *relapse.TreeNode, tree serialize.P
 	log.Printf("derivTreeNode Final = %s", res)
 	tree.Up()
 	if !Nullable(refs, res) {
-		return relapse.NewEmptySet()
+		return relapse.NewNot(relapse.NewZAny())
 	}
 	return relapse.NewEmpty()
 }
@@ -123,12 +121,10 @@ func deriv(refs relapse.RefLookup, p *relapse.Pattern, tree serialize.Parser) *r
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *relapse.Empty:
-		return relapse.NewEmptySet()
-	case *relapse.EmptySet:
-		return relapse.NewEmptySet()
+		return relapse.NewNot(relapse.NewZAny())
 	case *relapse.TreeNode:
 		if tree.IsLeaf() {
-			return relapse.NewEmptySet()
+			return relapse.NewNot(relapse.NewZAny())
 		}
 		return derivTreeNode(refs, v, tree)
 	case *relapse.LeafNode:
@@ -137,16 +133,16 @@ func deriv(refs relapse.RefLookup, p *relapse.Pattern, tree serialize.Parser) *r
 			panic(err)
 		}
 		if !tree.IsLeaf() {
-			return relapse.NewEmptySet()
+			return relapse.NewNot(relapse.NewZAny())
 		}
 		res, err := f.Eval(tree)
 		if err != nil {
-			return relapse.NewEmptySet()
+			return relapse.NewNot(relapse.NewZAny())
 		}
 		if res {
 			return relapse.NewEmpty()
 		}
-		return relapse.NewEmptySet()
+		return relapse.NewNot(relapse.NewZAny())
 	case *relapse.Concat:
 		leftDeriv := relapse.NewConcat(sderiv(refs, v.GetLeftPattern(), tree), v.GetRightPattern())
 		if Nullable(refs, v.GetLeftPattern()) {
@@ -176,7 +172,7 @@ func deriv(refs relapse.RefLookup, p *relapse.Pattern, tree serialize.Parser) *r
 	case *relapse.Not:
 		return relapse.NewNot(sderiv(refs, v.GetPattern(), tree))
 	case *relapse.ZAny:
-		return deriv(refs, relapse.NewNot(relapse.NewEmptySet()), tree)
+		return p
 	case *relapse.Contains:
 		newp := relapse.NewConcat(relapse.NewZAny(), v.GetPattern(), relapse.NewZAny())
 		return deriv(refs, newp, tree)

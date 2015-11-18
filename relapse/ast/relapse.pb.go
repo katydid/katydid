@@ -18,7 +18,6 @@
 		NameChoice
 		Pattern
 		Empty
-		EmptySet
 		TreeNode
 		Contains
 		LeafNode
@@ -329,7 +328,6 @@ func (m *NameChoice) GetCloseParen() *expr.Keyword {
 
 type Pattern struct {
 	Empty      *Empty      `protobuf:"bytes,1,opt,name=Empty" json:"Empty,omitempty"`
-	EmptySet   *EmptySet   `protobuf:"bytes,2,opt,name=EmptySet" json:"EmptySet,omitempty"`
 	TreeNode   *TreeNode   `protobuf:"bytes,3,opt,name=TreeNode" json:"TreeNode,omitempty"`
 	LeafNode   *LeafNode   `protobuf:"bytes,4,opt,name=LeafNode" json:"LeafNode,omitempty"`
 	Concat     *Concat     `protobuf:"bytes,5,opt,name=Concat" json:"Concat,omitempty"`
@@ -350,13 +348,6 @@ func (*Pattern) ProtoMessage() {}
 func (m *Pattern) GetEmpty() *Empty {
 	if m != nil {
 		return m.Empty
-	}
-	return nil
-}
-
-func (m *Pattern) GetEmptySet() *EmptySet {
-	if m != nil {
-		return m.EmptySet
 	}
 	return nil
 }
@@ -455,20 +446,6 @@ func (*Empty) ProtoMessage() {}
 func (m *Empty) GetEmpty() *expr.Keyword {
 	if m != nil {
 		return m.Empty
-	}
-	return nil
-}
-
-type EmptySet struct {
-	EmptySet *expr.Keyword `protobuf:"bytes,1,opt,name=EmptySet" json:"EmptySet,omitempty"`
-}
-
-func (m *EmptySet) Reset()      { *m = EmptySet{} }
-func (*EmptySet) ProtoMessage() {}
-
-func (m *EmptySet) GetEmptySet() *expr.Keyword {
-	if m != nil {
-		return m.EmptySet
 	}
 	return nil
 }
@@ -907,7 +884,6 @@ func init() {
 	proto.RegisterType((*NameChoice)(nil), "relapse.NameChoice")
 	proto.RegisterType((*Pattern)(nil), "relapse.Pattern")
 	proto.RegisterType((*Empty)(nil), "relapse.Empty")
-	proto.RegisterType((*EmptySet)(nil), "relapse.EmptySet")
 	proto.RegisterType((*TreeNode)(nil), "relapse.TreeNode")
 	proto.RegisterType((*Contains)(nil), "relapse.Contains")
 	proto.RegisterType((*LeafNode)(nil), "relapse.LeafNode")
@@ -1220,9 +1196,6 @@ func (this *Pattern) Equal(that interface{}) bool {
 	if !this.Empty.Equal(that1.Empty) {
 		return false
 	}
-	if !this.EmptySet.Equal(that1.EmptySet) {
-		return false
-	}
 	if !this.TreeNode.Equal(that1.TreeNode) {
 		return false
 	}
@@ -1282,31 +1255,6 @@ func (this *Empty) Equal(that interface{}) bool {
 		return false
 	}
 	if !this.Empty.Equal(that1.Empty) {
-		return false
-	}
-	return true
-}
-func (this *EmptySet) Equal(that interface{}) bool {
-	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
-	}
-
-	that1, ok := that.(*EmptySet)
-	if !ok {
-		return false
-	}
-	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
-	} else if this == nil {
-		return false
-	}
-	if !this.EmptySet.Equal(that1.EmptySet) {
 		return false
 	}
 	return true
@@ -1859,13 +1807,10 @@ func (this *Pattern) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := make([]string, 0, 18)
+	s := make([]string, 0, 17)
 	s = append(s, "&relapse.Pattern{")
 	if this.Empty != nil {
 		s = append(s, "Empty: "+fmt.Sprintf("%#v", this.Empty)+",\n")
-	}
-	if this.EmptySet != nil {
-		s = append(s, "EmptySet: "+fmt.Sprintf("%#v", this.EmptySet)+",\n")
 	}
 	if this.TreeNode != nil {
 		s = append(s, "TreeNode: "+fmt.Sprintf("%#v", this.TreeNode)+",\n")
@@ -1914,18 +1859,6 @@ func (this *Empty) GoString() string {
 	s = append(s, "&relapse.Empty{")
 	if this.Empty != nil {
 		s = append(s, "Empty: "+fmt.Sprintf("%#v", this.Empty)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *EmptySet) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 5)
-	s = append(s, "&relapse.EmptySet{")
-	if this.EmptySet != nil {
-		s = append(s, "EmptySet: "+fmt.Sprintf("%#v", this.EmptySet)+",\n")
 	}
 	s = append(s, "}")
 	return strings.Join(s, "")
@@ -2228,9 +2161,6 @@ func (this *Pattern) GetValue() interface{} {
 	if this.Empty != nil {
 		return this.Empty
 	}
-	if this.EmptySet != nil {
-		return this.EmptySet
-	}
 	if this.TreeNode != nil {
 		return this.TreeNode
 	}
@@ -2274,8 +2204,6 @@ func (this *Pattern) SetValue(value interface{}) bool {
 	switch vt := value.(type) {
 	case *Empty:
 		this.Empty = vt
-	case *EmptySet:
-		this.EmptySet = vt
 	case *TreeNode:
 		this.TreeNode = vt
 	case *LeafNode:

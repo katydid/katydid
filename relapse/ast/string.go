@@ -108,10 +108,6 @@ func (this *Empty) String() string {
 	return this.Empty.String()
 }
 
-func (this *EmptySet) String() string {
-	return this.EmptySet.String()
-}
-
 func (this *TreeNode) String() string {
 	return this.Name.String() + this.Colon.String() +
 		this.Pattern.String()

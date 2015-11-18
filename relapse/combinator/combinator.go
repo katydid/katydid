@@ -82,7 +82,7 @@ func Value(f funcs.Bool) *relapse.Pattern {
 }
 
 func None() *relapse.Pattern {
-	return relapse.NewEmptySet()
+	return relapse.NewNot(relapse.NewZAny())
 }
 
 func Eval(name string) *relapse.Pattern {

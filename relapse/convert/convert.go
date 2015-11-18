@@ -67,7 +67,7 @@ func toTrans(refs relapse.RefLookup) (transitions transSet, states map[string]*r
 	states = make(map[string]*relapse.Pattern)
 	states[p.String()] = interp.Simplify(refs, p)
 	//fmt.Printf("newState = %s\n", p)
-	//fmt.Printf("newState = %s\n", relapse.NewEmptySet())
+	//fmt.Printf("newState = %s\n", relapse.NewNot(relapse.NewZany()))
 	allVisited := false
 	for !allVisited {
 		allVisited = true
@@ -154,7 +154,7 @@ func transForPattern(refs relapse.RefLookup, p *relapse.Pattern) transSet {
 			dElse := applyIfNotNil(simplify, d.retElse)
 			dchild := applyIfNotNil(simplify, d.child)
 			if dchild == nil {
-				dchild = interp.Simplify(refs, relapse.NewNot(relapse.NewEmptySet()))
+				dchild = relapse.NewZAny()
 			}
 			ts = ts.add(&callAndReturn{
 				src:     p,
@@ -256,8 +256,6 @@ func getAllExprs(bookKeepingRefs relapse.RefLookup, allRefs relapse.RefLookup, p
 	switch v := typ.(type) {
 	case *relapse.Empty:
 		return newAllNil()
-	case *relapse.EmptySet:
-		return newAllNil()
 	case *relapse.TreeNode:
 		return newAllName(v.GetName())
 	case *relapse.LeafNode:
@@ -289,7 +287,7 @@ func getAllExprs(bookKeepingRefs relapse.RefLookup, allRefs relapse.RefLookup, p
 	case *relapse.Not:
 		return getAllExprs(bookKeepingRefs, allRefs, v.GetPattern())
 	case *relapse.ZAny:
-		return getAllExprs(bookKeepingRefs, allRefs, relapse.NewNot(relapse.NewEmptySet()))
+		return newAllNil()
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
@@ -526,12 +524,12 @@ func deriv(refs relapse.RefLookup, p *relapse.Pattern, expr *expr.Expr, name *re
 	}
 	typ := p.GetValue()
 	switch v := typ.(type) {
-	case *relapse.Empty, *relapse.EmptySet:
+	case *relapse.Empty:
 		if expr != nil {
 			return &internal{
 				src:  p,
 				expr: expr,
-				dst:  relapse.NewEmptySet(),
+				dst:  relapse.NewNot(relapse.NewZAny()),
 			}
 		} else {
 			//TODO this should probably be an internal
@@ -539,18 +537,18 @@ func deriv(refs relapse.RefLookup, p *relapse.Pattern, expr *expr.Expr, name *re
 				src:     p,
 				name:    name,
 				child:   nil,
-				retNull: relapse.NewEmptySet(),
-				retElse: relapse.NewEmptySet(),
+				retNull: relapse.NewNot(relapse.NewZAny()),
+				retElse: relapse.NewNot(relapse.NewZAny()),
 			}
 		}
 	case *relapse.TreeNode:
 		if name != nil {
-			nul := relapse.NewEmptySet()
-			var els *relapse.Pattern = relapse.NewEmptySet() // TODO this should probably be an internal
+			nul := relapse.NewNot(relapse.NewZAny())
+			var els *relapse.Pattern = relapse.NewNot(relapse.NewZAny()) // TODO this should probably be an internal
 			var child *relapse.Pattern = nil
 			if v.GetName().Equal(name) {
 				nul = relapse.NewEmpty()
-				els = relapse.NewEmptySet()
+				els = relapse.NewNot(relapse.NewZAny())
 				child = v.GetPattern()
 			}
 			return &callAndReturn{
@@ -564,11 +562,11 @@ func deriv(refs relapse.RefLookup, p *relapse.Pattern, expr *expr.Expr, name *re
 		return &internal{
 			src:  p,
 			expr: expr,
-			dst:  relapse.NewEmptySet(),
+			dst:  relapse.NewNot(relapse.NewZAny()),
 		}
 	case *relapse.LeafNode:
 		if expr != nil {
-			dst := relapse.NewEmptySet()
+			dst := relapse.NewNot(relapse.NewZAny())
 			if v.GetExpr().Equal(expr) {
 				dst = relapse.NewEmpty()
 			}
@@ -582,8 +580,8 @@ func deriv(refs relapse.RefLookup, p *relapse.Pattern, expr *expr.Expr, name *re
 			src:     p,
 			name:    name,
 			child:   nil,
-			retNull: relapse.NewEmptySet(),
-			retElse: relapse.NewEmptySet(),
+			retNull: relapse.NewNot(relapse.NewZAny()),
+			retElse: relapse.NewNot(relapse.NewZAny()),
 		}
 	case *relapse.Concat:
 		dl := d(v.GetLeftPattern())
@@ -604,7 +602,8 @@ func deriv(refs relapse.RefLookup, p *relapse.Pattern, expr *expr.Expr, name *re
 	case *relapse.Not:
 		return not(d(v.GetPattern()))
 	case *relapse.ZAny:
-		return deriv(refs, relapse.NewNot(relapse.NewEmptySet()), expr, name)
+		panic("todo")
+		//return deriv(refs, relapse.NewNot(relapse.NewNot(relapse.NewZany())), expr, name)
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }

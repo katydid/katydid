@@ -60,8 +60,6 @@ func sat(refs relapse.RefLookup, p *relapse.Pattern) bool {
 	switch v := typ.(type) {
 	case *relapse.Empty:
 		return true
-	case *relapse.EmptySet:
-		return false
 	case *relapse.TreeNode:
 		return satName(v.GetName()) && sat(refs, v.GetPattern())
 	case *relapse.LeafNode:
@@ -77,6 +75,9 @@ func sat(refs relapse.RefLookup, p *relapse.Pattern) bool {
 	case *relapse.Reference:
 		return sat(refs, refs[v.GetName()])
 	case *relapse.Not:
+		if v.GetPattern().ZAny != nil {
+			return false
+		}
 		return true // TODO
 	case *relapse.ZAny:
 		return true

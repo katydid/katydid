@@ -33,8 +33,6 @@ func Simplify(refs relapse.RefLookup, p *relapse.Pattern) *relapse.Pattern {
 	switch v := typ.(type) {
 	case *relapse.Empty:
 		return p
-	case *relapse.EmptySet:
-		return p
 	case *relapse.TreeNode:
 		return checkRef(refs, relapse.NewTreeNode(v.GetName(), Simplify(refs, v.GetPattern())))
 	case *relapse.LeafNode:
@@ -75,28 +73,21 @@ func Simplify(refs relapse.RefLookup, p *relapse.Pattern) *relapse.Pattern {
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
 
-func isEmptySet(p *relapse.Pattern) bool {
-	return p.EmptySet != nil
+func isNotZany(p *relapse.Pattern) bool {
+	return p.Not != nil && p.GetNot().GetPattern().ZAny != nil
 }
 
 func isEmpty(p *relapse.Pattern) bool {
 	return p.Empty != nil
 }
 
-func isNotEmptySet(p *relapse.Pattern) bool {
-	if p.Not != nil {
-		return isEmptySet(p.Not.GetPattern())
-	}
-	return false
-}
-
 func isZany(p *relapse.Pattern) bool {
-	return p.ZAny != nil || isNotEmptySet(p)
+	return p.ZAny != nil
 }
 
 func simplifyConcat(p1, p2 *relapse.Pattern) *relapse.Pattern {
-	if isEmptySet(p1) || isEmptySet(p2) {
-		return relapse.NewEmptySet()
+	if isNotZany(p1) || isNotZany(p2) {
+		return relapse.NewNot(relapse.NewZAny())
 	}
 	if p1.Concat != nil {
 		return simplifyConcat(
@@ -119,10 +110,10 @@ func simplifyConcat(p1, p2 *relapse.Pattern) *relapse.Pattern {
 }
 
 func simplifyOr(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
-	if isEmptySet(p1) {
+	if isNotZany(p1) {
 		return p2
 	}
-	if isEmptySet(p2) {
+	if isNotZany(p2) {
 		return p1
 	}
 	if isZany(p1) || isZany(p2) {
@@ -146,8 +137,8 @@ func simplifyOr(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Patter
 }
 
 func simplifyAnd(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
-	if isEmptySet(p1) || isEmptySet(p2) {
-		return relapse.NewEmptySet()
+	if isNotZany(p1) || isNotZany(p2) {
+		return relapse.NewNot(relapse.NewZAny())
 	}
 	if isZany(p1) {
 		return p2
@@ -159,14 +150,14 @@ func simplifyAnd(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Patte
 		if Nullable(refs, p2) {
 			return relapse.NewEmpty()
 		} else {
-			return relapse.NewEmptySet()
+			return relapse.NewNot(relapse.NewZAny())
 		}
 	}
 	if isEmpty(p2) {
 		if Nullable(refs, p1) {
 			return relapse.NewEmpty()
 		} else {
-			return relapse.NewEmptySet()
+			return relapse.NewNot(relapse.NewZAny())
 		}
 	}
 	if p1.Equal(p2) {
@@ -178,12 +169,6 @@ func simplifyAnd(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Patte
 func simplifyNot(p *relapse.Pattern) *relapse.Pattern {
 	if p.Not != nil {
 		return p.Not.GetPattern()
-	}
-	if p.EmptySet != nil {
-		return relapse.NewZAny()
-	}
-	if p.ZAny != nil {
-		return relapse.NewEmptySet()
 	}
 	return relapse.NewNot(p)
 }
@@ -197,8 +182,8 @@ func simplifyOptional(p *relapse.Pattern) *relapse.Pattern {
 }
 
 func simplifyInterleave(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
-	if isEmptySet(p1) || isEmptySet(p2) {
-		return relapse.NewEmptySet()
+	if isNotZany(p1) || isNotZany(p2) {
+		return relapse.NewNot(relapse.NewZAny())
 	}
 	if isEmpty(p1) {
 		return p2
@@ -206,15 +191,18 @@ func simplifyInterleave(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relaps
 	if isEmpty(p2) {
 		return p1
 	}
+	if isZany(p1) && isZany(p2) {
+		return p1
+	}
 	return relapse.NewInterleave(p1, p2)
 }
 
 func simplifyContains(p *relapse.Pattern) *relapse.Pattern {
-	if isEmpty(p) || p.ZAny != nil {
+	if isEmpty(p) || isZany(p) {
 		return relapse.NewZAny()
 	}
-	if isEmptySet(p) {
-		return relapse.NewEmptySet()
+	if isNotZany(p) {
+		return p
 	}
 	return relapse.NewContains(p)
 }

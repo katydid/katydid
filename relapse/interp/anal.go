@@ -32,8 +32,6 @@ func getLeafs(refs relapse.RefLookup, p *relapse.Pattern, path []string) []*expr
 	switch v := typ.(type) {
 	case *relapse.Empty:
 		return nil
-	case *relapse.EmptySet:
-		return nil
 	case *relapse.TreeNode:
 		if len(path) == 0 {
 			return nil
@@ -71,7 +69,7 @@ func getLeafs(refs relapse.RefLookup, p *relapse.Pattern, path []string) []*expr
 	case *relapse.Not:
 		return getLeafs(refs, v.GetPattern(), path)
 	case *relapse.ZAny:
-		return getLeafs(refs, relapse.NewNot(relapse.NewEmptySet()), path)
+		return nil
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
@@ -128,8 +126,6 @@ func replace(refs relapse.RefLookup, p *relapse.Pattern, path []string, current 
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *relapse.Empty:
-		return
-	case *relapse.EmptySet:
 		return
 	case *relapse.TreeNode:
 		if len(path) == 0 {

@@ -74,12 +74,6 @@ func NewEmpty() *Pattern {
 	}
 }
 
-func NewEmptySet() *Pattern {
-	return &Pattern{
-		EmptySet: &EmptySet{&expr.Keyword{Value: "<emptyset>"}},
-	}
-}
-
 func newOpenParen() *expr.Keyword {
 	return &expr.Keyword{Value: "("}
 }

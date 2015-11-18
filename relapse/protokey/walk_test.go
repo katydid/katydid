@@ -45,7 +45,7 @@ func topDown(pattern *relapse.Pattern, f func(*relapse.Pattern)) {
 	case *relapse.Interleave:
 		topDown(v.GetLeftPattern(), f)
 		topDown(v.GetRightPattern(), f)
-	case *relapse.Empty, *relapse.EmptySet, *relapse.LeafNode, *relapse.Reference, *relapse.ZAny:
+	case *relapse.Empty, *relapse.LeafNode, *relapse.Reference, *relapse.ZAny:
 		// do nothing
 	default:
 		panic(fmt.Sprintf("unknown pattern typ %T", typ))

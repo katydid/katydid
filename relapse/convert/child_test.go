@@ -109,7 +109,7 @@ func TestChild7(t *testing.T) {
 	selse := interp.Simplify(refs, du.retElse)
 	t.Logf("snull = %s", snull)
 	t.Logf("selse = %s", selse)
-	if !snull.Equal(relapse.NewNot(relapse.NewEmptySet())) {
+	if !snull.Equal(relapse.NewZAny()) {
 		t.Fatalf("for dst expected !EmptySet, but got %s", snull)
 	}
 	if !selse.Equal(relapse.NewReference("empty")) {

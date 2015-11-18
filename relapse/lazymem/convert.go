@@ -39,8 +39,6 @@ func newPattern(refs map[string]*Pattern, p *relapse.Pattern) *Pattern {
 	switch v := typ.(type) {
 	case *relapse.Empty:
 		return NewEmpty()
-	case *relapse.EmptySet:
-		return NewEmptySet()
 	case *relapse.TreeNode:
 		return NewTreeNode(v.GetName(), newPattern(refs, v.GetPattern()))
 	case *relapse.LeafNode:
@@ -58,7 +56,8 @@ func newPattern(refs map[string]*Pattern, p *relapse.Pattern) *Pattern {
 	case *relapse.Reference:
 		return NewLazyPattern(refs[v.GetName()])
 	case *relapse.ZAny:
-		return newPattern(refs, relapse.NewNot(relapse.NewEmptySet()))
+		//return newPattern(refs, relapse.NewNot(relapse.NewEmptySet()))
+		panic("todo")
 	}
 	panic(fmt.Sprintf("unknown Pattern typ %T", typ))
 }
@@ -108,8 +107,6 @@ func convertPattern(visited map[*Pattern]string, p *Pattern, newStr func() strin
 	switch v := typ.(type) {
 	case *Empty:
 		return relapse.NewEmpty()
-	case *EmptySet:
-		return relapse.NewEmptySet()
 	case *TreeNode:
 		if v.Pattern.Lookahead().LeafNode != nil {
 			return relapse.NewTreeNode(v.Name, relapse.NewLeafNode(v.Pattern.Lookahead().LeafNode.Expr))

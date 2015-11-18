@@ -88,7 +88,7 @@ func (this *ErrDup) Error() string {
 func (this *keyer) translate(context *context, p *relapse.Pattern) (*relapse.Pattern, error) {
 	typ := p.GetValue()
 	switch v := typ.(type) {
-	case *relapse.Empty, *relapse.EmptySet, *relapse.LeafNode, *relapse.ZAny:
+	case *relapse.Empty, *relapse.LeafNode, *relapse.ZAny:
 		return p, nil
 	case *relapse.TreeNode:
 		return this.translateName(context, v.GetName(), v.GetPattern())

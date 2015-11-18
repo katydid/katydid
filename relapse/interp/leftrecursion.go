@@ -36,8 +36,6 @@ func hasLeftRecursion(visited map[*relapse.Pattern]bool, refs relapse.RefLookup,
 	switch v := typ.(type) {
 	case *relapse.Empty:
 		return false
-	case *relapse.EmptySet:
-		return false
 	case *relapse.TreeNode:
 		return false
 	case *relapse.LeafNode:
