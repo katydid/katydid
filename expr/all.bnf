@@ -37,7 +37,7 @@ _hex_lit     : '0' ( 'x' | 'X' ) _hex_digit { _hex_digit } ;
 
 _singed_int_lit : ['-'] _int_lit ;
 
-int_lit: _int '(' _singed_int_lit ')' | _singed_int_lit ;
+int_lit: _int '(' _singed_int_lit ')' |  '0' | ['-'] _decimal_lit ;
 uint_lit: _uint '(' _int_lit ')' ;
 
 _decimals  : _decimal_digit { _decimal_digit } ;
