@@ -21,6 +21,19 @@ import (
 	"testing"
 )
 
+func check(t *testing.T, g *relapse.Grammar) {
+	refs := relapse.NewRefsLookup(g)
+	for name := range refs {
+		if !onlyUintNames(refs[name]) {
+			t.Fatalf("expected only uint names")
+		}
+		if anyStringNames(refs[name]) {
+			t.Fatalf("expected only uint names")
+		}
+	}
+
+}
+
 func TestKeyField(t *testing.T) {
 	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZAny())
 	g := p.Grammar()
@@ -28,10 +41,11 @@ func TestKeyField(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	t.Logf("%v", gkey)
+	check(t, gkey)
 	if gkey.GetTopPattern().GetTreeNode().GetName().GetName().GetUintValue() != 1 {
 		t.Fatalf("expected field 1, but got %v", gkey)
 	}
-	t.Logf("%v", gkey)
 }
 
 func TestKeyOr(t *testing.T) {
@@ -44,13 +58,14 @@ func TestKeyOr(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	t.Logf("%v", gkey)
+	check(t, gkey)
 	if gkey.GetTopPattern().GetOr().GetLeftPattern().GetTreeNode().GetName().GetName().GetUintValue() != 1 {
 		t.Fatalf("expected field 1, but got %v", gkey)
 	}
 	if gkey.GetTopPattern().GetOr().GetRightPattern().GetTreeNode().GetName().GetName().GetUintValue() != 2 {
 		t.Fatalf("expected field 2, but got %v", gkey)
 	}
-	t.Logf("%v", gkey)
 }
 
 func TestKeyTree(t *testing.T) {
@@ -60,13 +75,14 @@ func TestKeyTree(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	t.Logf("%v", gkey)
 	if gkey.GetTopPattern().GetTreeNode().GetName().GetName().GetUintValue() != 3 {
 		t.Fatalf("expected field 3, but got %v", gkey)
 	}
 	if gkey.GetTopPattern().GetTreeNode().GetPattern().GetTreeNode().GetName().GetName().GetUintValue() != 1 {
 		t.Fatalf("expected field 1, but got %v", gkey)
 	}
-	t.Logf("%v", gkey)
+	check(t, gkey)
 }
 
 func TestKeyAnyName(t *testing.T) {
@@ -76,24 +92,14 @@ func TestKeyAnyName(t *testing.T) {
 	)
 	g := p.Grammar()
 	gkey, err := KeyTheGrammar("debug", "Debug", debug.DebugDescription(), g)
-	if err != nil {
-		t.Fatal(err)
+	if err == nil {
+		t.Fatalf("Expected: Any Field Not Supported: Name: _, but got %v", gkey)
 	}
-	if gkey.GetTopPattern().GetOr().GetLeftPattern().GetTreeNode().GetName().GetNameChoice().GetLeft().GetAnyName() == nil {
-		t.Fatalf("expected any field, but got %v", gkey)
-	}
-	if gkey.GetTopPattern().GetOr().GetLeftPattern().GetTreeNode().GetName().GetNameChoice().GetRight().GetName().GetUintValue() != 3 {
-		t.Fatalf("expected field 3, but got %v", gkey)
-	}
-	if gkey.GetTopPattern().GetOr().GetRightPattern().GetTreeNode().GetName().GetName().GetUintValue() != 2 {
-		t.Fatalf("expected field 2, but got %v", gkey)
-	}
-	t.Logf("%v", gkey)
 }
 
 func TestKeyRecursive(t *testing.T) {
 	p := relapse.NewOr(
-		relapse.NewTreeNode(relapse.NewNameChoice(relapse.NewAnyName(), relapse.NewStringName("C")), relapse.NewReference("main")),
+		relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewReference("main")),
 		relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZAny()),
 	)
 	g := p.Grammar()
@@ -101,10 +107,8 @@ func TestKeyRecursive(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if gkey.GetTopPattern().GetOr().GetLeftPattern().GetTreeNode().GetName().GetNameChoice().GetRight().GetName().GetUintValue() != 3 {
-		t.Fatalf("expected field 3, but got %v", gkey)
-	}
 	t.Logf("%v", gkey)
+	check(t, gkey)
 }
 
 func TestKeyLeftRecursive(t *testing.T) {
@@ -118,10 +122,11 @@ func TestKeyLeftRecursive(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	t.Logf("%v", gkey)
 	if gkey.GetTopPattern().GetOr().GetRightPattern().GetOr().GetLeftPattern().GetTreeNode().GetName().GetName().GetUintValue() != 3 {
 		t.Fatalf("expected field 3, but got %v", gkey)
 	}
-	t.Logf("%v", gkey)
+	check(t, gkey)
 }
 
 func TestKeyLeaf(t *testing.T) {
@@ -132,9 +137,10 @@ func TestKeyLeaf(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Logf("%v", gkey)
+	check(t, gkey)
 }
 
-func TestKeyAny(t *testing.T) {
+func TestKeyAnyArrayIndex(t *testing.T) {
 	p := relapse.NewConcat(
 		relapse.NewZAny(),
 		relapse.NewTreeNode(relapse.NewStringName("E"),
@@ -153,6 +159,7 @@ func TestKeyAny(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Logf("%v", gkey)
+	check(t, gkey)
 }
 
 func TestRepeatedMessageWithNoFieldsOfTypeMessage(t *testing.T) {
@@ -174,44 +181,25 @@ func TestRepeatedMessageWithNoFieldsOfTypeMessage(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Logf("%v", gkey)
+	check(t, gkey)
 }
 
 func TestUnreachable(t *testing.T) {
 	p := relapse.NewTreeNode(relapse.NewStringName("NotC"), relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZAny())))
 	g := p.Grammar()
 	gkey, err := KeyTheGrammar("debug", "Debug", debug.DebugDescription(), g)
-	if err != nil {
-		t.Fatal(err)
+	if err == nil {
+		t.Fatal("Expected: Unknown Field Error: Name: NotC, Msg: Debug, but got %v", gkey)
 	}
-	if gkey.GetTopPattern().GetTreeNode().GetName().GetAnyNameExcept().GetExcept().AnyName == nil {
-		t.Fatalf("expected field !(_), but got %v", gkey)
-	}
-	if gkey.GetTopPattern().GetTreeNode().GetPattern().GetTreeNode().GetName().GetAnyNameExcept().GetExcept().AnyName == nil {
-		t.Fatalf("expected field !(_), but got %v", gkey)
-	}
-	if gkey.GetTopPattern().GetTreeNode().GetPattern().GetTreeNode().GetPattern().GetTreeNode().GetName().GetAnyNameExcept().GetExcept().AnyName == nil {
-		t.Fatalf("expected field !(_), but got %v", gkey)
-	}
-	t.Logf("%v", gkey)
 }
 
 func TestNotUnreachable(t *testing.T) {
 	p := relapse.NewTreeNode(relapse.NewAnyNameExcept(relapse.NewStringName("NotC")), relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZAny())))
 	g := p.Grammar()
 	gkey, err := KeyTheGrammar("debug", "Debug", debug.DebugDescription(), g)
-	if err != nil {
-		t.Fatal(err)
+	if err == nil {
+		t.Fatalf("Expected: AnyNameExcept Not Supported Error: Name: !(NotC), but got %v", gkey)
 	}
-	if gkey.GetTopPattern().GetTreeNode().GetName().GetAnyNameExcept().GetExcept().GetAnyNameExcept().GetExcept().AnyName == nil {
-		t.Fatalf("expected field !(!(_)), but got %v", gkey)
-	}
-	if gkey.GetTopPattern().GetTreeNode().GetPattern().GetTreeNode().GetName().GetName().GetUintValue() != 3 {
-		t.Fatalf("expected field 3, but got %v", gkey)
-	}
-	if gkey.GetTopPattern().GetTreeNode().GetPattern().GetTreeNode().GetPattern().GetTreeNode().GetName().GetName().GetUintValue() != 1 {
-		t.Fatalf("expected field 1, but got %v", gkey)
-	}
-	t.Logf("%v", gkey)
 }
 
 func TestNotUnreachableArray(t *testing.T) {
@@ -221,71 +209,41 @@ func TestNotUnreachableArray(t *testing.T) {
 		))))
 	g := p.Grammar()
 	gkey, err := KeyTheGrammar("debug", "Debug", debug.DebugDescription(), g)
-	if err != nil {
-		t.Fatal(err)
+	if err == nil {
+		t.Fatalf("Expected: AnyNameExcept Not Supported Error: Name: !(NotC), but got %v", gkey)
 	}
-	if gkey.GetTopPattern().GetTreeNode().GetName().GetAnyNameExcept().GetExcept().GetAnyNameExcept().GetExcept().AnyName == nil {
-		t.Fatalf("expected field !(!(_)), but got %v", gkey)
-	}
-	if gkey.GetTopPattern().GetTreeNode().GetPattern().GetTreeNode().GetName().GetName().GetUintValue() != 6 {
-		t.Fatalf("expected field 6, but got %v", gkey)
-	}
-	if name := gkey.GetTopPattern().GetTreeNode().GetPattern().GetTreeNode().GetPattern().GetConcat().GetRightPattern().GetTreeNode().GetName(); name.AnyName == nil {
-		t.Fatalf("expected field _, but got %v", name)
-	}
-	t.Logf("%v", gkey)
 }
 
 func TestTopsyTurvy(t *testing.T) {
 	p := relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZAny()))
 	gkey, err := KeyTheGrammar("protokey", "TopsyTurvy", ProtokeyDescription(), p.Grammar())
-	if err != nil {
-		t.Fatal(err)
+	if err == nil {
+		t.Fatalf("Expected: Any Field Not Supported: Name: _, but got %v", gkey)
 	}
-	if gkey.GetTopPattern().GetTreeNode().GetName().AnyName != nil {
-		t.Fatalf("did not expected any name, since this causes a name conflict")
-	}
-	//TODO more checks
-	t.Logf("%v", gkey)
 }
 
 func TestKnot(t *testing.T) {
 	p := relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewTreeNode(relapse.NewStringName("Elbow"), relapse.NewZAny())))
 	gkey, err := KeyTheGrammar("protokey", "Knot", ProtokeyDescription(), p.Grammar())
-	if err != nil {
-		t.Fatal(err)
+	if err == nil {
+		t.Fatal("Expected: Any Field Not Supported: Name: _, but got %v", gkey)
 	}
-	if gkey.GetTopPattern().GetTreeNode().GetName().AnyName != nil {
-		t.Fatalf("did not expected any name, since this causes a name conflict")
-	}
-	//TODO more checks
-	t.Logf("%v", gkey)
 }
 
 func TestRecursiveKnotTurn(t *testing.T) {
 	p := relapse.NewOr(relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewReference("main")), relapse.NewTreeNode(relapse.NewStringName("Turn"), relapse.NewZAny()))
 	gkey, err := KeyTheGrammar("protokey", "Knot", ProtokeyDescription(), p.Grammar())
-	if err != nil {
-		t.Fatal(err)
+	if err == nil {
+		t.Fatal("Expected: Any Field Not Supported: Name: _, but got %v", gkey)
 	}
-	if gkey.GetTopPattern().GetOr().GetRightPattern().GetTreeNode().GetName().AnyNameExcept != nil {
-		t.Fatalf("did not expected not")
-	}
-	//TODO more checks
-	t.Logf("%v", gkey)
 }
 
 func TestRecursiveKnotElbow(t *testing.T) {
 	p := relapse.NewOr(relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewReference("main")), relapse.NewTreeNode(relapse.NewStringName("Elbow"), relapse.NewZAny()))
 	gkey, err := KeyTheGrammar("protokey", "Knot", ProtokeyDescription(), p.Grammar())
-	if err != nil {
-		t.Fatal(err)
+	if err == nil {
+		t.Fatal("Expected: Any Field Not Supported: Name: _, but got %v", gkey)
 	}
-	if gkey.GetTopPattern().GetOr().GetRightPattern().GetTreeNode().GetName().AnyNameExcept != nil {
-		t.Fatalf("did not expected not")
-	}
-	//TODO more checks
-	t.Logf("%v", gkey)
 }
 
 func TestAnyIndex(t *testing.T) {
@@ -298,4 +256,5 @@ func TestAnyIndex(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Logf("%v", gkey)
+	check(t, gkey)
 }

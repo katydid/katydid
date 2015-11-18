@@ -121,7 +121,8 @@ func (this *keyer) translate(context *context, p *relapse.Pattern) (*relapse.Pat
 		p, err := this.translate(context, v.GetPattern())
 		return relapse.NewNot(p), err
 	case *relapse.WithSomeTreeNode:
-		return nil, fmt.Errorf("todo")
+		p, err := this.translate(context, v.GetPattern())
+		return relapse.NewConcat(relapse.NewZAny(), p, relapse.NewZAny()), err
 	case *relapse.Optional:
 		p, err := this.translate(context, v.GetPattern())
 		return relapse.NewOptional(p), err
