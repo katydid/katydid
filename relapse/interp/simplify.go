@@ -62,8 +62,8 @@ func Simplify(refs relapse.RefLookup, p *relapse.Pattern) *relapse.Pattern {
 		return checkRef(refs, simplifyNot(Simplify(refs, v.GetPattern())))
 	case *relapse.ZAny:
 		return p
-	case *relapse.WithSomeTreeNode:
-		return p //TODO we can do better
+	case *relapse.Contains:
+		return checkRef(refs, simplifyContains(Simplify(refs, v.GetPattern())))
 	case *relapse.Optional:
 		return simplifyOptional(Simplify(refs, v.GetPattern()))
 	case *relapse.Interleave:
@@ -111,8 +111,8 @@ func simplifyConcat(p1, p2 *relapse.Pattern) *relapse.Pattern {
 		return p1
 	}
 	if isZany(p1) && p2.Concat != nil {
-		if t := p2.Concat.GetLeftPattern().TreeNode; isZany(p2.Concat.GetRightPattern()) && t != nil {
-			return relapse.NewWithSomeTreeNode(t.GetName(), t.GetPattern())
+		if l := p2.Concat.GetLeftPattern(); isZany(p2.Concat.GetRightPattern()) {
+			return relapse.NewContains(l)
 		}
 	}
 	return relapse.NewConcat(p1, p2)
@@ -207,4 +207,14 @@ func simplifyInterleave(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relaps
 		return p1
 	}
 	return relapse.NewInterleave(p1, p2)
+}
+
+func simplifyContains(p *relapse.Pattern) *relapse.Pattern {
+	if isEmpty(p) || p.ZAny != nil {
+		return relapse.NewZAny()
+	}
+	if isEmptySet(p) {
+		return relapse.NewEmptySet()
+	}
+	return relapse.NewContains(p)
 }

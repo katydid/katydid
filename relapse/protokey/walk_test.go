@@ -38,7 +38,7 @@ func topDown(pattern *relapse.Pattern, f func(*relapse.Pattern)) {
 		topDown(v.GetPattern(), f)
 	case *relapse.Not:
 		topDown(v.GetPattern(), f)
-	case *relapse.WithSomeTreeNode:
+	case *relapse.Contains:
 		topDown(v.GetPattern(), f)
 	case *relapse.Optional:
 		topDown(v.GetPattern(), f)

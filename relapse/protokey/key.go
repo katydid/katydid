@@ -122,9 +122,9 @@ func (this *keyer) translate(context *context, p *relapse.Pattern) (*relapse.Pat
 	case *relapse.Not:
 		p, err := this.translate(context, v.GetPattern())
 		return relapse.NewNot(p), err
-	case *relapse.WithSomeTreeNode:
+	case *relapse.Contains:
 		p, err := this.translate(context, v.GetPattern())
-		return relapse.NewConcat(relapse.NewZAny(), p, relapse.NewZAny()), err
+		return relapse.NewContains(p), err
 	case *relapse.Optional:
 		p, err := this.translate(context, v.GetPattern())
 		return relapse.NewOptional(p), err

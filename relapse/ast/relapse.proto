@@ -89,7 +89,7 @@ message Pattern {
 	optional Reference Reference = 9;
 	optional Not Not = 10;
 	optional ZAny ZAny = 11;
-	optional WithSomeTreeNode WithSomeTreeNode = 12;
+	optional Contains Contains = 12;
 	optional Optional Optional = 13;
 	optional Interleave Interleave = 14;
 }
@@ -108,7 +108,7 @@ message TreeNode {
 	optional Pattern Pattern = 3;
 }
 
-message WithSomeTreeNode {
+message Contains {
 	optional expr.Keyword Dot = 1;
 	optional Pattern Pattern = 2;
 }

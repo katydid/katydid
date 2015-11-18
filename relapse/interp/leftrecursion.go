@@ -56,7 +56,7 @@ func hasLeftRecursion(visited map[*relapse.Pattern]bool, refs relapse.RefLookup,
 		return hasLeftRecursion(visited, refs, v.GetPattern())
 	case *relapse.ZAny:
 		return false
-	case *relapse.WithSomeTreeNode:
+	case *relapse.Contains:
 		return hasLeftRecursion(visited, refs, v.GetPattern())
 	case *relapse.Optional:
 		return false //TODO

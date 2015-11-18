@@ -403,7 +403,7 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `DepthPattern : Dot TreeNode	<< &Pattern{WithSomeTreeNode: &WithSomeTreeNode{
+		String: `DepthPattern : Dot Pattern	<< &Pattern{Contains: &Contains{
       Dot: X[0].(*expr.Keyword),
       Pattern: X[1].(*Pattern),
     }}, nil >>`,
@@ -412,7 +412,7 @@ var productionsTable = ProdTab{
 		Index:      30,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &Pattern{WithSomeTreeNode: &WithSomeTreeNode{
+			return &Pattern{Contains: &Contains{
 				Dot:     X[0].(*expr.Keyword),
 				Pattern: X[1].(*Pattern),
 			}}, nil

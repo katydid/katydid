@@ -303,11 +303,11 @@ func NewTreeNode(name *NameExpr, pattern *Pattern) *Pattern {
 	}
 }
 
-func NewWithSomeTreeNode(name *NameExpr, pattern *Pattern) *Pattern {
+func NewContains(pattern *Pattern) *Pattern {
 	return &Pattern{
-		WithSomeTreeNode: &WithSomeTreeNode{
+		Contains: &Contains{
 			Dot:     newDot(),
-			Pattern: NewTreeNode(name, pattern),
+			Pattern: pattern,
 		},
 	}
 }

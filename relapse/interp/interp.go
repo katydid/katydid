@@ -78,7 +78,7 @@ func Nullable(refs relapse.RefLookup, p *relapse.Pattern) bool {
 		return !(Nullable(refs, v.GetPattern()))
 	case *relapse.ZAny:
 		return true
-	case *relapse.WithSomeTreeNode:
+	case *relapse.Contains:
 		return Nullable(refs, v.GetPattern())
 	case *relapse.Optional:
 		return true
@@ -177,7 +177,7 @@ func deriv(refs relapse.RefLookup, p *relapse.Pattern, tree serialize.Parser) *r
 		return relapse.NewNot(sderiv(refs, v.GetPattern(), tree))
 	case *relapse.ZAny:
 		return deriv(refs, relapse.NewNot(relapse.NewEmptySet()), tree)
-	case *relapse.WithSomeTreeNode:
+	case *relapse.Contains:
 		newp := relapse.NewConcat(relapse.NewZAny(), v.GetPattern(), relapse.NewZAny())
 		return deriv(refs, newp, tree)
 	case *relapse.Optional:

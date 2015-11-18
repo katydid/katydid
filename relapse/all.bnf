@@ -228,7 +228,7 @@ EmptySet
 DepthPattern
   : StartConcat
   | StartInterleave
-  | Dot TreeNode << &Pattern{WithSomeTreeNode: &WithSomeTreeNode{
+  | Dot Pattern << &Pattern{Contains: &Contains{
       Dot: $0.(*expr.Keyword),
       Pattern: $1.(*Pattern),
     }}, nil

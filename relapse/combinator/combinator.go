@@ -39,7 +39,7 @@ func concat(p *relapse.Pattern, ps ...*relapse.Pattern) *relapse.Pattern {
 }
 
 func InPath(name string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewWithSomeTreeNode(relapse.NewStringName(name), concat(child, children...))
+	return relapse.NewContains(relapse.NewTreeNode(relapse.NewStringName(name), concat(child, children...)))
 }
 
 func In(name string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {

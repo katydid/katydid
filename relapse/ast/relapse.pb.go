@@ -20,7 +20,7 @@
 		Empty
 		EmptySet
 		TreeNode
-		WithSomeTreeNode
+		Contains
 		LeafNode
 		Concat
 		Or
@@ -328,20 +328,20 @@ func (m *NameChoice) GetCloseParen() *expr.Keyword {
 }
 
 type Pattern struct {
-	Empty            *Empty            `protobuf:"bytes,1,opt,name=Empty" json:"Empty,omitempty"`
-	EmptySet         *EmptySet         `protobuf:"bytes,2,opt,name=EmptySet" json:"EmptySet,omitempty"`
-	TreeNode         *TreeNode         `protobuf:"bytes,3,opt,name=TreeNode" json:"TreeNode,omitempty"`
-	LeafNode         *LeafNode         `protobuf:"bytes,4,opt,name=LeafNode" json:"LeafNode,omitempty"`
-	Concat           *Concat           `protobuf:"bytes,5,opt,name=Concat" json:"Concat,omitempty"`
-	Or               *Or               `protobuf:"bytes,6,opt,name=Or" json:"Or,omitempty"`
-	And              *And              `protobuf:"bytes,7,opt,name=And" json:"And,omitempty"`
-	ZeroOrMore       *ZeroOrMore       `protobuf:"bytes,8,opt,name=ZeroOrMore" json:"ZeroOrMore,omitempty"`
-	Reference        *Reference        `protobuf:"bytes,9,opt,name=Reference" json:"Reference,omitempty"`
-	Not              *Not              `protobuf:"bytes,10,opt,name=Not" json:"Not,omitempty"`
-	ZAny             *ZAny             `protobuf:"bytes,11,opt,name=ZAny" json:"ZAny,omitempty"`
-	WithSomeTreeNode *WithSomeTreeNode `protobuf:"bytes,12,opt,name=WithSomeTreeNode" json:"WithSomeTreeNode,omitempty"`
-	Optional         *Optional         `protobuf:"bytes,13,opt,name=Optional" json:"Optional,omitempty"`
-	Interleave       *Interleave       `protobuf:"bytes,14,opt,name=Interleave" json:"Interleave,omitempty"`
+	Empty      *Empty      `protobuf:"bytes,1,opt,name=Empty" json:"Empty,omitempty"`
+	EmptySet   *EmptySet   `protobuf:"bytes,2,opt,name=EmptySet" json:"EmptySet,omitempty"`
+	TreeNode   *TreeNode   `protobuf:"bytes,3,opt,name=TreeNode" json:"TreeNode,omitempty"`
+	LeafNode   *LeafNode   `protobuf:"bytes,4,opt,name=LeafNode" json:"LeafNode,omitempty"`
+	Concat     *Concat     `protobuf:"bytes,5,opt,name=Concat" json:"Concat,omitempty"`
+	Or         *Or         `protobuf:"bytes,6,opt,name=Or" json:"Or,omitempty"`
+	And        *And        `protobuf:"bytes,7,opt,name=And" json:"And,omitempty"`
+	ZeroOrMore *ZeroOrMore `protobuf:"bytes,8,opt,name=ZeroOrMore" json:"ZeroOrMore,omitempty"`
+	Reference  *Reference  `protobuf:"bytes,9,opt,name=Reference" json:"Reference,omitempty"`
+	Not        *Not        `protobuf:"bytes,10,opt,name=Not" json:"Not,omitempty"`
+	ZAny       *ZAny       `protobuf:"bytes,11,opt,name=ZAny" json:"ZAny,omitempty"`
+	Contains   *Contains   `protobuf:"bytes,12,opt,name=Contains" json:"Contains,omitempty"`
+	Optional   *Optional   `protobuf:"bytes,13,opt,name=Optional" json:"Optional,omitempty"`
+	Interleave *Interleave `protobuf:"bytes,14,opt,name=Interleave" json:"Interleave,omitempty"`
 }
 
 func (m *Pattern) Reset()      { *m = Pattern{} }
@@ -424,9 +424,9 @@ func (m *Pattern) GetZAny() *ZAny {
 	return nil
 }
 
-func (m *Pattern) GetWithSomeTreeNode() *WithSomeTreeNode {
+func (m *Pattern) GetContains() *Contains {
 	if m != nil {
-		return m.WithSomeTreeNode
+		return m.Contains
 	}
 	return nil
 }
@@ -503,22 +503,22 @@ func (m *TreeNode) GetPattern() *Pattern {
 	return nil
 }
 
-type WithSomeTreeNode struct {
+type Contains struct {
 	Dot     *expr.Keyword `protobuf:"bytes,1,opt,name=Dot" json:"Dot,omitempty"`
 	Pattern *Pattern      `protobuf:"bytes,2,opt,name=Pattern" json:"Pattern,omitempty"`
 }
 
-func (m *WithSomeTreeNode) Reset()      { *m = WithSomeTreeNode{} }
-func (*WithSomeTreeNode) ProtoMessage() {}
+func (m *Contains) Reset()      { *m = Contains{} }
+func (*Contains) ProtoMessage() {}
 
-func (m *WithSomeTreeNode) GetDot() *expr.Keyword {
+func (m *Contains) GetDot() *expr.Keyword {
 	if m != nil {
 		return m.Dot
 	}
 	return nil
 }
 
-func (m *WithSomeTreeNode) GetPattern() *Pattern {
+func (m *Contains) GetPattern() *Pattern {
 	if m != nil {
 		return m.Pattern
 	}
@@ -909,7 +909,7 @@ func init() {
 	proto.RegisterType((*Empty)(nil), "relapse.Empty")
 	proto.RegisterType((*EmptySet)(nil), "relapse.EmptySet")
 	proto.RegisterType((*TreeNode)(nil), "relapse.TreeNode")
-	proto.RegisterType((*WithSomeTreeNode)(nil), "relapse.WithSomeTreeNode")
+	proto.RegisterType((*Contains)(nil), "relapse.Contains")
 	proto.RegisterType((*LeafNode)(nil), "relapse.LeafNode")
 	proto.RegisterType((*Concat)(nil), "relapse.Concat")
 	proto.RegisterType((*Or)(nil), "relapse.Or")
@@ -1250,7 +1250,7 @@ func (this *Pattern) Equal(that interface{}) bool {
 	if !this.ZAny.Equal(that1.ZAny) {
 		return false
 	}
-	if !this.WithSomeTreeNode.Equal(that1.WithSomeTreeNode) {
+	if !this.Contains.Equal(that1.Contains) {
 		return false
 	}
 	if !this.Optional.Equal(that1.Optional) {
@@ -1342,7 +1342,7 @@ func (this *TreeNode) Equal(that interface{}) bool {
 	}
 	return true
 }
-func (this *WithSomeTreeNode) Equal(that interface{}) bool {
+func (this *Contains) Equal(that interface{}) bool {
 	if that == nil {
 		if this == nil {
 			return true
@@ -1350,7 +1350,7 @@ func (this *WithSomeTreeNode) Equal(that interface{}) bool {
 		return false
 	}
 
-	that1, ok := that.(*WithSomeTreeNode)
+	that1, ok := that.(*Contains)
 	if !ok {
 		return false
 	}
@@ -1894,8 +1894,8 @@ func (this *Pattern) GoString() string {
 	if this.ZAny != nil {
 		s = append(s, "ZAny: "+fmt.Sprintf("%#v", this.ZAny)+",\n")
 	}
-	if this.WithSomeTreeNode != nil {
-		s = append(s, "WithSomeTreeNode: "+fmt.Sprintf("%#v", this.WithSomeTreeNode)+",\n")
+	if this.Contains != nil {
+		s = append(s, "Contains: "+fmt.Sprintf("%#v", this.Contains)+",\n")
 	}
 	if this.Optional != nil {
 		s = append(s, "Optional: "+fmt.Sprintf("%#v", this.Optional)+",\n")
@@ -1948,12 +1948,12 @@ func (this *TreeNode) GoString() string {
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
-func (this *WithSomeTreeNode) GoString() string {
+func (this *Contains) GoString() string {
 	if this == nil {
 		return "nil"
 	}
 	s := make([]string, 0, 6)
-	s = append(s, "&relapse.WithSomeTreeNode{")
+	s = append(s, "&relapse.Contains{")
 	if this.Dot != nil {
 		s = append(s, "Dot: "+fmt.Sprintf("%#v", this.Dot)+",\n")
 	}
@@ -2258,8 +2258,8 @@ func (this *Pattern) GetValue() interface{} {
 	if this.ZAny != nil {
 		return this.ZAny
 	}
-	if this.WithSomeTreeNode != nil {
-		return this.WithSomeTreeNode
+	if this.Contains != nil {
+		return this.Contains
 	}
 	if this.Optional != nil {
 		return this.Optional
@@ -2294,8 +2294,8 @@ func (this *Pattern) SetValue(value interface{}) bool {
 		this.Not = vt
 	case *ZAny:
 		this.ZAny = vt
-	case *WithSomeTreeNode:
-		this.WithSomeTreeNode = vt
+	case *Contains:
+		this.Contains = vt
 	case *Optional:
 		this.Optional = vt
 	case *Interleave:
