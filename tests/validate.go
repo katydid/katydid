@@ -66,18 +66,22 @@ func ValidatorList() []interface{} {
 
 func ValidateProtoEtc(name string, grammar combinator.G, m interface{}, expected bool) {
 	Validate(name, grammar, ProtoEtc(m), expected)
-	ValidateProto("Proto"+name, grammar, m, expected)
 }
 
-func ValidateProto(name string, grammar combinator.G, m interface{}, expected bool) {
+func ValidateProtoKeyEtc(name string, grammar combinator.G, m interface{}, expected bool) {
+	Validate(name, grammar, ProtoEtc(m), expected)
+	ValidateProtoKey(name, grammar, m, expected)
+}
+
+func ValidateProtoKey(name string, grammar combinator.G, m interface{}, expected bool) {
 	packageName := "tests"
 	messageName := reflect.TypeOf(m).Elem().Name()
 	codecs := Proto(m)
 	g, err := protokey.KeyTheGrammar(packageName, messageName, m.(ProtoMessage).Description(), grammar.Grammar())
-	if err == nil {
-		Validate(name, combinator.G(relapse.NewRefsLookup(g)), codecs, expected)
+	if err != nil {
+		panic(name + ": " + err.Error())
 	}
-	//TODO maybe there should be a different Validate function for when protokey is not possible
+	Validate("ProtoKey"+name, combinator.G(relapse.NewRefsLookup(g)), codecs, expected)
 }
 
 func Validate(name string, grammar combinator.G, codecs Codecs, expected bool) {

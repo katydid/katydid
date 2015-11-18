@@ -33,13 +33,13 @@ var Ab21FinanceJudo = &FinanceJudo{
 var AnyFinanceJudo = G{"main": Any()}
 
 func init() {
-	ValidateProtoEtc("Ab21Any", AnyFinanceJudo, Ab21FinanceJudo, true)
+	ValidateProtoKeyEtc("Ab21Any", AnyFinanceJudo, Ab21FinanceJudo, true)
 }
 
 var NoneFinanceJudo = G{"main": None()}
 
 func init() {
-	ValidateProtoEtc("Ab21None", NoneFinanceJudo, Ab21FinanceJudo, false)
+	ValidateProtoKeyEtc("Ab21None", NoneFinanceJudo, Ab21FinanceJudo, false)
 }
 
 var HasSpirit1FinanceJudo = G{
@@ -48,7 +48,7 @@ var HasSpirit1FinanceJudo = G{
 }
 
 func init() {
-	ValidateProtoEtc("Ab21Spirit1", HasSpirit1FinanceJudo, Ab21FinanceJudo, true)
+	ValidateProtoKeyEtc("Ab21Spirit1", HasSpirit1FinanceJudo, Ab21FinanceJudo, true)
 }
 
 var HasSpirit2FinanceJudo = G{
@@ -57,7 +57,7 @@ var HasSpirit2FinanceJudo = G{
 }
 
 func init() {
-	ValidateProtoEtc("Ab21Spirit2", HasSpirit2FinanceJudo, Ab21FinanceJudo, false)
+	ValidateProtoKeyEtc("Ab21Spirit2", HasSpirit2FinanceJudo, Ab21FinanceJudo, false)
 }
 
 var MagazineFrameAFinanceJudo = G{
@@ -75,7 +75,7 @@ var MagazineFrameAFinanceJudo = G{
 }
 
 func init() {
-	ValidateProtoEtc("Ab21MagazineFrameA", MagazineFrameAFinanceJudo, Ab21FinanceJudo, true)
+	ValidateProtoKeyEtc("Ab21MagazineFrameA", MagazineFrameAFinanceJudo, Ab21FinanceJudo, true)
 }
 
 var MagazineFrameSingleAFinanceJudo = G{
@@ -90,7 +90,7 @@ var MagazineFrameSingleAFinanceJudo = G{
 }
 
 func init() {
-	ValidateProtoEtc("Ab21MagazineFrameSingleA", MagazineFrameSingleAFinanceJudo, Ab21FinanceJudo, false)
+	ValidateProtoKeyEtc("Ab21MagazineFrameSingleA", MagazineFrameSingleAFinanceJudo, Ab21FinanceJudo, false)
 }
 
 var InAnyExceptNotAFieldNameFinanceJudo = G{
