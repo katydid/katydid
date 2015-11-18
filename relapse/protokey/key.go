@@ -114,6 +114,8 @@ func (this *keyer) translate(context *context, p *relapse.Pattern) (*relapse.Pat
 			return p, nil
 		}
 		if !c.Equal(context) {
+			//TODO we could probably create a new reference here
+			//  for every conflicting combination of msg x repeated x referece name
 			return nil, &ErrDup{v.GetName(), c, context}
 		}
 		return p, nil

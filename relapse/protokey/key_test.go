@@ -36,6 +36,7 @@ func check(t *testing.T, g *relapse.Grammar) {
 
 func TestKeyField(t *testing.T) {
 	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZAny())
+	t.Logf("%v", p)
 	g := p.Grammar()
 	gkey, err := KeyTheGrammar("debug", "Debug", debug.DebugDescription(), g)
 	if err != nil {
