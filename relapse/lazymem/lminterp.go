@@ -35,8 +35,7 @@ func Interpret(g *relapse.Grammar, tree serialize.Parser) bool {
 	if err != io.EOF {
 		panic(err)
 	}
-	pp := ConvertPattern(res)
-	fmt.Printf("CONVERTED: %s\n", pp)
+	fmt.Printf("CONVERTED: %s\n", ConvertPattern(res))
 	return Nullable(res)
 }
 

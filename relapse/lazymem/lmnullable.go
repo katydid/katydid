@@ -69,7 +69,7 @@ func nullable(visited map[*Pattern]struct{}, p *Pattern) (changed bool) {
 	case *Contains:
 		changed = nullable(visited, v.Pattern)
 		if v.Pattern.HasNullable() {
-			p.SetNullable(true)
+			p.SetNullable(p.GetNullable())
 		}
 	case *Optional:
 		changed = true

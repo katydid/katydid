@@ -16,8 +16,25 @@ package lazymem
 
 import (
 	. "github.com/katydid/katydid/relapse/combinator"
+	"github.com/katydid/katydid/tests"
 	"testing"
 )
+
+func TestContainsNullable(t *testing.T) {
+	g := G{"main": InPath("a", Any())}
+	p := ConvertGrammar(g.Grammar())
+	if Nullable(p) {
+		t.Fatalf("expected not nullable for %v", g.Grammar())
+	}
+}
+
+func TestConcatAnyXAnyNullable(t *testing.T) {
+	g := tests.HasSpirit2FinanceJudo
+	p := ConvertGrammar(g.Grammar())
+	if Nullable(p) {
+		t.Fatalf("expected not nullable for %v", g.Grammar())
+	}
+}
 
 func TestNullableLeftRecursionTrue(t *testing.T) {
 	g := G{"main": AnyOf(Eval("main"), Any())}

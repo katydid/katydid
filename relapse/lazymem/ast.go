@@ -15,6 +15,7 @@
 package lazymem
 
 import (
+	"fmt"
 	"github.com/katydid/katydid/expr/ast"
 	"github.com/katydid/katydid/expr/compose"
 	"github.com/katydid/katydid/relapse/ast"
@@ -22,7 +23,8 @@ import (
 )
 
 type Pattern struct {
-	thunk    func() *PatternHead
+	name     string
+	thunk    *Pattern
 	head     *PatternHead
 	nullable *bool
 }
@@ -33,7 +35,7 @@ func (this *Pattern) HasHead() bool {
 
 func (this *Pattern) Head() *PatternHead {
 	if this.head == nil {
-		this.head = this.thunk()
+		this.head = this.thunk.Head()
 	}
 	return this.head
 }
@@ -53,11 +55,24 @@ func (this *Pattern) GetNullable() bool {
 	return *this.nullable
 }
 
-func NewLazyPattern(p *Pattern) *Pattern {
+func (this *Pattern) GoString() string {
+	if this.thunk != nil {
+		return fmt.Sprintf("&Pattern{thunk: %v}", this.name)
+	}
+	return fmt.Sprintf("&Pattern{head: %#v}", this.head)
+}
+
+func (this *Pattern) String() string {
+	if this.thunk != nil {
+		return fmt.Sprintf("@%v", this.name)
+	}
+	return this.head.String()
+}
+
+func NewLazyPattern(name string, p *Pattern) *Pattern {
 	return &Pattern{
-		thunk: func() *PatternHead {
-			return p.Head()
-		},
+		name:  name,
+		thunk: p,
 	}
 }
 
@@ -112,6 +127,14 @@ func (this *PatternHead) GetValue() interface{} {
 	panic("no pattern set")
 }
 
+func (this *PatternHead) GoString() string {
+	return fmt.Sprintf("%#v", this.GetValue())
+}
+
+func (this *PatternHead) String() string {
+	return fmt.Sprintf("%v", this.GetValue())
+}
+
 type Empty struct{}
 
 func NewEmpty() *Pattern {
@@ -120,6 +143,14 @@ func NewEmpty() *Pattern {
 			Empty: &Empty{},
 		},
 	}
+}
+
+func (this *Empty) GoString() string {
+	return "&Empty{}"
+}
+
+func (this *Empty) String() string {
+	return "<empty>"
 }
 
 type Node struct {
@@ -140,6 +171,20 @@ func NewNode(f compose.Bool, n *relapse.NameExpr, e *expr.Expr, p *Pattern) *Pat
 			},
 		},
 	}
+}
+
+func (this *Node) GoString() string {
+	if this.Name != nil {
+		return fmt.Sprintf("&Node{Name: %#v, Pattern: %#v}", this.Name, this.Pattern)
+	}
+	return fmt.Sprintf("&Node{Expr: %#v, Pattern: %#v}", this.Expr, this.Pattern)
+}
+
+func (this *Node) String() string {
+	if this.Name != nil {
+		return this.Name.String() + ": " + this.Pattern.String()
+	}
+	return this.Expr.String()
 }
 
 func NewTreeNode(name *relapse.NameExpr, p *Pattern) *Pattern {
@@ -175,6 +220,14 @@ func NewConcat(l, r *Pattern) *Pattern {
 	}
 }
 
+func (this *Concat) GoString() string {
+	return fmt.Sprintf("&Concat{Left: %#v, Right: %#v}", this.Left, this.Right)
+}
+
+func (this *Concat) String() string {
+	return fmt.Sprintf("[%v, %v]", this.Left, this.Right)
+}
+
 type Or struct {
 	Left  *Pattern
 	Right *Pattern
@@ -189,6 +242,14 @@ func NewOr(l, r *Pattern) *Pattern {
 			},
 		},
 	}
+}
+
+func (this *Or) GoString() string {
+	return fmt.Sprintf("&Or{Left: %#v, Right: %#v}", this.Left, this.Right)
+}
+
+func (this *Or) String() string {
+	return fmt.Sprintf("( %v | %v )", this.Left, this.Right)
 }
 
 type And struct {
@@ -207,6 +268,14 @@ func NewAnd(l, r *Pattern) *Pattern {
 	}
 }
 
+func (this *And) GoString() string {
+	return fmt.Sprintf("&And{Left: %#v, Right: %#v}", this.Left, this.Right)
+}
+
+func (this *And) String() string {
+	return fmt.Sprintf("( %v & %v )", this.Left, this.Right)
+}
+
 type ZeroOrMore struct {
 	Pattern *Pattern
 }
@@ -219,6 +288,14 @@ func NewZeroOrMore(p *Pattern) *Pattern {
 			},
 		},
 	}
+}
+
+func (this *ZeroOrMore) GoString() string {
+	return fmt.Sprintf("&ZeroOrMore{Pattern: %#v}", this.Pattern)
+}
+
+func (this *ZeroOrMore) String() string {
+	return fmt.Sprintf("(%v)*", this.Pattern)
 }
 
 type Not struct {
@@ -235,6 +312,14 @@ func NewNot(p *Pattern) *Pattern {
 	}
 }
 
+func (this *Not) GoString() string {
+	return fmt.Sprintf("&Not{Pattern: %#v}", this.Pattern)
+}
+
+func (this *Not) String() string {
+	return fmt.Sprintf("!(%v)", this.Pattern)
+}
+
 type ZAny struct{}
 
 func NewZAny() *Pattern {
@@ -243,6 +328,14 @@ func NewZAny() *Pattern {
 			ZAny: &ZAny{},
 		},
 	}
+}
+
+func (this *ZAny) GoString() string {
+	return "&ZAny{}"
+}
+
+func (this *ZAny) String() string {
+	return "*"
 }
 
 type Contains struct {
@@ -259,6 +352,14 @@ func NewContains(p *Pattern) *Pattern {
 	}
 }
 
+func (this *Contains) GoString() string {
+	return fmt.Sprintf("&Contains{Pattern: %#v}", this.Pattern)
+}
+
+func (this *Contains) String() string {
+	return fmt.Sprintf(".%v", this.Pattern)
+}
+
 type Optional struct {
 	Pattern *Pattern
 }
@@ -271,6 +372,14 @@ func NewOptional(p *Pattern) *Pattern {
 			},
 		},
 	}
+}
+
+func (this *Optional) GoString() string {
+	return fmt.Sprintf("&Optional{Pattern: %#v}", this.Pattern)
+}
+
+func (this *Optional) String() string {
+	return fmt.Sprintf("(%v)?", this.Pattern)
 }
 
 type Interleave struct {
@@ -287,4 +396,12 @@ func NewInterleave(l, r *Pattern) *Pattern {
 			},
 		},
 	}
+}
+
+func (this *Interleave) GoString() string {
+	return fmt.Sprintf("&Interleave{Left: %#v, Right: %#v}", this.Left, this.Right)
+}
+
+func (this *Interleave) String() string {
+	return fmt.Sprintf("{ %#v ; %#v}", this.Left, this.Right)
 }
