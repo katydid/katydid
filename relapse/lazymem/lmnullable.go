@@ -24,10 +24,6 @@ func Nullable(p *Pattern) bool {
 	for changed {
 		changed = nullable(visited, p)
 	}
-	//The pattern might not have been set in which case false is returned
-	if !p.HasNullable() {
-		return false
-	}
 	return p.GetNullable()
 }
 
@@ -36,44 +32,29 @@ func nullable(visited map[*Pattern]struct{}, p *Pattern) (changed bool) {
 		return false
 	}
 	visited[p] = struct{}{}
-	if p.HasNullable() {
-		return false
-	}
 	head := p.Head().GetValue()
 	switch v := head.(type) {
 	case *Empty:
 		changed = true
 		p.SetNullable(true)
-	case *EmptySet:
-		changed = true
-		p.SetNullable(false)
-	case *TreeNode:
-		changed = true
-		p.SetNullable(false)
-	case *LeafNode:
+	case *Node:
 		changed = true
 		p.SetNullable(false)
 	case *Concat:
 		leftChanged := nullable(visited, v.Left)
 		rightChanged := nullable(visited, v.Right)
 		changed = leftChanged || rightChanged
-		if v.Left.HasNullable() && v.Right.HasNullable() {
-			p.SetNullable(v.Left.GetNullable() && v.Right.GetNullable())
-		}
+		p.SetNullable(v.Left.GetNullable() && v.Right.GetNullable())
 	case *Or:
 		leftChanged := nullable(visited, v.Left)
 		rightChanged := nullable(visited, v.Right)
 		changed = leftChanged || rightChanged
-		if v.Left.HasNullable() && v.Right.HasNullable() {
-			p.SetNullable(v.Left.GetNullable() || v.Right.GetNullable())
-		}
+		p.SetNullable(v.Left.GetNullable() || v.Right.GetNullable())
 	case *And:
 		leftChanged := nullable(visited, v.Left)
 		rightChanged := nullable(visited, v.Right)
 		changed = leftChanged || rightChanged
-		if v.Left.HasNullable() && v.Right.HasNullable() {
-			p.SetNullable(v.Left.GetNullable() && v.Right.GetNullable())
-		}
+		p.SetNullable(v.Left.GetNullable() && v.Right.GetNullable())
 	case *ZeroOrMore:
 		changed = true
 		p.SetNullable(true)
@@ -82,6 +63,22 @@ func nullable(visited map[*Pattern]struct{}, p *Pattern) (changed bool) {
 		if v.Pattern.HasNullable() {
 			p.SetNullable(!v.Pattern.GetNullable())
 		}
+	case *ZAny:
+		changed = true
+		p.SetNullable(true)
+	case *Contains:
+		changed = nullable(visited, v.Pattern)
+		if v.Pattern.HasNullable() {
+			p.SetNullable(true)
+		}
+	case *Optional:
+		changed = true
+		p.SetNullable(true)
+	case *Interleave:
+		leftChanged := nullable(visited, v.Left)
+		rightChanged := nullable(visited, v.Right)
+		changed = leftChanged || rightChanged
+		p.SetNullable(v.Left.GetNullable() && v.Right.GetNullable())
 	default:
 		panic(fmt.Sprintf("unknown pattern typ %T", head))
 	}

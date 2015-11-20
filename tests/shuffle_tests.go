@@ -21,7 +21,7 @@ import (
 
 //Foundations of XML Processing: The Tree Automata Approach - Chapter 15.2 Page 194
 //interleave((a[], b[]); (c[], d[]))
-var Page194 = G{"main": Interleave(
+var Page194 = G{"main": InAnyOrder(
 	InOrder(
 		In("A", Any()),
 		In("B", Any()),
@@ -251,7 +251,7 @@ func init() {
 var whitespace = Many(Value(Regex(StringConst("^(\\s)+$"), StringVar())))
 
 //Name && Address? && Email*
-var Page195NameAddrEmail = G{"main": In("Person", Interleave(
+var Page195NameAddrEmail = G{"main": In("Person", InAnyOrder(
 	In("Name", Any()),
 	Maybe(In("Addr", Any())),
 	Many(In("Email", Any())),
@@ -390,7 +390,7 @@ func init() {
 }
 
 //(Name,Tel?) && (Name,Email*)
-var Page195NameTelNameEmail = G{"main": In("Person", Interleave(
+var Page195NameTelNameEmail = G{"main": In("Person", InAnyOrder(
 	InOrder(
 		In("Name", Any()),
 		Maybe(In("Tel", Any())),
@@ -573,7 +573,7 @@ func init() {
 
 //ABStar{A:a & B:b & *}
 var ABStar = G{"main": In("ABStar",
-	Interleave(
+	InAnyOrder(
 		In("A", Value(StringEq(StringVar(), StringConst("a")))),
 		In("B", Value(StringEq(StringVar(), StringConst("b")))),
 		Any(),

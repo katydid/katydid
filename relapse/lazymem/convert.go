@@ -46,9 +46,9 @@ func newPattern(refs map[string]*Pattern, p *relapse.Pattern) *Pattern {
 	case *relapse.Concat:
 		return NewConcat(newPattern(refs, v.GetLeftPattern()), newPattern(refs, v.GetRightPattern()))
 	case *relapse.Or:
-		return NewAnd(newPattern(refs, v.GetLeftPattern()), newPattern(refs, v.GetRightPattern()))
-	case *relapse.And:
 		return NewOr(newPattern(refs, v.GetLeftPattern()), newPattern(refs, v.GetRightPattern()))
+	case *relapse.And:
+		return NewAnd(newPattern(refs, v.GetLeftPattern()), newPattern(refs, v.GetRightPattern()))
 	case *relapse.ZeroOrMore:
 		return NewZeroOrMore(newPattern(refs, v.GetPattern()))
 	case *relapse.Not:
@@ -56,8 +56,13 @@ func newPattern(refs map[string]*Pattern, p *relapse.Pattern) *Pattern {
 	case *relapse.Reference:
 		return NewLazyPattern(refs[v.GetName()])
 	case *relapse.ZAny:
-		//return newPattern(refs, relapse.NewNot(relapse.NewEmptySet()))
-		panic("todo")
+		return NewZAny()
+	case *relapse.Contains:
+		return NewContains(newPattern(refs, v.GetPattern()))
+	case *relapse.Optional:
+		return NewOptional(newPattern(refs, v.GetPattern()))
+	case *relapse.Interleave:
+		return NewInterleave(newPattern(refs, v.GetLeftPattern()), newPattern(refs, v.GetRightPattern()))
 	}
 	panic(fmt.Sprintf("unknown Pattern typ %T", typ))
 }
@@ -83,6 +88,7 @@ func ConvertPattern(p *Pattern) *relapse.Grammar {
 			}
 		}
 	}
+	removeEqualRefs(refs)
 	return relapse.NewGrammar(refs)
 }
 
@@ -107,12 +113,13 @@ func convertPattern(visited map[*Pattern]string, p *Pattern, newStr func() strin
 	switch v := typ.(type) {
 	case *Empty:
 		return relapse.NewEmpty()
-	case *TreeNode:
-		if v.Pattern.Lookahead().LeafNode != nil {
-			return relapse.NewTreeNode(v.Name, relapse.NewLeafNode(v.Pattern.Lookahead().LeafNode.Expr))
+	case *Node:
+		if v.Name != nil {
+			c := convertPattern(visited, v.Pattern, newStr)
+			return relapse.NewTreeNode(v.Name, c)
+		} else {
+			return relapse.NewLeafNode(v.Expr)
 		}
-		c := convertPattern(visited, v.Pattern, newStr)
-		return relapse.NewTreeNode(v.Name, c)
 	case *Concat:
 		left := convertPattern(visited, v.Left, newStr)
 		right := convertPattern(visited, v.Right, newStr)
@@ -131,6 +138,87 @@ func convertPattern(visited map[*Pattern]string, p *Pattern, newStr func() strin
 	case *Not:
 		c := convertPattern(visited, v.Pattern, newStr)
 		return relapse.NewNot(c)
+	case *ZAny:
+		return relapse.NewZAny()
+	case *Optional:
+		c := convertPattern(visited, v.Pattern, newStr)
+		return relapse.NewOptional(c)
+	case *Contains:
+		c := convertPattern(visited, v.Pattern, newStr)
+		return relapse.NewContains(c)
+	case *Interleave:
+		left := convertPattern(visited, v.Left, newStr)
+		right := convertPattern(visited, v.Right, newStr)
+		return relapse.NewInterleave(left, right)
 	}
 	panic(fmt.Sprintf("unknown Pattern typ %T", typ))
+}
+
+func findEqual(refs relapse.RefLookup) (string, string, bool) {
+	for name1 := range refs {
+		for name2 := range refs {
+			if name1 == name2 {
+				continue
+			}
+			if refs[name1].Equal(refs[name2]) {
+				if name2 == "main" {
+					//always return main first
+					return name2, name1, true
+				}
+				return name1, name2, true
+			}
+		}
+	}
+	return "", "", false
+}
+
+func replaceRef(p *relapse.Pattern, prev, next string) {
+	typ := p.GetValue()
+	switch v := typ.(type) {
+	case *relapse.Empty, *relapse.LeafNode, *relapse.ZAny:
+		return
+	case *relapse.TreeNode:
+		replaceRef(v.GetPattern(), prev, next)
+	case *relapse.Concat:
+		replaceRef(v.GetLeftPattern(), prev, next)
+		replaceRef(v.GetRightPattern(), prev, next)
+	case *relapse.Or:
+		replaceRef(v.GetLeftPattern(), prev, next)
+		replaceRef(v.GetRightPattern(), prev, next)
+	case *relapse.And:
+		replaceRef(v.GetLeftPattern(), prev, next)
+		replaceRef(v.GetRightPattern(), prev, next)
+	case *relapse.ZeroOrMore:
+		replaceRef(v.GetPattern(), prev, next)
+	case *relapse.Reference:
+		if v.Name == prev {
+			v.Name = next
+		}
+	case *relapse.Not:
+		replaceRef(v.GetPattern(), prev, next)
+	case *relapse.Contains:
+		replaceRef(v.GetPattern(), prev, next)
+	case *relapse.Optional:
+		replaceRef(v.GetPattern(), prev, next)
+	case *relapse.Interleave:
+		replaceRef(v.GetLeftPattern(), prev, next)
+		replaceRef(v.GetRightPattern(), prev, next)
+	default:
+		panic(fmt.Sprintf("unknown pattern typ %T", typ))
+	}
+}
+
+func replaceRefs(refs relapse.RefLookup, prev, next string) {
+	for name := range refs {
+		replaceRef(refs[name], prev, next)
+	}
+}
+
+func removeEqualRefs(refs relapse.RefLookup) {
+	name1, name2, ok := findEqual(refs)
+	for ok {
+		delete(refs, name2)
+		replaceRefs(refs, name2, name1)
+		name1, name2, ok = findEqual(refs)
+	}
 }

@@ -16,7 +16,9 @@ package lazymem
 
 import (
 	"github.com/katydid/katydid/expr/ast"
+	"github.com/katydid/katydid/expr/compose"
 	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse/nameexpr"
 )
 
 type Pattern struct {
@@ -25,16 +27,13 @@ type Pattern struct {
 	nullable *bool
 }
 
+func (this *Pattern) HasHead() bool {
+	return this.head != nil
+}
+
 func (this *Pattern) Head() *PatternHead {
 	if this.head == nil {
 		this.head = this.thunk()
-	}
-	return this.head
-}
-
-func (this *Pattern) Lookahead() *PatternHead {
-	if this.head == nil {
-		return this.thunk()
 	}
 	return this.head
 }
@@ -64,28 +63,24 @@ func NewLazyPattern(p *Pattern) *Pattern {
 
 type PatternHead struct {
 	Empty      *Empty
-	EmptySet   *EmptySet
-	TreeNode   *TreeNode
-	LeafNode   *LeafNode
+	Node       *Node
 	Concat     *Concat
 	Or         *Or
 	And        *And
 	ZeroOrMore *ZeroOrMore
 	Not        *Not
+	ZAny       *ZAny
+	Contains   *Contains
+	Optional   *Optional
+	Interleave *Interleave
 }
 
 func (this *PatternHead) GetValue() interface{} {
 	if this.Empty != nil {
 		return this.Empty
 	}
-	if this.EmptySet != nil {
-		return this.EmptySet
-	}
-	if this.TreeNode != nil {
-		return this.TreeNode
-	}
-	if this.LeafNode != nil {
-		return this.LeafNode
+	if this.Node != nil {
+		return this.Node
 	}
 	if this.Concat != nil {
 		return this.Concat
@@ -102,6 +97,18 @@ func (this *PatternHead) GetValue() interface{} {
 	if this.Not != nil {
 		return this.Not
 	}
+	if this.ZAny != nil {
+		return this.ZAny
+	}
+	if this.Contains != nil {
+		return this.Contains
+	}
+	if this.Optional != nil {
+		return this.Optional
+	}
+	if this.Interleave != nil {
+		return this.Interleave
+	}
 	panic("no pattern set")
 }
 
@@ -115,44 +122,41 @@ func NewEmpty() *Pattern {
 	}
 }
 
-type EmptySet struct{}
-
-func NewEmptySet() *Pattern {
-	return &Pattern{
-		head: &PatternHead{
-			EmptySet: &EmptySet{},
-		},
-	}
-}
-
-type TreeNode struct {
+type Node struct {
+	F       compose.Bool
 	Name    *relapse.NameExpr
+	Expr    *expr.Expr
 	Pattern *Pattern
 }
 
-func NewTreeNode(name *relapse.NameExpr, p *Pattern) *Pattern {
+func NewNode(f compose.Bool, n *relapse.NameExpr, e *expr.Expr, p *Pattern) *Pattern {
 	return &Pattern{
 		head: &PatternHead{
-			TreeNode: &TreeNode{
-				Name:    name,
+			Node: &Node{
+				F:       f,
+				Name:    n,
+				Expr:    e,
 				Pattern: p,
 			},
 		},
 	}
 }
 
-type LeafNode struct {
-	Expr *expr.Expr
+func NewTreeNode(name *relapse.NameExpr, p *Pattern) *Pattern {
+	nameFunc := nameexpr.NameToFunc(name)
+	f, err := compose.NewBoolFunc(nameFunc)
+	if err != nil {
+		panic(err)
+	}
+	return NewNode(f, name, nil, p)
 }
 
 func NewLeafNode(expr *expr.Expr) *Pattern {
-	return &Pattern{
-		head: &PatternHead{
-			LeafNode: &LeafNode{
-				Expr: expr,
-			},
-		},
+	f, err := compose.NewBool(expr)
+	if err != nil {
+		panic(err)
 	}
+	return NewNode(f, nil, expr, NewEmpty())
 }
 
 type Concat struct {
@@ -226,6 +230,60 @@ func NewNot(p *Pattern) *Pattern {
 		head: &PatternHead{
 			Not: &Not{
 				Pattern: p,
+			},
+		},
+	}
+}
+
+type ZAny struct{}
+
+func NewZAny() *Pattern {
+	return &Pattern{
+		head: &PatternHead{
+			ZAny: &ZAny{},
+		},
+	}
+}
+
+type Contains struct {
+	Pattern *Pattern
+}
+
+func NewContains(p *Pattern) *Pattern {
+	return &Pattern{
+		head: &PatternHead{
+			Contains: &Contains{
+				Pattern: p,
+			},
+		},
+	}
+}
+
+type Optional struct {
+	Pattern *Pattern
+}
+
+func NewOptional(p *Pattern) *Pattern {
+	return &Pattern{
+		head: &PatternHead{
+			Optional: &Optional{
+				Pattern: p,
+			},
+		},
+	}
+}
+
+type Interleave struct {
+	Left  *Pattern
+	Right *Pattern
+}
+
+func NewInterleave(l, r *Pattern) *Pattern {
+	return &Pattern{
+		head: &PatternHead{
+			Interleave: &Interleave{
+				Left:  l,
+				Right: r,
 			},
 		},
 	}
