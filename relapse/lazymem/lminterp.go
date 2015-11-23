@@ -86,16 +86,14 @@ func deriv(p *Pattern, tree serialize.Parser) *Pattern {
 		}
 	case *Or:
 		treeCopy := tree.Copy()
-		return NewOr(
-			deriv(v.Left, tree),
-			deriv(v.Right, treeCopy),
-		)
+		left := deriv(v.Left, tree)
+		right := deriv(v.Right, treeCopy)
+		return NewOr(left, right)
 	case *And:
 		treeCopy := tree.Copy()
-		return NewAnd(
-			deriv(v.Left, tree),
-			deriv(v.Right, treeCopy),
-		)
+		left := deriv(v.Left, tree)
+		right := deriv(v.Right, treeCopy)
+		return NewAnd(left, right)
 	case *ZeroOrMore:
 		return NewConcat(
 			deriv(v.Pattern, tree),
@@ -111,9 +109,11 @@ func deriv(p *Pattern, tree serialize.Parser) *Pattern {
 		return deriv(NewOr(NewEmpty(), v.Pattern), tree)
 	case *Interleave:
 		treeCopy := tree.Copy()
+		left := deriv(v.Left, tree)
+		right := deriv(v.Right, treeCopy)
 		return NewOr(
-			NewInterleave(deriv(v.Left, tree), v.Right),
-			NewInterleave(v.Left, deriv(v.Right, treeCopy)),
+			NewInterleave(left, v.Right),
+			NewInterleave(v.Left, right),
 		)
 	default:
 		panic(fmt.Sprintf("unknown pattern typ %T", head))

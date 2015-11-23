@@ -18,6 +18,9 @@ import (
 	"fmt"
 )
 
+//Returns whether a pattern is nullable.
+//It interprets the nullability of the pattern as the last fixed point of the nullability equations.
+//This allows the function to also work for left recursive patterns.
 func Nullable(p *Pattern) bool {
 	visited := make(map[*Pattern]struct{})
 	changed := true
