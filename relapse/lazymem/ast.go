@@ -24,7 +24,7 @@ import (
 
 type Pattern struct {
 	name     string
-	thunk    *Pattern
+	thunk    func() *Pattern
 	head     *PatternHead
 	nullable *bool
 }
@@ -35,7 +35,7 @@ func (this *Pattern) HasHead() bool {
 
 func (this *Pattern) Head() *PatternHead {
 	if this.head == nil {
-		this.head = this.thunk.Head()
+		this.head = this.thunk().Head()
 	}
 	return this.head
 }
@@ -71,8 +71,12 @@ func (this *Pattern) String() string {
 
 func NewLazyPattern(name string, p *Pattern) *Pattern {
 	return &Pattern{
-		name:  name,
-		thunk: p,
+		name: name,
+		thunk: func() *Pattern {
+			return &Pattern{
+				head: p.Head(),
+			}
+		},
 	}
 }
 

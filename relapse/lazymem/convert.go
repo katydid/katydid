@@ -78,7 +78,7 @@ func ConvertPattern(p *Pattern) *relapse.Grammar {
 			if _, ok := refs[name]; !ok {
 				headp := p
 				if p.thunk != nil {
-					headp = p.thunk
+					headp = p.thunk()
 				}
 				visited[headp] = name
 				newp := convertPattern(visited, headp)

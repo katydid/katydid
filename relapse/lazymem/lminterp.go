@@ -19,16 +19,39 @@ import (
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/serialize"
 	"io"
+	"strconv"
+	"sync"
 )
 
+var mem Memoize = nil
+
+type Memoize map[*Pattern]map[serialize.Parser]*Pattern
+
+func (this Memoize) Get(p *Pattern, tree serialize.Parser) *Pattern {
+	t := this[p]
+	if t == nil {
+		return nil
+	}
+	return t[tree]
+}
+
+func (this Memoize) Add(p *Pattern, tree serialize.Parser, d *Pattern) {
+	t := this[p]
+	if t == nil {
+		this[p] = make(map[serialize.Parser]*Pattern)
+	}
+	this[p][tree] = d
+}
+
 func Interpret(g *relapse.Grammar, tree serialize.Parser) bool {
+	mem = make(Memoize)
 	fmt.Printf("BEFORE: %s\n", g)
 	p := ConvertGrammar(g)
 	res := p
 	res = Simplify(res)
 	err := tree.Next()
 	for err == nil {
-		res = deriv(res, tree)
+		res = deriv(res, tree.Copy())
 		res = Simplify(res)
 		err = tree.Next()
 	}
@@ -47,12 +70,13 @@ func derivNode(p *Node, tree serialize.Parser) *Pattern {
 	if !matched {
 		return NewNot(NewZAny())
 	}
+	tree = tree.Copy()
 	res := p.Pattern
 	if !tree.IsLeaf() {
 		tree.Down()
 		err := tree.Next()
 		for err == nil {
-			res = deriv(res, tree)
+			res = deriv(res, tree.Copy())
 			res = Simplify(res)
 			err = tree.Next()
 		}
@@ -67,6 +91,38 @@ func derivNode(p *Node, tree serialize.Parser) *Pattern {
 	return NewEmpty()
 }
 
+var i int
+var s sync.Mutex
+
+func newName() string {
+	s.Lock()
+	defer s.Unlock()
+	i++
+	return "int" + strconv.Itoa(i)
+}
+
+func lderiv(p *Pattern, tree serialize.Parser) *Pattern {
+	m := mem.Get(p, tree)
+	if m != nil {
+		return m
+	}
+	if p.thunk == nil {
+		fmt.Printf("deriv %s\n", p.String())
+		res := deriv(p, tree)
+		mem.Add(p, tree, res)
+		return res
+	}
+	fmt.Printf("lazy %s\n", p.String())
+	res := &Pattern{
+		name: newName(),
+		thunk: func() *Pattern {
+			return deriv(p, tree)
+		},
+	}
+	mem.Add(p, tree, res)
+	return res
+}
+
 func deriv(p *Pattern, tree serialize.Parser) *Pattern {
 	head := p.Head().GetValue()
 	switch v := head.(type) {
@@ -75,42 +131,39 @@ func deriv(p *Pattern, tree serialize.Parser) *Pattern {
 	case *Node:
 		return derivNode(v, tree)
 	case *Concat:
-		leftDeriv := NewConcat(deriv(v.Left, tree), v.Right)
+		leftDeriv := NewConcat(lderiv(v.Left, tree), v.Right)
 		if Nullable(v.Left) {
 			return NewOr(
 				leftDeriv,
-				deriv(v.Right, tree.Copy()),
+				lderiv(v.Right, tree),
 			)
 		} else {
 			return leftDeriv
 		}
 	case *Or:
-		treeCopy := tree.Copy()
-		left := deriv(v.Left, tree)
-		right := deriv(v.Right, treeCopy)
+		left := lderiv(v.Left, tree)
+		right := lderiv(v.Right, tree)
 		return NewOr(left, right)
 	case *And:
-		treeCopy := tree.Copy()
-		left := deriv(v.Left, tree)
-		right := deriv(v.Right, treeCopy)
+		left := lderiv(v.Left, tree)
+		right := lderiv(v.Right, tree)
 		return NewAnd(left, right)
 	case *ZeroOrMore:
 		return NewConcat(
-			deriv(v.Pattern, tree),
+			lderiv(v.Pattern, tree),
 			NewZeroOrMore(v.Pattern),
 		)
 	case *Not:
-		return NewNot(deriv(v.Pattern, tree))
+		return NewNot(lderiv(v.Pattern, tree))
 	case *ZAny:
 		return p
 	case *Contains:
-		return deriv(NewConcat(NewZAny(), NewConcat(v.Pattern, NewZAny())), tree)
+		return lderiv(NewConcat(NewZAny(), NewConcat(v.Pattern, NewZAny())), tree)
 	case *Optional:
-		return deriv(NewOr(NewEmpty(), v.Pattern), tree)
+		return lderiv(NewOr(NewEmpty(), v.Pattern), tree)
 	case *Interleave:
-		treeCopy := tree.Copy()
-		left := deriv(v.Left, tree)
-		right := deriv(v.Right, treeCopy)
+		left := lderiv(v.Left, tree)
+		right := lderiv(v.Right, tree)
 		return NewOr(
 			NewInterleave(left, v.Right),
 			NewInterleave(v.Left, right),

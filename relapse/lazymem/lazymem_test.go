@@ -16,7 +16,7 @@ package lazymem_test
 
 import (
 	"github.com/katydid/katydid/relapse/ast"
-	"github.com/katydid/katydid/relapse/interp"
+	//"github.com/katydid/katydid/relapse/interp"
 	"github.com/katydid/katydid/relapse/lazymem"
 	"github.com/katydid/katydid/serialize"
 	"github.com/katydid/katydid/serialize/debug"
@@ -24,9 +24,9 @@ import (
 )
 
 func test(t *testing.T, g *relapse.Grammar, parser serialize.Parser, expected bool, desc string) {
-	if interp.HasLeftRecursion(g) {
-		t.Skipf("skipping left recursive grammar %v", g)
-	}
+	// if interp.HasLeftRecursion(g) {
+	// 	t.Skipf("skipping left recursive grammar %v", g)
+	// }
 	parser = debug.NewLogger(parser, debug.NewLineLogger())
 	match := lazymem.Interpret(g, parser)
 	if match != expected {
