@@ -17,6 +17,7 @@ package lazymem
 import (
 	"fmt"
 	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse/interp"
 )
 
 func ConvertGrammar(g *relapse.Grammar) *Pattern {
@@ -87,11 +88,15 @@ func ConvertPattern(p *Pattern) *relapse.Grammar {
 			}
 		}
 	}
+	for name, pat := range refs {
+		if name != "main" {
+			refs[name] = interp.Simplify(refs, pat)
+		}
+	}
 	return relapse.NewGrammar(refs)
 }
 
 func convertPattern(visited map[*Pattern]string, p *Pattern) *relapse.Pattern {
-	fmt.Printf("convertPattern %v\n", p)
 	if p.thunk != nil {
 		if _, ok := visited[p]; !ok {
 			visited[p] = p.name

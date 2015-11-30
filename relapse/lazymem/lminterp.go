@@ -41,7 +41,7 @@ func (this memoize) Add(p *Pattern, tree serialize.Parser, d *Pattern) {
 }
 
 func Interpret(g *relapse.Grammar, tree serialize.Parser) bool {
-	fmt.Printf("BEFORE: %s\n", g)
+	//fmt.Printf("BEFORE: %s\n", g)
 	p := ConvertGrammar(g)
 	res := p
 	res = Simplify(res)
@@ -55,7 +55,7 @@ func Interpret(g *relapse.Grammar, tree serialize.Parser) bool {
 	if err != io.EOF {
 		panic(err)
 	}
-	fmt.Printf("CONVERTED: %s\n", ConvertPattern(res))
+	//fmt.Printf("CONVERTED: %s\n", ConvertPattern(res))
 	return Nullable(res)
 }
 
@@ -104,16 +104,19 @@ func (this *interpreter) lderiv(p *Pattern, tree serialize.Parser) *Pattern {
 		return m
 	}
 	if p.thunk == nil {
-		fmt.Printf("deriv %s\n", p.String())
+		//fmt.Printf("deriv %s\n", p.String())
 		res := this.deriv(p, tree)
 		this.mem.Add(p, tree, res)
 		return res
 	}
-	fmt.Printf("lazy %s\n", p.String())
+	//fmt.Printf("lazy %s\n", p.String())
 	res := &Pattern{
 		name: this.newName(),
 		thunk: func() *Pattern {
-			return this.deriv(p, tree)
+			//fmt.Printf("-> evaluating lazy pattern %v\n", p)
+			pp := this.deriv(p, tree)
+			//fmt.Printf("<- evaluated lazy pattern %v\n", p)
+			return pp
 		},
 	}
 	this.mem.Add(p, tree, res)
