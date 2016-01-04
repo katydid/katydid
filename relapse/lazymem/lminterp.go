@@ -40,23 +40,39 @@ func (this memoize) Add(p *Pattern, tree serialize.Parser, d *Pattern) {
 	this[p][tree] = d
 }
 
-func Interpret(g *relapse.Grammar, tree serialize.Parser) bool {
-	//fmt.Printf("BEFORE: %s\n", g)
-	p := ConvertGrammar(g)
-	res := p
-	res = Simplify(res)
+type Interpreter struct {
+	p *Pattern
+}
+
+func (this *Interpreter) Interpret(tree serialize.Parser) bool {
 	interpret := &interpreter{make(memoize), 0}
+	res := this.p
 	err := tree.Next()
 	for err == nil {
 		res = interpret.deriv(res, tree.Copy())
 		res = Simplify(res)
+		head := res.Head()
+		if head.ZAny != nil {
+			return true
+		}
+		if head.Not != nil && head.Not.Pattern.Head().ZAny != nil {
+			return false
+		}
 		err = tree.Next()
 	}
 	if err != io.EOF {
 		panic(err)
 	}
-	//fmt.Printf("CONVERTED: %s\n", ConvertPattern(res))
 	return Nullable(res)
+}
+
+func NewInterpreter(g *relapse.Grammar) *Interpreter {
+	p := ConvertGrammar(g)
+	return &Interpreter{Simplify(p)}
+}
+
+func Interpret(g *relapse.Grammar, tree serialize.Parser) bool {
+	return NewInterpreter(g).Interpret(tree)
 }
 
 type interpreter struct {
@@ -79,15 +95,29 @@ func (this *interpreter) derivNode(p *Node, tree serialize.Parser) *Pattern {
 	}
 	tree = tree.Copy()
 	res := p.Pattern
+	head := res.Head()
+	if head.ZAny != nil {
+		return NewEmpty()
+	}
+	if head.Not != nil && head.Not.Pattern.Head().ZAny != nil {
+		return NewNot(NewZAny())
+	}
 	if !tree.IsLeaf() {
 		tree.Down()
 		err := tree.Next()
 		for err == nil {
 			res = this.deriv(res, tree.Copy())
 			res = Simplify(res)
+			head := res.Head()
+			if head.ZAny != nil {
+				break
+			}
+			if head.Not != nil && head.Not.Pattern.Head().ZAny != nil {
+				break
+			}
 			err = tree.Next()
 		}
-		if err != io.EOF {
+		if err != nil && err != io.EOF {
 			panic(err)
 		}
 		tree.Up()

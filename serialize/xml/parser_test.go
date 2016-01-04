@@ -69,3 +69,7 @@ func TestPerson(t *testing.T) {
 	</Person>`
 	testXML(t, person)
 }
+
+func TestAB(t *testing.T) {
+	testXML(t, `<A>B</A>`)
+}

@@ -32,7 +32,11 @@ func TestRuntimeError(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if _, err := b.Eval(serialize.NewStringValue("0")); err == nil {
+	f, err := compose.NewBoolFunc(b)
+	if err != nil {
+		panic(err)
+	}
+	if _, err := f.Eval(serialize.NewStringValue("0")); err == nil {
 		t.Fatal("expected error")
 	}
 }

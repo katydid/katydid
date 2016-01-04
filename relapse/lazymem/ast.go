@@ -201,7 +201,11 @@ func NewTreeNode(name *relapse.NameExpr, p *Pattern) *Pattern {
 }
 
 func NewLeafNode(expr *expr.Expr) *Pattern {
-	f, err := compose.NewBool(expr)
+	b, err := compose.NewBool(expr)
+	if err != nil {
+		panic(err)
+	}
+	f, err := compose.NewBoolFunc(b)
 	if err != nil {
 		panic(err)
 	}

@@ -40,14 +40,18 @@ func TestComposeNot(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	r, err := b.Eval(nil)
+	f, err := NewBoolFunc(b)
+	if err != nil {
+		panic(err)
+	}
+	r, err := f.Eval(nil)
 	if err != nil {
 		panic(err)
 	}
 	if r != true {
 		t.Fatalf("expected true")
 	}
-	str := funcs.Sprint(b.Func)
+	str := funcs.Sprint(f.Func)
 	if str != "true" {
 		t.Fatalf("trimming did not work: %s", str)
 	}
@@ -64,21 +68,25 @@ func TestComposeContains(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	r, err := b.Eval(serialize.NewStringValue("TheStreet"))
+	f, err := NewBoolFunc(b)
+	if err != nil {
+		panic(err)
+	}
+	r, err := f.Eval(serialize.NewStringValue("TheStreet"))
 	if err != nil {
 		panic(err)
 	}
 	if r != true {
 		t.Fatalf("expected true")
 	}
-	r, err = b.Eval(serialize.NewStringValue("ThatStreet"))
+	r, err = f.Eval(serialize.NewStringValue("ThatStreet"))
 	if err != nil {
 		panic(err)
 	}
 	if r != false {
 		t.Fatalf("expected false")
 	}
-	if strings.Contains(funcs.Sprint(b.Func), "toLower(`TheStreet`)") {
+	if strings.Contains(funcs.Sprint(f.Func), "toLower(`TheStreet`)") {
 		t.Fatalf("trimming did not work")
 	}
 }
@@ -92,7 +100,11 @@ func TestComposeStringEq(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	r, err := b.Eval(serialize.NewStringValue("TheStreet"))
+	f, err := NewBoolFunc(b)
+	if err != nil {
+		panic(err)
+	}
+	r, err := f.Eval(serialize.NewStringValue("TheStreet"))
 	if err != nil {
 		panic(err)
 	}
@@ -115,14 +127,18 @@ func TestComposeListBool(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	r, err := b.Eval(nil)
+	f, err := NewBoolFunc(b)
+	if err != nil {
+		panic(err)
+	}
+	r, err := f.Eval(nil)
 	if err != nil {
 		panic(err)
 	}
 	if r != true {
 		t.Fatalf("expected true")
 	}
-	str := funcs.Sprint(b.Func)
+	str := funcs.Sprint(f.Func)
 	if str != "true" {
 		t.Fatalf("trimming did not work: %s", str)
 	}
@@ -145,14 +161,18 @@ func TestComposeListInt64(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	r, err := b.Eval(nil)
+	f, err := NewBoolFunc(b)
+	if err != nil {
+		panic(err)
+	}
+	r, err := f.Eval(nil)
 	if err != nil {
 		panic(err)
 	}
 	if r != true {
 		t.Fatalf("expected true")
 	}
-	t.Logf("%s", funcs.Sprint(b.Func))
+	t.Logf("%s", funcs.Sprint(f.Func))
 }
 
 func TestComposeRegex(t *testing.T) {
@@ -164,7 +184,11 @@ func TestComposeRegex(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	r, err := b.Eval(serialize.NewStringValue("a"))
+	f, err := NewBoolFunc(b)
+	if err != nil {
+		panic(err)
+	}
+	r, err := f.Eval(serialize.NewStringValue("a"))
 	if err != nil {
 		panic(err)
 	}
@@ -178,7 +202,11 @@ func TestConst(t *testing.T) {
 		expr.NewStringVar(),
 		expr.NewStringConst("ab"),
 	)
-	_, err := NewBool(expr)
+	b, err := NewBool(expr)
+	if err != nil {
+		panic(err)
+	}
+	_, err = NewBoolFunc(b)
 	if err == nil {
 		t.Fatalf("expected error")
 	}
@@ -196,7 +224,11 @@ func TestTrimInit(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	r, err := b.Eval(nil)
+	f, err := NewBoolFunc(b)
+	if err != nil {
+		panic(err)
+	}
+	r, err := f.Eval(nil)
 	if err != nil {
 		panic(err)
 	}
@@ -221,12 +253,16 @@ func TestNoTrim(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	str := funcs.Sprint(b.Func)
+	f, err := NewBoolFunc(b)
+	if err != nil {
+		panic(err)
+	}
+	str := funcs.Sprint(f.Func)
 	if str == "false" {
 		t.Fatalf("too much trimming")
 	}
 	t.Logf("trimmed = %s", str)
-	r, err := b.Eval(serialize.NewStringValue("abc"))
+	r, err := f.Eval(serialize.NewStringValue("abc"))
 	if err != nil {
 		panic(err)
 	}
@@ -249,11 +285,15 @@ func TestList(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	str := funcs.Sprint(b.Func)
+	f, err := NewBoolFunc(b)
+	if err != nil {
+		panic(err)
+	}
+	str := funcs.Sprint(f.Func)
 	if str != "true" {
 		t.Fatalf("not enough trimming on %s", str)
 	}
-	r, err := b.Eval(nil)
+	r, err := f.Eval(nil)
 	if err != nil {
 		panic(err)
 	}
@@ -270,7 +310,11 @@ func TestComposeBuiltInRegex(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	r, err := b.Eval(serialize.NewStringValue("ab"))
+	f, err := NewBoolFunc(b)
+	if err != nil {
+		panic(err)
+	}
+	r, err := f.Eval(serialize.NewStringValue("ab"))
 	if err != nil {
 		panic(err)
 	}
@@ -287,7 +331,11 @@ func TestComposeBuiltInEqual(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	r, err := b.Eval(serialize.NewIntValue(124))
+	f, err := NewBoolFunc(b)
+	if err != nil {
+		panic(err)
+	}
+	r, err := f.Eval(serialize.NewIntValue(124))
 	if err != nil {
 		panic(err)
 	}

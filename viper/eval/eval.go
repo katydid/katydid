@@ -94,7 +94,11 @@ func evalCall(rules *viper.Rules, src string, name string) (parentDst string, ch
 }
 
 func evalExpr(expr *expr.Expr, value serialize.Decoder) bool {
-	f, err := compose.NewBool(expr)
+	b, err := compose.NewBool(expr)
+	if err != nil {
+		panic(err)
+	}
+	f, err := compose.NewBoolFunc(b)
 	if err != nil {
 		panic(err)
 	}

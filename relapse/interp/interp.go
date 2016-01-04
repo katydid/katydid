@@ -39,14 +39,14 @@ func Interpret(g *relapse.Grammar, tree serialize.Parser) bool {
 		// if nameErr != nil {
 		// 	panic(nameErr)
 		// }
-		// log.Printf("Interpret = %s given input %s", res, name)
+		//log.Printf("Interpret = %s given input %s", res, name)
 		res = sderiv(refs, res, tree)
 		err = tree.Next()
 	}
 	if err != io.EOF {
 		panic(err)
 	}
-	log.Printf("Interpret Final = %s", res)
+	//log.Printf("Interpret Final = %s", res)
 	return Nullable(refs, res)
 }
 
@@ -88,7 +88,7 @@ func Nullable(refs relapse.RefLookup, p *relapse.Pattern) bool {
 
 func derivTreeNode(refs relapse.RefLookup, p *relapse.TreeNode, tree serialize.Parser) *relapse.Pattern {
 	matched := nameexpr.EvalName(p.GetName(), tree)
-	log.Printf("name %s -> %v", p, matched)
+	//log.Printf("name %s -> %v", p, matched)
 	if !matched {
 		return relapse.NewNot(relapse.NewZAny())
 	}
@@ -102,7 +102,7 @@ func derivTreeNode(refs relapse.RefLookup, p *relapse.TreeNode, tree serialize.P
 	if err != io.EOF {
 		panic(err)
 	}
-	log.Printf("derivTreeNode Final = %s", res)
+	//log.Printf("derivTreeNode Final = %s", res)
 	tree.Up()
 	if !Nullable(refs, res) {
 		return relapse.NewNot(relapse.NewZAny())
@@ -113,7 +113,7 @@ func derivTreeNode(refs relapse.RefLookup, p *relapse.TreeNode, tree serialize.P
 func sderiv(refs relapse.RefLookup, p *relapse.Pattern, tree serialize.Parser) *relapse.Pattern {
 	d := deriv(refs, p, tree)
 	s := Simplify(refs, d)
-	log.Printf("sderiv %s -> %s -> %s", p, d, s)
+	//log.Printf("sderiv %s -> %s -> %s", p, d, s)
 	return s
 }
 
@@ -128,7 +128,11 @@ func deriv(refs relapse.RefLookup, p *relapse.Pattern, tree serialize.Parser) *r
 		}
 		return derivTreeNode(refs, v, tree)
 	case *relapse.LeafNode:
-		f, err := compose.NewBool(v.GetExpr())
+		b, err := compose.NewBool(v.GetExpr())
+		if err != nil {
+			panic(err)
+		}
+		f, err := compose.NewBoolFunc(b)
 		if err != nil {
 			panic(err)
 		}

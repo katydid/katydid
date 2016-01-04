@@ -19,7 +19,8 @@ import (
 	"github.com/gogo/protobuf/proto"
 	. "github.com/katydid/katydid/funcs"
 	. "github.com/katydid/katydid/relapse/combinator"
-	"github.com/katydid/katydid/relapse/interp"
+	"github.com/katydid/katydid/relapse/lazymem"
+	"github.com/katydid/katydid/relapse/protokey"
 	pparser "github.com/katydid/katydid/serialize/proto"
 	"github.com/katydid/katydid/tests"
 	"testing"
@@ -39,14 +40,16 @@ func bench(b *testing.B, patternDecls G, pkg string, msg string, gen func() prot
 	tmp := gen()
 	desc := tmp.(tests.ProtoMessage).Description()
 	g := patternDecls.Grammar()
+	g, _ = protokey.KeyTheGrammar(pkg, msg, desc, g)
 	s := pparser.NewProtoParser(pkg, msg, desc)
+	interpreter := lazymem.NewInterpreter(g)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		err := s.Init(datas[i%num])
 		if err != nil {
 			b.Fatal(err)
 		}
-		interp.Interpret(g, s)
+		interpreter.Interpret(s)
 	}
 }
 
@@ -54,7 +57,7 @@ func benchTest(t *testing.T, patternDecls G, expected bool, pkg string, msg stri
 	g := patternDecls.Grammar()
 	desc := fmt.Sprintf("%#v", m)
 	parser := tests.NewProtoParser(pkg, msg, m)
-	match := interp.Interpret(g, parser)
+	match := lazymem.Interpret(g, parser)
 	if match != expected {
 		t.Fatalf("Expected %v on given \n%s\n on \n%s", expected, g.String(), desc)
 	}

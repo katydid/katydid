@@ -16,24 +16,24 @@ package convert_test
 
 import (
 	"github.com/katydid/katydid/relapse/ast"
-	"github.com/katydid/katydid/relapse/convert"
+	//"github.com/katydid/katydid/relapse/convert"
 	"github.com/katydid/katydid/serialize"
-	"github.com/katydid/katydid/serialize/debug"
+	//"github.com/katydid/katydid/serialize/debug"
 	"github.com/katydid/katydid/tests"
-	"github.com/katydid/katydid/viper/eval"
+	//"github.com/katydid/katydid/viper/eval"
 	"testing"
 )
 
 func test(t *testing.T, g *relapse.Grammar, parser serialize.Parser, expected bool, desc string) {
-	t.Skip("TODO")
-	parser = debug.NewLogger(parser, debug.NewLineLogger())
-	rules := convert.ToRules(g)
+	t.Skipf("TODO")
+	//parser = debug.NewLogger(parser, debug.NewLineLogger())
+	//rules := convert.ToRules(g)
 	//println("Rules:" + rules.String())
-	match := eval.Eval(rules, parser)
-	if match != expected {
-		t.Fail()
-		t.Fatalf("Expected %v given %v converted to \n%s\n on \n%s", expected, g, rules, desc)
-	}
+	// match := eval.Eval(rules, parser)
+	// if match != expected {
+	// 	t.Fail()
+	// 	t.Fatalf("Expected %v given %v converted to \n%s\n on \n%s", expected, g, rules, desc)
+	// }
 }
 
 func TestNotNil(t *testing.T) {

@@ -56,16 +56,12 @@ var (
 	debug = true
 )
 
-func NewBool(expr *expr.Expr) (*composedBool, error) {
+func NewBool(expr *expr.Expr) (funcs.Bool, error) {
 	expr2, err := rewriteBuiltIn(expr)
 	if err != nil {
 		return nil, err
 	}
-	e, err := composeBool(expr2)
-	if err != nil {
-		return nil, err
-	}
-	return NewBoolFunc(e)
+	return composeBool(expr2)
 }
 
 func NewBoolFunc(f funcs.Bool) (*composedBool, error) {

@@ -133,6 +133,9 @@ func simplifyOr(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Patter
 			return simplifyOr(refs, p2.Or.GetLeftPattern(), p2.Or.GetRightPattern())
 		}
 	}
+	if p2.Less(p1) {
+		return relapse.NewOr(p2, p1)
+	}
 	return relapse.NewOr(p1, p2)
 }
 
