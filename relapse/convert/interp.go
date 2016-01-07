@@ -59,8 +59,8 @@ func interpret(auto *auto, current *state, tree serialize.Parser) *state {
 				tree.Up()
 			}
 			for _, u := range t.ups {
-				if u.ret == up.current {
-					current = auto.states[u.dst]
+				if u.bot == up.current {
+					current = auto.states[u.top]
 				}
 			}
 			fmt.Printf("up current = %v\n", auto.patterns[current.current].String())

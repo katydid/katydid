@@ -67,7 +67,7 @@ func (this *auto) draw() {
 			v := funcs.Sprint(t.value)
 			a("\t" + scurrent + " -> " + strconv.Quote(this.patterns[t.down].String()) + " [ label = " + strconv.Quote(v+"&uarr;"+current) + " ];")
 			for _, u := range t.ups {
-				a("\t" + strconv.Quote(this.patterns[u.ret].String()) + " -> " + strconv.Quote(this.patterns[u.dst].String()) + " [ label = " + strconv.Quote(v+"&darr;"+current) + " ];")
+				a("\t" + strconv.Quote(this.patterns[u.bot].String()) + " -> " + strconv.Quote(this.patterns[u.top].String()) + " [ label = " + strconv.Quote(v+"&darr;"+current) + " ];")
 			}
 		}
 	}
@@ -156,7 +156,7 @@ func setToList(ms map[int]struct{}) []int {
 }
 
 func (this *converter) getReachable(state *state) []int {
-	allDsts := this.states[state.current].dsts()
+	allDsts := this.states[state.current].tops()
 	allDsts[state.current] = struct{}{}
 	prevDsts := allDsts
 	nextDsts := make(map[int]struct{})
@@ -169,7 +169,7 @@ func (this *converter) getReachable(state *state) []int {
 				fmt.Printf("yeah: %v\n", this.getPattern(d))
 				panic("yeah")
 			}
-			for n, _ := range this.states[d].dsts() {
+			for n, _ := range this.states[d].tops() {
 				if _, ok := allDsts[n]; !ok {
 					nextDsts[n] = struct{}{}
 					allDsts[n] = struct{}{}
@@ -208,10 +208,10 @@ func (this tran) Equal(that tran) bool {
 		return false
 	}
 	for i := range this.ups {
-		if this.ups[i].ret != that.ups[i].ret {
+		if this.ups[i].bot != that.ups[i].bot {
 			return false
 		}
-		if this.ups[i].dst != that.ups[i].dst {
+		if this.ups[i].top != that.ups[i].top {
 			return false
 		}
 	}
@@ -219,18 +219,18 @@ func (this tran) Equal(that tran) bool {
 }
 
 type up struct {
-	ret int
-	dst int
+	bot int
+	top int
 }
 
-func (this *state) dsts() map[int]struct{} {
-	dsts := make(map[int]struct{})
+func (this *state) tops() map[int]struct{} {
+	tops := make(map[int]struct{})
 	for _, t := range this.trans {
 		for _, u := range t.ups {
-			dsts[u.dst] = struct{}{}
+			tops[u.top] = struct{}{}
 		}
 	}
-	return dsts
+	return tops
 }
 
 func (this *converter) toStr(s *state) string {
@@ -239,7 +239,7 @@ func (this *converter) toStr(s *state) string {
 	for _, t := range s.trans {
 		us := []string{}
 		for _, u := range t.ups {
-			us = append(us, "( "+this.getPattern(u.ret).String()+" ^ "+this.getPattern(u.dst).String()+" )")
+			us = append(us, "( "+this.getPattern(u.bot).String()+" ^ "+this.getPattern(u.top).String()+" )")
 		}
 		ts = append(ts, funcs.Sprint(t.value)+" -> "+this.getPattern(t.down).String()+" [ "+strings.Join(us, ", ")+" ]")
 	}
@@ -282,11 +282,11 @@ func (this *converter) newState(current int, trans []tran) *state {
 func (this *converter) dedup2(ups []up) []up {
 	rups := make(map[int]int)
 	for _, up := range ups {
-		if d, ok := rups[up.ret]; !ok {
-			rups[up.ret] = up.dst
-		} else if d != up.dst {
+		if d, ok := rups[up.bot]; !ok {
+			rups[up.bot] = up.top
+		} else if d != up.top {
 			fmt.Printf("wtf\n")
-			rups[up.ret] = this.addPattern(relapse.NewOr(this.getPattern(up.dst), this.getPattern(d)))
+			rups[up.bot] = this.addPattern(relapse.NewOr(this.getPattern(up.top), this.getPattern(d)))
 		}
 	}
 	iups := []int{}
@@ -305,14 +305,14 @@ func (this *converter) dedup(ups []up) []up {
 	rups := make(map[int]map[int]struct{})
 	nups := []up{}
 	for i, up := range ups {
-		if _, ok := rups[up.ret]; !ok {
+		if _, ok := rups[up.bot]; !ok {
 			nups = append(nups, ups[i])
-			rups[up.ret] = make(map[int]struct{})
-			rups[up.ret][up.dst] = struct{}{}
-		} else if _, ok1 := rups[up.ret][up.dst]; !ok1 {
+			rups[up.bot] = make(map[int]struct{})
+			rups[up.bot][up.top] = struct{}{}
+		} else if _, ok1 := rups[up.bot][up.top]; !ok1 {
 			nups = append(nups, ups[i])
-			rups[up.ret][up.dst] = struct{}{}
-			fmt.Printf("wtf %v -> %v \n", this.patterns[up.ret], this.patterns[up.dst])
+			rups[up.bot][up.top] = struct{}{}
+			fmt.Printf("wtf %v -> %v \n", this.patterns[up.bot], this.patterns[up.top])
 			//panic("wtf different returns")
 		}
 	}
@@ -329,8 +329,8 @@ func (this *converter) union(left, right *state) []tran {
 			for _, lu := range lt.ups {
 				for _, ru := range rt.ups {
 					ups = append(ups, up{
-						ret: this.addPattern(relapse.NewOr(this.getPattern(lu.ret), this.getPattern(ru.ret))),
-						dst: this.addPattern(relapse.NewOr(this.getPattern(lu.dst), this.getPattern(ru.dst))),
+						bot: this.addPattern(relapse.NewOr(this.getPattern(lu.bot), this.getPattern(ru.bot))),
+						top: this.addPattern(relapse.NewOr(this.getPattern(lu.top), this.getPattern(ru.top))),
 					})
 				}
 			}
@@ -351,8 +351,8 @@ func (this *converter) copy(trans []tran) []tran {
 		ups := []up{}
 		for _, u := range t.ups {
 			ups = append(ups, up{
-				ret: u.ret,
-				dst: u.dst,
+				bot: u.bot,
+				top: u.top,
 			})
 		}
 		tt := tran{
@@ -369,7 +369,7 @@ func (this *converter) leftConcat(current int, left *state, rightCurrent int) []
 	ts := this.copy(left.trans)
 	for i, lt := range left.trans {
 		for j, lu := range lt.ups {
-			ts[i].ups[j].dst = this.addPattern(relapse.NewConcat(this.getPattern(lu.dst), this.getPattern(rightCurrent)))
+			ts[i].ups[j].top = this.addPattern(relapse.NewConcat(this.getPattern(lu.top), this.getPattern(rightCurrent)))
 		}
 	}
 	return ts
@@ -434,9 +434,9 @@ func (this *converter) convert(p *relapse.Pattern) *state {
 		current := this.addPattern(p)
 		f := nameToFunc(v.GetName())
 		below := this.convert(v.GetPattern())
-		dsts := this.getReachable(below)
-		ups := make([]up, 0, len(dsts))
-		for _, d := range dsts {
+		tops := this.getReachable(below)
+		ups := make([]up, 0, len(tops))
+		for _, d := range tops {
 			if interp.Nullable(this.refs, this.getPattern(d)) {
 				ups = append(ups, up{d, this.getEmpty()})
 			} else {
@@ -505,12 +505,12 @@ func (this *converter) convert(p *relapse.Pattern) *state {
 		for i := range n.trans {
 			ups := []up{}
 			for j := range n.trans[i].ups {
-				d := n.trans[i].ups[j].dst
+				d := n.trans[i].ups[j].top
 				dpat := this.getPattern(d)
 				ndpat := relapse.NewNot(dpat)
 				ups = append(ups, up{
-					dst: this.addPattern(ndpat),
-					ret: n.trans[i].ups[j].ret,
+					top: this.addPattern(ndpat),
+					bot: n.trans[i].ups[j].bot,
 				})
 			}
 			trans[i] = tran{
