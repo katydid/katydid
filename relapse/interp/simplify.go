@@ -53,7 +53,7 @@ func Simplify(refs relapse.RefLookup, p *relapse.Pattern) *relapse.Pattern {
 			Simplify(refs, v.GetRightPattern()),
 		))
 	case *relapse.ZeroOrMore:
-		return checkRef(refs, relapse.NewZeroOrMore(Simplify(refs, v.GetPattern())))
+		return checkRef(refs, simplifyZeroOrMore(Simplify(refs, v.GetPattern())))
 	case *relapse.Reference:
 		return p
 	case *relapse.Not:
@@ -167,6 +167,13 @@ func simplifyAnd(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Patte
 		return p1
 	}
 	return relapse.NewAnd(p1, p2)
+}
+
+func simplifyZeroOrMore(p *relapse.Pattern) *relapse.Pattern {
+	if p.ZeroOrMore != nil {
+		return p
+	}
+	return relapse.NewZeroOrMore(p)
 }
 
 func simplifyNot(p *relapse.Pattern) *relapse.Pattern {

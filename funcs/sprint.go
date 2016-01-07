@@ -35,7 +35,58 @@ type stringer interface {
 	String() string
 }
 
+func isVarConst(p1, p2 interface{}) (string, bool) {
+	switch p1.(type) {
+	case *varBool, *varBytes, *varDouble, *varInt, *varString, *varUint:
+		switch p2.(type) {
+		case *constBool, *constBytes, *constDouble, *constInt, *constString, *constUint:
+			return Sprint(p2), true
+		}
+	}
+	switch p2.(type) {
+	case *varBool, *varBytes, *varDouble, *varInt, *varString, *varUint:
+		switch p1.(type) {
+		case *constBool, *constBytes, *constDouble, *constInt, *constString, *constUint:
+			return Sprint(p1), true
+		}
+	}
+	return "", false
+}
+
 func Sprint(i interface{}) string {
+	e := reflect.ValueOf(i).Elem()
+	uniqName := e.Type().Name()
+	name := reverse(uniqName)
+	numFields := e.NumField()
+	if numFields == 2 {
+		p1 := e.Field(0).Interface()
+		p2 := e.Field(1).Interface()
+		v, ok := isVarConst(p1, p2)
+		if ok {
+			if name == "eq" {
+				return "== " + v
+			}
+			if name == "ne" {
+				return "!= " + v
+			}
+			if name == "gt" {
+				return "> " + v
+			}
+			if name == "lt" {
+				return "< " + v
+			}
+			if name == "ge" {
+				return ">= " + v
+			}
+			if name == "le" {
+				return "<= " + v
+			}
+		}
+	}
+	return sprint(i)
+}
+
+func sprint(i interface{}) string {
 	e := reflect.ValueOf(i).Elem()
 	uniqName := e.Type().Name()
 	name := reverse(uniqName)
@@ -52,7 +103,7 @@ func Sprint(i interface{}) string {
 		if _, ok := e.Field(i).Type().MethodByName("Eval"); !ok {
 			continue
 		}
-		ss = append(ss, Sprint(e.Field(i).Interface()))
+		ss = append(ss, sprint(e.Field(i).Interface()))
 	}
 	if len(ss) == 0 {
 		return name
@@ -119,6 +170,18 @@ func Simplify(f Bool) Bool {
 				return BoolConst(false)
 			}
 		}
+		switch vv1 := v1.(type) {
+		case *stringEq:
+			if vv2, ok := v2.(*stringEq); ok {
+				if vvv1, ok1 := isVarConst(vv1.V1, vv1.V2); ok1 {
+					if vvv2, ok2 := isVarConst(vv2.V1, vv2.V2); ok2 {
+						if vvv1 != vvv2 {
+							return BoolConst(false)
+						}
+					}
+				}
+			}
+		}
 		return And(v1, v2)
 	}
 	if ff, ok := f.(*or); ok {
@@ -160,6 +223,32 @@ func Simplify(f Bool) Bool {
 		}
 		if vv, ok := v1.(*constBool); ok {
 			return BoolConst(!vv.v)
+		}
+		switch vv := v1.(type) {
+		case *boolEq:
+			return BoolNe(vv.V1, vv.V2)
+		case *bytesEq:
+			return BytesNe(vv.V1, vv.V2)
+		case *doubleEq:
+			return DoubleNe(vv.V1, vv.V2)
+		case *intEq:
+			return IntNe(vv.V1, vv.V2)
+		case *stringEq:
+			return StringNe(vv.V1, vv.V2)
+		case *uintEq:
+			return UintNe(vv.V1, vv.V2)
+		case *boolNe:
+			return BoolEq(vv.V1, vv.V2)
+		case *bytesNe:
+			return BytesEq(vv.V1, vv.V2)
+		case *doubleNe:
+			return DoubleEq(vv.V1, vv.V2)
+		case *intNe:
+			return IntEq(vv.V1, vv.V2)
+		case *stringNe:
+			return StringEq(vv.V1, vv.V2)
+		case *uintNe:
+			return UintEq(vv.V1, vv.V2)
 		}
 		return Not(v1)
 	}
