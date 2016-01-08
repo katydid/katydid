@@ -201,6 +201,9 @@ type tran struct {
 }
 
 func (this tran) Equal(that tran) bool {
+	if !funcs.Equal(this.value, that.value) {
+		return false
+	}
 	if this.down != that.down {
 		return false
 	}
@@ -253,9 +256,18 @@ func (this *converter) newState(current int, trans []tran) *state {
 	// }
 	//mtrans := make(map[string]int, len(trans))
 	is := make([]int, 0, len(trans))
-	for i := range trans {
-		sf := funcs.Sprint(trans[i].value)
+	for trani := range trans {
+		sf := funcs.Sprint(trans[trani].value)
 		if sf == "false" {
+			continue
+		}
+		found := false
+		for _, i := range is {
+			if trans[i].Equal(trans[trani]) {
+				found = true
+			}
+		}
+		if found {
 			continue
 		}
 		// 	if j, ok := mtrans[sf]; ok {
@@ -265,7 +277,7 @@ func (this *converter) newState(current int, trans []tran) *state {
 		// 		}
 		// 	}
 		// 	mtrans[funcs.Sprint(trans[i].value)] = i
-		is = append(is, i)
+		is = append(is, trani)
 	}
 	trans2 := make([]tran, 0, len(is))
 	for _, i := range is {
@@ -549,7 +561,13 @@ func (this *converter) convert(p *relapse.Pattern) *state {
 		this.states[s.current] = s
 		return s
 	case *relapse.Contains:
-
+		left := this.convert(relapse.NewZAny())
+		right := this.convert(relapse.NewConcat(v.GetPattern(), relapse.NewZAny()))
+		current := this.addPattern(p)
+		trans := this.concat(current, left, right)
+		s := this.newState(current, trans)
+		this.states[s.current] = s
+		return s
 	case *relapse.Optional:
 
 	case *relapse.Interleave:

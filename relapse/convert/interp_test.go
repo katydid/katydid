@@ -815,6 +815,50 @@ func TestInterpAAndBAnyCCBC(t *testing.T) {
 	}
 }
 
+func TestInterpAContainsB1(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewContains(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+	))
+	auto := Convert(make(map[string]*relapse.Pattern), p)
+	tree := newXMLStringParser("<A><B/></A>")
+	if !Interp(auto, tree) {
+		t.Fatalf("expected match")
+	}
+}
+
+func TestInterpAContainsBCBC(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewContains(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+	))
+	auto := Convert(make(map[string]*relapse.Pattern), p)
+	tree := newXMLStringParser("<A><C/><B/><C/></A>")
+	if !Interp(auto, tree) {
+		t.Fatalf("expected match")
+	}
+}
+
+func TestInterpAContainsBCC(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewContains(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+	))
+	auto := Convert(make(map[string]*relapse.Pattern), p)
+	tree := newXMLStringParser("<A><C/><C/></A>")
+	if Interp(auto, tree) {
+		t.Fatalf("unexpected match")
+	}
+}
+
+func TestInterpAContainsB0(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewContains(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+	))
+	auto := Convert(make(map[string]*relapse.Pattern), p)
+	tree := newXMLStringParser("<A></A>")
+	if Interp(auto, tree) {
+		t.Fatalf("unexpected match")
+	}
+}
+
 func newXMLStringParser(s string) serialize.Parser {
 	p := xparser.NewXMLParser()
 	err := p.Init([]byte(s))
