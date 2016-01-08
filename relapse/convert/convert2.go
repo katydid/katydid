@@ -330,6 +330,32 @@ func (this *converter) union(left, right *state) []tran {
 	return ts
 }
 
+func (this *converter) intersect(left, right *state) []tran {
+	ts := []tran{}
+	for _, lt := range left.trans {
+		for _, rt := range right.trans {
+			pdl := this.getPattern(lt.down)
+			pdr := this.getPattern(rt.down)
+			ups := []up{}
+			for _, lu := range lt.ups {
+				for _, ru := range rt.ups {
+					ups = append(ups, up{
+						bot: this.addPattern(relapse.NewAnd(this.getPattern(lu.bot), this.getPattern(ru.bot))),
+						top: this.addPattern(relapse.NewAnd(this.getPattern(lu.top), this.getPattern(ru.top))),
+					})
+				}
+			}
+			tt := tran{
+				value: funcs.Simplify(funcs.And(lt.value, rt.value)),
+				down:  this.addPattern(relapse.NewAnd(pdl, pdr)),
+				ups:   ups,
+			}
+			ts = append(ts, tt)
+		}
+	}
+	return ts
+}
+
 func (this *converter) copy(trans []tran) []tran {
 	ts := []tran{}
 	for _, t := range trans {
@@ -470,7 +496,13 @@ func (this *converter) convert(p *relapse.Pattern) *state {
 		this.states[s.current] = s
 		return s
 	case *relapse.And:
-
+		left := this.convert(v.GetLeftPattern())
+		right := this.convert(v.GetRightPattern())
+		current := this.addPattern(p)
+		ts := this.intersect(left, right)
+		s := this.newState(current, ts)
+		this.states[s.current] = s
+		return s
 	case *relapse.ZeroOrMore:
 		elem := this.convert(v.GetPattern())
 		current := this.addPattern(p)
