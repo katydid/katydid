@@ -24,7 +24,7 @@ import (
 	"testing"
 )
 
-func TestInterpA(t *testing.T) {
+func TestInterpA1(t *testing.T) {
 	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())
 	auto := Convert(make(map[string]*relapse.Pattern), p)
 	tree := newXMLStringParser("<A/>")
@@ -33,7 +33,7 @@ func TestInterpA(t *testing.T) {
 	}
 }
 
-func TestInterpB(t *testing.T) {
+func TestInterpB1(t *testing.T) {
 	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())
 	auto := Convert(make(map[string]*relapse.Pattern), p)
 	tree := newXMLStringParser("<B/>")

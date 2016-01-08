@@ -321,26 +321,11 @@ func (this *converter) dedup(ups []up) []up {
 
 func (this *converter) union(left, right *state) []tran {
 	ts := []tran{}
-	for _, lt := range left.trans {
-		for _, rt := range right.trans {
-			pdl := this.getPattern(lt.down)
-			pdr := this.getPattern(rt.down)
-			ups := []up{}
-			for _, lu := range lt.ups {
-				for _, ru := range rt.ups {
-					ups = append(ups, up{
-						bot: this.addPattern(relapse.NewOr(this.getPattern(lu.bot), this.getPattern(ru.bot))),
-						top: this.addPattern(relapse.NewOr(this.getPattern(lu.top), this.getPattern(ru.top))),
-					})
-				}
-			}
-			tt := tran{
-				value: funcs.Simplify(funcs.And(lt.value, rt.value)),
-				down:  this.addPattern(relapse.NewOr(pdl, pdr)),
-				ups:   ups,
-			}
-			ts = append(ts, tt)
-		}
+	for i, _ := range left.trans {
+		ts = append(ts, left.trans[i])
+	}
+	for i, _ := range right.trans {
+		ts = append(ts, right.trans[i])
 	}
 	return ts
 }
