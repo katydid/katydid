@@ -859,6 +859,176 @@ func TestInterpAContainsB0(t *testing.T) {
 	}
 }
 
+func TestInterpOptionalB0(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewOptional(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+	))
+	auto := Convert(make(map[string]*relapse.Pattern), p)
+	tree := newXMLStringParser("<A></A>")
+	if !Interp(auto, tree) {
+		t.Fatalf("expected match")
+	}
+}
+
+func TestInterpOptionalB1(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewOptional(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+	))
+	auto := Convert(make(map[string]*relapse.Pattern), p)
+	tree := newXMLStringParser("<A><B/></A>")
+	if !Interp(auto, tree) {
+		t.Fatalf("expected match")
+	}
+}
+
+func TestInterpOptionalB2(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewOptional(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+	))
+	auto := Convert(make(map[string]*relapse.Pattern), p)
+	tree := newXMLStringParser("<A><B/><B/></A>")
+	if Interp(auto, tree) {
+		t.Fatalf("unexpected match")
+	}
+}
+
+func TestInterpOptionalC1(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewOptional(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+	))
+	auto := Convert(make(map[string]*relapse.Pattern), p)
+	tree := newXMLStringParser("<A><C/></A>")
+	if Interp(auto, tree) {
+		t.Fatalf("unexpected match")
+	}
+}
+
+func TestInterpInterleaveBC(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewInterleave(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+		relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+	))
+	auto := Convert(make(map[string]*relapse.Pattern), p)
+	tree := newXMLStringParser("<A><B/><C/></A>")
+	if !Interp(auto, tree) {
+		t.Fatalf("expected match")
+	}
+}
+
+func TestInterpInterleaveCB(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewInterleave(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+		relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+	))
+	auto := Convert(make(map[string]*relapse.Pattern), p)
+	tree := newXMLStringParser("<A><C/><B/></A>")
+	if !Interp(auto, tree) {
+		t.Fatalf("expected match")
+	}
+}
+
+func TestInterpInterleaveC(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewInterleave(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+		relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+	))
+	auto := Convert(make(map[string]*relapse.Pattern), p)
+	tree := newXMLStringParser("<A><C/></A>")
+	if Interp(auto, tree) {
+		t.Fatalf("unexpected match")
+	}
+}
+
+func TestInterpInterleaveBCAnyBC(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewInterleave(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+		relapse.NewInterleave(
+			relapse.NewZAny(),
+			relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+		),
+	))
+	auto := Convert(make(map[string]*relapse.Pattern), p)
+	tree := newXMLStringParser("<A><B/><C/></A>")
+	if !Interp(auto, tree) {
+		t.Fatalf("expected match")
+	}
+}
+
+func TestInterpInterleaveBCAnyBAC(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewInterleave(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+		relapse.NewInterleave(
+			relapse.NewZAny(),
+			relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+		),
+	))
+	auto := Convert(make(map[string]*relapse.Pattern), p)
+	tree := newXMLStringParser("<A><B/><A/><C/></A>")
+	if !Interp(auto, tree) {
+		t.Fatalf("expected match")
+	}
+}
+
+func TestInterpInterleaveBCAnyABACA(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewInterleave(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+		relapse.NewInterleave(
+			relapse.NewZAny(),
+			relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+		),
+	))
+	auto := Convert(make(map[string]*relapse.Pattern), p)
+	tree := newXMLStringParser("<A><A/><B/><A/><C/><A/></A>")
+	if !Interp(auto, tree) {
+		t.Fatalf("expected match")
+	}
+}
+
+func TestInterpInterleaveBCAnyABAA(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewInterleave(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+		relapse.NewInterleave(
+			relapse.NewZAny(),
+			relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+		),
+	))
+	auto := Convert(make(map[string]*relapse.Pattern), p)
+	tree := newXMLStringParser("<A><A/><B/><A/><A/></A>")
+	if Interp(auto, tree) {
+		t.Fatalf("unexpected match")
+	}
+}
+
+func TestInterpInterleaveBCAnyACCBA(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewInterleave(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+		relapse.NewInterleave(
+			relapse.NewZAny(),
+			relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+		),
+	))
+	auto := Convert(make(map[string]*relapse.Pattern), p)
+	tree := newXMLStringParser("<A><A/><C/><C/><B/><A/></A>")
+	if !Interp(auto, tree) {
+		t.Fatalf("expected match")
+	}
+}
+
+func TestInterpInterleaveBCAnyACCCA(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewInterleave(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+		relapse.NewInterleave(
+			relapse.NewZAny(),
+			relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+		),
+	))
+	auto := Convert(make(map[string]*relapse.Pattern), p)
+	tree := newXMLStringParser("<A><A/><C/><C/><C/><A/></A>")
+	if Interp(auto, tree) {
+		t.Fatalf("unexpected match")
+	}
+}
+
 func newXMLStringParser(s string) serialize.Parser {
 	p := xparser.NewXMLParser()
 	err := p.Init([]byte(s))

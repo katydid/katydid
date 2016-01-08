@@ -388,7 +388,7 @@ func (this *converter) copy(trans []tran) []tran {
 	return ts
 }
 
-func (this *converter) leftConcat(current int, left *state, rightCurrent int) []tran {
+func (this *converter) leftConcat(left *state, rightCurrent int) []tran {
 	ts := this.copy(left.trans)
 	for i, lt := range left.trans {
 		for j, lu := range lt.ups {
@@ -399,7 +399,7 @@ func (this *converter) leftConcat(current int, left *state, rightCurrent int) []
 }
 
 func (this *converter) concat(current int, left, right *state) []tran {
-	ts := this.leftConcat(current, left, right.current)
+	ts := this.leftConcat(left, right.current)
 	if !interp.Nullable(this.refs, this.getPattern(left.current)) {
 		return ts
 	}
@@ -409,6 +409,16 @@ func (this *converter) concat(current int, left, right *state) []tran {
 	fmt.Printf("right %v\n", this.toStr(right))
 	trans := this.union(newleft, right)
 	return trans
+}
+
+func (this *converter) interleave(left *state, right *relapse.Pattern) []tran {
+	ts := this.copy(left.trans)
+	for i, lt := range left.trans {
+		for j, lu := range lt.ups {
+			ts[i].ups[j].top = this.addPattern(relapse.NewInterleave(this.getPattern(lu.top), right))
+		}
+	}
+	return ts
 }
 
 func (this *converter) newDeadEnd(f funcs.Bool) tran {
@@ -518,7 +528,7 @@ func (this *converter) convert(p *relapse.Pattern) *state {
 	case *relapse.ZeroOrMore:
 		elem := this.convert(v.GetPattern())
 		current := this.addPattern(p)
-		ts := this.leftConcat(current, elem, current)
+		ts := this.leftConcat(elem, current)
 		// if interp.Nullable(this.refs, v.GetPattern()) {
 		// 	panic("not implemented")
 		// } else {
@@ -569,9 +579,25 @@ func (this *converter) convert(p *relapse.Pattern) *state {
 		this.states[s.current] = s
 		return s
 	case *relapse.Optional:
-
+		left := this.convert(v.GetPattern())
+		right := this.convert(relapse.NewEmpty())
+		current := this.addPattern(p)
+		ts := this.union(left, right)
+		s := this.newState(current, ts)
+		this.states[s.current] = s
+		return s
 	case *relapse.Interleave:
-
+		left := this.convert(v.GetLeftPattern())
+		right := this.convert(v.GetRightPattern())
+		current := this.addPattern(p)
+		//leftfirst := this.addPattern(relapse.NewConcat(v.GetLeftPattern(), v.GetRightPattern()))
+		//rightfirst := this.addPattern(relapse.NewConcat(v.GetRightPattern(), v.GetLeftPattern()))
+		lefttrans := this.interleave(left, v.GetRightPattern())
+		righttrans := this.interleave(right, v.GetLeftPattern())
+		ts := this.union(&state{current, false, lefttrans}, &state{current, false, righttrans})
+		s := this.newState(current, ts)
+		this.states[s.current] = s
+		return s
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T %v", typ, p))
 }
