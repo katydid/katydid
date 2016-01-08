@@ -247,24 +247,24 @@ func (this *converter) toStr(s *state) string {
 }
 
 func (this *converter) newState(current int, trans []tran) *state {
-	fmt.Printf("deduping %v\n", this.toStr(&state{current, false, trans}))
-	for i := range trans {
-		trans[i].ups = this.dedup2(trans[i].ups)
-	}
-	mtrans := make(map[string]int, len(trans))
+	// fmt.Printf("deduping %v\n", this.toStr(&state{current, false, trans}))
+	// for i := range trans {
+	// 	trans[i].ups = this.dedup2(trans[i].ups)
+	// }
+	//mtrans := make(map[string]int, len(trans))
 	is := make([]int, 0, len(trans))
 	for i := range trans {
 		sf := funcs.Sprint(trans[i].value)
 		if sf == "false" {
 			continue
 		}
-		if j, ok := mtrans[sf]; ok {
-			if !trans[i].Equal(trans[j]) {
-				fmt.Printf("deduped! %v\n", this.toStr(&state{current, false, trans}))
-				panic("wtf")
-			}
-		}
-		mtrans[funcs.Sprint(trans[i].value)] = i
+		// 	if j, ok := mtrans[sf]; ok {
+		// 		if !trans[i].Equal(trans[j]) {
+		// 			fmt.Printf("deduped! %v\n", this.toStr(&state{current, false, trans}))
+		// 			panic("wtf")
+		// 		}
+		// 	}
+		// 	mtrans[funcs.Sprint(trans[i].value)] = i
 		is = append(is, i)
 	}
 	trans2 := make([]tran, 0, len(is))
@@ -275,7 +275,7 @@ func (this *converter) newState(current int, trans []tran) *state {
 		current: current,
 		trans:   trans2,
 	}
-	fmt.Printf("deduped  %v\n", this.toStr(s))
+	// fmt.Printf("deduped  %v\n", this.toStr(s))
 	return s
 }
 
