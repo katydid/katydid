@@ -20,7 +20,7 @@ import (
 
 func TestSprint1(t *testing.T) {
 	out := Sprint(BoolEq(BoolConst(true), BoolVar()))
-	exp := "eq(true,$bool)"
+	exp := "== true"
 	if out != exp {
 		t.Fatalf("expected %s, but got %s", exp, out)
 	}

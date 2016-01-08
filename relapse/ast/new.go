@@ -307,6 +307,13 @@ func NewContains(pattern *Pattern) *Pattern {
 }
 
 func NewLeafNode(expr *expr.Expr) *Pattern {
+	if expr.BuiltIn != nil {
+		return &Pattern{
+			LeafNode: &LeafNode{
+				Expr: expr,
+			},
+		}
+	}
 	return &Pattern{
 		LeafNode: &LeafNode{
 			RightArrow: newRightArrow(),

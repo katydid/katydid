@@ -97,6 +97,12 @@ func CompareVarExpr(a, b *expr.Expr) bool {
 		bs := b.GetFunction().GetParams()
 		return compareVarExprs(as, bs)
 	}
+	if a.BuiltIn != nil && b.BuiltIn != nil {
+		if a.GetBuiltIn().GetSymbol().GetValue() != b.GetBuiltIn().GetSymbol().GetValue() {
+			return false
+		}
+		return CompareVarExpr(a.GetBuiltIn().GetExpr(), b.GetBuiltIn().GetExpr())
+	}
 	//types are different
 	return false
 }
