@@ -343,10 +343,10 @@ func (this *converter) union(left, right []tran) []tran {
 	return ts
 }
 
-func (this *converter) intersect(left, right *state) []tran {
+func (this *converter) intersect(left, right []tran) []tran {
 	ts := []tran{}
-	for _, lt := range left.trans {
-		for _, rt := range right.trans {
+	for _, lt := range left {
+		for _, rt := range right {
 			pdl := this.getPattern(lt.down)
 			pdr := this.getPattern(rt.down)
 			ups := []up{}
@@ -399,19 +399,9 @@ func (this *converter) leftConcat(left []tran, rightCurrent int) []tran {
 	return ts
 }
 
-func (this *converter) concat(current int, left, right *state) []tran {
-	leftts := this.leftConcat(left.trans, right.current)
-	if !interp.Nullable(this.refs, this.getPattern(left.current)) {
-		return leftts
-	}
-	fmt.Printf("concating %v\n", this.getPattern(current))
-	trans := this.union(leftts, right.trans)
-	return trans
-}
-
-func (this *converter) interleave(left *state, right *relapse.Pattern) []tran {
-	ts := this.copy(left.trans)
-	for i, lt := range left.trans {
+func (this *converter) interleave(left []tran, right *relapse.Pattern) []tran {
+	ts := this.copy(left)
+	for i, lt := range left {
 		for j, lu := range lt.ups {
 			ts[i].ups[j].top = this.addPattern(relapse.NewInterleave(this.getPattern(lu.top), right))
 		}
@@ -490,19 +480,23 @@ func (this *converter) convert(p *relapse.Pattern) []tran {
 			this.newDeadEnd(not(f)),
 		}
 	case *relapse.Concat:
-		left := this.sconvert(v.GetLeftPattern())
-		right := this.sconvert(v.GetRightPattern())
-		current := this.addPattern(p)
-		trans := this.concat(current, left, right)
+		fmt.Printf("concating %v\n", p)
+		left := this.convert(v.GetLeftPattern())
+		leftts := this.leftConcat(left, this.addPattern(v.GetRightPattern()))
+		if !interp.Nullable(this.refs, v.GetLeftPattern()) {
+			return leftts
+		}
+		rightts := this.convert(v.GetRightPattern())
+		trans := this.union(leftts, rightts)
 		return trans
 	case *relapse.Or:
-		left := this.sconvert(v.GetLeftPattern())
-		right := this.sconvert(v.GetRightPattern())
-		ts := this.union(left.trans, right.trans)
+		left := this.convert(v.GetLeftPattern())
+		right := this.convert(v.GetRightPattern())
+		ts := this.union(left, right)
 		return ts
 	case *relapse.And:
-		left := this.sconvert(v.GetLeftPattern())
-		right := this.sconvert(v.GetRightPattern())
+		left := this.convert(v.GetLeftPattern())
+		right := this.convert(v.GetRightPattern())
 		ts := this.intersect(left, right)
 		return ts
 	case *relapse.ZeroOrMore:
@@ -516,22 +510,22 @@ func (this *converter) convert(p *relapse.Pattern) []tran {
 		trans := this.convert(p)
 		return trans
 	case *relapse.Not:
-		n := this.sconvert(v.GetPattern())
-		trans := make([]tran, len(n.trans))
-		for i := range n.trans {
+		ntrans := this.convert(v.GetPattern())
+		trans := make([]tran, len(ntrans))
+		for i := range ntrans {
 			ups := []up{}
-			for j := range n.trans[i].ups {
-				d := n.trans[i].ups[j].top
+			for j := range ntrans[i].ups {
+				d := ntrans[i].ups[j].top
 				dpat := this.getPattern(d)
 				ndpat := relapse.NewNot(dpat)
 				ups = append(ups, up{
 					top: this.addPattern(ndpat),
-					bot: n.trans[i].ups[j].bot,
+					bot: ntrans[i].ups[j].bot,
 				})
 			}
 			trans[i] = tran{
-				value: n.trans[i].value,
-				down:  n.trans[i].down,
+				value: ntrans[i].value,
+				down:  ntrans[i].down,
 				ups:   ups,
 			}
 		}
@@ -541,19 +535,12 @@ func (this *converter) convert(p *relapse.Pattern) []tran {
 			this.newAnyEnd(funcs.BoolConst(true)),
 		}
 	case *relapse.Contains:
-		left := this.sconvert(relapse.NewZAny())
-		right := this.sconvert(relapse.NewConcat(v.GetPattern(), relapse.NewZAny()))
-		current := this.addPattern(p)
-		trans := this.concat(current, left, right)
-		return trans
+		return this.convert(relapse.NewConcat(relapse.NewZAny(), relapse.NewConcat(v.GetPattern(), relapse.NewZAny())))
 	case *relapse.Optional:
-		left := this.convert(v.GetPattern())
-		right := this.convert(relapse.NewEmpty())
-		ts := this.union(left, right)
-		return ts
+		return this.convert(relapse.NewOr(v.GetPattern(), relapse.NewEmpty()))
 	case *relapse.Interleave:
-		left := this.sconvert(v.GetLeftPattern())
-		right := this.sconvert(v.GetRightPattern())
+		left := this.convert(v.GetLeftPattern())
+		right := this.convert(v.GetRightPattern())
 		lefttrans := this.interleave(left, v.GetRightPattern())
 		righttrans := this.interleave(right, v.GetLeftPattern())
 		ts := this.union(lefttrans, righttrans)
