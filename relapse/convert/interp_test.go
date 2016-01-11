@@ -24,6 +24,15 @@ import (
 	"testing"
 )
 
+func newXMLStringParser(s string) serialize.Parser {
+	p := xparser.NewXMLParser()
+	err := p.Init([]byte(s))
+	if err != nil {
+		panic(err)
+	}
+	return p
+}
+
 func TestInterpA1(t *testing.T) {
 	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())
 	auto := Convert(make(map[string]*relapse.Pattern), p)
@@ -1029,11 +1038,61 @@ func TestInterpInterleaveBCAnyACCCA(t *testing.T) {
 	}
 }
 
-func newXMLStringParser(s string) serialize.Parser {
-	p := xparser.NewXMLParser()
-	err := p.Init([]byte(s))
-	if err != nil {
-		panic(err)
+func TestInterpRefA1(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())
+	refs := map[string]*relapse.Pattern{"main": p}
+	auto := Convert(refs, p)
+	tree := newXMLStringParser("<A/>")
+	if !Interp(auto, tree) {
+		t.Fatalf("expected match")
 	}
-	return p
 }
+
+func TestInterpRefB1(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())
+	refs := map[string]*relapse.Pattern{"main": p}
+	auto := Convert(refs, p)
+	tree := newXMLStringParser("<B/>")
+	if Interp(auto, tree) {
+		t.Fatalf("unexpected match")
+	}
+}
+
+// func TestInterpRefLoopA1(t *testing.T) {
+// 	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewOr(
+// 		relapse.NewEmpty(),
+// 		relapse.NewReference("main"),
+// 	))
+// 	refs := map[string]*relapse.Pattern{"main": p}
+// 	auto := Convert(refs, p)
+// 	tree := newXMLStringParser("<A/>")
+// 	if !Interp(auto, tree) {
+// 		t.Fatalf("expected match")
+// 	}
+// }
+
+// func TestInterpRefLoopA2(t *testing.T) {
+// 	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewOr(
+// 		relapse.NewEmpty(),
+// 		relapse.NewReference("main"),
+// 	))
+// 	refs := map[string]*relapse.Pattern{"main": p}
+// 	auto := Convert(refs, p)
+// 	tree := newXMLStringParser("<A><A/></A>")
+// 	if !Interp(auto, tree) {
+// 		t.Fatalf("expected match")
+// 	}
+// }
+
+// func TestInterpRefLoopAB(t *testing.T) {
+// 	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewOr(
+// 		relapse.NewEmpty(),
+// 		relapse.NewReference("main"),
+// 	))
+// 	refs := map[string]*relapse.Pattern{"main": p}
+// 	auto := Convert(refs, p)
+// 	tree := newXMLStringParser("<A><B/></A>")
+// 	if Interp(auto, tree) {
+// 		t.Fatalf("unexpected match")
+// 	}
+// }

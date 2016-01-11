@@ -78,7 +78,7 @@ func (this *auto) draw() {
 func Convert(refs relapse.RefLookup, p *relapse.Pattern) *auto {
 	c := newConverter(refs)
 	start := c.addPattern(p)
-	c.convert(p)
+	c.sconvert(p)
 	finals := c.getReachable(c.states[start])
 	c.exhaust()
 	for _, f := range finals {
@@ -139,7 +139,7 @@ func (this *converter) exhaust() {
 		for i, p := range this.patterns {
 			if _, ok := this.states[i]; !ok {
 				fmt.Printf("exhausting %v %d\n", p, len(this.states))
-				this.convert(p)
+				this.sconvert(p)
 				changed = true
 			}
 		}
@@ -163,7 +163,7 @@ func (this *converter) getReachable(state *state) []int {
 	for {
 		for _, d := range setToList(prevDsts) {
 			if _, ok := this.states[d]; !ok {
-				this.convert(this.getPattern(d))
+				this.sconvert(this.getPattern(d))
 			}
 			if this.states[d] == nil {
 				fmt.Printf("yeah: %v\n", this.getPattern(d))
@@ -287,6 +287,7 @@ func (this *converter) newState(current int, trans []tran) *state {
 		current: current,
 		trans:   trans2,
 	}
+	this.states[current] = s
 	// fmt.Printf("deduped  %v\n", this.toStr(s))
 	return s
 }
@@ -331,13 +332,13 @@ func (this *converter) dedup(ups []up) []up {
 	return ups
 }
 
-func (this *converter) union(left, right *state) []tran {
+func (this *converter) union(left, right []tran) []tran {
 	ts := []tran{}
-	for i, _ := range left.trans {
-		ts = append(ts, left.trans[i])
+	for i, _ := range left {
+		ts = append(ts, left[i])
 	}
-	for i, _ := range right.trans {
-		ts = append(ts, right.trans[i])
+	for i, _ := range right {
+		ts = append(ts, right[i])
 	}
 	return ts
 }
@@ -388,9 +389,9 @@ func (this *converter) copy(trans []tran) []tran {
 	return ts
 }
 
-func (this *converter) leftConcat(left *state, rightCurrent int) []tran {
-	ts := this.copy(left.trans)
-	for i, lt := range left.trans {
+func (this *converter) leftConcat(left []tran, rightCurrent int) []tran {
+	ts := this.copy(left)
+	for i, lt := range left {
 		for j, lu := range lt.ups {
 			ts[i].ups[j].top = this.addPattern(relapse.NewConcat(this.getPattern(lu.top), this.getPattern(rightCurrent)))
 		}
@@ -399,15 +400,12 @@ func (this *converter) leftConcat(left *state, rightCurrent int) []tran {
 }
 
 func (this *converter) concat(current int, left, right *state) []tran {
-	ts := this.leftConcat(left, right.current)
+	leftts := this.leftConcat(left.trans, right.current)
 	if !interp.Nullable(this.refs, this.getPattern(left.current)) {
-		return ts
+		return leftts
 	}
-	newleft := &state{current, false, ts}
 	fmt.Printf("concating %v\n", this.getPattern(current))
-	fmt.Printf("newleft %v\n", this.toStr(newleft))
-	fmt.Printf("right %v\n", this.toStr(right))
-	trans := this.union(newleft, right)
+	trans := this.union(leftts, right.trans)
 	return trans
 }
 
@@ -445,28 +443,28 @@ func exprToFunc(expr *expr.Expr) funcs.Bool {
 	return funcs.Simplify(f)
 }
 
-func (this *converter) convert(p *relapse.Pattern) *state {
+func (this *converter) sconvert(p *relapse.Pattern) *state {
 	p = interp.Simplify(this.refs, p)
-	c := this.addPattern(p)
-	if this.states[c] != nil {
-		return this.states[c]
+	current := this.addPattern(p)
+	if this.states[current] != nil {
+		return this.states[current]
 	}
-	this.states[c] = nil
+	this.states[current] = nil
+	trans := this.convert(p)
+	return this.newState(current, trans)
+}
+
+func (this *converter) convert(p *relapse.Pattern) []tran {
+	fmt.Printf("converting %s\n", p.String())
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *relapse.Empty:
-		s := this.newState(
-			this.getEmpty(),
-			[]tran{
-				this.newDeadEnd(funcs.BoolConst(true)),
-			},
-		)
-		this.states[s.current] = s
-		return s
+		return []tran{
+			this.newDeadEnd(funcs.BoolConst(true)),
+		}
 	case *relapse.TreeNode:
-		current := this.addPattern(p)
 		f := nameToFunc(v.GetName())
-		below := this.convert(v.GetPattern())
+		below := this.sconvert(v.GetPattern())
 		tops := this.getReachable(below)
 		ups := make([]up, 0, len(tops))
 		for _, d := range tops {
@@ -476,70 +474,49 @@ func (this *converter) convert(p *relapse.Pattern) *state {
 				ups = append(ups, up{d, this.getNone()})
 			}
 		}
-		s := this.newState(
-			current,
-			[]tran{
-				{f, this.addPattern(v.Pattern), ups},
-				this.newDeadEnd(not(f)),
-			},
-		)
-		this.states[s.current] = s
-		return s
+		return []tran{
+			{f, this.addPattern(v.Pattern), ups},
+			this.newDeadEnd(not(f)),
+		}
 	case *relapse.LeafNode:
 		f := exprToFunc(v.GetExpr())
-		s := this.newState(
-			this.addPattern(p),
-			[]tran{
-				{
-					f, this.getEmpty(), []up{
-						{this.getEmpty(), this.getEmpty()},
-						{this.getNone(), this.getNone()},
-					},
+		return []tran{
+			{
+				f, this.getEmpty(), []up{
+					{this.getEmpty(), this.getEmpty()},
+					{this.getNone(), this.getNone()},
 				},
-				this.newDeadEnd(not(f)),
 			},
-		)
-		this.states[s.current] = s
-		return s
+			this.newDeadEnd(not(f)),
+		}
 	case *relapse.Concat:
-		left := this.convert(v.GetLeftPattern())
-		right := this.convert(v.GetRightPattern())
+		left := this.sconvert(v.GetLeftPattern())
+		right := this.sconvert(v.GetRightPattern())
 		current := this.addPattern(p)
 		trans := this.concat(current, left, right)
-		s := this.newState(current, trans)
-		this.states[s.current] = s
-		return s
+		return trans
 	case *relapse.Or:
-		left := this.convert(v.GetLeftPattern())
-		right := this.convert(v.GetRightPattern())
-		current := this.addPattern(p)
-		ts := this.union(left, right)
-		s := this.newState(current, ts)
-		this.states[s.current] = s
-		return s
+		left := this.sconvert(v.GetLeftPattern())
+		right := this.sconvert(v.GetRightPattern())
+		ts := this.union(left.trans, right.trans)
+		return ts
 	case *relapse.And:
-		left := this.convert(v.GetLeftPattern())
-		right := this.convert(v.GetRightPattern())
-		current := this.addPattern(p)
+		left := this.sconvert(v.GetLeftPattern())
+		right := this.sconvert(v.GetRightPattern())
 		ts := this.intersect(left, right)
-		s := this.newState(current, ts)
-		this.states[s.current] = s
-		return s
+		return ts
 	case *relapse.ZeroOrMore:
-		elem := this.convert(v.GetPattern())
+		ts := this.convert(v.GetPattern())
 		current := this.addPattern(p)
-		ts := this.leftConcat(elem, current)
-		// if interp.Nullable(this.refs, v.GetPattern()) {
-		// 	panic("not implemented")
-		// } else {
-		s := this.newState(current, ts)
-		this.states[s.current] = s
-		return s
-		//}
+		trans := this.leftConcat(ts, current)
+		return trans
 	case *relapse.Reference:
-
+		p := this.refs[v.GetName()]
+		this.states[this.addPattern(p)] = nil
+		trans := this.convert(p)
+		return trans
 	case *relapse.Not:
-		n := this.convert(v.GetPattern())
+		n := this.sconvert(v.GetPattern())
 		trans := make([]tran, len(n.trans))
 		for i := range n.trans {
 			ups := []up{}
@@ -558,46 +535,29 @@ func (this *converter) convert(p *relapse.Pattern) *state {
 				ups:   ups,
 			}
 		}
-		s := this.newState(this.addPattern(p), trans)
-		this.states[s.current] = s
-		return s
+		return trans
 	case *relapse.ZAny:
-		s := this.newState(
-			this.getAny(),
-			[]tran{
-				this.newAnyEnd(funcs.BoolConst(true)),
-			},
-		)
-		this.states[s.current] = s
-		return s
+		return []tran{
+			this.newAnyEnd(funcs.BoolConst(true)),
+		}
 	case *relapse.Contains:
-		left := this.convert(relapse.NewZAny())
-		right := this.convert(relapse.NewConcat(v.GetPattern(), relapse.NewZAny()))
+		left := this.sconvert(relapse.NewZAny())
+		right := this.sconvert(relapse.NewConcat(v.GetPattern(), relapse.NewZAny()))
 		current := this.addPattern(p)
 		trans := this.concat(current, left, right)
-		s := this.newState(current, trans)
-		this.states[s.current] = s
-		return s
+		return trans
 	case *relapse.Optional:
 		left := this.convert(v.GetPattern())
 		right := this.convert(relapse.NewEmpty())
-		current := this.addPattern(p)
 		ts := this.union(left, right)
-		s := this.newState(current, ts)
-		this.states[s.current] = s
-		return s
+		return ts
 	case *relapse.Interleave:
-		left := this.convert(v.GetLeftPattern())
-		right := this.convert(v.GetRightPattern())
-		current := this.addPattern(p)
-		//leftfirst := this.addPattern(relapse.NewConcat(v.GetLeftPattern(), v.GetRightPattern()))
-		//rightfirst := this.addPattern(relapse.NewConcat(v.GetRightPattern(), v.GetLeftPattern()))
+		left := this.sconvert(v.GetLeftPattern())
+		right := this.sconvert(v.GetRightPattern())
 		lefttrans := this.interleave(left, v.GetRightPattern())
 		righttrans := this.interleave(right, v.GetLeftPattern())
-		ts := this.union(&state{current, false, lefttrans}, &state{current, false, righttrans})
-		s := this.newState(current, ts)
-		this.states[s.current] = s
-		return s
+		ts := this.union(lefttrans, righttrans)
+		return ts
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T %v", typ, p))
 }
