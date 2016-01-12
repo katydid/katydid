@@ -79,10 +79,11 @@ func Convert(refs relapse.RefLookup, p *relapse.Pattern) *auto {
 	c := newConverter(refs)
 	start := c.addPattern(p)
 	c.sconvert(p)
-	finals := c.getReachable(c.states[start])
 	c.exhaust()
+	finals := c.getReachable(p)
 	for _, f := range finals {
-		if interp.Nullable(c.refs, c.getPattern(c.states[f].current)) {
+		currentpattern := c.states[f].current
+		if interp.Nullable(c.refs, c.getPattern(currentpattern)) {
 			c.states[f].final = true
 		}
 	}
@@ -155,21 +156,148 @@ func setToList(ms map[int]struct{}) []int {
 	return is
 }
 
-func (this *converter) getReachable(state *state) []int {
-	allDsts := this.states[state.current].tops()
-	allDsts[state.current] = struct{}{}
+func tops(trans []tran) map[int]struct{} {
+	tops := make(map[int]struct{})
+	for _, t := range trans {
+		for _, u := range t.ups {
+			tops[u.top] = struct{}{}
+		}
+	}
+	return tops
+}
+
+type Set map[int]struct{}
+
+func newSet() Set {
+	return make(Set)
+}
+
+func (this Set) add(i int) Set {
+	this[i] = struct{}{}
+	return this
+}
+
+func (this Set) union(that Set) Set {
+	for j := range that {
+		this = this.add(j)
+	}
+	return this
+}
+
+func (this *converter) reachableConcat(left, right Set) Set {
+	s := newSet()
+	for l := range left {
+		for r := range right {
+			lp := this.getPattern(l)
+			rp := this.getPattern(r)
+			c := relapse.NewConcat(lp, rp)
+			s.add(this.addPattern(c))
+		}
+	}
+	return s
+}
+
+func (this *converter) reachableIntersect(left, right Set) Set {
+	s := newSet()
+	for l := range left {
+		for r := range right {
+			lp := this.getPattern(l)
+			rp := this.getPattern(r)
+			c := relapse.NewAnd(lp, rp)
+			s.add(this.addPattern(c))
+		}
+	}
+	return s
+}
+
+func (this *converter) reachableInterleave(left, right Set) Set {
+	s := newSet()
+	for l := range left {
+		for r := range right {
+			lp := this.getPattern(l)
+			rp := this.getPattern(r)
+			c := relapse.NewInterleave(lp, rp)
+			s.add(this.addPattern(c))
+		}
+	}
+	return s
+}
+
+func (this *converter) getReachable2(p *relapse.Pattern) Set {
+	fmt.Printf("getReachable2 %s\n", p.String())
+	typ := p.GetValue()
+	switch v := typ.(type) {
+	case *relapse.Empty:
+		return newSet().add(this.getNone())
+	case *relapse.TreeNode:
+		return newSet().add(this.getEmpty()).add(this.getNone())
+	case *relapse.LeafNode:
+		return newSet().add(this.getEmpty()).add(this.getNone())
+	case *relapse.Concat:
+		lefts1 := this.getReachable2(v.GetLeftPattern())
+		rights := this.getReachable2(v.GetRightPattern())
+		lefts2 := this.reachableConcat(lefts1, rights)
+		if !interp.Nullable(this.refs, v.GetLeftPattern()) {
+			return lefts2
+		}
+		return lefts2.union(rights)
+	case *relapse.Or:
+		lefts := this.getReachable2(v.GetLeftPattern())
+		rights := this.getReachable2(v.GetRightPattern())
+		return lefts.union(rights)
+	case *relapse.And:
+		left := this.getReachable2(v.GetLeftPattern())
+		right := this.getReachable2(v.GetRightPattern())
+		return this.reachableIntersect(left, right)
+	case *relapse.ZeroOrMore:
+		pat := this.getReachable2(v.GetPattern())
+		here := newSet().add(this.addPattern(p))
+		return this.reachableConcat(pat, here)
+	case *relapse.Reference:
+		r := this.refs[v.GetName()]
+		return this.getReachable2(r)
+	case *relapse.Not:
+		rs := this.getReachable2(v.GetPattern())
+		set := newSet()
+		for r := range rs {
+			set.add(this.addPattern(relapse.NewNot(this.getPattern(r))))
+		}
+		return set
+	case *relapse.ZAny:
+		return newSet().add(this.getAny())
+	case *relapse.Contains:
+		return this.getReachable2(relapse.NewConcat(relapse.NewZAny(), relapse.NewConcat(v.GetPattern(), relapse.NewZAny())))
+	case *relapse.Optional:
+		return this.getReachable2(relapse.NewOr(v.GetPattern(), relapse.NewEmpty()))
+	case *relapse.Interleave:
+		left := this.getReachable2(v.GetLeftPattern())
+		right := this.getReachable2(v.GetRightPattern())
+		lefts := this.reachableInterleave(left, newSet().add(this.addPattern(v.GetRightPattern())))
+		rights := this.reachableInterleave(right, newSet().add(this.addPattern(v.GetLeftPattern())))
+		return lefts.union(rights)
+	}
+	panic(fmt.Sprintf("unknown pattern typ %T %v", typ, p))
+}
+
+func (this *converter) getTops(p *relapse.Pattern) Set {
+	d := this.addPattern(p)
+	sd := this.states[d]
+	if sd != nil {
+		return tops(sd.trans)
+	}
+	return this.getReachable2(p)
+}
+
+func (this *converter) getReachable(p *relapse.Pattern) []int {
+	current := this.addPattern(p)
+	allDsts := this.getTops(p)
+	allDsts[current] = struct{}{}
 	prevDsts := allDsts
 	nextDsts := make(map[int]struct{})
 	for {
 		for _, d := range setToList(prevDsts) {
-			if _, ok := this.states[d]; !ok {
-				this.sconvert(this.getPattern(d))
-			}
-			if this.states[d] == nil {
-				fmt.Printf("yeah: %v\n", this.getPattern(d))
-				panic("yeah")
-			}
-			for n, _ := range this.states[d].tops() {
+			dsts := this.getTops(this.getPattern(d))
+			for n, _ := range dsts {
 				if _, ok := allDsts[n]; !ok {
 					nextDsts[n] = struct{}{}
 					allDsts[n] = struct{}{}
@@ -224,16 +352,6 @@ func (this tran) Equal(that tran) bool {
 type up struct {
 	bot int
 	top int
-}
-
-func (this *state) tops() map[int]struct{} {
-	tops := make(map[int]struct{})
-	for _, t := range this.trans {
-		for _, u := range t.ups {
-			tops[u.top] = struct{}{}
-		}
-	}
-	return tops
 }
 
 func (this *converter) toStr(s *state) string {
@@ -434,12 +552,12 @@ func exprToFunc(expr *expr.Expr) funcs.Bool {
 }
 
 func (this *converter) sconvert(p *relapse.Pattern) *state {
+	fmt.Printf("sconvert %v\n", p)
 	p = interp.Simplify(this.refs, p)
 	current := this.addPattern(p)
 	if this.states[current] != nil {
 		return this.states[current]
 	}
-	this.states[current] = nil
 	trans := this.convert(p)
 	return this.newState(current, trans)
 }
@@ -454,8 +572,7 @@ func (this *converter) convert(p *relapse.Pattern) []tran {
 		}
 	case *relapse.TreeNode:
 		f := nameToFunc(v.GetName())
-		below := this.sconvert(v.GetPattern())
-		tops := this.getReachable(below)
+		tops := this.getReachable(v.GetPattern())
 		ups := make([]up, 0, len(tops))
 		for _, d := range tops {
 			if interp.Nullable(this.refs, this.getPattern(d)) {
@@ -506,7 +623,6 @@ func (this *converter) convert(p *relapse.Pattern) []tran {
 		return trans
 	case *relapse.Reference:
 		p := this.refs[v.GetName()]
-		this.states[this.addPattern(p)] = nil
 		trans := this.convert(p)
 		return trans
 	case *relapse.Not:
