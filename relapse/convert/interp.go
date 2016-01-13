@@ -65,7 +65,7 @@ func interpret(auto *auto, currents []*stackstate, tree serialize.Parser) []*sta
 				}
 				e, err := f.Eval(tree)
 				if err != nil {
-					panic(err)
+					continue
 				}
 				if !e {
 					continue

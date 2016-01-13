@@ -33,6 +33,16 @@ func newXMLStringParser(s string) serialize.Parser {
 	return p
 }
 
+func TestInterpNone(t *testing.T) {
+	p := relapse.NewNot(relapse.NewZAny())
+	refs := map[string]*relapse.Pattern{"main": p}
+	auto := Convert(refs, refs["main"])
+	tree := newXMLStringParser("<A/>")
+	if Interp(auto, tree) {
+		t.Fatalf("unexpected match")
+	}
+}
+
 func TestInterpA1(t *testing.T) {
 	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())
 	auto := Convert(make(map[string]*relapse.Pattern), p)
@@ -1092,6 +1102,51 @@ func TestInterpRefLoopAB(t *testing.T) {
 	refs := map[string]*relapse.Pattern{"main": p}
 	auto := Convert(refs, relapse.NewReference("main"))
 	tree := newXMLStringParser("<A><B/></A>")
+	if Interp(auto, tree) {
+		t.Fatalf("unexpected match")
+	}
+}
+
+func TestInterpConcatOptionalBD_BD(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"),
+		relapse.NewConcat(
+			relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+			relapse.NewOptional(relapse.NewTreeNode(relapse.NewStringName("D"), relapse.NewEmpty())),
+		),
+	)
+	refs := map[string]*relapse.Pattern{"main": p}
+	auto := Convert(refs, relapse.NewReference("main"))
+	tree := newXMLStringParser("<A><B/><D/></A>")
+	if !Interp(auto, tree) {
+		t.Fatalf("expected match")
+	}
+}
+
+func TestInterpConcatOptionalBD_B(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"),
+		relapse.NewConcat(
+			relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+			relapse.NewOptional(relapse.NewTreeNode(relapse.NewStringName("D"), relapse.NewEmpty())),
+		),
+	)
+	refs := map[string]*relapse.Pattern{"main": p}
+	auto := Convert(refs, relapse.NewReference("main"))
+	tree := newXMLStringParser("<A><B/></A>")
+	if !Interp(auto, tree) {
+		t.Fatalf("expected match")
+	}
+}
+
+func TestInterpConcatOptionalBD_D(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"),
+		relapse.NewConcat(
+			relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+			relapse.NewOptional(relapse.NewTreeNode(relapse.NewStringName("D"), relapse.NewEmpty())),
+		),
+	)
+	refs := map[string]*relapse.Pattern{"main": p}
+	auto := Convert(refs, relapse.NewReference("main"))
+	tree := newXMLStringParser("<A><D/></A>")
 	if Interp(auto, tree) {
 		t.Fatalf("unexpected match")
 	}

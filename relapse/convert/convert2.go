@@ -101,7 +101,7 @@ type converter struct {
 func newConverter(refs relapse.RefLookup) *converter {
 	return &converter{
 		states:   make(map[int]*state),
-		patterns: []*relapse.Pattern{relapse.NewZAny(), relapse.NewNot(relapse.NewZAny()), relapse.NewEmpty()},
+		patterns: []*relapse.Pattern{},
 		refs:     refs,
 	}
 }
@@ -122,15 +122,15 @@ func (this *converter) getPattern(i int) *relapse.Pattern {
 }
 
 func (this *converter) getAny() int {
-	return 0
+	return this.addPattern(relapse.NewZAny())
 }
 
 func (this *converter) getNone() int {
-	return 1
+	return this.addPattern(relapse.NewNot(relapse.NewZAny()))
 }
 
 func (this *converter) getEmpty() int {
-	return 2
+	return this.addPattern(relapse.NewEmpty())
 }
 
 func (this *converter) exhaust() {
@@ -145,15 +145,6 @@ func (this *converter) exhaust() {
 			}
 		}
 	}
-}
-
-func setToList(ms map[int]struct{}) []int {
-	is := make([]int, 0, len(ms))
-	for i, _ := range ms {
-		is = append(is, i)
-	}
-	sort.Ints(is)
-	return is
 }
 
 func tops(trans []tran) map[int]struct{} {
@@ -184,6 +175,15 @@ func (this Set) union(that Set) Set {
 	return this
 }
 
+func (this Set) list() []int {
+	is := make([]int, 0, len(this))
+	for i, _ := range this {
+		is = append(is, i)
+	}
+	sort.Ints(is)
+	return is
+}
+
 func (this *converter) reachableConcat(left, right Set) Set {
 	s := newSet()
 	for l := range left {
@@ -191,7 +191,7 @@ func (this *converter) reachableConcat(left, right Set) Set {
 			lp := this.getPattern(l)
 			rp := this.getPattern(r)
 			c := relapse.NewConcat(lp, rp)
-			s.add(this.addPattern(c))
+			s = s.add(this.addPattern(c))
 		}
 	}
 	return s
@@ -204,27 +204,31 @@ func (this *converter) reachableIntersect(left, right Set) Set {
 			lp := this.getPattern(l)
 			rp := this.getPattern(r)
 			c := relapse.NewAnd(lp, rp)
-			s.add(this.addPattern(c))
+			s = s.add(this.addPattern(c))
 		}
 	}
 	return s
 }
 
-func (this *converter) reachableInterleave(left, right Set) Set {
+func (this *converter) reachableInterleave(left Set, rp *relapse.Pattern) Set {
 	s := newSet()
 	for l := range left {
-		for r := range right {
-			lp := this.getPattern(l)
-			rp := this.getPattern(r)
-			c := relapse.NewInterleave(lp, rp)
-			s.add(this.addPattern(c))
-		}
+		lp := this.getPattern(l)
+		c := relapse.NewInterleave(lp, rp)
+		s = s.add(this.addPattern(c))
 	}
 	return s
 }
 
 func (this *converter) getReachable2(p *relapse.Pattern) Set {
-	fmt.Printf("getReachable2 %s\n", p.String())
+	set := this.getReachable3(p)
+	for _, s := range set.list() {
+		fmt.Printf("getReachable2 %s -> %s\n", p.String(), this.getPattern(s))
+	}
+	return set
+}
+
+func (this *converter) getReachable3(p *relapse.Pattern) Set {
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *relapse.Empty:
@@ -235,11 +239,11 @@ func (this *converter) getReachable2(p *relapse.Pattern) Set {
 		return newSet().add(this.getEmpty()).add(this.getNone())
 	case *relapse.Concat:
 		lefts1 := this.getReachable2(v.GetLeftPattern())
-		rights := this.getReachable2(v.GetRightPattern())
-		lefts2 := this.reachableConcat(lefts1, rights)
+		lefts2 := this.reachableConcat(lefts1, newSet().add(this.addPattern(v.GetRightPattern())))
 		if !interp.Nullable(this.refs, v.GetLeftPattern()) {
 			return lefts2
 		}
+		rights := this.getReachable2(v.GetRightPattern())
 		return lefts2.union(rights)
 	case *relapse.Or:
 		lefts := this.getReachable2(v.GetLeftPattern())
@@ -260,7 +264,7 @@ func (this *converter) getReachable2(p *relapse.Pattern) Set {
 		rs := this.getReachable2(v.GetPattern())
 		set := newSet()
 		for r := range rs {
-			set.add(this.addPattern(relapse.NewNot(this.getPattern(r))))
+			set = set.add(this.addPattern(relapse.NewNot(this.getPattern(r))))
 		}
 		return set
 	case *relapse.ZAny:
@@ -272,8 +276,8 @@ func (this *converter) getReachable2(p *relapse.Pattern) Set {
 	case *relapse.Interleave:
 		left := this.getReachable2(v.GetLeftPattern())
 		right := this.getReachable2(v.GetRightPattern())
-		lefts := this.reachableInterleave(left, newSet().add(this.addPattern(v.GetRightPattern())))
-		rights := this.reachableInterleave(right, newSet().add(this.addPattern(v.GetLeftPattern())))
+		lefts := this.reachableInterleave(left, v.GetRightPattern())
+		rights := this.reachableInterleave(right, v.GetLeftPattern())
 		return lefts.union(rights)
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T %v", typ, p))
@@ -290,30 +294,27 @@ func (this *converter) getTops(p *relapse.Pattern) Set {
 
 func (this *converter) getReachable(p *relapse.Pattern) []int {
 	current := this.addPattern(p)
-	allDsts := this.getTops(p)
-	allDsts[current] = struct{}{}
+	allDsts := this.getTops(p).add(current)
 	prevDsts := allDsts
-	nextDsts := make(map[int]struct{})
+	nextDsts := newSet()
 	for {
-		for _, d := range setToList(prevDsts) {
+		for _, d := range prevDsts.list() {
 			dsts := this.getTops(this.getPattern(d))
-			for n, _ := range dsts {
+			for _, n := range dsts.list() {
+				fmt.Printf("getReachable from %v -> %d %v\n", p, n, this.getPattern(n))
 				if _, ok := allDsts[n]; !ok {
-					nextDsts[n] = struct{}{}
-					allDsts[n] = struct{}{}
+					nextDsts = nextDsts.add(n)
+					allDsts = allDsts.add(n)
 				}
 			}
 		}
 		if len(nextDsts) == 0 {
 			break
 		}
-		prevDsts = make(map[int]struct{})
-		for n, _ := range nextDsts {
-			prevDsts[n] = struct{}{}
-		}
-		nextDsts = make(map[int]struct{})
+		prevDsts = newSet().union(nextDsts)
+		nextDsts = newSet()
 	}
-	return setToList(allDsts)
+	return allDsts.list()
 }
 
 type state struct {
@@ -552,8 +553,8 @@ func exprToFunc(expr *expr.Expr) funcs.Bool {
 }
 
 func (this *converter) sconvert(p *relapse.Pattern) *state {
-	fmt.Printf("sconvert %v\n", p)
 	p = interp.Simplify(this.refs, p)
+	fmt.Printf("sconvert %v\n", p)
 	current := this.addPattern(p)
 	if this.states[current] != nil {
 		return this.states[current]
@@ -575,6 +576,7 @@ func (this *converter) convert(p *relapse.Pattern) []tran {
 		tops := this.getReachable(v.GetPattern())
 		ups := make([]up, 0, len(tops))
 		for _, d := range tops {
+			fmt.Printf("Reachable from %v -> %v\n", p, this.getPattern(d))
 			if interp.Nullable(this.refs, this.getPattern(d)) {
 				ups = append(ups, up{d, this.getEmpty()})
 			} else {

@@ -16,24 +16,54 @@ package convert_test
 
 import (
 	"github.com/katydid/katydid/relapse/ast"
-	//"github.com/katydid/katydid/relapse/convert"
+	"github.com/katydid/katydid/relapse/convert"
+	"github.com/katydid/katydid/relapse/interp"
 	"github.com/katydid/katydid/serialize"
 	//"github.com/katydid/katydid/serialize/debug"
 	"github.com/katydid/katydid/tests"
 	//"github.com/katydid/katydid/viper/eval"
 	"testing"
+	//"time"
 )
 
+type vNot struct {
+	has bool
+}
+
+func (this *vNot) Visit(node interface{}) relapse.Visitor {
+	n, ok := node.(*relapse.Not)
+	if !ok {
+		return this
+	}
+	if n.GetPattern().ZAny != nil {
+		return this
+	}
+	this.has = true
+	return this
+}
+
+func hasNot(g *relapse.Grammar) bool {
+	vNot := &vNot{}
+	g.Walk(vNot)
+	return vNot.has
+}
+
 func test(t *testing.T, g *relapse.Grammar, parser serialize.Parser, expected bool, desc string) {
-	t.Skipf("TODO")
-	//parser = debug.NewLogger(parser, debug.NewLineLogger())
-	//rules := convert.ToRules(g)
-	//println("Rules:" + rules.String())
-	// match := eval.Eval(rules, parser)
-	// if match != expected {
-	// 	t.Fail()
-	// 	t.Fatalf("Expected %v given %v converted to \n%s\n on \n%s", expected, g, rules, desc)
-	// }
+	//t.Skipf("TODO")
+	if interp.HasLeftRecursion(g) {
+		t.Skipf("convert was not designed to handle left recursion")
+	}
+	if hasNot(g) {
+		t.Skipf("TODO: currently skipping tests with the not operator")
+	}
+	//parser = debug.NewLogger(parser, debug.NewDelayLogger(time.Millisecond*50))
+	refs := relapse.NewRefsLookup(g)
+	auto := convert.Convert(refs, refs["main"])
+	match := convert.Interp(auto, parser)
+	if match != expected {
+		t.Fail()
+		t.Fatalf("Expected %v given %v\n on \n%s", expected, g, desc)
+	}
 }
 
 func TestNotNil(t *testing.T) {
