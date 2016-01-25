@@ -254,7 +254,7 @@ func init() {
 	ValidateProtoKeyEtc("ProperNotNamePersonNoname", ProperNotNamePerson, NonamePerson, true)
 	ValidateProtoKeyEtc("ProperNotNamePersonRobert", ProperNotNamePerson, RobertPerson, true)
 	ValidateProtoKeyEtc("ProperNotNamePersonSmith", ProperNotNamePerson, SmithPerson, true)
-	ValidateProtoKeyEtc("ProperNotNamePersonRobert", ProperNotNamePerson, DavidPerson, false)
+	ValidateProtoKeyEtc("ProperNotNamePersonDavid", ProperNotNamePerson, DavidPerson, false)
 }
 
 //Is this person's name David and telephone number 0123456789

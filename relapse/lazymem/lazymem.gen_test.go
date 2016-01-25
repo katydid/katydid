@@ -1233,6 +1233,21 @@ func TestPage195E2NameE2AddrE2Xml(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestProperNotNamePersonDavidJson(t *testing.T) {
+	v := tests.Validators["ProperNotNamePersonDavid"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProperNotNamePersonDavidProto(t *testing.T) {
+	v := tests.Validators["ProperNotNamePersonDavid"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProperNotNamePersonDavidReflect(t *testing.T) {
+	v := tests.Validators["ProperNotNamePersonDavid"]["reflect"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestProperNotNamePersonNonameJson(t *testing.T) {
 	v := tests.Validators["ProperNotNamePersonNoname"]["json"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
@@ -1555,6 +1570,11 @@ func TestProtoKeyOrNameTelephoneMoverProto(t *testing.T) {
 
 func TestProtoKeyOrNameTelephoneSmithProto(t *testing.T) {
 	v := tests.Validators["ProtoKeyOrNameTelephoneSmith"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoKeyProperNotNamePersonDavidProto(t *testing.T) {
+	v := tests.Validators["ProtoKeyProperNotNamePersonDavid"]["proto"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 

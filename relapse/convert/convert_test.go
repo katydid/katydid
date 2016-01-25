@@ -67,11 +67,7 @@ func test(t *testing.T, g *relapse.Grammar, parser serialize.Parser, expected bo
 }
 
 func TestNotNil(t *testing.T) {
-	v := tests.Validators["EmptyOrNilJohn"]["reflect"]
+	v := tests.Validators["NilNameJohn"]["reflect"]
 	refs := relapse.NewRefsLookup(v.Grammar)
-	delete(refs, "main")
-	refs["main"] = refs["nil"]
-	delete(refs, "nil")
-	delete(refs, "empty")
 	test(t, relapse.NewGrammar(refs), v.Parser(), v.Expected, v.Description)
 }
