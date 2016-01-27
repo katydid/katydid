@@ -109,65 +109,137 @@ func simplifyConcat(p1, p2 *relapse.Pattern) *relapse.Pattern {
 	return relapse.NewConcat(p1, p2)
 }
 
+func getOrs(p *relapse.Pattern) []*relapse.Pattern {
+	if p.Or != nil {
+		return append(getOrs(p.Or.GetLeftPattern()), getOrs(p.Or.GetRightPattern())...)
+	}
+	return []*relapse.Pattern{p}
+}
+
 func simplifyOr(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
-	if isNotZany(p1) {
-		return p2
-	}
-	if isNotZany(p2) {
-		return p1
-	}
-	if isZany(p1) || isZany(p2) {
-		return relapse.NewZAny()
-	}
-	if isEmpty(p1) && Nullable(refs, p2) {
-		return p2
-	}
-	if isEmpty(p2) && Nullable(refs, p1) {
-		return p1
-	}
-	if p1.Equal(p2) {
-		return p1
-	}
-	if p2.Or != nil {
-		if p1.Equal(p2.Or.GetLeftPattern()) || p1.Equal(p2.Or.GetRightPattern()) {
-			return simplifyOr(refs, p2.Or.GetLeftPattern(), p2.Or.GetRightPattern())
+	left := getOrs(p1)
+	right := getOrs(p2)
+	list := append(left, right...)
+	list = relapse.Set(list)
+	relapse.Sort(list)
+	var p *relapse.Pattern = list[0]
+	for i := range list {
+		if i == 0 {
+			continue
 		}
+		p = relapse.NewOr(p, list[i])
 	}
-	if p2.Less(p1) {
-		return relapse.NewOr(p2, p1)
+	return p
+	// if isNotZany(p1) {
+	// 	return p2
+	// }
+	// if isNotZany(p2) {
+	// 	return p1
+	// }
+	// if isZany(p1) || isZany(p2) {
+	// 	return relapse.NewZAny()
+	// }
+	// if isEmpty(p1) && Nullable(refs, p2) {
+	// 	return p2
+	// }
+	// if isEmpty(p2) && Nullable(refs, p1) {
+	// 	return p1
+	// }
+	// if p1.Or != nil {
+	// 	return simplifyOr(refs, p1.Or.GetLeftPattern(), simplifyOr(refs, p1.Or.GetRightPattern(), p2))
+	// }
+	// if p1.Equal(p2) {
+	// 	return p1
+	// }
+	// if p2.Or != nil {
+	// 	if p1.Equal(p2.Or.GetLeftPattern()) || p1.Equal(p2.Or.GetRightPattern()) {
+	// 		return simplifyOr(refs, p2.Or.GetLeftPattern(), p2.Or.GetRightPattern())
+	// 	}
+	// 	if p2.Or.GetLeftPattern().Less(p1) {
+	// 		return simplifyOr(refs, p2.Or.GetLeftPattern(), simplifyOr(refs, p1, p2.Or.GetRightPattern()))
+	// 	}
+	// }
+	// if p2.Less(p1) {
+	// 	return relapse.NewOr(p2, p1)
+	// }
+	// return relapse.NewOr(p1, p2)
+}
+
+func getAnds(p *relapse.Pattern) []*relapse.Pattern {
+	if p.And != nil {
+		return append(getOrs(p.And.GetLeftPattern()), getOrs(p.And.GetRightPattern())...)
 	}
-	return relapse.NewOr(p1, p2)
+	return []*relapse.Pattern{p}
 }
 
 func simplifyAnd(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
-	if isNotZany(p1) || isNotZany(p2) {
-		return relapse.NewNot(relapse.NewZAny())
-	}
-	if isZany(p1) {
-		return p2
-	}
-	if isZany(p2) {
-		return p1
-	}
-	if isEmpty(p1) {
-		if Nullable(refs, p2) {
-			return relapse.NewEmpty()
-		} else {
-			return relapse.NewNot(relapse.NewZAny())
+	// if isNotZany(p1) || isNotZany(p2) {
+	// 	return relapse.NewNot(relapse.NewZAny())
+	// }
+	// if isZany(p1) {
+	// 	return p2
+	// }
+	// if isZany(p2) {
+	// 	return p1
+	// }
+	// if isEmpty(p1) {
+	// 	if Nullable(refs, p2) {
+	// 		return relapse.NewEmpty()
+	// 	} else {
+	// 		return relapse.NewNot(relapse.NewZAny())
+	// 	}
+	// }
+	// if isEmpty(p2) {
+	// 	if Nullable(refs, p1) {
+	// 		return relapse.NewEmpty()
+	// 	} else {
+	// 		return relapse.NewNot(relapse.NewZAny())
+	// 	}
+	// }
+	left := getAnds(p1)
+	right := getAnds(p2)
+	list := append(left, right...)
+	list = relapse.Set(list)
+	relapse.Sort(list)
+	var p *relapse.Pattern = list[0]
+	for i := range list {
+		if i == 0 {
+			continue
 		}
+		p = relapse.NewAnd(p, list[i])
 	}
-	if isEmpty(p2) {
-		if Nullable(refs, p1) {
-			return relapse.NewEmpty()
-		} else {
-			return relapse.NewNot(relapse.NewZAny())
-		}
-	}
-	if p1.Equal(p2) {
-		return p1
-	}
-	return relapse.NewAnd(p1, p2)
+	return p
 }
+
+// func simplifyAnd(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
+// 	if isNotZany(p1) || isNotZany(p2) {
+// 		return relapse.NewNot(relapse.NewZAny())
+// 	}
+// 	if isZany(p1) {
+// 		return p2
+// 	}
+// 	if isZany(p2) {
+// 		return p1
+// 	}
+// 	if isEmpty(p1) {
+// 		if Nullable(refs, p2) {
+// 			return relapse.NewEmpty()
+// 		} else {
+// 			return relapse.NewNot(relapse.NewZAny())
+// 		}
+// 	}
+// 	if isEmpty(p2) {
+// 		if Nullable(refs, p1) {
+// 			return relapse.NewEmpty()
+// 		} else {
+// 			return relapse.NewNot(relapse.NewZAny())
+// 		}
+// 	}
+// 	if p1.Equal(p2) {
+// 		return p1
+// 	}
+// 	return relapse.NewAnd(p1, p2)
+// }
 
 func simplifyZeroOrMore(p *relapse.Pattern) *relapse.Pattern {
 	if p.ZeroOrMore != nil {
@@ -191,6 +263,13 @@ func simplifyOptional(p *relapse.Pattern) *relapse.Pattern {
 	return relapse.NewOptional(p)
 }
 
+func getInterleaves(p *relapse.Pattern) []*relapse.Pattern {
+	if p.Interleave != nil {
+		return append(getOrs(p.Interleave.GetLeftPattern()), getOrs(p.Interleave.GetRightPattern())...)
+	}
+	return []*relapse.Pattern{p}
+}
+
 func simplifyInterleave(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
 	if isNotZany(p1) || isNotZany(p2) {
 		return relapse.NewNot(relapse.NewZAny())
@@ -204,7 +283,19 @@ func simplifyInterleave(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relaps
 	if isZany(p1) && isZany(p2) {
 		return p1
 	}
-	return relapse.NewInterleave(p1, p2)
+	left := getInterleaves(p1)
+	right := getInterleaves(p2)
+	list := append(left, right...)
+	list = relapse.Set(list)
+	relapse.Sort(list)
+	var p *relapse.Pattern = list[0]
+	for i := range list {
+		if i == 0 {
+			continue
+		}
+		p = relapse.NewInterleave(p, list[i])
+	}
+	return p
 }
 
 func simplifyContains(p *relapse.Pattern) *relapse.Pattern {

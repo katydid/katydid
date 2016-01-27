@@ -17,6 +17,7 @@ package relapse
 import (
 	"bytes"
 	"github.com/gogo/protobuf/proto"
+	"sort"
 )
 
 func Compare(p1, p2 *Pattern) int {
@@ -33,4 +34,41 @@ func Compare(p1, p2 *Pattern) int {
 
 func (p1 *Pattern) Less(p2 *Pattern) bool {
 	return Compare(p1, p2) < 0
+}
+
+func Has(ps []*Pattern, p *Pattern) bool {
+	for _, pp := range ps {
+		if Compare(pp, p) == 0 {
+			return true
+		}
+	}
+	return false
+}
+
+func Set(ps []*Pattern) []*Pattern {
+	set := make([]*Pattern, 0, len(ps))
+	for i := range ps {
+		if !Has(set, ps[i]) {
+			set = append(set, ps[i])
+		}
+	}
+	return set
+}
+
+func Sort(ps []*Pattern) {
+	sort.Sort(Sortable(ps))
+}
+
+type Sortable []*Pattern
+
+func (s Sortable) Less(i, j int) bool {
+	return s[i].Less(s[j])
+}
+
+func (s Sortable) Len() int {
+	return len(s)
+}
+
+func (s Sortable) Swap(i, j int) {
+	s[i], s[j] = s[j], s[i]
 }

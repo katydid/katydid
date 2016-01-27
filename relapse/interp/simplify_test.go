@@ -37,3 +37,29 @@ func TestSimplify2(t *testing.T) {
 		t.Fatalf("Did not expected EmptySet")
 	}
 }
+
+func newT(s string) *relapse.Pattern {
+	return relapse.NewTreeNode(relapse.NewStringName(s), relapse.NewEmpty())
+}
+
+func TestSimplifyOr1(t *testing.T) {
+	input := relapse.NewOr(newT("B"), relapse.NewOr(newT("C"), relapse.NewOr(newT("A"), newT("B"))))
+	refs := relapse.RefLookup{"main": input}
+	output := Simplify(refs, input)
+	expected := relapse.NewOr(newT("A"), relapse.NewOr(newT("B"), newT("C")))
+	t.Logf("%v", output)
+	if !expected.Equal(output) {
+		t.Fatalf("expected %v, but got %v", expected, output)
+	}
+}
+
+func TestSimplifyOr2(t *testing.T) {
+	input := relapse.NewOr(relapse.NewOr(newT("A"), newT("B")), relapse.NewOr(newT("B"), newT("C")))
+	refs := relapse.RefLookup{"main": input}
+	output := Simplify(refs, input)
+	expected := relapse.NewOr(newT("A"), relapse.NewOr(newT("B"), newT("C")))
+	t.Logf("%v", output)
+	if !expected.Equal(output) {
+		t.Fatalf("expected %v, but got %v", expected, output)
+	}
+}

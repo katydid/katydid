@@ -133,6 +133,8 @@ func (this *converter) getEmpty() int {
 	return this.addPattern(relapse.NewEmpty())
 }
 
+var dontcare = relapse.NewTreeNode(relapse.NewStringName("DontCare"), relapse.NewEmpty())
+
 func (this *converter) exhaust() {
 	changed := true
 	for changed {
@@ -184,104 +186,118 @@ func (this Set) list() []int {
 	return is
 }
 
-func (this *converter) reachableConcat(left, right Set) Set {
-	s := newSet()
-	for l := range left {
-		for r := range right {
-			lp := this.getPattern(l)
-			rp := this.getPattern(r)
-			c := relapse.NewConcat(lp, rp)
-			s = s.add(this.addPattern(c))
-		}
-	}
-	return s
-}
+// type FPSet map[funcs.Bool]int
 
-func (this *converter) reachableIntersect(left, right Set) Set {
-	s := newSet()
-	for l := range left {
-		for r := range right {
-			lp := this.getPattern(l)
-			rp := this.getPattern(r)
-			c := relapse.NewAnd(lp, rp)
-			s = s.add(this.addPattern(c))
-		}
-	}
-	return s
-}
+// func newFPSet() FPSet {
+// 	return make(FPSet)
+// }
 
-func (this *converter) reachableInterleave(left Set, rp *relapse.Pattern) Set {
-	s := newSet()
-	for l := range left {
-		lp := this.getPattern(l)
-		c := relapse.NewInterleave(lp, rp)
-		s = s.add(this.addPattern(c))
-	}
-	return s
-}
+// func (this FPSet) add(f funcs.Bool, i int) Set {
+// 	this[f] = i
+// 	return this
+// }
 
-func (this *converter) getReachable2(p *relapse.Pattern) Set {
-	set := this.getReachable3(p)
-	for _, s := range set.list() {
-		fmt.Printf("getReachable2 %s -> %s\n", p.String(), this.getPattern(s))
-	}
-	return set
-}
+// func (this FPSet) union(that FPSet) FPSet {
+// 	for j := range that {
+// 		this = this.add(j)
+// 	}
+// 	return this
+// }
 
-func (this *converter) getReachable3(p *relapse.Pattern) Set {
-	typ := p.GetValue()
-	switch v := typ.(type) {
-	case *relapse.Empty:
-		return newSet().add(this.getNone())
-	case *relapse.TreeNode:
-		return newSet().add(this.getEmpty()).add(this.getNone())
-	case *relapse.LeafNode:
-		return newSet().add(this.getEmpty()).add(this.getNone())
-	case *relapse.Concat:
-		lefts1 := this.getReachable2(v.GetLeftPattern())
-		lefts2 := this.reachableConcat(lefts1, newSet().add(this.addPattern(v.GetRightPattern())))
-		if !interp.Nullable(this.refs, v.GetLeftPattern()) {
-			return lefts2
-		}
-		rights := this.getReachable2(v.GetRightPattern())
-		return lefts2.union(rights)
-	case *relapse.Or:
-		lefts := this.getReachable2(v.GetLeftPattern())
-		rights := this.getReachable2(v.GetRightPattern())
-		return lefts.union(rights)
-	case *relapse.And:
-		left := this.getReachable2(v.GetLeftPattern())
-		right := this.getReachable2(v.GetRightPattern())
-		return this.reachableIntersect(left, right)
-	case *relapse.ZeroOrMore:
-		pat := this.getReachable2(v.GetPattern())
-		here := newSet().add(this.addPattern(p))
-		return this.reachableConcat(pat, here)
-	case *relapse.Reference:
-		r := this.refs[v.GetName()]
-		return this.getReachable2(r)
-	case *relapse.Not:
-		rs := this.getReachable2(v.GetPattern())
-		set := newSet()
-		for r := range rs {
-			set = set.add(this.addPattern(relapse.NewNot(this.getPattern(r))))
-		}
-		return set
-	case *relapse.ZAny:
-		return newSet().add(this.getAny())
-	case *relapse.Contains:
-		return this.getReachable2(relapse.NewConcat(relapse.NewZAny(), relapse.NewConcat(v.GetPattern(), relapse.NewZAny())))
-	case *relapse.Optional:
-		return this.getReachable2(relapse.NewOr(v.GetPattern(), relapse.NewEmpty()))
-	case *relapse.Interleave:
-		left := this.getReachable2(v.GetLeftPattern())
-		right := this.getReachable2(v.GetRightPattern())
-		lefts := this.reachableInterleave(left, v.GetRightPattern())
-		rights := this.reachableInterleave(right, v.GetLeftPattern())
-		return lefts.union(rights)
-	}
-	panic(fmt.Sprintf("unknown pattern typ %T %v", typ, p))
-}
+// func (this *converter) reachableConcat(left FPSet, rp *relapse.Pattern) FPSet {
+// 	s := newFPSet()
+// 	for l, lpi := range left {
+// 		lp := this.getPattern(lpi)
+// 		c := relapse.NewConcat(lp, rp)
+// 		s = s.add(l, this.addPattern(c))
+// 	}
+// 	return s
+// }
+
+// func (this *converter) reachableIntersect(left, right FPSet) FPSet {
+// 	s := newSet()
+// 	for l, lpi := range left {
+// 		for r, rpi := range right {
+// 			lp := this.getPattern(lpi)
+// 			rp := this.getPattern(rpi)
+// 			c := relapse.NewAnd(lp, rp)
+// 			s = s.add(funcs.And(l, r), this.addPattern(c))
+// 		}
+// 	}
+// 	return s
+// }
+
+// func (this *converter) reachableInterleave(left FPSet, rp *relapse.Pattern) FPSet {
+// 	s := newSet()
+// 	for l, lpi := range left {
+// 		lp := this.getPattern(lpi)
+// 		c := relapse.NewInterleave(lp, rp)
+// 		s = s.add(l, this.addPattern(c))
+// 	}
+// 	return s
+// }
+
+// func (this *converter) getReachable2(p *relapse.Pattern) Set {
+// 	set := this.getReachable3(p)
+// 	for _, s := range set.list() {
+// 		fmt.Printf("getReachable2 %s -> %s\n", p.String(), this.getPattern(s))
+// 	}
+// 	return set
+// }
+
+// func (this *converter) getReachable3(p *relapse.Pattern) FPSet {
+// 	typ := p.GetValue()
+// 	switch v := typ.(type) {
+// 	case *relapse.Empty:
+// 		return newFPSet().add(funcs.BoolConst(true), this.getNone())
+// 	case *relapse.TreeNode:
+// 		return newFPSet().add(this.getEmpty()).add(this.getNone())
+// 	case *relapse.LeafNode:
+// 		return newSet().add(this.getEmpty()).add(this.getNone())
+// 	case *relapse.Concat:
+// 		lefts1 := this.getReachable2(v.GetLeftPattern())
+// 		lefts2 := this.reachableConcat(lefts1, v.GetRightPattern())
+// 		if !interp.Nullable(this.refs, v.GetLeftPattern()) {
+// 			return lefts2
+// 		}
+// 		rights := this.getReachable2(v.GetRightPattern())
+// 		return this.reachableIntersect(lefts2, rights).union(lefts2.union(rights))
+// 	case *relapse.Or:
+// 		lefts := this.getReachable2(v.GetLeftPattern())
+// 		rights := this.getReachable2(v.GetRightPattern())
+// 		return this.reachableIntersect(lefts, rights).union(lefts.union(rights))
+// 	case *relapse.And:
+// 		left := this.getReachable2(v.GetLeftPattern())
+// 		right := this.getReachable2(v.GetRightPattern())
+// 		return this.reachableIntersect(left, right)
+// 	case *relapse.ZeroOrMore:
+// 		pat := this.getReachable2(v.GetPattern())
+// 		return this.reachableConcat(pat, p)
+// 	case *relapse.Reference:
+// 		r := this.refs[v.GetName()]
+// 		return this.getReachable2(r)
+// 	case *relapse.Not:
+// 		rs := this.getReachable2(v.GetPattern())
+// 		set := newSet()
+// 		for r := range rs {
+// 			set = set.add(this.addPattern(relapse.NewNot(this.getPattern(r))))
+// 		}
+// 		return set
+// 	case *relapse.ZAny:
+// 		return newSet().add(this.getAny())
+// 	case *relapse.Contains:
+// 		return this.getReachable2(relapse.NewConcat(relapse.NewZAny(), relapse.NewConcat(v.GetPattern(), relapse.NewZAny())))
+// 	case *relapse.Optional:
+// 		return this.getReachable2(relapse.NewOr(v.GetPattern(), relapse.NewEmpty()))
+// 	case *relapse.Interleave:
+// 		left := this.getReachable2(v.GetLeftPattern())
+// 		right := this.getReachable2(v.GetRightPattern())
+// 		lefts := this.reachableInterleave(left, v.GetRightPattern())
+// 		rights := this.reachableInterleave(right, v.GetLeftPattern())
+// 		return this.reachableIntersect(lefts, rights).union(lefts.union(rights))
+// 	}
+// 	panic(fmt.Sprintf("unknown pattern typ %T %v", typ, p))
+// }
 
 func (this *converter) getTops(p *relapse.Pattern) Set {
 	d := this.addPattern(p)
@@ -289,7 +305,8 @@ func (this *converter) getTops(p *relapse.Pattern) Set {
 	if sd != nil {
 		return tops(sd.trans)
 	}
-	return this.getReachable2(p)
+	ts := this.convert(p, false)
+	return tops(ts)
 }
 
 func (this *converter) getReachable(p *relapse.Pattern) []int {
@@ -411,53 +428,112 @@ func (this *converter) newState(current int, trans []tran) *state {
 	return s
 }
 
-func (this *converter) dedup2(ups []up) []up {
-	rups := make(map[int]int)
-	for _, up := range ups {
-		if d, ok := rups[up.bot]; !ok {
-			rups[up.bot] = up.top
-		} else if d != up.top {
-			fmt.Printf("wtf\n")
-			rups[up.bot] = this.addPattern(relapse.NewOr(this.getPattern(up.top), this.getPattern(d)))
-		}
-	}
-	iups := []int{}
-	for i := range rups {
-		iups = append(iups, i)
-	}
-	sort.Ints(iups)
-	nups := []up{}
-	for _, i := range iups {
-		nups = append(nups, up{i, rups[i]})
-	}
-	return nups
-}
+// func (this *converter) dedup2(ups []up) []up {
+// 	rups := make(map[int]int)
+// 	for _, up := range ups {
+// 		if d, ok := rups[up.bot]; !ok {
+// 			rups[up.bot] = up.top
+// 		} else if d != up.top {
+// 			fmt.Printf("wtf\n")
+// 			rups[up.bot] = this.addPattern(relapse.NewOr(this.getPattern(up.top), this.getPattern(d)))
+// 		}
+// 	}
+// 	iups := []int{}
+// 	for i := range rups {
+// 		iups = append(iups, i)
+// 	}
+// 	sort.Ints(iups)
+// 	nups := []up{}
+// 	for _, i := range iups {
+// 		nups = append(nups, up{i, rups[i]})
+// 	}
+// 	return nups
+// }
 
-func (this *converter) dedup(ups []up) []up {
-	rups := make(map[int]map[int]struct{})
-	nups := []up{}
-	for i, up := range ups {
-		if _, ok := rups[up.bot]; !ok {
-			nups = append(nups, ups[i])
-			rups[up.bot] = make(map[int]struct{})
-			rups[up.bot][up.top] = struct{}{}
-		} else if _, ok1 := rups[up.bot][up.top]; !ok1 {
-			nups = append(nups, ups[i])
-			rups[up.bot][up.top] = struct{}{}
-			fmt.Printf("wtf %v -> %v \n", this.patterns[up.bot], this.patterns[up.top])
-			//panic("wtf different returns")
+// func (this *converter) dedup(ups []up) []up {
+// 	rups := make(map[int]map[int]struct{})
+// 	nups := []up{}
+// 	for i, up := range ups {
+// 		if _, ok := rups[up.bot]; !ok {
+// 			nups = append(nups, ups[i])
+// 			rups[up.bot] = make(map[int]struct{})
+// 			rups[up.bot][up.top] = struct{}{}
+// 		} else if _, ok1 := rups[up.bot][up.top]; !ok1 {
+// 			nups = append(nups, ups[i])
+// 			rups[up.bot][up.top] = struct{}{}
+// 			fmt.Printf("wtf %v -> %v \n", this.patterns[up.bot], this.patterns[up.top])
+// 			//panic("wtf different returns")
+// 		}
+// 	}
+// 	return ups
+// }
+
+func (this *converter) addion(ts []tran, t tran) []tran {
+	tvaluestr := funcs.Sprint(t.value)
+	if tvaluestr == "false" {
+		return ts
+	}
+	for i := range ts {
+		if funcs.Sprint(ts[i].value) == tvaluestr {
+			pdts := this.getPattern(ts[i].down)
+			pdt := this.getPattern(t.down)
+			ups := []up{}
+			for _, tu := range t.ups {
+				for _, tsu := range ts[i].ups {
+					ups = append(ups, up{
+						bot: this.addPattern(relapse.NewOr(this.getPattern(tsu.bot), this.getPattern(tu.bot))),
+						top: this.addPattern(relapse.NewOr(this.getPattern(tsu.top), this.getPattern(tu.top))),
+					})
+				}
+			}
+			ts[i] = tran{
+				value: ts[i].value,
+				down:  this.addPattern(relapse.NewOr(pdts, pdt)),
+				ups:   ups,
+			}
+			return ts
 		}
 	}
-	return ups
+	return append(ts, t)
 }
 
 func (this *converter) union(left, right []tran) []tran {
 	ts := []tran{}
-	for i, _ := range left {
-		ts = append(ts, left[i])
-	}
-	for i, _ := range right {
-		ts = append(ts, right[i])
+	for _, lt := range left {
+		for _, rt := range right {
+			pdl := this.getPattern(lt.down)
+			pdr := this.getPattern(rt.down)
+			ups := []up{}
+			for _, lu := range lt.ups {
+				for _, ru := range rt.ups {
+					ups = append(ups, up{
+						bot: this.addPattern(relapse.NewOr(this.getPattern(lu.bot), this.getPattern(ru.bot))),
+						top: this.addPattern(relapse.NewOr(this.getPattern(lu.top), this.getPattern(ru.top))),
+					})
+				}
+			}
+			truetrue := funcs.Simplify(funcs.And(lt.value, rt.value))
+			ts = this.addion(ts, tran{
+				value: truetrue,
+				down:  this.addPattern(relapse.NewOr(pdl, pdr)),
+				ups:   ups,
+			})
+
+			truefalse := funcs.Simplify(funcs.And(lt.value, not(rt.value)))
+			ts = this.addion(ts, tran{
+				value: truefalse,
+				down:  lt.down,
+				ups:   lt.ups,
+			})
+
+			falsetrue := funcs.Simplify(funcs.And(not(lt.value), rt.value))
+			ts = this.addion(ts, tran{
+				value: falsetrue,
+				down:  rt.down,
+				ups:   rt.ups,
+			})
+
+		}
 	}
 	return ts
 }
@@ -559,11 +635,11 @@ func (this *converter) sconvert(p *relapse.Pattern) *state {
 	if this.states[current] != nil {
 		return this.states[current]
 	}
-	trans := this.convert(p)
+	trans := this.convert(p, true)
 	return this.newState(current, trans)
 }
 
-func (this *converter) convert(p *relapse.Pattern) []tran {
+func (this *converter) convert(p *relapse.Pattern, down bool) []tran {
 	fmt.Printf("converting %s\n", p.String())
 	typ := p.GetValue()
 	switch v := typ.(type) {
@@ -573,6 +649,15 @@ func (this *converter) convert(p *relapse.Pattern) []tran {
 		}
 	case *relapse.TreeNode:
 		f := nameToFunc(v.GetName())
+		if !down {
+			return []tran{
+				{f, this.addPattern(v.Pattern), []up{
+					up{this.addPattern(dontcare), this.getEmpty()},
+					up{this.addPattern(dontcare), this.getNone()},
+				}},
+				this.newDeadEnd(not(f)),
+			}
+		}
 		tops := this.getReachable(v.GetPattern())
 		ups := make([]up, 0, len(tops))
 		for _, d := range tops {
@@ -600,35 +685,38 @@ func (this *converter) convert(p *relapse.Pattern) []tran {
 		}
 	case *relapse.Concat:
 		fmt.Printf("concating %v\n", p)
-		left := this.convert(v.GetLeftPattern())
+		left := this.convert(v.GetLeftPattern(), down)
 		leftts := this.leftConcat(left, this.addPattern(v.GetRightPattern()))
 		if !interp.Nullable(this.refs, v.GetLeftPattern()) {
 			return leftts
 		}
-		rightts := this.convert(v.GetRightPattern())
+		rightts := this.convert(v.GetRightPattern(), down)
 		trans := this.union(leftts, rightts)
 		return trans
 	case *relapse.Or:
-		left := this.convert(v.GetLeftPattern())
-		right := this.convert(v.GetRightPattern())
+		left := this.convert(v.GetLeftPattern(), down)
+		right := this.convert(v.GetRightPattern(), down)
 		ts := this.union(left, right)
+		fmt.Printf("ORLEFT:  %v\n", this.toStr(&state{this.addPattern(v.GetLeftPattern()), false, left}))
+		fmt.Printf("ORRIGHT: %v\n", this.toStr(&state{this.addPattern(v.GetRightPattern()), false, right}))
+		fmt.Printf("ORRES:   %v\n", this.toStr(&state{this.addPattern(p), false, ts}))
 		return ts
 	case *relapse.And:
-		left := this.convert(v.GetLeftPattern())
-		right := this.convert(v.GetRightPattern())
+		left := this.convert(v.GetLeftPattern(), down)
+		right := this.convert(v.GetRightPattern(), down)
 		ts := this.intersect(left, right)
 		return ts
 	case *relapse.ZeroOrMore:
-		ts := this.convert(v.GetPattern())
+		ts := this.convert(v.GetPattern(), down)
 		current := this.addPattern(p)
 		trans := this.leftConcat(ts, current)
 		return trans
 	case *relapse.Reference:
 		p := this.refs[v.GetName()]
-		trans := this.convert(p)
+		trans := this.convert(p, down)
 		return trans
 	case *relapse.Not:
-		ntrans := this.convert(v.GetPattern())
+		ntrans := this.convert(v.GetPattern(), down)
 		trans := make([]tran, len(ntrans))
 		for i := range ntrans {
 			ups := []up{}
@@ -653,15 +741,18 @@ func (this *converter) convert(p *relapse.Pattern) []tran {
 			this.newAnyEnd(funcs.BoolConst(true)),
 		}
 	case *relapse.Contains:
-		return this.convert(relapse.NewConcat(relapse.NewZAny(), relapse.NewConcat(v.GetPattern(), relapse.NewZAny())))
+		return this.convert(relapse.NewConcat(relapse.NewZAny(), relapse.NewConcat(v.GetPattern(), relapse.NewZAny())), down)
 	case *relapse.Optional:
-		return this.convert(relapse.NewOr(v.GetPattern(), relapse.NewEmpty()))
+		return this.convert(relapse.NewOr(v.GetPattern(), relapse.NewEmpty()), down)
 	case *relapse.Interleave:
-		left := this.convert(v.GetLeftPattern())
-		right := this.convert(v.GetRightPattern())
+		left := this.convert(v.GetLeftPattern(), down)
+		right := this.convert(v.GetRightPattern(), down)
 		lefttrans := this.interleave(left, v.GetRightPattern())
 		righttrans := this.interleave(right, v.GetLeftPattern())
 		ts := this.union(lefttrans, righttrans)
+		fmt.Printf("INTERLEAVE_LEFT:  %v\n", this.toStr(&state{this.addPattern(v.GetLeftPattern()), false, lefttrans}))
+		fmt.Printf("INTERLEAVE_RIGHT: %v\n", this.toStr(&state{this.addPattern(v.GetRightPattern()), false, righttrans}))
+		fmt.Printf("INTERLEAVE_RES:   %v\n", this.toStr(&state{this.addPattern(p), false, ts}))
 		return ts
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T %v", typ, p))

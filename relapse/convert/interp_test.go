@@ -1178,97 +1178,97 @@ func TestInterpConcatOptionalBD_D(t *testing.T) {
 // 	}
 // }
 
-// func TestInterpNotAndBStarC_BC(t *testing.T) {
-// 	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewNot(
-// 		relapse.NewAnd(
-// 			relapse.NewConcat(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()), relapse.NewZAny()),
-// 			relapse.NewConcat(relapse.NewZAny(), relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty())),
-// 		),
-// 	))
-// 	refs := map[string]*relapse.Pattern{"main": p}
-// 	auto := Convert(refs, relapse.NewReference("main"))
-// 	tree := newXMLStringParser("<A><B/><C/></A>")
-// 	if Interp(auto, tree) {
-// 		t.Fatalf("unexpected match")
-// 	}
-// }
+func TestInterpNotAndBStarC_BC(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewNot(
+		relapse.NewAnd(
+			relapse.NewConcat(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()), relapse.NewZAny()),
+			relapse.NewConcat(relapse.NewZAny(), relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty())),
+		),
+	))
+	refs := map[string]*relapse.Pattern{"main": p}
+	auto := Convert(refs, relapse.NewReference("main"))
+	tree := newXMLStringParser("<A><B/><C/></A>")
+	if Interp(auto, tree) {
+		t.Fatalf("unexpected match")
+	}
+}
 
-// func TestInterpNotAndBStarC_CB(t *testing.T) {
-// 	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewNot(
-// 		relapse.NewAnd(
-// 			relapse.NewConcat(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()), relapse.NewZAny()),
-// 			relapse.NewConcat(relapse.NewZAny(), relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty())),
-// 		),
-// 	))
-// 	refs := map[string]*relapse.Pattern{"main": p}
-// 	auto := Convert(refs, relapse.NewReference("main"))
-// 	tree := newXMLStringParser("<A><C/><B/></A>")
-// 	if !Interp(auto, tree) {
-// 		t.Fatalf("expected match")
-// 	}
-// }
+func TestInterpNotAndBStarC_CB(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewNot(
+		relapse.NewAnd(
+			relapse.NewConcat(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()), relapse.NewZAny()),
+			relapse.NewConcat(relapse.NewZAny(), relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty())),
+		),
+	))
+	refs := map[string]*relapse.Pattern{"main": p}
+	auto := Convert(refs, relapse.NewReference("main"))
+	tree := newXMLStringParser("<A><C/><B/></A>")
+	if !Interp(auto, tree) {
+		t.Fatalf("expected match")
+	}
+}
 
-// func TestInterpAndNotAB_A(t *testing.T) {
-// 	p := relapse.NewAnd(
-// 		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
-// 		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
-// 	)
-// 	refs := map[string]*relapse.Pattern{"main": p}
-// 	auto := Convert(refs, relapse.NewReference("main"))
-// 	tree := newXMLStringParser("<A/>")
-// 	if Interp(auto, tree) {
-// 		t.Fatalf("unexpected match")
-// 	}
-// }
+func TestInterpAndNotAB_A(t *testing.T) {
+	p := relapse.NewAnd(
+		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
+		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
+	)
+	refs := map[string]*relapse.Pattern{"main": p}
+	auto := Convert(refs, relapse.NewReference("main"))
+	tree := newXMLStringParser("<A/>")
+	if Interp(auto, tree) {
+		t.Fatalf("unexpected match")
+	}
+}
 
-// func TestInterpAndNotAB_B(t *testing.T) {
-// 	p := relapse.NewAnd(
-// 		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
-// 		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
-// 	)
-// 	refs := map[string]*relapse.Pattern{"main": p}
-// 	auto := Convert(refs, relapse.NewReference("main"))
-// 	tree := newXMLStringParser("<B/>")
-// 	if Interp(auto, tree) {
-// 		t.Fatalf("unexpected match")
-// 	}
-// }
+func TestInterpAndNotAB_B(t *testing.T) {
+	p := relapse.NewAnd(
+		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
+		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
+	)
+	refs := map[string]*relapse.Pattern{"main": p}
+	auto := Convert(refs, relapse.NewReference("main"))
+	tree := newXMLStringParser("<B/>")
+	if Interp(auto, tree) {
+		t.Fatalf("unexpected match")
+	}
+}
 
-// func TestInterpAndNotAB_C(t *testing.T) {
-// 	p := relapse.NewAnd(
-// 		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
-// 		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
-// 	)
-// 	refs := map[string]*relapse.Pattern{"main": p}
-// 	auto := Convert(refs, relapse.NewReference("main"))
-// 	tree := newXMLStringParser("<C/>")
-// 	if !Interp(auto, tree) {
-// 		t.Fatalf("expected match")
-// 	}
-// }
+func TestInterpAndNotAB_C(t *testing.T) {
+	p := relapse.NewAnd(
+		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
+		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
+	)
+	refs := map[string]*relapse.Pattern{"main": p}
+	auto := Convert(refs, relapse.NewReference("main"))
+	tree := newXMLStringParser("<C/>")
+	if !Interp(auto, tree) {
+		t.Fatalf("expected match")
+	}
+}
 
-// func TestInterpOrNotAB_A(t *testing.T) {
-// 	p := relapse.NewOr(
-// 		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
-// 		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
-// 	)
-// 	refs := map[string]*relapse.Pattern{"main": p}
-// 	auto := Convert(refs, relapse.NewReference("main"))
-// 	tree := newXMLStringParser("<A/>")
-// 	if !Interp(auto, tree) {
-// 		t.Fatalf("expected match")
-// 	}
-// }
+func TestInterpOrNotAB_A(t *testing.T) {
+	p := relapse.NewOr(
+		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
+		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
+	)
+	refs := map[string]*relapse.Pattern{"main": p}
+	auto := Convert(refs, relapse.NewReference("main"))
+	tree := newXMLStringParser("<A/>")
+	if !Interp(auto, tree) {
+		t.Fatalf("expected match")
+	}
+}
 
-// func TestInterpOrNotAB_C(t *testing.T) {
-// 	p := relapse.NewOr(
-// 		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
-// 		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
-// 	)
-// 	refs := map[string]*relapse.Pattern{"main": p}
-// 	auto := Convert(refs, relapse.NewReference("main"))
-// 	tree := newXMLStringParser("<C/>")
-// 	if !Interp(auto, tree) {
-// 		t.Fatalf("expected match")
-// 	}
-// }
+func TestInterpOrNotAB_C(t *testing.T) {
+	p := relapse.NewOr(
+		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
+		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
+	)
+	refs := map[string]*relapse.Pattern{"main": p}
+	auto := Convert(refs, relapse.NewReference("main"))
+	tree := newXMLStringParser("<C/>")
+	if !Interp(auto, tree) {
+		t.Fatalf("expected match")
+	}
+}

@@ -181,6 +181,25 @@ func Simplify(f Bool) Bool {
 					}
 				}
 			}
+			if vv2, ok := v2.(*stringNe); ok {
+				if vvv1, ok1 := isVarConst(vv1.V1, vv1.V2); ok1 {
+					if vvv2, ok2 := isVarConst(vv2.V1, vv2.V2); ok2 {
+						if vvv1 != vvv2 {
+							return v1
+						}
+					}
+				}
+			}
+		case *stringNe:
+			if vv2, ok := v2.(*stringEq); ok {
+				if vvv1, ok1 := isVarConst(vv1.V1, vv1.V2); ok1 {
+					if vvv2, ok2 := isVarConst(vv2.V1, vv2.V2); ok2 {
+						if vvv1 != vvv2 {
+							return v2
+						}
+					}
+				}
+			}
 		}
 		return And(v1, v2)
 	}
@@ -223,6 +242,12 @@ func Simplify(f Bool) Bool {
 		}
 		if vv, ok := v1.(*constBool); ok {
 			return BoolConst(!vv.v)
+		}
+		if vv, ok := v1.(*and); ok {
+			return Simplify(Or(Not(vv.V1), Not(vv.V2)))
+		}
+		if vv, ok := v1.(*or); ok {
+			return Simplify(And(Not(vv.V1), Not(vv.V2)))
 		}
 		switch vv := v1.(type) {
 		case *boolEq:
