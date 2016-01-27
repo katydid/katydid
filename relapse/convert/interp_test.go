@@ -1152,31 +1152,31 @@ func TestInterpConcatOptionalBD_D(t *testing.T) {
 	}
 }
 
-// func TestInterpAnyButNotB_B(t *testing.T) {
-// 	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
-// 		relapse.NewZAny(),
-// 		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
-// 	))
-// 	refs := map[string]*relapse.Pattern{"main": p}
-// 	auto := Convert(refs, relapse.NewReference("main"))
-// 	tree := newXMLStringParser("<A><B/></A>")
-// 	if Interp(auto, tree) {
-// 		t.Fatalf("unexpected match")
-// 	}
-// }
+func TestInterpAnyButNotB_B(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
+		relapse.NewZAny(),
+		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
+	))
+	refs := map[string]*relapse.Pattern{"main": p}
+	auto := Convert(refs, relapse.NewReference("main"))
+	tree := newXMLStringParser("<A><B/></A>")
+	if Interp(auto, tree) {
+		t.Fatalf("unexpected match")
+	}
+}
 
-// func TestInterpAnyButNotB_C(t *testing.T) {
-// 	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
-// 		relapse.NewZAny(),
-// 		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
-// 	))
-// 	refs := map[string]*relapse.Pattern{"main": p}
-// 	auto := Convert(refs, relapse.NewReference("main"))
-// 	tree := newXMLStringParser("<A><C/></A>")
-// 	if !Interp(auto, tree) {
-// 		t.Fatalf("expected match")
-// 	}
-// }
+func TestInterpAnyButNotB_C(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
+		relapse.NewZAny(),
+		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
+	))
+	refs := map[string]*relapse.Pattern{"main": p}
+	auto := Convert(refs, relapse.NewReference("main"))
+	tree := newXMLStringParser("<A><C/></A>")
+	if !Interp(auto, tree) {
+		t.Fatalf("expected match")
+	}
+}
 
 func TestInterpNotAndBStarC_BC(t *testing.T) {
 	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewNot(

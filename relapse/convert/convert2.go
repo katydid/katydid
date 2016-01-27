@@ -186,119 +186,6 @@ func (this Set) list() []int {
 	return is
 }
 
-// type FPSet map[funcs.Bool]int
-
-// func newFPSet() FPSet {
-// 	return make(FPSet)
-// }
-
-// func (this FPSet) add(f funcs.Bool, i int) Set {
-// 	this[f] = i
-// 	return this
-// }
-
-// func (this FPSet) union(that FPSet) FPSet {
-// 	for j := range that {
-// 		this = this.add(j)
-// 	}
-// 	return this
-// }
-
-// func (this *converter) reachableConcat(left FPSet, rp *relapse.Pattern) FPSet {
-// 	s := newFPSet()
-// 	for l, lpi := range left {
-// 		lp := this.getPattern(lpi)
-// 		c := relapse.NewConcat(lp, rp)
-// 		s = s.add(l, this.addPattern(c))
-// 	}
-// 	return s
-// }
-
-// func (this *converter) reachableIntersect(left, right FPSet) FPSet {
-// 	s := newSet()
-// 	for l, lpi := range left {
-// 		for r, rpi := range right {
-// 			lp := this.getPattern(lpi)
-// 			rp := this.getPattern(rpi)
-// 			c := relapse.NewAnd(lp, rp)
-// 			s = s.add(funcs.And(l, r), this.addPattern(c))
-// 		}
-// 	}
-// 	return s
-// }
-
-// func (this *converter) reachableInterleave(left FPSet, rp *relapse.Pattern) FPSet {
-// 	s := newSet()
-// 	for l, lpi := range left {
-// 		lp := this.getPattern(lpi)
-// 		c := relapse.NewInterleave(lp, rp)
-// 		s = s.add(l, this.addPattern(c))
-// 	}
-// 	return s
-// }
-
-// func (this *converter) getReachable2(p *relapse.Pattern) Set {
-// 	set := this.getReachable3(p)
-// 	for _, s := range set.list() {
-// 		fmt.Printf("getReachable2 %s -> %s\n", p.String(), this.getPattern(s))
-// 	}
-// 	return set
-// }
-
-// func (this *converter) getReachable3(p *relapse.Pattern) FPSet {
-// 	typ := p.GetValue()
-// 	switch v := typ.(type) {
-// 	case *relapse.Empty:
-// 		return newFPSet().add(funcs.BoolConst(true), this.getNone())
-// 	case *relapse.TreeNode:
-// 		return newFPSet().add(this.getEmpty()).add(this.getNone())
-// 	case *relapse.LeafNode:
-// 		return newSet().add(this.getEmpty()).add(this.getNone())
-// 	case *relapse.Concat:
-// 		lefts1 := this.getReachable2(v.GetLeftPattern())
-// 		lefts2 := this.reachableConcat(lefts1, v.GetRightPattern())
-// 		if !interp.Nullable(this.refs, v.GetLeftPattern()) {
-// 			return lefts2
-// 		}
-// 		rights := this.getReachable2(v.GetRightPattern())
-// 		return this.reachableIntersect(lefts2, rights).union(lefts2.union(rights))
-// 	case *relapse.Or:
-// 		lefts := this.getReachable2(v.GetLeftPattern())
-// 		rights := this.getReachable2(v.GetRightPattern())
-// 		return this.reachableIntersect(lefts, rights).union(lefts.union(rights))
-// 	case *relapse.And:
-// 		left := this.getReachable2(v.GetLeftPattern())
-// 		right := this.getReachable2(v.GetRightPattern())
-// 		return this.reachableIntersect(left, right)
-// 	case *relapse.ZeroOrMore:
-// 		pat := this.getReachable2(v.GetPattern())
-// 		return this.reachableConcat(pat, p)
-// 	case *relapse.Reference:
-// 		r := this.refs[v.GetName()]
-// 		return this.getReachable2(r)
-// 	case *relapse.Not:
-// 		rs := this.getReachable2(v.GetPattern())
-// 		set := newSet()
-// 		for r := range rs {
-// 			set = set.add(this.addPattern(relapse.NewNot(this.getPattern(r))))
-// 		}
-// 		return set
-// 	case *relapse.ZAny:
-// 		return newSet().add(this.getAny())
-// 	case *relapse.Contains:
-// 		return this.getReachable2(relapse.NewConcat(relapse.NewZAny(), relapse.NewConcat(v.GetPattern(), relapse.NewZAny())))
-// 	case *relapse.Optional:
-// 		return this.getReachable2(relapse.NewOr(v.GetPattern(), relapse.NewEmpty()))
-// 	case *relapse.Interleave:
-// 		left := this.getReachable2(v.GetLeftPattern())
-// 		right := this.getReachable2(v.GetRightPattern())
-// 		lefts := this.reachableInterleave(left, v.GetRightPattern())
-// 		rights := this.reachableInterleave(right, v.GetLeftPattern())
-// 		return this.reachableIntersect(lefts, rights).union(lefts.union(rights))
-// 	}
-// 	panic(fmt.Sprintf("unknown pattern typ %T %v", typ, p))
-// }
-
 func (this *converter) getTops(p *relapse.Pattern) Set {
 	d := this.addPattern(p)
 	sd := this.states[d]
@@ -372,25 +259,24 @@ type up struct {
 	top int
 }
 
-func (this *converter) toStr(s *state) string {
-	current := this.getPattern(s.current)
+func toStr(s *state, ps []*relapse.Pattern) string {
+	current := ps[s.current]
 	ts := []string{}
 	for _, t := range s.trans {
 		us := []string{}
 		for _, u := range t.ups {
-			us = append(us, "( "+this.getPattern(u.bot).String()+" ^ "+this.getPattern(u.top).String()+" )")
+			us = append(us, "( "+ps[u.bot].String()+" ^ "+ps[u.top].String()+" )")
 		}
-		ts = append(ts, funcs.Sprint(t.value)+" -> "+this.getPattern(t.down).String()+" [ "+strings.Join(us, ", ")+" ]")
+		ts = append(ts, funcs.Sprint(t.value)+" -> "+ps[t.down].String()+" [ "+strings.Join(us, ", ")+" ]")
 	}
 	return current.String() + " { " + strings.Join(ts, ", ") + " }"
 }
 
+func (this *converter) toStr(s *state) string {
+	return toStr(s, this.patterns)
+}
+
 func (this *converter) newState(current int, trans []tran) *state {
-	// fmt.Printf("deduping %v\n", this.toStr(&state{current, false, trans}))
-	// for i := range trans {
-	// 	trans[i].ups = this.dedup2(trans[i].ups)
-	// }
-	//mtrans := make(map[string]int, len(trans))
 	is := make([]int, 0, len(trans))
 	for trani := range trans {
 		sf := funcs.Sprint(trans[trani].value)
@@ -406,13 +292,6 @@ func (this *converter) newState(current int, trans []tran) *state {
 		if found {
 			continue
 		}
-		// 	if j, ok := mtrans[sf]; ok {
-		// 		if !trans[i].Equal(trans[j]) {
-		// 			fmt.Printf("deduped! %v\n", this.toStr(&state{current, false, trans}))
-		// 			panic("wtf")
-		// 		}
-		// 	}
-		// 	mtrans[funcs.Sprint(trans[i].value)] = i
 		is = append(is, trani)
 	}
 	trans2 := make([]tran, 0, len(is))
@@ -424,49 +303,32 @@ func (this *converter) newState(current int, trans []tran) *state {
 		trans:   trans2,
 	}
 	this.states[current] = s
-	// fmt.Printf("deduped  %v\n", this.toStr(s))
 	return s
 }
 
-// func (this *converter) dedup2(ups []up) []up {
-// 	rups := make(map[int]int)
-// 	for _, up := range ups {
-// 		if d, ok := rups[up.bot]; !ok {
-// 			rups[up.bot] = up.top
-// 		} else if d != up.top {
-// 			fmt.Printf("wtf\n")
-// 			rups[up.bot] = this.addPattern(relapse.NewOr(this.getPattern(up.top), this.getPattern(d)))
-// 		}
-// 	}
-// 	iups := []int{}
-// 	for i := range rups {
-// 		iups = append(iups, i)
-// 	}
-// 	sort.Ints(iups)
-// 	nups := []up{}
-// 	for _, i := range iups {
-// 		nups = append(nups, up{i, rups[i]})
-// 	}
-// 	return nups
-// }
-
-// func (this *converter) dedup(ups []up) []up {
-// 	rups := make(map[int]map[int]struct{})
-// 	nups := []up{}
-// 	for i, up := range ups {
-// 		if _, ok := rups[up.bot]; !ok {
-// 			nups = append(nups, ups[i])
-// 			rups[up.bot] = make(map[int]struct{})
-// 			rups[up.bot][up.top] = struct{}{}
-// 		} else if _, ok1 := rups[up.bot][up.top]; !ok1 {
-// 			nups = append(nups, ups[i])
-// 			rups[up.bot][up.top] = struct{}{}
-// 			fmt.Printf("wtf %v -> %v \n", this.patterns[up.bot], this.patterns[up.top])
-// 			//panic("wtf different returns")
-// 		}
-// 	}
-// 	return ups
-// }
+func (this *converter) orups(as, bs []up) []up {
+	newups := make(map[int]int)
+	newbots := []int{}
+	for _, a := range as {
+		for _, b := range bs {
+			newbot := this.addPattern(relapse.NewOr(this.getPattern(a.bot), this.getPattern(b.bot)))
+			newtop := this.addPattern(relapse.NewOr(this.getPattern(a.top), this.getPattern(b.top)))
+			oldtop, ok := newups[newbot]
+			if ok {
+				newups[newbot] = this.addPattern(relapse.NewOr(this.getPattern(oldtop), this.getPattern(newtop)))
+			} else {
+				newbots = append(newbots, newbot)
+				newups[newbot] = newtop
+			}
+		}
+	}
+	sort.Ints(newbots)
+	ups := make([]up, 0, len(newbots))
+	for i := range newbots {
+		ups = append(ups, up{bot: newbots[i], top: newups[newbots[i]]})
+	}
+	return ups
+}
 
 func (this *converter) addion(ts []tran, t tran) []tran {
 	tvaluestr := funcs.Sprint(t.value)
@@ -477,15 +339,7 @@ func (this *converter) addion(ts []tran, t tran) []tran {
 		if funcs.Sprint(ts[i].value) == tvaluestr {
 			pdts := this.getPattern(ts[i].down)
 			pdt := this.getPattern(t.down)
-			ups := []up{}
-			for _, tu := range t.ups {
-				for _, tsu := range ts[i].ups {
-					ups = append(ups, up{
-						bot: this.addPattern(relapse.NewOr(this.getPattern(tsu.bot), this.getPattern(tu.bot))),
-						top: this.addPattern(relapse.NewOr(this.getPattern(tsu.top), this.getPattern(tu.top))),
-					})
-				}
-			}
+			ups := this.orups(t.ups, ts[i].ups)
 			ts[i] = tran{
 				value: ts[i].value,
 				down:  this.addPattern(relapse.NewOr(pdts, pdt)),
@@ -503,15 +357,8 @@ func (this *converter) union(left, right []tran) []tran {
 		for _, rt := range right {
 			pdl := this.getPattern(lt.down)
 			pdr := this.getPattern(rt.down)
-			ups := []up{}
-			for _, lu := range lt.ups {
-				for _, ru := range rt.ups {
-					ups = append(ups, up{
-						bot: this.addPattern(relapse.NewOr(this.getPattern(lu.bot), this.getPattern(ru.bot))),
-						top: this.addPattern(relapse.NewOr(this.getPattern(lu.top), this.getPattern(ru.top))),
-					})
-				}
-			}
+			ups := this.orups(lt.ups, rt.ups)
+
 			truetrue := funcs.Simplify(funcs.And(lt.value, rt.value))
 			ts = this.addion(ts, tran{
 				value: truetrue,
@@ -519,19 +366,19 @@ func (this *converter) union(left, right []tran) []tran {
 				ups:   ups,
 			})
 
-			truefalse := funcs.Simplify(funcs.And(lt.value, not(rt.value)))
-			ts = this.addion(ts, tran{
-				value: truefalse,
-				down:  lt.down,
-				ups:   lt.ups,
-			})
+			// truefalse := funcs.Simplify(funcs.And(lt.value, not(rt.value)))
+			// ts = this.addion(ts, tran{
+			// 	value: truefalse,
+			// 	down:  lt.down,
+			// 	ups:   lt.ups,
+			// })
 
-			falsetrue := funcs.Simplify(funcs.And(not(lt.value), rt.value))
-			ts = this.addion(ts, tran{
-				value: falsetrue,
-				down:  rt.down,
-				ups:   rt.ups,
-			})
+			// falsetrue := funcs.Simplify(funcs.And(not(lt.value), rt.value))
+			// ts = this.addion(ts, tran{
+			// 	value: falsetrue,
+			// 	down:  rt.down,
+			// 	ups:   rt.ups,
+			// })
 
 		}
 	}
@@ -652,8 +499,8 @@ func (this *converter) convert(p *relapse.Pattern, down bool) []tran {
 		if !down {
 			return []tran{
 				{f, this.addPattern(v.Pattern), []up{
-					up{this.addPattern(dontcare), this.getEmpty()},
-					up{this.addPattern(dontcare), this.getNone()},
+					up{this.getEmpty(), this.getEmpty()},
+					up{this.getNone(), this.getNone()},
 				}},
 				this.newDeadEnd(not(f)),
 			}
@@ -661,7 +508,6 @@ func (this *converter) convert(p *relapse.Pattern, down bool) []tran {
 		tops := this.getReachable(v.GetPattern())
 		ups := make([]up, 0, len(tops))
 		for _, d := range tops {
-			fmt.Printf("Reachable from %v -> %v\n", p, this.getPattern(d))
 			if interp.Nullable(this.refs, this.getPattern(d)) {
 				ups = append(ups, up{d, this.getEmpty()})
 			} else {
@@ -684,7 +530,6 @@ func (this *converter) convert(p *relapse.Pattern, down bool) []tran {
 			this.newDeadEnd(not(f)),
 		}
 	case *relapse.Concat:
-		fmt.Printf("concating %v\n", p)
 		left := this.convert(v.GetLeftPattern(), down)
 		leftts := this.leftConcat(left, this.addPattern(v.GetRightPattern()))
 		if !interp.Nullable(this.refs, v.GetLeftPattern()) {
@@ -696,10 +541,10 @@ func (this *converter) convert(p *relapse.Pattern, down bool) []tran {
 	case *relapse.Or:
 		left := this.convert(v.GetLeftPattern(), down)
 		right := this.convert(v.GetRightPattern(), down)
+		fmt.Printf("ORLEFT = %v\n", this.toStr(&state{this.addPattern(v.GetLeftPattern()), false, left}))
+		fmt.Printf("ORRIGHT = %v\n", this.toStr(&state{this.addPattern(v.GetRightPattern()), false, right}))
 		ts := this.union(left, right)
-		fmt.Printf("ORLEFT:  %v\n", this.toStr(&state{this.addPattern(v.GetLeftPattern()), false, left}))
-		fmt.Printf("ORRIGHT: %v\n", this.toStr(&state{this.addPattern(v.GetRightPattern()), false, right}))
-		fmt.Printf("ORRES:   %v\n", this.toStr(&state{this.addPattern(p), false, ts}))
+		fmt.Printf("ORRES = %v\n", this.toStr(&state{this.addPattern(p), false, ts}))
 		return ts
 	case *relapse.And:
 		left := this.convert(v.GetLeftPattern(), down)
@@ -750,9 +595,6 @@ func (this *converter) convert(p *relapse.Pattern, down bool) []tran {
 		lefttrans := this.interleave(left, v.GetRightPattern())
 		righttrans := this.interleave(right, v.GetLeftPattern())
 		ts := this.union(lefttrans, righttrans)
-		fmt.Printf("INTERLEAVE_LEFT:  %v\n", this.toStr(&state{this.addPattern(v.GetLeftPattern()), false, lefttrans}))
-		fmt.Printf("INTERLEAVE_RIGHT: %v\n", this.toStr(&state{this.addPattern(v.GetRightPattern()), false, righttrans}))
-		fmt.Printf("INTERLEAVE_RES:   %v\n", this.toStr(&state{this.addPattern(p), false, ts}))
 		return ts
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T %v", typ, p))

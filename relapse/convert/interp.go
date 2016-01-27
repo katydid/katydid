@@ -17,93 +17,59 @@ package convert
 import (
 	"fmt"
 	"github.com/katydid/katydid/expr/compose"
+	"github.com/katydid/katydid/funcs"
 	"github.com/katydid/katydid/serialize"
 	"io"
-	"strings"
 )
 
 func Interp(auto *auto, tree serialize.Parser) bool {
-	start := []*stackstate{{auto.states[auto.start], 0, 0}}
-	fs := interpret(auto, start, tree)
-	for _, f := range fs {
-		if f.current.final {
-			return true
-		}
-	}
-	return false
+	f := interpret(auto, auto.states[auto.start], tree)
+	return f.final
 }
 
-type stackstate struct {
-	current    *state
-	stackState int
-	stackFunc  int
-}
-
-func stacks(auto *auto, currents []*stackstate) string {
-	ss := make([]string, len(currents))
-	for i, c := range currents {
-		ss[i] = auto.patterns[c.current.current].String()
-	}
-	return strings.Join(ss, ", ")
-}
-
-func interpret(auto *auto, currents []*stackstate, tree serialize.Parser) []*stackstate {
+func interpret(auto *auto, current *state, tree serialize.Parser) *state {
 	for {
-		fmt.Printf("currents = %v\n", stacks(auto, currents))
+		fmt.Printf("current = %v\n", toStr(current, auto.patterns))
 		if err := tree.Next(); err != nil {
 			if err == io.EOF {
 				break
 			}
 			panic(err)
 		}
-		downs := []*stackstate{}
-		for currenti, current := range currents {
-			for trani, t := range current.current.trans {
-				f, err := compose.NewBoolFunc(t.value)
-				if err != nil {
-					panic(err)
-				}
-				e, err := f.Eval(tree)
-				if err != nil {
-					continue
-				}
-				if !e {
-					continue
-				}
-				downs = append(downs, &stackstate{
-					current:    auto.states[t.down],
-					stackState: currenti,
-					stackFunc:  trani,
-				})
+		for _, t := range current.trans {
+			f, err := compose.NewBoolFunc(t.value)
+			if err != nil {
+				panic(err)
 			}
-		}
-		fmt.Printf("downs = %v\n", stacks(auto, downs))
-		ups := downs
-		if tree.IsLeaf() {
-			fmt.Printf("leaf\n")
-		} else {
-			fmt.Printf("Down\n")
-			tree.Down()
-			ups = interpret(auto, downs, tree)
-			fmt.Printf("Up\n")
-			tree.Up()
-		}
-		fmt.Printf("ups = %v\n", stacks(auto, ups))
-		newCurrents := []*stackstate{}
-		for _, up := range ups {
-			current := currents[up.stackState]
-			tran := current.current.trans[up.stackFunc]
-			for _, u := range tran.ups {
-				if u.bot == up.current.current {
-					newCurrents = append(newCurrents, &stackstate{
-						current:    auto.states[u.top],
-						stackState: current.stackState,
-						stackFunc:  current.stackFunc,
-					})
+			e, err := f.Eval(tree)
+			if err != nil {
+				continue
+			}
+			if !e {
+				continue
+			}
+			fmt.Printf("evaled %v\n", funcs.Sprint(t.value))
+			down := auto.states[t.down]
+			fmt.Printf("down = %v\n", auto.patterns[down.current])
+			up := down
+			if tree.IsLeaf() {
+				fmt.Printf("leaf\n")
+			} else {
+				fmt.Printf("Down\n")
+				tree.Down()
+				up = interpret(auto, down, tree)
+				fmt.Printf("Up\n")
+				tree.Up()
+			}
+			fmt.Printf("up = %v\n", auto.patterns[up.current])
+			for _, cup := range t.ups {
+				if cup.bot == up.current {
+					current = auto.states[cup.top]
+					break
 				}
 			}
+			break
 		}
-		currents = newCurrents
 	}
-	return currents
+	return current
 }

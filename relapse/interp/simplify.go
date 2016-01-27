@@ -117,19 +117,6 @@ func getOrs(p *relapse.Pattern) []*relapse.Pattern {
 }
 
 func simplifyOr(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
-	left := getOrs(p1)
-	right := getOrs(p2)
-	list := append(left, right...)
-	list = relapse.Set(list)
-	relapse.Sort(list)
-	var p *relapse.Pattern = list[0]
-	for i := range list {
-		if i == 0 {
-			continue
-		}
-		p = relapse.NewOr(p, list[i])
-	}
-	return p
 	// if isNotZany(p1) {
 	// 	return p2
 	// }
@@ -145,24 +132,19 @@ func simplifyOr(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Patter
 	// if isEmpty(p2) && Nullable(refs, p1) {
 	// 	return p1
 	// }
-	// if p1.Or != nil {
-	// 	return simplifyOr(refs, p1.Or.GetLeftPattern(), simplifyOr(refs, p1.Or.GetRightPattern(), p2))
-	// }
-	// if p1.Equal(p2) {
-	// 	return p1
-	// }
-	// if p2.Or != nil {
-	// 	if p1.Equal(p2.Or.GetLeftPattern()) || p1.Equal(p2.Or.GetRightPattern()) {
-	// 		return simplifyOr(refs, p2.Or.GetLeftPattern(), p2.Or.GetRightPattern())
-	// 	}
-	// 	if p2.Or.GetLeftPattern().Less(p1) {
-	// 		return simplifyOr(refs, p2.Or.GetLeftPattern(), simplifyOr(refs, p1, p2.Or.GetRightPattern()))
-	// 	}
-	// }
-	// if p2.Less(p1) {
-	// 	return relapse.NewOr(p2, p1)
-	// }
-	// return relapse.NewOr(p1, p2)
+	left := getOrs(p1)
+	right := getOrs(p2)
+	list := append(left, right...)
+	list = relapse.Set(list)
+	relapse.Sort(list)
+	var p *relapse.Pattern = list[0]
+	for i := range list {
+		if i == 0 {
+			continue
+		}
+		p = relapse.NewOr(p, list[i])
+	}
+	return p
 }
 
 func getAnds(p *relapse.Pattern) []*relapse.Pattern {
@@ -211,36 +193,6 @@ func simplifyAnd(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Patte
 	return p
 }
 
-// func simplifyAnd(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
-// 	if isNotZany(p1) || isNotZany(p2) {
-// 		return relapse.NewNot(relapse.NewZAny())
-// 	}
-// 	if isZany(p1) {
-// 		return p2
-// 	}
-// 	if isZany(p2) {
-// 		return p1
-// 	}
-// 	if isEmpty(p1) {
-// 		if Nullable(refs, p2) {
-// 			return relapse.NewEmpty()
-// 		} else {
-// 			return relapse.NewNot(relapse.NewZAny())
-// 		}
-// 	}
-// 	if isEmpty(p2) {
-// 		if Nullable(refs, p1) {
-// 			return relapse.NewEmpty()
-// 		} else {
-// 			return relapse.NewNot(relapse.NewZAny())
-// 		}
-// 	}
-// 	if p1.Equal(p2) {
-// 		return p1
-// 	}
-// 	return relapse.NewAnd(p1, p2)
-// }
-
 func simplifyZeroOrMore(p *relapse.Pattern) *relapse.Pattern {
 	if p.ZeroOrMore != nil {
 		return p
@@ -255,7 +207,6 @@ func simplifyNot(p *relapse.Pattern) *relapse.Pattern {
 	return relapse.NewNot(p)
 }
 
-//TODO we can do better
 func simplifyOptional(p *relapse.Pattern) *relapse.Pattern {
 	if isEmpty(p) {
 		return relapse.NewEmpty()
