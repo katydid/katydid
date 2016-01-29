@@ -334,6 +334,7 @@ func TestDPocketRosesReflect(t *testing.T) {
 }
 
 func TestDeepLeft811Json(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["DeepLeft811"]["json"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
@@ -774,11 +775,13 @@ func TestNilNameSmithReflect(t *testing.T) {
 }
 
 func TestOneHash811Json(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["OneHash811"]["json"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestOneLeftAndTwoRightHashes811Json(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["OneLeftAndTwoRightHashes811"]["json"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
@@ -1084,151 +1087,181 @@ func TestPage194dcbaJson(t *testing.T) {
 }
 
 func TestPage195E0Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E0"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E0AddrE0Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E0AddrE0"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E0AddrE0NameE0Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E0AddrE0NameE0"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E0NameE0Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E0NameE0"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E0NameE0AddrE0Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E0NameE0AddrE0"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E0NameE0NameE0Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E0NameE0NameE0"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E0NameE0NameE0TelE0Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E0NameE0NameE0TelE0"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E0NameE0NameE2Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E0NameE0NameE2"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E0NameE0NameE2TelE0Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E0NameE0NameE2TelE0"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E0NameE0TelE0NameE2Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E0NameE0TelE0NameE2"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E0NameE0TelE2NameE0Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E0NameE0TelE2NameE0"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E0NameE0TelE2NameE2Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E0NameE0TelE2NameE2"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E0NameE2NameE0Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E0NameE2NameE0"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E0NameE2NameE0TelE0Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E0NameE2NameE0TelE0"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E0NameE2TelE0NameE0Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E0NameE2TelE0NameE0"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E0NameE2TelE0NameE2Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E0NameE2TelE0NameE2"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E0NameE2TelE2NameE2Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E0NameE2TelE2NameE2"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E0TelE0NameE0NameE0Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E0TelE0NameE0NameE0"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E0TelE0NameE0NameE2Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E0TelE0NameE0NameE2"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E1Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E1"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E1AddrE1Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E1AddrE1"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E1AddrE1NameE1Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E1AddrE1NameE1"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E1NameE1Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E1NameE1"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E1NameE1AddrE1Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E1NameE1AddrE1"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E2Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E2"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E2AddrE2Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E2AddrE2"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E2AddrE2NameE2Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E2AddrE2NameE2"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E2NameE0TelE0NameE2Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E2NameE0TelE0NameE2"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E2NameE2Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E2NameE2"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestPage195E2NameE2AddrE2Xml(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["Page195E2NameE2AddrE2"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
@@ -1754,11 +1787,13 @@ func TestTopTop1Reflect(t *testing.T) {
 }
 
 func TestTwoHashes811Json(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["TwoHashes811"]["json"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
 func TestTwoLeftAndOneRightHashes811Json(t *testing.T) {
+	t.Fatal("SKIP")
 	v := tests.Validators["TwoLeftAndOneRightHashes811"]["json"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }

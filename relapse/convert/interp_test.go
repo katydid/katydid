@@ -1152,6 +1152,7 @@ func TestInterpConcatOptionalBD_D(t *testing.T) {
 	}
 }
 
+//!(B:<empty>) can be <empty> and * can be B:<empty> which means B:<empty> can be accepted
 func TestInterpAnyButNotB_B(t *testing.T) {
 	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
 		relapse.NewZAny(),
@@ -1160,8 +1161,8 @@ func TestInterpAnyButNotB_B(t *testing.T) {
 	refs := map[string]*relapse.Pattern{"main": p}
 	auto := Convert(refs, relapse.NewReference("main"))
 	tree := newXMLStringParser("<A><B/></A>")
-	if Interp(auto, tree) {
-		t.Fatalf("unexpected match")
+	if !Interp(auto, tree) {
+		t.Fatalf("expected match")
 	}
 }
 

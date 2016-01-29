@@ -186,6 +186,8 @@ func Simplify(f Bool) Bool {
 					if vvv2, ok2 := isVarConst(vv2.V1, vv2.V2); ok2 {
 						if vvv1 != vvv2 {
 							return v1
+						} else {
+							return BoolConst(false)
 						}
 					}
 				}
@@ -196,6 +198,8 @@ func Simplify(f Bool) Bool {
 					if vvv2, ok2 := isVarConst(vv2.V1, vv2.V2); ok2 {
 						if vvv1 != vvv2 {
 							return v2
+						} else {
+							return BoolConst(false)
 						}
 					}
 				}

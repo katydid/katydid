@@ -20,11 +20,15 @@ import (
 	"github.com/katydid/katydid/funcs"
 	"github.com/katydid/katydid/serialize"
 	"io"
+	"strings"
 )
 
 func Interp(auto *auto, tree serialize.Parser) bool {
-	f := interpret(auto, auto.states[auto.start], tree)
-	return f.final
+	// f := interpret(auto, auto.states[auto.start], tree)
+	// return f.final
+	n, f := Record(auto, tree)
+	fmt.Printf("%v\n", n)
+	return f
 }
 
 func interpret(auto *auto, current *state, tree serialize.Parser) *state {
@@ -72,4 +76,122 @@ func interpret(auto *auto, current *state, tree serialize.Parser) *state {
 		}
 	}
 	return current
+}
+
+func Record(auto *auto, tree serialize.Parser) (Node, bool) {
+	ns, f := record(auto, auto.states[auto.start], tree)
+	n := Node{
+		Label:    "Root",
+		Down:     auto.patterns[auto.start].String(),
+		Up:       auto.patterns[f.current].String(),
+		Children: ns,
+	}
+	return n, f.final
+}
+
+func getValue(parser serialize.Parser) interface{} {
+	var v interface{}
+	var err error
+	v, err = parser.Int()
+	if err == nil {
+		return v
+	}
+	v, err = parser.String()
+	if err == nil {
+		return v
+	}
+	v, err = parser.Uint()
+	if err == nil {
+		return v
+	}
+	v, err = parser.Double()
+	if err == nil {
+		return v
+	}
+	v, err = parser.Bool()
+	if err == nil {
+		return v
+	}
+	v, err = parser.Bytes()
+	if err == nil {
+		return v
+	}
+	return nil
+}
+
+type Node struct {
+	Label    string
+	Current  string
+	Down     string
+	Up       string
+	Children []Node
+}
+
+func (this Node) String() string {
+	children := make([]string, len(this.Children))
+	for i := range this.Children {
+		ss := strings.Split(this.Children[i].String(), "\n")
+		for i, s := range ss {
+			ss[i] = "\t\t" + s
+		}
+		children[i] = strings.Join(ss, "\n")
+	}
+	schild := fmt.Sprintf("\n\tChildren: {\n%v\n\t}", strings.Join(children, "\n"))
+	if len(children) == 0 {
+		schild = ""
+	}
+	return fmt.Sprintf("%v:\n\tCurrent: %v\n\tDown: %v%v\n\tUp: %v", this.Label, this.Current, this.Down, schild, this.Up)
+}
+
+func record(auto *auto, current *state, tree serialize.Parser) ([]Node, *state) {
+	nodes := make([]Node, 0)
+	for {
+		fmt.Printf("current = %v\n", toStr(current, auto.patterns))
+		if err := tree.Next(); err != nil {
+			if err == io.EOF {
+				break
+			} else {
+				panic(err)
+			}
+		}
+		value := getValue(tree)
+		for _, t := range current.trans {
+			f, err := compose.NewBoolFunc(t.value)
+			if err != nil {
+				panic(err)
+			}
+			e, err := f.Eval(tree)
+			if err != nil {
+				continue
+			}
+			if !e {
+				continue
+			}
+			down := auto.states[t.down]
+			up := down
+			name := fmt.Sprintf("%v", value)
+			var children []Node
+			if tree.IsLeaf() {
+			} else {
+				tree.Down()
+				children, up = record(auto, down, tree)
+				tree.Up()
+			}
+			nodes = append(nodes, Node{
+				Label:    name,
+				Current:  auto.patterns[current.current].String(),
+				Down:     auto.patterns[down.current].String(),
+				Up:       auto.patterns[up.current].String(),
+				Children: children,
+			})
+			for _, cup := range t.ups {
+				if cup.bot == up.current {
+					current = auto.states[cup.top]
+					break
+				}
+			}
+			break
+		}
+	}
+	return nodes, current
 }

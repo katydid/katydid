@@ -265,11 +265,11 @@ func toStr(s *state, ps []*relapse.Pattern) string {
 	for _, t := range s.trans {
 		us := []string{}
 		for _, u := range t.ups {
-			us = append(us, "( "+ps[u.bot].String()+" ^ "+ps[u.top].String()+" )")
+			us = append(us, "\t\t"+ps[u.bot].String()+" ^ "+ps[u.top].String())
 		}
-		ts = append(ts, funcs.Sprint(t.value)+" -> "+ps[t.down].String()+" [ "+strings.Join(us, ", ")+" ]")
+		ts = append(ts, "\t"+funcs.Sprint(t.value)+" -> "+ps[t.down].String()+" [\n"+strings.Join(us, ",\n")+"\n\t]")
 	}
-	return current.String() + " { " + strings.Join(ts, ", ") + " }"
+	return current.String() + " {\n" + strings.Join(ts, ",\n") + "\n}"
 }
 
 func (this *converter) toStr(s *state) string {
