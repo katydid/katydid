@@ -1273,3 +1273,33 @@ func TestInterpOrNotAB_C(t *testing.T) {
 		t.Fatalf("expected match")
 	}
 }
+
+func TestInterpAEndsWithBContainsAnyD_ABCD(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
+		relapse.NewZAny(),
+		relapse.NewTreeNode(relapse.NewStringName("B"),
+			relapse.NewContains(relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewTreeNode(relapse.NewStringName("D"), relapse.NewEmpty()))),
+		)),
+	)
+	refs := map[string]*relapse.Pattern{"main": p}
+	auto := Convert(refs, relapse.NewReference("main"))
+	tree := newXMLStringParser("<A><B><C><D/></C></B></A>")
+	if !Interp(auto, tree) {
+		t.Fatalf("expected match")
+	}
+}
+
+func TestInterpAEndsWithBContainsAnyD_ABCA(t *testing.T) {
+	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
+		relapse.NewZAny(),
+		relapse.NewTreeNode(relapse.NewStringName("B"),
+			relapse.NewContains(relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewTreeNode(relapse.NewStringName("D"), relapse.NewEmpty()))),
+		)),
+	)
+	refs := map[string]*relapse.Pattern{"main": p}
+	auto := Convert(refs, relapse.NewReference("main"))
+	tree := newXMLStringParser("<A><B><C><A/></C></B></A>")
+	if Interp(auto, tree) {
+		t.Fatalf("unexpected match")
+	}
+}
