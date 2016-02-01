@@ -30,7 +30,6 @@ func Interp(auto *auto, tree serialize.Parser) bool {
 	fmt.Printf("%v\n", n)
 	return f
 }
-
 func interpret(auto *auto, current *state, tree serialize.Parser) *state {
 	for {
 		fmt.Printf("current = %v\n", toStr(current, auto.patterns))
@@ -155,6 +154,7 @@ func record(auto *auto, current *state, tree serialize.Parser) ([]Node, *state) 
 			}
 		}
 		value := getValue(tree)
+		allfalse := true
 		for _, t := range current.trans {
 			f, err := compose.NewBoolFunc(t.value)
 			if err != nil {
@@ -172,6 +172,7 @@ func record(auto *auto, current *state, tree serialize.Parser) ([]Node, *state) 
 			name := fmt.Sprintf("%v", value)
 			var children []Node
 			if tree.IsLeaf() {
+				//do nothing
 			} else {
 				tree.Down()
 				children, up = record(auto, down, tree)
@@ -187,10 +188,17 @@ func record(auto *auto, current *state, tree serialize.Parser) ([]Node, *state) 
 			for _, cup := range t.ups {
 				if cup.bot == up.current {
 					current = auto.states[cup.top]
+					allfalse = false
 					break
 				}
 			}
+			if allfalse {
+				panic("allfalse " + auto.patterns[up.current].String())
+			}
 			break
+		}
+		if allfalse {
+			panic("allfalse " + fmt.Sprintf("%d ", len(current.trans)) + auto.patterns[current.current].String())
 		}
 	}
 	return nodes, current

@@ -33,6 +33,39 @@ type auto struct {
 	patterns []*relapse.Pattern
 }
 
+func (this *auto) reachable(s int) bool {
+	return this.reachable2(make(map[int]bool), s)
+}
+
+func (this *auto) reachable2(visited map[int]bool, s int) bool {
+	if s == this.start {
+		return true
+	}
+	if v, ok := visited[s]; ok {
+		return v
+	}
+	visited[s] = false
+	for _, state := range this.states {
+		for _, tran := range state.trans {
+			if tran.down == s {
+				if this.reachable2(visited, state.current) {
+					visited[s] = true
+					return true
+				}
+			}
+			for _, up := range tran.ups {
+				if up.top == s {
+					if this.reachable2(visited, state.current) && this.reachable2(visited, up.bot) {
+						visited[s] = true
+						return true
+					}
+				}
+			}
+		}
+	}
+	return false
+}
+
 func (this *auto) draw() {
 	s := []string{}
 	a := func(line string) {
@@ -44,6 +77,9 @@ func (this *auto) draw() {
 	accepts := []string{}
 	other := []string{}
 	for _, s := range this.states {
+		if !this.reachable(s.current) {
+			continue
+		}
 		current := this.patterns[s.current].String()
 		scurrent := strconv.Quote(current)
 		if s.final {
@@ -58,6 +94,9 @@ func (this *auto) draw() {
 	a("\tnode [shape = circle]; " + strings.Join(other, " "))
 	for si, _ := range this.patterns {
 		s := this.states[si]
+		if !this.reachable(s.current) {
+			continue
+		}
 		current := this.patterns[s.current].String()
 		scurrent := strconv.Quote(current)
 		if this.start == s.current {
@@ -67,6 +106,9 @@ func (this *auto) draw() {
 			v := funcs.Sprint(t.value)
 			a("\t" + scurrent + " -> " + strconv.Quote(this.patterns[t.down].String()) + " [ label = " + strconv.Quote(v+"&uarr;"+current) + " ];")
 			for _, u := range t.ups {
+				if !this.reachable(u.bot) {
+					continue
+				}
 				a("\t" + strconv.Quote(this.patterns[u.bot].String()) + " -> " + strconv.Quote(this.patterns[u.top].String()) + " [ label = " + strconv.Quote(v+"&darr;"+current) + " ];")
 			}
 		}
