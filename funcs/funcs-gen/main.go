@@ -28,11 +28,11 @@ type {{.Type}}{{.CName}} struct {
 func (this *{{.Type}}{{.CName}}) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return {{.Error}}, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return {{.Error}}, nil
 	}
 	{{if .Eval}}{{.Eval}}{{else}}return v1 {{.Operator}} v2, nil{{end}}
 }
@@ -56,6 +56,7 @@ type compare struct {
 	Type     string
 	Eval     string
 	CType    string
+	Error    string
 }
 
 func (this *compare) CName() string {
@@ -419,34 +420,34 @@ type inSeter struct {
 func main() {
 	gen := gen.NewFunc("funcs")
 	gen(compareStr, "compare.gen.go", []interface{}{
-		&compare{"ge", ">=", "double", "", "Double"},
-		&compare{"ge", ">=", "int", "", "Int"},
-		&compare{"ge", ">=", "uint", "", "Uint"},
-		&compare{"ge", "", "bytes", "return bytes.Compare(v1, v2) >= 0, nil", "Bytes"},
-		&compare{"gt", ">", "double", "", "Double"},
-		&compare{"gt", ">", "int", "", "Int"},
-		&compare{"gt", ">", "uint", "", "Uint"},
-		&compare{"gt", "", "bytes", "return bytes.Compare(v1, v2) > 0, nil", "Bytes"},
-		&compare{"le", "<=", "double", "", "Double"},
-		&compare{"le", "<=", "int", "", "Int"},
-		&compare{"le", "<=", "uint", "", "Uint"},
-		&compare{"le", "", "bytes", "return bytes.Compare(v1, v2) <= 0, nil", "Bytes"},
-		&compare{"lt", "<", "double", "", "Double"},
-		&compare{"lt", "<", "int", "", "Int"},
-		&compare{"lt", "<", "uint", "", "Uint"},
-		&compare{"lt", "", "bytes", "return bytes.Compare(v1, v2) < 0, nil", "Bytes"},
-		&compare{"eq", "==", "double", "", "Double"},
-		&compare{"eq", "==", "int", "", "Int"},
-		&compare{"eq", "==", "uint", "", "Uint"},
-		&compare{"eq", "==", "bool", "", "Bool"},
-		&compare{"eq", "==", "string", "", "String"},
-		&compare{"eq", "", "bytes", "return bytes.Equal(v1, v2), nil", "Bytes"},
-		&compare{"ne", "!=", "double", "", "Double"},
-		&compare{"ne", "!=", "int", "", "Int"},
-		&compare{"ne", "!=", "uint", "", "Uint"},
-		&compare{"ne", "!=", "bool", "", "Bool"},
-		&compare{"ne", "!=", "string", "", "String"},
-		&compare{"ne", "", "bytes", "return !bytes.Equal(v1, v2), nil", "Bytes"},
+		&compare{"ge", ">=", "double", "", "Double", "false"},
+		&compare{"ge", ">=", "int", "", "Int", "false"},
+		&compare{"ge", ">=", "uint", "", "Uint", "false"},
+		&compare{"ge", "", "bytes", "return bytes.Compare(v1, v2) >= 0, nil", "Bytes", "false"},
+		&compare{"gt", ">", "double", "", "Double", "true"},
+		&compare{"gt", ">", "int", "", "Int", "true"},
+		&compare{"gt", ">", "uint", "", "Uint", "true"},
+		&compare{"gt", "", "bytes", "return bytes.Compare(v1, v2) > 0, nil", "Bytes", "true"},
+		&compare{"le", "<=", "double", "", "Double", "false"},
+		&compare{"le", "<=", "int", "", "Int", "false"},
+		&compare{"le", "<=", "uint", "", "Uint", "false"},
+		&compare{"le", "", "bytes", "return bytes.Compare(v1, v2) <= 0, nil", "Bytes", "false"},
+		&compare{"lt", "<", "double", "", "Double", "true"},
+		&compare{"lt", "<", "int", "", "Int", "true"},
+		&compare{"lt", "<", "uint", "", "Uint", "true"},
+		&compare{"lt", "", "bytes", "return bytes.Compare(v1, v2) < 0, nil", "Bytes", "true"},
+		&compare{"eq", "==", "double", "", "Double", "false"},
+		&compare{"eq", "==", "int", "", "Int", "false"},
+		&compare{"eq", "==", "uint", "", "Uint", "false"},
+		&compare{"eq", "==", "bool", "", "Bool", "false"},
+		&compare{"eq", "==", "string", "", "String", "false"},
+		&compare{"eq", "", "bytes", "return bytes.Equal(v1, v2), nil", "Bytes", "false"},
+		&compare{"ne", "!=", "double", "", "Double", "true"},
+		&compare{"ne", "!=", "int", "", "Int", "true"},
+		&compare{"ne", "!=", "uint", "", "Uint", "true"},
+		&compare{"ne", "!=", "bool", "", "Bool", "true"},
+		&compare{"ne", "!=", "string", "", "String", "true"},
+		&compare{"ne", "", "bytes", "return !bytes.Equal(v1, v2), nil", "Bytes", "true"},
 	}, `"bytes"`)
 	gen(newFuncStr, "newfunc.gen.go", []interface{}{
 		"Double",

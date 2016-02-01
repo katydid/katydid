@@ -15,11 +15,11 @@ type doubleGE struct {
 func (this *doubleGE) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	return v1 >= v2, nil
 }
@@ -44,11 +44,11 @@ type intGE struct {
 func (this *intGE) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	return v1 >= v2, nil
 }
@@ -73,11 +73,11 @@ type uintGE struct {
 func (this *uintGE) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	return v1 >= v2, nil
 }
@@ -102,11 +102,11 @@ type bytesGE struct {
 func (this *bytesGE) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	return bytes.Compare(v1, v2) >= 0, nil
 }
@@ -131,11 +131,11 @@ type doubleGt struct {
 func (this *doubleGt) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	return v1 > v2, nil
 }
@@ -160,11 +160,11 @@ type intGt struct {
 func (this *intGt) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	return v1 > v2, nil
 }
@@ -189,11 +189,11 @@ type uintGt struct {
 func (this *uintGt) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	return v1 > v2, nil
 }
@@ -218,11 +218,11 @@ type bytesGt struct {
 func (this *bytesGt) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	return bytes.Compare(v1, v2) > 0, nil
 }
@@ -247,11 +247,11 @@ type doubleLE struct {
 func (this *doubleLE) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	return v1 <= v2, nil
 }
@@ -276,11 +276,11 @@ type intLE struct {
 func (this *intLE) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	return v1 <= v2, nil
 }
@@ -305,11 +305,11 @@ type uintLE struct {
 func (this *uintLE) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	return v1 <= v2, nil
 }
@@ -334,11 +334,11 @@ type bytesLE struct {
 func (this *bytesLE) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	return bytes.Compare(v1, v2) <= 0, nil
 }
@@ -363,11 +363,11 @@ type doubleLt struct {
 func (this *doubleLt) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	return v1 < v2, nil
 }
@@ -392,11 +392,11 @@ type intLt struct {
 func (this *intLt) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	return v1 < v2, nil
 }
@@ -421,11 +421,11 @@ type uintLt struct {
 func (this *uintLt) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	return v1 < v2, nil
 }
@@ -450,11 +450,11 @@ type bytesLt struct {
 func (this *bytesLt) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	return bytes.Compare(v1, v2) < 0, nil
 }
@@ -479,11 +479,11 @@ type doubleEq struct {
 func (this *doubleEq) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	return v1 == v2, nil
 }
@@ -508,11 +508,11 @@ type intEq struct {
 func (this *intEq) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	return v1 == v2, nil
 }
@@ -537,11 +537,11 @@ type uintEq struct {
 func (this *uintEq) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	return v1 == v2, nil
 }
@@ -566,11 +566,11 @@ type boolEq struct {
 func (this *boolEq) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	return v1 == v2, nil
 }
@@ -595,11 +595,11 @@ type stringEq struct {
 func (this *stringEq) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	return v1 == v2, nil
 }
@@ -624,11 +624,11 @@ type bytesEq struct {
 func (this *bytesEq) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	return bytes.Equal(v1, v2), nil
 }
@@ -653,11 +653,11 @@ type doubleNe struct {
 func (this *doubleNe) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	return v1 != v2, nil
 }
@@ -682,11 +682,11 @@ type intNe struct {
 func (this *intNe) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	return v1 != v2, nil
 }
@@ -711,11 +711,11 @@ type uintNe struct {
 func (this *uintNe) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	return v1 != v2, nil
 }
@@ -740,11 +740,11 @@ type boolNe struct {
 func (this *boolNe) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	return v1 != v2, nil
 }
@@ -769,11 +769,11 @@ type stringNe struct {
 func (this *stringNe) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	return v1 != v2, nil
 }
@@ -798,11 +798,11 @@ type bytesNe struct {
 func (this *bytesNe) Eval() (bool, error) {
 	v1, err := this.V1.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	v2, err := this.V2.Eval()
 	if err != nil {
-		return false, err
+		return true, nil
 	}
 	return !bytes.Equal(v1, v2), nil
 }
