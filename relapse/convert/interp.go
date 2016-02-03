@@ -30,6 +30,7 @@ func Interp(auto *auto, tree serialize.Parser) bool {
 	fmt.Printf("%v\n", n)
 	return f
 }
+
 func interpret(auto *auto, current *state, tree serialize.Parser) *state {
 	for {
 		fmt.Printf("current = %v\n", toStr(current, auto.patterns))

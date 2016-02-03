@@ -65,8 +65,9 @@ func test(t *testing.T, g *relapse.Grammar, parser serialize.Parser, expected bo
 	// if len(refs) > 1 {
 	// 	t.Skipf("not today")
 	// }
-	auto := convert.Convert(refs, refs["main"])
-	match := convert.Interp(auto, parser)
+	// auto := convert.Convert(refs, refs["main"])
+	// match := convert.Interp(auto, parser)
+	match := convert.Eval(refs, parser)
 	if match != expected {
 		t.Fail()
 		t.Fatalf("Expected %v given %v\n on \n%s", expected, g, desc)
