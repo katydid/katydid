@@ -43,22 +43,19 @@ func DerivEval(refs map[string]*relapse.Pattern, parser serialize.Parser) bool {
 	for name, p := range refs {
 		newRefs[name] = FromPattern(p)
 	}
-	m := derivEval(newRefs, map[funcs.Bool]pattern{funcs.BoolConst(true): newRefs["main"]}, parser)
-	for _, p := range m {
-		return nullable(newRefs, p)
-	}
-	panic("Wtf")
+	ps := derivEval(newRefs, []pattern{newRefs["main"]}, parser)
+	return nullable(newRefs, ps[0])
 }
 
-func printMap(name string, m map[funcs.Bool]pattern) {
-	fmt.Printf("<%v>\n", name)
-	for k, v := range m {
-		fmt.Printf("\t%s: %s\n", funcs.Sprint(k), v.String())
-	}
-	fmt.Printf("</%v>\n", name)
-}
+// func printMap(name string, m map[funcs.Bool]pattern) {
+// 	fmt.Printf("<%v>\n", name)
+// 	for k, v := range m {
+// 		fmt.Printf("\t%s: %s\n", funcs.Sprint(k), v.String())
+// 	}
+// 	fmt.Printf("</%v>\n", name)
+// }
 
-func derivEval(refs map[string]pattern, currents map[funcs.Bool]pattern, parser serialize.Parser) map[funcs.Bool]pattern {
+func derivEval(refs map[string]pattern, currents []pattern, parser serialize.Parser) []pattern {
 	for {
 		// fmt.Printf("NEXT\n")
 		// printMap("CURRENTS", currents)
@@ -69,11 +66,16 @@ func derivEval(refs map[string]pattern, currents map[funcs.Bool]pattern, parser 
 				panic(err)
 			}
 		}
-		downs := make(map[funcs.Bool]pattern)
+		downs := []pattern{}
+		lookup := make([]map[funcs.Bool]int, len(currents))
 		//fmt.Printf("VALUE: %v\n", getValue(parser))
-		for _, current := range currents {
+		for currenti, current := range currents {
 			thisdowns := derivCall(refs, current, parser)
-			downs = unionMap(downs, thisdowns)
+			lookup[currenti] = make(map[funcs.Bool]int)
+			for f := range thisdowns {
+				downs = append(downs, thisdowns[f])
+				lookup[currenti][f] = len(downs) - 1
+			}
 		}
 		if parser.IsLeaf() {
 			//do nothing
@@ -84,9 +86,13 @@ func derivEval(refs map[string]pattern, currents map[funcs.Bool]pattern, parser 
 			parser.Up()
 			//		fmt.Printf("UP\n")
 		}
-		for currentf, current := range currents {
-			thisups := derivReturn(refs, current, downs)
-			currents[currentf] = thisups
+		for currenti, current := range currents {
+			newpatterns := make(map[funcs.Bool]pattern)
+			for f, i := range lookup[currenti] {
+				newpatterns[f] = downs[i]
+			}
+			thisups := derivReturn(refs, current, newpatterns)
+			currents[currenti] = thisups
 		}
 	}
 	return currents
