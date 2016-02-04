@@ -20,6 +20,7 @@ import (
 	exprparser "github.com/katydid/katydid/expr/parser"
 	"github.com/katydid/katydid/funcs"
 	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse/interp"
 	"github.com/katydid/katydid/relapse/nameexpr"
 )
 
@@ -116,6 +117,10 @@ func newInterleave(p1, p2 pattern) pattern {
 
 func (p pattern) String() string {
 	return ToPattern(p).String()
+}
+
+func simplify(p pattern) pattern {
+	return FromPattern(interp.Simplify(make(map[string]*relapse.Pattern), ToPattern(p)))
 }
 
 func ToPattern(p pattern) *relapse.Pattern {

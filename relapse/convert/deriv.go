@@ -92,7 +92,7 @@ func derivEval(refs map[string]pattern, currents []pattern, parser serialize.Par
 				newpatterns[f] = downs[i]
 			}
 			thisups := derivReturn(refs, current, newpatterns)
-			currents[currenti] = thisups
+			currents[currenti] = simplify(thisups)
 		}
 	}
 	return currents
