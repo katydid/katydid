@@ -16,7 +16,9 @@ package nameexpr
 
 import (
 	"fmt"
+	"github.com/katydid/katydid/expr/ast"
 	"github.com/katydid/katydid/expr/compose"
+	exprparser "github.com/katydid/katydid/expr/parser"
 	"github.com/katydid/katydid/funcs"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/serialize"
@@ -33,6 +35,71 @@ func EvalName(nameExpr *relapse.NameExpr, tree serialize.Decoder) bool {
 		panic(err)
 	}
 	return v
+}
+
+func FuncToName(f funcs.Bool) *relapse.NameExpr {
+	exprStr := funcs.Sprint(f)
+	expr, err := exprparser.NewParser().ParseExpr(exprStr)
+	if err != nil {
+		panic(err)
+	}
+	return exprToName(expr)
+}
+
+func exprToName(e *expr.Expr) *relapse.NameExpr {
+	if e.GetBuiltIn() != nil {
+		if e.GetBuiltIn().GetSymbol().String() == "==" {
+			if e.GetBuiltIn().GetExpr().GetTerminal() != nil {
+				t := e.GetBuiltIn().GetExpr().GetTerminal()
+				if t.DoubleValue != nil {
+					return relapse.NewDoubleName(t.GetDoubleValue())
+				}
+				if t.IntValue != nil {
+					return relapse.NewIntName(t.GetIntValue())
+				}
+				if t.UintValue != nil {
+					return relapse.NewUintName(t.GetUintValue())
+				}
+				if t.BoolValue != nil {
+					return relapse.NewBoolName(t.GetBoolValue())
+				}
+				if t.StringValue != nil {
+					return relapse.NewStringName(t.GetStringValue())
+				}
+				if t.BytesValue != nil {
+					return relapse.NewBytesName(t.GetBytesValue())
+				}
+			} else {
+				panic("todo")
+			}
+		} else {
+			panic("todo")
+		}
+	}
+	if e.GetFunction() != nil {
+		if e.GetFunction().GetName() == "not" {
+			return relapse.NewAnyNameExcept(exprToName(e.GetFunction().GetParams()[0]))
+		}
+		if e.GetFunction().GetName() == "or" {
+			return relapse.NewNameChoice(
+				exprToName(e.GetFunction().GetParams()[0]),
+				exprToName(e.GetFunction().GetParams()[1]),
+			)
+		}
+		panic("todo")
+	}
+	if e.GetTerminal() != nil {
+		if e.GetTerminal().BoolValue != nil {
+			if e.GetTerminal().GetBoolValue() {
+				return relapse.NewAnyName()
+			} else {
+				panic("todo")
+			}
+		} else {
+			panic("todo")
+		}
+	}
+	panic("todo")
 }
 
 func NameToFunc(n *relapse.NameExpr) funcs.Bool {

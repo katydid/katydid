@@ -37,7 +37,7 @@ func interpTest(t *testing.T, refs map[string]*relapse.Pattern, tree string) boo
 	parser := newXMLStringParser(tree)
 	// auto := Convert(refs, refs["main"])
 	// return Interp(auto, parser)
-	return Eval(refs, parser)
+	return DerivEval(refs, parser)
 }
 
 func TestInterpNone(t *testing.T) {
