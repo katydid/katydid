@@ -15,10 +15,7 @@
 package convert
 
 import (
-	//"github.com/katydid/katydid/funcs"
-	"github.com/katydid/katydid/funcs"
 	"github.com/katydid/katydid/relapse/ast"
-	"github.com/katydid/katydid/relapse/combinator"
 	"github.com/katydid/katydid/serialize"
 	xparser "github.com/katydid/katydid/serialize/xml"
 	"testing"
@@ -38,100 +35,6 @@ func interpTest(t *testing.T, refs map[string]*relapse.Pattern, tree string) boo
 	// auto := Convert(refs, refs["main"])
 	// return Interp(auto, parser)
 	return Deriv(refs, parser)
-}
-
-func TestInterpNone(t *testing.T) {
-	p := relapse.NewNot(relapse.NewZAny())
-	tree := "<A/>"
-	if interpTest(t, map[string]*relapse.Pattern{"main": p}, tree) {
-		t.Fatalf("unexpected match")
-	}
-}
-
-func TestInterpA1(t *testing.T) {
-	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())
-	tree := "<A/>"
-	if !interpTest(t, map[string]*relapse.Pattern{"main": p}, tree) {
-		t.Fatalf("expected match")
-	}
-}
-
-func TestInterpB1(t *testing.T) {
-	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())
-	tree := "<B/>"
-	if interpTest(t, map[string]*relapse.Pattern{"main": p}, tree) {
-		t.Fatalf("unexpected match")
-	}
-}
-
-func TestInterpNotA(t *testing.T) {
-	p := relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty()))
-	tree := "<A/>"
-	if interpTest(t, map[string]*relapse.Pattern{"main": p}, tree) {
-		t.Fatalf("unexpected match")
-	}
-}
-
-func TestInterpNotB(t *testing.T) {
-	p := relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty()))
-	tree := "<B/>"
-	if !interpTest(t, map[string]*relapse.Pattern{"main": p}, tree) {
-		t.Fatalf("expected match")
-	}
-}
-
-func TestInterpAB(t *testing.T) {
-	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()))
-	tree := "<A><B/></A>"
-	if !interpTest(t, map[string]*relapse.Pattern{"main": p}, tree) {
-		t.Fatalf("expected match")
-	}
-}
-
-func TestInterpBB(t *testing.T) {
-	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()))
-	tree := "<B><B/></B>"
-	if interpTest(t, map[string]*relapse.Pattern{"main": p}, tree) {
-		t.Fatalf("unexpected match")
-	}
-}
-
-func TestInterpALeafB(t *testing.T) {
-	p := relapse.NewTreeNode(relapse.NewStringName("A"), combinator.Value(funcs.StringEq(funcs.StringConst("B"), funcs.StringVar())))
-	tree := "<A>B</A>"
-	if !interpTest(t, map[string]*relapse.Pattern{"main": p}, tree) {
-		t.Fatalf("expected match")
-	}
-}
-
-func TestInterpBLeafB(t *testing.T) {
-	p := relapse.NewTreeNode(relapse.NewStringName("A"), combinator.Value(funcs.StringEq(funcs.StringConst("B"), funcs.StringVar())))
-	tree := "<B>B</B>"
-	if interpTest(t, map[string]*relapse.Pattern{"main": p}, tree) {
-		t.Fatalf("unexpected match")
-	}
-}
-
-func TestInterpConcatBC(t *testing.T) {
-	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
-		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
-		relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
-	))
-	tree := "<A><B/><C/></A>"
-	if !interpTest(t, map[string]*relapse.Pattern{"main": p}, tree) {
-		t.Fatalf("expected match")
-	}
-}
-
-func TestInterpConcatBB(t *testing.T) {
-	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
-		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
-		relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
-	))
-	tree := "<A><B/><B/></A>"
-	if interpTest(t, map[string]*relapse.Pattern{"main": p}, tree) {
-		t.Fatalf("unexpected match")
-	}
 }
 
 func TestInterpNotConcatBC(t *testing.T) {

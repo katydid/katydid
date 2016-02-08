@@ -258,6 +258,61 @@ func TestAndNameTelephoneSmithReflect(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestBasicAB_ABXml(t *testing.T) {
+	v := tests.Validators["BasicAB_AB"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicAB_BBXml(t *testing.T) {
+	v := tests.Validators["BasicAB_BB"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicALeafB_ABXml(t *testing.T) {
+	v := tests.Validators["BasicALeafB_AB"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicALeafB_BBXml(t *testing.T) {
+	v := tests.Validators["BasicALeafB_BB"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicA_AXml(t *testing.T) {
+	v := tests.Validators["BasicA_A"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicA_BXml(t *testing.T) {
+	v := tests.Validators["BasicA_B"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicConcatBC_BBXml(t *testing.T) {
+	v := tests.Validators["BasicConcatBC_BB"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicConcatBC_BCXml(t *testing.T) {
+	v := tests.Validators["BasicConcatBC_BC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicNone_AXml(t *testing.T) {
+	v := tests.Validators["BasicNone_A"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicNotA_AXml(t *testing.T) {
+	v := tests.Validators["BasicNotA_A"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicNotA_BXml(t *testing.T) {
+	v := tests.Validators["BasicNotA_B"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestBightTurnJson(t *testing.T) {
 	v := tests.Validators["BightTurn"]["json"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
