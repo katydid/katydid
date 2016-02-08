@@ -212,3 +212,25 @@ func (this *NameChoice) Walk(v Visitor) {
 		this.GetRight().Walk(v)
 	}
 }
+
+type vNot struct {
+	has bool
+}
+
+func (this *vNot) Visit(node interface{}) Visitor {
+	n, ok := node.(*Not)
+	if !ok {
+		return this
+	}
+	if n.GetPattern().ZAny != nil {
+		return this
+	}
+	this.has = true
+	return this
+}
+
+func HasNot(g *Grammar) bool {
+	vNot := &vNot{}
+	g.Walk(vNot)
+	return vNot.has
+}
