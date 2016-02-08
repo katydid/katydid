@@ -46,7 +46,7 @@ func TestSimplifyOr1(t *testing.T) {
 	input := relapse.NewOr(newT("B"), relapse.NewOr(newT("C"), relapse.NewOr(newT("A"), newT("B"))))
 	refs := relapse.RefLookup{"main": input}
 	output := Simplify(refs, input)
-	expected := relapse.NewOr(newT("A"), relapse.NewOr(newT("B"), newT("C")))
+	expected := relapse.NewOr(relapse.NewOr(newT("A"), newT("B")), newT("C"))
 	t.Logf("%v", output)
 	if !expected.Equal(output) {
 		t.Fatalf("expected %v, but got %v", expected, output)
@@ -57,7 +57,7 @@ func TestSimplifyOr2(t *testing.T) {
 	input := relapse.NewOr(relapse.NewOr(newT("A"), newT("B")), relapse.NewOr(newT("B"), newT("C")))
 	refs := relapse.RefLookup{"main": input}
 	output := Simplify(refs, input)
-	expected := relapse.NewOr(newT("A"), relapse.NewOr(newT("B"), newT("C")))
+	expected := relapse.NewOr(relapse.NewOr(newT("A"), newT("B")), newT("C"))
 	t.Logf("%v", output)
 	if !expected.Equal(output) {
 		t.Fatalf("expected %v, but got %v", expected, output)

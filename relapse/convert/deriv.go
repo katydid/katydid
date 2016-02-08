@@ -30,14 +30,6 @@ type next struct {
 	notnull pattern
 }
 
-func derivUnion(left, right []next) []next {
-	panic("todo")
-}
-
-func derivIntersect(left, right []next) []next {
-	panic("todo")
-}
-
 func DerivEval(refs map[string]*relapse.Pattern, parser serialize.Parser) bool {
 	newRefs := make(map[string]pattern)
 	for name, p := range refs {
@@ -55,10 +47,18 @@ func DerivEval(refs map[string]*relapse.Pattern, parser serialize.Parser) bool {
 // 	fmt.Printf("</%v>\n", name)
 // }
 
+func printList(name string, ps []pattern) {
+	fmt.Printf("<%v>\n", name)
+	for _, p := range ps {
+		fmt.Printf("\t%s\n", p.String())
+	}
+	fmt.Printf("</%v>\n", name)
+}
+
 func derivEval(refs map[string]pattern, currents []pattern, parser serialize.Parser) []pattern {
 	for {
-		// fmt.Printf("NEXT\n")
-		// printMap("CURRENTS", currents)
+		fmt.Printf("NEXT\n")
+		//printList("CURRENTS", currents)
 		if err := parser.Next(); err != nil {
 			if err == io.EOF {
 				break
@@ -68,7 +68,7 @@ func derivEval(refs map[string]pattern, currents []pattern, parser serialize.Par
 		}
 		downs := []pattern{}
 		lookup := make([]map[funcs.Bool]int, len(currents))
-		//fmt.Printf("VALUE: %v\n", getValue(parser))
+		fmt.Printf("VALUE: %v\n", getValue(parser))
 		for currenti, current := range currents {
 			thisdowns := derivCall(refs, current, parser)
 			lookup[currenti] = make(map[funcs.Bool]int)
@@ -80,11 +80,11 @@ func derivEval(refs map[string]pattern, currents []pattern, parser serialize.Par
 		if parser.IsLeaf() {
 			//do nothing
 		} else {
-			//		fmt.Printf("DOWN\n")
+			fmt.Printf("DOWN\n")
 			parser.Down()
 			downs = derivEval(refs, downs, parser)
 			parser.Up()
-			//		fmt.Printf("UP\n")
+			fmt.Printf("UP\n")
 		}
 		for currenti, current := range currents {
 			newpatterns := make(map[funcs.Bool]pattern)

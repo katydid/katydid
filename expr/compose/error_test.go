@@ -22,7 +22,7 @@ import (
 	"testing"
 )
 
-func TestRuntimeError(t *testing.T) {
+func TestNoEqualError(t *testing.T) {
 	exprStr := Sprint(StringEq(ElemStrings(NewListOfString([]String{StringVar()}), IntConst(3)), StringConst("0123456789")))
 	e, err := parser.NewParser().ParseExpr(exprStr)
 	if err != nil {
@@ -34,9 +34,11 @@ func TestRuntimeError(t *testing.T) {
 	}
 	f, err := compose.NewBoolFunc(b)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
-	if _, err := f.Eval(serialize.NewStringValue("0")); err == nil {
-		t.Fatal("expected error")
+	if v, err := f.Eval(serialize.NewStringValue("0")); err != nil {
+		t.Fatal(err)
+	} else if v {
+		t.Fatalf("expected false")
 	}
 }

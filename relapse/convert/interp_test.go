@@ -1169,6 +1169,7 @@ func TestInterpOrNotAB_C(t *testing.T) {
 	}
 }
 
+//next fundamental flaw 1
 func TestInterpAEndsWithBContainsAnyD_ABCD(t *testing.T) {
 	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
 		relapse.NewZAny(),
@@ -1182,6 +1183,7 @@ func TestInterpAEndsWithBContainsAnyD_ABCD(t *testing.T) {
 	}
 }
 
+//next fundamental flaw 2
 func TestInterpAEndsWithBContainsAnyD_ABCA(t *testing.T) {
 	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
 		relapse.NewZAny(),

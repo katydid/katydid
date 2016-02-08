@@ -120,18 +120,18 @@ func simplifyOr(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Patter
 	// if isNotZany(p1) {
 	// 	return p2
 	// }
-	// if isNotZany(p2) {
-	// 	return p1
-	// }
-	// if isZany(p1) || isZany(p2) {
-	// 	return relapse.NewZAny()
-	// }
-	// if isEmpty(p1) && Nullable(refs, p2) {
-	// 	return p2
-	// }
-	// if isEmpty(p2) && Nullable(refs, p1) {
-	// 	return p1
-	// }
+	if isNotZany(p2) {
+		return p1
+	}
+	if isZany(p1) || isZany(p2) {
+		return relapse.NewZAny()
+	}
+	if isEmpty(p1) && Nullable(refs, p2) {
+		return p2
+	}
+	if isEmpty(p2) && Nullable(refs, p1) {
+		return p1
+	}
 	left := getOrs(p1)
 	right := getOrs(p2)
 	list := append(left, right...)
@@ -155,29 +155,29 @@ func getAnds(p *relapse.Pattern) []*relapse.Pattern {
 }
 
 func simplifyAnd(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
-	// if isNotZany(p1) || isNotZany(p2) {
-	// 	return relapse.NewNot(relapse.NewZAny())
-	// }
-	// if isZany(p1) {
-	// 	return p2
-	// }
-	// if isZany(p2) {
-	// 	return p1
-	// }
-	// if isEmpty(p1) {
-	// 	if Nullable(refs, p2) {
-	// 		return relapse.NewEmpty()
-	// 	} else {
-	// 		return relapse.NewNot(relapse.NewZAny())
-	// 	}
-	// }
-	// if isEmpty(p2) {
-	// 	if Nullable(refs, p1) {
-	// 		return relapse.NewEmpty()
-	// 	} else {
-	// 		return relapse.NewNot(relapse.NewZAny())
-	// 	}
-	// }
+	if isNotZany(p1) || isNotZany(p2) {
+		return relapse.NewNot(relapse.NewZAny())
+	}
+	if isZany(p1) {
+		return p2
+	}
+	if isZany(p2) {
+		return p1
+	}
+	if isEmpty(p1) {
+		if Nullable(refs, p2) {
+			return relapse.NewEmpty()
+		} else {
+			return relapse.NewNot(relapse.NewZAny())
+		}
+	}
+	if isEmpty(p2) {
+		if Nullable(refs, p1) {
+			return relapse.NewEmpty()
+		} else {
+			return relapse.NewNot(relapse.NewZAny())
+		}
+	}
 	left := getAnds(p1)
 	right := getAnds(p2)
 	list := append(left, right...)

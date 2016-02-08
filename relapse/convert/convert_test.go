@@ -51,7 +51,7 @@ func hasNot(g *relapse.Grammar) bool {
 
 func test(t *testing.T, g *relapse.Grammar, parser serialize.Parser, expected bool, desc string) {
 	//t.Skipf("TODO")
-	if interp.HasRecursion(g) {
+	if interp.HasLeftRecursion(g) {
 		t.Skipf("convert was not designed to handle recursion")
 	}
 	// if strings.Contains(desc, "#") && strings.Contains(desc, "Right") {
