@@ -117,9 +117,9 @@ func getOrs(p *relapse.Pattern) []*relapse.Pattern {
 }
 
 func simplifyOr(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
-	// if isNotZany(p1) {
-	// 	return p2
-	// }
+	if isNotZany(p1) {
+		return p2
+	}
 	if isNotZany(p2) {
 		return p1
 	}

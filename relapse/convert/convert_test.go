@@ -67,7 +67,7 @@ func test(t *testing.T, g *relapse.Grammar, parser serialize.Parser, expected bo
 	// }
 	// auto := convert.Convert(refs, refs["main"])
 	// match := convert.Interp(auto, parser)
-	match := convert.DerivEval(refs, parser)
+	match := convert.Deriv(refs, parser)
 	if match != expected {
 		t.Fail()
 		t.Fatalf("Expected %v given %v\n on \n%s", expected, g, desc)
