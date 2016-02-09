@@ -308,6 +308,41 @@ func TestBasicConcatBC_BCXml(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestBasicConcatZAnyC_ABXml(t *testing.T) {
+	v := tests.Validators["BasicConcatZAnyC_AB"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicConcatZAnyC_ABCXml(t *testing.T) {
+	v := tests.Validators["BasicConcatZAnyC_ABC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicConcatZAnyC_ACXml(t *testing.T) {
+	v := tests.Validators["BasicConcatZAnyC_AC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicConcatZAnyC_ACchildB_TypicalFundementalFlawXml(t *testing.T) {
+	v := tests.Validators["BasicConcatZAnyC_ACchildB_TypicalFundementalFlaw"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicConcatZAnyC_BBBCXml(t *testing.T) {
+	v := tests.Validators["BasicConcatZAnyC_BBBC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicConcatZAnyC_BCBCXml(t *testing.T) {
+	v := tests.Validators["BasicConcatZAnyC_BCBC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicConcatZAnyC_BCCCXml(t *testing.T) {
+	v := tests.Validators["BasicConcatZAnyC_BCCC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestBasicNone_AXml(t *testing.T) {
 	v := tests.Validators["BasicNone_A"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)

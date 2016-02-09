@@ -198,4 +198,52 @@ func init() {
 		false,
 	)
 
+	basicConcatZAnyC := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
+		relapse.NewZAny(),
+		relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+	))}
+	Validate(
+		"BasicConcatZAnyC_AC",
+		basicConcatZAnyC,
+		XMLString("<A><C/></A>"),
+		true,
+	)
+	Validate(
+		"BasicConcatZAnyC_ABC",
+		basicConcatZAnyC,
+		XMLString("<A><B/><C/></A>"),
+		true,
+	)
+	Validate(
+		"BasicConcatZAnyC_BBBC",
+		basicConcatZAnyC,
+		XMLString("<A><B/><B/><B/><C/></A>"),
+		true,
+	)
+	Validate(
+		"BasicConcatZAnyC_BCCC",
+		basicConcatZAnyC,
+		XMLString("<A><B/><C/><C/><C/></A>"),
+		true,
+	)
+	Validate(
+		"BasicConcatZAnyC_BCBC",
+		basicConcatZAnyC,
+		XMLString("<A><B/><C/><B/><C/></A>"),
+		true,
+	)
+	Validate(
+		"BasicConcatZAnyC_AB",
+		basicConcatZAnyC,
+		XMLString("<A><B/></A>"),
+		false,
+	)
+	//typical fundemental flaw
+	Validate(
+		"BasicConcatZAnyC_ACchildB_TypicalFundementalFlaw",
+		basicConcatZAnyC,
+		XMLString("<A><C>B</C></A>"),
+		false,
+	)
+
 }
