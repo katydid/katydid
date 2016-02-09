@@ -400,4 +400,73 @@ func init() {
 		false,
 	)
 
+	basicTreeAandA := G{"main": relapse.NewAnd(
+		relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
+		relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
+	)}
+	Validate(
+		"BasicTreeAandA_A",
+		basicTreeAandA,
+		XMLString("<A><A/></A>"),
+		true,
+	)
+	Validate(
+		"BasicTreeAandA_B",
+		basicTreeAandA,
+		XMLString("<A><B/></A>"),
+		false,
+	)
+
+	basicTreeAandB := G{"main": relapse.NewAnd(
+		relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
+		relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
+	)}
+	Validate(
+		"BasicTreeAandB_B",
+		basicTreeAandB,
+		XMLString("<A><B/></A>"),
+		false,
+	)
+
+	basicAndBAnyC := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewAnd(
+		relapse.NewConcat(
+			relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+			relapse.NewZAny(),
+		),
+		relapse.NewConcat(
+			relapse.NewZAny(),
+			relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+		),
+	))}
+	Validate(
+		"BasicAndBAnyC_BC",
+		basicAndBAnyC,
+		XMLString("<A><B/><C/></A>"),
+		true,
+	)
+	Validate(
+		"BasicAndBAnyC_CB",
+		basicAndBAnyC,
+		XMLString("<A><C/><B/></A>"),
+		false,
+	)
+	Validate(
+		"BasicAndBAnyC_B",
+		basicAndBAnyC,
+		XMLString("<A><B/></A>"),
+		false,
+	)
+	Validate(
+		"BasicAndBAnyC_C",
+		basicAndBAnyC,
+		XMLString("<A><C/></A>"),
+		false,
+	)
+	Validate(
+		"BasicAndBAnyC_BXXXC",
+		basicAndBAnyC,
+		XMLString("<A><B/><X/><X/><X/><C/></A>"),
+		true,
+	)
+
 }

@@ -288,6 +288,31 @@ func TestBasicA_BXml(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestBasicAndBAnyC_BXml(t *testing.T) {
+	v := tests.Validators["BasicAndBAnyC_B"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicAndBAnyC_BCXml(t *testing.T) {
+	v := tests.Validators["BasicAndBAnyC_BC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicAndBAnyC_BXXXCXml(t *testing.T) {
+	v := tests.Validators["BasicAndBAnyC_BXXXC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicAndBAnyC_CXml(t *testing.T) {
+	v := tests.Validators["BasicAndBAnyC_C"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicAndBAnyC_CBXml(t *testing.T) {
+	v := tests.Validators["BasicAndBAnyC_CB"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestBasicAorB_AXml(t *testing.T) {
 	v := tests.Validators["BasicAorB_A"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
@@ -430,6 +455,21 @@ func TestBasicTreeAOrOrC_ABXml(t *testing.T) {
 
 func TestBasicTreeAOrOrC_CAXml(t *testing.T) {
 	v := tests.Validators["BasicTreeAOrOrC_CA"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicTreeAandA_AXml(t *testing.T) {
+	v := tests.Validators["BasicTreeAandA_A"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicTreeAandA_BXml(t *testing.T) {
+	v := tests.Validators["BasicTreeAandA_B"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicTreeAandB_BXml(t *testing.T) {
+	v := tests.Validators["BasicTreeAandB_B"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
