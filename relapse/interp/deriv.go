@@ -35,7 +35,25 @@ func Interpret(g *relapse.Grammar, parser serialize.Parser) bool {
 	return Nullable(refs, finals[0])
 }
 
+func escapable(patterns []*relapse.Pattern) bool {
+	for _, pattern := range patterns {
+		if pattern.ZAny != nil {
+			continue
+		}
+		if pattern.Not != nil {
+			if pattern.GetNot().GetPattern().ZAny != nil {
+				continue
+			}
+		}
+		return true
+	}
+	return false
+}
+
 func deriv(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern, tree serialize.Parser) []*relapse.Pattern {
+	if !escapable(patterns) {
+		return patterns
+	}
 	var resPatterns []*relapse.Pattern = patterns
 	for {
 		if err := tree.Next(); err != nil {
