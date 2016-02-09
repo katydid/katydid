@@ -756,7 +756,7 @@ func init() {
 		true,
 	)
 
-	//next fundamental flaw
+	//deeper fundamental flaw
 	basicAEndsWithBContainsAnyD := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
 		relapse.NewZAny(),
 		relapse.NewTreeNode(relapse.NewStringName("B"),
@@ -764,13 +764,13 @@ func init() {
 		)),
 	)}
 	Validate(
-		"BasicAEndsWithBContainsAnyD_BCD",
+		"BasicAEndsWithBContainsAnyD_BCD_DeeperFundementalFlaw",
 		basicAEndsWithBContainsAnyD,
 		XMLString("<A><B><C><D/></C></B></A>"),
 		true,
 	)
 	Validate(
-		"BasicAEndsWithBContainsAnyD_BCA",
+		"BasicAEndsWithBContainsAnyD_BCA_DeeperFundementalFlaw",
 		basicAEndsWithBContainsAnyD,
 		XMLString("<A><B><C><A/></C></B></A>"),
 		false,

@@ -288,13 +288,13 @@ func TestBasicAContainsB_CCXml(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestBasicAEndsWithBContainsAnyD_BCAXml(t *testing.T) {
-	v := tests.Validators["BasicAEndsWithBContainsAnyD_BCA"]["xml"]
+func TestBasicAEndsWithBContainsAnyD_BCA_DeeperFundementalFlawXml(t *testing.T) {
+	v := tests.Validators["BasicAEndsWithBContainsAnyD_BCA_DeeperFundementalFlaw"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestBasicAEndsWithBContainsAnyD_BCDXml(t *testing.T) {
-	v := tests.Validators["BasicAEndsWithBContainsAnyD_BCD"]["xml"]
+func TestBasicAEndsWithBContainsAnyD_BCD_DeeperFundementalFlawXml(t *testing.T) {
+	v := tests.Validators["BasicAEndsWithBContainsAnyD_BCD_DeeperFundementalFlaw"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
