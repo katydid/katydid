@@ -36,13 +36,17 @@ func (p1 *Pattern) Less(p2 *Pattern) bool {
 	return Compare(p1, p2) < 0
 }
 
-func Has(ps []*Pattern, p *Pattern) bool {
-	for _, pp := range ps {
+func Index(ps []*Pattern, p *Pattern) int {
+	for i, pp := range ps {
 		if Compare(pp, p) == 0 {
-			return true
+			return i
 		}
 	}
-	return false
+	return -1
+}
+
+func Has(ps []*Pattern, p *Pattern) bool {
+	return Index(ps, p) > -1
 }
 
 func Set(ps []*Pattern) []*Pattern {

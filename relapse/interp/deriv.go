@@ -50,7 +50,9 @@ func deriv(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern, tree s
 			//do nothing
 		} else {
 			tree.Down()
-			childPatterns = deriv(refs, childPatterns, tree)
+			zchild, zi := zip(childPatterns)
+			zchild = deriv(refs, zchild, tree)
+			childPatterns = unzip(zchild, zi)
 			tree.Up()
 		}
 		resPatterns = derivReturns(refs, resPatterns, childPatterns)
@@ -64,6 +66,24 @@ func simps(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern) []*rel
 		patterns[i] = Simplify(refs, patterns[i])
 	}
 	return patterns
+}
+
+func zip(patterns []*relapse.Pattern) ([]*relapse.Pattern, []int) {
+	zipped := relapse.Set(patterns)
+	relapse.Sort(zipped)
+	indexes := make([]int, len(patterns))
+	for i, pattern := range patterns {
+		indexes[i] = relapse.Index(zipped, pattern)
+	}
+	return zipped, indexes
+}
+
+func unzip(patterns []*relapse.Pattern, indexes []int) []*relapse.Pattern {
+	res := make([]*relapse.Pattern, len(indexes))
+	for i, index := range indexes {
+		res[i] = patterns[index]
+	}
+	return res
 }
 
 func derivCalls(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern, label serialize.Decoder) []*relapse.Pattern {
