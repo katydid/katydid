@@ -51,11 +51,11 @@ func escapable(patterns []*relapse.Pattern) bool {
 }
 
 func deriv(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern, tree serialize.Parser) []*relapse.Pattern {
-	if !escapable(patterns) {
-		return patterns
-	}
 	var resPatterns []*relapse.Pattern = patterns
 	for {
+		if !escapable(resPatterns) {
+			return resPatterns
+		}
 		if err := tree.Next(); err != nil {
 			if err == io.EOF {
 				break
