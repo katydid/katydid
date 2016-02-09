@@ -280,4 +280,62 @@ func init() {
 		false,
 	)
 
+	basicZeroOrMoreEmpty := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZeroOrMore(
+		relapse.NewEmpty(),
+	))}
+	Validate(
+		"BasicZeroOrMoreEmpty_Empty",
+		basicZeroOrMoreEmpty,
+		XMLString("<A></A>"),
+		true,
+	)
+	Validate(
+		"BasicZeroOrMoreEmpty_B",
+		basicZeroOrMoreEmpty,
+		XMLString("<A><B/></A>"),
+		false,
+	)
+
+	basicZeroOrMoreZeroOrMoreB := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZeroOrMore(
+		relapse.NewZeroOrMore(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
+	))}
+	Validate(
+		"BasicZeroOrMoreZeroOrMoreB_BB",
+		basicZeroOrMoreZeroOrMoreB,
+		XMLString("<A><B/><B/></A>"),
+		true,
+	)
+	Validate(
+		"BasicZeroOrMoreZeroOrMoreB_C",
+		basicZeroOrMoreZeroOrMoreB,
+		XMLString("<A><C/></A>"),
+		false,
+	)
+
+	basicConcatOrEmpty := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
+		relapse.NewOr(
+			relapse.NewEmpty(),
+			relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+		),
+		relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+	))}
+	Validate(
+		"BasicConcatOrEmpty_BC",
+		basicConcatOrEmpty,
+		XMLString("<A><B/><C/></A>"),
+		true,
+	)
+	Validate(
+		"BasicConcatOrEmpty_C",
+		basicConcatOrEmpty,
+		XMLString("<A><C/></A>"),
+		true,
+	)
+	Validate(
+		"BasicConcatOrEmpty_BD",
+		basicConcatOrEmpty,
+		XMLString("<A><B/><D/></A>"),
+		false,
+	)
+
 }

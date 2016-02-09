@@ -308,6 +308,21 @@ func TestBasicConcatBC_BCXml(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestBasicConcatOrEmpty_BCXml(t *testing.T) {
+	v := tests.Validators["BasicConcatOrEmpty_BC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicConcatOrEmpty_BDXml(t *testing.T) {
+	v := tests.Validators["BasicConcatOrEmpty_BD"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicConcatOrEmpty_CXml(t *testing.T) {
+	v := tests.Validators["BasicConcatOrEmpty_C"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestBasicConcatZAnyC_ABXml(t *testing.T) {
 	v := tests.Validators["BasicConcatZAnyC_AB"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
@@ -420,6 +435,26 @@ func TestBasicZeroOrMoreB_BCXml(t *testing.T) {
 
 func TestBasicZeroOrMoreB_CXml(t *testing.T) {
 	v := tests.Validators["BasicZeroOrMoreB_C"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicZeroOrMoreEmpty_BXml(t *testing.T) {
+	v := tests.Validators["BasicZeroOrMoreEmpty_B"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicZeroOrMoreEmpty_EmptyXml(t *testing.T) {
+	v := tests.Validators["BasicZeroOrMoreEmpty_Empty"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicZeroOrMoreZeroOrMoreB_BBXml(t *testing.T) {
+	v := tests.Validators["BasicZeroOrMoreZeroOrMoreB_BB"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicZeroOrMoreZeroOrMoreB_CXml(t *testing.T) {
+	v := tests.Validators["BasicZeroOrMoreZeroOrMoreB_C"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
