@@ -398,6 +398,31 @@ func TestBasicTreeBAorBB_BAXml(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestBasicZeroOrMoreB_0Xml(t *testing.T) {
+	v := tests.Validators["BasicZeroOrMoreB_0"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicZeroOrMoreB_1Xml(t *testing.T) {
+	v := tests.Validators["BasicZeroOrMoreB_1"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicZeroOrMoreB_3Xml(t *testing.T) {
+	v := tests.Validators["BasicZeroOrMoreB_3"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicZeroOrMoreB_BCXml(t *testing.T) {
+	v := tests.Validators["BasicZeroOrMoreB_BC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicZeroOrMoreB_CXml(t *testing.T) {
+	v := tests.Validators["BasicZeroOrMoreB_C"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestBightTurnJson(t *testing.T) {
 	v := tests.Validators["BightTurn"]["json"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)

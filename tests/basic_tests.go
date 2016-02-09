@@ -246,4 +246,38 @@ func init() {
 		false,
 	)
 
+	basicZeroOrMoreB0 := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZeroOrMore(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+	))}
+	Validate(
+		"BasicZeroOrMoreB_0",
+		basicZeroOrMoreB0,
+		XMLString("<A></A>"),
+		true,
+	)
+	Validate(
+		"BasicZeroOrMoreB_1",
+		basicZeroOrMoreB0,
+		XMLString("<A><B/></A>"),
+		true,
+	)
+	Validate(
+		"BasicZeroOrMoreB_3",
+		basicZeroOrMoreB0,
+		XMLString("<A><B/><B/><B/></A>"),
+		true,
+	)
+	Validate(
+		"BasicZeroOrMoreB_C",
+		basicZeroOrMoreB0,
+		XMLString("<A><C/></A>"),
+		false,
+	)
+	Validate(
+		"BasicZeroOrMoreB_BC",
+		basicZeroOrMoreB0,
+		XMLString("<A><B/><C/><B/></A>"),
+		false,
+	)
+
 }
