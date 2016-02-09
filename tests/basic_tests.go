@@ -21,81 +21,181 @@ import (
 )
 
 func init() {
+	basicNone := G{"main": relapse.NewNot(relapse.NewZAny())}
 	Validate(
 		"BasicNone_A",
-		G{"main": relapse.NewNot(relapse.NewZAny())},
+		basicNone,
 		XMLString("<A/>"),
 		false,
 	)
 
+	basicA := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())}
 	Validate(
 		"BasicA_A",
-		G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())},
+		basicA,
 		XMLString("<A/>"),
 		true,
 	)
 	Validate(
 		"BasicA_B",
-		G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())},
+		basicA,
 		XMLString("<B/>"),
 		false,
 	)
 
+	basicNotA := G{"main": relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty()))}
 	Validate(
 		"BasicNotA_A",
-		G{"main": relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty()))},
+		basicNotA,
 		XMLString("<A/>"),
 		false,
 	)
 	Validate(
 		"BasicNotA_B",
-		G{"main": relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty()))},
+		basicNotA,
 		XMLString("<B/>"),
 		true,
 	)
 
+	basicAB := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()))}
 	Validate(
 		"BasicAB_AB",
-		G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()))},
+		basicAB,
 		XMLString("<A><B/></A>"),
 		true,
 	)
 	Validate(
 		"BasicAB_BB",
-		G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()))},
+		basicAB,
 		XMLString("<B><B/></B>"),
 		false,
 	)
 
+	basicALeafB := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), Value(StringEq(StringConst("B"), StringVar())))}
 	Validate(
 		"BasicALeafB_AB",
-		G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), Value(StringEq(StringConst("B"), StringVar())))},
+		basicALeafB,
 		XMLString("<A>B</A>"),
 		true,
 	)
 	Validate(
 		"BasicALeafB_BB",
-		G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), Value(StringEq(StringConst("B"), StringVar())))},
+		basicALeafB,
 		XMLString("<B>B</B>"),
 		false,
 	)
 
+	basicConcatBC := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+		relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+	))}
 	Validate(
 		"BasicConcatBC_BC",
-		G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
-			relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
-			relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
-		))},
+		basicConcatBC,
 		XMLString("<A><B/><C/></A>"),
 		true,
 	)
 	Validate(
 		"BasicConcatBC_BB",
-		G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
-			relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
-			relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
-		))},
+		basicConcatBC,
 		XMLString("<A><B/><B/></A>"),
 		false,
 	)
+
+	basicNotConcatBC := G{"main": relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+		relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+	)))}
+	Validate(
+		"BasicNotConcatBC_BC",
+		basicNotConcatBC,
+		XMLString("<A><B/><C/></A>"),
+		false,
+	)
+	Validate(
+		"BasicNotConcatBC_BB",
+		basicNotConcatBC,
+		XMLString("<A><B/><B/></A>"),
+		true,
+	)
+
+	basicAorB := G{"main": relapse.NewOr(
+		relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty()),
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+	)}
+	Validate(
+		"BasicAorB_A",
+		basicAorB,
+		XMLString("<A/>"),
+		true,
+	)
+
+	Validate(
+		"BasicAorB_C",
+		basicAorB,
+		XMLString("<C/>"),
+		false,
+	)
+
+	basicTreeAAorBB := G{"main": relapse.NewOr(
+		relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
+	)}
+	Validate(
+		"BasicTreeAAorBB_AA",
+		basicTreeAAorBB,
+		XMLString("<A><A/></A>"),
+		true,
+	)
+	Validate(
+		"BasicTreeAAorBB_AB",
+		basicTreeAAorBB,
+		XMLString("<A><B/></A>"),
+		false,
+	)
+
+	basicTreeBAorBB := G{"main": relapse.NewOr(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
+	)}
+	Validate(
+		"BasicTreeBAorBB_BA",
+		basicTreeBAorBB,
+		XMLString("<B><A/></B>"),
+		true,
+	)
+	Validate(
+		"BasicTreeBAorBB_AA",
+		basicTreeBAorBB,
+		XMLString("<A><A/></A>"),
+		false,
+	)
+
+	basicTreeAOrOrC := G{"main": relapse.NewOr(
+		relapse.NewTreeNode(relapse.NewStringName("A"),
+			relapse.NewOr(
+				relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty()),
+				relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+			),
+		),
+		relapse.NewTreeNode(relapse.NewStringName("C"),
+			relapse.NewOr(
+				relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+				relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+			),
+		),
+	)}
+	Validate(
+		"BasicTreeAOrOrC_AB",
+		basicTreeAOrOrC,
+		XMLString("<A><B/></A>"),
+		true,
+	)
+	Validate(
+		"BasicTreeAOrOrC_CA",
+		basicTreeAOrOrC,
+		XMLString("<C><A/></C>"),
+		false,
+	)
+
 }

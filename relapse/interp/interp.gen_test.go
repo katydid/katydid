@@ -288,6 +288,16 @@ func TestBasicA_BXml(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestBasicAorB_AXml(t *testing.T) {
+	v := tests.Validators["BasicAorB_A"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicAorB_CXml(t *testing.T) {
+	v := tests.Validators["BasicAorB_C"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestBasicConcatBC_BBXml(t *testing.T) {
 	v := tests.Validators["BasicConcatBC_BB"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
@@ -310,6 +320,46 @@ func TestBasicNotA_AXml(t *testing.T) {
 
 func TestBasicNotA_BXml(t *testing.T) {
 	v := tests.Validators["BasicNotA_B"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicNotConcatBC_BBXml(t *testing.T) {
+	v := tests.Validators["BasicNotConcatBC_BB"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicNotConcatBC_BCXml(t *testing.T) {
+	v := tests.Validators["BasicNotConcatBC_BC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicTreeAAorBB_AAXml(t *testing.T) {
+	v := tests.Validators["BasicTreeAAorBB_AA"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicTreeAAorBB_ABXml(t *testing.T) {
+	v := tests.Validators["BasicTreeAAorBB_AB"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicTreeAOrOrC_ABXml(t *testing.T) {
+	v := tests.Validators["BasicTreeAOrOrC_AB"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicTreeAOrOrC_CAXml(t *testing.T) {
+	v := tests.Validators["BasicTreeAOrOrC_CA"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicTreeBAorBB_AAXml(t *testing.T) {
+	v := tests.Validators["BasicTreeBAorBB_AA"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicTreeBAorBB_BAXml(t *testing.T) {
+	v := tests.Validators["BasicTreeBAorBB_BA"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
