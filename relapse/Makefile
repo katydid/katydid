@@ -19,6 +19,7 @@ regenerate:
 	rm ./util/rune.go
 	rmdir util
 	(cd interp && make regenerate)
+	(cd mem && make regenerate)
 	(cd convert && make regenerate)
 	(cd lazymem && make regenerate)
 	(cd protokey && make regenerate)
