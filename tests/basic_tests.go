@@ -469,4 +469,122 @@ func init() {
 		true,
 	)
 
+	basicTreeAndBAnyC := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewAnd(
+		relapse.NewConcat(
+			relapse.NewTreeNode(relapse.NewStringName("A"),
+				relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+			),
+			relapse.NewZAny(),
+		),
+		relapse.NewConcat(
+			relapse.NewZAny(),
+			relapse.NewTreeNode(relapse.NewStringName("A"),
+				relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+			),
+		),
+	))}
+	Validate(
+		"BasicTreeAndBAnyC_BC",
+		basicTreeAndBAnyC,
+		XMLString("<A><A><B/></A><A><C/></A></A>"),
+		true,
+	)
+	Validate(
+		"BasicTreeAndBAnyC_CB",
+		basicTreeAndBAnyC,
+		XMLString("<A><A><C/></A><A><B/></A></A>"),
+		false,
+	)
+	Validate(
+		"BasicTreeAndBAnyC_BXXXC",
+		basicTreeAndBAnyC,
+		XMLString("<A><A><B/></A><X/><X/><X/><A><C/></A></A>"),
+		true,
+	)
+	Validate(
+		"BasicTreeAndBAnyC_CBC",
+		basicTreeAndBAnyC,
+		XMLString("<A><A><C/></A><A><B/></A><A><C/></A></A>"),
+		false,
+	)
+
+	basicAContainsB := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewContains(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+	))}
+	Validate(
+		"BasicAContainsB_B",
+		basicAContainsB,
+		XMLString("<A><B/></A>"),
+		true,
+	)
+	Validate(
+		"BasicAContainsB_CBC",
+		basicAContainsB,
+		XMLString("<A><C/><B/><C/></A>"),
+		true,
+	)
+	Validate(
+		"BasicAContainsB_CC",
+		basicAContainsB,
+		XMLString("<A><C/><C/></A>"),
+		false,
+	)
+	Validate(
+		"BasicAContainsB_0",
+		basicAContainsB,
+		XMLString("<A></A>"),
+		false,
+	)
+
+	basicOptionalB := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewOptional(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+	))}
+	Validate(
+		"BasicOptionalB_Empty",
+		basicOptionalB,
+		XMLString("<A></A>"),
+		true,
+	)
+	Validate(
+		"BasicOptionalB_B",
+		basicOptionalB,
+		XMLString("<A><B/></A>"),
+		true,
+	)
+	Validate(
+		"BasicOptionalB_BB",
+		basicOptionalB,
+		XMLString("<A><B/><B/></A>"),
+		false,
+	)
+	Validate(
+		"BasicOptionalB_C",
+		basicOptionalB,
+		XMLString("<A><C/></A>"),
+		false,
+	)
+
+	basicInterleaveBC := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewInterleave(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+		relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+	))}
+	Validate(
+		"BasicInterleaveBC_BC",
+		basicInterleaveBC,
+		XMLString("<A><B/><C/></A>"),
+		true,
+	)
+	Validate(
+		"BasicInterleaveBC_CB",
+		basicInterleaveBC,
+		XMLString("<A><C/><B/></A>"),
+		true,
+	)
+	Validate(
+		"BasicInterleaveBC_C",
+		basicInterleaveBC,
+		XMLString("<A><C/></A>"),
+		false,
+	)
+
 }

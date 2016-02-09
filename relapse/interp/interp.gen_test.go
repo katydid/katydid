@@ -268,6 +268,26 @@ func TestBasicAB_BBXml(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestBasicAContainsB_0Xml(t *testing.T) {
+	v := tests.Validators["BasicAContainsB_0"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicAContainsB_BXml(t *testing.T) {
+	v := tests.Validators["BasicAContainsB_B"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicAContainsB_CBCXml(t *testing.T) {
+	v := tests.Validators["BasicAContainsB_CBC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicAContainsB_CCXml(t *testing.T) {
+	v := tests.Validators["BasicAContainsB_CC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestBasicALeafB_ABXml(t *testing.T) {
 	v := tests.Validators["BasicALeafB_AB"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
@@ -413,6 +433,21 @@ func TestBasicConcatZAnyC_BCCCXml(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestBasicInterleaveBC_BCXml(t *testing.T) {
+	v := tests.Validators["BasicInterleaveBC_BC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicInterleaveBC_CXml(t *testing.T) {
+	v := tests.Validators["BasicInterleaveBC_C"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicInterleaveBC_CBXml(t *testing.T) {
+	v := tests.Validators["BasicInterleaveBC_CB"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestBasicNone_AXml(t *testing.T) {
 	v := tests.Validators["BasicNone_A"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
@@ -435,6 +470,26 @@ func TestBasicNotConcatBC_BBXml(t *testing.T) {
 
 func TestBasicNotConcatBC_BCXml(t *testing.T) {
 	v := tests.Validators["BasicNotConcatBC_BC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicOptionalB_BXml(t *testing.T) {
+	v := tests.Validators["BasicOptionalB_B"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicOptionalB_BBXml(t *testing.T) {
+	v := tests.Validators["BasicOptionalB_BB"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicOptionalB_CXml(t *testing.T) {
+	v := tests.Validators["BasicOptionalB_C"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicOptionalB_EmptyXml(t *testing.T) {
+	v := tests.Validators["BasicOptionalB_Empty"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -470,6 +525,26 @@ func TestBasicTreeAandA_BXml(t *testing.T) {
 
 func TestBasicTreeAandB_BXml(t *testing.T) {
 	v := tests.Validators["BasicTreeAandB_B"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicTreeAndBAnyC_BCXml(t *testing.T) {
+	v := tests.Validators["BasicTreeAndBAnyC_BC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicTreeAndBAnyC_BXXXCXml(t *testing.T) {
+	v := tests.Validators["BasicTreeAndBAnyC_BXXXC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicTreeAndBAnyC_CBXml(t *testing.T) {
+	v := tests.Validators["BasicTreeAndBAnyC_CB"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicTreeAndBAnyC_CBCXml(t *testing.T) {
+	v := tests.Validators["BasicTreeAndBAnyC_CBC"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
