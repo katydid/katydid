@@ -12,21 +12,27 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package convert
+package interp
 
 import (
 	"fmt"
 	"github.com/katydid/katydid/expr/compose"
 	"github.com/katydid/katydid/relapse/ast"
-	"github.com/katydid/katydid/relapse/interp"
 	"github.com/katydid/katydid/relapse/nameexpr"
 	"github.com/katydid/katydid/serialize"
 	"io"
+	"log"
 )
 
-func Deriv(refs map[string]*relapse.Pattern, parser serialize.Parser) bool {
+func init() {
+	log.SetFlags(log.Lshortfile)
+}
+
+//This is a naive implementation and it does not handle left recursion
+func Interpret(g *relapse.Grammar, parser serialize.Parser) bool {
+	refs := relapse.NewRefsLookup(g)
 	finals := deriv(refs, []*relapse.Pattern{refs["main"]}, parser)
-	return interp.Nullable(refs, finals[0])
+	return Nullable(refs, finals[0])
 }
 
 func deriv(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern, tree serialize.Parser) []*relapse.Pattern {
@@ -55,7 +61,7 @@ func deriv(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern, tree s
 
 func simps(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern) []*relapse.Pattern {
 	for i := range patterns {
-		patterns[i] = interp.Simplify(refs, patterns[i])
+		patterns[i] = Simplify(refs, patterns[i])
 	}
 	return patterns
 }
@@ -109,7 +115,7 @@ func derivCall(refs map[string]*relapse.Pattern, p *relapse.Pattern, label seria
 		return []*relapse.Pattern{relapse.NewNot(relapse.NewZAny())}
 	case *relapse.Concat:
 		l := derivCall(refs, v.GetLeftPattern(), label)
-		if !interp.Nullable(refs, v.GetLeftPattern()) {
+		if !Nullable(refs, v.GetLeftPattern()) {
 			return l
 		}
 		r := derivCall(refs, v.GetRightPattern(), label)
@@ -157,19 +163,19 @@ func derivReturn(refs map[string]*relapse.Pattern, p *relapse.Pattern, patterns 
 	case *relapse.ZAny:
 		return patterns[0], patterns[1:]
 	case *relapse.TreeNode:
-		if interp.Nullable(refs, patterns[0]) {
+		if Nullable(refs, patterns[0]) {
 			return relapse.NewEmpty(), patterns[1:]
 		}
 		return relapse.NewNot(relapse.NewZAny()), patterns[1:]
 	case *relapse.LeafNode:
-		if interp.Nullable(refs, patterns[0]) {
+		if Nullable(refs, patterns[0]) {
 			return relapse.NewEmpty(), patterns[1:]
 		}
 		return relapse.NewNot(relapse.NewZAny()), patterns[1:]
 	case *relapse.Concat:
 		l, leftRest := derivReturn(refs, v.GetLeftPattern(), patterns)
 		leftConcat := relapse.NewConcat(l, v.GetRightPattern())
-		if !interp.Nullable(refs, v.GetLeftPattern()) {
+		if !Nullable(refs, v.GetLeftPattern()) {
 			return leftConcat, leftRest
 		}
 		r, rightRest := derivReturn(refs, v.GetRightPattern(), leftRest)
