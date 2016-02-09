@@ -587,4 +587,192 @@ func init() {
 		false,
 	)
 
+	basicInterleaveBAnyC := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewInterleave(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+		relapse.NewInterleave(
+			relapse.NewZAny(),
+			relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+		),
+	))}
+	Validate(
+		"BasicInterleaveBAnyC_BC",
+		basicInterleaveBAnyC,
+		XMLString("<A><B/><C/></A>"),
+		true,
+	)
+	Validate(
+		"BasicInterleaveBAnyC_BAC",
+		basicInterleaveBAnyC,
+		XMLString("<A><B/><A/><C/></A>"),
+		true,
+	)
+	Validate(
+		"BasicInterleaveBAnyC_ABACA",
+		basicInterleaveBAnyC,
+		XMLString("<A><A/><B/><A/><C/><A/></A>"),
+		true,
+	)
+	Validate(
+		"BasicInterleaveBAnyC_ABAA",
+		basicInterleaveBAnyC,
+		XMLString("<A><A/><B/><A/><A/></A>"),
+		false,
+	)
+	Validate(
+		"BasicInterleaveBAnyC_ACCBA",
+		basicInterleaveBAnyC,
+		XMLString("<A><A/><C/><C/><B/><A/></A>"),
+		true,
+	)
+	Validate(
+		"BasicInterleaveBAnyC_ACCCA",
+		basicInterleaveBAnyC,
+		XMLString("<A><A/><C/><C/><C/><A/></A>"),
+		false,
+	)
+
+	basicRefLoop := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewOr(
+		relapse.NewEmpty(),
+		relapse.NewReference("main"),
+	))}
+	Validate(
+		"BasicRefLoop_A",
+		basicRefLoop,
+		XMLString("<A/>"),
+		true,
+	)
+	Validate(
+		"BasicRefLoop_AA",
+		basicRefLoop,
+		XMLString("<A><A/></A>"),
+		true,
+	)
+	Validate(
+		"BasicRefLoop_AB",
+		basicRefLoop,
+		XMLString("<A><B/></A>"),
+		false,
+	)
+
+	basicConcatBOptionalD := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"),
+		relapse.NewConcat(
+			relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+			relapse.NewOptional(relapse.NewTreeNode(relapse.NewStringName("D"), relapse.NewEmpty())),
+		),
+	)}
+	Validate(
+		"BasicConcatBOptionalD_BD",
+		basicConcatBOptionalD,
+		XMLString("<A><B/><D/></A>"),
+		true,
+	)
+	Validate(
+		"BasicConcatBOptionalD_B",
+		basicConcatBOptionalD,
+		XMLString("<A><B/></A>"),
+		true,
+	)
+	Validate(
+		"BasicConcatBOptionalD_D",
+		basicConcatBOptionalD,
+		XMLString("<A><D/></A>"),
+		false,
+	)
+
+	//!(B:<empty>) can be <empty> and * can be B:<empty> which means B:<empty> can be accepted
+	basicAnyNotB := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
+		relapse.NewZAny(),
+		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
+	))}
+	Validate(
+		"BasicAnyNotB_B",
+		basicAnyNotB,
+		XMLString("<A><B/></A>"),
+		true,
+	)
+	Validate(
+		"BasicAnyNotB_C",
+		basicAnyNotB,
+		XMLString("<A><C/></A>"),
+		true,
+	)
+
+	basicNotAndBStarC := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewNot(
+		relapse.NewAnd(
+			relapse.NewConcat(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()), relapse.NewZAny()),
+			relapse.NewConcat(relapse.NewZAny(), relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty())),
+		),
+	))}
+	Validate(
+		"BasicNotAndBStarC_BC",
+		basicNotAndBStarC,
+		XMLString("<A><B/><C/></A>"),
+		false,
+	)
+	Validate(
+		"BasicNotAndBStarC_CB",
+		basicNotAndBStarC,
+		XMLString("<A><C/><B/></A>"),
+		true,
+	)
+
+	basicAndNotAB := G{"main": relapse.NewAnd(
+		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
+		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
+	)}
+	Validate(
+		"BasicAndNotAB_A",
+		basicAndNotAB,
+		XMLString("<A/>"),
+		false,
+	)
+	Validate(
+		"BasicAndNotAB_B",
+		basicAndNotAB,
+		XMLString("<B/>"),
+		false,
+	)
+	Validate(
+		"BasicAndNotAB_C",
+		basicAndNotAB,
+		XMLString("<C/>"),
+		true,
+	)
+
+	basicOrNotAB := G{"main": relapse.NewOr(
+		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
+		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
+	)}
+	Validate(
+		"BasicOrNotAB_A",
+		basicOrNotAB,
+		XMLString("<A/>"),
+		true,
+	)
+	Validate(
+		"BasicOrNotAB_C",
+		basicOrNotAB,
+		XMLString("<C/>"),
+		true,
+	)
+
+	//next fundamental flaw
+	basicAEndsWithBContainsAnyD := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
+		relapse.NewZAny(),
+		relapse.NewTreeNode(relapse.NewStringName("B"),
+			relapse.NewContains(relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewTreeNode(relapse.NewStringName("D"), relapse.NewEmpty()))),
+		)),
+	)}
+	Validate(
+		"BasicAEndsWithBContainsAnyD_BCD",
+		basicAEndsWithBContainsAnyD,
+		XMLString("<A><B><C><D/></C></B></A>"),
+		true,
+	)
+	Validate(
+		"BasicAEndsWithBContainsAnyD_BCA",
+		basicAEndsWithBContainsAnyD,
+		XMLString("<A><B><C><A/></C></B></A>"),
+		false,
+	)
 }
