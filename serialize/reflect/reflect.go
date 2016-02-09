@@ -30,32 +30,9 @@ type state struct {
 	isArray  bool
 }
 
-func (this state) Copy() state {
-	return state{
-		parent:   this.parent,
-		typ:      this.typ,
-		value:    this.value,
-		field:    this.field,
-		maxField: this.maxField,
-		isLeaf:   this.isLeaf,
-		isArray:  this.isArray,
-	}
-}
-
 type parser struct {
 	state
 	stack []state
-}
-
-func (this *parser) Copy() serialize.Parser {
-	s := &parser{
-		state: this.state.Copy(),
-		stack: make([]state, len(this.stack)),
-	}
-	for i := range this.stack {
-		s.stack[i] = this.stack[i].Copy()
-	}
-	return s
 }
 
 func deref(v reflect.Value) reflect.Value {

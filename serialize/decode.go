@@ -28,7 +28,6 @@ type Decoder interface {
 type errValue struct{}
 
 type Parser interface {
-	Copy() Parser
 	Next() error
 	IsLeaf() bool
 	Up()

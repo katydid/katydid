@@ -568,37 +568,6 @@ type state struct {
 	arrayIndex       int
 }
 
-func (s state) Copy() state {
-	bufs := make([]byte, len(s.buf))
-	copy(bufs, s.buf)
-	return state{
-		buf:              bufs,
-		offset:           s.offset,
-		name:             s.name,
-		startValueOffset: s.startValueOffset,
-		endValueOffset:   s.endValueOffset,
-		inArray:          s.inArray,
-		firstObjectValue: s.firstObjectValue,
-		firstArrayValue:  s.firstArrayValue,
-		isValueObject:    s.isValueObject,
-		isValueArray:     s.isValueArray,
-		isLeaf:           s.isLeaf,
-		arrayIndex:       s.arrayIndex,
-	}
-}
-
-func (s *jsonParser) Copy() serialize.Parser {
-	news := &jsonParser{
-		state: s.state.Copy(),
-		stack: make([]state, len(s.stack)),
-	}
-	for i := range s.stack {
-		news.stack[i] = s.stack[i].Copy()
-	}
-	return news
-
-}
-
 func (s *jsonParser) Up() {
 	top := len(s.stack) - 1
 	s.state = s.stack[top]

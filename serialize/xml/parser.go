@@ -49,18 +49,6 @@ func (p *parser) Init(buf []byte) error {
 	return nil
 }
 
-func (p *parser) Copy() serialize.Parser {
-	return &parser{
-		buf:       p.buf,
-		dec:       p.dec.Copy(),
-		tok:       CopyToken(p.tok),
-		attrs:     copyAttrs(p.attrs),
-		attrIndex: p.attrIndex,
-		attrValue: p.attrValue,
-		attrFirst: p.attrFirst,
-	}
-}
-
 func hasContent(c CharData) bool {
 	return len(string(c)) > 0
 }

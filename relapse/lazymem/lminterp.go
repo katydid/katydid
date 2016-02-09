@@ -49,7 +49,7 @@ func (this *Interpreter) Interpret(tree serialize.Parser) bool {
 	res := this.p
 	err := tree.Next()
 	for err == nil {
-		res = interpret.deriv(res, tree.Copy())
+		res = interpret.deriv(res, tree /*TODO remove .Copy()*/)
 		res = Simplify(res)
 		head := res.Head()
 		if head.ZAny != nil {
@@ -93,7 +93,7 @@ func (this *interpreter) derivNode(p *Node, tree serialize.Parser) *Pattern {
 	if !matched {
 		return NewNot(NewZAny())
 	}
-	tree = tree.Copy()
+	tree = tree /* TODO remove .Copy()*/
 	res := p.Pattern
 	head := res.Head()
 	if head.ZAny != nil {
@@ -106,7 +106,7 @@ func (this *interpreter) derivNode(p *Node, tree serialize.Parser) *Pattern {
 		tree.Down()
 		err := tree.Next()
 		for err == nil {
-			res = this.deriv(res, tree.Copy())
+			res = this.deriv(res, tree /* TODO remove .Copy()*/)
 			res = Simplify(res)
 			head := res.Head()
 			if head.ZAny != nil {

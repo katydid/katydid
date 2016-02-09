@@ -124,14 +124,6 @@ func (l *l) Bytes() ([]byte, error) {
 	return v, err
 }
 
-func (this *l) Copy() serialize.Parser {
-	s := this.s.Copy()
-	this.copies++
-	name := this.name + "->" + strconv.Itoa(this.copies)
-	this.l.Printf(this.name+".Copy() (%s)", name)
-	return &l{name, s, this.l, 0}
-}
-
 func (l *l) Next() error {
 	err := l.s.Next()
 	l.l.Printf(l.name+".Next() (%v)", err)

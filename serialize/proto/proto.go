@@ -81,19 +81,6 @@ type protoParser struct {
 	debug bool
 }
 
-func (this *protoParser) Copy() serialize.Parser {
-	s := &protoParser{
-		descMap: this.descMap,
-		state:   this.state,
-		stack:   make([]state, len(this.stack)),
-		debug:   this.debug,
-	}
-	for i := range this.stack {
-		s.stack[i] = this.stack[i]
-	}
-	return s
-}
-
 type state struct {
 	buf           []byte
 	parent        *descriptor.DescriptorProto
