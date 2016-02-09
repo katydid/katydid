@@ -17,6 +17,7 @@ package mem
 import (
 	"fmt"
 	"github.com/katydid/katydid/expr/compose"
+	"github.com/katydid/katydid/funcs"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/interp"
 	"github.com/katydid/katydid/relapse/nameexpr"
@@ -64,7 +65,9 @@ func deriv(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern, tree s
 				panic(err)
 			}
 		}
-		childPatterns := derivCalls(refs, resPatterns, tree)
+		callables := derivCalls(refs, resPatterns)
+		calls := combos(callables)
+		childPatterns := evalCalls(calls, tree)
 		if tree.IsLeaf() {
 			//do nothing
 		} else {
@@ -78,6 +81,23 @@ func deriv(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern, tree s
 		resPatterns = simps(refs, resPatterns)
 	}
 	return resPatterns
+}
+
+func evalCalls(calls []*call, label serialize.Decoder) []*relapse.Pattern {
+	for _, call := range calls {
+		f, err := compose.NewBoolFunc(call.cond)
+		if err != nil {
+			panic(err)
+		}
+		res, err := f.Eval(label)
+		if err != nil {
+			panic(err)
+		}
+		if res {
+			return call.then
+		}
+	}
+	panic("wtf")
 }
 
 func simps(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern) []*relapse.Pattern {
@@ -105,83 +125,136 @@ func unzip(patterns []*relapse.Pattern, indexes []int) []*relapse.Pattern {
 	return res
 }
 
-func derivCalls(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern, label serialize.Decoder) []*relapse.Pattern {
-	res := []*relapse.Pattern{}
+func derivCalls(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern) []*callable {
+	res := []*callable{}
 	for _, pattern := range patterns {
-		ps := derivCall(refs, pattern, label)
-		res = append(res, ps...)
+		cs := derivCall(refs, pattern)
+		res = append(res, cs...)
 	}
 	return res
 }
 
-func derivCall(refs map[string]*relapse.Pattern, p *relapse.Pattern, label serialize.Decoder) []*relapse.Pattern {
+type call struct {
+	cond funcs.Bool
+	then []*relapse.Pattern
+}
+
+func combos(callables []*callable) []*call {
+	cs := []*call{}
+	for _, callable := range callables {
+		c := combo(callable)
+		cs = combine(cs, c)
+	}
+	return cs
+}
+
+func combine(left, right []*call) []*call {
+	if len(left) == 0 {
+		return right
+	}
+	if len(right) == 0 {
+		return left
+	}
+	cs := make([]*call, 0, len(left)*len(right))
+	for _, l := range left {
+		for _, r := range right {
+			cs = append(cs, &call{
+				funcs.Simplify(funcs.And(l.cond, r.cond)),
+				append([]*relapse.Pattern{}, append(l.then, r.then...)...),
+			})
+		}
+	}
+	return cs
+}
+
+func combo(c *callable) []*call {
+	if c.els == nil {
+		return []*call{&call{funcs.BoolConst(true), []*relapse.Pattern{c.then}}}
+	}
+	return []*call{
+		&call{c.cond, []*relapse.Pattern{c.then}},
+		&call{funcs.Not(c.cond), []*relapse.Pattern{c.els}},
+	}
+}
+
+func evals(calls []*callable, label serialize.Decoder) []*relapse.Pattern {
+	patterns := make([]*relapse.Pattern, len(calls))
+	for i, call := range calls {
+		patterns[i] = call.eval(label)
+	}
+	return patterns
+}
+
+type callable struct {
+	cond funcs.Bool
+	then *relapse.Pattern
+	els  *relapse.Pattern
+}
+
+func (this *callable) eval(label serialize.Decoder) *relapse.Pattern {
+	if this.els == nil {
+		return this.then
+	}
+	f, err := compose.NewBoolFunc(this.cond)
+	if err != nil {
+		panic(err)
+	}
+	cond, err := f.Eval(label)
+	if err != nil {
+		panic(err)
+	}
+	if cond {
+		return this.then
+	}
+	return this.els
+}
+
+func derivCall(refs map[string]*relapse.Pattern, p *relapse.Pattern) []*callable {
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *relapse.Empty:
-		return []*relapse.Pattern{relapse.NewNot(relapse.NewZAny())}
+		return []*callable{&callable{nil, relapse.NewNot(relapse.NewZAny()), nil}}
 	case *relapse.ZAny:
-		return []*relapse.Pattern{relapse.NewZAny()}
+		return []*callable{&callable{nil, relapse.NewZAny(), nil}}
 	case *relapse.TreeNode:
 		b := nameexpr.NameToFunc(v.GetName())
-		f, err := compose.NewBoolFunc(b)
-		if err != nil {
-			panic(err)
-		}
-		eval, err := f.Eval(label)
-		if err != nil {
-			panic(err)
-		}
-		if eval {
-			return []*relapse.Pattern{v.GetPattern()}
-		}
-		return []*relapse.Pattern{relapse.NewNot(relapse.NewZAny())}
+		return []*callable{&callable{b, v.GetPattern(), relapse.NewNot(relapse.NewZAny())}}
 	case *relapse.LeafNode:
 		b, err := compose.NewBool(v.GetExpr())
 		if err != nil {
 			panic(err)
 		}
-		f, err := compose.NewBoolFunc(b)
-		if err != nil {
-			panic(err)
-		}
-		eval, err := f.Eval(label)
-		if err != nil {
-			panic(err)
-		}
-		if eval {
-			return []*relapse.Pattern{relapse.NewEmpty()}
-		}
-		return []*relapse.Pattern{relapse.NewNot(relapse.NewZAny())}
+		return []*callable{&callable{b, relapse.NewEmpty(), relapse.NewNot(relapse.NewZAny())}}
 	case *relapse.Concat:
-		l := derivCall(refs, v.GetLeftPattern(), label)
+		l := derivCall(refs, v.GetLeftPattern())
 		if !interp.Nullable(refs, v.GetLeftPattern()) {
 			return l
 		}
-		r := derivCall(refs, v.GetRightPattern(), label)
+		r := derivCall(refs, v.GetRightPattern())
 		return append(l, r...)
 	case *relapse.Or:
-		return derivCall2(refs, v.GetLeftPattern(), v.GetRightPattern(), label)
+		return derivCall2(refs, v.GetLeftPattern(), v.GetRightPattern())
 	case *relapse.And:
-		return derivCall2(refs, v.GetLeftPattern(), v.GetRightPattern(), label)
+		return derivCall2(refs, v.GetLeftPattern(), v.GetRightPattern())
 	case *relapse.Interleave:
-		return derivCall2(refs, v.GetLeftPattern(), v.GetRightPattern(), label)
+		return derivCall2(refs, v.GetLeftPattern(), v.GetRightPattern())
 	case *relapse.ZeroOrMore:
-		return derivCall(refs, v.GetPattern(), label)
+		return derivCall(refs, v.GetPattern())
 	case *relapse.Reference:
-		return derivCall(refs, refs[v.GetName()], label)
+		return derivCall(refs, refs[v.GetName()])
 	case *relapse.Not:
-		return derivCall(refs, v.GetPattern(), label)
+		return derivCall(refs, v.GetPattern())
 	case *relapse.Contains:
-		return derivCall(refs, relapse.NewConcat(relapse.NewZAny(), relapse.NewConcat(v.GetPattern(), relapse.NewZAny())), label)
+		return derivCall(refs, relapse.NewConcat(relapse.NewZAny(), relapse.NewConcat(v.GetPattern(), relapse.NewZAny())))
 	case *relapse.Optional:
-		return derivCall(refs, relapse.NewOr(v.GetPattern(), relapse.NewEmpty()), label)
+		return derivCall(refs, relapse.NewOr(v.GetPattern(), relapse.NewEmpty()))
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
 
-func derivCall2(refs map[string]*relapse.Pattern, left, right *relapse.Pattern, label serialize.Decoder) []*relapse.Pattern {
-	l := derivCall(refs, left, label)
-	r := derivCall(refs, right, label)
+func derivCall2(refs map[string]*relapse.Pattern, left, right *relapse.Pattern) []*callable {
+	l := derivCall(refs, left)
+	r := derivCall(refs, right)
 	return append(l, r...)
 }
 
