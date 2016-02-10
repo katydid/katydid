@@ -72,9 +72,9 @@ func deriv(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern, tree s
 			//do nothing
 		} else {
 			tree.Down()
-			zchild, zi, zignore := zip(childPatterns)
+			zchild, zi := zip(childPatterns)
 			zchild = deriv(refs, zchild, tree)
-			childPatterns = unzip(zchild, zi, zignore)
+			childPatterns = unzip(zchild, zi)
 			tree.Up()
 		}
 		nullable := nullables(refs, childPatterns)
@@ -99,17 +99,21 @@ func simps(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern) []*rel
 	return patterns
 }
 
-func zip(patterns []*relapse.Pattern) ([]*relapse.Pattern, []int, []*relapse.Pattern) {
-	zipped := relapse.Set(patterns)
-	relapse.Sort(zipped)
-	zignore := []*relapse.Pattern{
+var (
+	zignore = []*relapse.Pattern{
 		relapse.NewZAny(),
 		relapse.NewNot(relapse.NewZAny()),
 	}
-	if index := relapse.Index(zipped, relapse.NewZAny()); index != -1 {
+)
+
+func zip(patterns []*relapse.Pattern) ([]*relapse.Pattern, []int) {
+	zipped := relapse.Set(patterns)
+	relapse.Sort(zipped)
+
+	if index := relapse.Index(zipped, zignore[0]); index != -1 {
 		zipped = relapse.Remove(zipped, index)
 	}
-	if index := relapse.Index(zipped, relapse.NewNot(relapse.NewZAny())); index != -1 {
+	if index := relapse.Index(zipped, zignore[1]); index != -1 {
 		zipped = relapse.Remove(zipped, index)
 	}
 	indexes := make([]int, len(patterns))
@@ -122,16 +126,16 @@ func zip(patterns []*relapse.Pattern) ([]*relapse.Pattern, []int, []*relapse.Pat
 		}
 		indexes[i] = index
 	}
-	return zipped, indexes, zignore
+	return zipped, indexes
 }
 
-func unzip(patterns []*relapse.Pattern, indexes []int, ignored []*relapse.Pattern) []*relapse.Pattern {
+func unzip(patterns []*relapse.Pattern, indexes []int) []*relapse.Pattern {
 	res := make([]*relapse.Pattern, len(indexes))
 	for i, index := range indexes {
 		if index >= 0 {
 			res[i] = patterns[index]
 		} else {
-			res[i] = ignored[(index+1)*-1]
+			res[i] = zignore[(index+1)*-1]
 		}
 	}
 	return res
