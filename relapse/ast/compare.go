@@ -45,6 +45,10 @@ func Index(ps []*Pattern, p *Pattern) int {
 	return -1
 }
 
+func Remove(ps []*Pattern, index int) []*Pattern {
+	return append(append([]*Pattern{}, ps[:index]...), ps[index+1:]...)
+}
+
 func Has(ps []*Pattern, p *Pattern) bool {
 	return Index(ps, p) > -1
 }
