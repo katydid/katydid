@@ -66,8 +66,8 @@ func deriv(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern, tree s
 			}
 		}
 		callables := derivCalls(refs, resPatterns)
-		calls := combos(callables)
-		childPatterns := evalCalls(calls, tree)
+		callTree := newCallTree(callables)
+		childPatterns := callTree.eval(tree)
 		if tree.IsLeaf() {
 			//do nothing
 		} else {
@@ -90,23 +90,6 @@ func nullables(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern) []
 		nulls[i] = interp.Nullable(refs, p)
 	}
 	return nulls
-}
-
-func evalCalls(calls []*call, label serialize.Decoder) []*relapse.Pattern {
-	for _, call := range calls {
-		f, err := compose.NewBoolFunc(call.cond)
-		if err != nil {
-			panic(err)
-		}
-		res, err := f.Eval(label)
-		if err != nil {
-			panic(err)
-		}
-		if res {
-			return call.then
-		}
-	}
-	panic("wtf")
 }
 
 func simps(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern) []*relapse.Pattern {
@@ -143,59 +126,76 @@ func derivCalls(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern) [
 	return res
 }
 
-type call struct {
+type callNode struct {
 	cond funcs.Bool
-	then []*relapse.Pattern
+	then *callNode
+	els  *callNode
+	term []*relapse.Pattern
 }
 
-func combos(callables []*callable) []*call {
-	cs := []*call{}
-	for _, callable := range callables {
-		c := combo(callable)
-		cs = combine(cs, c)
+func (this *callNode) eval(label serialize.Decoder) []*relapse.Pattern {
+	if this.term != nil {
+		return this.term
 	}
-	return cs
+	f, err := compose.NewBoolFunc(this.cond)
+	if err != nil {
+		panic(err)
+	}
+	cond, err := f.Eval(label)
+	if err != nil {
+		panic(err)
+	}
+	if cond {
+		return this.then.eval(label)
+	}
+	return this.els.eval(label)
 }
 
-func combine(left, right []*call) []*call {
-	if len(left) == 0 {
-		return right
+func newCallTree(callables []*callable) *callNode {
+	top := newCallNode(callables[0])
+	for _, callable := range callables[1:] {
+		callnode := newCallNode(callable)
+		top = appendCallNode(top, callnode)
 	}
-	if len(right) == 0 {
-		return left
-	}
-	cs := make([]*call, 0, len(left)*len(right))
-	for _, l := range left {
-		for _, r := range right {
-			f := funcs.Simplify(funcs.And(l.cond, r.cond))
-			if funcs.Sprint(f) == "false" {
-				continue
-			}
-			cs = append(cs, &call{
-				f,
-				append([]*relapse.Pattern{}, append(l.then, r.then...)...),
-			})
-		}
-	}
-	return cs
+	return top
 }
 
-func combo(c *callable) []*call {
-	if c.els == nil {
-		return []*call{&call{funcs.BoolConst(true), []*relapse.Pattern{c.then}}}
+func newCallNode(call *callable) *callNode {
+	c := &callNode{}
+	if call.els == nil {
+		c.term = []*relapse.Pattern{call.then}
+	} else {
+		c.cond = call.cond
+		c.then = &callNode{term: []*relapse.Pattern{call.then}}
+		c.els = &callNode{term: []*relapse.Pattern{call.els}}
 	}
-	return []*call{
-		&call{c.cond, []*relapse.Pattern{c.then}},
-		&call{funcs.Not(c.cond), []*relapse.Pattern{c.els}},
+	return c
+}
+
+func appendCallNode(top, bot *callNode) *callNode {
+	if top.term != nil {
+		return prependTerm(top.term, bot)
+	}
+	then := appendCallNode(top.then, bot)
+	els := appendCallNode(top.els, bot)
+	return &callNode{
+		cond: top.cond,
+		then: then,
+		els:  els,
 	}
 }
 
-func evals(calls []*callable, label serialize.Decoder) []*relapse.Pattern {
-	patterns := make([]*relapse.Pattern, len(calls))
-	for i, call := range calls {
-		patterns[i] = call.eval(label)
+func prependTerm(patterns []*relapse.Pattern, bot *callNode) *callNode {
+	if bot.term != nil {
+		return &callNode{term: append([]*relapse.Pattern{}, append(patterns, bot.term...)...)}
 	}
-	return patterns
+	then := prependTerm(patterns, bot.then)
+	els := prependTerm(patterns, bot.els)
+	return &callNode{
+		cond: bot.cond,
+		then: then,
+		els:  els,
+	}
 }
 
 type callable struct {
