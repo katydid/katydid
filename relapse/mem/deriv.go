@@ -155,7 +155,7 @@ func newCallTree(callables []*callable) *callNode {
 	top := newCallNode(callables[0])
 	for _, callable := range callables[1:] {
 		callnode := newCallNode(callable)
-		top = appendCallNode(top, callnode)
+		top = appendCallNode(funcs.BoolConst(true), top, callnode)
 	}
 	return top
 }
@@ -172,12 +172,14 @@ func newCallNode(call *callable) *callNode {
 	return c
 }
 
-func appendCallNode(top, bot *callNode) *callNode {
+func appendCallNode(cond funcs.Bool, top, bot *callNode) *callNode {
 	if top.term != nil {
-		return prependTerm(top.term, bot)
+		return prependTerm(cond, top.term, bot)
 	}
-	then := appendCallNode(top.then, bot)
-	els := appendCallNode(top.els, bot)
+	thencond := funcs.Simplify(funcs.And(cond, top.cond))
+	elscond := funcs.Simplify(funcs.And(cond, funcs.Not(top.cond)))
+	then := appendCallNode(thencond, top.then, bot)
+	els := appendCallNode(elscond, top.els, bot)
 	return &callNode{
 		cond: top.cond,
 		then: then,
@@ -185,12 +187,20 @@ func appendCallNode(top, bot *callNode) *callNode {
 	}
 }
 
-func prependTerm(patterns []*relapse.Pattern, bot *callNode) *callNode {
+func prependTerm(cond funcs.Bool, patterns []*relapse.Pattern, bot *callNode) *callNode {
 	if bot.term != nil {
 		return &callNode{term: append([]*relapse.Pattern{}, append(patterns, bot.term...)...)}
 	}
-	then := prependTerm(patterns, bot.then)
-	els := prependTerm(patterns, bot.els)
+	thencond := funcs.Simplify(funcs.And(cond, bot.cond))
+	if funcs.Sprint(thencond) == "false" {
+		return prependTerm(cond, patterns, bot.els)
+	}
+	elscond := funcs.Simplify(funcs.And(cond, funcs.Not(bot.cond)))
+	if funcs.Sprint(elscond) == "false" {
+		return prependTerm(cond, patterns, bot.then)
+	}
+	then := prependTerm(thencond, patterns, bot.then)
+	els := prependTerm(elscond, patterns, bot.els)
 	return &callNode{
 		cond: bot.cond,
 		then: then,
