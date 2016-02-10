@@ -49,6 +49,20 @@ func Remove(ps []*Pattern, index int) []*Pattern {
 	return append(append([]*Pattern{}, ps[:index]...), ps[index+1:]...)
 }
 
+func Equals(this, that []*Pattern) bool {
+	if len(this) != len(that) {
+		return false
+	}
+	for _, l := range this {
+		for _, r := range that {
+			if !l.Equal(r) {
+				return false
+			}
+		}
+	}
+	return true
+}
+
 func Has(ps []*Pattern, p *Pattern) bool {
 	return Index(ps, p) > -1
 }

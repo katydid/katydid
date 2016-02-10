@@ -17,7 +17,6 @@ package mem
 import (
 	"fmt"
 	"github.com/katydid/katydid/expr/compose"
-	"github.com/katydid/katydid/funcs"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/interp"
 	"github.com/katydid/katydid/relapse/nameexpr"
@@ -33,8 +32,10 @@ func init() {
 //This is a naive implementation and it does not handle left recursion
 func Interpret(g *relapse.Grammar, parser serialize.Parser) bool {
 	refs := relapse.NewRefsLookup(g)
-	finals := deriv(refs, []*relapse.Pattern{refs["main"]}, parser)
-	return interp.Nullable(refs, finals[0])
+	mem := newMem(refs)
+	start := mem.add([]*relapse.Pattern{refs["main"]})
+	final := deriv(mem, start, parser)
+	return mem.accept(final)
 }
 
 func escapable(patterns []*relapse.Pattern) bool {
@@ -52,11 +53,10 @@ func escapable(patterns []*relapse.Pattern) bool {
 	return false
 }
 
-func deriv(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern, tree serialize.Parser) []*relapse.Pattern {
-	var resPatterns []*relapse.Pattern = patterns
+func deriv(mem *mem, current state, tree serialize.Parser) state {
 	for {
-		if !escapable(resPatterns) {
-			return resPatterns
+		if !mem.escapable(current) {
+			return current
 		}
 		if err := tree.Next(); err != nil {
 			if err == io.EOF {
@@ -65,23 +65,18 @@ func deriv(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern, tree s
 				panic(err)
 			}
 		}
-		callables := derivCalls(refs, resPatterns)
-		callTree := newCallTree(callables)
-		childPatterns := callTree.eval(tree)
+		callTree := mem.getCallTree(current)
+		childState, zi := callTree.eval(tree)
 		if tree.IsLeaf() {
 			//do nothing
 		} else {
 			tree.Down()
-			zchild, zi := zip(childPatterns)
-			zchild = deriv(refs, zchild, tree)
-			childPatterns = unzip(zchild, zi)
+			childState = deriv(mem, childState, tree)
 			tree.Up()
 		}
-		nullable := nullables(refs, childPatterns)
-		resPatterns = derivReturns(refs, resPatterns, nullable)
-		resPatterns = simps(refs, resPatterns)
+		current = mem.getReturn(current, zi, childState)
 	}
-	return resPatterns
+	return current
 }
 
 func nullables(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern) []bool {
@@ -99,48 +94,6 @@ func simps(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern) []*rel
 	return patterns
 }
 
-var (
-	zignore = []*relapse.Pattern{
-		relapse.NewZAny(),
-		relapse.NewNot(relapse.NewZAny()),
-	}
-)
-
-func zip(patterns []*relapse.Pattern) ([]*relapse.Pattern, []int) {
-	zipped := relapse.Set(patterns)
-	relapse.Sort(zipped)
-
-	if index := relapse.Index(zipped, zignore[0]); index != -1 {
-		zipped = relapse.Remove(zipped, index)
-	}
-	if index := relapse.Index(zipped, zignore[1]); index != -1 {
-		zipped = relapse.Remove(zipped, index)
-	}
-	indexes := make([]int, len(patterns))
-	for i, pattern := range patterns {
-		index := relapse.Index(zipped, pattern)
-		if index == -1 {
-			index = relapse.Index(zignore, pattern)
-			index *= -1
-			index -= 1
-		}
-		indexes[i] = index
-	}
-	return zipped, indexes
-}
-
-func unzip(patterns []*relapse.Pattern, indexes []int) []*relapse.Pattern {
-	res := make([]*relapse.Pattern, len(indexes))
-	for i, index := range indexes {
-		if index >= 0 {
-			res[i] = patterns[index]
-		} else {
-			res[i] = zignore[(index+1)*-1]
-		}
-	}
-	return res
-}
-
 func derivCalls(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern) []*callable {
 	res := []*callable{}
 	for _, pattern := range patterns {
@@ -148,112 +101,6 @@ func derivCalls(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern) [
 		res = append(res, cs...)
 	}
 	return res
-}
-
-type callNode struct {
-	cond funcs.Bool
-	then *callNode
-	els  *callNode
-	term []*relapse.Pattern
-}
-
-func (this *callNode) eval(label serialize.Decoder) []*relapse.Pattern {
-	if this.term != nil {
-		return this.term
-	}
-	f, err := compose.NewBoolFunc(this.cond)
-	if err != nil {
-		panic(err)
-	}
-	cond, err := f.Eval(label)
-	if err != nil {
-		panic(err)
-	}
-	if cond {
-		return this.then.eval(label)
-	}
-	return this.els.eval(label)
-}
-
-func newCallTree(callables []*callable) *callNode {
-	top := newCallNode(callables[0])
-	for _, callable := range callables[1:] {
-		callnode := newCallNode(callable)
-		top = appendCallNode(funcs.BoolConst(true), top, callnode)
-	}
-	return top
-}
-
-func newCallNode(call *callable) *callNode {
-	c := &callNode{}
-	if call.els == nil {
-		c.term = []*relapse.Pattern{call.then}
-	} else {
-		c.cond = call.cond
-		c.then = &callNode{term: []*relapse.Pattern{call.then}}
-		c.els = &callNode{term: []*relapse.Pattern{call.els}}
-	}
-	return c
-}
-
-func appendCallNode(cond funcs.Bool, top, bot *callNode) *callNode {
-	if top.term != nil {
-		return prependTerm(cond, top.term, bot)
-	}
-	thencond := funcs.Simplify(funcs.And(cond, top.cond))
-	elscond := funcs.Simplify(funcs.And(cond, funcs.Not(top.cond)))
-	then := appendCallNode(thencond, top.then, bot)
-	els := appendCallNode(elscond, top.els, bot)
-	return &callNode{
-		cond: top.cond,
-		then: then,
-		els:  els,
-	}
-}
-
-func prependTerm(cond funcs.Bool, patterns []*relapse.Pattern, bot *callNode) *callNode {
-	if bot.term != nil {
-		return &callNode{term: append([]*relapse.Pattern{}, append(patterns, bot.term...)...)}
-	}
-	thencond := funcs.Simplify(funcs.And(cond, bot.cond))
-	if funcs.Sprint(thencond) == "false" {
-		return prependTerm(cond, patterns, bot.els)
-	}
-	elscond := funcs.Simplify(funcs.And(cond, funcs.Not(bot.cond)))
-	if funcs.Sprint(elscond) == "false" {
-		return prependTerm(cond, patterns, bot.then)
-	}
-	then := prependTerm(thencond, patterns, bot.then)
-	els := prependTerm(elscond, patterns, bot.els)
-	return &callNode{
-		cond: bot.cond,
-		then: then,
-		els:  els,
-	}
-}
-
-type callable struct {
-	cond funcs.Bool
-	then *relapse.Pattern
-	els  *relapse.Pattern
-}
-
-func (this *callable) eval(label serialize.Decoder) *relapse.Pattern {
-	if this.els == nil {
-		return this.then
-	}
-	f, err := compose.NewBoolFunc(this.cond)
-	if err != nil {
-		panic(err)
-	}
-	cond, err := f.Eval(label)
-	if err != nil {
-		panic(err)
-	}
-	if cond {
-		return this.then
-	}
-	return this.els
 }
 
 func derivCall(refs map[string]*relapse.Pattern, p *relapse.Pattern) []*callable {

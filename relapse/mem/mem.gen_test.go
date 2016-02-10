@@ -4,10 +4,9 @@
 package mem_test
 
 import (
-"testing"
-"github.com/katydid/katydid/tests"
+	"github.com/katydid/katydid/tests"
+	"testing"
 )
-
 
 func TestABStarAAAXml(t *testing.T) {
 	v := tests.Validators["ABStarAAA"]["xml"]
