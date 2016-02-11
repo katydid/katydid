@@ -28,16 +28,20 @@ type mem struct {
 	callTrees   map[state]*memCallNode
 	returns     map[state]map[string]map[state]state
 	escapables  map[state]bool
+	start       state
 }
 
 func newMem(refs map[string]*relapse.Pattern) *mem {
-	return &mem{
+	m := &mem{
 		refs:        refs,
 		patternsMap: [][]*relapse.Pattern{},
 		callTrees:   make(map[state]*memCallNode),
 		returns:     make(map[state]map[string]map[state]state),
 		escapables:  make(map[state]bool),
 	}
+	start := m.add([]*relapse.Pattern{refs["main"]})
+	m.start = start
+	return m
 }
 
 func (this *mem) escapable(s state) bool {

@@ -16,6 +16,7 @@ package mem_test
 
 import (
 	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse/mem"
 	"github.com/katydid/katydid/serialize"
 	"testing"
 )
@@ -28,14 +29,17 @@ type reset interface {
 func bench(b *testing.B, grammar *relapse.Grammar, gen func() serialize.Parser) {
 	num := 1000
 	parsers := make([]reset, num)
+	c := mem.Compile(grammar)
 	for i := 0; i < num; i++ {
-		parsers[i] = gen().(reset)
+		p := gen().(reset)
+		parsers[i] = p
+		c.Interpret(p)
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		if err := parsers[i%num].Reset(); err != nil {
 			b.Fatal(err)
 		}
-		b.Skipf("not implemented")
+		c.Interpret(parsers[i%num])
 	}
 }

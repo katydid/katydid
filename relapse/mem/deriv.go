@@ -38,6 +38,21 @@ func Interpret(g *relapse.Grammar, parser serialize.Parser) bool {
 	return mem.accept(final)
 }
 
+type Compiled interface {
+	Interpret(serialize.Parser) bool
+}
+
+func (mem *mem) Interpret(parser serialize.Parser) bool {
+	final := deriv(mem, mem.start, parser)
+	return mem.accept(final)
+}
+
+func Compile(g *relapse.Grammar) Compiled {
+	refs := relapse.NewRefsLookup(g)
+	mem := newMem(refs)
+	return mem
+}
+
 func escapable(patterns []*relapse.Pattern) bool {
 	for _, pattern := range patterns {
 		if pattern.ZAny != nil {
