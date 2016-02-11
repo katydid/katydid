@@ -12,11 +12,10 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package interp_test
+package mem_test
 
 import (
 	"github.com/katydid/katydid/relapse/ast"
-	"github.com/katydid/katydid/relapse/interp"
 	"github.com/katydid/katydid/serialize"
 	"testing"
 )
@@ -37,6 +36,6 @@ func bench(b *testing.B, grammar *relapse.Grammar, gen func() serialize.Parser) 
 		if err := parsers[i%num].Reset(); err != nil {
 			b.Fatal(err)
 		}
-		interp.Interpret(grammar, parsers[i%num])
+		b.Skipf("not implemented")
 	}
 }

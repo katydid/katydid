@@ -26,7 +26,15 @@ func Test{{.Name}}{{capFirst .CodecName}}(t *testing.T) {
 }
 `
 
+const benchStr = `
+func Benchmark{{.Name}}{{capFirst .CodecName}}(b *testing.B) {
+	v := tests.BenchValidators["{{.Name}}"]["{{.CodecName}}"]
+	bench(b, v.Grammar, tests.Random{{.MessageName}}{{capFirst .CodecName}}Parser)
+}
+`
+
 func main() {
 	gen := gen.NewFunc("lazymem_test")
 	gen(testStr, "lazymem.gen_test.go", tests.ValidatorList(), `"testing"`, `"github.com/katydid/katydid/tests"`)
+	gen(benchStr, "lazymem.gen_bench_test.go", tests.BenchValidatorList(), `"testing"`, `"github.com/katydid/katydid/tests"`)
 }

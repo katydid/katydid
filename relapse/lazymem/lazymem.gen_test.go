@@ -1823,6 +1823,16 @@ func TestProtoKeyAndNameTelephoneSmithProto(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestProtoKeyBenchBridgePepperAndFountainTargetProto(t *testing.T) {
+	v := tests.Validators["ProtoKeyBenchBridgePepperAndFountainTarget"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoKeyBridgePepperProto(t *testing.T) {
+	v := tests.Validators["ProtoKeyBridgePepper"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestProtoKeyContextDavidProto(t *testing.T) {
 	v := tests.Validators["ProtoKeyContextDavid"]["proto"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
@@ -2080,6 +2090,31 @@ func TestProtoKeyRecursiveRuntimeProto(t *testing.T) {
 
 func TestProtoKeyRecursiveSyscallProto(t *testing.T) {
 	v := tests.Validators["ProtoKeyRecursiveSyscall"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoKeyTypewriterPrisonDaisySledProto(t *testing.T) {
+	v := tests.Validators["ProtoKeyTypewriterPrisonDaisySled"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoKeyTypewriterPrisonMapSharkProto(t *testing.T) {
+	v := tests.Validators["ProtoKeyTypewriterPrisonMapShark"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoKeyTypewriterPrisonMenuPaperclipProto(t *testing.T) {
+	v := tests.Validators["ProtoKeyTypewriterPrisonMenuPaperclip"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoKeyTypewriterPrisonScarBusStopProto(t *testing.T) {
+	v := tests.Validators["ProtoKeyTypewriterPrisonScarBusStop"]["proto"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestProtoKeyTypewriterPrisonSmileLetterProto(t *testing.T) {
+	v := tests.Validators["ProtoKeyTypewriterPrisonSmileLetter"]["proto"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 

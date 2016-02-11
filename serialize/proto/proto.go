@@ -115,6 +115,13 @@ func NewProtoParser(srcPackage, srcMessage string, desc *descriptor.FileDescript
 	}
 }
 
+func (s *protoParser) Reset() error {
+	if len(s.stack) > 0 {
+		return s.Init(s.stack[0].buf)
+	}
+	return s.Init(s.buf)
+}
+
 func (s *protoParser) Init(buf []byte) error {
 	s.buf = buf
 	s.offset = 0
