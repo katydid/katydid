@@ -26,21 +26,22 @@ type composedBool interface {
 }
 
 type memCallNode struct {
-	cond    composedBool
-	then    *memCallNode
-	els     *memCallNode
-	state   int
-	ziindex int
+	cond       composedBool
+	then       *memCallNode
+	els        *memCallNode
+	child      int
+	stackIndex int
 }
 
-func newMemCallTree(patterns *PatternsIndexedSet, zis *IntsIndexedSet, node *callNode) *memCallNode {
+func newMemCallTree(parent int, stackElms *PairIndexedSet, patterns *PatternsIndexedSet, zis *IntsIndexedSet, node *callNode) *memCallNode {
 	if node.term != nil {
 		ps := node.term
 		zps, zi := zip(ps)
-		return &memCallNode{state: patterns.add(zps), ziindex: zis.add(zi)}
+		stackIndex := stackElms.add(stackElm{state: parent, zindex: zis.add(zi)})
+		return &memCallNode{child: patterns.add(zps), stackIndex: stackIndex}
 	}
-	then := newMemCallTree(patterns, zis, node.then)
-	els := newMemCallTree(patterns, zis, node.els)
+	then := newMemCallTree(parent, stackElms, patterns, zis, node.then)
+	els := newMemCallTree(parent, stackElms, patterns, zis, node.els)
 	f, err := compose.NewBoolFunc(node.cond)
 	if err != nil {
 		panic(err)
@@ -54,7 +55,7 @@ func newMemCallTree(patterns *PatternsIndexedSet, zis *IntsIndexedSet, node *cal
 
 func (this *memCallNode) eval(label serialize.Decoder) (int, int) {
 	if this.cond == nil {
-		return this.state, this.ziindex
+		return this.child, this.stackIndex
 	}
 	cond, err := this.cond.Eval(label)
 	if err != nil {

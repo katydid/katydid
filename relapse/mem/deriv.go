@@ -57,7 +57,7 @@ func deriv(mem *mem, current int, tree serialize.Parser) int {
 			}
 		}
 		callTree := mem.getCallTree(current)
-		childState, zi := callTree.eval(tree)
+		childState, stackElm := callTree.eval(tree)
 		if tree.IsLeaf() {
 			//do nothing
 		} else {
@@ -65,7 +65,7 @@ func deriv(mem *mem, current int, tree serialize.Parser) int {
 			childState = deriv(mem, childState, tree)
 			tree.Up()
 		}
-		current = mem.getReturn(current, zi, childState)
+		current = mem.getReturn(stackElm, childState)
 	}
 	return current
 }

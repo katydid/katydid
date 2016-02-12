@@ -40,10 +40,14 @@ type mem struct {
 	refs        map[string]*relapse.Pattern
 	patternsMap PatternsIndexedSet
 	callTrees   map[int]*memCallNode
-	returns     map[int]map[int]map[int]int
+	returns     map[int]map[int]int
 	escapables  map[int]bool
 	zis         IntsIndexedSet
 	start       int
+
+	stackElms       PairIndexedSet
+	stateToNullable map[int]int
+	nullables       BoolsIndexedSet
 }
 
 func newMem(refs map[string]*relapse.Pattern) *mem {
@@ -51,9 +55,13 @@ func newMem(refs map[string]*relapse.Pattern) *mem {
 		refs:        refs,
 		patternsMap: newPatternsIndexedSet(),
 		callTrees:   make(map[int]*memCallNode),
-		returns:     make(map[int]map[int]map[int]int),
+		returns:     make(map[int]map[int]int),
 		escapables:  make(map[int]bool),
 		zis:         newIntsIndexedSet(),
+
+		stackElms:       newPairIndexedSet(),
+		stateToNullable: make(map[int]int),
+		nullables:       newBoolsIndexedSet(),
 	}
 	start := m.patternsMap.add([]*relapse.Pattern{refs["main"]})
 	m.start = start
@@ -85,34 +93,44 @@ func (this *mem) getCallTree(s int) *memCallNode {
 	}
 	callables := derivCalls(this.refs, this.patternsMap[s])
 	callTree := newCallTree(callables)
-	memCallTree := newMemCallTree(&this.patternsMap, &this.zis, callTree)
+	memCallTree := newMemCallTree(s, &this.stackElms, &this.patternsMap, &this.zis, callTree)
 	this.callTrees[s] = memCallTree
 	return memCallTree
 }
 
-func (this *mem) getReturn(current int, ziindex int, child int) int {
-	zis, ok := this.returns[current]
+func (this *mem) getNullable(child int, ziindex int) int {
+	pairIndex := this.stackElms.add(stackElm{child, ziindex})
+	nullIndex, ok := this.stateToNullable[pairIndex]
 	if ok {
-		children, ok := zis[ziindex]
-		if ok {
-			ret, ok := children[child]
-			if ok {
-				return ret
-			}
-		} else {
-			this.returns[current][ziindex] = make(map[int]int)
-		}
-	} else {
-		this.returns[current] = make(map[int]map[int]int)
-		this.returns[current][ziindex] = make(map[int]int)
+		return nullIndex
 	}
 	zchild := this.patternsMap[child]
 	childPatterns := unzip(zchild, this.zis[ziindex])
 	nullable := nullables(this.refs, childPatterns)
+	nullIndex = this.nullables.add(nullable)
+	this.stateToNullable[pairIndex] = nullIndex
+	return nullIndex
+}
+
+func (this *mem) getReturn(stackIndex int, child int) int {
+	children, ok := this.returns[stackIndex]
+	if ok {
+		ret, ok := children[child]
+		if ok {
+			return ret
+		}
+	} else {
+		this.returns[stackIndex] = make(map[int]int)
+	}
+	stackElm := this.stackElms[stackIndex]
+	current := stackElm.state
+	zindex := stackElm.zindex
+	nullIndex := this.getNullable(child, zindex)
+	nullable := this.nullables[nullIndex]
 	currentPatterns := this.patternsMap[current]
 	currentPatterns = derivReturns(this.refs, currentPatterns, nullable)
 	simplePatterns := simps(this.refs, currentPatterns)
 	res := this.patternsMap.add(simplePatterns)
-	this.returns[current][ziindex][child] = res
+	this.returns[stackIndex][child] = res
 	return res
 }

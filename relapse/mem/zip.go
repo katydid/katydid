@@ -23,6 +23,10 @@ var (
 		relapse.NewZAny(),
 		relapse.NewNot(relapse.NewZAny()),
 	}
+	zignoreb = []bool{
+		true,
+		false,
+	}
 )
 
 func zip(patterns []*relapse.Pattern) ([]*relapse.Pattern, []int) {
@@ -55,6 +59,18 @@ func unzip(patterns []*relapse.Pattern, indexes []int) []*relapse.Pattern {
 			res[i] = patterns[index]
 		} else {
 			res[i] = zignore[(index+1)*-1]
+		}
+	}
+	return res
+}
+
+func unzipb(bools []bool, indexes []int) []bool {
+	res := make([]bool, len(indexes))
+	for i, index := range indexes {
+		if index >= 0 {
+			res[i] = bools[index]
+		} else {
+			res[i] = zignoreb[(index+1)*-1]
 		}
 	}
 	return res

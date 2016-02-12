@@ -74,3 +74,66 @@ func (this *PatternsIndexedSet) add(patterns []*relapse.Pattern) int {
 	*this = append(*this, patterns)
 	return len(*this) - 1
 }
+
+type BoolsIndexedSet [][]bool
+
+func newBoolsIndexedSet() BoolsIndexedSet {
+	return BoolsIndexedSet([][]bool{})
+}
+
+func (this BoolsIndexedSet) index(bs []bool) int {
+	for i, ibs := range this {
+		if len(bs) == len(ibs) {
+			eq := true
+			for j := range ibs {
+				if ibs[j] != bs[j] {
+					eq = false
+					break
+				}
+			}
+			if eq {
+				return i
+			}
+		}
+	}
+	return -1
+}
+
+func (this *BoolsIndexedSet) add(bs []bool) int {
+	index := this.index(bs)
+	if index != -1 {
+		return index
+	}
+	*this = append(*this, bs)
+	return len(*this) - 1
+}
+
+type stackElm struct {
+	state  int
+	zindex int
+}
+
+type PairIndexedSet []stackElm
+
+func newPairIndexedSet() PairIndexedSet {
+	return PairIndexedSet([]stackElm{})
+}
+
+func (this PairIndexedSet) index(se stackElm) int {
+	for i, ise := range this {
+		if ise.state == se.state &&
+			ise.zindex == se.zindex {
+			return i
+		}
+	}
+	return -1
+}
+
+func (this *PairIndexedSet) add(se stackElm) int {
+	index := this.index(se)
+	if index != -1 {
+		return index
+	}
+	*this = append(*this, se)
+	return len(*this) - 1
+}
