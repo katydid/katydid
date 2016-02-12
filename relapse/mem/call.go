@@ -29,18 +29,18 @@ type memCallNode struct {
 	cond    composedBool
 	then    *memCallNode
 	els     *memCallNode
-	term    state
-	zistate int
+	state   int
+	ziindex int
 }
 
-func newMemCallTree(mem *mem, node *callNode) *memCallNode {
+func newMemCallTree(patterns *PatternsIndexedSet, zis *IntsIndexedSet, node *callNode) *memCallNode {
 	if node.term != nil {
 		ps := node.term
 		zps, zi := zip(ps)
-		return &memCallNode{term: mem.add(zps), zistate: mem.addzi(zi)}
+		return &memCallNode{state: patterns.add(zps), ziindex: zis.add(zi)}
 	}
-	then := newMemCallTree(mem, node.then)
-	els := newMemCallTree(mem, node.els)
+	then := newMemCallTree(patterns, zis, node.then)
+	els := newMemCallTree(patterns, zis, node.els)
 	f, err := compose.NewBoolFunc(node.cond)
 	if err != nil {
 		panic(err)
@@ -52,9 +52,9 @@ func newMemCallTree(mem *mem, node *callNode) *memCallNode {
 	}
 }
 
-func (this *memCallNode) eval(label serialize.Decoder) (state, int) {
+func (this *memCallNode) eval(label serialize.Decoder) (int, int) {
 	if this.cond == nil {
-		return this.term, this.zistate
+		return this.state, this.ziindex
 	}
 	cond, err := this.cond.Eval(label)
 	if err != nil {

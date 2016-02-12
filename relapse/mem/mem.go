@@ -17,35 +17,50 @@ package mem
 import (
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/interp"
+	"github.com/katydid/katydid/serialize"
 )
 
-type state int
+type Mem interface {
+	Interpret(serialize.Parser) bool
+}
+
+//This is a naive implementation and it does not handle left recursion
+func (mem *mem) Interpret(parser serialize.Parser) bool {
+	final := deriv(mem, mem.start, parser)
+	return mem.accept(final)
+}
+
+func New(g *relapse.Grammar) Mem {
+	refs := relapse.NewRefsLookup(g)
+	mem := newMem(refs)
+	return mem
+}
 
 type mem struct {
 	refs        map[string]*relapse.Pattern
-	patternsMap [][]*relapse.Pattern
-	callTrees   map[state]*memCallNode
-	returns     map[state]map[int]map[state]state
-	escapables  map[state]bool
-	zis         [][]int
-	start       state
+	patternsMap PatternsIndexedSet
+	callTrees   map[int]*memCallNode
+	returns     map[int]map[int]map[int]int
+	escapables  map[int]bool
+	zis         IntsIndexedSet
+	start       int
 }
 
 func newMem(refs map[string]*relapse.Pattern) *mem {
 	m := &mem{
 		refs:        refs,
-		patternsMap: [][]*relapse.Pattern{},
-		callTrees:   make(map[state]*memCallNode),
-		returns:     make(map[state]map[int]map[state]state),
-		escapables:  make(map[state]bool),
-		zis:         [][]int{},
+		patternsMap: newPatternsIndexedSet(),
+		callTrees:   make(map[int]*memCallNode),
+		returns:     make(map[int]map[int]map[int]int),
+		escapables:  make(map[int]bool),
+		zis:         newIntsIndexedSet(),
 	}
-	start := m.add([]*relapse.Pattern{refs["main"]})
+	start := m.patternsMap.add([]*relapse.Pattern{refs["main"]})
 	m.start = start
 	return m
 }
 
-func (this *mem) escapable(s state) bool {
+func (this *mem) escapable(s int) bool {
 	if e, ok := this.escapables[s]; ok {
 		return e
 	}
@@ -55,7 +70,7 @@ func (this *mem) escapable(s state) bool {
 	return e
 }
 
-func (this *mem) accept(s state) bool {
+func (this *mem) accept(s int) bool {
 	patterns := this.patternsMap[s]
 	if len(patterns) != 1 {
 		return false
@@ -63,86 +78,41 @@ func (this *mem) accept(s state) bool {
 	return interp.Nullable(this.refs, patterns[0])
 }
 
-func (this *mem) lookupzi(zi []int) int {
-	for i, zis := range this.zis {
-		if len(zi) == len(zis) {
-			eq := true
-			for j := range zis {
-				if zis[j] != zi[j] {
-					eq = false
-					break
-				}
-			}
-			if eq {
-				return i
-			}
-		}
-	}
-	return -1
-}
-
-func (this *mem) addzi(zi []int) int {
-	index := this.lookupzi(zi)
-	if index != -1 {
-		return index
-	}
-	this.zis = append(this.zis, zi)
-	return len(this.zis) - 1
-}
-
-func (this *mem) lookup(patterns []*relapse.Pattern) state {
-	for i, ps := range this.patternsMap {
-		if relapse.Equals(ps, patterns) {
-			return state(i)
-		}
-	}
-	return state(-1)
-}
-
-func (this *mem) add(patterns []*relapse.Pattern) state {
-	index := this.lookup(patterns)
-	if index != -1 {
-		return index
-	}
-	this.patternsMap = append(this.patternsMap, patterns)
-	return state(len(this.patternsMap) - 1)
-}
-
-func (this *mem) getCallTree(s state) *memCallNode {
+func (this *mem) getCallTree(s int) *memCallNode {
 	ct, ok := this.callTrees[s]
 	if ok {
 		return ct
 	}
 	callables := derivCalls(this.refs, this.patternsMap[s])
 	callTree := newCallTree(callables)
-	memCallTree := newMemCallTree(this, callTree)
+	memCallTree := newMemCallTree(&this.patternsMap, &this.zis, callTree)
 	this.callTrees[s] = memCallTree
 	return memCallTree
 }
 
-func (this *mem) getReturn(current state, zistate int, child state) state {
+func (this *mem) getReturn(current int, ziindex int, child int) int {
 	zis, ok := this.returns[current]
 	if ok {
-		children, ok := zis[zistate]
+		children, ok := zis[ziindex]
 		if ok {
 			ret, ok := children[child]
 			if ok {
 				return ret
 			}
 		} else {
-			this.returns[current][zistate] = make(map[state]state)
+			this.returns[current][ziindex] = make(map[int]int)
 		}
 	} else {
-		this.returns[current] = make(map[int]map[state]state)
-		this.returns[current][zistate] = make(map[state]state)
+		this.returns[current] = make(map[int]map[int]int)
+		this.returns[current][ziindex] = make(map[int]int)
 	}
 	zchild := this.patternsMap[child]
-	childPatterns := unzip(zchild, this.zis[zistate])
+	childPatterns := unzip(zchild, this.zis[ziindex])
 	nullable := nullables(this.refs, childPatterns)
 	currentPatterns := this.patternsMap[current]
 	currentPatterns = derivReturns(this.refs, currentPatterns, nullable)
 	simplePatterns := simps(this.refs, currentPatterns)
-	res := this.add(simplePatterns)
-	this.returns[current][zistate][child] = res
+	res := this.patternsMap.add(simplePatterns)
+	this.returns[current][ziindex][child] = res
 	return res
 }

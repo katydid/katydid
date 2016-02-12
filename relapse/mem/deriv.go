@@ -29,30 +29,6 @@ func init() {
 	log.SetFlags(log.Lshortfile)
 }
 
-//This is a naive implementation and it does not handle left recursion
-func Interpret(g *relapse.Grammar, parser serialize.Parser) bool {
-	refs := relapse.NewRefsLookup(g)
-	mem := newMem(refs)
-	start := mem.add([]*relapse.Pattern{refs["main"]})
-	final := deriv(mem, start, parser)
-	return mem.accept(final)
-}
-
-type Compiled interface {
-	Interpret(serialize.Parser) bool
-}
-
-func (mem *mem) Interpret(parser serialize.Parser) bool {
-	final := deriv(mem, mem.start, parser)
-	return mem.accept(final)
-}
-
-func Compile(g *relapse.Grammar) Compiled {
-	refs := relapse.NewRefsLookup(g)
-	mem := newMem(refs)
-	return mem
-}
-
 func escapable(patterns []*relapse.Pattern) bool {
 	for _, pattern := range patterns {
 		if pattern.ZAny != nil {
@@ -68,7 +44,7 @@ func escapable(patterns []*relapse.Pattern) bool {
 	return false
 }
 
-func deriv(mem *mem, current state, tree serialize.Parser) state {
+func deriv(mem *mem, current int, tree serialize.Parser) int {
 	for {
 		if !mem.escapable(current) {
 			return current

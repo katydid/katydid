@@ -28,7 +28,7 @@ func test(t *testing.T, g *relapse.Grammar, parser serialize.Parser, expected bo
 		t.Skipf("interp was not designed to handle left recursion")
 	}
 	//parser = debug.NewLogger(parser, debug.NewLineLogger())
-	c := mem.Compile(g)
+	c := mem.New(g)
 	match := c.Interpret(parser)
 	if match != expected {
 		t.Fatalf("Expected %v on given \n%s\n on \n%s", expected, g.String(), desc)
