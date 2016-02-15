@@ -108,6 +108,7 @@ func derivCalls(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern, l
 	res := []*relapse.Pattern{}
 	for _, pattern := range patterns {
 		ps := derivCall(refs, pattern, label)
+		ps = simps(refs, ps)
 		res = append(res, ps...)
 	}
 	return res

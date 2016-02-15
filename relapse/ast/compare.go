@@ -53,11 +53,9 @@ func Equals(this, that []*Pattern) bool {
 	if len(this) != len(that) {
 		return false
 	}
-	for _, l := range this {
-		for _, r := range that {
-			if !l.Equal(r) {
-				return false
-			}
+	for i := range this {
+		if !this[i].Equal(that[i]) {
+			return false
 		}
 	}
 	return true

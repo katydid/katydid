@@ -29,11 +29,10 @@ type reset interface {
 func bench(b *testing.B, grammar *relapse.Grammar, gen func() serialize.Parser) {
 	num := 1000
 	parsers := make([]reset, num)
-	c := mem.New(grammar)
+	c := mem.Compile(grammar)
 	for i := 0; i < num; i++ {
 		p := gen().(reset)
 		parsers[i] = p
-		c.Interpret(p)
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {

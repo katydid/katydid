@@ -98,22 +98,21 @@ func (this *mem) getCallTree(s int) *memCallNode {
 	return memCallTree
 }
 
-func (this *mem) getNullable(child int) int {
-	nullIndex, ok := this.stateToNullable[child]
+func (this *mem) getNullable(state int) int {
+	nullIndex, ok := this.stateToNullable[state]
 	if ok {
 		return nullIndex
 	}
-	childPatterns := this.patternsMap[child]
+	childPatterns := this.patternsMap[state]
 	nullable := nullables(this.refs, childPatterns)
 	nullIndex = this.nullables.add(nullable)
-	this.stateToNullable[child] = nullIndex
+	this.stateToNullable[state] = nullIndex
 	return nullIndex
 }
 
-func (this *mem) getReturn(stackIndex int, child int) int {
+func (this *mem) getReturnn(stackIndex int, nullIndex int) int {
 	children, ok := this.returns[stackIndex]
 	if ok {
-		nullIndex := this.getNullable(child)
 		ret, ok := children[nullIndex]
 		if ok {
 			return ret
@@ -122,7 +121,6 @@ func (this *mem) getReturn(stackIndex int, child int) int {
 		this.returns[stackIndex] = make(map[int]int)
 	}
 	stackElm := this.stackElms[stackIndex]
-	nullIndex := this.getNullable(child)
 	zullable := this.nullables[nullIndex]
 	zindex := stackElm.zindex
 	nullable := unzipb(zullable, this.zis[zindex])
@@ -133,4 +131,9 @@ func (this *mem) getReturn(stackIndex int, child int) int {
 	res := this.patternsMap.add(simplePatterns)
 	this.returns[stackIndex][nullIndex] = res
 	return res
+}
+
+func (this *mem) getReturn(stackIndex int, child int) int {
+	nullIndex := this.getNullable(child)
+	return this.getReturnn(stackIndex, nullIndex)
 }

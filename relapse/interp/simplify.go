@@ -149,7 +149,7 @@ func simplifyOr(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Patter
 
 func getAnds(p *relapse.Pattern) []*relapse.Pattern {
 	if p.And != nil {
-		return append(getOrs(p.And.GetLeftPattern()), getOrs(p.And.GetRightPattern())...)
+		return append(getAnds(p.And.GetLeftPattern()), getAnds(p.And.GetRightPattern())...)
 	}
 	return []*relapse.Pattern{p}
 }
@@ -216,7 +216,7 @@ func simplifyOptional(p *relapse.Pattern) *relapse.Pattern {
 
 func getInterleaves(p *relapse.Pattern) []*relapse.Pattern {
 	if p.Interleave != nil {
-		return append(getOrs(p.Interleave.GetLeftPattern()), getOrs(p.Interleave.GetRightPattern())...)
+		return append(getInterleaves(p.Interleave.GetLeftPattern()), getInterleaves(p.Interleave.GetRightPattern())...)
 	}
 	return []*relapse.Pattern{p}
 }

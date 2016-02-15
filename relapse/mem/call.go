@@ -19,6 +19,7 @@ import (
 	"github.com/katydid/katydid/funcs"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/serialize"
+	"strings"
 )
 
 type composedBool interface {
@@ -74,6 +75,28 @@ type callNode struct {
 	term []*relapse.Pattern
 }
 
+func addtab(s string) string {
+	ss := strings.Split(s, "\n")
+	for i := range ss {
+		ss[i] = "\t" + ss[i]
+	}
+	return strings.Join(ss, "\n")
+}
+
+func (this *callNode) String() string {
+	if this.term != nil {
+		ss := make([]string, len(this.term))
+		for i := range this.term {
+			ss[i] = this.term[i].String()
+		}
+		return strings.Join(ss, ", ")
+	}
+	sthen := addtab(this.then.String())
+	sels := addtab(this.els.String())
+	sfunc := funcs.Sprint(this.cond)
+	return "{\n" + sfunc + "\nThen:\n" + sthen + "\nElse:\n" + sels + "}"
+}
+
 func (this *callNode) eval(label serialize.Decoder) []*relapse.Pattern {
 	if this.term != nil {
 		return this.term
@@ -95,8 +118,11 @@ func (this *callNode) eval(label serialize.Decoder) []*relapse.Pattern {
 func newCallTree(callables []*callable) *callNode {
 	top := newCallNode(callables[0])
 	for _, callable := range callables[1:] {
-		callnode := newCallNode(callable)
-		top = appendCallNode(funcs.BoolConst(true), top, callnode)
+		if callable.cond == nil {
+			top = appendCallTerm(top, callable.then)
+		} else {
+			top = appendCallNode(top, callable.cond, callable.then, callable.els)
+		}
 	}
 	return top
 }
@@ -104,6 +130,8 @@ func newCallTree(callables []*callable) *callNode {
 func newCallNode(call *callable) *callNode {
 	c := &callNode{}
 	if call.els == nil {
+		c.term = []*relapse.Pattern{call.then}
+	} else if call.then.Equal(call.els) {
 		c.term = []*relapse.Pattern{call.then}
 	} else {
 		c.cond = call.cond
@@ -113,14 +141,12 @@ func newCallNode(call *callable) *callNode {
 	return c
 }
 
-func appendCallNode(cond funcs.Bool, top, bot *callNode) *callNode {
+func appendCallTerm(top *callNode, term *relapse.Pattern) *callNode {
 	if top.term != nil {
-		return prependTerm(cond, top.term, bot)
+		return &callNode{term: append([]*relapse.Pattern{}, append(top.term, term)...)}
 	}
-	thencond := funcs.Simplify(funcs.And(cond, top.cond))
-	elscond := funcs.Simplify(funcs.And(cond, funcs.Not(top.cond)))
-	then := appendCallNode(thencond, top.then, bot)
-	els := appendCallNode(elscond, top.els, bot)
+	then := appendCallTerm(top.then, term)
+	els := appendCallTerm(top.els, term)
 	return &callNode{
 		cond: top.cond,
 		then: then,
@@ -128,24 +154,49 @@ func appendCallNode(cond funcs.Bool, top, bot *callNode) *callNode {
 	}
 }
 
-func prependTerm(cond funcs.Bool, patterns []*relapse.Pattern, bot *callNode) *callNode {
-	if bot.term != nil {
-		return &callNode{term: append([]*relapse.Pattern{}, append(patterns, bot.term...)...)}
+func appendCallNode(top *callNode, cond funcs.Bool, then, els *relapse.Pattern) *callNode {
+	if top.term != nil {
+		thens := append([]*relapse.Pattern{}, append(top.term, then)...)
+		elss := append([]*relapse.Pattern{}, append(top.term, els)...)
+		return &callNode{
+			cond: cond,
+			then: &callNode{term: thens},
+			els:  &callNode{term: elss},
+		}
 	}
-	thencond := funcs.Simplify(funcs.And(cond, bot.cond))
-	if funcs.Sprint(thencond) == "false" {
-		return prependTerm(cond, patterns, bot.els)
+	if funcs.Equal(top.cond, cond) {
+		thennode := appendCallTerm(top.then, then)
+		elsnode := appendCallTerm(top.els, els)
+		return &callNode{
+			cond: top.cond,
+			then: thennode,
+			els:  elsnode,
+		}
 	}
-	elscond := funcs.Simplify(funcs.And(cond, funcs.Not(bot.cond)))
-	if funcs.Sprint(elscond) == "false" {
-		return prependTerm(cond, patterns, bot.then)
+	if funcs.Sprint(funcs.Simplify(funcs.And(top.cond, cond))) == "false" {
+		thennode := appendCallTerm(top.then, els)
+		elsnode := appendCallNode(top.els, cond, then, els)
+		return &callNode{
+			cond: top.cond,
+			then: thennode,
+			els:  elsnode,
+		}
 	}
-	then := prependTerm(thencond, patterns, bot.then)
-	els := prependTerm(elscond, patterns, bot.els)
+	if funcs.Sprint(funcs.Simplify(funcs.And(top.cond, funcs.Not(cond)))) == "false" {
+		thennode := appendCallNode(top.then, cond, then, els)
+		elsnode := appendCallTerm(top.els, then)
+		return &callNode{
+			cond: top.cond,
+			then: thennode,
+			els:  elsnode,
+		}
+	}
+	thennode := appendCallNode(top.then, cond, then, els)
+	elsnode := appendCallNode(top.els, cond, then, els)
 	return &callNode{
-		cond: bot.cond,
-		then: then,
-		els:  els,
+		cond: top.cond,
+		then: thennode,
+		els:  elsnode,
 	}
 }
 
