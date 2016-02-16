@@ -3,326 +3,326 @@
 
 package funcs
 
-type rangeFloat64s struct {
-	List  Float64s
-	First Int64
-	Last  Int64
-	Thrower
+type rangeDoubles struct {
+	List  Doubles
+	First Int
+	Last  Int
 }
 
-func (this *rangeFloat64s) Eval() []float64 {
-	list := this.List.Eval()
-	first := int(this.First.Eval())
+func (this *rangeDoubles) Eval() ([]float64, error) {
+	list, err := this.List.Eval()
+	if err != nil {
+		return nil, err
+	}
+	first64, err := this.First.Eval()
+	if err != nil {
+		return nil, err
+	}
+	first := int(first64)
 	if len(list) == 0 {
-		return this.ThrowFloat64s(NewRangeCheckErr(first, len(list)))
+		return nil, NewRangeCheckErr(first, len(list))
 	}
 	if first < 0 {
 		first = first % len(list)
 	}
 	if first > len(list) {
-		return this.ThrowFloat64s(NewRangeCheckErr(first, len(list)))
+		return nil, NewRangeCheckErr(first, len(list))
 	}
-	last := int(this.Last.Eval())
+	last64, err := this.Last.Eval()
+	if err != nil {
+		return nil, err
+	}
+	last := int(last64)
 	if last < 0 {
 		last = last % len(list)
 	}
 	if last > len(list) {
-		return this.ThrowFloat64s(NewRangeCheckErr(last, len(list)))
+		return nil, NewRangeCheckErr(last, len(list))
 	}
 	if first > last {
-		return this.ThrowFloat64s(NewRangeErr(first, last))
+		return nil, NewRangeErr(first, last)
 	}
-	return list[first:last]
+	return list[first:last], nil
 }
 
 func init() {
-	Register("range", new(rangeFloat64s))
+	Register("range", new(rangeDoubles))
 }
 
-type rangeFloat32s struct {
-	List  Float32s
-	First Int64
-	Last  Int64
-	Thrower
+func RangeDoubles(list Doubles, from, to Int) Doubles {
+	return &rangeDoubles{
+		List:  list,
+		First: from,
+		Last:  to,
+	}
 }
 
-func (this *rangeFloat32s) Eval() []float32 {
-	list := this.List.Eval()
-	first := int(this.First.Eval())
+type rangeInts struct {
+	List  Ints
+	First Int
+	Last  Int
+}
+
+func (this *rangeInts) Eval() ([]int64, error) {
+	list, err := this.List.Eval()
+	if err != nil {
+		return nil, err
+	}
+	first64, err := this.First.Eval()
+	if err != nil {
+		return nil, err
+	}
+	first := int(first64)
 	if len(list) == 0 {
-		return this.ThrowFloat32s(NewRangeCheckErr(first, len(list)))
+		return nil, NewRangeCheckErr(first, len(list))
 	}
 	if first < 0 {
 		first = first % len(list)
 	}
 	if first > len(list) {
-		return this.ThrowFloat32s(NewRangeCheckErr(first, len(list)))
+		return nil, NewRangeCheckErr(first, len(list))
 	}
-	last := int(this.Last.Eval())
+	last64, err := this.Last.Eval()
+	if err != nil {
+		return nil, err
+	}
+	last := int(last64)
 	if last < 0 {
 		last = last % len(list)
 	}
 	if last > len(list) {
-		return this.ThrowFloat32s(NewRangeCheckErr(last, len(list)))
+		return nil, NewRangeCheckErr(last, len(list))
 	}
 	if first > last {
-		return this.ThrowFloat32s(NewRangeErr(first, last))
+		return nil, NewRangeErr(first, last)
 	}
-	return list[first:last]
+	return list[first:last], nil
 }
 
 func init() {
-	Register("range", new(rangeFloat32s))
+	Register("range", new(rangeInts))
 }
 
-type rangeInt64s struct {
-	List  Int64s
-	First Int64
-	Last  Int64
-	Thrower
+func RangeInts(list Ints, from, to Int) Ints {
+	return &rangeInts{
+		List:  list,
+		First: from,
+		Last:  to,
+	}
 }
 
-func (this *rangeInt64s) Eval() []int64 {
-	list := this.List.Eval()
-	first := int(this.First.Eval())
+type rangeUints struct {
+	List  Uints
+	First Int
+	Last  Int
+}
+
+func (this *rangeUints) Eval() ([]uint64, error) {
+	list, err := this.List.Eval()
+	if err != nil {
+		return nil, err
+	}
+	first64, err := this.First.Eval()
+	if err != nil {
+		return nil, err
+	}
+	first := int(first64)
 	if len(list) == 0 {
-		return this.ThrowInt64s(NewRangeCheckErr(first, len(list)))
+		return nil, NewRangeCheckErr(first, len(list))
 	}
 	if first < 0 {
 		first = first % len(list)
 	}
 	if first > len(list) {
-		return this.ThrowInt64s(NewRangeCheckErr(first, len(list)))
+		return nil, NewRangeCheckErr(first, len(list))
 	}
-	last := int(this.Last.Eval())
+	last64, err := this.Last.Eval()
+	if err != nil {
+		return nil, err
+	}
+	last := int(last64)
 	if last < 0 {
 		last = last % len(list)
 	}
 	if last > len(list) {
-		return this.ThrowInt64s(NewRangeCheckErr(last, len(list)))
+		return nil, NewRangeCheckErr(last, len(list))
 	}
 	if first > last {
-		return this.ThrowInt64s(NewRangeErr(first, last))
+		return nil, NewRangeErr(first, last)
 	}
-	return list[first:last]
+	return list[first:last], nil
 }
 
 func init() {
-	Register("range", new(rangeInt64s))
+	Register("range", new(rangeUints))
 }
 
-type rangeUint64s struct {
-	List  Uint64s
-	First Int64
-	Last  Int64
-	Thrower
-}
-
-func (this *rangeUint64s) Eval() []uint64 {
-	list := this.List.Eval()
-	first := int(this.First.Eval())
-	if len(list) == 0 {
-		return this.ThrowUint64s(NewRangeCheckErr(first, len(list)))
+func RangeUints(list Uints, from, to Int) Uints {
+	return &rangeUints{
+		List:  list,
+		First: from,
+		Last:  to,
 	}
-	if first < 0 {
-		first = first % len(list)
-	}
-	if first > len(list) {
-		return this.ThrowUint64s(NewRangeCheckErr(first, len(list)))
-	}
-	last := int(this.Last.Eval())
-	if last < 0 {
-		last = last % len(list)
-	}
-	if last > len(list) {
-		return this.ThrowUint64s(NewRangeCheckErr(last, len(list)))
-	}
-	if first > last {
-		return this.ThrowUint64s(NewRangeErr(first, last))
-	}
-	return list[first:last]
-}
-
-func init() {
-	Register("range", new(rangeUint64s))
-}
-
-type rangeInt32s struct {
-	List  Int32s
-	First Int64
-	Last  Int64
-	Thrower
-}
-
-func (this *rangeInt32s) Eval() []int32 {
-	list := this.List.Eval()
-	first := int(this.First.Eval())
-	if len(list) == 0 {
-		return this.ThrowInt32s(NewRangeCheckErr(first, len(list)))
-	}
-	if first < 0 {
-		first = first % len(list)
-	}
-	if first > len(list) {
-		return this.ThrowInt32s(NewRangeCheckErr(first, len(list)))
-	}
-	last := int(this.Last.Eval())
-	if last < 0 {
-		last = last % len(list)
-	}
-	if last > len(list) {
-		return this.ThrowInt32s(NewRangeCheckErr(last, len(list)))
-	}
-	if first > last {
-		return this.ThrowInt32s(NewRangeErr(first, last))
-	}
-	return list[first:last]
-}
-
-func init() {
-	Register("range", new(rangeInt32s))
-}
-
-type rangeUint32s struct {
-	List  Uint32s
-	First Int64
-	Last  Int64
-	Thrower
-}
-
-func (this *rangeUint32s) Eval() []uint32 {
-	list := this.List.Eval()
-	first := int(this.First.Eval())
-	if len(list) == 0 {
-		return this.ThrowUint32s(NewRangeCheckErr(first, len(list)))
-	}
-	if first < 0 {
-		first = first % len(list)
-	}
-	if first > len(list) {
-		return this.ThrowUint32s(NewRangeCheckErr(first, len(list)))
-	}
-	last := int(this.Last.Eval())
-	if last < 0 {
-		last = last % len(list)
-	}
-	if last > len(list) {
-		return this.ThrowUint32s(NewRangeCheckErr(last, len(list)))
-	}
-	if first > last {
-		return this.ThrowUint32s(NewRangeErr(first, last))
-	}
-	return list[first:last]
-}
-
-func init() {
-	Register("range", new(rangeUint32s))
 }
 
 type rangeBools struct {
 	List  Bools
-	First Int64
-	Last  Int64
-	Thrower
+	First Int
+	Last  Int
 }
 
-func (this *rangeBools) Eval() []bool {
-	list := this.List.Eval()
-	first := int(this.First.Eval())
+func (this *rangeBools) Eval() ([]bool, error) {
+	list, err := this.List.Eval()
+	if err != nil {
+		return nil, err
+	}
+	first64, err := this.First.Eval()
+	if err != nil {
+		return nil, err
+	}
+	first := int(first64)
 	if len(list) == 0 {
-		return this.ThrowBools(NewRangeCheckErr(first, len(list)))
+		return nil, NewRangeCheckErr(first, len(list))
 	}
 	if first < 0 {
 		first = first % len(list)
 	}
 	if first > len(list) {
-		return this.ThrowBools(NewRangeCheckErr(first, len(list)))
+		return nil, NewRangeCheckErr(first, len(list))
 	}
-	last := int(this.Last.Eval())
+	last64, err := this.Last.Eval()
+	if err != nil {
+		return nil, err
+	}
+	last := int(last64)
 	if last < 0 {
 		last = last % len(list)
 	}
 	if last > len(list) {
-		return this.ThrowBools(NewRangeCheckErr(last, len(list)))
+		return nil, NewRangeCheckErr(last, len(list))
 	}
 	if first > last {
-		return this.ThrowBools(NewRangeErr(first, last))
+		return nil, NewRangeErr(first, last)
 	}
-	return list[first:last]
+	return list[first:last], nil
 }
 
 func init() {
 	Register("range", new(rangeBools))
 }
 
-type rangeStrings struct {
-	List  Strings
-	First Int64
-	Last  Int64
-	Thrower
+func RangeBools(list Bools, from, to Int) Bools {
+	return &rangeBools{
+		List:  list,
+		First: from,
+		Last:  to,
+	}
 }
 
-func (this *rangeStrings) Eval() []string {
-	list := this.List.Eval()
-	first := int(this.First.Eval())
+type rangeStrings struct {
+	List  Strings
+	First Int
+	Last  Int
+}
+
+func (this *rangeStrings) Eval() ([]string, error) {
+	list, err := this.List.Eval()
+	if err != nil {
+		return nil, err
+	}
+	first64, err := this.First.Eval()
+	if err != nil {
+		return nil, err
+	}
+	first := int(first64)
 	if len(list) == 0 {
-		return this.ThrowStrings(NewRangeCheckErr(first, len(list)))
+		return nil, NewRangeCheckErr(first, len(list))
 	}
 	if first < 0 {
 		first = first % len(list)
 	}
 	if first > len(list) {
-		return this.ThrowStrings(NewRangeCheckErr(first, len(list)))
+		return nil, NewRangeCheckErr(first, len(list))
 	}
-	last := int(this.Last.Eval())
+	last64, err := this.Last.Eval()
+	if err != nil {
+		return nil, err
+	}
+	last := int(last64)
 	if last < 0 {
 		last = last % len(list)
 	}
 	if last > len(list) {
-		return this.ThrowStrings(NewRangeCheckErr(last, len(list)))
+		return nil, NewRangeCheckErr(last, len(list))
 	}
 	if first > last {
-		return this.ThrowStrings(NewRangeErr(first, last))
+		return nil, NewRangeErr(first, last)
 	}
-	return list[first:last]
+	return list[first:last], nil
 }
 
 func init() {
 	Register("range", new(rangeStrings))
 }
 
-type rangeListOfBytes struct {
-	List  ListOfBytes
-	First Int64
-	Last  Int64
-	Thrower
+func RangeStrings(list Strings, from, to Int) Strings {
+	return &rangeStrings{
+		List:  list,
+		First: from,
+		Last:  to,
+	}
 }
 
-func (this *rangeListOfBytes) Eval() [][]byte {
-	list := this.List.Eval()
-	first := int(this.First.Eval())
+type rangeListOfBytes struct {
+	List  ListOfBytes
+	First Int
+	Last  Int
+}
+
+func (this *rangeListOfBytes) Eval() ([][]byte, error) {
+	list, err := this.List.Eval()
+	if err != nil {
+		return nil, err
+	}
+	first64, err := this.First.Eval()
+	if err != nil {
+		return nil, err
+	}
+	first := int(first64)
 	if len(list) == 0 {
-		return this.ThrowListOfBytes(NewRangeCheckErr(first, len(list)))
+		return nil, NewRangeCheckErr(first, len(list))
 	}
 	if first < 0 {
 		first = first % len(list)
 	}
 	if first > len(list) {
-		return this.ThrowListOfBytes(NewRangeCheckErr(first, len(list)))
+		return nil, NewRangeCheckErr(first, len(list))
 	}
-	last := int(this.Last.Eval())
+	last64, err := this.Last.Eval()
+	if err != nil {
+		return nil, err
+	}
+	last := int(last64)
 	if last < 0 {
 		last = last % len(list)
 	}
 	if last > len(list) {
-		return this.ThrowListOfBytes(NewRangeCheckErr(last, len(list)))
+		return nil, NewRangeCheckErr(last, len(list))
 	}
 	if first > last {
-		return this.ThrowListOfBytes(NewRangeErr(first, last))
+		return nil, NewRangeErr(first, last)
 	}
-	return list[first:last]
+	return list[first:last], nil
 }
 
 func init() {
 	Register("range", new(rangeListOfBytes))
+}
+
+func RangeListOfBytes(list ListOfBytes, from, to Int) ListOfBytes {
+	return &rangeListOfBytes{
+		List:  list,
+		First: from,
+		Last:  to,
+	}
 }

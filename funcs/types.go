@@ -14,74 +14,50 @@
 
 package funcs
 
-type Float64 interface {
-	Eval() float64
+type Double interface {
+	Eval() (float64, error)
 }
 
-type Float32 interface {
-	Eval() float32
+type Int interface {
+	Eval() (int64, error)
 }
 
-type Int64 interface {
-	Eval() int64
-}
-
-type Uint64 interface {
-	Eval() uint64
-}
-
-type Int32 interface {
-	Eval() int32
+type Uint interface {
+	Eval() (uint64, error)
 }
 
 type Bool interface {
-	Eval() bool
+	Eval() (bool, error)
 }
 
 type String interface {
-	Eval() string
+	Eval() (string, error)
 }
 
 type Bytes interface {
-	Eval() []byte
+	Eval() ([]byte, error)
 }
 
-type Uint32 interface {
-	Eval() uint32
+type Doubles interface {
+	Eval() ([]float64, error)
 }
 
-type Float64s interface {
-	Eval() []float64
+type Ints interface {
+	Eval() ([]int64, error)
 }
 
-type Float32s interface {
-	Eval() []float32
-}
-
-type Int64s interface {
-	Eval() []int64
-}
-
-type Uint64s interface {
-	Eval() []uint64
-}
-
-type Int32s interface {
-	Eval() []int32
+type Uints interface {
+	Eval() ([]uint64, error)
 }
 
 type Bools interface {
-	Eval() []bool
+	Eval() ([]bool, error)
 }
 
 type Strings interface {
-	Eval() []string
+	Eval() ([]string, error)
 }
 
 type ListOfBytes interface {
-	Eval() [][]byte
-}
-
-type Uint32s interface {
-	Eval() []uint32
+	Eval() ([][]byte, error)
 }

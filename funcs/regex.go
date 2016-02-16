@@ -18,14 +18,22 @@ import (
 	"regexp"
 )
 
+func Regex(e ConstString, s String) Bool {
+	return &regex{Expr: e, S: s}
+}
+
 type regex struct {
 	r    *regexp.Regexp
 	Expr ConstString
-	B    Bytes
+	S    String
 }
 
 func (this *regex) Init() error {
-	r, err := regexp.Compile(this.Expr.Eval())
+	e, err := this.Expr.Eval()
+	if err != nil {
+		return err
+	}
+	r, err := regexp.Compile(e)
 	if err != nil {
 		return err
 	}
@@ -33,8 +41,12 @@ func (this *regex) Init() error {
 	return nil
 }
 
-func (this *regex) Eval() bool {
-	return this.r.Match(this.B.Eval())
+func (this *regex) Eval() (bool, error) {
+	s, err := this.S.Eval()
+	if err != nil {
+		return false, err
+	}
+	return this.r.MatchString(s), nil
 }
 
 func init() {

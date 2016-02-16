@@ -14,16 +14,28 @@
 
 package funcs
 
+func Not(b Bool) Bool {
+	return &not{b}
+}
+
 type not struct {
 	V1 Bool
 }
 
-func (this *not) Eval() bool {
-	return !this.V1.Eval()
+func (this *not) Eval() (bool, error) {
+	b, err := this.V1.Eval()
+	if err != nil || !b {
+		return true, nil
+	}
+	return !b, nil
 }
 
 func init() {
 	Register("not", new(not))
+}
+
+func And(a, b Bool) Bool {
+	return &and{a, b}
 }
 
 type and struct {
@@ -31,12 +43,20 @@ type and struct {
 	V2 Bool
 }
 
-func (this *and) Eval() bool {
-	return this.V1.Eval() && this.V2.Eval()
+func (this *and) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil || !v1 {
+		return false, err
+	}
+	return this.V2.Eval()
 }
 
 func init() {
 	Register("and", new(and))
+}
+
+func Or(a, b Bool) Bool {
+	return &or{a, b}
 }
 
 type or struct {
@@ -44,8 +64,12 @@ type or struct {
 	V2 Bool
 }
 
-func (this *or) Eval() bool {
-	return this.V1.Eval() || this.V2.Eval()
+func (this *or) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err == nil && v1 {
+		return true, nil
+	}
+	return this.V2.Eval()
 }
 
 func init() {

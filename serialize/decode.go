@@ -14,16 +14,57 @@
 
 package serialize
 
+import "fmt"
+
 type Decoder interface {
-	Float64() (float64, error)
-	Float32() (float32, error)
-	Int64() (int64, error)
-	Uint64() (uint64, error)
-	Int32() (int32, error)
+	Double() (float64, error)
+	Int() (int64, error)
+	Uint() (uint64, error)
 	Bool() (bool, error)
 	String() (string, error)
 	Bytes() ([]byte, error)
-	Uint32() (uint32, error)
 }
 
 type errValue struct{}
+
+type Parser interface {
+	Next() error
+	IsLeaf() bool
+	Up()
+	Down()
+	Decoder
+}
+
+func Sprint(value Decoder) string {
+	return fmt.Sprintf("%#v", getValue(value))
+}
+
+func getValue(value Decoder) interface{} {
+	var v interface{}
+	var err error
+	v, err = value.Bool()
+	if err == nil {
+		return v
+	}
+	v, err = value.Bytes()
+	if err == nil {
+		return v
+	}
+	v, err = value.String()
+	if err == nil {
+		return v
+	}
+	v, err = value.Int()
+	if err == nil {
+		return v
+	}
+	v, err = value.Uint()
+	if err == nil {
+		return v
+	}
+	v, err = value.Double()
+	if err == nil {
+		return v
+	}
+	return nil
+}

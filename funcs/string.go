@@ -15,21 +15,76 @@
 package funcs
 
 import (
-	"golang.org/x/text/unicode/norm"
 	"strings"
 )
+
+func ToLower(s String) String {
+	return &toLower{s}
+}
+
+type toLower struct {
+	S String
+}
+
+func (this *toLower) Eval() (string, error) {
+	s, err := this.S.Eval()
+	if err != nil {
+		return "", err
+	}
+	return strings.ToLower(s), nil
+}
+
+func init() {
+	Register("toLower", new(toLower))
+}
+
+func ToUpper(s String) String {
+	return &toUpper{s}
+}
+
+type toUpper struct {
+	S String
+}
+
+func (this *toUpper) Eval() (string, error) {
+	s, err := this.S.Eval()
+	if err != nil {
+		return "", err
+	}
+	return strings.ToUpper(s), nil
+}
+
+func init() {
+	Register("toUpper", new(toUpper))
+}
+
+func Contains(s, sub String) Bool {
+	return &contains{s, sub}
+}
 
 type contains struct {
 	S      String
 	Substr String
 }
 
-func (this *contains) Eval() bool {
-	return strings.Contains(this.S.Eval(), this.Substr.Eval())
+func (this *contains) Eval() (bool, error) {
+	s, err := this.S.Eval()
+	if err != nil {
+		return false, err
+	}
+	subStr, err := this.Substr.Eval()
+	if err != nil {
+		return false, err
+	}
+	return strings.Contains(s, subStr), nil
 }
 
 func init() {
 	Register("contains", new(contains))
+}
+
+func EqualFold(a, b String) Bool {
+	return &equalFold{a, b}
 }
 
 type equalFold struct {
@@ -37,14 +92,24 @@ type equalFold struct {
 	V2 String
 }
 
-func (this *equalFold) Eval() bool {
-	v1 := this.V1.Eval()
-	v2 := this.V2.Eval()
-	return strings.EqualFold(v1, v2)
+func (this *equalFold) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return false, err
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return false, err
+	}
+	return strings.EqualFold(v1, v2), nil
 }
 
 func init() {
 	Register("eqFold", new(equalFold))
+}
+
+func HasPrefix(a, b String) Bool {
+	return &hasPrefix{a, b}
 }
 
 type hasPrefix struct {
@@ -52,14 +117,24 @@ type hasPrefix struct {
 	V2 String
 }
 
-func (this *hasPrefix) Eval() bool {
-	v1 := this.V1.Eval()
-	v2 := this.V2.Eval()
-	return strings.HasPrefix(v1, v2)
+func (this *hasPrefix) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return false, err
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return false, err
+	}
+	return strings.HasPrefix(v1, v2), nil
 }
 
 func init() {
 	Register("hasPrefix", new(hasPrefix))
+}
+
+func HasSuffix(a, b String) Bool {
+	return &hasSuffix{a, b}
 }
 
 type hasSuffix struct {
@@ -67,60 +142,18 @@ type hasSuffix struct {
 	V2 String
 }
 
-func (this *hasSuffix) Eval() bool {
-	v1 := this.V1.Eval()
-	v2 := this.V2.Eval()
-	return strings.HasSuffix(v1, v2)
+func (this *hasSuffix) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return false, err
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return false, err
+	}
+	return strings.HasSuffix(v1, v2), nil
 }
 
 func init() {
 	Register("hasSuffix", new(hasSuffix))
-}
-
-type nfc struct {
-	V1 String
-}
-
-func (this *nfc) Eval() string {
-	return norm.NFC.String(this.V1.Eval())
-}
-
-func init() {
-	Register("nfc", new(nfc))
-}
-
-type nfd struct {
-	V1 String
-}
-
-func (this *nfd) Eval() string {
-	return norm.NFD.String(this.V1.Eval())
-}
-
-func init() {
-	Register("nfd", new(nfd))
-}
-
-type nfkc struct {
-	V1 String
-}
-
-func (this *nfkc) Eval() string {
-	return norm.NFKC.String(this.V1.Eval())
-}
-
-func init() {
-	Register("nfkc", new(nfkc))
-}
-
-type nfkd struct {
-	V1 String
-}
-
-func (this *nfkd) Eval() string {
-	return norm.NFKD.String(this.V1.Eval())
-}
-
-func init() {
-	Register("nfkd", new(nfkd))
 }

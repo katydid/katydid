@@ -1,0 +1,178 @@
+//  Copyright 2013 Walter Schulze
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+syntax = "proto2";
+
+package relapse;
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "github.com/katydid/katydid/expr/ast/expr.proto";
+
+option (gogoproto.goproto_stringer_all) = false;
+option (gogoproto.gostring_all) = true;
+option (gogoproto.equal_all) = true;
+option (gogoproto.goproto_unrecognized_all) = false;
+
+message Grammar {
+	optional Pattern TopPattern = 1;
+	repeated PatternDecl PatternDecls = 2;
+	optional expr.Space After = 3;
+}
+
+message PatternDecl {
+	optional expr.Keyword Hash = 1;
+	optional expr.Space Before = 2;
+	optional string Name = 3 [(gogoproto.nullable) = false];
+	optional expr.Keyword Eq = 4;
+	optional Pattern Pattern = 5;
+}
+
+message NameExpr {
+	option (gogoproto.onlyone) = true;
+	optional Name Name = 1;
+	optional AnyName AnyName = 2;
+	optional AnyNameExcept AnyNameExcept = 3;
+	optional NameChoice NameChoice = 4; 
+}
+
+message Name {
+	optional expr.Space Before = 1;
+
+	optional double DoubleValue = 3;
+	optional int64 IntValue = 5;
+	optional uint64 UintValue = 6;
+	optional bool BoolValue = 8;
+	optional string StringValue = 9;
+	optional bytes BytesValue = 10;
+}
+
+message AnyName {
+	optional expr.Keyword Underscore = 1;
+}
+
+message AnyNameExcept {
+	optional expr.Keyword Exclamation = 1;
+	optional expr.Keyword OpenParen = 2;
+	optional NameExpr Except = 3;
+	optional expr.Keyword CloseParen = 4;
+}
+
+message NameChoice {
+	optional expr.Keyword OpenParen = 1;
+	optional NameExpr Left = 2;
+	optional expr.Keyword Pipe = 3;
+	optional NameExpr Right = 4;
+	optional expr.Keyword CloseParen = 5;
+}
+
+message Pattern {
+	option (gogoproto.onlyone) = true;
+	optional Empty Empty = 1;
+	optional TreeNode TreeNode = 3;
+	optional LeafNode LeafNode = 4;
+	optional Concat Concat = 5;
+	optional Or Or = 6;
+	optional And And = 7;
+	optional ZeroOrMore ZeroOrMore = 8;
+	optional Reference Reference = 9;
+	optional Not Not = 10;
+	optional ZAny ZAny = 11;
+	optional Contains Contains = 12;
+	optional Optional Optional = 13;
+	optional Interleave Interleave = 14;
+}
+
+message Empty {
+	optional expr.Keyword Empty = 1;
+}
+
+message TreeNode {
+	optional NameExpr Name = 1;
+	optional expr.Keyword Colon = 2;
+	optional Pattern Pattern = 3;
+}
+
+message Contains {
+	optional expr.Keyword Dot = 1;
+	optional Pattern Pattern = 2;
+}
+
+message LeafNode {
+	optional expr.Keyword RightArrow = 1;
+	optional expr.Expr Expr = 2;
+}
+
+message Concat {
+	optional expr.Keyword OpenBracket = 2;
+	optional Pattern LeftPattern = 3;
+	optional expr.Keyword Comma = 4;
+	optional Pattern RightPattern = 5;
+	optional expr.Keyword ExtraComma = 6;
+	optional expr.Keyword CloseBracket = 7;
+}
+
+message Or {
+	optional expr.Keyword OpenParen = 1;
+	optional Pattern LeftPattern = 2;
+	optional expr.Keyword Pipe = 3;
+	optional Pattern RightPattern = 4;
+	optional expr.Keyword CloseParen = 5;
+}
+
+message And {
+	optional expr.Keyword OpenParen = 1;
+	optional Pattern LeftPattern = 2;
+	optional expr.Keyword Ampersand = 3;
+	optional Pattern RightPattern = 4;
+	optional expr.Keyword CloseParen = 5;
+}
+
+message ZeroOrMore {
+	optional expr.Keyword OpenParen = 1;
+	optional Pattern Pattern = 2;
+	optional expr.Keyword CloseParen = 3;
+	optional expr.Keyword Star = 4;
+}
+
+message Reference {
+	optional expr.Keyword At = 1;
+	optional string Name = 2 [(gogoproto.nullable) = false];
+}
+
+message Not {
+	optional expr.Keyword Exclamation = 1;
+	optional expr.Keyword OpenParen = 2;
+	optional Pattern Pattern = 3;
+	optional expr.Keyword CloseParen = 4;
+}
+
+message ZAny {
+	optional expr.Keyword Star = 1;
+}
+
+message Optional {
+	optional expr.Keyword OpenParen = 1;
+	optional Pattern Pattern = 2;
+	optional expr.Keyword CloseParen = 3;
+	optional expr.Keyword QuestionMark = 4;
+}
+
+message Interleave {
+	optional expr.Keyword OpenCurly = 2;
+	optional Pattern LeftPattern = 3;
+	optional expr.Keyword SemiColon = 4;
+	optional Pattern RightPattern = 5;
+	optional expr.Keyword ExtraSemiColon = 6;
+	optional expr.Keyword CloseCurly = 7;
+}

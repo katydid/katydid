@@ -35,6 +35,11 @@ func LowerFirst(s string) string {
 	return string(b)
 }
 
+var funcMap = template.FuncMap{
+	"capFirst":   CapFirst,
+	"lowerFirst": LowerFirst,
+}
+
 type gen struct {
 	name string
 	dir  string
@@ -65,7 +70,7 @@ func (this *gen) gen(tmp string, filename string, objects []interface{}, imports
 		f.Write([]byte(strings.Join(imports, "\n")))
 		f.Write([]byte("\n)\n\n"))
 	}
-	t := template.Must(template.New("a").Parse(tmp))
+	t := template.Must(template.New("a").Funcs(funcMap).Parse(tmp))
 	for _, o := range objects {
 		err := t.Execute(f, o)
 		if err != nil {

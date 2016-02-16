@@ -1,0 +1,656 @@
+//  DO NOT EDIT
+//  This is generated file, see build.sh
+//  Sources: ../expr/license.bnf ../expr/lexer.bnf, viper.bnf, ../expr/expr.bnf, ../expr/keyword.bnf
+
+//  Copyright 2013 Walter Schulze
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+_lineComment : '/' '/' {.} '\n' ;
+
+_blockComment : '/' '*' {. | '*'} '*' '/' ;
+
+_comment : _lineComment | _blockComment ;
+
+_ws : ' ' | '\t' | '\n' | '\r' ; //whitespace
+
+space : _comment | _ws { _ws } ;
+
+_decimal_digit : '0' - '9' ;
+_octal_digit : '0' - '7' ;
+_hex_digit : '0' - '9' | 'A' - 'F' | 'a' - 'f';
+
+_int_lit     : _decimal_lit | _octal_lit | _hex_lit ;
+_decimal_lit : ( '1' - '9' ) { _decimal_digit } ;
+_octal_lit   : '0' { _octal_digit } ;
+_hex_lit     : '0' ( 'x' | 'X' ) _hex_digit { _hex_digit } ;
+
+_singed_int_lit : ['-'] _int_lit ;
+
+int_lit: _int '(' _singed_int_lit ')' |  '0' | ['-'] _decimal_lit ;
+uint_lit: _uint '(' _int_lit ')' ;
+
+_decimals  : _decimal_digit { _decimal_digit } ;
+_exponent  : ( 'e' | 'E' ) [ '+' | '-' ] _decimals ;
+
+_float_lit : ( _decimals '.' _decimals _exponent )
+			| ( _decimals '.' ( _decimals | _exponent ) )
+          	| ( _decimals _exponent )
+          	| ( '.' _decimals [ _exponent ] ) 
+          	;
+
+double_lit: _double '(' ['-'] ( _float_lit | _int_lit ) ')' | _float_lit ;
+
+_upcase : 'A'-'Z' ;
+_lowcase : 'a'-'z' ;
+_id_char : _upcase | _lowcase | '_' | _decimal_digit ;
+
+_id : (_upcase | _lowcase | '_' ) {_id_char} ;
+id : _id ;
+
+_double : 'd' 'o' 'u' 'b' 'l' 'e' ;
+_int : 'i' 'n' 't';
+_uint : 'u' 'i' 'n' 't';
+_bytes : '[' ']' 'b' 'y' 't' 'e' ;
+_string : 's' 't' 'r' 'i' 'n' 'g' ;
+_bool : 'b' 'o' 'o' 'l' ;
+
+_qualid : _id { '.' _id } ;
+
+double_var : '$' _double ;
+int_var : '$' _int ;
+uint_var : '$' _uint ;
+bytes_var : '$' _bytes ;
+string_var : '$' _string ;
+bool_var : '$' _bool ;
+
+_big_u_value      : '\\' 'U' _hex_digit _hex_digit _hex_digit _hex_digit
+                            _hex_digit _hex_digit _hex_digit _hex_digit ;
+_little_u_value   : '\\' 'u' _hex_digit _hex_digit _hex_digit _hex_digit ;
+_hex_byte_u_value   : '\\' 'x' _hex_digit _hex_digit ;
+
+_octal_byte_u_value : '\\' _octal_digit _octal_digit _octal_digit ;
+_byte_value       : _octal_byte_u_value | _hex_byte_u_value ;
+_raw_string : '`' {.} '`' ;
+_escaped_char     : '\\' ( 'a' | 'b' | 'f' | 'n' | 'r' | 't' | 'v' | '\\' | '\'' | '"' ) ;
+_unicode_value    : . | _little_u_value | _big_u_value | _escaped_char ;
+_interpreted_string : '"' { _unicode_value | _byte_value } '"' ;
+
+string_lit : _raw_string | _interpreted_string ;
+
+_char_lit	: '\'' (_unicode_value | _byte_value) '\'' ;
+
+_byte_elem : _int_lit | _char_lit ;
+
+bytes_lit : _bytes '{' { _ws } [ _byte_elem { { _ws } ',' { _ws } _byte_elem } ] { _ws } '}' ;
+<< 
+import (
+  . "github.com/katydid/katydid/viper/ast"
+  "github.com/katydid/katydid/expr/ast"
+  "github.com/katydid/katydid/types"
+  "github.com/katydid/katydid/viper/token"
+  "strconv"
+)
+
+func newString(v interface{}) string {
+  t := v.(*token.Token)
+  return string(t.Lit)
+}
+
+func unquote(s1 string) string {
+  s, err := strconv.Unquote(s1)
+  if err != nil {
+    return s1
+  }
+  return s
+}
+
+>>
+
+Start
+  : Rules       << &Rules{$0.([]*Rule), nil}, nil >>
+  | Rules Space << &Rules{$0.([]*Rule), $1.(*expr.Space)}, nil >>
+  ;
+
+Rules
+  : Rule        << []*Rule{$0.(*Rule)}, nil >>
+  | Rules Rule  << append($0.([]*Rule), $1.(*Rule)), nil >>
+  ;
+
+Rule
+  : StartRule   << &Rule{Start: $0.(*Start)}, nil >>
+  | Final       << &Rule{Final: $0.(*Final)}, nil >>
+  | Internal    << &Rule{Internal: $0.(*Internal)}, nil >>
+  | Call        << &Rule{Call: $0.(*Call)}, nil >>
+  | Return      << &Rule{Return: $0.(*Return)}, nil >>
+  ;
+
+StartRule
+  : Space "start" Equal State SemiColon <<
+    &Start{
+      Before: $0.(*expr.Space),
+      Eq: $2.(*expr.Keyword),
+      State: $3.(*State),
+      SemiColon: $4.(*expr.Keyword),
+    }, nil
+  >>
+  | "start" Equal State SemiColon <<
+    &Start{
+      Eq: $1.(*expr.Keyword),
+      State: $2.(*State),
+      SemiColon: $3.(*expr.Keyword),
+    }, nil
+  >>
+  ;
+
+Final
+  : Space "final" Equal State SemiColon <<
+    &Final{
+      Before: $0.(*expr.Space),
+      Eq: $2.(*expr.Keyword),
+      State: $3.(*State),
+      SemiColon: $4.(*expr.Keyword),
+    }, nil
+  >>
+  | "final" Equal State SemiColon <<
+    &Final{
+      Eq: $1.(*expr.Keyword),
+      State: $2.(*State),
+      SemiColon: $3.(*expr.Keyword),
+    }, nil
+  >>
+  ;
+
+Internal
+  : Space "internal" State Expr State SemiColon <<
+    &Internal{
+      Before: $0.(*expr.Space),
+      Src: $2.(*State),
+      Expr: $3.(*expr.Expr),
+      Dst: $4.(*State),
+      SemiColon: $5.(*expr.Keyword),
+    }, nil
+  >>
+  | "internal" State Expr State SemiColon <<
+    &Internal{
+      Src: $1.(*State),
+      Expr: $2.(*expr.Expr),
+      Dst: $3.(*State),
+      SemiColon: $4.(*expr.Keyword),
+    }, nil
+  >>
+  ;
+
+Call
+  : Space "call" State Expr State State SemiColon <<
+    &Call{
+      Before: $0.(*expr.Space),
+      Src: $2.(*State),
+      Expr: $3.(*expr.Expr),
+      ParentDst: $4.(*State),
+      ChildDst: $5.(*State),
+      SemiColon: $6.(*expr.Keyword),
+    }, nil
+  >>
+  | "call" State Expr State State SemiColon <<
+    &Call{
+      Src: $1.(*State),
+      Expr: $2.(*expr.Expr),
+      ParentDst: $3.(*State),
+      ChildDst: $4.(*State),
+      SemiColon: $5.(*expr.Keyword),
+    }, nil
+  >>
+  ;
+
+Return
+  : Space "return" State State Expr State SemiColon <<
+    &Return{
+      Before: $0.(*expr.Space),
+      ParentSrc: $2.(*State),
+      ChildSrc: $3.(*State),
+      Expr: $4.(*expr.Expr),
+      Dst: $5.(*State),
+      SemiColon: $6.(*expr.Keyword),
+    }, nil
+  >>
+  | "return" State State Expr State SemiColon <<
+    &Return{
+      ParentSrc: $1.(*State),
+      ChildSrc: $2.(*State),
+      Expr: $3.(*expr.Expr),
+      Dst: $4.(*State),
+      SemiColon: $5.(*expr.Keyword),
+    }, nil
+  >>
+  ;
+
+State
+  : Space id         << &State{Before: $0.(*expr.Space), Name: newString($1)}, nil >>
+  | id               << &State{Name: newString($0)}, nil >>
+  | Space string_lit << &State{Before: $0.(*expr.Space), Name: newString($1)}, nil >>
+  | string_lit       << &State{Name: newString($0)}, nil >>
+  ;
+
+
+
+
+
+
+AllExpr
+  : Expr Space
+  | Expr
+  | BuiltIn Space << &expr.Expr{BuiltIn: $0.(*expr.BuiltIn)}, nil >>
+  | BuiltIn << &expr.Expr{BuiltIn: $0.(*expr.BuiltIn)}, nil >>
+  ;
+
+Expr
+  : SpaceTerminal << &expr.Expr{Terminal: $0.(*expr.Terminal)}, nil >>
+  | Function << &expr.Expr{Function: $0.(*expr.Function)}, nil >>
+  | List << &expr.Expr{List: $0.(*expr.List)}, nil >>
+  ;
+
+Function
+  : Space id OpenParen Exprs CloseParen << &expr.Function{Before: $0.(*expr.Space), Name: newString($1), OpenParen: $2.(*expr.Keyword), Params: $3.([]*expr.Expr), CloseParen: $4.(*expr.Keyword)}, nil >>
+  | Space id OpenParen CloseParen << &expr.Function{Before: $0.(*expr.Space), Name: newString($1), OpenParen: $2.(*expr.Keyword), CloseParen: $3.(*expr.Keyword)}, nil >>
+  | id OpenParen Exprs CloseParen << &expr.Function{Name: newString($0), OpenParen: $1.(*expr.Keyword), Params: $2.([]*expr.Expr), CloseParen: $3.(*expr.Keyword)}, nil >>
+  | id OpenParen CloseParen << &expr.Function{Name: newString($0), OpenParen: $1.(*expr.Keyword), CloseParen: $2.(*expr.Keyword)}, nil >>
+  ;
+
+BuiltIn
+  : EqualEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
+  | ExclamationEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
+  | LessThan Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
+  | GreaterThan Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
+  | GreaterEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
+  | LessEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
+  | TildeEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
+  | StarEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
+  | CaretEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
+  | DollarEqual Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
+  | ColonColon Expr << &expr.BuiltIn{Symbol: $0.(*expr.Keyword), Expr: $1.(*expr.Expr)}, nil >>
+  ;
+
+List
+  : Space ListType OpenCurly Exprs CloseCurly << &expr.List{Before: $0.(*expr.Space), Type: $1.(types.Type), OpenCurly: $2.(*expr.Keyword), Elems: $3.([]*expr.Expr), CloseCurly: $4.(*expr.Keyword)}, nil >>
+  | ListType OpenCurly Exprs CloseCurly << &expr.List{Type: $0.(types.Type), OpenCurly: $1.(*expr.Keyword), Elems: $2.([]*expr.Expr), CloseCurly: $3.(*expr.Keyword)}, nil >>
+  | Space ListType OpenCurly CloseCurly << &expr.List{Before: $0.(*expr.Space), Type: $1.(types.Type), OpenCurly: $2.(*expr.Keyword), CloseCurly: $3.(*expr.Keyword)}, nil >>
+  | ListType OpenCurly CloseCurly << &expr.List{Type: $0.(types.Type), OpenCurly: $1.(*expr.Keyword), CloseCurly: $2.(*expr.Keyword)}, nil >>
+  ;
+
+Exprs
+  : Expr << []*expr.Expr{$0.(*expr.Expr)}, nil >>
+  | Exprs Comma Expr << append($0.([]*expr.Expr), expr.SetExprComma($2, $1)), nil >>
+  ;
+
+ListType
+  : "[]bool" << types.LIST_BOOL, nil >>
+  | "[]int" << types.LIST_INT, nil >>
+  | "[]uint" << types.LIST_UINT, nil >>
+  | "[]double" << types.LIST_DOUBLE, nil >>
+  | "[]string" << types.LIST_STRING, nil >>
+  | "[][]byte" << types.LIST_BYTES, nil >>
+  ;
+
+SpaceTerminal
+  : Terminal << $0, nil >>
+  | Space Terminal << expr.SetTerminalSpace($1, $0), nil >>
+  ;
+
+Literal
+  : Bool << expr.NewBoolTerminal($0), nil >>
+  | int_lit << expr.NewIntTerminal(newString($0)) >>
+  | uint_lit << expr.NewUintTerminal(newString($0)) >>
+  | double_lit << expr.NewDoubleTerminal(newString($0)) >>
+  | string_lit << expr.NewStringTerminal(newString($0)) >>
+  | bytes_lit << expr.NewBytesTerminal(newString($0)) >>
+  ;
+
+Terminal
+  : Literal
+  | bool_var << expr.NewVariableTerminal(types.SINGLE_BOOL) >>
+  | int_var << expr.NewVariableTerminal(types.SINGLE_INT) >>
+  | uint_var << expr.NewVariableTerminal(types.SINGLE_UINT) >>
+  | double_var << expr.NewVariableTerminal(types.SINGLE_DOUBLE) >>
+  | string_var << expr.NewVariableTerminal(types.SINGLE_STRING) >>
+  | bytes_var << expr.NewVariableTerminal(types.SINGLE_BYTES) >>
+  ;
+
+Bool
+  : "true" << true, nil >>
+  | "false" << false, nil >>
+  ;
+Equal
+  : "="  << &expr.Keyword{Value: "="}, nil >>
+  | Space "=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "=",
+    }, nil
+  >>
+  ;
+
+OpenParen
+  : "(" << &expr.Keyword{Value: "("}, nil >>
+  | Space "(" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "(",
+    }, nil
+  >>
+  ;
+
+CloseParen
+  : ")" << &expr.Keyword{Value: ")"}, nil >>
+  | Space ")" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: ")",
+    }, nil
+  >>
+  ;
+
+OpenCurly
+  : "{" << &expr.Keyword{Value: "{"}, nil >>
+  | Space "{" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "{",
+    }, nil
+  >>
+  ;
+
+CloseCurly
+  : "}" << &expr.Keyword{Value: "}"}, nil >>
+  | Space "}" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "}",
+    }, nil
+  >>
+  ;
+
+Comma
+  : "," << &expr.Keyword{Value: ","}, nil >>
+  | Space "," << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: ",",
+    }, nil
+  >>
+  ;
+
+SemiColon
+  : ";" << &expr.Keyword{Value: ";"}, nil >>
+  | Space ";" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: ";",
+    }, nil
+  >>
+  ;
+
+Hash
+  : "#" << &expr.Keyword{Value: "#"}, nil >>
+  | Space "#" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "#",
+    }, nil
+  >>
+  ;
+
+Ampersand
+  : "&" << &expr.Keyword{Value: "&"}, nil >>
+  | Space "&" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "&",
+    }, nil
+  >>
+  ;
+
+Pipe
+  : "|" << &expr.Keyword{Value: "|"}, nil >>
+  | Space "|" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "|",
+    }, nil
+  >>
+  ;
+
+OpenBracket
+  : "[" << &expr.Keyword{Value: "["}, nil >>
+  | Space "[" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "[",
+    }, nil
+  >>
+  ;
+
+CloseBracket
+  : "]" << &expr.Keyword{Value: "]"}, nil >>
+  | Space "]" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "]",
+    }, nil
+  >>
+  ;
+
+Colon
+  : ":" << &expr.Keyword{Value: ":"}, nil >>
+  | Space ":" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: ":",
+    }, nil
+  >>
+  ;
+
+Exclamation
+  : "!" << &expr.Keyword{Value: "!"}, nil >>
+  | Space "!" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "!",
+    }, nil
+  >>
+  ;
+
+Star
+  : "*" << &expr.Keyword{Value: "*"}, nil >>
+  | Space "*" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "*",
+    }, nil
+  >>
+  ;
+
+Underscore
+  : "_" << &expr.Keyword{Value: "_"}, nil >>
+  | Space "_" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "_",
+    }, nil
+  >>
+  ;
+
+Tilde
+  : "~" << &expr.Keyword{Value: "~"}, nil >>
+  | Space "~" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "~",
+    }, nil
+  >>
+  ;
+
+Dot
+  : "." << &expr.Keyword{Value: "."}, nil >>
+  | Space "." << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: ".",
+    }, nil
+  >>
+  ;
+
+At
+  : "@" << &expr.Keyword{Value: "@"}, nil >>
+  | Space "@" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "@",
+    }, nil
+  >>
+  ;
+
+RightArrow
+  : "->" << &expr.Keyword{Value: "->"}, nil >>
+  | Space "->" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "->",
+    }, nil
+  >>
+  ;
+
+EqualEqual
+  : "=="  << &expr.Keyword{Value: "=="}, nil >>
+  | Space "==" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "==",
+    }, nil
+  >>
+  ;
+
+ExclamationEqual
+  : "!="  << &expr.Keyword{Value: "!="}, nil >>
+  | Space "!=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "!=",
+    }, nil
+  >>
+  ;
+
+LessThan
+  : "<"  << &expr.Keyword{Value: "<"}, nil >>
+  | Space "<" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "<",
+    }, nil
+  >>
+  ;
+
+GreaterThan
+  : ">"  << &expr.Keyword{Value: ">"}, nil >>
+  | Space ">" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: ">",
+    }, nil
+  >>
+  ;
+
+LessEqual
+  : "<="  << &expr.Keyword{Value: "<="}, nil >>
+  | Space "<=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "<=",
+    }, nil
+  >>
+  ;
+
+GreaterEqual
+  : ">="  << &expr.Keyword{Value: ">="}, nil >>
+  | Space ">=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: ">=",
+    }, nil
+  >>
+  ;
+
+TildeEqual
+  : "~="  << &expr.Keyword{Value: "~="}, nil >>
+  | Space "~=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "~=",
+    }, nil
+  >>
+  ;
+
+StarEqual
+  : "*="  << &expr.Keyword{Value: "*="}, nil >>
+  | Space "*=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "*=",
+    }, nil
+  >>
+  ;
+
+CaretEqual
+  : "^="  << &expr.Keyword{Value: "^="}, nil >>
+  | Space "^=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "^=",
+    }, nil
+  >>
+  ;
+
+DollarEqual
+  : "$="  << &expr.Keyword{Value: "$="}, nil >>
+  | Space "$=" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "$=",
+    }, nil
+  >>
+  ;
+
+ColonColon
+  : "::"  << &expr.Keyword{Value: "::"}, nil >>
+  | Space "::" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "::",
+    }, nil
+  >>
+  ;
+
+QuestionMark
+  : "?"  << &expr.Keyword{Value: "?"}, nil >>
+  | Space "?" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "?",
+    }, nil
+  >>
+  ;
+
+Space
+  : Space space << expr.AppendSpace($0, newString($1)), nil >>
+  | space << &expr.Space{Space: []string{newString($0)}}, nil >>
+  ;

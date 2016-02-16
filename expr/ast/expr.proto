@@ -1,0 +1,82 @@
+//  Copyright 2013 Walter Schulze
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+syntax = "proto2";
+
+package expr;
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "github.com/katydid/katydid/types/types.proto";
+
+option (gogoproto.goproto_stringer_all) = false;
+option (gogoproto.equal_all) = true;
+option (gogoproto.gostring_all) = true;
+
+message Expr {
+	optional Keyword Comma = 1;
+	optional Terminal Terminal = 2;
+	optional List List = 3;
+	optional Function Function = 4;
+	optional BuiltIn BuiltIn = 5;
+}
+
+message List {
+	optional Space Before = 1;
+	optional types.Type Type = 2 [(gogoproto.nullable) = false];
+	optional Keyword OpenCurly = 3;
+	repeated Expr Elems = 4;
+	optional Keyword CloseCurly = 5;
+}
+
+message Function {
+	optional Space Before = 1;
+	optional string Name = 2 [(gogoproto.nullable) = false];
+	optional Keyword OpenParen = 3;
+	repeated Expr Params = 4;
+	optional Keyword CloseParen = 5;
+}
+
+message BuiltIn {
+	optional Keyword Symbol = 1;
+	optional Expr Expr = 2;
+}
+
+message Terminal {
+	optional Space Before = 1;
+	optional string Literal = 2 [(gogoproto.nullable) = false];
+
+	optional double DoubleValue = 3;
+	optional int64 IntValue = 5;
+	optional uint64 UintValue = 6;
+
+	optional bool BoolValue = 8;
+	optional string StringValue = 9;
+
+	optional bytes BytesValue = 10;
+
+	optional Variable Variable = 50;
+}
+
+message Variable {
+	optional types.Type Type = 2 [(gogoproto.nullable) = false];
+}
+
+message Keyword {
+	optional Space Before = 1;
+	optional string Value = 2 [(gogoproto.nullable) = false];
+}
+
+message Space {
+	repeated string Space = 1;
+}

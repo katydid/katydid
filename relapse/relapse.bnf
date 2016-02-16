@@ -1,0 +1,285 @@
+AllGrammar
+  : Grammar
+  | GrammarWithEndingSpace
+  ;
+
+Grammar
+  : Pattern                     << &Grammar{$0.(*Pattern), nil, nil}, nil >>  
+  | Pattern PatternDecls        << &Grammar{$0.(*Pattern), $1.([]*PatternDecl), nil}, nil >>
+  | PatternDecls                << &Grammar{nil, $0.([]*PatternDecl), nil}, nil >>
+  ;
+
+GrammarWithEndingSpace
+  : Pattern Space               << &Grammar{$0.(*Pattern), nil, $1.(*expr.Space)}, nil >>
+  | Pattern PatternDecls Space  << &Grammar{$0.(*Pattern), $1.([]*PatternDecl), $2.(*expr.Space)}, nil >>
+  | PatternDecls Space          << &Grammar{nil, $0.([]*PatternDecl), $1.(*expr.Space)}, nil >>
+  ;
+
+PatternDecls
+  : PatternDecl               << []*PatternDecl{$0.(*PatternDecl)}, nil >>
+  | PatternDecls PatternDecl  << append($0.([]*PatternDecl), $1.(*PatternDecl)), nil >>
+  ;
+
+PatternDecl
+  : Hash Space id Equal Pattern
+  <<
+    &PatternDecl{
+      Hash: $0.(*expr.Keyword),
+      Before: $1.(*expr.Space),
+      Name: newString($2),
+      Eq: $3.(*expr.Keyword),
+      Pattern: $4.(*Pattern),
+    }, nil
+  >>
+  | Hash id Equal Pattern
+  <<
+    &PatternDecl{
+      Hash: $0.(*expr.Keyword),
+      Name: newString($1),
+      Eq: $2.(*expr.Keyword),
+      Pattern: $3.(*Pattern),
+    }, nil
+  >>
+  ;
+
+Name
+  : Space Literal << NewSDTName($0.(*expr.Space), $1.(*expr.Terminal)), nil >>
+  | Literal       << NewSDTName(nil, $0.(*expr.Terminal)), nil >>
+  | Space id      << NewSDTName($0.(*expr.Space), &expr.Terminal{StringValue: proto.String(newString($1))}), nil >>
+  | id            << NewSDTName(nil, &expr.Terminal{StringValue: proto.String(newString($0))}), nil >>
+  ;
+
+NameExpr
+  : Underscore   << &NameExpr{AnyName: &AnyName{$0.(*expr.Keyword)}}, nil >>
+  | Name
+  | Exclamation OpenParen NameExpr CloseParen <<
+    &NameExpr{AnyNameExcept: &AnyNameExcept{
+      Exclamation: $0.(*expr.Keyword),
+      OpenParen: $1.(*expr.Keyword),
+      Except: $2.(*NameExpr),
+      CloseParen: $3.(*expr.Keyword),
+    }}, nil
+  >>
+  | StartNameChoice
+  ;
+
+StartNameChoice
+  : OpenParen NameExpr Pipe ContinueNameChoice CloseParen <<
+    &NameExpr{NameChoice: &NameChoice{
+      OpenParen: $0.(*expr.Keyword),
+      Left: $1.(*NameExpr),
+      Pipe: $2.(*expr.Keyword),
+      Right: $3.(*NameExpr),
+      CloseParen: $4.(*expr.Keyword),
+    }}, nil
+  >>
+  ;
+
+ContinueNameChoice
+  : NameExpr
+  | ContinueNameChoice Pipe NameExpr <<
+    &NameExpr{NameChoice: &NameChoice{
+      Left: $0.(*NameExpr),
+      Pipe: $1.(*expr.Keyword),
+      Right: $2.(*NameExpr),
+    }}, nil
+  >>
+  ;
+
+Empty
+  : "<empty>" << &expr.Keyword{Value: "<empty>"}, nil >>
+  | Space "<empty>" << 
+    &expr.Keyword{
+      Before: $0.(*expr.Space),
+      Value: "<empty>",
+    }, nil
+  >>
+  ;
+
+DepthPattern
+  : StartConcat
+  | StartInterleave
+  | Dot Pattern << &Pattern{Contains: &Contains{
+      Dot: $0.(*expr.Keyword),
+      Pattern: $1.(*Pattern),
+    }}, nil
+  >>
+  | RightArrow Function <<
+    &Pattern{LeafNode: &LeafNode{
+        RightArrow: $0.(*expr.Keyword),
+        Expr: &expr.Expr{Function: $1.(*expr.Function)},
+    }}, nil
+  >> 
+  | BuiltIn <<
+    &Pattern{LeafNode: &LeafNode{
+        Expr: &expr.Expr{BuiltIn: $0.(*expr.BuiltIn)},
+    }}, nil
+  >> 
+  ;
+
+TreeNode
+  : NameExpr Colon Pattern <<
+    &Pattern{TreeNode: &TreeNode{
+      Name: $0.(*NameExpr),
+      Colon: $1.(*expr.Keyword),
+      Pattern: $2.(*Pattern),
+    }}, nil
+  >>
+  | NameExpr DepthPattern <<
+    &Pattern{TreeNode: &TreeNode{
+      Name: $0.(*NameExpr),
+      Pattern: $1.(*Pattern),
+    }}, nil
+  >>
+  ;
+
+Pattern
+  : Empty << &Pattern{Empty: &Empty{$0.(*expr.Keyword)}}, nil >>
+  | Star   << &Pattern{ZAny: &ZAny{Star: $0.(*expr.Keyword)}}, nil >>
+  | TreeNode
+  | DepthPattern
+  | StartOr
+  | StartAnd
+  | OpenParen Pattern CloseParen Star <<
+    &Pattern{ZeroOrMore: &ZeroOrMore{
+      OpenParen: $0.(*expr.Keyword),
+      Pattern: $1.(*Pattern),
+      CloseParen: $2.(*expr.Keyword),
+      Star: $3.(*expr.Keyword),
+    }}, nil
+  >>
+  | OpenParen Pattern CloseParen QuestionMark <<
+    &Pattern{Optional: &Optional{
+      OpenParen: $0.(*expr.Keyword),
+      Pattern: $1.(*Pattern),
+      CloseParen: $2.(*expr.Keyword),
+      QuestionMark: $3.(*expr.Keyword),
+    }}, nil
+  >>
+  | At id <<
+    &Pattern{Reference: &Reference{
+      At: $0.(*expr.Keyword),
+      Name: newString($1),
+    }}, nil
+  >>
+  | Exclamation OpenParen Pattern CloseParen <<
+    &Pattern{Not: &Not{
+      Exclamation: $0.(*expr.Keyword),
+      OpenParen: $1.(*expr.Keyword),
+      Pattern: $2.(*Pattern),
+      CloseParen: $3.(*expr.Keyword),
+    }}, nil
+  >>
+  ;
+
+StartConcat
+  : OpenBracket Pattern Comma ContinueConcat CloseBracket <<
+    &Pattern{Concat: &Concat{
+      OpenBracket: $0.(*expr.Keyword),
+      LeftPattern: $1.(*Pattern),
+      Comma: $2.(*expr.Keyword),
+      RightPattern: $3.(*Pattern),
+      CloseBracket: $4.(*expr.Keyword),
+    }}, nil
+  >>
+  | OpenBracket Pattern Comma ContinueConcat Comma CloseBracket <<
+    &Pattern{Concat: &Concat{
+      OpenBracket: $0.(*expr.Keyword),
+      LeftPattern: $1.(*Pattern),
+      Comma: $2.(*expr.Keyword),
+      RightPattern: $3.(*Pattern),
+      ExtraComma: $4.(*expr.Keyword),
+      CloseBracket: $5.(*expr.Keyword),
+    }}, nil
+  >>
+  ;
+
+ContinueConcat
+  : Pattern
+  | ContinueConcat Comma Pattern <<
+    &Pattern{Concat: &Concat{
+      LeftPattern: $0.(*Pattern),
+      Comma: $1.(*expr.Keyword),
+      RightPattern: $2.(*Pattern),
+    }}, nil
+  >>
+  ;
+
+StartOr
+  : OpenParen Pattern Pipe ContinueOr CloseParen <<
+    &Pattern{Or: &Or{
+      OpenParen: $0.(*expr.Keyword),
+      LeftPattern: $1.(*Pattern),
+      Pipe: $2.(*expr.Keyword),
+      RightPattern: $3.(*Pattern),
+      CloseParen: $4.(*expr.Keyword),
+    }}, nil
+  >>
+  ;
+
+ContinueOr
+  : Pattern
+  | ContinueOr Pipe Pattern <<
+    &Pattern{Or: &Or{
+      LeftPattern: $0.(*Pattern),
+      Pipe: $1.(*expr.Keyword),
+      RightPattern: $2.(*Pattern),
+    }}, nil
+  >>
+  ;
+
+StartAnd
+  : OpenParen Pattern Ampersand ContinueAnd CloseParen <<
+    &Pattern{And: &And{
+      OpenParen: $0.(*expr.Keyword),
+      LeftPattern: $1.(*Pattern),
+      Ampersand: $2.(*expr.Keyword),
+      RightPattern: $3.(*Pattern),
+      CloseParen: $4.(*expr.Keyword),
+    }}, nil
+  >>
+  ;
+
+ContinueAnd
+  : Pattern
+  | ContinueAnd Ampersand Pattern <<
+    &Pattern{And: &And{
+      LeftPattern: $0.(*Pattern),
+      Ampersand: $1.(*expr.Keyword),
+      RightPattern: $2.(*Pattern),
+    }}, nil
+  >>
+  ;
+
+StartInterleave
+  : OpenCurly Pattern SemiColon ContinueInterleave CloseCurly <<
+    &Pattern{Interleave: &Interleave{
+      OpenCurly: $0.(*expr.Keyword),
+      LeftPattern: $1.(*Pattern),
+      SemiColon: $2.(*expr.Keyword),
+      RightPattern: $3.(*Pattern),
+      CloseCurly: $4.(*expr.Keyword),
+    }}, nil
+  >>
+  | OpenCurly Pattern SemiColon ContinueInterleave SemiColon CloseCurly <<
+    &Pattern{Interleave: &Interleave{
+      OpenCurly: $0.(*expr.Keyword),
+      LeftPattern: $1.(*Pattern),
+      SemiColon: $2.(*expr.Keyword),
+      RightPattern: $3.(*Pattern),
+      ExtraSemiColon: $4.(*expr.Keyword),
+      CloseCurly: $5.(*expr.Keyword),
+    }}, nil
+  >>
+  ;
+
+ContinueInterleave
+  : Pattern
+  | ContinueInterleave SemiColon Pattern <<
+    &Pattern{Interleave: &Interleave{
+      LeftPattern: $0.(*Pattern),
+      SemiColon: $1.(*expr.Keyword),
+      RightPattern: $2.(*Pattern),
+    }}, nil
+  >>
+  ;

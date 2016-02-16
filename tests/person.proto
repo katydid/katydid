@@ -1,0 +1,20 @@
+syntax = "proto2";
+
+package tests;
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+option (gogoproto.populate_all) = true;
+option (gogoproto.gostring_all) = true;
+
+message Person {
+  option (gogoproto.description) = true;
+  optional string Name = 1;
+  repeated Address Addresses = 2;
+  optional string Telephone = 3;
+}
+
+message Address {
+  optional int64 Number = 1;
+  optional string Street = 2;
+}

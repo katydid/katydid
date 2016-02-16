@@ -12,16 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-.PHONY: nuke regenerate gofmt build test
+.PHONY: nuke dep regenerate gofmt build test
 
-all: nuke regenerate gofmt build test checklicense
+all: nuke dep regenerate build test checklicense
+
+dep:
+	go install github.com/gogo/protobuf/protoc-gen-gogo
+	go install -v github.com/goccmack/gocc/...
 
 checklicense:
 	go install ./cmd/checklicense
 	checklicense .
 
 test:
-	go test -v ./...
+	go test ./...
 
 build:
 	go build ./...
@@ -33,54 +37,31 @@ bench:
 	go test -v -test.run=XXX -test.bench=. ./...
 
 regenerate:
-	(cd types && protoc --gogo_out=. -I=.:../../../../:../../../../github.com/gogo/protobuf/protobuf types.proto)
-	(cd asm && gocc asm.bnf)
-	(cd asm/ast && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf asm.proto)
-	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf person.proto)
-	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf srctree.proto)
-	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf taxonomy.proto)
-	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf treeregister.proto)
-	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf typewriterprison.proto)
-	(cd asm/test && protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf puddingmilkshake.proto)
-	go install github.com/katydid/katydid/funcs/funcs-gen
-	funcs-gen ./funcs/
-	go install github.com/katydid/katydid/asm/compose/compose-gen
-	compose-gen ./asm/compose/
-	go install github.com/katydid/katydid/asm/conv/conv-gen
-	conv-gen ./asm/conv/
-	go install github.com/katydid/katydid/serialize/serialize-gen
-	serialize-gen ./serialize
+	(cd types && make regenerate)
+	(cd funcs && make regenerate)
+	(cd expr && make regenerate)
+	(cd tests && make regenerate)
+	(cd serialize && make regenerate)
+	(cd viper && make regenerate)
+	(cd relapse && make regenerate)
 	(cd funcs && go test -test.run=GenFuncList 2>../list_of_functions.txt)
-	make gofmt
+	find . -name "*.pb.go" | xargs gofmt -l -s -w
+	find . -name "*.gen.go" | xargs gofmt -l -s -w
+	find . -name "*.gen_test.go" | xargs gofmt -l -s -w
 
 clean:
-	(cd asm && rm *.txt || true)
-	rm -rf asm/test/example/*
 	go clean ./...
-
-example:
-	(cd asm/test && go test -c && ./test.test)
+	(cd expr && make clean)
+	(cd viper && make clean)
+	(cd relapse && make clean)
 
 nuke: clean
-	rm -rf funcs/compare.gen.go
-	rm -rf funcs/newfunc.gen.go
-	rm -rf funcs/const.gen.go
-	rm -rf funcs/elem.gen.go
-	rm -rf funcs/length.gen.go
-	rm -rf funcs/list.gen.go
-	rm -rf funcs/print.gen.go
-	rm -rf asm/compose/compose.gen.go
-	rm -rf asm/conv/conv.gen.go
+	(cd funcs && make nuke)
+	(cd serialize && make nuke)
+	(cd expr && make nuke)
+	(cd viper && make nuke)
+	(cd relapse && make nuke)
 	rm list_of_functions.txt || true
-	rm -rf asm/errors
-	rm -rf asm/lexer
-	rm -rf asm/parser/action.go
-	rm -rf asm/parser/actiontable.go
-	rm -rf asm/parser/gototable.go
-	rm -rf asm/parser/parser.go
-	rm -rf asm/parser/productionstable.go
-	rm -rf asm/token
-	rm -rf asm/util
 	go clean -i ./...
 
 gofmt:
@@ -91,10 +72,8 @@ drone:
 	sudo apt-get install graphviz
 	mkdir -p $(GOPATH)/src/github.com/gogo
 	mkdir -p $(GOPATH)/src/github.com/goccmack
-	mkdir -p $(GOPATH)/src/golang.org/x
 	(cd $(GOPATH)/src/github.com/goccmack && git clone https://github.com/goccmack/gocc )
 	(cd $(GOPATH)/src/github.com/goccmack/gocc && go install ./... )
 	(cd $(GOPATH)/src/github.com/gogo && git clone https://github.com/gogo/protobuf )
-	(cd $(GOPATH)/src/github.com/gogo/protobuf && make )
-	(cd $(GOPATH)/src/golang.org/x && hg clone https://code.google.com/p/go.text text)
+	(cd $(GOPATH)/src/github.com/gogo/protobuf && make install)
 	(cd $(GOPATH)/src/github.com/katydid/katydid/ && make)

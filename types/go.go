@@ -24,16 +24,10 @@ func FromGo(typ reflect.Type) Type {
 	switch kind {
 	case reflect.Float64:
 		return SINGLE_DOUBLE
-	case reflect.Float32:
-		return SINGLE_FLOAT
 	case reflect.Int64:
-		return SINGLE_INT64
+		return SINGLE_INT
 	case reflect.Uint64:
-		return SINGLE_UINT64
-	case reflect.Int32:
-		return SINGLE_INT32
-	case reflect.Uint32:
-		return SINGLE_UINT32
+		return SINGLE_UINT
 	case reflect.Bool:
 		return SINGLE_BOOL
 	case reflect.String:
@@ -45,16 +39,10 @@ func FromGo(typ reflect.Type) Type {
 			return SINGLE_BYTES
 		case reflect.Float64:
 			return LIST_DOUBLE
-		case reflect.Float32:
-			return LIST_FLOAT
 		case reflect.Int64:
-			return LIST_INT64
+			return LIST_INT
 		case reflect.Uint64:
-			return LIST_UINT64
-		case reflect.Int32:
-			return LIST_INT32
-		case reflect.Uint32:
-			return LIST_UINT32
+			return LIST_UINT
 		case reflect.Bool:
 			return LIST_BOOL
 		case reflect.String:

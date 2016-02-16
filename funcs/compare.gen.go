@@ -7,173 +7,207 @@ import (
 	"bytes"
 )
 
-type float64Ge struct {
-	V1 Float64
-	V2 Float64
+type doubleGE struct {
+	V1 Double
+	V2 Double
 }
 
-func (this *float64Ge) Eval() bool {
-	return this.V1.Eval() >= this.V2.Eval()
-}
-
-func init() {
-	Register("ge", new(float64Ge))
-}
-
-type float32Ge struct {
-	V1 Float32
-	V2 Float32
-}
-
-func (this *float32Ge) Eval() bool {
-	return this.V1.Eval() >= this.V2.Eval()
+func (this *doubleGE) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return false, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return false, nil
+	}
+	return v1 >= v2, nil
 }
 
 func init() {
-	Register("ge", new(float32Ge))
+	Register("ge", new(doubleGE))
 }
 
-type int64Ge struct {
-	V1 Int64
-	V2 Int64
+func DoubleGE(a, b Double) Bool {
+	return &doubleGE{V1: a, V2: b}
 }
 
-func (this *int64Ge) Eval() bool {
-	return this.V1.Eval() >= this.V2.Eval()
+func DoubleVarGE(a Double) Bool {
+	return &doubleGE{V1: a, V2: DoubleVar()}
 }
 
-func init() {
-	Register("ge", new(int64Ge))
+type intGE struct {
+	V1 Int
+	V2 Int
 }
 
-type uint64Ge struct {
-	V1 Uint64
-	V2 Uint64
-}
-
-func (this *uint64Ge) Eval() bool {
-	return this.V1.Eval() >= this.V2.Eval()
-}
-
-func init() {
-	Register("ge", new(uint64Ge))
-}
-
-type int32Ge struct {
-	V1 Int32
-	V2 Int32
-}
-
-func (this *int32Ge) Eval() bool {
-	return this.V1.Eval() >= this.V2.Eval()
+func (this *intGE) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return false, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return false, nil
+	}
+	return v1 >= v2, nil
 }
 
 func init() {
-	Register("ge", new(int32Ge))
+	Register("ge", new(intGE))
 }
 
-type uint32Ge struct {
-	V1 Uint32
-	V2 Uint32
+func IntGE(a, b Int) Bool {
+	return &intGE{V1: a, V2: b}
 }
 
-func (this *uint32Ge) Eval() bool {
-	return this.V1.Eval() >= this.V2.Eval()
+func IntVarGE(a Int) Bool {
+	return &intGE{V1: a, V2: IntVar()}
+}
+
+type uintGE struct {
+	V1 Uint
+	V2 Uint
+}
+
+func (this *uintGE) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return false, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return false, nil
+	}
+	return v1 >= v2, nil
 }
 
 func init() {
-	Register("ge", new(uint32Ge))
+	Register("ge", new(uintGE))
 }
 
-type bytesGe struct {
+func UintGE(a, b Uint) Bool {
+	return &uintGE{V1: a, V2: b}
+}
+
+func UintVarGE(a Uint) Bool {
+	return &uintGE{V1: a, V2: UintVar()}
+}
+
+type bytesGE struct {
 	V1 Bytes
 	V2 Bytes
 }
 
-func (this *bytesGe) Eval() bool {
-	return bytes.Compare(this.V1.Eval(), this.V2.Eval()) >= 0
+func (this *bytesGE) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return false, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return false, nil
+	}
+	return bytes.Compare(v1, v2) >= 0, nil
 }
 
 func init() {
-	Register("ge", new(bytesGe))
+	Register("ge", new(bytesGE))
 }
 
-type float64Gt struct {
-	V1 Float64
-	V2 Float64
+func BytesGE(a, b Bytes) Bool {
+	return &bytesGE{V1: a, V2: b}
 }
 
-func (this *float64Gt) Eval() bool {
-	return this.V1.Eval() > this.V2.Eval()
+func BytesVarGE(a Bytes) Bool {
+	return &bytesGE{V1: a, V2: BytesVar()}
 }
 
-func init() {
-	Register("gt", new(float64Gt))
+type doubleGt struct {
+	V1 Double
+	V2 Double
 }
 
-type float32Gt struct {
-	V1 Float32
-	V2 Float32
-}
-
-func (this *float32Gt) Eval() bool {
-	return this.V1.Eval() > this.V2.Eval()
-}
-
-func init() {
-	Register("gt", new(float32Gt))
-}
-
-type int64Gt struct {
-	V1 Int64
-	V2 Int64
-}
-
-func (this *int64Gt) Eval() bool {
-	return this.V1.Eval() > this.V2.Eval()
+func (this *doubleGt) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return true, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return true, nil
+	}
+	return v1 > v2, nil
 }
 
 func init() {
-	Register("gt", new(int64Gt))
+	Register("gt", new(doubleGt))
 }
 
-type uint64Gt struct {
-	V1 Uint64
-	V2 Uint64
+func DoubleGt(a, b Double) Bool {
+	return &doubleGt{V1: a, V2: b}
 }
 
-func (this *uint64Gt) Eval() bool {
-	return this.V1.Eval() > this.V2.Eval()
+func DoubleVarGt(a Double) Bool {
+	return &doubleGt{V1: a, V2: DoubleVar()}
 }
 
-func init() {
-	Register("gt", new(uint64Gt))
+type intGt struct {
+	V1 Int
+	V2 Int
 }
 
-type int32Gt struct {
-	V1 Int32
-	V2 Int32
-}
-
-func (this *int32Gt) Eval() bool {
-	return this.V1.Eval() > this.V2.Eval()
-}
-
-func init() {
-	Register("gt", new(int32Gt))
-}
-
-type uint32Gt struct {
-	V1 Uint32
-	V2 Uint32
-}
-
-func (this *uint32Gt) Eval() bool {
-	return this.V1.Eval() > this.V2.Eval()
+func (this *intGt) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return true, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return true, nil
+	}
+	return v1 > v2, nil
 }
 
 func init() {
-	Register("gt", new(uint32Gt))
+	Register("gt", new(intGt))
+}
+
+func IntGt(a, b Int) Bool {
+	return &intGt{V1: a, V2: b}
+}
+
+func IntVarGt(a Int) Bool {
+	return &intGt{V1: a, V2: IntVar()}
+}
+
+type uintGt struct {
+	V1 Uint
+	V2 Uint
+}
+
+func (this *uintGt) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return true, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return true, nil
+	}
+	return v1 > v2, nil
+}
+
+func init() {
+	Register("gt", new(uintGt))
+}
+
+func UintGt(a, b Uint) Bool {
+	return &uintGt{V1: a, V2: b}
+}
+
+func UintVarGt(a Uint) Bool {
+	return &uintGt{V1: a, V2: UintVar()}
 }
 
 type bytesGt struct {
@@ -181,181 +215,231 @@ type bytesGt struct {
 	V2 Bytes
 }
 
-func (this *bytesGt) Eval() bool {
-	return bytes.Compare(this.V1.Eval(), this.V2.Eval()) > 0
+func (this *bytesGt) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return true, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return true, nil
+	}
+	return bytes.Compare(v1, v2) > 0, nil
 }
 
 func init() {
 	Register("gt", new(bytesGt))
 }
 
-type float64Le struct {
-	V1 Float64
-	V2 Float64
+func BytesGt(a, b Bytes) Bool {
+	return &bytesGt{V1: a, V2: b}
 }
 
-func (this *float64Le) Eval() bool {
-	return this.V1.Eval() <= this.V2.Eval()
+func BytesVarGt(a Bytes) Bool {
+	return &bytesGt{V1: a, V2: BytesVar()}
 }
 
-func init() {
-	Register("le", new(float64Le))
+type doubleLE struct {
+	V1 Double
+	V2 Double
 }
 
-type float32Le struct {
-	V1 Float32
-	V2 Float32
-}
-
-func (this *float32Le) Eval() bool {
-	return this.V1.Eval() <= this.V2.Eval()
-}
-
-func init() {
-	Register("le", new(float32Le))
-}
-
-type int64Le struct {
-	V1 Int64
-	V2 Int64
-}
-
-func (this *int64Le) Eval() bool {
-	return this.V1.Eval() <= this.V2.Eval()
+func (this *doubleLE) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return false, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return false, nil
+	}
+	return v1 <= v2, nil
 }
 
 func init() {
-	Register("le", new(int64Le))
+	Register("le", new(doubleLE))
 }
 
-type uint64Le struct {
-	V1 Uint64
-	V2 Uint64
+func DoubleLE(a, b Double) Bool {
+	return &doubleLE{V1: a, V2: b}
 }
 
-func (this *uint64Le) Eval() bool {
-	return this.V1.Eval() <= this.V2.Eval()
+func DoubleVarLE(a Double) Bool {
+	return &doubleLE{V1: a, V2: DoubleVar()}
 }
 
-func init() {
-	Register("le", new(uint64Le))
+type intLE struct {
+	V1 Int
+	V2 Int
 }
 
-type int32Le struct {
-	V1 Int32
-	V2 Int32
-}
-
-func (this *int32Le) Eval() bool {
-	return this.V1.Eval() <= this.V2.Eval()
-}
-
-func init() {
-	Register("le", new(int32Le))
-}
-
-type uint32Le struct {
-	V1 Uint32
-	V2 Uint32
-}
-
-func (this *uint32Le) Eval() bool {
-	return this.V1.Eval() <= this.V2.Eval()
+func (this *intLE) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return false, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return false, nil
+	}
+	return v1 <= v2, nil
 }
 
 func init() {
-	Register("le", new(uint32Le))
+	Register("le", new(intLE))
 }
 
-type bytesLe struct {
+func IntLE(a, b Int) Bool {
+	return &intLE{V1: a, V2: b}
+}
+
+func IntVarLE(a Int) Bool {
+	return &intLE{V1: a, V2: IntVar()}
+}
+
+type uintLE struct {
+	V1 Uint
+	V2 Uint
+}
+
+func (this *uintLE) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return false, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return false, nil
+	}
+	return v1 <= v2, nil
+}
+
+func init() {
+	Register("le", new(uintLE))
+}
+
+func UintLE(a, b Uint) Bool {
+	return &uintLE{V1: a, V2: b}
+}
+
+func UintVarLE(a Uint) Bool {
+	return &uintLE{V1: a, V2: UintVar()}
+}
+
+type bytesLE struct {
 	V1 Bytes
 	V2 Bytes
 }
 
-func (this *bytesLe) Eval() bool {
-	return bytes.Compare(this.V1.Eval(), this.V2.Eval()) <= 0
+func (this *bytesLE) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return false, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return false, nil
+	}
+	return bytes.Compare(v1, v2) <= 0, nil
 }
 
 func init() {
-	Register("le", new(bytesLe))
+	Register("le", new(bytesLE))
 }
 
-type float64Lt struct {
-	V1 Float64
-	V2 Float64
+func BytesLE(a, b Bytes) Bool {
+	return &bytesLE{V1: a, V2: b}
 }
 
-func (this *float64Lt) Eval() bool {
-	return this.V1.Eval() < this.V2.Eval()
+func BytesVarLE(a Bytes) Bool {
+	return &bytesLE{V1: a, V2: BytesVar()}
 }
 
-func init() {
-	Register("lt", new(float64Lt))
+type doubleLt struct {
+	V1 Double
+	V2 Double
 }
 
-type float32Lt struct {
-	V1 Float32
-	V2 Float32
-}
-
-func (this *float32Lt) Eval() bool {
-	return this.V1.Eval() < this.V2.Eval()
-}
-
-func init() {
-	Register("lt", new(float32Lt))
-}
-
-type int64Lt struct {
-	V1 Int64
-	V2 Int64
-}
-
-func (this *int64Lt) Eval() bool {
-	return this.V1.Eval() < this.V2.Eval()
+func (this *doubleLt) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return true, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return true, nil
+	}
+	return v1 < v2, nil
 }
 
 func init() {
-	Register("lt", new(int64Lt))
+	Register("lt", new(doubleLt))
 }
 
-type uint64Lt struct {
-	V1 Uint64
-	V2 Uint64
+func DoubleLt(a, b Double) Bool {
+	return &doubleLt{V1: a, V2: b}
 }
 
-func (this *uint64Lt) Eval() bool {
-	return this.V1.Eval() < this.V2.Eval()
+func DoubleVarLt(a Double) Bool {
+	return &doubleLt{V1: a, V2: DoubleVar()}
 }
 
-func init() {
-	Register("lt", new(uint64Lt))
+type intLt struct {
+	V1 Int
+	V2 Int
 }
 
-type int32Lt struct {
-	V1 Int32
-	V2 Int32
-}
-
-func (this *int32Lt) Eval() bool {
-	return this.V1.Eval() < this.V2.Eval()
-}
-
-func init() {
-	Register("lt", new(int32Lt))
-}
-
-type uint32Lt struct {
-	V1 Uint32
-	V2 Uint32
-}
-
-func (this *uint32Lt) Eval() bool {
-	return this.V1.Eval() < this.V2.Eval()
+func (this *intLt) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return true, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return true, nil
+	}
+	return v1 < v2, nil
 }
 
 func init() {
-	Register("lt", new(uint32Lt))
+	Register("lt", new(intLt))
+}
+
+func IntLt(a, b Int) Bool {
+	return &intLt{V1: a, V2: b}
+}
+
+func IntVarLt(a Int) Bool {
+	return &intLt{V1: a, V2: IntVar()}
+}
+
+type uintLt struct {
+	V1 Uint
+	V2 Uint
+}
+
+func (this *uintLt) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return true, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return true, nil
+	}
+	return v1 < v2, nil
+}
+
+func init() {
+	Register("lt", new(uintLt))
+}
+
+func UintLt(a, b Uint) Bool {
+	return &uintLt{V1: a, V2: b}
+}
+
+func UintVarLt(a Uint) Bool {
+	return &uintLt{V1: a, V2: UintVar()}
 }
 
 type bytesLt struct {
@@ -363,90 +447,115 @@ type bytesLt struct {
 	V2 Bytes
 }
 
-func (this *bytesLt) Eval() bool {
-	return bytes.Compare(this.V1.Eval(), this.V2.Eval()) < 0
+func (this *bytesLt) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return true, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return true, nil
+	}
+	return bytes.Compare(v1, v2) < 0, nil
 }
 
 func init() {
 	Register("lt", new(bytesLt))
 }
 
-type float64Eq struct {
-	V1 Float64
-	V2 Float64
+func BytesLt(a, b Bytes) Bool {
+	return &bytesLt{V1: a, V2: b}
 }
 
-func (this *float64Eq) Eval() bool {
-	return this.V1.Eval() == this.V2.Eval()
+func BytesVarLt(a Bytes) Bool {
+	return &bytesLt{V1: a, V2: BytesVar()}
 }
 
-func init() {
-	Register("eq", new(float64Eq))
+type doubleEq struct {
+	V1 Double
+	V2 Double
 }
 
-type float32Eq struct {
-	V1 Float32
-	V2 Float32
-}
-
-func (this *float32Eq) Eval() bool {
-	return this.V1.Eval() == this.V2.Eval()
-}
-
-func init() {
-	Register("eq", new(float32Eq))
-}
-
-type int64Eq struct {
-	V1 Int64
-	V2 Int64
-}
-
-func (this *int64Eq) Eval() bool {
-	return this.V1.Eval() == this.V2.Eval()
+func (this *doubleEq) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return false, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return false, nil
+	}
+	return v1 == v2, nil
 }
 
 func init() {
-	Register("eq", new(int64Eq))
+	Register("eq", new(doubleEq))
 }
 
-type uint64Eq struct {
-	V1 Uint64
-	V2 Uint64
+func DoubleEq(a, b Double) Bool {
+	return &doubleEq{V1: a, V2: b}
 }
 
-func (this *uint64Eq) Eval() bool {
-	return this.V1.Eval() == this.V2.Eval()
+func DoubleVarEq(a Double) Bool {
+	return &doubleEq{V1: a, V2: DoubleVar()}
 }
 
-func init() {
-	Register("eq", new(uint64Eq))
+type intEq struct {
+	V1 Int
+	V2 Int
 }
 
-type int32Eq struct {
-	V1 Int32
-	V2 Int32
-}
-
-func (this *int32Eq) Eval() bool {
-	return this.V1.Eval() == this.V2.Eval()
-}
-
-func init() {
-	Register("eq", new(int32Eq))
-}
-
-type uint32Eq struct {
-	V1 Uint32
-	V2 Uint32
-}
-
-func (this *uint32Eq) Eval() bool {
-	return this.V1.Eval() == this.V2.Eval()
+func (this *intEq) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return false, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return false, nil
+	}
+	return v1 == v2, nil
 }
 
 func init() {
-	Register("eq", new(uint32Eq))
+	Register("eq", new(intEq))
+}
+
+func IntEq(a, b Int) Bool {
+	return &intEq{V1: a, V2: b}
+}
+
+func IntVarEq(a Int) Bool {
+	return &intEq{V1: a, V2: IntVar()}
+}
+
+type uintEq struct {
+	V1 Uint
+	V2 Uint
+}
+
+func (this *uintEq) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return false, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return false, nil
+	}
+	return v1 == v2, nil
+}
+
+func init() {
+	Register("eq", new(uintEq))
+}
+
+func UintEq(a, b Uint) Bool {
+	return &uintEq{V1: a, V2: b}
+}
+
+func UintVarEq(a Uint) Bool {
+	return &uintEq{V1: a, V2: UintVar()}
 }
 
 type boolEq struct {
@@ -454,12 +563,28 @@ type boolEq struct {
 	V2 Bool
 }
 
-func (this *boolEq) Eval() bool {
-	return this.V1.Eval() == this.V2.Eval()
+func (this *boolEq) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return false, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return false, nil
+	}
+	return v1 == v2, nil
 }
 
 func init() {
 	Register("eq", new(boolEq))
+}
+
+func BoolEq(a, b Bool) Bool {
+	return &boolEq{V1: a, V2: b}
+}
+
+func BoolVarEq(a Bool) Bool {
+	return &boolEq{V1: a, V2: BoolVar()}
 }
 
 type stringEq struct {
@@ -467,12 +592,28 @@ type stringEq struct {
 	V2 String
 }
 
-func (this *stringEq) Eval() bool {
-	return this.V1.Eval() == this.V2.Eval()
+func (this *stringEq) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return false, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return false, nil
+	}
+	return v1 == v2, nil
 }
 
 func init() {
 	Register("eq", new(stringEq))
+}
+
+func StringEq(a, b String) Bool {
+	return &stringEq{V1: a, V2: b}
+}
+
+func StringVarEq(a String) Bool {
+	return &stringEq{V1: a, V2: StringVar()}
 }
 
 type bytesEq struct {
@@ -480,10 +621,200 @@ type bytesEq struct {
 	V2 Bytes
 }
 
-func (this *bytesEq) Eval() bool {
-	return bytes.Equal(this.V1.Eval(), this.V2.Eval())
+func (this *bytesEq) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return false, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return false, nil
+	}
+	return bytes.Equal(v1, v2), nil
 }
 
 func init() {
 	Register("eq", new(bytesEq))
+}
+
+func BytesEq(a, b Bytes) Bool {
+	return &bytesEq{V1: a, V2: b}
+}
+
+func BytesVarEq(a Bytes) Bool {
+	return &bytesEq{V1: a, V2: BytesVar()}
+}
+
+type doubleNe struct {
+	V1 Double
+	V2 Double
+}
+
+func (this *doubleNe) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return true, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return true, nil
+	}
+	return v1 != v2, nil
+}
+
+func init() {
+	Register("ne", new(doubleNe))
+}
+
+func DoubleNe(a, b Double) Bool {
+	return &doubleNe{V1: a, V2: b}
+}
+
+func DoubleVarNe(a Double) Bool {
+	return &doubleNe{V1: a, V2: DoubleVar()}
+}
+
+type intNe struct {
+	V1 Int
+	V2 Int
+}
+
+func (this *intNe) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return true, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return true, nil
+	}
+	return v1 != v2, nil
+}
+
+func init() {
+	Register("ne", new(intNe))
+}
+
+func IntNe(a, b Int) Bool {
+	return &intNe{V1: a, V2: b}
+}
+
+func IntVarNe(a Int) Bool {
+	return &intNe{V1: a, V2: IntVar()}
+}
+
+type uintNe struct {
+	V1 Uint
+	V2 Uint
+}
+
+func (this *uintNe) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return true, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return true, nil
+	}
+	return v1 != v2, nil
+}
+
+func init() {
+	Register("ne", new(uintNe))
+}
+
+func UintNe(a, b Uint) Bool {
+	return &uintNe{V1: a, V2: b}
+}
+
+func UintVarNe(a Uint) Bool {
+	return &uintNe{V1: a, V2: UintVar()}
+}
+
+type boolNe struct {
+	V1 Bool
+	V2 Bool
+}
+
+func (this *boolNe) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return true, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return true, nil
+	}
+	return v1 != v2, nil
+}
+
+func init() {
+	Register("ne", new(boolNe))
+}
+
+func BoolNe(a, b Bool) Bool {
+	return &boolNe{V1: a, V2: b}
+}
+
+func BoolVarNe(a Bool) Bool {
+	return &boolNe{V1: a, V2: BoolVar()}
+}
+
+type stringNe struct {
+	V1 String
+	V2 String
+}
+
+func (this *stringNe) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return true, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return true, nil
+	}
+	return v1 != v2, nil
+}
+
+func init() {
+	Register("ne", new(stringNe))
+}
+
+func StringNe(a, b String) Bool {
+	return &stringNe{V1: a, V2: b}
+}
+
+func StringVarNe(a String) Bool {
+	return &stringNe{V1: a, V2: StringVar()}
+}
+
+type bytesNe struct {
+	V1 Bytes
+	V2 Bytes
+}
+
+func (this *bytesNe) Eval() (bool, error) {
+	v1, err := this.V1.Eval()
+	if err != nil {
+		return true, nil
+	}
+	v2, err := this.V2.Eval()
+	if err != nil {
+		return true, nil
+	}
+	return !bytes.Equal(v1, v2), nil
+}
+
+func init() {
+	Register("ne", new(bytesNe))
+}
+
+func BytesNe(a, b Bytes) Bool {
+	return &bytesNe{V1: a, V2: b}
+}
+
+func BytesVarNe(a Bytes) Bool {
+	return &bytesNe{V1: a, V2: BytesVar()}
 }

@@ -1,0 +1,102 @@
+//  Copyright 2015 Walter Schulze
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+package proto
+
+import (
+	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
+)
+
+type errUnknown struct {
+	msg string
+}
+
+func (this *errUnknown) Error() string {
+	return "Could not find " + this.msg
+}
+
+type DescMap interface {
+	GetRoot() *descriptor.DescriptorProto
+	LookupMessage(field *descriptor.FieldDescriptorProto) *descriptor.DescriptorProto
+	LookupField(msg *descriptor.DescriptorProto, key uint64) (*descriptor.FieldDescriptorProto, bool)
+}
+
+type descMap struct {
+	desc       *descriptor.FileDescriptorSet
+	root       *descriptor.DescriptorProto
+	fieldToMsg map[*descriptor.FieldDescriptorProto]*descriptor.DescriptorProto
+	msgToField map[*descriptor.DescriptorProto]map[uint64]*descriptor.FieldDescriptorProto
+}
+
+func NewDescriptorMap(pkgName, msgName string, desc *descriptor.FileDescriptorSet) (DescMap, error) {
+	root := desc.GetMessage(pkgName, msgName)
+	d := &descMap{
+		desc:       desc,
+		root:       root,
+		fieldToMsg: make(map[*descriptor.FieldDescriptorProto]*descriptor.DescriptorProto),
+		msgToField: make(map[*descriptor.DescriptorProto]map[uint64]*descriptor.FieldDescriptorProto),
+	}
+	err := d.visit(pkgName, root)
+	return d, err
+}
+
+func (this *descMap) visit(pkgName string, msg *descriptor.DescriptorProto) error {
+	if _, ok := this.msgToField[msg]; ok {
+		return nil
+	}
+	for i, f := range msg.GetField() {
+		if _, ok := this.msgToField[msg]; !ok {
+			this.msgToField[msg] = make(map[uint64]*descriptor.FieldDescriptorProto)
+		}
+		this.msgToField[msg][f.GetKeyUint64()] = msg.Field[i]
+		if f.GetType() == descriptor.FieldDescriptorProto_TYPE_MESSAGE {
+			newPkgName, newMsgName := this.desc.FindMessage(pkgName, msg.GetName(), f.GetName())
+			if len(newMsgName) == 0 {
+				return &errUnknown{pkgName + "." + msg.GetName() + "." + f.GetName()}
+			}
+			newMsg := this.desc.GetMessage(newPkgName, newMsgName)
+			if newMsg == nil {
+				return &errUnknown{newPkgName + "." + newMsgName}
+			}
+			this.fieldToMsg[msg.Field[i]] = newMsg
+			if _, ok := this.msgToField[newMsg]; ok {
+				continue
+			}
+			if err := this.visit(newPkgName, newMsg); err != nil {
+				return err
+			}
+		}
+	}
+	for i := range msg.GetNestedType() {
+		this.visit(pkgName, msg.GetNestedType()[i])
+	}
+	return nil
+}
+
+func (this *descMap) GetRoot() *descriptor.DescriptorProto {
+	return this.root
+}
+
+func (this *descMap) LookupMessage(field *descriptor.FieldDescriptorProto) *descriptor.DescriptorProto {
+	return this.fieldToMsg[field]
+}
+
+func (this *descMap) LookupField(msg *descriptor.DescriptorProto, key uint64) (*descriptor.FieldDescriptorProto, bool) {
+	fields, ok := this.msgToField[msg]
+	if !ok {
+		return nil, false
+	}
+	f, ok := fields[key]
+	return f, ok
+}

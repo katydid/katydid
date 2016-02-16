@@ -3,134 +3,162 @@
 
 package funcs
 
-type lenFloat64s struct {
-	E Float64s
+type lenDoubles struct {
+	E Doubles
 }
 
-func (this *lenFloat64s) Eval() int64 {
-	return int64(len(this.E.Eval()))
-}
-
-func init() {
-	Register("length", new(lenFloat64s))
-}
-
-type lenFloat32s struct {
-	E Float32s
-}
-
-func (this *lenFloat32s) Eval() int64 {
-	return int64(len(this.E.Eval()))
+func (this *lenDoubles) Eval() (int64, error) {
+	e, err := this.E.Eval()
+	if err != nil {
+		return 0, err
+	}
+	return int64(len(e)), nil
 }
 
 func init() {
-	Register("length", new(lenFloat32s))
+	Register("length", new(lenDoubles))
 }
 
-type lenInt64s struct {
-	E Int64s
+func LenDoubles(e Doubles) Int {
+	return &lenDoubles{E: e}
 }
 
-func (this *lenInt64s) Eval() int64 {
-	return int64(len(this.E.Eval()))
+type lenInts struct {
+	E Ints
 }
 
-func init() {
-	Register("length", new(lenInt64s))
-}
-
-type lenUint64s struct {
-	E Uint64s
-}
-
-func (this *lenUint64s) Eval() int64 {
-	return int64(len(this.E.Eval()))
+func (this *lenInts) Eval() (int64, error) {
+	e, err := this.E.Eval()
+	if err != nil {
+		return 0, err
+	}
+	return int64(len(e)), nil
 }
 
 func init() {
-	Register("length", new(lenUint64s))
+	Register("length", new(lenInts))
 }
 
-type lenInt32s struct {
-	E Int32s
+func LenInts(e Ints) Int {
+	return &lenInts{E: e}
 }
 
-func (this *lenInt32s) Eval() int64 {
-	return int64(len(this.E.Eval()))
+type lenUints struct {
+	E Uints
 }
 
-func init() {
-	Register("length", new(lenInt32s))
-}
-
-type lenUint32s struct {
-	E Uint32s
-}
-
-func (this *lenUint32s) Eval() int64 {
-	return int64(len(this.E.Eval()))
+func (this *lenUints) Eval() (int64, error) {
+	e, err := this.E.Eval()
+	if err != nil {
+		return 0, err
+	}
+	return int64(len(e)), nil
 }
 
 func init() {
-	Register("length", new(lenUint32s))
+	Register("length", new(lenUints))
+}
+
+func LenUints(e Uints) Int {
+	return &lenUints{E: e}
 }
 
 type lenBools struct {
 	E Bools
 }
 
-func (this *lenBools) Eval() int64 {
-	return int64(len(this.E.Eval()))
+func (this *lenBools) Eval() (int64, error) {
+	e, err := this.E.Eval()
+	if err != nil {
+		return 0, err
+	}
+	return int64(len(e)), nil
 }
 
 func init() {
 	Register("length", new(lenBools))
 }
 
+func LenBools(e Bools) Int {
+	return &lenBools{E: e}
+}
+
 type lenStrings struct {
 	E Strings
 }
 
-func (this *lenStrings) Eval() int64 {
-	return int64(len(this.E.Eval()))
+func (this *lenStrings) Eval() (int64, error) {
+	e, err := this.E.Eval()
+	if err != nil {
+		return 0, err
+	}
+	return int64(len(e)), nil
 }
 
 func init() {
 	Register("length", new(lenStrings))
 }
 
+func LenStrings(e Strings) Int {
+	return &lenStrings{E: e}
+}
+
 type lenListOfBytes struct {
 	E ListOfBytes
 }
 
-func (this *lenListOfBytes) Eval() int64 {
-	return int64(len(this.E.Eval()))
+func (this *lenListOfBytes) Eval() (int64, error) {
+	e, err := this.E.Eval()
+	if err != nil {
+		return 0, err
+	}
+	return int64(len(e)), nil
 }
 
 func init() {
 	Register("length", new(lenListOfBytes))
 }
 
+func LenListOfBytes(e ListOfBytes) Int {
+	return &lenListOfBytes{E: e}
+}
+
 type lenString struct {
 	E String
 }
 
-func (this *lenString) Eval() int64 {
-	return int64(len(this.E.Eval()))
+func (this *lenString) Eval() (int64, error) {
+	e, err := this.E.Eval()
+	if err != nil {
+		return 0, err
+	}
+	return int64(len(e)), nil
 }
 
 func init() {
 	Register("length", new(lenString))
 }
 
+func LenString(e String) Int {
+	return &lenString{E: e}
+}
+
 type lenBytes struct {
 	E Bytes
 }
 
-func (this *lenBytes) Eval() int64 {
-	return int64(len(this.E.Eval()))
+func (this *lenBytes) Eval() (int64, error) {
+	e, err := this.E.Eval()
+	if err != nil {
+		return 0, err
+	}
+	return int64(len(e)), nil
 }
 
 func init() {
 	Register("length", new(lenBytes))
+}
+
+func LenBytes(e Bytes) Int {
+	return &lenBytes{E: e}
 }

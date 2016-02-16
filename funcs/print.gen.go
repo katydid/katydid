@@ -7,110 +7,90 @@ import (
 	"fmt"
 )
 
-type printFloat64 struct {
-	E Float64
+type printDouble struct {
+	E Double
 }
 
-func (this *printFloat64) Eval() float64 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+func (this *printDouble) Eval() (float64, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
 }
 
-func (this *printFloat64) IsVariable() {}
+func (this *printDouble) IsVariable() {}
 
 func init() {
-	Register("print", new(printFloat64))
+	Register("print", new(printDouble))
 }
 
-type printFloat32 struct {
-	E Float32
+func PrintDouble(e Double) Double {
+	return &printDouble{E: e}
 }
 
-func (this *printFloat32) Eval() float32 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+type printInt struct {
+	E Int
 }
 
-func (this *printFloat32) IsVariable() {}
+func (this *printInt) Eval() (int64, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
+}
+
+func (this *printInt) IsVariable() {}
 
 func init() {
-	Register("print", new(printFloat32))
+	Register("print", new(printInt))
 }
 
-type printInt64 struct {
-	E Int64
+func PrintInt(e Int) Int {
+	return &printInt{E: e}
 }
 
-func (this *printInt64) Eval() int64 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+type printUint struct {
+	E Uint
 }
 
-func (this *printInt64) IsVariable() {}
+func (this *printUint) Eval() (uint64, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
+}
+
+func (this *printUint) IsVariable() {}
 
 func init() {
-	Register("print", new(printInt64))
+	Register("print", new(printUint))
 }
 
-type printUint64 struct {
-	E Uint64
-}
-
-func (this *printUint64) Eval() uint64 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
-}
-
-func (this *printUint64) IsVariable() {}
-
-func init() {
-	Register("print", new(printUint64))
-}
-
-type printInt32 struct {
-	E Int32
-}
-
-func (this *printInt32) Eval() int32 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
-}
-
-func (this *printInt32) IsVariable() {}
-
-func init() {
-	Register("print", new(printInt32))
-}
-
-type printUint32 struct {
-	E Uint32
-}
-
-func (this *printUint32) Eval() uint32 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
-}
-
-func (this *printUint32) IsVariable() {}
-
-func init() {
-	Register("print", new(printUint32))
+func PrintUint(e Uint) Uint {
+	return &printUint{E: e}
 }
 
 type printBool struct {
 	E Bool
 }
 
-func (this *printBool) Eval() bool {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+func (this *printBool) Eval() (bool, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
 }
 
 func (this *printBool) IsVariable() {}
@@ -119,14 +99,22 @@ func init() {
 	Register("print", new(printBool))
 }
 
+func PrintBool(e Bool) Bool {
+	return &printBool{E: e}
+}
+
 type printString struct {
 	E String
 }
 
-func (this *printString) Eval() string {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+func (this *printString) Eval() (string, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
 }
 
 func (this *printString) IsVariable() {}
@@ -135,14 +123,22 @@ func init() {
 	Register("print", new(printString))
 }
 
+func PrintString(e String) String {
+	return &printString{E: e}
+}
+
 type printBytes struct {
 	E Bytes
 }
 
-func (this *printBytes) Eval() []byte {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+func (this *printBytes) Eval() ([]byte, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
 }
 
 func (this *printBytes) IsVariable() {}
@@ -151,110 +147,94 @@ func init() {
 	Register("print", new(printBytes))
 }
 
-type printFloat64s struct {
-	E Float64s
+func PrintBytes(e Bytes) Bytes {
+	return &printBytes{E: e}
 }
 
-func (this *printFloat64s) Eval() []float64 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+type printDoubles struct {
+	E Doubles
 }
 
-func (this *printFloat64s) IsVariable() {}
+func (this *printDoubles) Eval() ([]float64, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
+}
+
+func (this *printDoubles) IsVariable() {}
 
 func init() {
-	Register("print", new(printFloat64s))
+	Register("print", new(printDoubles))
 }
 
-type printFloat32s struct {
-	E Float32s
+func PrintDoubles(e Doubles) Doubles {
+	return &printDoubles{E: e}
 }
 
-func (this *printFloat32s) Eval() []float32 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+type printInts struct {
+	E Ints
 }
 
-func (this *printFloat32s) IsVariable() {}
+func (this *printInts) Eval() ([]int64, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
+}
+
+func (this *printInts) IsVariable() {}
 
 func init() {
-	Register("print", new(printFloat32s))
+	Register("print", new(printInts))
 }
 
-type printInt64s struct {
-	E Int64s
+func PrintInts(e Ints) Ints {
+	return &printInts{E: e}
 }
 
-func (this *printInt64s) Eval() []int64 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+type printUints struct {
+	E Uints
 }
 
-func (this *printInt64s) IsVariable() {}
+func (this *printUints) Eval() ([]uint64, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
+}
+
+func (this *printUints) IsVariable() {}
 
 func init() {
-	Register("print", new(printInt64s))
+	Register("print", new(printUints))
 }
 
-type printUint64s struct {
-	E Uint64s
-}
-
-func (this *printUint64s) Eval() []uint64 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
-}
-
-func (this *printUint64s) IsVariable() {}
-
-func init() {
-	Register("print", new(printUint64s))
-}
-
-type printInt32s struct {
-	E Int32s
-}
-
-func (this *printInt32s) Eval() []int32 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
-}
-
-func (this *printInt32s) IsVariable() {}
-
-func init() {
-	Register("print", new(printInt32s))
-}
-
-type printUint32s struct {
-	E Uint32s
-}
-
-func (this *printUint32s) Eval() []uint32 {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
-}
-
-func (this *printUint32s) IsVariable() {}
-
-func init() {
-	Register("print", new(printUint32s))
+func PrintUints(e Uints) Uints {
+	return &printUints{E: e}
 }
 
 type printBools struct {
 	E Bools
 }
 
-func (this *printBools) Eval() []bool {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+func (this *printBools) Eval() ([]bool, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
 }
 
 func (this *printBools) IsVariable() {}
@@ -263,14 +243,22 @@ func init() {
 	Register("print", new(printBools))
 }
 
+func PrintBools(e Bools) Bools {
+	return &printBools{E: e}
+}
+
 type printStrings struct {
 	E Strings
 }
 
-func (this *printStrings) Eval() []string {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+func (this *printStrings) Eval() ([]string, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
 }
 
 func (this *printStrings) IsVariable() {}
@@ -279,18 +267,30 @@ func init() {
 	Register("print", new(printStrings))
 }
 
+func PrintStrings(e Strings) Strings {
+	return &printStrings{E: e}
+}
+
 type printListOfBytes struct {
 	E ListOfBytes
 }
 
-func (this *printListOfBytes) Eval() [][]byte {
-	v := this.E.Eval()
-	fmt.Printf("%#v\n", v)
-	return v
+func (this *printListOfBytes) Eval() ([][]byte, error) {
+	v, err := this.E.Eval()
+	if err != nil {
+		fmt.Printf("error: %#v\n", v)
+	} else {
+		fmt.Printf("value: %#v\n", v)
+	}
+	return v, err
 }
 
 func (this *printListOfBytes) IsVariable() {}
 
 func init() {
 	Register("print", new(printListOfBytes))
+}
+
+func PrintListOfBytes(e ListOfBytes) ListOfBytes {
+	return &printListOfBytes{E: e}
 }
