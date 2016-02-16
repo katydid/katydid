@@ -15,12 +15,29 @@
 package convert
 
 import (
-	"fmt"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/mem"
 	"github.com/katydid/katydid/serialize"
 	"io"
 )
+
+func Compile(g *relapse.Grammar) *Auto {
+	mem := mem.Compile(g)
+	return &Auto{
+		Refs:        mem.Refs,
+		PatternsMap: mem.PatternsMap,
+		Calls:       mem.Calls,
+		Returns:     mem.Returns,
+		Escapables:  mem.Escapables,
+		Zis:         mem.Zis,
+		Start:       mem.Start,
+
+		StackElms:       mem.StackElms,
+		StateToNullable: mem.StateToNullable,
+		Nullables:       mem.Nullables,
+		Accept:          mem.Accept,
+	}
+}
 
 type Auto struct {
 	Refs        map[string]*relapse.Pattern
@@ -44,15 +61,39 @@ func Interpret(auto *Auto, parser serialize.Parser) bool {
 
 func deriv(auto *Auto, current int, tree serialize.Parser) int {
 	for {
+		if !auto.Escapables[current] {
+			return current
+		}
+		if err := tree.Next(); err != nil {
+			if err == io.EOF {
+				break
+			} else {
+				panic(err)
+			}
+		}
+		callTree := auto.Calls[current]
+		childState, stackElm := callTree.Eval(tree)
+		if !tree.IsLeaf() {
+			tree.Down()
+			childState = deriv(auto, childState, tree)
+			tree.Up()
+		}
+		nullIndex := auto.StateToNullable[childState]
+		current = auto.Returns[stackElm][nullIndex]
+	}
+	return current
+}
+
+func checkderiv(auto *Auto, current int, tree serialize.Parser) int {
+	for {
 		if esc, ok := auto.Escapables[current]; ok {
 			if !esc {
-				mem.Prints("!Escapable", current, auto.PatternsMap[current])
+				// mem.Prints("!Escapable", current, auto.PatternsMap[current])
 				return current
 			}
 		} else {
 			panic("wtf")
 		}
-		fmt.Printf("Next\n")
 		if err := tree.Next(); err != nil {
 			if err == io.EOF {
 				break
@@ -65,23 +106,21 @@ func deriv(auto *Auto, current int, tree serialize.Parser) int {
 			panic("wtf")
 		}
 		childState, stackElm := callTree.Eval(tree)
-		callpair := auto.StackElms[stackElm]
-		mem.Prints("call", callpair.State, auto.PatternsMap[callpair.State])
+		//callpair := auto.StackElms[stackElm]
+		// mem.Prints("call", callpair.State, auto.PatternsMap[callpair.State])
 		if tree.IsLeaf() {
 			//do nothing
 		} else {
-			fmt.Printf("Down\n")
 			tree.Down()
 			childState = deriv(auto, childState, tree)
 			tree.Up()
-			fmt.Printf("Up\n")
 		}
 		nullIndex, nok := auto.StateToNullable[childState]
 		if !nok {
 			panic("wtf")
 		}
-		retpair := auto.StackElms[stackElm]
-		mem.Prints("return", retpair.State, auto.PatternsMap[retpair.State])
+		//retpair := auto.StackElms[stackElm]
+		//mem.Prints("return", retpair.State, auto.PatternsMap[retpair.State])
 		children, rok := auto.Returns[stackElm]
 		if !rok {
 			panic("wtf")

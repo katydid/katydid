@@ -16,6 +16,7 @@ package convert_test
 
 import (
 	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse/convert"
 	"github.com/katydid/katydid/serialize"
 	"testing"
 )
@@ -31,11 +32,12 @@ func bench(b *testing.B, grammar *relapse.Grammar, gen func() serialize.Parser) 
 	for i := 0; i < num; i++ {
 		parsers[i] = gen().(reset)
 	}
+	auto := convert.Compile(grammar)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		if err := parsers[i%num].Reset(); err != nil {
 			b.Fatal(err)
 		}
-		b.Skipf("not implemented")
+		convert.Interpret(auto, parsers[i%num])
 	}
 }

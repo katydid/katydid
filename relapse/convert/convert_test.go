@@ -18,7 +18,6 @@ import (
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/convert"
 	"github.com/katydid/katydid/relapse/interp"
-	"github.com/katydid/katydid/relapse/mem"
 	"github.com/katydid/katydid/serialize"
 	"testing"
 )
@@ -27,21 +26,7 @@ func test(t *testing.T, g *relapse.Grammar, parser serialize.Parser, expected bo
 	if interp.HasLeftRecursion(g) {
 		t.Skipf("convert was not designed to handle recursion")
 	}
-	mem := mem.Compile(g)
-	auto := &convert.Auto{
-		Refs:        mem.Refs,
-		PatternsMap: mem.PatternsMap,
-		Calls:       mem.Calls,
-		Returns:     mem.Returns,
-		Escapables:  mem.Escapables,
-		Zis:         mem.Zis,
-		Start:       mem.Start,
-
-		StackElms:       mem.StackElms,
-		StateToNullable: mem.StateToNullable,
-		Nullables:       mem.Nullables,
-		Accept:          mem.Accept,
-	}
+	auto := convert.Compile(g)
 	match := convert.Interpret(auto, parser)
 	if match != expected {
 		t.Fatalf("Expected %v on given \n%s\n on \n%s", expected, g.String(), desc)
