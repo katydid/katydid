@@ -20,120 +20,125 @@ import (
 	"github.com/katydid/katydid/serialize"
 )
 
-type Mem interface {
-	Interpret(serialize.Parser) bool
-}
-
 //This is a naive implementation and it does not handle left recursion
-func (mem *mem) Interpret(parser serialize.Parser) bool {
-	final := deriv(mem, mem.start, parser)
+func (mem *Mem) Interpret(parser serialize.Parser) bool {
+	final := deriv(mem, mem.Start, parser)
 	return mem.accept(final)
 }
 
-func New(g *relapse.Grammar) Mem {
+func New(g *relapse.Grammar) *Mem {
 	refs := relapse.NewRefsLookup(g)
 	mem := newMem(refs)
 	return mem
 }
 
-type mem struct {
-	refs        map[string]*relapse.Pattern
-	patternsMap PatternsIndexedSet
-	callTrees   map[int]*memCallNode
-	returns     map[int]map[int]int
-	escapables  map[int]bool
-	zis         IntsIndexedSet
-	start       int
+type Mem struct {
+	Refs        map[string]*relapse.Pattern
+	PatternsMap PatternsIndexedSet
+	Calls       map[int]*CallNode
+	Returns     map[int]map[int]int
+	Escapables  map[int]bool
+	Zis         IntsIndexedSet
+	Start       int
 
-	stackElms       PairIndexedSet
-	stateToNullable map[int]int
-	nullables       BoolsIndexedSet
+	StackElms       PairIndexedSet
+	StateToNullable map[int]int
+	Nullables       BoolsIndexedSet
+
+	Accept map[int]bool
 }
 
-func newMem(refs map[string]*relapse.Pattern) *mem {
-	m := &mem{
-		refs:        refs,
-		patternsMap: newPatternsIndexedSet(),
-		callTrees:   make(map[int]*memCallNode),
-		returns:     make(map[int]map[int]int),
-		escapables:  make(map[int]bool),
-		zis:         newIntsIndexedSet(),
+func newMem(refs map[string]*relapse.Pattern) *Mem {
+	m := &Mem{
+		Refs:        refs,
+		PatternsMap: newPatternsIndexedSet(),
+		Calls:       make(map[int]*CallNode),
+		Returns:     make(map[int]map[int]int),
+		Escapables:  make(map[int]bool),
+		Zis:         newIntsIndexedSet(),
 
-		stackElms:       newPairIndexedSet(),
-		stateToNullable: make(map[int]int),
-		nullables:       newBoolsIndexedSet(),
+		StackElms:       newPairIndexedSet(),
+		StateToNullable: make(map[int]int),
+		Nullables:       newBoolsIndexedSet(),
+		Accept:          make(map[int]bool),
 	}
-	start := m.patternsMap.add([]*relapse.Pattern{refs["main"]})
-	m.start = start
+	start := m.PatternsMap.add([]*relapse.Pattern{refs["main"]})
+	m.Start = start
 	return m
 }
 
-func (this *mem) escapable(s int) bool {
-	if e, ok := this.escapables[s]; ok {
+func (this *Mem) escapable(s int) bool {
+	if e, ok := this.Escapables[s]; ok {
 		return e
 	}
-	patterns := this.patternsMap[s]
+	patterns := this.PatternsMap[s]
 	e := escapable(patterns)
-	this.escapables[s] = e
+	this.Escapables[s] = e
 	return e
 }
 
-func (this *mem) accept(s int) bool {
-	patterns := this.patternsMap[s]
+func (this *Mem) accept(s int) bool {
+	if a, ok := this.Accept[s]; ok {
+		return a
+	}
+	patterns := this.PatternsMap[s]
 	if len(patterns) != 1 {
+		this.Accept[s] = false
 		return false
 	}
-	return interp.Nullable(this.refs, patterns[0])
+	accept := interp.Nullable(this.Refs, patterns[0])
+	this.Accept[s] = accept
+	return accept
 }
 
-func (this *mem) getCallTree(s int) *memCallNode {
-	ct, ok := this.callTrees[s]
+func (this *Mem) getCallTree(s int) *CallNode {
+	ct, ok := this.Calls[s]
 	if ok {
 		return ct
 	}
-	callables := derivCalls(this.refs, this.patternsMap[s])
+	callables := derivCalls(this.Refs, this.PatternsMap[s])
 	callTree := newCallTree(callables)
-	memCallTree := newMemCallTree(s, &this.stackElms, &this.patternsMap, &this.zis, callTree)
-	this.callTrees[s] = memCallTree
+	memCallTree := newMemCallTree(s, &this.StackElms, &this.PatternsMap, &this.Zis, callTree)
+	this.Calls[s] = memCallTree
 	return memCallTree
 }
 
-func (this *mem) getNullable(state int) int {
-	nullIndex, ok := this.stateToNullable[state]
+func (this *Mem) getNullable(state int) int {
+	nullIndex, ok := this.StateToNullable[state]
 	if ok {
 		return nullIndex
 	}
-	childPatterns := this.patternsMap[state]
-	nullable := nullables(this.refs, childPatterns)
-	nullIndex = this.nullables.add(nullable)
-	this.stateToNullable[state] = nullIndex
+	childPatterns := this.PatternsMap[state]
+	nullable := nullables(this.Refs, childPatterns)
+	nullIndex = this.Nullables.add(nullable)
+	this.StateToNullable[state] = nullIndex
 	return nullIndex
 }
 
-func (this *mem) getReturnn(stackIndex int, nullIndex int) int {
-	children, ok := this.returns[stackIndex]
+func (this *Mem) getReturnn(stackIndex int, nullIndex int) int {
+	children, ok := this.Returns[stackIndex]
 	if ok {
 		ret, ok := children[nullIndex]
 		if ok {
 			return ret
 		}
 	} else {
-		this.returns[stackIndex] = make(map[int]int)
+		this.Returns[stackIndex] = make(map[int]int)
 	}
-	stackElm := this.stackElms[stackIndex]
-	zullable := this.nullables[nullIndex]
-	zindex := stackElm.zindex
-	nullable := unzipb(zullable, this.zis[zindex])
-	current := stackElm.state
-	currentPatterns := this.patternsMap[current]
-	currentPatterns = derivReturns(this.refs, currentPatterns, nullable)
-	simplePatterns := simps(this.refs, currentPatterns)
-	res := this.patternsMap.add(simplePatterns)
-	this.returns[stackIndex][nullIndex] = res
+	stackElm := this.StackElms[stackIndex]
+	zullable := this.Nullables[nullIndex]
+	zindex := stackElm.Zindex
+	nullable := unzipb(zullable, this.Zis[zindex])
+	current := stackElm.State
+	currentPatterns := this.PatternsMap[current]
+	currentPatterns = derivReturns(this.Refs, currentPatterns, nullable)
+	simplePatterns := simps(this.Refs, currentPatterns)
+	res := this.PatternsMap.add(simplePatterns)
+	this.Returns[stackIndex][nullIndex] = res
 	return res
 }
 
-func (this *mem) getReturn(stackIndex int, child int) int {
+func (this *Mem) getReturn(stackIndex int, child int) int {
 	nullIndex := this.getNullable(child)
 	return this.getReturnn(stackIndex, nullIndex)
 }

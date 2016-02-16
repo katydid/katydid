@@ -19,29 +19,26 @@ import (
 	"github.com/katydid/katydid/relapse/ast"
 )
 
-func Compile(g *relapse.Grammar) Mem {
+func Compile(g *relapse.Grammar) *Mem {
 	refs := relapse.NewRefsLookup(g)
 	mem := newMem(refs)
 	changed := true
+	visited := make(map[int]bool)
 	for changed {
 		changed = false
-		for state := range mem.patternsMap {
-			if !mem.escapable(state) {
+		for state := range mem.PatternsMap {
+			if visited[state] {
 				continue
 			}
-			if _, ok := mem.callTrees[state]; !ok {
-				compile(mem, state)
-				if _, ok := mem.callTrees[state]; !ok {
-					panic("wtf")
-				}
-				changed = true
-			}
+			visited[state] = true
+			compile(mem, state)
+			changed = true
 		}
 	}
 	return mem
 }
 
-func prints(prefix string, state int, patterns []*relapse.Pattern) {
+func Prints(prefix string, state int, patterns []*relapse.Pattern) {
 	fmt.Printf(prefix+":%d:", state)
 	for _, p := range patterns {
 		fmt.Printf("%v, ", p.String())
@@ -49,23 +46,26 @@ func prints(prefix string, state int, patterns []*relapse.Pattern) {
 	fmt.Printf("\n")
 }
 
-func compile(mem *mem, current int) {
+func compile(mem *Mem, current int) {
 	mem.getNullable(current)
+	mem.accept(current)
+	mem.escapable(current)
+
 	callTree := mem.getCallTree(current)
 	leafs := getLeafs(callTree)
 	for _, leaf := range leafs {
-		childlen := len(mem.patternsMap[leaf.child])
+		childlen := len(mem.PatternsMap[leaf.child])
 		nullablecombos := mcombos(childlen)
 		for _, nullablecombo := range nullablecombos {
-			nullIndex := mem.nullables.add(nullablecombo)
+			nullIndex := mem.Nullables.add(nullablecombo)
 			mem.getReturnn(leaf.stackIndex, nullIndex)
 		}
 	}
 }
 
-func getLeafs(callTree *memCallNode) []*memCallNode {
+func getLeafs(callTree *CallNode) []*CallNode {
 	if callTree.cond == nil {
-		return []*memCallNode{callTree}
+		return []*CallNode{callTree}
 	}
 	then := getLeafs(callTree.then)
 	els := getLeafs(callTree.els)
@@ -84,10 +84,7 @@ func mcombos(n int) [][]bool {
 
 func combos(n int) [][]bool {
 	if n == 0 {
-		return [][]bool{}
-	}
-	if n == 1 {
-		return [][]bool{[]bool{false}, []bool{true}}
+		return [][]bool{[]bool{}}
 	}
 	cs := mcombos(n - 1)
 	res := [][]bool{}

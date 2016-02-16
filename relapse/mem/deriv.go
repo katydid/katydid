@@ -44,7 +44,7 @@ func escapable(patterns []*relapse.Pattern) bool {
 	return false
 }
 
-func deriv(mem *mem, current int, tree serialize.Parser) int {
+func deriv(mem *Mem, current int, tree serialize.Parser) int {
 	for {
 		if !mem.escapable(current) {
 			return current
@@ -57,7 +57,7 @@ func deriv(mem *mem, current int, tree serialize.Parser) int {
 			}
 		}
 		callTree := mem.getCallTree(current)
-		childState, stackElm := callTree.eval(tree)
+		childState, stackElm := callTree.Eval(tree)
 		if tree.IsLeaf() {
 			//do nothing
 		} else {

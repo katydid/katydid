@@ -26,20 +26,20 @@ type composedBool interface {
 	Eval(serialize.Decoder) (bool, error)
 }
 
-type memCallNode struct {
+type CallNode struct {
 	cond       composedBool
-	then       *memCallNode
-	els        *memCallNode
+	then       *CallNode
+	els        *CallNode
 	child      int
 	stackIndex int
 }
 
-func newMemCallTree(parent int, stackElms *PairIndexedSet, patterns *PatternsIndexedSet, zis *IntsIndexedSet, node *callNode) *memCallNode {
+func newMemCallTree(parent int, stackElms *PairIndexedSet, patterns *PatternsIndexedSet, zis *IntsIndexedSet, node *callNode) *CallNode {
 	if node.term != nil {
 		ps := node.term
 		zps, zi := zip(ps)
-		stackIndex := stackElms.add(stackElm{state: parent, zindex: zis.add(zi)})
-		return &memCallNode{child: patterns.add(zps), stackIndex: stackIndex}
+		stackIndex := stackElms.add(stackElm{State: parent, Zindex: zis.add(zi)})
+		return &CallNode{child: patterns.add(zps), stackIndex: stackIndex}
 	}
 	then := newMemCallTree(parent, stackElms, patterns, zis, node.then)
 	els := newMemCallTree(parent, stackElms, patterns, zis, node.els)
@@ -47,14 +47,14 @@ func newMemCallTree(parent int, stackElms *PairIndexedSet, patterns *PatternsInd
 	if err != nil {
 		panic(err)
 	}
-	return &memCallNode{
+	return &CallNode{
 		cond: f,
 		then: then,
 		els:  els,
 	}
 }
 
-func (this *memCallNode) eval(label serialize.Decoder) (int, int) {
+func (this *CallNode) Eval(label serialize.Decoder) (int, int) {
 	if this.cond == nil {
 		return this.child, this.stackIndex
 	}
@@ -63,9 +63,9 @@ func (this *memCallNode) eval(label serialize.Decoder) (int, int) {
 		panic(err)
 	}
 	if cond {
-		return this.then.eval(label)
+		return this.then.Eval(label)
 	}
-	return this.els.eval(label)
+	return this.els.Eval(label)
 }
 
 type callNode struct {
@@ -116,6 +116,11 @@ func (this *callNode) eval(label serialize.Decoder) []*relapse.Pattern {
 }
 
 func newCallTree(callables []*callable) *callNode {
+	if len(callables) == 0 {
+		return &callNode{
+			term: []*relapse.Pattern{},
+		}
+	}
 	top := newCallNode(callables[0])
 	for _, callable := range callables[1:] {
 		if callable.cond == nil {

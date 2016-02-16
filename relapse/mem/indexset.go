@@ -109,8 +109,8 @@ func (this *BoolsIndexedSet) add(bs []bool) int {
 }
 
 type stackElm struct {
-	state  int
-	zindex int
+	State  int
+	Zindex int
 }
 
 type PairIndexedSet []stackElm
@@ -121,8 +121,8 @@ func newPairIndexedSet() PairIndexedSet {
 
 func (this PairIndexedSet) index(se stackElm) int {
 	for i, ise := range this {
-		if ise.state == se.state &&
-			ise.zindex == se.zindex {
+		if ise.State == se.State &&
+			ise.Zindex == se.Zindex {
 			return i
 		}
 	}
