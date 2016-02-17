@@ -37,7 +37,7 @@ http://katydid.github.io/play
 
 ##Examples
 
-http://katydid.github.io/examples/
+http://katydid.github.io/doc/examples
 
 ##Theory
 
