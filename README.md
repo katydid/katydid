@@ -38,7 +38,7 @@ Katydid version 0.2 is in beta.
 
 ## Playground
 
-[Relapse Playgroun](http://katydid.github.io/play)
+[Relapse Playground](http://katydid.github.io/play)
 
 ## Examples
 
@@ -49,7 +49,7 @@ Katydid version 0.2 is in beta.
 Tree Automata and Visual Pushdown Automata have been found to be very applicable to XML processing.
 Relapse tries to apply these Automata to different types of trees.
 
-## Tools
+## External Tools
 
   * [Translate RelaxNG](https://github.com/katydid/relaxng) to Relapse
   * [Translate JsonSchema](https://github.com/katydid/jsonschema) to Relapse
