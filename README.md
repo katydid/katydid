@@ -6,12 +6,12 @@ Currently there are two tools:
   * A collection of parsers, and
   * Relapse: a tree validation language.
 
-### What is a validation language
+### What is a validation language?
 Regular expressions are used as validators for strings.
 RelaxNG, DTD and XSchema are validation languages for XML.
 JsonSchema is a validation language for JSON.
 
-### What are trees
+### What are trees?
 A tree is a structure, record, class that does not contain any loops.
 
 Katydid has implemented parsers for multiple types of trees:
@@ -23,6 +23,11 @@ Katydid has implemented parsers for multiple types of trees:
   * Easy to add your own. Simply implement a [parser](http://katydid.github.io/dev/parsers)
 
 Relapse can validate these trees, since they have implemented Parsers.
+
+### What is a Katydid?
+
+A Katydid is the common name for a [leaf insect](https://avatars1.githubusercontent.com/u/9207606?v=3&s=200).
+You might enjoy this [video](https://www.youtube.com/watch?v=SvjSP2xYZm8).
 
 ## Status
 Katydid version 0.2 is in alpha.
@@ -40,10 +45,6 @@ Katydid version 0.2 is in alpha.
 
 [Relapse Playground](http://katydid.github.io/play)
 
-## Examples
-
-[Relapse Examples](http://katydid.github.io/doc/examples)
-
 ## Theory
 
 Tree Automata and Visual Pushdown Automata have been found to be very applicable to XML processing.
@@ -56,10 +57,9 @@ Relapse tries to apply these Automata to different types of trees.
 
 ## Possible Futures
 
-  * Language Agnostic Testset
+  * Language Agnostic Test set
   * Capturing (like Regular Expression Capturing, but for trees)
   * Dynamic Transcoding between different Tree Types
   * Optionally enable Javascript/Lua user defined functions.
   * More serialization formats: CapnProto?, Bson, Yaml, Toml ...
-  * Remove all dependencies from core Katydid repo and move all other extra functionality into richer feature set repos that extend the core of Katydid.
-
+  * Remove all dependencies from core Katydid repository and move all other extra functionality into richer feature set repositories that extend the core of Katydid.
