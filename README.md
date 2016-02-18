@@ -25,7 +25,7 @@ Katydid has implemented parsers for multiple types of trees:
 Relapse can validate these trees, since they have implemented Parsers.
 
 ## Status
-Katydid version 0.2 is in beta.
+Katydid version 0.2 is in alpha.
 [![Build Status](https://drone.io/github.com/katydid/katydid/status.png)](https://drone.io/github.com/katydid/katydid/latest)
 
 ## Ideals
