@@ -22,6 +22,9 @@ import "github.com/katydid/katydid/types/types.proto";
 option (gogoproto.goproto_stringer_all) = false;
 option (gogoproto.equal_all) = true;
 option (gogoproto.gostring_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.sizer_all) = true;
 
 message Expr {
 	optional Keyword Comma = 1;

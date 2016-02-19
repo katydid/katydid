@@ -461,7 +461,16 @@ func (s *jsonParser) Int() (int64, error) {
 	if s.isLeaf {
 		v := string(s.Value())
 		i, err := strconv.ParseInt(v, 10, 64)
-		return int64(i), err
+		if err != nil {
+			f, ferr := strconv.ParseFloat(v, 64)
+			if ferr != nil {
+				return i, err
+			}
+			if float64(int64(f)) == f {
+				return int64(f), nil
+			}
+		}
+		return i, err
 	}
 	if s.inArray {
 		return int64(s.arrayIndex), nil

@@ -1703,6 +1703,16 @@ func TestPage195E2NameE2AddrE2Xml(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestPlaygroundFalseJson(t *testing.T) {
+	v := tests.Validators["PlaygroundFalse"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestPlaygroundTrueJson(t *testing.T) {
+	v := tests.Validators["PlaygroundTrue"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestProperNotNamePersonDavidJson(t *testing.T) {
 	v := tests.Validators["ProperNotNamePersonDavid"]["json"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)

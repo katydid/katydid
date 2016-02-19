@@ -76,6 +76,23 @@ func TestMultiLineArray(t *testing.T) {
 	t.Logf("%v", jout)
 }
 
+func TestIntWithExponent(t *testing.T) {
+	s := `{"A":1e+08}`
+	parser := sjson.NewJsonParser()
+	parser.Init([]byte(s))
+	parser.Next()
+	parser.Down()
+	parser.Next()
+	if !parser.IsLeaf() {
+		t.Fatal("incorrect walk, please adjust the path above")
+	}
+	if i, err := parser.Int(); err != nil {
+		t.Fatalf("did not expect error %v", err)
+	} else if i != 1e+08 {
+		t.Fatalf("got %d", i)
+	}
+}
+
 func testValue(t *testing.T, input, output string) {
 	parser := sjson.NewJsonParser()
 	if err := parser.Init([]byte(input)); err != nil {
@@ -102,8 +119,8 @@ func TestValues(t *testing.T) {
 	testValue(t, "1.123", "1.123")
 	testValue(t, "1.1e1", "11")
 	testValue(t, "1.1e-1", "0.11")
-	testValue(t, "1.1e10", "1.1e+10")
-	testValue(t, "1.1e+10", "1.1e+10")
+	testValue(t, "1.1e10", "11000000000")
+	testValue(t, "1.1e+10", "11000000000")
 	testValue(t, `"a"`, "a")
 	testValue(t, `"abc"`, "abc")
 	testValue(t, `""`, "")
