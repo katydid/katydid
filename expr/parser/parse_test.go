@@ -26,6 +26,7 @@ func TestParse(t *testing.T) {
 		`eq($string, "bla")`,
 		`1`,
 		`1.0`,
+		`-1.0`,
 	}
 	negatives := []string{
 		"a",

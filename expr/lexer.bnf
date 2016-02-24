@@ -32,7 +32,7 @@ _float_lit : ( _decimals '.' _decimals _exponent )
           	| ( '.' _decimals [ _exponent ] ) 
           	;
 
-double_lit: _double '(' ['-'] ( _float_lit | _int_lit ) ')' | _float_lit ;
+double_lit: _double '(' ['-'] ( _float_lit | _int_lit ) ')' | ['-'] _float_lit ;
 
 _upcase : 'A'-'Z' ;
 _lowcase : 'a'-'z' ;
