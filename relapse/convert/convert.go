@@ -19,6 +19,7 @@ import (
 	"github.com/katydid/katydid/relapse/mem"
 	"github.com/katydid/katydid/serialize"
 	"io"
+	"reflect"
 )
 
 func Compile(g *relapse.Grammar) *Auto {
@@ -52,6 +53,15 @@ type Auto struct {
 	StateToNullable map[int]int
 	Nullables       mem.BoolsIndexedSet
 	Accept          map[int]bool
+}
+
+func Implements(auto *Auto, typ reflect.Type) []interface{} {
+	allis := []interface{}{}
+	for _, call := range auto.Calls {
+		is := mem.Implements(call, typ)
+		allis = append(allis, is...)
+	}
+	return allis
 }
 
 func Interpret(auto *Auto, parser serialize.Parser) bool {

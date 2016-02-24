@@ -19,19 +19,25 @@ import (
 	"github.com/katydid/katydid/funcs"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/serialize"
+	"reflect"
 	"strings"
 )
 
-type composedBool interface {
-	Eval(serialize.Decoder) (bool, error)
-}
-
 type CallNode struct {
-	cond       composedBool
+	cond       compose.Bool
 	then       *CallNode
 	els        *CallNode
 	child      int
 	stackIndex int
+}
+
+func Implements(c *CallNode, typ reflect.Type) []interface{} {
+	var is []interface{}
+	fs := getAllConditions(c)
+	for _, f := range fs {
+		is = append(is, compose.FuncImplements(f, typ)...)
+	}
+	return is
 }
 
 func newMemCallTree(parent int, stackElms *PairIndexedSet, patterns *PatternsIndexedSet, zis *IntsIndexedSet, node *callNode) *CallNode {
@@ -52,6 +58,20 @@ func newMemCallTree(parent int, stackElms *PairIndexedSet, patterns *PatternsInd
 		then: then,
 		els:  els,
 	}
+}
+
+func getAllConditions(c *CallNode) []compose.Bool {
+	if c.cond == nil {
+		return []compose.Bool{}
+	}
+	cs := []compose.Bool{c.cond}
+	if c.then != nil {
+		cs = append(cs, getAllConditions(c.then)...)
+	}
+	if c.els != nil {
+		cs = append(cs, getAllConditions(c.then)...)
+	}
+	return cs
 }
 
 func (this *CallNode) Eval(label serialize.Decoder) (int, int) {
