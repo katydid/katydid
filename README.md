@@ -41,6 +41,10 @@ Katydid version 0.2 is in alpha.
   * Decidable (excluding User Defined Functions)
   * Expressive
 
+## Tour
+
+[Relapse Tour](http://katydid.github.io/tour)
+
 ## Playground
 
 [Relapse Playground](http://katydid.github.io/play)
