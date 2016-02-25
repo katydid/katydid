@@ -1,0 +1,46 @@
+//  Copyright 2016 Walter Schulze
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+syntax = "proto2";
+package prototests;
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+option (gogoproto.description_all) = true;
+
+message Container {
+	optional int64 Field1 = 1;
+	extensions 100 to 199;
+}
+
+extend Container {
+	optional double FieldA = 100;
+	optional Small FieldB = 101;
+	optional Big FieldC = 102;
+}
+
+message Small {
+	optional int64 SmallField = 1;
+}
+
+message Big {
+	optional int64 BigField = 1;
+}
+
+message BigContainer {
+	optional int64 Field2 = 2;
+	extensions 14 to 16;
+	optional int64 Field13 = 13;
+	extensions 10 to 12;
+	optional Container M = 1;
+}

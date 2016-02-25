@@ -16,6 +16,7 @@ package proto
 
 import (
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
+	"strings"
 )
 
 type errUnknown struct {
@@ -51,15 +52,47 @@ func NewDescriptorMap(pkgName, msgName string, desc *descriptor.FileDescriptorSe
 	return d, err
 }
 
+func dotToUnderscore(r rune) rune {
+	if r == '.' {
+		return '_'
+	}
+	return r
+}
+
+func (this *descMap) findExts(pkgName string, msgName string) []*descriptor.FieldDescriptorProto {
+	exts := []*descriptor.FieldDescriptorProto{}
+	extendee := "." + pkgName + "." + msgName
+	for _, file := range this.desc.GetFile() {
+		for i, ext := range file.GetExtension() {
+			if strings.Map(dotToUnderscore, file.GetPackage()) == strings.Map(dotToUnderscore, pkgName) {
+				if !(ext.GetExtendee() == msgName || ext.GetExtendee() == extendee) {
+					continue
+				}
+			} else {
+				if ext.GetExtendee() != extendee {
+					continue
+				}
+			}
+			exts = append(exts, file.Extension[i])
+		}
+	}
+	return exts
+}
+
 func (this *descMap) visit(pkgName string, msg *descriptor.DescriptorProto) error {
 	if _, ok := this.msgToField[msg]; ok {
 		return nil
 	}
-	for i, f := range msg.GetField() {
+	fields := msg.GetField()
+	if msg.HasExtension() {
+		exts := this.findExts(pkgName, msg.GetName())
+		fields = append(fields, exts...)
+	}
+	for i, f := range fields {
 		if _, ok := this.msgToField[msg]; !ok {
 			this.msgToField[msg] = make(map[uint64]*descriptor.FieldDescriptorProto)
 		}
-		this.msgToField[msg][f.GetKeyUint64()] = msg.Field[i]
+		this.msgToField[msg][f.GetKeyUint64()] = fields[i]
 		if f.GetType() == descriptor.FieldDescriptorProto_TYPE_MESSAGE {
 			newPkgName, newMsgName := this.desc.FindMessage(pkgName, msg.GetName(), f.GetName())
 			if len(newMsgName) == 0 {
@@ -69,7 +102,7 @@ func (this *descMap) visit(pkgName string, msg *descriptor.DescriptorProto) erro
 			if newMsg == nil {
 				return &errUnknown{newPkgName + "." + newMsgName}
 			}
-			this.fieldToMsg[msg.Field[i]] = newMsg
+			this.fieldToMsg[fields[i]] = newMsg
 			if _, ok := this.msgToField[newMsg]; ok {
 				continue
 			}

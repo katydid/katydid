@@ -18,6 +18,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/katydid/katydid/serialize"
 	"github.com/katydid/katydid/serialize/debug"
+	"github.com/katydid/katydid/serialize/proto/prototests"
 	"io"
 	"testing"
 )
@@ -102,4 +103,30 @@ func TestSkipRepeated2(t *testing.T) {
 	parser.String()
 	parser.Up()
 	next(t, parser)
+}
+
+func TestExtensionsSmallContainer(t *testing.T) {
+	p := NewProtoParser("prototests", "Container", prototests.AContainer.Description())
+	data, err := proto.Marshal(prototests.AContainer)
+	if err != nil {
+		panic(err)
+	}
+	p.Init(data)
+	nodes := debug.StringWalk(p)
+	if !nodes.Equal(prototests.AContainerOutput) {
+		t.Fatalf("expected %v, but got %v", prototests.AContainerOutput, nodes)
+	}
+}
+
+func TestExtensionsBigContainer(t *testing.T) {
+	p := NewProtoParser("prototests", "BigContainer", prototests.ABigContainer.Description())
+	data, err := proto.Marshal(prototests.ABigContainer)
+	if err != nil {
+		panic(err)
+	}
+	p.Init(data)
+	nodes := debug.StringWalk(p)
+	if !nodes.Equal(prototests.ABigContainerOutput) {
+		t.Fatalf("expected %v, but got %v", prototests.ABigContainerOutput, nodes)
+	}
 }

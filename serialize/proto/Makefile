@@ -1,4 +1,4 @@
-# Copyright 2015 Walter Schulze
+# Copyright 2016 Walter Schulze
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,10 +13,4 @@
 # limitations under the License.
 
 regenerate:
-	go install github.com/katydid/katydid/serialize/serialize-gen
-	serialize-gen ./
-	cd debug && make regenerate
-	cd proto && make regenerate
-
-nuke:
-	rm value.gen.go || true
+	cd prototests && make regenerate
