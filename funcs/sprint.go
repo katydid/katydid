@@ -97,6 +97,12 @@ func sprint(i interface{}) string {
 		}
 		name = strer.String()
 	}
+	if _, ok := i.(Const); ok {
+		return name
+	}
+	if _, ok := i.(Decoder); ok {
+		return name
+	}
 	numFields := e.NumField()
 	ss := make([]string, 0, numFields)
 	for i := 0; i < numFields; i++ {
@@ -104,9 +110,6 @@ func sprint(i interface{}) string {
 			continue
 		}
 		ss = append(ss, sprint(e.Field(i).Interface()))
-	}
-	if len(ss) == 0 {
-		return name
 	}
 	return name + "(" + strings.Join(ss, ",") + ")"
 }
