@@ -97,10 +97,12 @@ func sprint(i interface{}) string {
 		}
 		name = strer.String()
 	}
-	if _, ok := i.(Const); ok {
+	switch i.(type) {
+	case Const:
 		return name
-	}
-	if _, ok := i.(Decoder); ok {
+	case Decoder:
+		return name
+	case ListOf:
 		return name
 	}
 	numFields := e.NumField()
