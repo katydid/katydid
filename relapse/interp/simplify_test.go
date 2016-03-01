@@ -65,18 +65,18 @@ func TestSimplifyOr2(t *testing.T) {
 }
 
 func TestSimplifyTree(t *testing.T) {
-	left := relapse.NewContains(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewContains(
+	left := relapse.NewTreeNode(relapse.NewStringName("A"),
 		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewContains(
 			relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewZAny()),
 		)),
-	)))
-	right := relapse.NewContains(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewContains(
+	)
+	right := relapse.NewTreeNode(relapse.NewStringName("A"),
 		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewContains(
 			relapse.NewTreeNode(relapse.NewStringName("D"), relapse.NewZAny()),
 		)),
-	)))
+	)
 	input := relapse.NewAnd(left, right)
-	expected := relapse.NewContains(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewContains(
+	expected := relapse.NewTreeNode(relapse.NewStringName("A"),
 		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewAnd(
 			relapse.NewContains(
 				relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewZAny()),
@@ -85,7 +85,7 @@ func TestSimplifyTree(t *testing.T) {
 				relapse.NewTreeNode(relapse.NewStringName("D"), relapse.NewZAny()),
 			),
 		)),
-	)))
+	)
 	refs := relapse.RefLookup{"main": input}
 	output := Simplify(refs, input)
 	t.Logf("%v", output)

@@ -775,4 +775,21 @@ func init() {
 		XMLString("<A><B><C><A/></C></B></A>"),
 		false,
 	)
+
+	basicAndContainsTree := G{"main": In("A", AllOf(
+		InPath("B", In("C", relapse.NewEmpty())),
+		InPath("B", In("D", relapse.NewEmpty())),
+	))}
+	Validate(
+		"BasicAndContainsTree_BCBD",
+		basicAndContainsTree,
+		XMLString("<A><B><C/></B><B><D/></B></A>"),
+		true,
+	)
+	Validate(
+		"BasicAndContainsTree_BC",
+		basicAndContainsTree,
+		XMLString("<A><B><C/></B></A>"),
+		false,
+	)
 }

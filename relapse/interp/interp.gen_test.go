@@ -343,6 +343,16 @@ func TestBasicAndBAnyC_CBXml(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestBasicAndContainsTree_BCXml(t *testing.T) {
+	v := tests.Validators["BasicAndContainsTree_BC"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestBasicAndContainsTree_BCBDXml(t *testing.T) {
+	v := tests.Validators["BasicAndContainsTree_BCBD"]["xml"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestBasicAndNotAB_AXml(t *testing.T) {
 	v := tests.Validators["BasicAndNotAB_A"]["xml"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)

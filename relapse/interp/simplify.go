@@ -174,27 +174,14 @@ func simplifyChildren(children []*relapse.Pattern, op func(left, right *relapse.
 	if len(children) == 0 || len(children) == 1 {
 		return children
 	}
-	c0 := children[0].Contains
-	c1 := children[1].Contains
-	if c0 != nil && c1 != nil {
-		t0 := c0.GetPattern().TreeNode
-		t1 := c1.GetPattern().TreeNode
-		if t0 != nil && t1 != nil {
-			if t0.GetName().Equal(t1.GetName()) {
-				newchild := relapse.NewContains(relapse.NewTreeNode(t0.GetName(), op(t0.GetPattern(), t1.GetPattern())))
-				children[1] = newchild
-				return simplifyChildren(children[1:], op)
-			}
-		}
-	} else {
-		t0 := children[0].TreeNode
-		t1 := children[1].TreeNode
-		if t0 != nil && t1 != nil {
-			if t0.GetName().Equal(t1.GetName()) {
-				newchild := relapse.NewTreeNode(t0.GetName(), op(t0.GetPattern(), t1.GetPattern()))
-				children[1] = newchild
-				return simplifyChildren(children[1:], op)
-			}
+
+	t0 := children[0].TreeNode
+	t1 := children[1].TreeNode
+	if t0 != nil && t1 != nil {
+		if t0.GetName().Equal(t1.GetName()) {
+			newchild := relapse.NewTreeNode(t0.GetName(), op(t0.GetPattern(), t1.GetPattern()))
+			children[1] = newchild
+			return simplifyChildren(children[1:], op)
 		}
 	}
 	return append([]*relapse.Pattern{children[0]}, simplifyChildren(children[1:], op)...)

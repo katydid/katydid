@@ -20,24 +20,24 @@ import (
 )
 
 func TestExplosionAndSameTree(t *testing.T) {
-	var input = `
+	var input = `.A:.B:
 (
-	.A:.B:.DeepLevel:.DeeperLevel:.DeepestLevel:->contains($string,"el") &
+	.DeepLevel:.DeeperLevel:.DeepestLevel:->contains($string,"el") &
 	(
-		.A:.B:.Rs:._:->eq("~a",$string) &
+		.Rs:._:->eq("~a",$string) &
 		(
-			.A:.B:.NumI32:->contains($int,[]int{28,1,52}) &
+			.NumI32:->contains($int,[]int{28,1,52}) &
 			(
-					.A:.B:.NumI64:>= 1 &
+				.NumI64:>= 1 &
 				(
-					.A:.B:.NumU32:<= uint(4) &
+					.NumU32:<= uint(4) &
 					(
-						.A:.B:.NumU64:== uint(4) &
+						.NumU64:== uint(4) &
 						(
-							.A:.B:.YesNo:== true &
+							.YesNo:== true &
 							(
-								.A:.B:.BS:== []byte{0x3, 0x2, 0x1, 0x0} &
-								.A:.B:.Uuid: == []byte{0x3, 0x2, 0x1, 0x0}
+								.BS:== []byte{0x3, 0x2, 0x1, 0x0} &
+								.Uuid: == []byte{0x3, 0x2, 0x1, 0x0}
 							)
 						)
 					)
@@ -47,6 +47,33 @@ func TestExplosionAndSameTree(t *testing.T) {
 	)
 )
 `
+	// This one causes a state explosion of over 14000 states.
+	// Since we now field names can't repeat the simplifacation above can be made for JSON and proto like serialization formats, but not for XML.
+	// var input = (
+	// 	.A:.B:.DeepLevel:.DeeperLevel:.DeepestLevel:->contains($string,"el") &
+	// 	(
+	// 		.A:.B:.Rs:._:->eq("~a",$string) &
+	// 		(
+	// 			.A:.B:.NumI32:->contains($int,[]int{28,1,52}) &
+	// 			(
+	// 				.A:.B:.NumI64:>= 1 &
+	// 				(
+	// 					.A:.B:.NumU32:<= uint(4) &
+	// 					(
+	// 						.A:.B:.NumU64:== uint(4) &
+	// 						(
+	// 							.A:.B:.YesNo:== true &
+	// 							(
+	// 								.A:.B:.BS:== []byte{0x3, 0x2, 0x1, 0x0} &
+	// 								.A:.B:.Uuid: == []byte{0x3, 0x2, 0x1, 0x0}
+	// 							)
+	// 						)
+	// 					)
+	// 				)
+	// 			)
+	// 		)
+	// 	)
+	// )
 	g, err := parser.ParseGrammar(input)
 	if err != nil {
 		panic(err)
