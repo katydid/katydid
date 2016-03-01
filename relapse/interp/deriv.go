@@ -118,9 +118,9 @@ func derivCall(refs map[string]*relapse.Pattern, p *relapse.Pattern, label seria
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *relapse.Empty:
-		return []*relapse.Pattern{relapse.NewNot(relapse.NewZAny())}
+		return []*relapse.Pattern{}
 	case *relapse.ZAny:
-		return []*relapse.Pattern{relapse.NewZAny()}
+		return []*relapse.Pattern{}
 	case *relapse.TreeNode:
 		b := nameexpr.NameToFunc(v.GetName())
 		f, err := compose.NewBoolFunc(b)
@@ -198,9 +198,9 @@ func derivReturn(refs map[string]*relapse.Pattern, p *relapse.Pattern, patterns 
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *relapse.Empty:
-		return patterns[0], patterns[1:]
+		return relapse.NewNot(relapse.NewZAny()), patterns
 	case *relapse.ZAny:
-		return patterns[0], patterns[1:]
+		return relapse.NewZAny(), patterns
 	case *relapse.TreeNode:
 		if Nullable(refs, patterns[0]) {
 			return relapse.NewEmpty(), patterns[1:]

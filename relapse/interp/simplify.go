@@ -29,45 +29,58 @@ func checkRef(refs relapse.RefLookup, p *relapse.Pattern) *relapse.Pattern {
 }
 
 func Simplify(refs relapse.RefLookup, p *relapse.Pattern) *relapse.Pattern {
+	return simplify(refs, p, true)
+}
+
+func simplify(refs relapse.RefLookup, p *relapse.Pattern, top bool) *relapse.Pattern {
+	cRef := func(cp *relapse.Pattern) *relapse.Pattern {
+		if top {
+			return cp
+		}
+		return checkRef(refs, cp)
+	}
+	simp := func(sp *relapse.Pattern) *relapse.Pattern {
+		return simplify(refs, sp, false)
+	}
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *relapse.Empty:
 		return p
 	case *relapse.TreeNode:
-		return checkRef(refs, relapse.NewTreeNode(v.GetName(), Simplify(refs, v.GetPattern())))
+		return cRef(relapse.NewTreeNode(v.GetName(), simp(v.GetPattern())))
 	case *relapse.LeafNode:
 		return p
 	case *relapse.Concat:
-		return checkRef(refs, simplifyConcat(
-			Simplify(refs, v.GetLeftPattern()),
-			Simplify(refs, v.GetRightPattern()),
+		return cRef(simplifyConcat(
+			simp(v.GetLeftPattern()),
+			simp(v.GetRightPattern()),
 		))
 	case *relapse.Or:
-		return checkRef(refs, simplifyOr(refs,
-			Simplify(refs, v.GetLeftPattern()),
-			Simplify(refs, v.GetRightPattern()),
+		return cRef(simplifyOr(refs,
+			simp(v.GetLeftPattern()),
+			simp(v.GetRightPattern()),
 		))
 	case *relapse.And:
-		return checkRef(refs, simplifyAnd(refs,
-			Simplify(refs, v.GetLeftPattern()),
-			Simplify(refs, v.GetRightPattern()),
+		return cRef(simplifyAnd(refs,
+			simp(v.GetLeftPattern()),
+			simp(v.GetRightPattern()),
 		))
 	case *relapse.ZeroOrMore:
-		return checkRef(refs, simplifyZeroOrMore(Simplify(refs, v.GetPattern())))
+		return cRef(simplifyZeroOrMore(simp(v.GetPattern())))
 	case *relapse.Reference:
 		return p
 	case *relapse.Not:
-		return checkRef(refs, simplifyNot(Simplify(refs, v.GetPattern())))
+		return cRef(simplifyNot(simp(v.GetPattern())))
 	case *relapse.ZAny:
 		return p
 	case *relapse.Contains:
-		return checkRef(refs, simplifyContains(Simplify(refs, v.GetPattern())))
+		return cRef(simplifyContains(simp(v.GetPattern())))
 	case *relapse.Optional:
-		return simplifyOptional(Simplify(refs, v.GetPattern()))
+		return simplifyOptional(simp(v.GetPattern()))
 	case *relapse.Interleave:
-		return checkRef(refs, simplifyInterleave(refs,
-			Simplify(refs, v.GetLeftPattern()),
-			Simplify(refs, v.GetRightPattern()),
+		return cRef(simplifyInterleave(refs,
+			simp(v.GetLeftPattern()),
+			simp(v.GetRightPattern()),
 		))
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
@@ -136,6 +149,9 @@ func simplifyOr(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Patter
 	right := getOrs(p2)
 	list := append(left, right...)
 	list = relapse.Set(list)
+	list = simplifyChildren(list, func(left, right *relapse.Pattern) *relapse.Pattern {
+		return simplifyOr(refs, left, right)
+	})
 	relapse.Sort(list)
 	var p *relapse.Pattern = list[0]
 	for i := range list {
@@ -152,6 +168,36 @@ func getAnds(p *relapse.Pattern) []*relapse.Pattern {
 		return append(getAnds(p.And.GetLeftPattern()), getAnds(p.And.GetRightPattern())...)
 	}
 	return []*relapse.Pattern{p}
+}
+
+func simplifyChildren(children []*relapse.Pattern, op func(left, right *relapse.Pattern) *relapse.Pattern) []*relapse.Pattern {
+	if len(children) == 0 || len(children) == 1 {
+		return children
+	}
+	c0 := children[0].Contains
+	c1 := children[1].Contains
+	if c0 != nil && c1 != nil {
+		t0 := c0.GetPattern().TreeNode
+		t1 := c1.GetPattern().TreeNode
+		if t0 != nil && t1 != nil {
+			if t0.GetName().Equal(t1.GetName()) {
+				newchild := relapse.NewContains(relapse.NewTreeNode(t0.GetName(), op(t0.GetPattern(), t1.GetPattern())))
+				children[1] = newchild
+				return simplifyChildren(children[1:], op)
+			}
+		}
+	} else {
+		t0 := children[0].TreeNode
+		t1 := children[1].TreeNode
+		if t0 != nil && t1 != nil {
+			if t0.GetName().Equal(t1.GetName()) {
+				newchild := relapse.NewTreeNode(t0.GetName(), op(t0.GetPattern(), t1.GetPattern()))
+				children[1] = newchild
+				return simplifyChildren(children[1:], op)
+			}
+		}
+	}
+	return append([]*relapse.Pattern{children[0]}, simplifyChildren(children[1:], op)...)
 }
 
 func simplifyAnd(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
@@ -182,6 +228,9 @@ func simplifyAnd(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Patte
 	right := getAnds(p2)
 	list := append(left, right...)
 	list = relapse.Set(list)
+	list = simplifyChildren(list, func(left, right *relapse.Pattern) *relapse.Pattern {
+		return simplifyAnd(refs, left, right)
+	})
 	relapse.Sort(list)
 	var p *relapse.Pattern = list[0]
 	for i := range list {

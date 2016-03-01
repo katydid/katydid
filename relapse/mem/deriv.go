@@ -98,9 +98,9 @@ func derivCall(refs map[string]*relapse.Pattern, p *relapse.Pattern) []*callable
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *relapse.Empty:
-		return []*callable{&callable{nil, relapse.NewNot(relapse.NewZAny()), nil}}
+		return []*callable{}
 	case *relapse.ZAny:
-		return []*callable{&callable{nil, relapse.NewZAny(), nil}}
+		return []*callable{}
 	case *relapse.TreeNode:
 		b := nameexpr.NameToFunc(v.GetName())
 		return []*callable{&callable{b, v.GetPattern(), relapse.NewNot(relapse.NewZAny())}}
@@ -156,9 +156,9 @@ func derivReturn(refs map[string]*relapse.Pattern, p *relapse.Pattern, nullable 
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *relapse.Empty:
-		return relapse.NewNot(relapse.NewZAny()), nullable[1:]
+		return relapse.NewNot(relapse.NewZAny()), nullable
 	case *relapse.ZAny:
-		return relapse.NewZAny(), nullable[1:]
+		return relapse.NewZAny(), nullable
 	case *relapse.TreeNode:
 		if nullable[0] {
 			return relapse.NewEmpty(), nullable[1:]

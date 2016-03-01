@@ -17,10 +17,14 @@ package mem
 import (
 	"fmt"
 	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse/interp"
 )
 
 func Compile(g *relapse.Grammar) *Mem {
 	refs := relapse.NewRefsLookup(g)
+	for name, p := range refs {
+		refs[name] = interp.Simplify(refs, p)
+	}
 	mem := newMem(refs)
 	changed := true
 	visited := make(map[int]bool)

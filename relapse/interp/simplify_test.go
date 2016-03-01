@@ -63,3 +63,33 @@ func TestSimplifyOr2(t *testing.T) {
 		t.Fatalf("expected %v, but got %v", expected, output)
 	}
 }
+
+func TestSimplifyTree(t *testing.T) {
+	left := relapse.NewContains(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewContains(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewContains(
+			relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewZAny()),
+		)),
+	)))
+	right := relapse.NewContains(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewContains(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewContains(
+			relapse.NewTreeNode(relapse.NewStringName("D"), relapse.NewZAny()),
+		)),
+	)))
+	input := relapse.NewAnd(left, right)
+	expected := relapse.NewContains(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewContains(
+		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewAnd(
+			relapse.NewContains(
+				relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewZAny()),
+			),
+			relapse.NewContains(
+				relapse.NewTreeNode(relapse.NewStringName("D"), relapse.NewZAny()),
+			),
+		)),
+	)))
+	refs := relapse.RefLookup{"main": input}
+	output := Simplify(refs, input)
+	t.Logf("%v", output)
+	if !expected.Equal(output) {
+		t.Fatalf("expected %v, but got %v", expected, output)
+	}
+}
