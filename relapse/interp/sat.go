@@ -15,8 +15,6 @@
 package interp
 
 import (
-	"fmt"
-	"github.com/katydid/katydid/expr/ast"
 	"github.com/katydid/katydid/relapse/ast"
 )
 
@@ -25,62 +23,6 @@ import (
 func Satisfiable(g *relapse.Grammar) bool {
 	refs := relapse.NewRefsLookup(g)
 	p := refs["main"]
-	return sat(refs, p)
-}
-
-func satName(nameExpr *relapse.NameExpr) bool {
-	typ := nameExpr.GetValue()
-	switch v := typ.(type) {
-	case *relapse.Name:
-		return true
-	case *relapse.AnyName:
-		return true
-	case *relapse.AnyNameExcept:
-		return true // TODO for example:
-		// - AnyNameExcept(Any) == false
-		// - AnyNameExcept(NameChoice(Any, Name("a"))) == false
-		// - AnyNameExcept(AnyNameExcept(Any)) == true
-	case *relapse.NameChoice:
-		return satName(v.GetLeft()) || satName(v.GetRight())
-	}
-	panic(fmt.Sprintf("unknown nameExpr typ %T", typ))
-}
-
-// This function returns mostly false positives, given the nature of user defined functions.
-func satLeaf(expr *expr.Expr) bool {
-	if expr.Terminal != nil && expr.GetTerminal().BoolValue != nil {
-		return expr.GetTerminal().GetBoolValue()
-	}
-	//TODO all functions without any variables should be evaluatable.
-	return true //TODO some standard functions should be evaluatable.
-}
-
-func sat(refs relapse.RefLookup, p *relapse.Pattern) bool {
-	typ := p.GetValue()
-	switch v := typ.(type) {
-	case *relapse.Empty:
-		return true
-	case *relapse.TreeNode:
-		return satName(v.GetName()) && sat(refs, v.GetPattern())
-	case *relapse.LeafNode:
-		return satLeaf(v.GetExpr())
-	case *relapse.Concat:
-		return sat(refs, v.GetLeftPattern()) && sat(refs, v.GetRightPattern())
-	case *relapse.Or:
-		return sat(refs, v.GetLeftPattern()) || sat(refs, v.GetRightPattern())
-	case *relapse.And:
-		return sat(refs, v.GetLeftPattern()) && sat(refs, v.GetRightPattern())
-	case *relapse.ZeroOrMore:
-		return true
-	case *relapse.Reference:
-		return sat(refs, refs[v.GetName()])
-	case *relapse.Not:
-		if v.GetPattern().ZAny != nil {
-			return false
-		}
-		return true // TODO
-	case *relapse.ZAny:
-		return true
-	}
-	panic(fmt.Sprintf("unknown pattern typ %T", typ))
+	sp := Simplify(refs, p)
+	return !isNotZany(sp)
 }

@@ -15,7 +15,9 @@
 package interp_test
 
 import (
+	"github.com/katydid/katydid/funcs"
 	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse/combinator"
 	. "github.com/katydid/katydid/relapse/interp"
 	"github.com/katydid/katydid/tests"
 	"testing"
@@ -86,6 +88,50 @@ func TestSimplifyTree(t *testing.T) {
 			),
 		)),
 	)
+	refs := relapse.RefLookup{"main": input}
+	output := Simplify(refs, input)
+	t.Logf("%v", output)
+	if !expected.Equal(output) {
+		t.Fatalf("expected %v, but got %v", expected, output)
+	}
+}
+
+func TestSimplifyFalseLeaf(t *testing.T) {
+	input := combinator.Value(funcs.And(funcs.StringEq(funcs.StringVar(), funcs.StringConst("a")), funcs.StringEq(funcs.StringVar(), funcs.StringConst("b"))))
+	expected := relapse.NewNot(relapse.NewZAny())
+	refs := relapse.RefLookup{"main": input}
+	output := Simplify(refs, input)
+	t.Logf("%v", output)
+	if !expected.Equal(output) {
+		t.Fatalf("expected %v, but got %v", expected, output)
+	}
+}
+
+func TestSimplifyFalseTreeNode(t *testing.T) {
+	input := relapse.NewTreeNode(relapse.NewAnyNameExcept(relapse.NewAnyName()), relapse.NewZAny())
+	expected := relapse.NewNot(relapse.NewZAny())
+	refs := relapse.RefLookup{"main": input}
+	output := Simplify(refs, input)
+	t.Logf("%v", output)
+	if !expected.Equal(output) {
+		t.Fatalf("expected %v, but got %v", expected, output)
+	}
+}
+
+func TestSimplifyTreeNodeWithNotZanyChild(t *testing.T) {
+	input := relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewNot(relapse.NewZAny()))
+	expected := relapse.NewNot(relapse.NewZAny())
+	refs := relapse.RefLookup{"main": input}
+	output := Simplify(refs, input)
+	t.Logf("%v", output)
+	if !expected.Equal(output) {
+		t.Fatalf("expected %v, but got %v", expected, output)
+	}
+}
+
+func TestSimplifyContainsFalseTreeNode(t *testing.T) {
+	input := relapse.NewContains(relapse.NewTreeNode(relapse.NewAnyNameExcept(relapse.NewAnyName()), relapse.NewZAny()))
+	expected := relapse.NewNot(relapse.NewZAny())
 	refs := relapse.RefLookup{"main": input}
 	output := Simplify(refs, input)
 	t.Logf("%v", output)

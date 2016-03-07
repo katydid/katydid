@@ -116,6 +116,24 @@ func sprint(i interface{}) string {
 	return name + "(" + strings.Join(ss, ",") + ")"
 }
 
+func IsFalse(fn Bool) bool {
+	f := Simplify(fn)
+	v, ok := f.(*constBool)
+	if !ok {
+		return false
+	}
+	return v.v == false
+}
+
+func IsTrue(fn Bool) bool {
+	f := Simplify(fn)
+	v, ok := f.(*constBool)
+	if !ok {
+		return false
+	}
+	return v.v == true
+}
+
 func Equal(l, r interface{}) bool {
 	le := reflect.ValueOf(l).Elem()
 	lUniqName := le.Type().Name()
