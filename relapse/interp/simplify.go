@@ -31,6 +31,13 @@ func checkRef(refs relapse.RefLookup, p *relapse.Pattern) *relapse.Pattern {
 	return p
 }
 
+func SimplifyGrammar(g *relapse.Grammar) *relapse.Grammar {
+	refs := relapse.NewRefsLookup(g)
+	p := Simplify(refs, refs["main"])
+	refs["main"] = p
+	return relapse.NewGrammar(refs)
+}
+
 func Simplify(refs relapse.RefLookup, p *relapse.Pattern) *relapse.Pattern {
 	return simplify(refs, p, true)
 }
@@ -50,15 +57,19 @@ func simplify(refs relapse.RefLookup, p *relapse.Pattern, top bool) *relapse.Pat
 	case *relapse.Empty:
 		return p
 	case *relapse.TreeNode:
-		b := nameexpr.NameToFunc(v.GetName())
-		if funcs.IsFalse(b) {
-			return relapse.NewNot(relapse.NewZAny())
-		}
 		child := simp(v.GetPattern())
 		if isNotZany(child) {
 			return relapse.NewNot(relapse.NewZAny())
 		}
-		return cRef(relapse.NewTreeNode(v.GetName(), child))
+		name := v.GetName()
+		b := nameexpr.NameToFunc(v.GetName())
+		if funcs.IsFalse(b) {
+			return relapse.NewNot(relapse.NewZAny())
+		}
+		if funcs.IsTrue(b) {
+			name = relapse.NewAnyName()
+		}
+		return cRef(relapse.NewTreeNode(name, child))
 	case *relapse.LeafNode:
 		b, err := compose.NewBool(v.GetExpr())
 		if err != nil {

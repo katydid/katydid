@@ -23,25 +23,29 @@ import (
 	"testing"
 )
 
+var alwaysFalse = Value(BoolConst(false))
+var f = Value(StringEq(StringVar(), StringConst("#")))
+var f2 = Value(StringEq(StringVar(), StringConst("?")))
+
 func getExpr(pattern *relapse.Pattern) *expr.Expr {
 	return pattern.GetLeafNode().GetExpr()
 }
 
 func TestAnal1(t *testing.T) {
-	f := Value(StringEq(StringVar(), StringConst("#")))
-	f2 := Value(StringEq(StringVar(), StringConst("?")))
-	alwaysFalse := getExpr(Value(BoolConst(false)))
 	g := G{
 		"main": In("A", In("B", In("c", f))),
 	}.Grammar()
-	leafs := interp.GetLeafs(g, "A", "B", "c")
+	newg := g.Clone()
+	path := []*relapse.NameExpr{relapse.NewStringName("A"), relapse.NewStringName("B"), relapse.NewStringName("c")}
+	leafs := interp.ChildrenOf(newg, path)
+	leafs = interp.LeafNodesOf(newg, leafs...)
 	if len(leafs) != 1 {
 		t.Fatalf("expected %d leafs, but got %d", 1, len(leafs))
 	}
-	if !interp.CompareVarExpr(leafs[0], getExpr(f2)) {
+	if !interp.CompareVarExpr(leafs[0].LeafNode.Expr, getExpr(f2)) {
 		t.Fatalf("expected %s but got %s", f2, leafs[0].String())
 	}
-	newg := interp.Replace(g, leafs[0], alwaysFalse, "A", "B", "c")
+	leafs[0].LeafNode = alwaysFalse.LeafNode
 	if interp.Satisfiable(newg) {
 		t.Fatalf("should be unsatisfiable: %s", newg)
 	}
@@ -51,9 +55,6 @@ func TestAnal1(t *testing.T) {
 }
 
 func TestAnal2(t *testing.T) {
-	f := Value(StringEq(StringVar(), StringConst("#")))
-	f2 := Value(StringEq(StringVar(), StringConst("?")))
-	alwaysFalse := getExpr(Value(BoolConst(false)))
 	g := G{
 		"main": AnyOf(
 			In("A", AllOf(
@@ -63,14 +64,17 @@ func TestAnal2(t *testing.T) {
 			In("D", In("c", f)),
 		),
 	}.Grammar()
-	leafs := interp.GetLeafs(g, "A", "B", "c")
+	newg := g.Clone()
+	path := []*relapse.NameExpr{relapse.NewStringName("A"), relapse.NewStringName("B"), relapse.NewStringName("c")}
+	leafs := interp.ChildrenOf(newg, path)
+	leafs = interp.LeafNodesOf(newg, leafs...)
 	if len(leafs) != 1 {
 		t.Fatalf("expected %d leafs, but got %d", 1, len(leafs))
 	}
-	if !interp.CompareVarExpr(leafs[0], getExpr(f2)) {
+	if !interp.CompareVarExpr(leafs[0].LeafNode.Expr, getExpr(f2)) {
 		t.Fatalf("expected %s but got %s", f2, leafs[0].String())
 	}
-	newg := interp.Replace(g, leafs[0], alwaysFalse, "A", "B", "c")
+	leafs[0].LeafNode = alwaysFalse.LeafNode
 	if !interp.Satisfiable(newg) {
 		t.Fatalf("should be satisfiable: %s", newg)
 	}
@@ -80,9 +84,6 @@ func TestAnal2(t *testing.T) {
 }
 
 func TestAnal3(t *testing.T) {
-	f := Value(StringEq(StringVar(), StringConst("#")))
-	f2 := Value(StringEq(StringVar(), StringConst("?")))
-	alwaysFalse := getExpr(Value(BoolConst(false)))
 	g := G{
 		"main": AnyOf(
 			In("A", AllOf(
@@ -92,14 +93,17 @@ func TestAnal3(t *testing.T) {
 			In("D", In("c", f)),
 		),
 	}.Grammar()
-	leafs := interp.GetLeafs(g, "A", "B", "c")
+	newg := g.Clone()
+	path := []*relapse.NameExpr{relapse.NewStringName("A"), relapse.NewStringName("B"), relapse.NewStringName("c")}
+	leafs := interp.ChildrenOf(newg, path)
+	leafs = interp.LeafNodesOf(newg, leafs...)
 	if len(leafs) != 1 {
 		t.Fatalf("expected %d leafs, but got %d", 1, len(leafs))
 	}
-	if !interp.CompareVarExpr(leafs[0], getExpr(f2)) {
+	if !interp.CompareVarExpr(leafs[0].LeafNode.Expr, getExpr(f2)) {
 		t.Fatalf("expected %s but got %s", f2, leafs[0].String())
 	}
-	newg := interp.Replace(g, leafs[0], alwaysFalse, "A", "B", "c")
+	leafs[0].LeafNode = alwaysFalse.LeafNode
 	if !interp.Satisfiable(newg) {
 		t.Fatalf("should be satisfiable: %s", newg)
 	}
@@ -109,12 +113,11 @@ func TestAnal3(t *testing.T) {
 }
 
 func TestAnal4(t *testing.T) {
-	f := Value(StringEq(StringVar(), StringConst("#")))
 	g := G{
-		"main": AnyOf(
-			In("A", AllOf(
-				Many(In("B", In("c", f))),
-				In("B", AnyOf(
+		"main": AllOf(
+			In("A", AnyOf(
+				In("B", In("c", f)),
+				In("B", AllOf(
 					In("d", f),
 					In("c", f),
 				)),
@@ -122,9 +125,137 @@ func TestAnal4(t *testing.T) {
 			In("D", In("c", f)),
 		),
 	}.Grammar()
-	leafs := interp.GetLeafs(g, "A", "B", "c")
+	newg := g.Clone()
+	path := []*relapse.NameExpr{relapse.NewStringName("A"), relapse.NewStringName("B"), relapse.NewStringName("c")}
+	leafs := interp.ChildrenOf(newg, path)
+	leafs = interp.LeafNodesOf(newg, leafs...)
 	if len(leafs) != 2 {
 		t.Fatalf("expected %d leafs, but got %d", 2, len(leafs))
 	}
+	for i := range leafs {
+		if !interp.CompareVarExpr(leafs[i].LeafNode.Expr, getExpr(f2)) {
+			t.Fatalf("expected %s but got %s", f2, leafs[0].String())
+		}
+		leafs[i].LeafNode = alwaysFalse.LeafNode
+	}
+	if interp.Satisfiable(newg) {
+		t.Fatalf("should be unsatisfiable: %s", newg)
+	}
+	if !interp.Satisfiable(g) {
+		t.Fatalf("should be satisfiable: %s", g)
+	}
+}
 
+func TestAnal5Repeated(t *testing.T) {
+	g := G{
+		"main": In("A", InAny(In("c", InAny(f)))),
+	}.Grammar()
+	newg := g.Clone()
+	path := []*relapse.NameExpr{relapse.NewStringName("A"), relapse.NewAnyName(), relapse.NewStringName("c"), relapse.NewAnyName()}
+	leafs := interp.ChildrenOf(newg, path)
+	leafs = interp.LeafNodesOf(newg, leafs...)
+	if len(leafs) != 1 {
+		t.Fatalf("expected %d leafs, but got %d", 1, len(leafs))
+	}
+	if !interp.CompareVarExpr(leafs[0].LeafNode.Expr, getExpr(f2)) {
+		t.Fatalf("expected %s but got %s", f2, leafs[0].String())
+	}
+	leafs[0].LeafNode = alwaysFalse.LeafNode
+	if interp.Satisfiable(newg) {
+		t.Fatalf("should be unsatisfiable: %s", newg)
+	}
+	if !interp.Satisfiable(g) {
+		t.Fatalf("should be satisfiable: %s", g)
+	}
+}
+
+func TestAnal6TreeNode(t *testing.T) {
+	g := G{
+		"main": In("A", In("B", In("c", f))),
+	}.Grammar()
+	newg := g.Clone()
+	path := []*relapse.NameExpr{relapse.NewStringName("A")}
+	trees := interp.ChildrenOf(newg, path)
+	trees = interp.TreeNodesOf(newg, trees...)
+	if len(trees) != 1 {
+		t.Fatalf("expected %d trees, but got %d", 1, len(trees))
+	}
+	trees[0].TreeNode.Name = relapse.NewAnyNameExcept(relapse.NewAnyName())
+	if interp.Satisfiable(newg) {
+		t.Fatalf("should be unsatisfiable: %s", newg)
+	}
+	if !interp.Satisfiable(g) {
+		t.Fatalf("should be satisfiable: %s", g)
+	}
+}
+
+func TestAnal7TreeNodes(t *testing.T) {
+	g := G{
+		"main": AllOf(
+			In("A", AnyOf(
+				In("B", In("c", f)),
+				In("B", AllOf(
+					In("d", f),
+					In("c", f),
+				)),
+			)),
+			In("D", In("c", f)),
+		),
+	}.Grammar()
+	newg := g.Clone()
+	path := []*relapse.NameExpr{relapse.NewStringName("A")}
+	trees := interp.ChildrenOf(newg, path)
+	trees = interp.TreeNodesOf(newg, trees...)
+	if len(trees) != 2 {
+		t.Fatalf("expected %d trees, but got %d", 2, len(trees))
+	}
+	for i := range trees {
+		trees[i].TreeNode.Name = relapse.NewAnyNameExcept(relapse.NewAnyName())
+	}
+	if interp.Satisfiable(newg) {
+		t.Fatalf("should be unsatisfiable: %s", newg)
+	}
+	if !interp.Satisfiable(g) {
+		t.Fatalf("should be satisfiable: %s", g)
+	}
+}
+
+func TestAnal8TreeNodes2(t *testing.T) {
+	g := G{
+		"main": AllOf(
+			In("A", AnyOf(
+				In("B", In("c", f)),
+				In("C", AllOf(
+					In("d", f),
+					In("c", f),
+				)),
+			)),
+			In("D", In("c", f)),
+		),
+	}.Grammar()
+	newg := g.Clone()
+	path := []*relapse.NameExpr{relapse.NewStringName("A")}
+	trees := interp.ChildrenOf(newg, path)
+	trees = interp.TreeNodesOf(newg, trees...)
+	if len(trees) != 2 {
+		t.Fatalf("expected %d trees, but got %d", 2, len(trees))
+	}
+	for i := range trees {
+		if trees[i].TreeNode.Name.Equal(relapse.NewStringName("B")) {
+			trees[i].TreeNode.Name = relapse.NewAnyNameExcept(relapse.NewAnyName())
+		}
+	}
+	if !interp.Satisfiable(newg) {
+		t.Fatalf("should be satisfiable: %s", newg)
+	}
+	if !interp.Satisfiable(g) {
+		t.Fatalf("should be satisfiable: %s", g)
+	}
+	newerg := interp.SimplifyGrammar(newg)
+	t.Logf("%v", newerg)
+	trees = interp.ChildrenOf(newerg, path)
+	trees = interp.TreeNodesOf(newerg, trees...)
+	if len(trees) != 1 {
+		t.Fatalf("expected %d trees, but got %d", 1, len(trees))
+	}
 }
