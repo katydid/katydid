@@ -12,6 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+//Internal command that checks each file for a license
 package main
 
 import (
