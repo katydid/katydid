@@ -15,14 +15,14 @@
 package mem
 
 import (
+	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse"
 	"github.com/katydid/katydid/relapse/interp"
-	"github.com/katydid/katydid/serialize"
 )
 
 //This is a naive implementation and it does not handle left recursion
-func (mem *Mem) Interpret(parser serialize.Parser) bool {
-	final := deriv(mem, mem.Start, parser)
+func (mem *Mem) Interpret(p parser.Interface) bool {
+	final := deriv(mem, mem.Start, p)
 	return mem.accept(final)
 }
 

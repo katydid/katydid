@@ -18,16 +18,16 @@ import (
 	"fmt"
 	"github.com/katydid/katydid/expr"
 	"github.com/katydid/katydid/expr/funcs"
-	"github.com/katydid/katydid/serialize"
+	"github.com/katydid/katydid/parser"
 	"reflect"
 )
 
 type Bool interface {
-	Eval(serialize.Decoder) (bool, error)
+	Eval(parser.Value) (bool, error)
 }
 
 type Decoder interface {
-	SetDecoder(serialize.Decoder)
+	SetDecoder(parser.Value)
 }
 
 type composedBool struct {
@@ -84,7 +84,7 @@ func NewBoolFunc(f funcs.Bool) (*composedBool, error) {
 	return &composedBool{decs, e}, nil
 }
 
-func (this *composedBool) Eval(dec serialize.Decoder) (bool, error) {
+func (this *composedBool) Eval(dec parser.Value) (bool, error) {
 	for _, v := range this.Decoders {
 		v.SetDecoder(dec)
 	}

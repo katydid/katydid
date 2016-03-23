@@ -15,21 +15,21 @@
 package mem_test
 
 import (
+	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse"
 	"github.com/katydid/katydid/relapse/interp"
 	"github.com/katydid/katydid/relapse/mem"
-	"github.com/katydid/katydid/serialize"
-	//"github.com/katydid/katydid/serialize/debug"
+	//"github.com/katydid/katydid/parser/debug"
 	"testing"
 )
 
-func test(t *testing.T, g *relapse.Grammar, parser serialize.Parser, expected bool, desc string) {
+func test(t *testing.T, g *relapse.Grammar, p parser.Interface, expected bool, desc string) {
 	if interp.HasLeftRecursion(g) {
 		t.Skipf("interp was not designed to handle left recursion")
 	}
 	//parser = debug.NewLogger(parser, debug.NewLineLogger())
 	c := mem.Compile(g)
-	match := c.Interpret(parser)
+	match := c.Interpret(p)
 	if match != expected {
 		t.Fatalf("Expected %v on given \n%s\n on \n%s", expected, g.String(), desc)
 	}

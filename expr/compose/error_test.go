@@ -17,15 +17,15 @@ package compose_test
 import (
 	"github.com/katydid/katydid/expr/compose"
 	. "github.com/katydid/katydid/expr/funcs"
-	"github.com/katydid/katydid/expr/parser"
-	"github.com/katydid/katydid/serialize"
+	exprparser "github.com/katydid/katydid/expr/parser"
+	"github.com/katydid/katydid/parser"
 	"testing"
 )
 
 func TestNoEqualError(t *testing.T) {
 	exprStr := Sprint(StringEq(ElemStrings(NewListOfString([]String{StringVar()}), IntConst(3)), StringConst("0123456789")))
 	t.Logf(exprStr)
-	e, err := parser.NewParser().ParseExpr(exprStr)
+	e, err := exprparser.NewParser().ParseExpr(exprStr)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -37,7 +37,7 @@ func TestNoEqualError(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if v, err := f.Eval(serialize.NewStringValue("0")); err != nil {
+	if v, err := f.Eval(parser.NewStringValue("0")); err != nil {
 		t.Fatal(err)
 	} else if v {
 		t.Fatalf("expected false")

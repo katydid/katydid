@@ -16,7 +16,7 @@ package prototests
 
 import (
 	"github.com/gogo/protobuf/proto"
-	. "github.com/katydid/katydid/serialize/debug"
+	. "github.com/katydid/katydid/parser/debug"
 )
 
 var AContainer = &Container{

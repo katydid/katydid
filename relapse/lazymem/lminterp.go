@@ -16,15 +16,15 @@ package lazymem
 
 import (
 	"fmt"
+	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse"
-	"github.com/katydid/katydid/serialize"
 	"io"
 	"strconv"
 )
 
-type memoize map[*Pattern]map[serialize.Parser]*Pattern
+type memoize map[*Pattern]map[parser.Interface]*Pattern
 
-func (this memoize) Get(p *Pattern, tree serialize.Parser) *Pattern {
+func (this memoize) Get(p *Pattern, tree parser.Interface) *Pattern {
 	t := this[p]
 	if t == nil {
 		return nil
@@ -32,10 +32,10 @@ func (this memoize) Get(p *Pattern, tree serialize.Parser) *Pattern {
 	return t[tree]
 }
 
-func (this memoize) Add(p *Pattern, tree serialize.Parser, d *Pattern) {
+func (this memoize) Add(p *Pattern, tree parser.Interface, d *Pattern) {
 	t := this[p]
 	if t == nil {
-		this[p] = make(map[serialize.Parser]*Pattern)
+		this[p] = make(map[parser.Interface]*Pattern)
 	}
 	this[p][tree] = d
 }
@@ -44,7 +44,7 @@ type Interpreter struct {
 	p *Pattern
 }
 
-func (this *Interpreter) Interpret(tree serialize.Parser) bool {
+func (this *Interpreter) Interpret(tree parser.Interface) bool {
 	interpret := &interpreter{make(memoize), 0}
 	res := this.p
 	err := tree.Next()
@@ -71,7 +71,7 @@ func NewInterpreter(g *relapse.Grammar) *Interpreter {
 	return &Interpreter{Simplify(p)}
 }
 
-func Interpret(g *relapse.Grammar, tree serialize.Parser) bool {
+func Interpret(g *relapse.Grammar, tree parser.Interface) bool {
 	return NewInterpreter(g).Interpret(tree)
 }
 
@@ -85,7 +85,7 @@ func (this *interpreter) newName() string {
 	return "ref" + strconv.Itoa(this.refNum)
 }
 
-func (this *interpreter) derivNode(p *Node, tree serialize.Parser) *Pattern {
+func (this *interpreter) derivNode(p *Node, tree parser.Interface) *Pattern {
 	matched, err := p.F.Eval(tree)
 	if err != nil {
 		return NewNot(NewZAny())
@@ -128,7 +128,7 @@ func (this *interpreter) derivNode(p *Node, tree serialize.Parser) *Pattern {
 	return NewEmpty()
 }
 
-func (this *interpreter) lderiv(p *Pattern, tree serialize.Parser) *Pattern {
+func (this *interpreter) lderiv(p *Pattern, tree parser.Interface) *Pattern {
 	m := this.mem.Get(p, tree)
 	if m != nil {
 		return m
@@ -153,7 +153,7 @@ func (this *interpreter) lderiv(p *Pattern, tree serialize.Parser) *Pattern {
 	return res
 }
 
-func (this *interpreter) deriv(p *Pattern, tree serialize.Parser) *Pattern {
+func (this *interpreter) deriv(p *Pattern, tree parser.Interface) *Pattern {
 	head := p.Head().GetValue()
 	switch v := head.(type) {
 	case *Empty:

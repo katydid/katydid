@@ -12,11 +12,11 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package serialize
+package parser
 
 import "fmt"
 
-type Decoder interface {
+type Value interface {
 	Double() (float64, error)
 	Int() (int64, error)
 	Uint() (uint64, error)
@@ -27,19 +27,19 @@ type Decoder interface {
 
 type errValue struct{}
 
-type Parser interface {
+type Interface interface {
 	Next() error
 	IsLeaf() bool
 	Up()
 	Down()
-	Decoder
+	Value
 }
 
-func Sprint(value Decoder) string {
+func Sprint(value Value) string {
 	return fmt.Sprintf("%#v", getValue(value))
 }
 
-func getValue(value Decoder) interface{} {
+func getValue(value Value) interface{} {
 	var v interface{}
 	var err error
 	v, err = value.Bool()

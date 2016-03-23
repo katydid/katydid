@@ -17,19 +17,19 @@ package lazymem_test
 import (
 	"github.com/katydid/katydid/relapse"
 	//"github.com/katydid/katydid/relapse/interp"
+	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/lazymem"
-	"github.com/katydid/katydid/serialize"
-	//"github.com/katydid/katydid/serialize/debug"
+	//"github.com/katydid/katydid/parser/debug"
 	"testing"
 )
 
-func test(t *testing.T, g *relapse.Grammar, parser serialize.Parser, expected bool, desc string) {
+func test(t *testing.T, g *relapse.Grammar, p parser.Interface, expected bool, desc string) {
 	t.Skipf("TODO: remove usage of parser.Copy")
 	// if interp.HasLeftRecursion(g) {
 	// 	t.Skipf("skipping left recursive grammar %v", g)
 	// }
 	//parser = debug.NewLogger(parser, debug.NewLineLogger())
-	match := lazymem.Interpret(g, parser)
+	match := lazymem.Interpret(g, p)
 	if match != expected {
 		t.Fatalf("Expected %v on given \n%s\n on \n%s", expected, g.String(), desc)
 	}

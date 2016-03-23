@@ -20,16 +20,16 @@ import (
 	"github.com/katydid/katydid/expr/compose"
 	"github.com/katydid/katydid/expr/funcs"
 	exprparser "github.com/katydid/katydid/expr/parser"
-	"github.com/katydid/katydid/serialize"
+	"github.com/katydid/katydid/parser"
 )
 
-func EvalName(nameExpr *expr.NameExpr, tree serialize.Decoder) bool {
+func EvalName(nameExpr *expr.NameExpr, name parser.Value) bool {
 	f := NameToFunc(nameExpr)
 	b, err := compose.NewBoolFunc(f)
 	if err != nil {
 		panic(err)
 	}
-	v, err := b.Eval(tree)
+	v, err := b.Eval(name)
 	if err != nil {
 		panic(err)
 	}

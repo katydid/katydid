@@ -18,8 +18,8 @@ import (
 	"fmt"
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 	"github.com/katydid/katydid/expr"
+	"github.com/katydid/katydid/parser/proto"
 	"github.com/katydid/katydid/relapse"
-	"github.com/katydid/katydid/serialize/proto"
 )
 
 func FieldNamesToNumbers(pkgName, msgName string, desc *descriptor.FileDescriptorSet, grammar *relapse.Grammar) (*relapse.Grammar, error) {

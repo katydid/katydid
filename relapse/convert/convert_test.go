@@ -15,19 +15,19 @@
 package convert_test
 
 import (
+	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse"
 	"github.com/katydid/katydid/relapse/convert"
 	"github.com/katydid/katydid/relapse/interp"
-	"github.com/katydid/katydid/serialize"
 	"testing"
 )
 
-func test(t *testing.T, g *relapse.Grammar, parser serialize.Parser, expected bool, desc string) {
+func test(t *testing.T, g *relapse.Grammar, p parser.Interface, expected bool, desc string) {
 	if interp.HasLeftRecursion(g) {
 		t.Skipf("convert was not designed to handle recursion")
 	}
 	auto := convert.Compile(g)
-	match := convert.Interpret(auto, parser)
+	match := convert.Interpret(auto, p)
 	if match != expected {
 		t.Fatalf("Expected %v on given \n%s\n on \n%s", expected, g.String(), desc)
 	}

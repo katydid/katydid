@@ -16,8 +16,8 @@ package protonum
 
 import (
 	"github.com/katydid/katydid/expr"
+	"github.com/katydid/katydid/parser/debug"
 	"github.com/katydid/katydid/relapse"
-	"github.com/katydid/katydid/serialize/debug"
 	"testing"
 )
 

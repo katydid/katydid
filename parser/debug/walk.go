@@ -16,37 +16,37 @@ package debug
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/serialize"
+	"github.com/katydid/katydid/parser"
 	"io"
 	"math/rand"
 	"strings"
 	"time"
 )
 
-func getValue(parser serialize.Parser) interface{} {
+func getValue(p parser.Interface) interface{} {
 	var v interface{}
 	var err error
-	v, err = parser.Int()
+	v, err = p.Int()
 	if err == nil {
 		return v
 	}
-	v, err = parser.Uint()
+	v, err = p.Uint()
 	if err == nil {
 		return v
 	}
-	v, err = parser.Double()
+	v, err = p.Double()
 	if err == nil {
 		return v
 	}
-	v, err = parser.Bool()
+	v, err = p.Bool()
 	if err == nil {
 		return v
 	}
-	v, err = parser.String()
+	v, err = p.String()
 	if err == nil {
 		return v
 	}
-	v, err = parser.Bytes()
+	v, err = p.Bytes()
 	if err == nil {
 		return v
 	}
@@ -97,57 +97,57 @@ func (this Nodes) Equal(that Nodes) bool {
 	return true
 }
 
-func Walk(parser serialize.Parser) Nodes {
+func Walk(p parser.Interface) Nodes {
 	a := make(Nodes, 0)
 	for {
-		if err := parser.Next(); err != nil {
+		if err := p.Next(); err != nil {
 			if err == io.EOF {
 				break
 			} else {
 				panic(err)
 			}
 		}
-		value := getValue(parser)
-		if parser.IsLeaf() {
+		value := getValue(p)
+		if p.IsLeaf() {
 			a = append(a, Node{fmt.Sprintf("%v", value), nil})
 		} else {
 			name := fmt.Sprintf("%v", value)
-			parser.Down()
-			v := Walk(parser)
-			parser.Up()
+			p.Down()
+			v := Walk(p)
+			p.Up()
 			a = append(a, Node{name, v})
 		}
 	}
 	return a
 }
 
-func StringWalk(parser serialize.Parser) Nodes {
+func StringWalk(p parser.Interface) Nodes {
 	a := make(Nodes, 0)
 	for {
-		if err := parser.Next(); err != nil {
+		if err := p.Next(); err != nil {
 			if err == io.EOF {
 				break
 			} else {
 				panic(err)
 			}
 		}
-		if parser.IsLeaf() {
-			value := getValue(parser)
+		if p.IsLeaf() {
+			value := getValue(p)
 			a = append(a, Node{fmt.Sprintf("%v", value), nil})
 		} else {
 			var name string
-			index, err := parser.Int()
+			index, err := p.Int()
 			if err == nil {
 				name = fmt.Sprintf("%d", index)
 			} else {
-				name, err = parser.String()
+				name, err = p.String()
 				if err != nil {
 					panic(err)
 				}
 			}
-			parser.Down()
-			v := StringWalk(parser)
-			parser.Up()
+			p.Down()
+			v := StringWalk(p)
+			p.Up()
 			a = append(a, Node{name, v})
 		}
 	}
@@ -162,29 +162,29 @@ type Rand interface {
 	Intn(n int) int
 }
 
-func RandomWalk(parser serialize.Parser, r Rand, next, down int) Nodes {
+func RandomWalk(p parser.Interface, r Rand, next, down int) Nodes {
 	a := make(Nodes, 0)
 	for {
 		if r.Intn(next) == 0 {
 			break
 		}
-		if err := parser.Next(); err != nil {
+		if err := p.Next(); err != nil {
 			if err == io.EOF {
 				break
 			} else {
 				panic(err)
 			}
 		}
-		value := getValue(parser)
-		if parser.IsLeaf() {
+		value := getValue(p)
+		if p.IsLeaf() {
 			a = append(a, Node{fmt.Sprintf("%#v", value), nil})
 		} else {
 			name := fmt.Sprintf("%#v", value)
 			var v Nodes
 			if r.Intn(down) != 0 {
-				parser.Down()
-				v = RandomWalk(parser, r, next, down)
-				parser.Up()
+				p.Down()
+				v = RandomWalk(p, r, next, down)
+				p.Up()
 			}
 			a = append(a, Node{name, v})
 		}

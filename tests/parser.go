@@ -19,11 +19,11 @@ import (
 	"encoding/xml"
 	"github.com/gogo/protobuf/proto"
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
-	"github.com/katydid/katydid/serialize"
-	jparser "github.com/katydid/katydid/serialize/json"
-	pparser "github.com/katydid/katydid/serialize/proto"
-	rparser "github.com/katydid/katydid/serialize/reflect"
-	xparser "github.com/katydid/katydid/serialize/xml"
+	"github.com/katydid/katydid/parser"
+	jparser "github.com/katydid/katydid/parser/json"
+	pparser "github.com/katydid/katydid/parser/proto"
+	rparser "github.com/katydid/katydid/parser/reflect"
+	xparser "github.com/katydid/katydid/parser/xml"
 	"reflect"
 )
 
@@ -55,7 +55,7 @@ func Reflect(m interface{}) Codecs {
 	return Codecs{
 		Description: getDesc(m),
 		Parsers: map[string]NewParser{
-			"reflect": func() serialize.Parser {
+			"reflect": func() parser.Interface {
 				return NewReflectParser(m)
 			},
 		},
@@ -66,7 +66,7 @@ func Json(m interface{}) Codecs {
 	return Codecs{
 		Description: getDesc(m),
 		Parsers: map[string]NewParser{
-			"json": func() serialize.Parser {
+			"json": func() parser.Interface {
 				return NewJsonParser(m)
 			},
 		},
@@ -77,7 +77,7 @@ func JsonString(s string) Codecs {
 	return Codecs{
 		Description: s,
 		Parsers: map[string]NewParser{
-			"json": func() serialize.Parser {
+			"json": func() parser.Interface {
 				return NewJsonStringParser(s)
 			},
 		},
@@ -90,7 +90,7 @@ func ProtoName(m interface{}) Codecs {
 	return Codecs{
 		Description: getDesc(m),
 		Parsers: map[string]NewParser{
-			"protoName": func() serialize.Parser {
+			"protoName": func() parser.Interface {
 				return NewProtoNameParser(packageName, messageName, m.(ProtoMessage))
 			},
 		},
@@ -103,7 +103,7 @@ func ProtoNum(m interface{}) Codecs {
 	return Codecs{
 		Description: getDesc(m),
 		Parsers: map[string]NewParser{
-			"protoNum": func() serialize.Parser {
+			"protoNum": func() parser.Interface {
 				return NewProtoNumParser(packageName, messageName, m.(ProtoMessage))
 			},
 		},
@@ -114,7 +114,7 @@ func XML(m interface{}) Codecs {
 	return Codecs{
 		Description: getDesc(m),
 		Parsers: map[string]NewParser{
-			"xml": func() serialize.Parser {
+			"xml": func() parser.Interface {
 				return NewXMLParser(m)
 			},
 		},
@@ -125,22 +125,22 @@ func XMLString(s string) Codecs {
 	return Codecs{
 		Description: s,
 		Parsers: map[string]NewParser{
-			"xml": func() serialize.Parser {
+			"xml": func() parser.Interface {
 				return NewXMLStringParser(s)
 			},
 		},
 	}
 }
 
-type NewParser func() serialize.Parser
+type NewParser func() parser.Interface
 
-func NewReflectParser(m interface{}) serialize.Parser {
+func NewReflectParser(m interface{}) parser.Interface {
 	s := rparser.NewReflectParser()
 	s.Init(reflect.ValueOf(m))
 	return s
 }
 
-func NewJsonParser(m interface{}) serialize.Parser {
+func NewJsonParser(m interface{}) parser.Interface {
 	data, err := json.Marshal(m)
 	if err != nil {
 		panic(err)
@@ -153,7 +153,7 @@ func NewJsonParser(m interface{}) serialize.Parser {
 	return s
 }
 
-func NewJsonStringParser(s string) serialize.Parser {
+func NewJsonStringParser(s string) parser.Interface {
 	p := jparser.NewJsonParser()
 	err := p.Init([]byte(s))
 	if err != nil {
@@ -167,7 +167,7 @@ type ProtoMessage interface {
 	proto.Message
 }
 
-func NewProtoNameParser(pkg, msg string, m ProtoMessage) serialize.Parser {
+func NewProtoNameParser(pkg, msg string, m ProtoMessage) parser.Interface {
 	data, err := proto.Marshal(m)
 	if err != nil {
 		panic(err)
@@ -179,7 +179,7 @@ func NewProtoNameParser(pkg, msg string, m ProtoMessage) serialize.Parser {
 	return s
 }
 
-func NewProtoNumParser(pkg, msg string, m ProtoMessage) serialize.Parser {
+func NewProtoNumParser(pkg, msg string, m ProtoMessage) parser.Interface {
 	data, err := proto.Marshal(m)
 	if err != nil {
 		panic(err)
@@ -191,7 +191,7 @@ func NewProtoNumParser(pkg, msg string, m ProtoMessage) serialize.Parser {
 	return s
 }
 
-func NewXMLParser(m interface{}) serialize.Parser {
+func NewXMLParser(m interface{}) parser.Interface {
 	data, err := xml.Marshal(m)
 	if err != nil {
 		panic(err)
@@ -204,7 +204,7 @@ func NewXMLParser(m interface{}) serialize.Parser {
 	return s
 }
 
-func NewXMLStringParser(s string) serialize.Parser {
+func NewXMLStringParser(s string) parser.Interface {
 	p := xparser.NewXMLParser()
 	err := p.Init([]byte(s))
 	if err != nil {

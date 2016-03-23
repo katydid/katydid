@@ -15,7 +15,7 @@
 package reflect
 
 import (
-	"github.com/katydid/katydid/serialize"
+	"github.com/katydid/katydid/parser"
 	"io"
 	"reflect"
 )
@@ -30,7 +30,7 @@ type state struct {
 	isArray  bool
 }
 
-type parser struct {
+type reflectParser struct {
 	state
 	stack []state
 }
@@ -68,16 +68,16 @@ func isSlice(v reflect.Value) bool {
 	return v.Kind() == reflect.Slice && v.Type().Elem().Kind() != reflect.Uint8
 }
 
-func NewReflectParser() *parser {
-	return &parser{stack: make([]state, 0, 10)}
+func NewReflectParser() *reflectParser {
+	return &reflectParser{stack: make([]state, 0, 10)}
 }
 
-func (s *parser) Init(value reflect.Value) *parser {
+func (s *reflectParser) Init(value reflect.Value) *reflectParser {
 	s.state = newState(value)
 	return s
 }
 
-func (s *parser) Next() error {
+func (s *reflectParser) Next() error {
 	if s.field >= s.maxField {
 		return io.EOF
 	}
@@ -95,15 +95,15 @@ func (s *parser) Next() error {
 	return nil
 }
 
-func (s *parser) IsLeaf() bool {
+func (s *reflectParser) IsLeaf() bool {
 	return s.isLeaf
 }
 
-func (s *parser) getValue() reflect.Value {
+func (s *reflectParser) getValue() reflect.Value {
 	return deref(s.value)
 }
 
-func (s *parser) Double() (float64, error) {
+func (s *reflectParser) Double() (float64, error) {
 	if s.isLeaf {
 		value := s.getValue()
 		switch value.Kind() {
@@ -111,10 +111,10 @@ func (s *parser) Double() (float64, error) {
 			return value.Float(), nil
 		}
 	}
-	return 0, serialize.ErrNotDouble
+	return 0, parser.ErrNotDouble
 }
 
-func (s *parser) Int() (int64, error) {
+func (s *reflectParser) Int() (int64, error) {
 	if s.isArray {
 		return int64(s.field - 1), nil
 	}
@@ -125,10 +125,10 @@ func (s *parser) Int() (int64, error) {
 			return value.Int(), nil
 		}
 	}
-	return 0, serialize.ErrNotInt
+	return 0, parser.ErrNotInt
 }
 
-func (s *parser) Uint() (uint64, error) {
+func (s *reflectParser) Uint() (uint64, error) {
 	if s.isLeaf {
 		value := s.getValue()
 		switch value.Kind() {
@@ -136,10 +136,10 @@ func (s *parser) Uint() (uint64, error) {
 			return value.Uint(), nil
 		}
 	}
-	return 0, serialize.ErrNotUint
+	return 0, parser.ErrNotUint
 }
 
-func (s *parser) Bool() (bool, error) {
+func (s *reflectParser) Bool() (bool, error) {
 	if s.isLeaf {
 		value := s.getValue()
 		switch value.Kind() {
@@ -147,10 +147,10 @@ func (s *parser) Bool() (bool, error) {
 			return value.Bool(), nil
 		}
 	}
-	return false, serialize.ErrNotBool
+	return false, parser.ErrNotBool
 }
 
-func (s *parser) String() (string, error) {
+func (s *reflectParser) String() (string, error) {
 	if !s.isLeaf {
 		return s.typ.Name, nil
 	}
@@ -159,10 +159,10 @@ func (s *parser) String() (string, error) {
 	case reflect.String:
 		return value.String(), nil
 	}
-	return "", serialize.ErrNotString
+	return "", parser.ErrNotString
 }
 
-func (s *parser) Bytes() ([]byte, error) {
+func (s *reflectParser) Bytes() ([]byte, error) {
 	if s.isLeaf {
 		value := s.getValue()
 		switch value.Kind() {
@@ -170,16 +170,16 @@ func (s *parser) Bytes() ([]byte, error) {
 			return value.Bytes(), nil
 		}
 	}
-	return nil, serialize.ErrNotBytes
+	return nil, parser.ErrNotBytes
 }
 
-func (s *parser) Up() {
+func (s *reflectParser) Up() {
 	top := len(s.stack) - 1
 	s.state = s.stack[top]
 	s.stack = s.stack[:top]
 }
 
-func (s *parser) Down() {
+func (s *reflectParser) Down() {
 	s.stack = append(s.stack, s.state)
 	if s.isArray {
 		s.state = newState(s.state.parent.Index(s.field - 1))

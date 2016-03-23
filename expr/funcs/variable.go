@@ -15,7 +15,7 @@
 package funcs
 
 import (
-	"github.com/katydid/katydid/serialize"
+	"github.com/katydid/katydid/parser"
 )
 
 type Variable interface {
@@ -23,5 +23,5 @@ type Variable interface {
 }
 
 type Decoder interface {
-	SetDecoder(dec serialize.Decoder)
+	SetDecoder(dec parser.Value)
 }

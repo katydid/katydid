@@ -16,7 +16,7 @@ package xml
 
 import (
 	"encoding/json"
-	"github.com/katydid/katydid/serialize/debug"
+	"github.com/katydid/katydid/parser/debug"
 	"testing"
 )
 

@@ -15,9 +15,9 @@
 package convert
 
 import (
+	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse"
 	"github.com/katydid/katydid/relapse/mem"
-	"github.com/katydid/katydid/serialize"
 	"io"
 	"reflect"
 )
@@ -64,12 +64,12 @@ func Implements(auto *Auto, typ reflect.Type) []interface{} {
 	return allis
 }
 
-func Interpret(auto *Auto, parser serialize.Parser) bool {
-	final := deriv(auto, auto.Start, parser)
+func Interpret(auto *Auto, p parser.Interface) bool {
+	final := deriv(auto, auto.Start, p)
 	return auto.Accept[final]
 }
 
-func deriv(auto *Auto, current int, tree serialize.Parser) int {
+func deriv(auto *Auto, current int, tree parser.Interface) int {
 	for {
 		if !auto.Escapables[current] {
 			return current
@@ -94,7 +94,7 @@ func deriv(auto *Auto, current int, tree serialize.Parser) int {
 	return current
 }
 
-func checkderiv(auto *Auto, current int, tree serialize.Parser) int {
+func checkderiv(auto *Auto, current int, tree parser.Interface) int {
 	for {
 		if esc, ok := auto.Escapables[current]; ok {
 			if !esc {

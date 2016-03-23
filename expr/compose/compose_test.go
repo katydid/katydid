@@ -18,7 +18,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/katydid/katydid/expr"
 	"github.com/katydid/katydid/expr/funcs"
-	"github.com/katydid/katydid/serialize"
+	"github.com/katydid/katydid/parser"
 	"strings"
 	"testing"
 )
@@ -72,14 +72,14 @@ func TestComposeContains(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	r, err := f.Eval(serialize.NewStringValue("TheStreet"))
+	r, err := f.Eval(parser.NewStringValue("TheStreet"))
 	if err != nil {
 		panic(err)
 	}
 	if r != true {
 		t.Fatalf("expected true")
 	}
-	r, err = f.Eval(serialize.NewStringValue("ThatStreet"))
+	r, err = f.Eval(parser.NewStringValue("ThatStreet"))
 	if err != nil {
 		panic(err)
 	}
@@ -104,7 +104,7 @@ func TestComposeStringEq(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	r, err := f.Eval(serialize.NewStringValue("TheStreet"))
+	r, err := f.Eval(parser.NewStringValue("TheStreet"))
 	if err != nil {
 		panic(err)
 	}
@@ -188,7 +188,7 @@ func TestComposeRegex(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	r, err := f.Eval(serialize.NewStringValue("a"))
+	r, err := f.Eval(parser.NewStringValue("a"))
 	if err != nil {
 		panic(err)
 	}
@@ -262,7 +262,7 @@ func TestNoTrim(t *testing.T) {
 		t.Fatalf("too much trimming")
 	}
 	t.Logf("trimmed = %s", str)
-	r, err := f.Eval(serialize.NewStringValue("abc"))
+	r, err := f.Eval(parser.NewStringValue("abc"))
 	if err != nil {
 		panic(err)
 	}
@@ -314,7 +314,7 @@ func TestComposeBuiltInRegex(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	r, err := f.Eval(serialize.NewStringValue("ab"))
+	r, err := f.Eval(parser.NewStringValue("ab"))
 	if err != nil {
 		panic(err)
 	}
@@ -335,7 +335,7 @@ func TestComposeBuiltInEqual(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	r, err := f.Eval(serialize.NewIntValue(124))
+	r, err := f.Eval(parser.NewIntValue(124))
 	if err != nil {
 		panic(err)
 	}

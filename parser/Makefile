@@ -13,8 +13,8 @@
 # limitations under the License.
 
 regenerate:
-	go install github.com/katydid/katydid/serialize/serialize-gen
-	serialize-gen ./
+	go install github.com/katydid/katydid/parser/parser-gen
+	parser-gen ./
 	cd debug && make regenerate
 	cd proto && make regenerate
 

@@ -18,7 +18,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
-	"github.com/katydid/katydid/serialize"
+	"github.com/katydid/katydid/parser"
 	"io"
 	"reflect"
 	"unsafe"
@@ -95,7 +95,7 @@ type state struct {
 }
 
 type Parser interface {
-	serialize.Parser
+	parser.Interface
 	Message() *descriptor.DescriptorProto
 	Field() *descriptor.FieldDescriptorProto
 }
@@ -254,11 +254,11 @@ func (s *protoParser) Value() []byte {
 
 func (s *protoParser) Double() (float64, error) {
 	if !s.isLeaf {
-		return 0, serialize.ErrNotDouble
+		return 0, parser.ErrNotDouble
 	}
 	if s.field.GetType() != descriptor.FieldDescriptorProto_TYPE_DOUBLE &&
 		s.field.GetType() != descriptor.FieldDescriptorProto_TYPE_FLOAT {
-		return 0, serialize.ErrNotDouble
+		return 0, parser.ErrNotDouble
 	}
 	buf := s.Value()
 	if len(buf) == 8 {
@@ -275,7 +275,7 @@ func (s *protoParser) Int() (int64, error) {
 		if s.inRepeated {
 			return int64(s.indexRepeated - 1), nil
 		}
-		return 0, serialize.ErrNotInt
+		return 0, parser.ErrNotInt
 	}
 	typ := s.field.GetType()
 	switch typ {
@@ -298,7 +298,7 @@ func (s *protoParser) Int() (int64, error) {
 		i, err := s.decodeInt32()
 		return int64(i), err
 	}
-	return 0, serialize.ErrNotInt
+	return 0, parser.ErrNotInt
 }
 
 func (s *protoParser) Uint() (uint64, error) {
@@ -306,7 +306,7 @@ func (s *protoParser) Uint() (uint64, error) {
 		if !s.fieldNames {
 			return uint64(s.field.GetNumber()), nil
 		}
-		return 0, serialize.ErrNotUint
+		return 0, parser.ErrNotUint
 	}
 	typ := s.field.GetType()
 	switch typ {
@@ -321,15 +321,15 @@ func (s *protoParser) Uint() (uint64, error) {
 		u, err := s.decodeFixed32()
 		return uint64(u), err
 	}
-	return 0, serialize.ErrNotUint
+	return 0, parser.ErrNotUint
 }
 
 func (s *protoParser) Bool() (bool, error) {
 	if !s.isLeaf {
-		return false, serialize.ErrNotBool
+		return false, parser.ErrNotBool
 	}
 	if s.field.GetType() != descriptor.FieldDescriptorProto_TYPE_BOOL {
-		return false, serialize.ErrNotBool
+		return false, parser.ErrNotBool
 	}
 	buf := s.Value()
 	v, n := binary.Uvarint(buf)
@@ -344,10 +344,10 @@ func (s *protoParser) String() (string, error) {
 		if s.fieldNames {
 			return s.field.GetName(), nil
 		}
-		return "", serialize.ErrNotString
+		return "", parser.ErrNotString
 	}
 	if s.field.GetType() != descriptor.FieldDescriptorProto_TYPE_STRING {
-		return "", serialize.ErrNotString
+		return "", parser.ErrNotString
 	}
 	buf := s.Value()
 	header := (*reflect.SliceHeader)(unsafe.Pointer(&buf))
@@ -357,10 +357,10 @@ func (s *protoParser) String() (string, error) {
 
 func (s *protoParser) Bytes() ([]byte, error) {
 	if !s.isLeaf {
-		return nil, serialize.ErrNotBytes
+		return nil, parser.ErrNotBytes
 	}
 	if s.field.GetType() != descriptor.FieldDescriptorProto_TYPE_BYTES {
-		return nil, serialize.ErrNotBytes
+		return nil, parser.ErrNotBytes
 	}
 	return s.Value(), nil
 }

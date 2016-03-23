@@ -4,11 +4,11 @@
 package funcs
 
 import (
-	"github.com/katydid/katydid/serialize"
+	"github.com/katydid/katydid/parser"
 )
 
 type varDouble struct {
-	Dec serialize.Decoder
+	Dec parser.Value
 }
 
 var _ Decoder = &varDouble{}
@@ -24,7 +24,7 @@ func (this *varDouble) Eval() (float64, error) {
 
 func (this *varDouble) IsVariable() {}
 
-func (this *varDouble) SetDecoder(dec serialize.Decoder) {
+func (this *varDouble) SetDecoder(dec parser.Value) {
 	this.Dec = dec
 }
 
@@ -37,7 +37,7 @@ func DoubleVar() *varDouble {
 }
 
 type varInt struct {
-	Dec serialize.Decoder
+	Dec parser.Value
 }
 
 var _ Decoder = &varInt{}
@@ -53,7 +53,7 @@ func (this *varInt) Eval() (int64, error) {
 
 func (this *varInt) IsVariable() {}
 
-func (this *varInt) SetDecoder(dec serialize.Decoder) {
+func (this *varInt) SetDecoder(dec parser.Value) {
 	this.Dec = dec
 }
 
@@ -66,7 +66,7 @@ func IntVar() *varInt {
 }
 
 type varUint struct {
-	Dec serialize.Decoder
+	Dec parser.Value
 }
 
 var _ Decoder = &varUint{}
@@ -82,7 +82,7 @@ func (this *varUint) Eval() (uint64, error) {
 
 func (this *varUint) IsVariable() {}
 
-func (this *varUint) SetDecoder(dec serialize.Decoder) {
+func (this *varUint) SetDecoder(dec parser.Value) {
 	this.Dec = dec
 }
 
@@ -95,7 +95,7 @@ func UintVar() *varUint {
 }
 
 type varBool struct {
-	Dec serialize.Decoder
+	Dec parser.Value
 }
 
 var _ Decoder = &varBool{}
@@ -111,7 +111,7 @@ func (this *varBool) Eval() (bool, error) {
 
 func (this *varBool) IsVariable() {}
 
-func (this *varBool) SetDecoder(dec serialize.Decoder) {
+func (this *varBool) SetDecoder(dec parser.Value) {
 	this.Dec = dec
 }
 
@@ -124,7 +124,7 @@ func BoolVar() *varBool {
 }
 
 type varString struct {
-	Dec serialize.Decoder
+	Dec parser.Value
 }
 
 var _ Decoder = &varString{}
@@ -140,7 +140,7 @@ func (this *varString) Eval() (string, error) {
 
 func (this *varString) IsVariable() {}
 
-func (this *varString) SetDecoder(dec serialize.Decoder) {
+func (this *varString) SetDecoder(dec parser.Value) {
 	this.Dec = dec
 }
 
@@ -153,7 +153,7 @@ func StringVar() *varString {
 }
 
 type varBytes struct {
-	Dec serialize.Decoder
+	Dec parser.Value
 }
 
 var _ Decoder = &varBytes{}
@@ -169,7 +169,7 @@ func (this *varBytes) Eval() ([]byte, error) {
 
 func (this *varBytes) IsVariable() {}
 
-func (this *varBytes) SetDecoder(dec serialize.Decoder) {
+func (this *varBytes) SetDecoder(dec parser.Value) {
 	this.Dec = dec
 }
 

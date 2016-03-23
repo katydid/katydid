@@ -16,8 +16,8 @@ package json_test
 
 import (
 	"encoding/json"
-	"github.com/katydid/katydid/serialize/debug"
-	sjson "github.com/katydid/katydid/serialize/json"
+	"github.com/katydid/katydid/parser/debug"
+	sjson "github.com/katydid/katydid/parser/json"
 	"testing"
 )
 

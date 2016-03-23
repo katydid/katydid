@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"github.com/katydid/katydid/expr"
 	"github.com/katydid/katydid/expr/compose"
-	"github.com/katydid/katydid/serialize"
+	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/viper/ast"
 	"io"
 	"strings"
@@ -55,12 +55,12 @@ func isFinal(rules *viper.Rules, f string) bool {
 	return false
 }
 
-func Eval(rules *viper.Rules, tree serialize.Parser) bool {
+func Eval(rules *viper.Rules, tree parser.Interface) bool {
 	return isFinal(rules, eval(rules, tree, getStart(rules)))
 }
 
 func evalName(e *expr.Expr, name string) bool {
-	return evalExpr(e, serialize.NewStringValue(name))
+	return evalExpr(e, parser.NewStringValue(name))
 }
 
 func evalReturn(rules *viper.Rules, srcParent, srcChild string, name string) (dst string) {
@@ -93,7 +93,7 @@ func evalCall(rules *viper.Rules, src string, name string) (parentDst string, ch
 	panic("unknown call " + src + " " + name)
 }
 
-func evalExpr(expr *expr.Expr, value serialize.Decoder) bool {
+func evalExpr(expr *expr.Expr, value parser.Value) bool {
 	b, err := compose.NewBool(expr)
 	if err != nil {
 		panic(err)
@@ -110,7 +110,7 @@ func evalExpr(expr *expr.Expr, value serialize.Decoder) bool {
 	return res
 }
 
-func evalInternal(rules *viper.Rules, src string, value serialize.Decoder) (dst string) {
+func evalInternal(rules *viper.Rules, src string, value parser.Value) (dst string) {
 	for _, rule := range rules.Rules {
 		if rule.Internal == nil {
 			continue
@@ -122,10 +122,10 @@ func evalInternal(rules *viper.Rules, src string, value serialize.Decoder) (dst 
 			}
 		}
 	}
-	panic("unknown internal " + src + " " + serialize.Sprint(value))
+	panic("unknown internal " + src + " " + parser.Sprint(value))
 }
 
-func eval(rules *viper.Rules, tree serialize.Parser, current string) string {
+func eval(rules *viper.Rules, tree parser.Interface, current string) string {
 	for {
 		fmt.Printf("state = %s\n", current)
 		if err := tree.Next(); err != nil {

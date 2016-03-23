@@ -17,15 +17,15 @@ package eval
 import (
 	"github.com/katydid/katydid/expr"
 	"github.com/katydid/katydid/expr/funcs"
-	"github.com/katydid/katydid/expr/parser"
-	"github.com/katydid/katydid/serialize"
-	rparser "github.com/katydid/katydid/serialize/reflect"
+	exprparser "github.com/katydid/katydid/expr/parser"
+	"github.com/katydid/katydid/parser"
+	rparser "github.com/katydid/katydid/parser/reflect"
 	"github.com/katydid/katydid/viper/ast"
 	"reflect"
 	"testing"
 )
 
-func newReflectParser(m interface{}) serialize.Parser {
+func newReflectParser(m interface{}) parser.Interface {
 	s := rparser.NewReflectParser()
 	s.Init(reflect.ValueOf(m))
 	return s
@@ -40,7 +40,7 @@ func test(t *testing.T, rules *viper.Rules, m interface{}, expected bool) {
 
 func newExpr(e interface{}) *expr.Expr {
 	es := funcs.Sprint(e)
-	ee, err := parser.NewParser().ParseExpr(es)
+	ee, err := exprparser.NewParser().ParseExpr(es)
 	if err != nil {
 		panic(err)
 	}

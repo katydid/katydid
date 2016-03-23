@@ -18,8 +18,8 @@ import (
 	"fmt"
 	"github.com/katydid/katydid/expr/compose"
 	nameexpr "github.com/katydid/katydid/expr/name"
+	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse"
-	"github.com/katydid/katydid/serialize"
 	"io"
 	"log"
 )
@@ -29,7 +29,7 @@ func init() {
 }
 
 //This is a naive implementation and it does not handle left recursion
-func Interpret(g *relapse.Grammar, parser serialize.Parser) bool {
+func Interpret(g *relapse.Grammar, parser parser.Interface) bool {
 	refs := relapse.NewRefsLookup(g)
 	finals := deriv(refs, []*relapse.Pattern{refs["main"]}, parser)
 	return Nullable(refs, finals[0])
@@ -50,7 +50,7 @@ func escapable(patterns []*relapse.Pattern) bool {
 	return false
 }
 
-func deriv(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern, tree serialize.Parser) []*relapse.Pattern {
+func deriv(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern, tree parser.Interface) []*relapse.Pattern {
 	var resPatterns []*relapse.Pattern = patterns
 	for {
 		if !escapable(resPatterns) {
@@ -104,7 +104,7 @@ func unzip(patterns []*relapse.Pattern, indexes []int) []*relapse.Pattern {
 	return res
 }
 
-func derivCalls(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern, label serialize.Decoder) []*relapse.Pattern {
+func derivCalls(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern, label parser.Value) []*relapse.Pattern {
 	res := []*relapse.Pattern{}
 	for _, pattern := range patterns {
 		ps := derivCall(refs, pattern, label)
@@ -114,7 +114,7 @@ func derivCalls(refs map[string]*relapse.Pattern, patterns []*relapse.Pattern, l
 	return res
 }
 
-func derivCall(refs map[string]*relapse.Pattern, p *relapse.Pattern, label serialize.Decoder) []*relapse.Pattern {
+func derivCall(refs map[string]*relapse.Pattern, p *relapse.Pattern, label parser.Value) []*relapse.Pattern {
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *relapse.Empty:
@@ -179,7 +179,7 @@ func derivCall(refs map[string]*relapse.Pattern, p *relapse.Pattern, label seria
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
 
-func derivCall2(refs map[string]*relapse.Pattern, left, right *relapse.Pattern, label serialize.Decoder) []*relapse.Pattern {
+func derivCall2(refs map[string]*relapse.Pattern, left, right *relapse.Pattern, label parser.Value) []*relapse.Pattern {
 	l := derivCall(refs, left, label)
 	r := derivCall(refs, right, label)
 	return append(l, r...)

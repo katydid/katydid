@@ -17,7 +17,7 @@ package json
 import (
 	"bytes"
 	"fmt"
-	"github.com/katydid/katydid/serialize"
+	"github.com/katydid/katydid/parser"
 	"io"
 	"strconv"
 )
@@ -454,7 +454,7 @@ func (s *jsonParser) Double() (float64, error) {
 		i, err := strconv.ParseFloat(v, 64)
 		return i, err
 	}
-	return 0, serialize.ErrNotDouble
+	return 0, parser.ErrNotDouble
 }
 
 func (s *jsonParser) Int() (int64, error) {
@@ -475,7 +475,7 @@ func (s *jsonParser) Int() (int64, error) {
 	if s.inArray {
 		return int64(s.arrayIndex), nil
 	}
-	return 0, serialize.ErrNotInt
+	return 0, parser.ErrNotInt
 }
 
 func (s *jsonParser) Uint() (uint64, error) {
@@ -484,7 +484,7 @@ func (s *jsonParser) Uint() (uint64, error) {
 		i, err := strconv.ParseUint(v, 10, 64)
 		return uint64(i), err
 	}
-	return 0, serialize.ErrNotUint
+	return 0, parser.ErrNotUint
 }
 
 func (s *jsonParser) Bool() (bool, error) {
@@ -497,14 +497,14 @@ func (s *jsonParser) Bool() (bool, error) {
 			return false, nil
 		}
 	}
-	return false, serialize.ErrNotBool
+	return false, parser.ErrNotBool
 }
 
 func (s *jsonParser) String() (string, error) {
 	if s.isLeaf {
 		v := s.Value()
 		if v[0] != '"' {
-			return "", serialize.ErrNotString
+			return "", parser.ErrNotString
 		}
 		res, ok := unquote(v)
 		if !ok {
@@ -516,7 +516,7 @@ func (s *jsonParser) String() (string, error) {
 }
 
 func (s *jsonParser) Bytes() ([]byte, error) {
-	return nil, serialize.ErrNotBytes
+	return nil, parser.ErrNotBytes
 }
 
 func NewJsonParser() *jsonParser {

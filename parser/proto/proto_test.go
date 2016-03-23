@@ -16,9 +16,9 @@ package proto
 
 import (
 	"github.com/gogo/protobuf/proto"
-	"github.com/katydid/katydid/serialize"
-	"github.com/katydid/katydid/serialize/debug"
-	"github.com/katydid/katydid/serialize/proto/prototests"
+	"github.com/katydid/katydid/parser"
+	"github.com/katydid/katydid/parser/debug"
+	"github.com/katydid/katydid/parser/proto/prototests"
 	"io"
 	"testing"
 )
@@ -51,7 +51,7 @@ func TestRandomDebug(t *testing.T) {
 	}
 }
 
-func next(t *testing.T, parser serialize.Parser) {
+func next(t *testing.T, parser parser.Interface) {
 	if err := parser.Next(); err != nil {
 		if err != io.EOF {
 			t.Fatal(err)

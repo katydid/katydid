@@ -314,7 +314,7 @@ type ranger struct {
 
 const variableStr = `
 type var{{.Name}} struct {
-	Dec serialize.Decoder
+	Dec parser.Value
 }
 
 var _ Decoder = &var{{.Name}}{}
@@ -330,7 +330,7 @@ func (this *var{{.Name}}) Eval() ({{.GoType}}, error) {
 
 func (this *var{{.Name}}) IsVariable() {}
 
-func (this *var{{.Name}}) SetDecoder(dec serialize.Decoder) {
+func (this *var{{.Name}}) SetDecoder(dec parser.Value) {
 	this.Dec = dec
 }
 
@@ -532,7 +532,7 @@ func main() {
 		&varer{"Bool", "bool", "bool", "false"},
 		&varer{"String", "string", "string", `""`},
 		&varer{"Bytes", "[]byte", "[]byte", "nil"},
-	}, `"github.com/katydid/katydid/serialize"`)
+	}, `"github.com/katydid/katydid/parser"`)
 	gen(typStr, "type.gen.go", []interface{}{
 		&typer{"Double"},
 		&typer{"Int"},

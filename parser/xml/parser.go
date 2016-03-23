@@ -17,14 +17,14 @@ package xml
 import (
 	"bytes"
 	"fmt"
-	"github.com/katydid/katydid/serialize"
+	"github.com/katydid/katydid/parser"
 	"io"
 	"regexp"
 	"strconv"
 	"strings"
 )
 
-type parser struct {
+type xmlParser struct {
 	buf       []byte
 	dec       *Decoder
 	tok       Token
@@ -34,13 +34,13 @@ type parser struct {
 	attrFirst bool
 }
 
-func NewXMLParser() *parser {
-	return &parser{}
+func NewXMLParser() *xmlParser {
+	return &xmlParser{}
 }
 
 var procInstPattern = regexp.MustCompile(`<\?.*\?>`)
 
-func (p *parser) Init(buf []byte) error {
+func (p *xmlParser) Init(buf []byte) error {
 	buf = procInstPattern.ReplaceAll(buf, []byte{})
 	buf = bytes.TrimSpace(buf)
 	p.buf = buf
@@ -53,7 +53,7 @@ func hasContent(c CharData) bool {
 	return len(string(c)) > 0
 }
 
-func (p *parser) Next() (err error) {
+func (p *xmlParser) Next() (err error) {
 	if p.attrValue {
 		if p.attrFirst {
 			p.attrFirst = false
@@ -114,7 +114,7 @@ func (p *parser) Next() (err error) {
 	return err
 }
 
-func (p *parser) IsLeaf() bool {
+func (p *xmlParser) IsLeaf() bool {
 	if p.tok == nil {
 		if p.attrValue {
 			return true
@@ -126,7 +126,7 @@ func (p *parser) IsLeaf() bool {
 	return ok
 }
 
-func (p *parser) getValue() string {
+func (p *xmlParser) getValue() string {
 	if p.tok == nil && p.attrValue {
 		return p.attrs[p.attrIndex].Value
 	}
@@ -136,25 +136,25 @@ func (p *parser) getValue() string {
 	return ""
 }
 
-func (p *parser) Double() (float64, error) {
+func (p *xmlParser) Double() (float64, error) {
 	return strconv.ParseFloat(p.getValue(), 64)
 }
 
-func (p *parser) Int() (int64, error) {
+func (p *xmlParser) Int() (int64, error) {
 	i, err := strconv.ParseInt(p.getValue(), 10, 64)
 	return int64(i), err
 }
 
-func (p *parser) Uint() (uint64, error) {
+func (p *xmlParser) Uint() (uint64, error) {
 	i, err := strconv.ParseUint(p.getValue(), 10, 64)
 	return uint64(i), err
 }
 
-func (p *parser) Bool() (bool, error) {
+func (p *xmlParser) Bool() (bool, error) {
 	return strconv.ParseBool(strings.TrimSpace(p.getValue()))
 }
 
-func (p *parser) String() (string, error) {
+func (p *xmlParser) String() (string, error) {
 	if p.tok == nil && p.attrIndex < len(p.attrs) {
 		if p.attrValue {
 			return p.attrs[p.attrIndex].Value, nil
@@ -168,17 +168,17 @@ func (p *parser) String() (string, error) {
 	if c, ok := p.tok.(CharData); ok {
 		return string(c), nil
 	}
-	return "", serialize.ErrNotString
+	return "", parser.ErrNotString
 }
 
-func (p *parser) Bytes() ([]byte, error) {
+func (p *xmlParser) Bytes() ([]byte, error) {
 	if c, ok := p.tok.(CharData); ok {
 		return []byte(c), nil
 	}
-	return nil, serialize.ErrNotBytes
+	return nil, parser.ErrNotBytes
 }
 
-func (p *parser) Up() {
+func (p *xmlParser) Up() {
 	if p.tok == nil {
 		if p.attrValue {
 			p.attrValue = false
@@ -199,7 +199,7 @@ func (p *parser) Up() {
 	}
 }
 
-func (p *parser) Down() {
+func (p *xmlParser) Down() {
 	if p.tok == nil {
 		if p.attrIndex < len(p.attrs) {
 			p.attrValue = true

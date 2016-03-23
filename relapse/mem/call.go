@@ -17,8 +17,8 @@ package mem
 import (
 	"github.com/katydid/katydid/expr/compose"
 	"github.com/katydid/katydid/expr/funcs"
+	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse"
-	"github.com/katydid/katydid/serialize"
 	"reflect"
 	"strings"
 )
@@ -74,7 +74,7 @@ func getAllConditions(c *CallNode) []compose.Bool {
 	return cs
 }
 
-func (this *CallNode) Eval(label serialize.Decoder) (int, int) {
+func (this *CallNode) Eval(label parser.Value) (int, int) {
 	if this.cond == nil {
 		return this.child, this.stackIndex
 	}
@@ -117,7 +117,7 @@ func (this *callNode) String() string {
 	return "{\n" + sfunc + "\nThen:\n" + sthen + "\nElse:\n" + sels + "}"
 }
 
-func (this *callNode) eval(label serialize.Decoder) []*relapse.Pattern {
+func (this *callNode) eval(label parser.Value) []*relapse.Pattern {
 	if this.term != nil {
 		return this.term
 	}
@@ -231,7 +231,7 @@ type callable struct {
 	els  *relapse.Pattern
 }
 
-func (this *callable) eval(label serialize.Decoder) *relapse.Pattern {
+func (this *callable) eval(label parser.Value) *relapse.Pattern {
 	if this.els == nil {
 		return this.then
 	}

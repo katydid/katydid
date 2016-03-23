@@ -15,17 +15,17 @@
 package lazymem_test
 
 import (
+	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse"
-	"github.com/katydid/katydid/serialize"
 	"testing"
 )
 
 type reset interface {
-	serialize.Parser
+	parser.Interface
 	Reset() error
 }
 
-func bench(b *testing.B, grammar *relapse.Grammar, gen func() serialize.Parser) {
+func bench(b *testing.B, grammar *relapse.Grammar, gen func() parser.Interface) {
 	num := 1000
 	parsers := make([]reset, num)
 	for i := 0; i < num; i++ {

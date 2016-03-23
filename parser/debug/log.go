@@ -15,7 +15,7 @@
 package debug
 
 import (
-	"github.com/katydid/katydid/serialize"
+	"github.com/katydid/katydid/parser"
 	"log"
 	"os"
 	"path/filepath"
@@ -79,12 +79,12 @@ func (d *d) Printf(format string, v ...interface{}) {
 
 type l struct {
 	name   string
-	s      serialize.Parser
+	s      parser.Interface
 	l      Logger
 	copies int
 }
 
-func NewLogger(s serialize.Parser, logger Logger) serialize.Parser {
+func NewLogger(s parser.Interface, logger Logger) parser.Interface {
 	return &l{"parser", s, logger, 0}
 }
 

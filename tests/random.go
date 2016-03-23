@@ -16,7 +16,7 @@ package tests
 
 import (
 	"github.com/gogo/protobuf/proto"
-	"github.com/katydid/katydid/serialize"
+	"github.com/katydid/katydid/parser"
 	"math/rand"
 	"time"
 )
@@ -44,22 +44,22 @@ func RandomPuddingMilkshake() proto.Message {
 	return NewPopulatedPuddingMilkshake(r, true)
 }
 
-func RandomPersonProtoNumParser() serialize.Parser {
+func RandomPersonProtoNumParser() parser.Interface {
 	m := RandomPerson()
 	return NewProtoNumParser("tests", "Person", m.(ProtoMessage))
 }
 
-func RandomSrcTreeProtoNumParser() serialize.Parser {
+func RandomSrcTreeProtoNumParser() parser.Interface {
 	m := RandomSrcTree()
 	return NewProtoNumParser("test", "SrcTree", m.(ProtoMessage))
 }
 
-func RandomTypewriterPrisonProtoNumParser() serialize.Parser {
+func RandomTypewriterPrisonProtoNumParser() parser.Interface {
 	m := RandomTypewriterPrison()
 	return NewProtoNumParser("tests", "TypewriterPrison", m.(ProtoMessage))
 }
 
-func RandomPuddingMilkshakeProtoNumParser() serialize.Parser {
+func RandomPuddingMilkshakeProtoNumParser() parser.Interface {
 	m := RandomPuddingMilkshake()
 	return NewProtoNumParser("tests", "PuddingMilkshake", m.(ProtoMessage))
 }

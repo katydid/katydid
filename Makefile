@@ -39,7 +39,7 @@ bench:
 regenerate:
 	(cd expr && make regenerate)
 	(cd tests && make regenerate)
-	(cd serialize && make regenerate)
+	(cd parser && make regenerate)
 	(cd viper && make regenerate)
 	(cd relapse && make regenerate)
 	(cd expr/funcs && go test -test.run=GenFuncList 2>../../list_of_functions.txt)
@@ -54,7 +54,7 @@ clean:
 	(cd relapse && make clean)
 
 nuke: clean
-	(cd serialize && make nuke)
+	(cd parser && make nuke)
 	(cd expr && make nuke)
 	(cd viper && make nuke)
 	(cd relapse && make nuke)

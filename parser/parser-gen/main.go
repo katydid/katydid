@@ -41,7 +41,7 @@ type {{.Name}}Value struct {
 	v {{.GoType}}
 }
 
-func New{{.CName}}Value(v {{.GoType}}) Decoder {
+func New{{.CName}}Value(v {{.GoType}}) Value {
 	return &{{.Name}}Value{&errValue{}, v}
 }
 
@@ -52,7 +52,7 @@ func (v *{{.Name}}Value) {{.CName}}() ({{.GoType}}, error) {
 `
 
 func main() {
-	gen := gen.NewFunc("serialize")
+	gen := gen.NewFunc("parser")
 	gen(valueStr, "value.gen.go", []interface{}{
 		&valuer{"Double", "float64", "0"},
 		&valuer{"Int", "int64", "0"},

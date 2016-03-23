@@ -15,7 +15,7 @@
 package reflect
 
 import (
-	"github.com/katydid/katydid/serialize/debug"
+	"github.com/katydid/katydid/parser/debug"
 	"reflect"
 	"testing"
 )
