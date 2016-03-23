@@ -17,7 +17,7 @@ syntax = "proto2";
 package expr;
 
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
-import "github.com/katydid/katydid/types/types.proto";
+import "github.com/katydid/katydid/expr/types/types.proto";
 
 option (gogoproto.goproto_stringer_all) = false;
 option (gogoproto.equal_all) = true;

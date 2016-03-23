@@ -16,7 +16,7 @@ package funcs
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/types"
+	"github.com/katydid/katydid/expr/types"
 	"reflect"
 	"strings"
 )

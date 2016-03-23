@@ -17,8 +17,8 @@ package eval
 import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/katydid/katydid/expr/ast"
+	"github.com/katydid/katydid/expr/funcs"
 	"github.com/katydid/katydid/expr/parser"
-	"github.com/katydid/katydid/funcs"
 	"github.com/katydid/katydid/serialize"
 	rparser "github.com/katydid/katydid/serialize/reflect"
 	"github.com/katydid/katydid/tests"

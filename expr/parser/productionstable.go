@@ -3,7 +3,7 @@ package parser
 import (
 	"github.com/katydid/katydid/expr/ast"
 	"github.com/katydid/katydid/expr/token"
-	"github.com/katydid/katydid/types"
+	"github.com/katydid/katydid/expr/types"
 )
 
 func newString(v interface{}) string {

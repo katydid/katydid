@@ -16,7 +16,7 @@ package compose
 
 import (
 	"github.com/katydid/katydid/expr/ast"
-	"github.com/katydid/katydid/types"
+	"github.com/katydid/katydid/expr/types"
 )
 
 func symbolToFunc(symbol string) string {

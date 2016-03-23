@@ -24,7 +24,7 @@ import proto "github.com/gogo/protobuf/proto"
 import fmt "fmt"
 import math "math"
 import _ "github.com/gogo/protobuf/gogoproto"
-import types "github.com/katydid/katydid/types"
+import types "github.com/katydid/katydid/expr/types"
 
 import bytes "bytes"
 

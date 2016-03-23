@@ -16,7 +16,7 @@ package mem
 
 import (
 	"github.com/katydid/katydid/expr/compose"
-	"github.com/katydid/katydid/funcs"
+	"github.com/katydid/katydid/expr/funcs"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/serialize"
 	"reflect"

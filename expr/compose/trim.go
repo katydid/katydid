@@ -16,7 +16,7 @@ package compose
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/funcs"
+	"github.com/katydid/katydid/expr/funcs"
 	"reflect"
 )
 

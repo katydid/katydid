@@ -5,8 +5,8 @@ package compose
 
 import (
 	"github.com/katydid/katydid/expr/ast"
-	"github.com/katydid/katydid/funcs"
-	"github.com/katydid/katydid/types"
+	"github.com/katydid/katydid/expr/funcs"
+	"github.com/katydid/katydid/expr/types"
 )
 
 func composeDouble(expr *expr.Expr) (funcs.Double, error) {

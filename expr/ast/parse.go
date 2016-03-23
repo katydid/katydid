@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"github.com/gogo/protobuf/proto"
 	"github.com/katydid/katydid/expr/token"
-	"github.com/katydid/katydid/types"
+	"github.com/katydid/katydid/expr/types"
 	"strconv"
 	"strings"
 	"unicode/utf8"

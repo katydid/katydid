@@ -18,8 +18,8 @@ import (
 	"fmt"
 	"github.com/katydid/katydid/expr/ast"
 	"github.com/katydid/katydid/expr/compose"
+	"github.com/katydid/katydid/expr/funcs"
 	exprparser "github.com/katydid/katydid/expr/parser"
-	"github.com/katydid/katydid/funcs"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/serialize"
 )

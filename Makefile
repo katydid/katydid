@@ -37,14 +37,12 @@ bench:
 	go test -v -test.run=XXX -test.bench=. ./...
 
 regenerate:
-	(cd types && make regenerate)
-	(cd funcs && make regenerate)
 	(cd expr && make regenerate)
 	(cd tests && make regenerate)
 	(cd serialize && make regenerate)
 	(cd viper && make regenerate)
 	(cd relapse && make regenerate)
-	(cd funcs && go test -test.run=GenFuncList 2>../list_of_functions.txt)
+	(cd expr/funcs && go test -test.run=GenFuncList 2>../../list_of_functions.txt)
 	find . -name "*.pb.go" | xargs gofmt -l -s -w
 	find . -name "*.gen.go" | xargs gofmt -l -s -w
 	find . -name "*.gen_test.go" | xargs gofmt -l -s -w
@@ -56,7 +54,6 @@ clean:
 	(cd relapse && make clean)
 
 nuke: clean
-	(cd funcs && make nuke)
 	(cd serialize && make nuke)
 	(cd expr && make nuke)
 	(cd viper && make nuke)

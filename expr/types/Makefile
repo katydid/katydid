@@ -13,4 +13,4 @@
 # limitations under the License.
 
 regenerate:
-	protoc --gogo_out=. -I=.:../../../../:../../../../github.com/gogo/protobuf/protobuf types.proto
+	protoc --gogo_out=. -I=.:../../../../../:../../../../../github.com/gogo/protobuf/protobuf types.proto

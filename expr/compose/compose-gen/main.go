@@ -85,6 +85,6 @@ func main() {
 		&composer{"Bytes", "SINGLE_BYTES", "Bytes", "ListOfBytes", "LIST_BYTES"},
 	},
 		`"github.com/katydid/katydid/expr/ast"`,
-		`"github.com/katydid/katydid/funcs"`,
-		`"github.com/katydid/katydid/types"`)
+		`"github.com/katydid/katydid/expr/funcs"`,
+		`"github.com/katydid/katydid/expr/types"`)
 }

@@ -13,7 +13,7 @@
 # limitations under the License.
 
 regenerate:
-	go install github.com/katydid/katydid/funcs/funcs-gen
+	go install github.com/katydid/katydid/expr/funcs/funcs-gen
 	funcs-gen ./
 
 nuke:

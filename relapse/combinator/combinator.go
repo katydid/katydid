@@ -15,8 +15,8 @@
 package combinator
 
 import (
+	"github.com/katydid/katydid/expr/funcs"
 	exprparser "github.com/katydid/katydid/expr/parser"
-	"github.com/katydid/katydid/funcs"
 	"github.com/katydid/katydid/relapse/ast"
 )
 

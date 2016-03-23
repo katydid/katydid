@@ -15,7 +15,7 @@
 package convert_test
 
 import (
-	"github.com/katydid/katydid/funcs"
+	"github.com/katydid/katydid/expr/funcs"
 	. "github.com/katydid/katydid/relapse/combinator"
 	"github.com/katydid/katydid/relapse/convert"
 	reflectparser "github.com/katydid/katydid/serialize/reflect"

@@ -14,7 +14,9 @@
 
 regenerate:
 	./build.sh
+	(cd types && make regenerate)
 	(cd ast && make regenerate)
+	(cd funcs && make regenerate)
 	(cd compose && make regenerate)
 	rm ./util/rune.go
 	rm ./util/litconv.go
@@ -24,6 +26,7 @@ clean:
 	rm *.txt || true
 
 nuke: clean
+	(cd funcs && make nuke)
 	rm -rf ./errors
 	rm -rf ./lexer
 	rm -rf ./parser/action.go

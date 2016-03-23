@@ -17,7 +17,7 @@ package compose
 import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/katydid/katydid/expr/ast"
-	"github.com/katydid/katydid/funcs"
+	"github.com/katydid/katydid/expr/funcs"
 	"github.com/katydid/katydid/serialize"
 	"strings"
 	"testing"

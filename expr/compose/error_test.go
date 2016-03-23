@@ -16,8 +16,8 @@ package compose_test
 
 import (
 	"github.com/katydid/katydid/expr/compose"
+	. "github.com/katydid/katydid/expr/funcs"
 	"github.com/katydid/katydid/expr/parser"
-	. "github.com/katydid/katydid/funcs"
 	"github.com/katydid/katydid/serialize"
 	"testing"
 )

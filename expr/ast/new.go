@@ -16,7 +16,7 @@ package expr
 
 import (
 	"github.com/gogo/protobuf/proto"
-	"github.com/katydid/katydid/types"
+	"github.com/katydid/katydid/expr/types"
 )
 
 func NewNestedFunction(name string, params ...*Expr) *Expr {
