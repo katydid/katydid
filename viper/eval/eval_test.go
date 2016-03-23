@@ -15,13 +15,11 @@
 package eval
 
 import (
-	"github.com/gogo/protobuf/proto"
 	"github.com/katydid/katydid/expr/ast"
 	"github.com/katydid/katydid/expr/funcs"
 	"github.com/katydid/katydid/expr/parser"
 	"github.com/katydid/katydid/serialize"
 	rparser "github.com/katydid/katydid/serialize/reflect"
-	"github.com/katydid/katydid/tests"
 	"github.com/katydid/katydid/viper/ast"
 	"reflect"
 	"testing"
@@ -65,64 +63,64 @@ func any() *expr.Expr {
 	return anyName()
 }
 
-func TestAny(t *testing.T) {
-	test(t, viper.NewRules(
-		viper.NewStart("start"),
-		viper.NewFinal("start"),
-		viper.NewCall("start", anyName(), "start", "start"),
-		viper.NewReturn("start", "start", anyName(), "start"),
-		viper.NewInternal("start", any(), "start"),
-	), tests.RandomPerson(), true)
-}
+// func TestAny(t *testing.T) {
+// 	test(t, viper.NewRules(
+// 		viper.NewStart("start"),
+// 		viper.NewFinal("start"),
+// 		viper.NewCall("start", anyName(), "start", "start"),
+// 		viper.NewReturn("start", "start", anyName(), "start"),
+// 		viper.NewInternal("start", any(), "start"),
+// 	), tests.RandomPerson(), true)
+// }
 
-func TestNone(t *testing.T) {
-	test(t, viper.NewRules(
-		viper.NewStart("start"),
-		viper.NewCall("start", anyName(), "start", "start"),
-		viper.NewReturn("start", "start", anyName(), "start"),
-		viper.NewInternal("start", any(), "start"),
-	), tests.RandomPerson(), false)
-}
+// func TestNone(t *testing.T) {
+// 	test(t, viper.NewRules(
+// 		viper.NewStart("start"),
+// 		viper.NewCall("start", anyName(), "start", "start"),
+// 		viper.NewReturn("start", "start", anyName(), "start"),
+// 		viper.NewInternal("start", any(), "start"),
+// 	), tests.RandomPerson(), false)
+// }
 
-func TestSaladWorry(t *testing.T) {
-	t.Skipf("TODO")
-	m := &tests.FinanceJudo{
-		SaladWorry: &tests.SaladWorry{
-			MagazineFrame: []string{"a", "b"},
-			XrayPilot: &tests.XrayPilot{
-				AnkleCoat: proto.Int64(2),
-			},
-		},
-		RumourSpirit: proto.Int64(1),
-	}
-	rules := viper.NewRules(
-		viper.NewStart("start"),
-		viper.NewFinal("final"),
+// func TestSaladWorry(t *testing.T) {
+// 	t.Skipf("TODO")
+// 	m := &tests.FinanceJudo{
+// 		SaladWorry: &tests.SaladWorry{
+// 			MagazineFrame: []string{"a", "b"},
+// 			XrayPilot: &tests.XrayPilot{
+// 				AnkleCoat: proto.Int64(2),
+// 			},
+// 		},
+// 		RumourSpirit: proto.Int64(1),
+// 	}
+// 	rules := viper.NewRules(
+// 		viper.NewStart("start"),
+// 		viper.NewFinal("final"),
 
-		viper.NewCall("start", anyNameExcept("SaladWorry"), "start", "start"),
-		viper.NewReturn("start", "start", anyName(), "start"),
-		viper.NewInternal("start", any(), "start"),
+// 		viper.NewCall("start", anyNameExcept("SaladWorry"), "start", "start"),
+// 		viper.NewReturn("start", "start", anyName(), "start"),
+// 		viper.NewInternal("start", any(), "start"),
 
-		viper.NewCall("start", name("SaladWorry"), "start", "saladChild"),
-		viper.NewReturn("start", "final", name("SaladWorry"), "final"),
-		viper.NewReturn("start", "saladChild", name("SaladWorry"), "start"),
-		viper.NewCall("saladChild", name("MagazineFrame"), "saladChild", "magazineFrame"),
-		viper.NewCall("saladChild", anyNameExcept("MagazineFrame"), "saladChild", "start"),
-		viper.NewReturn("saladChild", "start", anyNameExcept("MagazineFrame"), "saladChild"),
-		viper.NewReturn("saladChild", "final", name("MagazineFrame"), "final"),
-		viper.NewReturn("saladChild", "magazineFrame", name("MagazineFrame"), "saladChild"),
+// 		viper.NewCall("start", name("SaladWorry"), "start", "saladChild"),
+// 		viper.NewReturn("start", "final", name("SaladWorry"), "final"),
+// 		viper.NewReturn("start", "saladChild", name("SaladWorry"), "start"),
+// 		viper.NewCall("saladChild", name("MagazineFrame"), "saladChild", "magazineFrame"),
+// 		viper.NewCall("saladChild", anyNameExcept("MagazineFrame"), "saladChild", "start"),
+// 		viper.NewReturn("saladChild", "start", anyNameExcept("MagazineFrame"), "saladChild"),
+// 		viper.NewReturn("saladChild", "final", name("MagazineFrame"), "final"),
+// 		viper.NewReturn("saladChild", "magazineFrame", name("MagazineFrame"), "saladChild"),
 
-		viper.NewCall("final", anyName(), "final", "final"),
-		viper.NewReturn("final", "final", anyName(), "final"),
-		viper.NewInternal("final", any(), "final"),
+// 		viper.NewCall("final", anyName(), "final", "final"),
+// 		viper.NewReturn("final", "final", anyName(), "final"),
+// 		viper.NewInternal("final", any(), "final"),
 
-		viper.NewInternal("magazineFrame", newExpr(funcs.Contains(funcs.StringVar(), funcs.StringConst("a"))), "final"),
-		viper.NewInternal("magazineFrame", newExpr(funcs.Contains(funcs.StringVar(), funcs.StringConst("b"))), "final"),
-		viper.NewInternal("magazineFrame", newExpr(funcs.Not(funcs.Contains(funcs.StringVar(), funcs.StringConst("a")))), "magazineFrame"),
-	)
-	test(t, rules, m, true)
-	m.SaladWorry.MagazineFrame = []string{"c", "b"}
-	test(t, rules, m, true)
-	m.SaladWorry.MagazineFrame = []string{"c", "d"}
-	test(t, rules, m, false)
-}
+// 		viper.NewInternal("magazineFrame", newExpr(funcs.Contains(funcs.StringVar(), funcs.StringConst("a"))), "final"),
+// 		viper.NewInternal("magazineFrame", newExpr(funcs.Contains(funcs.StringVar(), funcs.StringConst("b"))), "final"),
+// 		viper.NewInternal("magazineFrame", newExpr(funcs.Not(funcs.Contains(funcs.StringVar(), funcs.StringConst("a")))), "magazineFrame"),
+// 	)
+// 	test(t, rules, m, true)
+// 	m.SaladWorry.MagazineFrame = []string{"c", "b"}
+// 	test(t, rules, m, true)
+// 	m.SaladWorry.MagazineFrame = []string{"c", "d"}
+// 	test(t, rules, m, false)
+// }
