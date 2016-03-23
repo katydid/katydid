@@ -161,50 +161,6 @@ PatternDecl
   >>
   ;
 
-Name
-  : Space Literal << NewSDTName($0.(*expr.Space), $1.(*expr.Terminal)), nil >>
-  | Literal       << NewSDTName(nil, $0.(*expr.Terminal)), nil >>
-  | Space id      << NewSDTName($0.(*expr.Space), &expr.Terminal{StringValue: proto.String(newString($1))}), nil >>
-  | id            << NewSDTName(nil, &expr.Terminal{StringValue: proto.String(newString($0))}), nil >>
-  ;
-
-NameExpr
-  : Underscore   << &NameExpr{AnyName: &AnyName{$0.(*expr.Keyword)}}, nil >>
-  | Name
-  | Exclamation OpenParen NameExpr CloseParen <<
-    &NameExpr{AnyNameExcept: &AnyNameExcept{
-      Exclamation: $0.(*expr.Keyword),
-      OpenParen: $1.(*expr.Keyword),
-      Except: $2.(*NameExpr),
-      CloseParen: $3.(*expr.Keyword),
-    }}, nil
-  >>
-  | StartNameChoice
-  ;
-
-StartNameChoice
-  : OpenParen NameExpr Pipe ContinueNameChoice CloseParen <<
-    &NameExpr{NameChoice: &NameChoice{
-      OpenParen: $0.(*expr.Keyword),
-      Left: $1.(*NameExpr),
-      Pipe: $2.(*expr.Keyword),
-      Right: $3.(*NameExpr),
-      CloseParen: $4.(*expr.Keyword),
-    }}, nil
-  >>
-  ;
-
-ContinueNameChoice
-  : NameExpr
-  | ContinueNameChoice Pipe NameExpr <<
-    &NameExpr{NameChoice: &NameChoice{
-      Left: $0.(*NameExpr),
-      Pipe: $1.(*expr.Keyword),
-      Right: $2.(*NameExpr),
-    }}, nil
-  >>
-  ;
-
 Empty
   : "<empty>" << &expr.Keyword{Value: "<empty>"}, nil >>
   | Space "<empty>" << 
@@ -239,14 +195,14 @@ DepthPattern
 TreeNode
   : NameExpr Colon Pattern <<
     &Pattern{TreeNode: &TreeNode{
-      Name: $0.(*NameExpr),
+      Name: $0.(*expr.NameExpr),
       Colon: $1.(*expr.Keyword),
       Pattern: $2.(*Pattern),
     }}, nil
   >>
   | NameExpr DepthPattern <<
     &Pattern{TreeNode: &TreeNode{
-      Name: $0.(*NameExpr),
+      Name: $0.(*expr.NameExpr),
       Pattern: $1.(*Pattern),
     }}, nil
   >>
@@ -413,6 +369,50 @@ Expr
   : SpaceTerminal << &expr.Expr{Terminal: $0.(*expr.Terminal)}, nil >>
   | Function << &expr.Expr{Function: $0.(*expr.Function)}, nil >>
   | List << &expr.Expr{List: $0.(*expr.List)}, nil >>
+  ;
+
+Name
+  : Space Literal << expr.NewSDTName($0.(*expr.Space), $1.(*expr.Terminal)), nil >>
+  | Literal       << expr.NewSDTName(nil, $0.(*expr.Terminal)), nil >>
+  | Space id      << expr.NewSDTName($0.(*expr.Space), &expr.Terminal{StringValue: proto.String(newString($1))}), nil >>
+  | id            << expr.NewSDTName(nil, &expr.Terminal{StringValue: proto.String(newString($0))}), nil >>
+  ;
+
+NameExpr
+  : Underscore   << &expr.NameExpr{AnyName: &expr.AnyName{$0.(*expr.Keyword)}}, nil >>
+  | Name
+  | Exclamation OpenParen NameExpr CloseParen <<
+    &expr.NameExpr{AnyNameExcept: &expr.AnyNameExcept{
+      Exclamation: $0.(*expr.Keyword),
+      OpenParen: $1.(*expr.Keyword),
+      Except: $2.(*expr.NameExpr),
+      CloseParen: $3.(*expr.Keyword),
+    }}, nil
+  >>
+  | StartNameChoice
+  ;
+
+StartNameChoice
+  : OpenParen NameExpr Pipe ContinueNameChoice CloseParen <<
+    &expr.NameExpr{NameChoice: &expr.NameChoice{
+      OpenParen: $0.(*expr.Keyword),
+      Left: $1.(*expr.NameExpr),
+      Pipe: $2.(*expr.Keyword),
+      Right: $3.(*expr.NameExpr),
+      CloseParen: $4.(*expr.Keyword),
+    }}, nil
+  >>
+  ;
+
+ContinueNameChoice
+  : NameExpr
+  | ContinueNameChoice Pipe NameExpr <<
+    &expr.NameExpr{NameChoice: &expr.NameChoice{
+      Left: $0.(*expr.NameExpr),
+      Pipe: $1.(*expr.Keyword),
+      Right: $2.(*expr.NameExpr),
+    }}, nil
+  >>
   ;
 
 Function

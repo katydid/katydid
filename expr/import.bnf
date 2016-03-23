@@ -4,6 +4,7 @@ import (
   "github.com/katydid/katydid/expr/ast"
   "github.com/katydid/katydid/expr/types"
   "github.com/katydid/katydid/expr/token"
+  "github.com/gogo/protobuf/proto"
 )
 
 func newString(v interface{}) string {

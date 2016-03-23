@@ -17,6 +17,7 @@ package expr
 import (
 	"fmt"
 	"github.com/katydid/katydid/expr/types"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -33,6 +34,65 @@ func (this *Expr) String() string {
 		return space + this.GetFunction().String()
 	}
 	return this.BuiltIn.String()
+}
+
+func (this *NameExpr) String() string {
+	v := this.GetValue()
+	return v.(interface {
+		String() string
+	}).String()
+}
+
+// _decimal_digit : '0' - '9' ;
+// _upcase : 'A'-'Z' ;
+// _lowcase : 'a'-'z' ;
+// _id_char : _upcase | _lowcase | '_' | _decimal_digit ;
+// _id : (_upcase | _lowcase | '_' ) {_id_char} ;
+// id : _id ;
+var idRegexp = regexp.MustCompile("^[a-zA-Z_][_a-zA-Z0-9]*$")
+
+func isId(s string) bool {
+	return idRegexp.MatchString(s)
+}
+
+func (this *Name) String() string {
+	if this.DoubleValue != nil {
+		return this.Before.String() + strconv.FormatFloat(this.GetDoubleValue(), 'f', -1, 10)
+	}
+	if this.IntValue != nil {
+		return this.Before.String() + strconv.FormatInt(this.GetIntValue(), 10)
+	}
+	if this.UintValue != nil {
+		return this.Before.String() + "uint(" + strconv.FormatUint(this.GetUintValue(), 10) + ")"
+	}
+	if this.BoolValue != nil {
+		return this.Before.String() + strconv.FormatBool(this.GetBoolValue())
+	}
+	if this.StringValue != nil {
+		if isId(this.GetStringValue()) {
+			return this.Before.String() + this.GetStringValue()
+		}
+		return this.Before.String() + strconv.Quote(this.GetStringValue())
+	}
+	if this.BytesValue != nil {
+		return this.Before.String() + fmt.Sprintf("%#v", this.GetBytesValue())
+	}
+	panic("unreachable")
+}
+
+func (this *AnyName) String() string {
+	return this.Underscore.String()
+}
+
+func (this *AnyNameExcept) String() string {
+	return this.Exclamation.String() + this.OpenParen.String() +
+		this.Except.String() + this.CloseParen.String()
+}
+
+func (this *NameChoice) String() string {
+	return this.OpenParen.String() + this.Left.String() +
+		this.Pipe.String() + this.Right.String() +
+		this.CloseParen.String()
 }
 
 func (this *List) String() string {

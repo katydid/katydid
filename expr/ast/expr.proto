@@ -25,6 +25,7 @@ option (gogoproto.gostring_all) = true;
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
 option (gogoproto.sizer_all) = true;
+option (gogoproto.goproto_unrecognized_all) = false;
 
 message Expr {
 	optional Keyword Comma = 1;
@@ -32,6 +33,44 @@ message Expr {
 	optional List List = 3;
 	optional Function Function = 4;
 	optional BuiltIn BuiltIn = 5;
+}
+
+message NameExpr {
+	option (gogoproto.onlyone) = true;
+	optional Name Name = 1;
+	optional AnyName AnyName = 2;
+	optional AnyNameExcept AnyNameExcept = 3;
+	optional NameChoice NameChoice = 4; 
+}
+
+message Name {
+	optional Space Before = 1;
+
+	optional double DoubleValue = 3;
+	optional int64 IntValue = 5;
+	optional uint64 UintValue = 6;
+	optional bool BoolValue = 8;
+	optional string StringValue = 9;
+	optional bytes BytesValue = 10;
+}
+
+message AnyName {
+	optional Keyword Underscore = 1;
+}
+
+message AnyNameExcept {
+	optional Keyword Exclamation = 1;
+	optional Keyword OpenParen = 2;
+	optional NameExpr Except = 3;
+	optional Keyword CloseParen = 4;
+}
+
+message NameChoice {
+	optional Keyword OpenParen = 1;
+	optional NameExpr Left = 2;
+	optional Keyword Pipe = 3;
+	optional NameExpr Right = 4;
+	optional Keyword CloseParen = 5;
 }
 
 message List {

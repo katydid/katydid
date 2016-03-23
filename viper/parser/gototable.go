@@ -2,7 +2,7 @@
  */
 package parser
 
-const numNTSymbols = 54
+const numNTSymbols = 58
 
 type (
 	gotoTable [numStates]gotoRow
@@ -24,6 +24,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -82,6 +86,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -140,6 +148,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -198,6 +210,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -256,6 +272,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -314,6 +334,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -372,6 +396,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -430,6 +458,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -488,6 +520,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -546,6 +582,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -604,6 +644,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -662,6 +706,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -720,6 +768,10 @@ var gotoTab = gotoTable{
 		31, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -778,6 +830,10 @@ var gotoTab = gotoTable{
 		35, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -836,6 +892,10 @@ var gotoTab = gotoTable{
 		37, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -894,6 +954,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -952,6 +1016,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -1010,6 +1078,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -1068,6 +1140,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -1126,6 +1202,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -1184,6 +1264,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -1242,6 +1326,10 @@ var gotoTab = gotoTable{
 		43, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -1300,6 +1388,10 @@ var gotoTab = gotoTable{
 		44, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -1358,6 +1450,10 @@ var gotoTab = gotoTable{
 		45, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -1416,6 +1512,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -1474,6 +1574,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -1532,6 +1636,10 @@ var gotoTab = gotoTable{
 		49, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -1590,6 +1698,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -1648,6 +1760,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -1706,6 +1822,10 @@ var gotoTab = gotoTable{
 		52, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -1764,6 +1884,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -1822,14 +1946,18 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		57, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		61, // Function
 		-1, // BuiltIn
 		62, // List
 		-1, // Exprs
-		63, // ListType
+		64, // ListType
 		60, // SpaceTerminal
-		71, // Literal
-		70, // Terminal
+		63, // Literal
+		71, // Terminal
 		72, // Bool
 		-1, // Equal
 		-1, // OpenParen
@@ -1880,6 +2008,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -1938,6 +2070,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -1996,6 +2132,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -2054,14 +2194,18 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		86, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		61, // Function
 		-1, // BuiltIn
 		62, // List
 		-1, // Exprs
-		63, // ListType
+		64, // ListType
 		60, // SpaceTerminal
-		71, // Literal
-		70, // Terminal
+		63, // Literal
+		71, // Terminal
 		72, // Bool
 		-1, // Equal
 		-1, // OpenParen
@@ -2112,6 +2256,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -2170,6 +2318,10 @@ var gotoTab = gotoTable{
 		89, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -2228,6 +2380,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -2286,6 +2442,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -2344,6 +2504,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -2402,6 +2566,10 @@ var gotoTab = gotoTable{
 		90, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -2460,6 +2628,10 @@ var gotoTab = gotoTable{
 		91, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -2518,14 +2690,18 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		92, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		61, // Function
 		-1, // BuiltIn
 		62, // List
 		-1, // Exprs
-		63, // ListType
+		64, // ListType
 		60, // SpaceTerminal
-		71, // Literal
-		70, // Terminal
+		63, // Literal
+		71, // Terminal
 		72, // Bool
 		-1, // Equal
 		-1, // OpenParen
@@ -2576,14 +2752,18 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		93, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		61, // Function
 		-1, // BuiltIn
 		62, // List
 		-1, // Exprs
-		63, // ListType
+		64, // ListType
 		60, // SpaceTerminal
-		71, // Literal
-		70, // Terminal
+		63, // Literal
+		71, // Terminal
 		72, // Bool
 		-1, // Equal
 		-1, // OpenParen
@@ -2634,6 +2814,10 @@ var gotoTab = gotoTable{
 		94, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -2692,6 +2876,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -2750,6 +2938,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -2808,6 +3000,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -2866,6 +3062,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -2924,6 +3124,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -2982,6 +3186,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -3040,6 +3248,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -3098,6 +3310,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -3156,6 +3372,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -3214,6 +3434,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -3272,13 +3496,17 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
 		-1,  // Exprs
 		103, // ListType
 		-1,  // SpaceTerminal
-		71,  // Literal
+		63,  // Literal
 		104, // Terminal
 		72,  // Bool
 		-1,  // Equal
@@ -3330,6 +3558,10 @@ var gotoTab = gotoTable{
 		106, // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -3388,6 +3620,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -3446,6 +3682,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -3504,6 +3744,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -3562,6 +3806,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -3620,6 +3868,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -3666,64 +3918,6 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S63
 
-		-1,  // S'
-		-1,  // Start
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // StartRule
-		-1,  // Final
-		-1,  // Internal
-		-1,  // Call
-		-1,  // Return
-		-1,  // State
-		-1,  // AllExpr
-		-1,  // Expr
-		-1,  // Function
-		-1,  // BuiltIn
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Literal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		112, // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // Hash
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		-1,  // EqualEqual
-		-1,  // ExclamationEqual
-		-1,  // LessThan
-		-1,  // GreaterThan
-		-1,  // LessEqual
-		-1,  // GreaterEqual
-		-1,  // TildeEqual
-		-1,  // StarEqual
-		-1,  // CaretEqual
-		-1,  // DollarEqual
-		-1,  // ColonColon
-		-1,  // QuestionMark
-		111, // Space
-
-	},
-	gotoRow{ // S64
-
 		-1, // S'
 		-1, // Start
 		-1, // Rules
@@ -3736,6 +3930,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -3780,6 +3978,68 @@ var gotoTab = gotoTable{
 		-1, // Space
 
 	},
+	gotoRow{ // S64
+
+		-1,  // S'
+		-1,  // Start
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // StartRule
+		-1,  // Final
+		-1,  // Internal
+		-1,  // Call
+		-1,  // Return
+		-1,  // State
+		-1,  // AllExpr
+		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		112, // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		-1,  // SemiColon
+		-1,  // Hash
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // EqualEqual
+		-1,  // ExclamationEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		-1,  // ColonColon
+		-1,  // QuestionMark
+		111, // Space
+
+	},
 	gotoRow{ // S65
 
 		-1, // S'
@@ -3794,6 +4054,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -3852,6 +4116,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -3910,6 +4178,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -3968,6 +4240,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -4026,6 +4302,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -4084,6 +4364,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -4142,6 +4426,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -4200,6 +4488,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -4258,6 +4550,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -4316,6 +4612,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -4374,6 +4674,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -4432,6 +4736,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -4490,6 +4798,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -4548,6 +4860,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -4606,6 +4922,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -4664,6 +4984,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -4722,6 +5046,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -4780,6 +5108,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -4838,6 +5170,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -4896,6 +5232,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -4954,6 +5294,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -5012,6 +5356,10 @@ var gotoTab = gotoTable{
 		115, // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -5070,6 +5418,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -5128,6 +5480,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -5186,14 +5542,18 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		116, // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		61,  // Function
 		-1,  // BuiltIn
 		62,  // List
 		-1,  // Exprs
-		63,  // ListType
+		64,  // ListType
 		60,  // SpaceTerminal
-		71,  // Literal
-		70,  // Terminal
+		63,  // Literal
+		71,  // Terminal
 		72,  // Bool
 		-1,  // Equal
 		-1,  // OpenParen
@@ -5244,6 +5604,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -5302,6 +5666,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -5360,6 +5728,10 @@ var gotoTab = gotoTable{
 		119, // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -5418,6 +5790,10 @@ var gotoTab = gotoTable{
 		120, // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -5476,14 +5852,18 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		121, // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		61,  // Function
 		-1,  // BuiltIn
 		62,  // List
 		-1,  // Exprs
-		63,  // ListType
+		64,  // ListType
 		60,  // SpaceTerminal
-		71,  // Literal
-		70,  // Terminal
+		63,  // Literal
+		71,  // Terminal
 		72,  // Bool
 		-1,  // Equal
 		-1,  // OpenParen
@@ -5534,6 +5914,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -5592,6 +5976,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -5650,6 +6038,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -5708,6 +6100,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -5766,6 +6162,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -5824,6 +6224,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -5882,6 +6286,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -5940,6 +6348,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -5998,6 +6410,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -6056,6 +6472,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -6114,6 +6534,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -6172,6 +6596,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -6230,6 +6658,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -6288,14 +6720,18 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		130, // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		134, // Function
 		-1,  // BuiltIn
 		135, // List
-		136, // Exprs
-		138, // ListType
+		138, // Exprs
+		139, // ListType
 		133, // SpaceTerminal
-		140, // Literal
-		139, // Terminal
+		136, // Literal
+		140, // Terminal
 		141, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
@@ -6346,6 +6782,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -6404,6 +6844,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -6462,6 +6906,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -6520,20 +6968,24 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		159, // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		163, // Function
 		-1,  // BuiltIn
 		164, // List
-		165, // Exprs
-		166, // ListType
+		166, // Exprs
+		167, // ListType
 		162, // SpaceTerminal
-		169, // Literal
-		168, // Terminal
+		165, // Literal
+		169, // Terminal
 		170, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
 		-1,  // CloseParen
 		-1,  // OpenCurly
-		167, // CloseCurly
+		168, // CloseCurly
 		-1,  // Comma
 		-1,  // SemiColon
 		-1,  // Hash
@@ -6578,6 +7030,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -6636,6 +7092,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -6694,6 +7154,10 @@ var gotoTab = gotoTable{
 		185, // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -6752,6 +7216,10 @@ var gotoTab = gotoTable{
 		186, // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -6810,6 +7278,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -6868,6 +7340,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -6926,6 +7402,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -6984,6 +7464,10 @@ var gotoTab = gotoTable{
 		188, // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -7042,6 +7526,10 @@ var gotoTab = gotoTable{
 		189, // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -7100,6 +7588,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -7158,6 +7650,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -7216,18 +7712,22 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		130, // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		134, // Function
 		-1,  // BuiltIn
 		135, // List
-		190, // Exprs
-		138, // ListType
+		191, // Exprs
+		139, // ListType
 		133, // SpaceTerminal
-		140, // Literal
-		139, // Terminal
+		136, // Literal
+		140, // Terminal
 		141, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
-		191, // CloseParen
+		190, // CloseParen
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
@@ -7274,14 +7774,18 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		159, // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		163, // Function
 		-1,  // BuiltIn
 		164, // List
 		192, // Exprs
-		166, // ListType
+		167, // ListType
 		162, // SpaceTerminal
-		169, // Literal
-		168, // Terminal
+		165, // Literal
+		169, // Terminal
 		170, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
@@ -7332,6 +7836,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -7390,6 +7898,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -7448,6 +7960,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -7506,13 +8022,17 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
 		-1,  // Exprs
 		195, // ListType
 		-1,  // SpaceTerminal
-		140, // Literal
+		136, // Literal
 		196, // Terminal
 		141, // Bool
 		-1,  // Equal
@@ -7564,6 +8084,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -7622,6 +8146,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -7680,6 +8208,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -7738,6 +8270,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -7796,6 +8332,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -7854,6 +8394,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -7900,60 +8444,64 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S136
 
-		-1,  // S'
-		-1,  // Start
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // StartRule
-		-1,  // Final
-		-1,  // Internal
-		-1,  // Call
-		-1,  // Return
-		-1,  // State
-		-1,  // AllExpr
-		-1,  // Expr
-		-1,  // Function
-		-1,  // BuiltIn
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Literal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		201, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		202, // Comma
-		-1,  // SemiColon
-		-1,  // Hash
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		-1,  // EqualEqual
-		-1,  // ExclamationEqual
-		-1,  // LessThan
-		-1,  // GreaterThan
-		-1,  // LessEqual
-		-1,  // GreaterEqual
-		-1,  // TildeEqual
-		-1,  // StarEqual
-		-1,  // CaretEqual
-		-1,  // DollarEqual
-		-1,  // ColonColon
-		-1,  // QuestionMark
-		200, // Space
+		-1, // S'
+		-1, // Start
+		-1, // Rules
+		-1, // Rule
+		-1, // StartRule
+		-1, // Final
+		-1, // Internal
+		-1, // Call
+		-1, // Return
+		-1, // State
+		-1, // AllExpr
+		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
+		-1, // Function
+		-1, // BuiltIn
+		-1, // List
+		-1, // Exprs
+		-1, // ListType
+		-1, // SpaceTerminal
+		-1, // Literal
+		-1, // Terminal
+		-1, // Bool
+		-1, // Equal
+		-1, // OpenParen
+		-1, // CloseParen
+		-1, // OpenCurly
+		-1, // CloseCurly
+		-1, // Comma
+		-1, // SemiColon
+		-1, // Hash
+		-1, // Ampersand
+		-1, // Pipe
+		-1, // OpenBracket
+		-1, // CloseBracket
+		-1, // Colon
+		-1, // Exclamation
+		-1, // Star
+		-1, // Underscore
+		-1, // Tilde
+		-1, // Dot
+		-1, // At
+		-1, // RightArrow
+		-1, // EqualEqual
+		-1, // ExclamationEqual
+		-1, // LessThan
+		-1, // GreaterThan
+		-1, // LessEqual
+		-1, // GreaterEqual
+		-1, // TildeEqual
+		-1, // StarEqual
+		-1, // CaretEqual
+		-1, // DollarEqual
+		-1, // ColonColon
+		-1, // QuestionMark
+		-1, // Space
 
 	},
 	gotoRow{ // S137
@@ -7970,6 +8518,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -8028,6 +8580,72 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		201, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		202, // Comma
+		-1,  // SemiColon
+		-1,  // Hash
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // EqualEqual
+		-1,  // ExclamationEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		-1,  // ColonColon
+		-1,  // QuestionMark
+		200, // Space
+
+	},
+	gotoRow{ // S139
+
+		-1,  // S'
+		-1,  // Start
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // StartRule
+		-1,  // Final
+		-1,  // Internal
+		-1,  // Call
+		-1,  // Return
+		-1,  // State
+		-1,  // AllExpr
+		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -8072,64 +8690,6 @@ var gotoTab = gotoTable{
 		111, // Space
 
 	},
-	gotoRow{ // S139
-
-		-1, // S'
-		-1, // Start
-		-1, // Rules
-		-1, // Rule
-		-1, // StartRule
-		-1, // Final
-		-1, // Internal
-		-1, // Call
-		-1, // Return
-		-1, // State
-		-1, // AllExpr
-		-1, // Expr
-		-1, // Function
-		-1, // BuiltIn
-		-1, // List
-		-1, // Exprs
-		-1, // ListType
-		-1, // SpaceTerminal
-		-1, // Literal
-		-1, // Terminal
-		-1, // Bool
-		-1, // Equal
-		-1, // OpenParen
-		-1, // CloseParen
-		-1, // OpenCurly
-		-1, // CloseCurly
-		-1, // Comma
-		-1, // SemiColon
-		-1, // Hash
-		-1, // Ampersand
-		-1, // Pipe
-		-1, // OpenBracket
-		-1, // CloseBracket
-		-1, // Colon
-		-1, // Exclamation
-		-1, // Star
-		-1, // Underscore
-		-1, // Tilde
-		-1, // Dot
-		-1, // At
-		-1, // RightArrow
-		-1, // EqualEqual
-		-1, // ExclamationEqual
-		-1, // LessThan
-		-1, // GreaterThan
-		-1, // LessEqual
-		-1, // GreaterEqual
-		-1, // TildeEqual
-		-1, // StarEqual
-		-1, // CaretEqual
-		-1, // DollarEqual
-		-1, // ColonColon
-		-1, // QuestionMark
-		-1, // Space
-
-	},
 	gotoRow{ // S140
 
 		-1, // S'
@@ -8144,6 +8704,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -8202,6 +8766,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -8260,6 +8828,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -8318,6 +8890,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -8376,6 +8952,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -8434,6 +9014,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -8492,6 +9076,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -8550,6 +9138,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -8608,6 +9200,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -8666,6 +9262,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -8724,6 +9324,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -8782,6 +9386,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -8840,6 +9448,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -8898,6 +9510,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -8956,6 +9572,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -9014,6 +9634,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -9072,6 +9696,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -9130,6 +9758,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -9188,13 +9820,17 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
 		-1,  // Exprs
 		207, // ListType
 		-1,  // SpaceTerminal
-		169, // Literal
+		165, // Literal
 		208, // Terminal
 		170, // Bool
 		-1,  // Equal
@@ -9246,6 +9882,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -9304,6 +9944,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -9362,6 +10006,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -9420,6 +10068,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -9478,6 +10130,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -9536,6 +10192,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -9582,122 +10242,6 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S165
 
-		-1,  // S'
-		-1,  // Start
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // StartRule
-		-1,  // Final
-		-1,  // Internal
-		-1,  // Call
-		-1,  // Return
-		-1,  // State
-		-1,  // AllExpr
-		-1,  // Expr
-		-1,  // Function
-		-1,  // BuiltIn
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Literal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		-1,  // OpenCurly
-		213, // CloseCurly
-		214, // Comma
-		-1,  // SemiColon
-		-1,  // Hash
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		-1,  // EqualEqual
-		-1,  // ExclamationEqual
-		-1,  // LessThan
-		-1,  // GreaterThan
-		-1,  // LessEqual
-		-1,  // GreaterEqual
-		-1,  // TildeEqual
-		-1,  // StarEqual
-		-1,  // CaretEqual
-		-1,  // DollarEqual
-		-1,  // ColonColon
-		-1,  // QuestionMark
-		212, // Space
-
-	},
-	gotoRow{ // S166
-
-		-1,  // S'
-		-1,  // Start
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // StartRule
-		-1,  // Final
-		-1,  // Internal
-		-1,  // Call
-		-1,  // Return
-		-1,  // State
-		-1,  // AllExpr
-		-1,  // Expr
-		-1,  // Function
-		-1,  // BuiltIn
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Literal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		-1,  // CloseParen
-		216, // OpenCurly
-		-1,  // CloseCurly
-		-1,  // Comma
-		-1,  // SemiColon
-		-1,  // Hash
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		-1,  // EqualEqual
-		-1,  // ExclamationEqual
-		-1,  // LessThan
-		-1,  // GreaterThan
-		-1,  // LessEqual
-		-1,  // GreaterEqual
-		-1,  // TildeEqual
-		-1,  // StarEqual
-		-1,  // CaretEqual
-		-1,  // DollarEqual
-		-1,  // ColonColon
-		-1,  // QuestionMark
-		111, // Space
-
-	},
-	gotoRow{ // S167
-
 		-1, // S'
 		-1, // Start
 		-1, // Rules
@@ -9710,6 +10254,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -9754,6 +10302,130 @@ var gotoTab = gotoTable{
 		-1, // Space
 
 	},
+	gotoRow{ // S166
+
+		-1,  // S'
+		-1,  // Start
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // StartRule
+		-1,  // Final
+		-1,  // Internal
+		-1,  // Call
+		-1,  // Return
+		-1,  // State
+		-1,  // AllExpr
+		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		-1,  // OpenCurly
+		213, // CloseCurly
+		214, // Comma
+		-1,  // SemiColon
+		-1,  // Hash
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // EqualEqual
+		-1,  // ExclamationEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		-1,  // ColonColon
+		-1,  // QuestionMark
+		212, // Space
+
+	},
+	gotoRow{ // S167
+
+		-1,  // S'
+		-1,  // Start
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // StartRule
+		-1,  // Final
+		-1,  // Internal
+		-1,  // Call
+		-1,  // Return
+		-1,  // State
+		-1,  // AllExpr
+		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		-1,  // CloseParen
+		216, // OpenCurly
+		-1,  // CloseCurly
+		-1,  // Comma
+		-1,  // SemiColon
+		-1,  // Hash
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // EqualEqual
+		-1,  // ExclamationEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		-1,  // ColonColon
+		-1,  // QuestionMark
+		111, // Space
+
+	},
 	gotoRow{ // S168
 
 		-1, // S'
@@ -9768,6 +10440,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -9826,6 +10502,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -9884,6 +10564,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -9942,6 +10626,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -10000,6 +10688,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -10058,6 +10750,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -10116,6 +10812,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -10174,6 +10874,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -10232,6 +10936,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -10290,6 +10998,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -10348,6 +11060,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -10406,6 +11122,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -10464,6 +11184,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -10522,6 +11246,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -10580,6 +11308,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -10638,6 +11370,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -10696,6 +11432,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -10754,6 +11494,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -10812,6 +11556,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -10870,6 +11618,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -10928,6 +11680,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -10986,6 +11742,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -11032,64 +11792,6 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S190
 
-		-1,  // S'
-		-1,  // Start
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // StartRule
-		-1,  // Final
-		-1,  // Internal
-		-1,  // Call
-		-1,  // Return
-		-1,  // State
-		-1,  // AllExpr
-		-1,  // Expr
-		-1,  // Function
-		-1,  // BuiltIn
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Literal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		221, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		202, // Comma
-		-1,  // SemiColon
-		-1,  // Hash
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		-1,  // EqualEqual
-		-1,  // ExclamationEqual
-		-1,  // LessThan
-		-1,  // GreaterThan
-		-1,  // LessEqual
-		-1,  // GreaterEqual
-		-1,  // TildeEqual
-		-1,  // StarEqual
-		-1,  // CaretEqual
-		-1,  // DollarEqual
-		-1,  // ColonColon
-		-1,  // QuestionMark
-		200, // Space
-
-	},
-	gotoRow{ // S191
-
 		-1, // S'
 		-1, // Start
 		-1, // Rules
@@ -11102,6 +11804,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -11146,6 +11852,68 @@ var gotoTab = gotoTable{
 		-1, // Space
 
 	},
+	gotoRow{ // S191
+
+		-1,  // S'
+		-1,  // Start
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // StartRule
+		-1,  // Final
+		-1,  // Internal
+		-1,  // Call
+		-1,  // Return
+		-1,  // State
+		-1,  // AllExpr
+		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		221, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		202, // Comma
+		-1,  // SemiColon
+		-1,  // Hash
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // EqualEqual
+		-1,  // ExclamationEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		-1,  // ColonColon
+		-1,  // QuestionMark
+		200, // Space
+
+	},
 	gotoRow{ // S192
 
 		-1,  // S'
@@ -11160,6 +11928,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -11218,6 +11990,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -11276,6 +12052,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -11334,6 +12114,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -11392,6 +12176,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -11450,6 +12238,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -11508,6 +12300,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -11566,18 +12362,22 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		130, // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		134, // Function
 		-1,  // BuiltIn
 		135, // List
-		226, // Exprs
-		138, // ListType
+		227, // Exprs
+		139, // ListType
 		133, // SpaceTerminal
-		140, // Literal
-		139, // Terminal
+		136, // Literal
+		140, // Terminal
 		141, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
-		227, // CloseParen
+		226, // CloseParen
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
@@ -11624,6 +12424,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -11682,6 +12486,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -11740,14 +12548,18 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		232, // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		134, // Function
 		-1,  // BuiltIn
 		135, // List
 		-1,  // Exprs
-		138, // ListType
+		139, // ListType
 		133, // SpaceTerminal
-		140, // Literal
-		139, // Terminal
+		136, // Literal
+		140, // Terminal
 		141, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
@@ -11798,6 +12610,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -11856,6 +12672,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -11914,14 +12734,18 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		159, // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		163, // Function
 		-1,  // BuiltIn
 		164, // List
 		234, // Exprs
-		166, // ListType
+		167, // ListType
 		162, // SpaceTerminal
-		169, // Literal
-		168, // Terminal
+		165, // Literal
+		169, // Terminal
 		170, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
@@ -11972,6 +12796,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -12030,6 +12858,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -12088,6 +12920,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -12146,6 +12982,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -12204,6 +13044,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -12262,18 +13106,22 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		130, // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		134, // Function
 		-1,  // BuiltIn
 		135, // List
-		240, // Exprs
-		138, // ListType
+		241, // Exprs
+		139, // ListType
 		133, // SpaceTerminal
-		140, // Literal
-		139, // Terminal
+		136, // Literal
+		140, // Terminal
 		141, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
-		241, // CloseParen
+		240, // CloseParen
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
@@ -12320,6 +13168,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -12378,6 +13230,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -12436,14 +13292,18 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		245, // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		163, // Function
 		-1,  // BuiltIn
 		164, // List
 		-1,  // Exprs
-		166, // ListType
+		167, // ListType
 		162, // SpaceTerminal
-		169, // Literal
-		168, // Terminal
+		165, // Literal
+		169, // Terminal
 		170, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
@@ -12494,6 +13354,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -12552,14 +13416,18 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		159, // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		163, // Function
 		-1,  // BuiltIn
 		164, // List
 		247, // Exprs
-		166, // ListType
+		167, // ListType
 		162, // SpaceTerminal
-		169, // Literal
-		168, // Terminal
+		165, // Literal
+		169, // Terminal
 		170, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
@@ -12610,6 +13478,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -12668,6 +13540,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -12726,6 +13602,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -12784,6 +13664,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -12842,6 +13726,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -12900,6 +13788,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -12958,18 +13850,22 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		130, // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		134, // Function
 		-1,  // BuiltIn
 		135, // List
-		250, // Exprs
-		138, // ListType
+		251, // Exprs
+		139, // ListType
 		133, // SpaceTerminal
-		140, // Literal
-		139, // Terminal
+		136, // Literal
+		140, // Terminal
 		141, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
-		251, // CloseParen
+		250, // CloseParen
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
@@ -13016,14 +13912,18 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		159, // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		163, // Function
 		-1,  // BuiltIn
 		164, // List
 		252, // Exprs
-		166, // ListType
+		167, // ListType
 		162, // SpaceTerminal
-		169, // Literal
-		168, // Terminal
+		165, // Literal
+		169, // Terminal
 		170, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
@@ -13074,13 +13974,17 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
 		-1,  // Exprs
 		195, // ListType
 		-1,  // SpaceTerminal
-		140, // Literal
+		136, // Literal
 		196, // Terminal
 		141, // Bool
 		-1,  // Equal
@@ -13120,64 +14024,6 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S226
 
-		-1,  // S'
-		-1,  // Start
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // StartRule
-		-1,  // Final
-		-1,  // Internal
-		-1,  // Call
-		-1,  // Return
-		-1,  // State
-		-1,  // AllExpr
-		-1,  // Expr
-		-1,  // Function
-		-1,  // BuiltIn
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Literal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		256, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		202, // Comma
-		-1,  // SemiColon
-		-1,  // Hash
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		-1,  // EqualEqual
-		-1,  // ExclamationEqual
-		-1,  // LessThan
-		-1,  // GreaterThan
-		-1,  // LessEqual
-		-1,  // GreaterEqual
-		-1,  // TildeEqual
-		-1,  // StarEqual
-		-1,  // CaretEqual
-		-1,  // DollarEqual
-		-1,  // ColonColon
-		-1,  // QuestionMark
-		255, // Space
-
-	},
-	gotoRow{ // S227
-
 		-1, // S'
 		-1, // Start
 		-1, // Rules
@@ -13190,6 +14036,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -13234,6 +14084,68 @@ var gotoTab = gotoTable{
 		-1, // Space
 
 	},
+	gotoRow{ // S227
+
+		-1,  // S'
+		-1,  // Start
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // StartRule
+		-1,  // Final
+		-1,  // Internal
+		-1,  // Call
+		-1,  // Return
+		-1,  // State
+		-1,  // AllExpr
+		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		256, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		202, // Comma
+		-1,  // SemiColon
+		-1,  // Hash
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // EqualEqual
+		-1,  // ExclamationEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		-1,  // ColonColon
+		-1,  // QuestionMark
+		255, // Space
+
+	},
 	gotoRow{ // S228
 
 		-1, // S'
@@ -13248,6 +14160,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -13306,6 +14222,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -13364,6 +14284,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -13422,13 +14346,17 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
 		-1,  // Exprs
 		195, // ListType
 		-1,  // SpaceTerminal
-		140, // Literal
+		136, // Literal
 		196, // Terminal
 		141, // Bool
 		-1,  // Equal
@@ -13480,6 +14408,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -13538,13 +14470,17 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
 		-1,  // Exprs
 		207, // ListType
 		-1,  // SpaceTerminal
-		169, // Literal
+		165, // Literal
 		208, // Terminal
 		170, // Bool
 		-1,  // Equal
@@ -13596,6 +14532,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -13654,6 +14594,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -13712,6 +14656,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -13770,18 +14718,22 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		130, // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		134, // Function
 		-1,  // BuiltIn
 		135, // List
-		260, // Exprs
-		138, // ListType
+		261, // Exprs
+		139, // ListType
 		133, // SpaceTerminal
-		140, // Literal
-		139, // Terminal
+		136, // Literal
+		140, // Terminal
 		141, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
-		261, // CloseParen
+		260, // CloseParen
 		-1,  // OpenCurly
 		-1,  // CloseCurly
 		-1,  // Comma
@@ -13828,14 +14780,18 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		159, // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		163, // Function
 		-1,  // BuiltIn
 		164, // List
 		262, // Exprs
-		166, // ListType
+		167, // ListType
 		162, // SpaceTerminal
-		169, // Literal
-		168, // Terminal
+		165, // Literal
+		169, // Terminal
 		170, // Bool
 		-1,  // Equal
 		-1,  // OpenParen
@@ -13886,13 +14842,17 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
 		-1,  // Exprs
 		195, // ListType
 		-1,  // SpaceTerminal
-		140, // Literal
+		136, // Literal
 		196, // Terminal
 		141, // Bool
 		-1,  // Equal
@@ -13932,64 +14892,6 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S240
 
-		-1,  // S'
-		-1,  // Start
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // StartRule
-		-1,  // Final
-		-1,  // Internal
-		-1,  // Call
-		-1,  // Return
-		-1,  // State
-		-1,  // AllExpr
-		-1,  // Expr
-		-1,  // Function
-		-1,  // BuiltIn
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Literal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		266, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		202, // Comma
-		-1,  // SemiColon
-		-1,  // Hash
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		-1,  // EqualEqual
-		-1,  // ExclamationEqual
-		-1,  // LessThan
-		-1,  // GreaterThan
-		-1,  // LessEqual
-		-1,  // GreaterEqual
-		-1,  // TildeEqual
-		-1,  // StarEqual
-		-1,  // CaretEqual
-		-1,  // DollarEqual
-		-1,  // ColonColon
-		-1,  // QuestionMark
-		265, // Space
-
-	},
-	gotoRow{ // S241
-
 		-1, // S'
 		-1, // Start
 		-1, // Rules
@@ -14002,6 +14904,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -14046,6 +14952,68 @@ var gotoTab = gotoTable{
 		-1, // Space
 
 	},
+	gotoRow{ // S241
+
+		-1,  // S'
+		-1,  // Start
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // StartRule
+		-1,  // Final
+		-1,  // Internal
+		-1,  // Call
+		-1,  // Return
+		-1,  // State
+		-1,  // AllExpr
+		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		266, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		202, // Comma
+		-1,  // SemiColon
+		-1,  // Hash
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // EqualEqual
+		-1,  // ExclamationEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		-1,  // ColonColon
+		-1,  // QuestionMark
+		265, // Space
+
+	},
 	gotoRow{ // S242
 
 		-1, // S'
@@ -14060,6 +15028,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -14118,6 +15090,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -14176,13 +15152,17 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
 		-1,  // Exprs
 		207, // ListType
 		-1,  // SpaceTerminal
-		169, // Literal
+		165, // Literal
 		208, // Terminal
 		170, // Bool
 		-1,  // Equal
@@ -14234,6 +15214,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -14292,13 +15276,17 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
 		-1,  // Exprs
 		207, // ListType
 		-1,  // SpaceTerminal
-		169, // Literal
+		165, // Literal
 		208, // Terminal
 		170, // Bool
 		-1,  // Equal
@@ -14350,6 +15338,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -14408,6 +15400,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -14466,6 +15462,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -14512,64 +15512,6 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S250
 
-		-1,  // S'
-		-1,  // Start
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // StartRule
-		-1,  // Final
-		-1,  // Internal
-		-1,  // Call
-		-1,  // Return
-		-1,  // State
-		-1,  // AllExpr
-		-1,  // Expr
-		-1,  // Function
-		-1,  // BuiltIn
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Literal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		270, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		202, // Comma
-		-1,  // SemiColon
-		-1,  // Hash
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		-1,  // EqualEqual
-		-1,  // ExclamationEqual
-		-1,  // LessThan
-		-1,  // GreaterThan
-		-1,  // LessEqual
-		-1,  // GreaterEqual
-		-1,  // TildeEqual
-		-1,  // StarEqual
-		-1,  // CaretEqual
-		-1,  // DollarEqual
-		-1,  // ColonColon
-		-1,  // QuestionMark
-		255, // Space
-
-	},
-	gotoRow{ // S251
-
 		-1, // S'
 		-1, // Start
 		-1, // Rules
@@ -14582,6 +15524,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -14626,6 +15572,68 @@ var gotoTab = gotoTable{
 		-1, // Space
 
 	},
+	gotoRow{ // S251
+
+		-1,  // S'
+		-1,  // Start
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // StartRule
+		-1,  // Final
+		-1,  // Internal
+		-1,  // Call
+		-1,  // Return
+		-1,  // State
+		-1,  // AllExpr
+		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		270, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		202, // Comma
+		-1,  // SemiColon
+		-1,  // Hash
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // EqualEqual
+		-1,  // ExclamationEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		-1,  // ColonColon
+		-1,  // QuestionMark
+		255, // Space
+
+	},
 	gotoRow{ // S252
 
 		-1,  // S'
@@ -14640,6 +15648,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -14698,6 +15710,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -14756,6 +15772,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -14814,6 +15834,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -14872,6 +15896,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -14930,6 +15958,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -14988,6 +16020,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -15046,6 +16082,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -15092,64 +16132,6 @@ var gotoTab = gotoTable{
 	},
 	gotoRow{ // S260
 
-		-1,  // S'
-		-1,  // Start
-		-1,  // Rules
-		-1,  // Rule
-		-1,  // StartRule
-		-1,  // Final
-		-1,  // Internal
-		-1,  // Call
-		-1,  // Return
-		-1,  // State
-		-1,  // AllExpr
-		-1,  // Expr
-		-1,  // Function
-		-1,  // BuiltIn
-		-1,  // List
-		-1,  // Exprs
-		-1,  // ListType
-		-1,  // SpaceTerminal
-		-1,  // Literal
-		-1,  // Terminal
-		-1,  // Bool
-		-1,  // Equal
-		-1,  // OpenParen
-		272, // CloseParen
-		-1,  // OpenCurly
-		-1,  // CloseCurly
-		202, // Comma
-		-1,  // SemiColon
-		-1,  // Hash
-		-1,  // Ampersand
-		-1,  // Pipe
-		-1,  // OpenBracket
-		-1,  // CloseBracket
-		-1,  // Colon
-		-1,  // Exclamation
-		-1,  // Star
-		-1,  // Underscore
-		-1,  // Tilde
-		-1,  // Dot
-		-1,  // At
-		-1,  // RightArrow
-		-1,  // EqualEqual
-		-1,  // ExclamationEqual
-		-1,  // LessThan
-		-1,  // GreaterThan
-		-1,  // LessEqual
-		-1,  // GreaterEqual
-		-1,  // TildeEqual
-		-1,  // StarEqual
-		-1,  // CaretEqual
-		-1,  // DollarEqual
-		-1,  // ColonColon
-		-1,  // QuestionMark
-		265, // Space
-
-	},
-	gotoRow{ // S261
-
 		-1, // S'
 		-1, // Start
 		-1, // Rules
@@ -15162,6 +16144,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -15206,6 +16192,68 @@ var gotoTab = gotoTable{
 		-1, // Space
 
 	},
+	gotoRow{ // S261
+
+		-1,  // S'
+		-1,  // Start
+		-1,  // Rules
+		-1,  // Rule
+		-1,  // StartRule
+		-1,  // Final
+		-1,  // Internal
+		-1,  // Call
+		-1,  // Return
+		-1,  // State
+		-1,  // AllExpr
+		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
+		-1,  // Function
+		-1,  // BuiltIn
+		-1,  // List
+		-1,  // Exprs
+		-1,  // ListType
+		-1,  // SpaceTerminal
+		-1,  // Literal
+		-1,  // Terminal
+		-1,  // Bool
+		-1,  // Equal
+		-1,  // OpenParen
+		272, // CloseParen
+		-1,  // OpenCurly
+		-1,  // CloseCurly
+		202, // Comma
+		-1,  // SemiColon
+		-1,  // Hash
+		-1,  // Ampersand
+		-1,  // Pipe
+		-1,  // OpenBracket
+		-1,  // CloseBracket
+		-1,  // Colon
+		-1,  // Exclamation
+		-1,  // Star
+		-1,  // Underscore
+		-1,  // Tilde
+		-1,  // Dot
+		-1,  // At
+		-1,  // RightArrow
+		-1,  // EqualEqual
+		-1,  // ExclamationEqual
+		-1,  // LessThan
+		-1,  // GreaterThan
+		-1,  // LessEqual
+		-1,  // GreaterEqual
+		-1,  // TildeEqual
+		-1,  // StarEqual
+		-1,  // CaretEqual
+		-1,  // DollarEqual
+		-1,  // ColonColon
+		-1,  // QuestionMark
+		265, // Space
+
+	},
 	gotoRow{ // S262
 
 		-1,  // S'
@@ -15220,6 +16268,10 @@ var gotoTab = gotoTable{
 		-1,  // State
 		-1,  // AllExpr
 		-1,  // Expr
+		-1,  // Name
+		-1,  // NameExpr
+		-1,  // StartNameChoice
+		-1,  // ContinueNameChoice
 		-1,  // Function
 		-1,  // BuiltIn
 		-1,  // List
@@ -15278,6 +16330,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -15336,6 +16392,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -15394,6 +16454,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -15452,6 +16516,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -15510,6 +16578,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -15568,6 +16640,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -15626,6 +16702,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -15684,6 +16764,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -15742,6 +16826,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -15800,6 +16888,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List
@@ -15858,6 +16950,10 @@ var gotoTab = gotoTable{
 		-1, // State
 		-1, // AllExpr
 		-1, // Expr
+		-1, // Name
+		-1, // NameExpr
+		-1, // StartNameChoice
+		-1, // ContinueNameChoice
 		-1, // Function
 		-1, // BuiltIn
 		-1, // List

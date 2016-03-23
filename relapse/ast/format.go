@@ -18,6 +18,7 @@ import (
 	"github.com/katydid/katydid/expr/ast"
 )
 
+//Work in Progress: Like gofmt, but for relapse
 func Format(g *Grammar) {
 	first := true
 	if g.TopPattern == nil {
@@ -85,13 +86,13 @@ func formatTreeNode(t *TreeNode, first bool, tabs int) {
 	formatPattern(t.Pattern, true, tabs)
 }
 
-func formatNameExpr(nameExpr *NameExpr, first bool, tabs int) {
+func formatNameExpr(nameExpr *expr.NameExpr, first bool, tabs int) {
 	if nameExpr.Name != nil {
 		formatName(nameExpr.Name, first, tabs)
 	}
 }
 
-func formatName(name *Name, first bool, tabs int) {
+func formatName(name *expr.Name, first bool, tabs int) {
 	if name.Before == nil {
 		name.Before = &expr.Space{}
 	}

@@ -15,6 +15,7 @@
 package interp_test
 
 import (
+	"github.com/katydid/katydid/expr/ast"
 	"github.com/katydid/katydid/expr/funcs"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/combinator"
@@ -41,7 +42,7 @@ func TestSimplify2(t *testing.T) {
 }
 
 func newT(s string) *relapse.Pattern {
-	return relapse.NewTreeNode(relapse.NewStringName(s), relapse.NewEmpty())
+	return relapse.NewTreeNode(expr.NewStringName(s), relapse.NewEmpty())
 }
 
 func TestSimplifyOr1(t *testing.T) {
@@ -67,24 +68,24 @@ func TestSimplifyOr2(t *testing.T) {
 }
 
 func TestSimplifyTree(t *testing.T) {
-	left := relapse.NewTreeNode(relapse.NewStringName("A"),
-		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewContains(
-			relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewZAny()),
+	left := relapse.NewTreeNode(expr.NewStringName("A"),
+		relapse.NewTreeNode(expr.NewStringName("B"), relapse.NewContains(
+			relapse.NewTreeNode(expr.NewStringName("C"), relapse.NewZAny()),
 		)),
 	)
-	right := relapse.NewTreeNode(relapse.NewStringName("A"),
-		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewContains(
-			relapse.NewTreeNode(relapse.NewStringName("D"), relapse.NewZAny()),
+	right := relapse.NewTreeNode(expr.NewStringName("A"),
+		relapse.NewTreeNode(expr.NewStringName("B"), relapse.NewContains(
+			relapse.NewTreeNode(expr.NewStringName("D"), relapse.NewZAny()),
 		)),
 	)
 	input := relapse.NewAnd(left, right)
-	expected := relapse.NewTreeNode(relapse.NewStringName("A"),
-		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewAnd(
+	expected := relapse.NewTreeNode(expr.NewStringName("A"),
+		relapse.NewTreeNode(expr.NewStringName("B"), relapse.NewAnd(
 			relapse.NewContains(
-				relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewZAny()),
+				relapse.NewTreeNode(expr.NewStringName("C"), relapse.NewZAny()),
 			),
 			relapse.NewContains(
-				relapse.NewTreeNode(relapse.NewStringName("D"), relapse.NewZAny()),
+				relapse.NewTreeNode(expr.NewStringName("D"), relapse.NewZAny()),
 			),
 		)),
 	)
@@ -108,7 +109,7 @@ func TestSimplifyFalseLeaf(t *testing.T) {
 }
 
 func TestSimplifyFalseTreeNode(t *testing.T) {
-	input := relapse.NewTreeNode(relapse.NewAnyNameExcept(relapse.NewAnyName()), relapse.NewZAny())
+	input := relapse.NewTreeNode(expr.NewAnyNameExcept(expr.NewAnyName()), relapse.NewZAny())
 	expected := relapse.NewNot(relapse.NewZAny())
 	refs := relapse.RefLookup{"main": input}
 	output := Simplify(refs, input)
@@ -119,7 +120,7 @@ func TestSimplifyFalseTreeNode(t *testing.T) {
 }
 
 func TestSimplifyTreeNodeWithNotZanyChild(t *testing.T) {
-	input := relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewNot(relapse.NewZAny()))
+	input := relapse.NewTreeNode(expr.NewAnyName(), relapse.NewNot(relapse.NewZAny()))
 	expected := relapse.NewNot(relapse.NewZAny())
 	refs := relapse.RefLookup{"main": input}
 	output := Simplify(refs, input)
@@ -130,7 +131,7 @@ func TestSimplifyTreeNodeWithNotZanyChild(t *testing.T) {
 }
 
 func TestSimplifyContainsFalseTreeNode(t *testing.T) {
-	input := relapse.NewContains(relapse.NewTreeNode(relapse.NewAnyNameExcept(relapse.NewAnyName()), relapse.NewZAny()))
+	input := relapse.NewContains(relapse.NewTreeNode(expr.NewAnyNameExcept(expr.NewAnyName()), relapse.NewZAny()))
 	expected := relapse.NewNot(relapse.NewZAny())
 	refs := relapse.RefLookup{"main": input}
 	output := Simplify(refs, input)

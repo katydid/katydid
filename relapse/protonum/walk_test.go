@@ -16,6 +16,7 @@ package protonum
 
 import (
 	"fmt"
+	"github.com/katydid/katydid/expr/ast"
 	"github.com/katydid/katydid/relapse/ast"
 )
 
@@ -52,15 +53,15 @@ func topDown(pattern *relapse.Pattern, f func(*relapse.Pattern)) {
 	}
 }
 
-func topDownName(n *relapse.NameExpr, f func(*relapse.NameExpr)) {
+func topDownName(n *expr.NameExpr, f func(*expr.NameExpr)) {
 	f(n)
 	typ := n.GetValue()
 	switch v := typ.(type) {
-	case *relapse.Name, *relapse.AnyName:
+	case *expr.Name, *expr.AnyName:
 		//do nothing
-	case *relapse.AnyNameExcept:
+	case *expr.AnyNameExcept:
 		topDownName(v.GetExcept(), f)
-	case *relapse.NameChoice:
+	case *expr.NameChoice:
 		topDownName(v.GetLeft(), f)
 		topDownName(v.GetRight(), f)
 	default:
@@ -68,26 +69,26 @@ func topDownName(n *relapse.NameExpr, f func(*relapse.NameExpr)) {
 	}
 }
 
-func allNames(p *relapse.Pattern, f func(*relapse.NameExpr) bool) bool {
+func allNames(p *relapse.Pattern, f func(*expr.NameExpr) bool) bool {
 	ret := true
 	topDown(p, func(p *relapse.Pattern) {
 		if p.TreeNode == nil {
 			return
 		}
-		topDownName(p.TreeNode.GetName(), func(n *relapse.NameExpr) {
+		topDownName(p.TreeNode.GetName(), func(n *expr.NameExpr) {
 			ret = ret && f(n)
 		})
 	})
 	return ret
 }
 
-func anyNames(p *relapse.Pattern, f func(*relapse.NameExpr) bool) bool {
+func anyNames(p *relapse.Pattern, f func(*expr.NameExpr) bool) bool {
 	ret := false
 	topDown(p, func(p *relapse.Pattern) {
 		if p.TreeNode == nil {
 			return
 		}
-		topDownName(p.TreeNode.GetName(), func(n *relapse.NameExpr) {
+		topDownName(p.TreeNode.GetName(), func(n *expr.NameExpr) {
 			ret = ret || f(n)
 		})
 	})
@@ -95,7 +96,7 @@ func anyNames(p *relapse.Pattern, f func(*relapse.NameExpr) bool) bool {
 }
 
 func anyStringNames(p *relapse.Pattern) bool {
-	return anyNames(p, func(n *relapse.NameExpr) bool {
+	return anyNames(p, func(n *expr.NameExpr) bool {
 		if n.GetName() == nil {
 			return false
 		}
@@ -104,7 +105,7 @@ func anyStringNames(p *relapse.Pattern) bool {
 }
 
 func onlyUintNames(p *relapse.Pattern) bool {
-	return allNames(p, func(n *relapse.NameExpr) bool {
+	return allNames(p, func(n *expr.NameExpr) bool {
 		if n.GetName() == nil {
 			return true
 		}

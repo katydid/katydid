@@ -18,8 +18,7 @@ import (
 	"fmt"
 	"github.com/katydid/katydid/expr/ast"
 	"github.com/katydid/katydid/expr/compose"
-	"github.com/katydid/katydid/relapse/ast"
-	"github.com/katydid/katydid/relapse/nameexpr"
+	nameexpr "github.com/katydid/katydid/expr/name"
 )
 
 type Pattern struct {
@@ -159,12 +158,12 @@ func (this *Empty) String() string {
 
 type Node struct {
 	F       compose.Bool
-	Name    *relapse.NameExpr
+	Name    *expr.NameExpr
 	Expr    *expr.Expr
 	Pattern *Pattern
 }
 
-func NewNode(f compose.Bool, n *relapse.NameExpr, e *expr.Expr, p *Pattern) *Pattern {
+func NewNode(f compose.Bool, n *expr.NameExpr, e *expr.Expr, p *Pattern) *Pattern {
 	return &Pattern{
 		head: &PatternHead{
 			Node: &Node{
@@ -191,7 +190,7 @@ func (this *Node) String() string {
 	return this.Expr.String()
 }
 
-func NewTreeNode(name *relapse.NameExpr, p *Pattern) *Pattern {
+func NewTreeNode(name *expr.NameExpr, p *Pattern) *Pattern {
 	nameFunc := nameexpr.NameToFunc(name)
 	f, err := compose.NewBoolFunc(nameFunc)
 	if err != nil {

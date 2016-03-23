@@ -15,11 +15,11 @@
 package expr
 
 type Visitor interface {
-	Visit(node interface{}) Visitor
+	Visit(node interface{}) interface{}
 }
 
 func (this *Expr) Walk(v Visitor) {
-	v = v.Visit(this)
+	v = v.Visit(this).(Visitor)
 	if this.Terminal != nil {
 		this.GetTerminal().Walk(v)
 	}
@@ -34,32 +34,73 @@ func (this *Expr) Walk(v Visitor) {
 	}
 }
 
+func (this *NameExpr) Walk(v Visitor) {
+	v = v.Visit(this).(Visitor)
+	if this.Name != nil {
+		this.GetName().Walk(v)
+	}
+	if this.AnyName != nil {
+		this.GetAnyName().Walk(v)
+	}
+	if this.AnyNameExcept != nil {
+		this.GetAnyNameExcept().Walk(v)
+	}
+	if this.NameChoice != nil {
+		this.GetNameChoice().Walk(v)
+	}
+}
+
+func (this *Name) Walk(v Visitor) {
+	v = v.Visit(this).(Visitor)
+}
+
+func (this *AnyName) Walk(v Visitor) {
+	v = v.Visit(this).(Visitor)
+}
+
+func (this *AnyNameExcept) Walk(v Visitor) {
+	v = v.Visit(this).(Visitor)
+	if this.Except != nil {
+		this.GetExcept().Walk(v)
+	}
+}
+
+func (this *NameChoice) Walk(v Visitor) {
+	v = v.Visit(this).(Visitor)
+	if this.Left != nil {
+		this.GetLeft().Walk(v)
+	}
+	if this.Right != nil {
+		this.GetRight().Walk(v)
+	}
+}
+
 func (this *List) Walk(v Visitor) {
-	v = v.Visit(this)
+	v = v.Visit(this).(Visitor)
 	for _, e := range this.GetElems() {
 		e.Walk(v)
 	}
 }
 
 func (this *Function) Walk(v Visitor) {
-	v = v.Visit(this)
+	v = v.Visit(this).(Visitor)
 	for _, e := range this.GetParams() {
 		e.Walk(v)
 	}
 }
 
 func (this *BuiltIn) Walk(v Visitor) {
-	v = v.Visit(this)
+	v = v.Visit(this).(Visitor)
 	this.Expr.Walk(v)
 }
 
 func (this *Terminal) Walk(v Visitor) {
-	v = v.Visit(this)
+	v = v.Visit(this).(Visitor)
 	if this.Variable != nil {
 		this.GetVariable().Walk(v)
 	}
 }
 
 func (this *Variable) Walk(v Visitor) {
-	v = v.Visit(this)
+	v = v.Visit(this).(Visitor)
 }

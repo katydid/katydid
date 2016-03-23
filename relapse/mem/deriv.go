@@ -17,9 +17,9 @@ package mem
 import (
 	"fmt"
 	"github.com/katydid/katydid/expr/compose"
+	nameexpr "github.com/katydid/katydid/expr/name"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/interp"
-	"github.com/katydid/katydid/relapse/nameexpr"
 	"github.com/katydid/katydid/serialize"
 	"io"
 	"log"

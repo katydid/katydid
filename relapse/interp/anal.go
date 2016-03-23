@@ -21,13 +21,13 @@ import (
 )
 
 // Experimental
-func ChildrenOf(g *relapse.Grammar, path []*relapse.NameExpr) []*relapse.Pattern {
+func ChildrenOf(g *relapse.Grammar, path []*expr.NameExpr) []*relapse.Pattern {
 	refs := relapse.NewRefsLookup(g)
 	p := refs["main"]
 	return childrenOf(refs, p, path)
 }
 
-func childrenOf(refs relapse.RefLookup, p *relapse.Pattern, path []*relapse.NameExpr) []*relapse.Pattern {
+func childrenOf(refs relapse.RefLookup, p *relapse.Pattern, path []*expr.NameExpr) []*relapse.Pattern {
 	if len(path) == 0 {
 		return []*relapse.Pattern{p}
 	}

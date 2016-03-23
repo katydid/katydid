@@ -15,6 +15,7 @@
 package combinator
 
 import (
+	"github.com/katydid/katydid/expr/ast"
 	"github.com/katydid/katydid/expr/funcs"
 	exprparser "github.com/katydid/katydid/expr/parser"
 	"github.com/katydid/katydid/relapse/ast"
@@ -39,34 +40,34 @@ func concat(p *relapse.Pattern, ps ...*relapse.Pattern) *relapse.Pattern {
 }
 
 func InPath(name string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewContains(relapse.NewTreeNode(relapse.NewStringName(name), concat(child, children...)))
+	return relapse.NewContains(relapse.NewTreeNode(expr.NewStringName(name), concat(child, children...)))
 }
 
 func InAnyPath(child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewContains(relapse.NewTreeNode(relapse.NewAnyName(), concat(child, children...)))
+	return relapse.NewContains(relapse.NewTreeNode(expr.NewAnyName(), concat(child, children...)))
 }
 
 func In(name string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewTreeNode(relapse.NewStringName(name), concat(child, children...))
+	return relapse.NewTreeNode(expr.NewStringName(name), concat(child, children...))
 }
 
 func Elem(index int, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewTreeNode(relapse.NewIntName(int64(index)), concat(child, children...))
+	return relapse.NewTreeNode(expr.NewIntName(int64(index)), concat(child, children...))
 }
 
 func InAny(child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewTreeNode(relapse.NewAnyName(), concat(child, children...))
+	return relapse.NewTreeNode(expr.NewAnyName(), concat(child, children...))
 }
 
 func InAnyExcept(name string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewTreeNode(relapse.NewAnyNameExcept(relapse.NewStringName(name)), concat(child, children...))
+	return relapse.NewTreeNode(expr.NewAnyNameExcept(expr.NewStringName(name)), concat(child, children...))
 }
 
-func nameChoice(p string, ps ...string) *relapse.NameExpr {
+func nameChoice(p string, ps ...string) *expr.NameExpr {
 	if len(ps) == 0 {
-		return relapse.NewStringName(p)
+		return expr.NewStringName(p)
 	}
-	return relapse.NewNameChoice(relapse.NewStringName(p), nameChoice(ps[0], ps[1:]...))
+	return expr.NewNameChoice(expr.NewStringName(p), nameChoice(ps[0], ps[1:]...))
 }
 
 func InAnyOf(names []string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {

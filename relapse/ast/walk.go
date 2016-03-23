@@ -15,11 +15,11 @@
 package relapse
 
 type Visitor interface {
-	Visit(node interface{}) Visitor
+	Visit(node interface{}) interface{}
 }
 
 func (this *Grammar) Walk(v Visitor) {
-	v = v.Visit(this)
+	v = v.Visit(this).(Visitor)
 	if this.TopPattern != nil {
 		this.GetTopPattern().Walk(v)
 	}
@@ -29,14 +29,14 @@ func (this *Grammar) Walk(v Visitor) {
 }
 
 func (this *PatternDecl) Walk(v Visitor) {
-	v = v.Visit(this)
+	v = v.Visit(this).(Visitor)
 	if this.Pattern != nil {
 		this.GetPattern().Walk(v)
 	}
 }
 
 func (this *Pattern) Walk(v Visitor) {
-	v = v.Visit(this)
+	v = v.Visit(this).(Visitor)
 	if this.Empty != nil {
 		this.GetEmpty().Walk(v)
 	}
@@ -79,11 +79,11 @@ func (this *Pattern) Walk(v Visitor) {
 }
 
 func (this *Empty) Walk(v Visitor) {
-	v = v.Visit(this)
+	v = v.Visit(this).(Visitor)
 }
 
 func (this *TreeNode) Walk(v Visitor) {
-	v = v.Visit(this)
+	v = v.Visit(this).(Visitor)
 	if this.Name != nil {
 		this.GetName().Walk(v)
 	}
@@ -93,11 +93,11 @@ func (this *TreeNode) Walk(v Visitor) {
 }
 
 func (this *LeafNode) Walk(v Visitor) {
-	v = v.Visit(this)
+	v = v.Visit(this).(Visitor)
 }
 
 func (this *Concat) Walk(v Visitor) {
-	v = v.Visit(this)
+	v = v.Visit(this).(Visitor)
 	if this.LeftPattern != nil {
 		this.GetLeftPattern().Walk(v)
 	}
@@ -107,7 +107,7 @@ func (this *Concat) Walk(v Visitor) {
 }
 
 func (this *Or) Walk(v Visitor) {
-	v = v.Visit(this)
+	v = v.Visit(this).(Visitor)
 	if this.LeftPattern != nil {
 		this.GetLeftPattern().Walk(v)
 	}
@@ -117,7 +117,7 @@ func (this *Or) Walk(v Visitor) {
 }
 
 func (this *And) Walk(v Visitor) {
-	v = v.Visit(this)
+	v = v.Visit(this).(Visitor)
 	if this.LeftPattern != nil {
 		this.GetLeftPattern().Walk(v)
 	}
@@ -127,43 +127,43 @@ func (this *And) Walk(v Visitor) {
 }
 
 func (this *ZeroOrMore) Walk(v Visitor) {
-	v = v.Visit(this)
+	v = v.Visit(this).(Visitor)
 	if this.Pattern != nil {
 		this.GetPattern().Walk(v)
 	}
 }
 
 func (this *Reference) Walk(v Visitor) {
-	v = v.Visit(this)
+	v = v.Visit(this).(Visitor)
 }
 
 func (this *Not) Walk(v Visitor) {
-	v = v.Visit(this)
+	v = v.Visit(this).(Visitor)
 	if this.Pattern != nil {
 		this.GetPattern().Walk(v)
 	}
 }
 
 func (this *ZAny) Walk(v Visitor) {
-	v = v.Visit(this)
+	v = v.Visit(this).(Visitor)
 }
 
 func (this *Contains) Walk(v Visitor) {
-	v = v.Visit(this)
+	v = v.Visit(this).(Visitor)
 	if this.Pattern != nil {
 		this.GetPattern().Walk(v)
 	}
 }
 
 func (this *Optional) Walk(v Visitor) {
-	v = v.Visit(this)
+	v = v.Visit(this).(Visitor)
 	if this.Pattern != nil {
 		this.GetPattern().Walk(v)
 	}
 }
 
 func (this *Interleave) Walk(v Visitor) {
-	v = v.Visit(this)
+	v = v.Visit(this).(Visitor)
 	if this.LeftPattern != nil {
 		this.GetLeftPattern().Walk(v)
 	}
@@ -172,52 +172,11 @@ func (this *Interleave) Walk(v Visitor) {
 	}
 }
 
-func (this *NameExpr) Walk(v Visitor) {
-	v = v.Visit(this)
-	if this.Name != nil {
-		this.GetName().Walk(v)
-	}
-	if this.AnyName != nil {
-		this.GetAnyName().Walk(v)
-	}
-	if this.AnyNameExcept != nil {
-		this.GetAnyNameExcept().Walk(v)
-	}
-	if this.NameChoice != nil {
-		this.GetNameChoice().Walk(v)
-	}
-}
-
-func (this *Name) Walk(v Visitor) {
-	v = v.Visit(this)
-}
-
-func (this *AnyName) Walk(v Visitor) {
-	v = v.Visit(this)
-}
-
-func (this *AnyNameExcept) Walk(v Visitor) {
-	v = v.Visit(this)
-	if this.Except != nil {
-		this.GetExcept().Walk(v)
-	}
-}
-
-func (this *NameChoice) Walk(v Visitor) {
-	v = v.Visit(this)
-	if this.Left != nil {
-		this.GetLeft().Walk(v)
-	}
-	if this.Right != nil {
-		this.GetRight().Walk(v)
-	}
-}
-
 type vNot struct {
 	has bool
 }
 
-func (this *vNot) Visit(node interface{}) Visitor {
+func (this *vNot) Visit(node interface{}) interface{} {
 	n, ok := node.(*Not)
 	if !ok {
 		return this

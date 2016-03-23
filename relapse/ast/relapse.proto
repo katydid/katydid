@@ -41,44 +41,6 @@ message PatternDecl {
 	optional Pattern Pattern = 5;
 }
 
-message NameExpr {
-	option (gogoproto.onlyone) = true;
-	optional Name Name = 1;
-	optional AnyName AnyName = 2;
-	optional AnyNameExcept AnyNameExcept = 3;
-	optional NameChoice NameChoice = 4; 
-}
-
-message Name {
-	optional expr.Space Before = 1;
-
-	optional double DoubleValue = 3;
-	optional int64 IntValue = 5;
-	optional uint64 UintValue = 6;
-	optional bool BoolValue = 8;
-	optional string StringValue = 9;
-	optional bytes BytesValue = 10;
-}
-
-message AnyName {
-	optional expr.Keyword Underscore = 1;
-}
-
-message AnyNameExcept {
-	optional expr.Keyword Exclamation = 1;
-	optional expr.Keyword OpenParen = 2;
-	optional NameExpr Except = 3;
-	optional expr.Keyword CloseParen = 4;
-}
-
-message NameChoice {
-	optional expr.Keyword OpenParen = 1;
-	optional NameExpr Left = 2;
-	optional expr.Keyword Pipe = 3;
-	optional NameExpr Right = 4;
-	optional expr.Keyword CloseParen = 5;
-}
-
 message Pattern {
 	option (gogoproto.onlyone) = true;
 	optional Empty Empty = 1;
@@ -101,7 +63,7 @@ message Empty {
 }
 
 message TreeNode {
-	optional NameExpr Name = 1;
+	optional expr.NameExpr Name = 1;
 	optional expr.Keyword Colon = 2;
 	optional Pattern Pattern = 3;
 }

@@ -4,6 +4,7 @@ import (
   "github.com/katydid/katydid/expr/ast"
   "github.com/katydid/katydid/expr/types"
   "github.com/katydid/katydid/viper/token"
+  "github.com/gogo/protobuf/proto"
   "strconv"
 )
 

@@ -35,7 +35,7 @@ func check(t *testing.T, g *relapse.Grammar) {
 }
 
 func TestKeyField(t *testing.T) {
-	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZAny())
+	p := relapse.NewTreeNode(expr.NewStringName("A"), relapse.NewZAny())
 	t.Logf("%v", p)
 	g := p.Grammar()
 	gkey, err := FieldNamesToNumbers("debug", "Debug", debug.DebugDescription(), g)
@@ -51,8 +51,8 @@ func TestKeyField(t *testing.T) {
 
 func TestKeyOr(t *testing.T) {
 	p := relapse.NewOr(
-		relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZAny()),
-		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewZAny()),
+		relapse.NewTreeNode(expr.NewStringName("A"), relapse.NewZAny()),
+		relapse.NewTreeNode(expr.NewStringName("B"), relapse.NewZAny()),
 	)
 	g := p.Grammar()
 	gkey, err := FieldNamesToNumbers("debug", "Debug", debug.DebugDescription(), g)
@@ -70,7 +70,7 @@ func TestKeyOr(t *testing.T) {
 }
 
 func TestKeyTree(t *testing.T) {
-	p := relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZAny()))
+	p := relapse.NewTreeNode(expr.NewStringName("C"), relapse.NewTreeNode(expr.NewStringName("A"), relapse.NewZAny()))
 	g := p.Grammar()
 	gkey, err := FieldNamesToNumbers("debug", "Debug", debug.DebugDescription(), g)
 	if err != nil {
@@ -88,8 +88,8 @@ func TestKeyTree(t *testing.T) {
 
 func TestKeyAnyName(t *testing.T) {
 	p := relapse.NewOr(
-		relapse.NewTreeNode(relapse.NewNameChoice(relapse.NewAnyName(), relapse.NewStringName("C")), relapse.NewZAny()),
-		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewZAny()),
+		relapse.NewTreeNode(expr.NewNameChoice(expr.NewAnyName(), expr.NewStringName("C")), relapse.NewZAny()),
+		relapse.NewTreeNode(expr.NewStringName("B"), relapse.NewZAny()),
 	)
 	g := p.Grammar()
 	gkey, err := FieldNamesToNumbers("debug", "Debug", debug.DebugDescription(), g)
@@ -100,8 +100,8 @@ func TestKeyAnyName(t *testing.T) {
 
 func TestKeyRecursive(t *testing.T) {
 	p := relapse.NewOr(
-		relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewReference("main")),
-		relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZAny()),
+		relapse.NewTreeNode(expr.NewStringName("C"), relapse.NewReference("main")),
+		relapse.NewTreeNode(expr.NewStringName("A"), relapse.NewZAny()),
 	)
 	g := p.Grammar()
 	gkey, err := FieldNamesToNumbers("debug", "Debug", debug.DebugDescription(), g)
@@ -115,8 +115,8 @@ func TestKeyRecursive(t *testing.T) {
 func TestKeyLeftRecursive(t *testing.T) {
 	p := relapse.NewOr(
 		relapse.NewReference("a"),
-		relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewReference("main")),
-		relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZAny()),
+		relapse.NewTreeNode(expr.NewStringName("C"), relapse.NewReference("main")),
+		relapse.NewTreeNode(expr.NewStringName("A"), relapse.NewZAny()),
 	)
 	g := p.Grammar().AddRef("a", relapse.NewReference("main"))
 	gkey, err := FieldNamesToNumbers("debug", "Debug", debug.DebugDescription(), g)
@@ -144,11 +144,11 @@ func TestKeyLeaf(t *testing.T) {
 func TestKeyAnyArrayIndex(t *testing.T) {
 	p := relapse.NewConcat(
 		relapse.NewZAny(),
-		relapse.NewTreeNode(relapse.NewStringName("E"),
-			relapse.NewTreeNode(relapse.NewAnyName(),
+		relapse.NewTreeNode(expr.NewStringName("E"),
+			relapse.NewTreeNode(expr.NewAnyName(),
 				relapse.NewConcat(
-					relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZAny()),
-					relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewZAny()),
+					relapse.NewTreeNode(expr.NewStringName("A"), relapse.NewZAny()),
+					relapse.NewTreeNode(expr.NewStringName("B"), relapse.NewZAny()),
 				),
 			),
 		),
@@ -166,11 +166,11 @@ func TestKeyAnyArrayIndex(t *testing.T) {
 func TestRepeatedMessageWithNoFieldsOfTypeMessage(t *testing.T) {
 	p := relapse.NewConcat(
 		relapse.NewZAny(),
-		relapse.NewTreeNode(relapse.NewStringName("KeyValue"),
-			relapse.NewTreeNode(relapse.NewAnyName(),
+		relapse.NewTreeNode(expr.NewStringName("KeyValue"),
+			relapse.NewTreeNode(expr.NewAnyName(),
 				relapse.NewConcat(
-					relapse.NewTreeNode(relapse.NewStringName("Key"), relapse.NewZAny()),
-					relapse.NewTreeNode(relapse.NewStringName("Value"), relapse.NewZAny()),
+					relapse.NewTreeNode(expr.NewStringName("Key"), relapse.NewZAny()),
+					relapse.NewTreeNode(expr.NewStringName("Value"), relapse.NewZAny()),
 				),
 			),
 		),
@@ -186,7 +186,7 @@ func TestRepeatedMessageWithNoFieldsOfTypeMessage(t *testing.T) {
 }
 
 func TestUnreachable(t *testing.T) {
-	p := relapse.NewTreeNode(relapse.NewStringName("NotC"), relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZAny())))
+	p := relapse.NewTreeNode(expr.NewStringName("NotC"), relapse.NewTreeNode(expr.NewStringName("C"), relapse.NewTreeNode(expr.NewStringName("A"), relapse.NewZAny())))
 	g := p.Grammar()
 	gkey, err := FieldNamesToNumbers("debug", "Debug", debug.DebugDescription(), g)
 	if err == nil {
@@ -195,7 +195,7 @@ func TestUnreachable(t *testing.T) {
 }
 
 func TestNotUnreachable(t *testing.T) {
-	p := relapse.NewTreeNode(relapse.NewAnyNameExcept(relapse.NewStringName("NotC")), relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZAny())))
+	p := relapse.NewTreeNode(expr.NewAnyNameExcept(expr.NewStringName("NotC")), relapse.NewTreeNode(expr.NewStringName("C"), relapse.NewTreeNode(expr.NewStringName("A"), relapse.NewZAny())))
 	g := p.Grammar()
 	gkey, err := FieldNamesToNumbers("debug", "Debug", debug.DebugDescription(), g)
 	if err == nil {
@@ -204,8 +204,8 @@ func TestNotUnreachable(t *testing.T) {
 }
 
 func TestNotUnreachableArray(t *testing.T) {
-	p := relapse.NewTreeNode(relapse.NewAnyNameExcept(relapse.NewStringName("NotC")), relapse.NewTreeNode(relapse.NewStringName("F"),
-		relapse.NewConcat(relapse.NewZAny(), relapse.NewTreeNode(relapse.NewAnyName(),
+	p := relapse.NewTreeNode(expr.NewAnyNameExcept(expr.NewStringName("NotC")), relapse.NewTreeNode(expr.NewStringName("F"),
+		relapse.NewConcat(relapse.NewZAny(), relapse.NewTreeNode(expr.NewAnyName(),
 			relapse.NewZAny(),
 		))))
 	g := p.Grammar()
@@ -216,7 +216,7 @@ func TestNotUnreachableArray(t *testing.T) {
 }
 
 func TestTopsyTurvy(t *testing.T) {
-	p := relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZAny()))
+	p := relapse.NewTreeNode(expr.NewAnyName(), relapse.NewTreeNode(expr.NewStringName("A"), relapse.NewZAny()))
 	gkey, err := FieldNamesToNumbers("protonum", "TopsyTurvy", ProtonumDescription(), p.Grammar())
 	if err == nil {
 		t.Fatalf("Expected: Any Field Not Supported: Name: _, but got %v", gkey)
@@ -224,7 +224,7 @@ func TestTopsyTurvy(t *testing.T) {
 }
 
 func TestKnot(t *testing.T) {
-	p := relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewTreeNode(relapse.NewStringName("Elbow"), relapse.NewZAny())))
+	p := relapse.NewTreeNode(expr.NewAnyName(), relapse.NewTreeNode(expr.NewAnyName(), relapse.NewTreeNode(expr.NewStringName("Elbow"), relapse.NewZAny())))
 	gkey, err := FieldNamesToNumbers("protonum", "Knot", ProtonumDescription(), p.Grammar())
 	if err == nil {
 		t.Fatal("Expected: Any Field Not Supported: Name: _, but got %v", gkey)
@@ -232,7 +232,7 @@ func TestKnot(t *testing.T) {
 }
 
 func TestRecursiveKnotTurn(t *testing.T) {
-	p := relapse.NewOr(relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewReference("main")), relapse.NewTreeNode(relapse.NewStringName("Turn"), relapse.NewZAny()))
+	p := relapse.NewOr(relapse.NewTreeNode(expr.NewAnyName(), relapse.NewReference("main")), relapse.NewTreeNode(expr.NewStringName("Turn"), relapse.NewZAny()))
 	gkey, err := FieldNamesToNumbers("protonum", "Knot", ProtonumDescription(), p.Grammar())
 	if err == nil {
 		t.Fatal("Expected: Any Field Not Supported: Name: _, but got %v", gkey)
@@ -240,7 +240,7 @@ func TestRecursiveKnotTurn(t *testing.T) {
 }
 
 func TestRecursiveKnotElbow(t *testing.T) {
-	p := relapse.NewOr(relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewReference("main")), relapse.NewTreeNode(relapse.NewStringName("Elbow"), relapse.NewZAny()))
+	p := relapse.NewOr(relapse.NewTreeNode(expr.NewAnyName(), relapse.NewReference("main")), relapse.NewTreeNode(expr.NewStringName("Elbow"), relapse.NewZAny()))
 	gkey, err := FieldNamesToNumbers("protonum", "Knot", ProtonumDescription(), p.Grammar())
 	if err == nil {
 		t.Fatal("Expected: Any Field Not Supported: Name: _, but got %v", gkey)
@@ -248,9 +248,9 @@ func TestRecursiveKnotElbow(t *testing.T) {
 }
 
 func TestAnyIndex(t *testing.T) {
-	p := relapse.NewTreeNode(relapse.NewStringName("KeyValue"), relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewConcat(
-		relapse.NewTreeNode(relapse.NewStringName("Key"), relapse.NewZAny()),
-		relapse.NewTreeNode(relapse.NewStringName("Value"), relapse.NewZAny()),
+	p := relapse.NewTreeNode(expr.NewStringName("KeyValue"), relapse.NewTreeNode(expr.NewAnyName(), relapse.NewConcat(
+		relapse.NewTreeNode(expr.NewStringName("Key"), relapse.NewZAny()),
+		relapse.NewTreeNode(expr.NewStringName("Value"), relapse.NewZAny()),
 	)))
 	gkey, err := FieldNamesToNumbers("protonum", "ProtoNum", ProtonumDescription(), p.Grammar())
 	if err != nil {
