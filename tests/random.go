@@ -44,22 +44,22 @@ func RandomPuddingMilkshake() proto.Message {
 	return NewPopulatedPuddingMilkshake(r, true)
 }
 
-func RandomPersonProtoParser() serialize.Parser {
+func RandomPersonProtoNumParser() serialize.Parser {
 	m := RandomPerson()
-	return NewProtoParser("tests", "Person", m.(ProtoMessage))
+	return NewProtoNumParser("tests", "Person", m.(ProtoMessage))
 }
 
-func RandomSrcTreeProtoParser() serialize.Parser {
+func RandomSrcTreeProtoNumParser() serialize.Parser {
 	m := RandomSrcTree()
-	return NewProtoParser("test", "SrcTree", m.(ProtoMessage))
+	return NewProtoNumParser("test", "SrcTree", m.(ProtoMessage))
 }
 
-func RandomTypewriterPrisonProtoParser() serialize.Parser {
+func RandomTypewriterPrisonProtoNumParser() serialize.Parser {
 	m := RandomTypewriterPrison()
-	return NewProtoParser("tests", "TypewriterPrison", m.(ProtoMessage))
+	return NewProtoNumParser("tests", "TypewriterPrison", m.(ProtoMessage))
 }
 
-func RandomPuddingMilkshakeProtoParser() serialize.Parser {
+func RandomPuddingMilkshakeProtoNumParser() serialize.Parser {
 	m := RandomPuddingMilkshake()
-	return NewProtoParser("tests", "PuddingMilkshake", m.(ProtoMessage))
+	return NewProtoNumParser("tests", "PuddingMilkshake", m.(ProtoMessage))
 }

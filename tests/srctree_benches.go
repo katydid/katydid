@@ -15,5 +15,5 @@
 package tests
 
 func init() {
-	BenchValidateProtoKey("RecursiveSrcTree", RecursiveSrcTree, &SrcTree{})
+	BenchValidateProtoNum("RecursiveSrcTree", RecursiveSrcTree, &SrcTree{})
 }

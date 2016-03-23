@@ -29,7 +29,7 @@ import (
 )
 
 func noMerge(data []byte, desc *descriptor.FileDescriptorSet, pkgName, msgName string) error {
-	parser := katydidproto.NewProtoParser(pkgName, msgName, desc)
+	parser := katydidproto.NewProtoNumParser(pkgName, msgName, desc)
 	if err := parser.Init(data); err != nil {
 		panic(err)
 	}

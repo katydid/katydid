@@ -24,8 +24,7 @@ import (
 )
 
 func TestDebug(t *testing.T) {
-	p := NewProtoParser("debug", "Debug", debug.DebugDescription())
-	p.debug = true
+	p := NewProtoNameParser("debug", "Debug", debug.DebugDescription())
 	data, err := proto.Marshal(debug.Input)
 	if err != nil {
 		panic(err)
@@ -39,8 +38,7 @@ func TestDebug(t *testing.T) {
 }
 
 func TestRandomDebug(t *testing.T) {
-	p := NewProtoParser("debug", "Debug", debug.DebugDescription())
-	p.debug = true
+	p := NewProtoNameParser("debug", "Debug", debug.DebugDescription())
 	data, err := proto.Marshal(debug.Input)
 	if err != nil {
 		panic(err)
@@ -62,8 +60,7 @@ func next(t *testing.T, parser serialize.Parser) {
 }
 
 func TestSkipRepeated1(t *testing.T) {
-	p := NewProtoParser("debug", "Debug", debug.DebugDescription())
-	p.debug = true
+	p := NewProtoNameParser("debug", "Debug", debug.DebugDescription())
 	data, err := proto.Marshal(debug.Input)
 	if err != nil {
 		panic(err)
@@ -86,8 +83,7 @@ func TestSkipRepeated1(t *testing.T) {
 }
 
 func TestSkipRepeated2(t *testing.T) {
-	p := NewProtoParser("debug", "Debug", debug.DebugDescription())
-	p.debug = true
+	p := NewProtoNameParser("debug", "Debug", debug.DebugDescription())
 	data, err := proto.Marshal(debug.Input)
 	if err != nil {
 		panic(err)
@@ -106,7 +102,7 @@ func TestSkipRepeated2(t *testing.T) {
 }
 
 func TestExtensionsSmallContainer(t *testing.T) {
-	p := NewProtoParser("prototests", "Container", prototests.AContainer.Description())
+	p := NewProtoNameParser("prototests", "Container", prototests.AContainer.Description())
 	data, err := proto.Marshal(prototests.AContainer)
 	if err != nil {
 		panic(err)
@@ -119,7 +115,7 @@ func TestExtensionsSmallContainer(t *testing.T) {
 }
 
 func TestExtensionsBigContainer(t *testing.T) {
-	p := NewProtoParser("prototests", "BigContainer", prototests.ABigContainer.Description())
+	p := NewProtoNameParser("prototests", "BigContainer", prototests.ABigContainer.Description())
 	data, err := proto.Marshal(prototests.ABigContainer)
 	if err != nil {
 		panic(err)

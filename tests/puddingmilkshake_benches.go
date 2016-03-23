@@ -39,8 +39,8 @@ func init() {
 			Any(),
 		),
 	}
-	BenchValidateProtoKey("BridgePepper", bridgePepper, &PuddingMilkshake{})
-	ValidateProtoKey("BridgePepper", bridgePepper, &PuddingMilkshake{FinanceJudo: &FinanceJudo{SaladWorry: &SaladWorry{SpyCarpenter: &SpyCarpenter{BridgePepper: []string{"a"}}}}}, true)
+	BenchValidateProtoNum("BridgePepper", bridgePepper, &PuddingMilkshake{})
+	ValidateProtoNum("BridgePepper", bridgePepper, &PuddingMilkshake{FinanceJudo: &FinanceJudo{SaladWorry: &SaladWorry{SpyCarpenter: &SpyCarpenter{BridgePepper: []string{"a"}}}}}, true)
 
 	var bridgePepperAndFountainTarget = G{
 		"main": InOrder(
@@ -62,6 +62,6 @@ func init() {
 			Any(),
 		),
 	}
-	BenchValidateProtoKey("BridgePepperAndFountainTarget", bridgePepperAndFountainTarget, &PuddingMilkshake{})
-	ValidateProtoKey("BenchBridgePepperAndFountainTarget", bridgePepperAndFountainTarget, &PuddingMilkshake{FinanceJudo: &FinanceJudo{SaladWorry: &SaladWorry{SpyCarpenter: &SpyCarpenter{BridgePepper: []string{"a"}, FountainTarget: []string{"a"}}}}}, true)
+	BenchValidateProtoNum("BridgePepperAndFountainTarget", bridgePepperAndFountainTarget, &PuddingMilkshake{})
+	ValidateProtoNum("BenchBridgePepperAndFountainTarget", bridgePepperAndFountainTarget, &PuddingMilkshake{FinanceJudo: &FinanceJudo{SaladWorry: &SaladWorry{SpyCarpenter: &SpyCarpenter{BridgePepper: []string{"a"}, FountainTarget: []string{"a"}}}}}, true)
 }

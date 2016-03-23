@@ -9,87 +9,87 @@ import (
 )
 
 
-func BenchmarkProtoKeyAndNameTelephoneProto(b *testing.B) {
-	v := tests.BenchValidators["ProtoKeyAndNameTelephone"]["proto"]
-	bench(b, v.Grammar, tests.RandomPersonProtoParser)
+func BenchmarkProtoNumAndNameTelephoneProtoNum(b *testing.B) {
+	v := tests.BenchValidators["ProtoNumAndNameTelephone"]["protoNum"]
+	bench(b, v.Grammar, tests.RandomPersonProtoNumParser)
 }
 
-func BenchmarkProtoKeyBridgePepperProto(b *testing.B) {
-	v := tests.BenchValidators["ProtoKeyBridgePepper"]["proto"]
-	bench(b, v.Grammar, tests.RandomPuddingMilkshakeProtoParser)
+func BenchmarkProtoNumBridgePepperProtoNum(b *testing.B) {
+	v := tests.BenchValidators["ProtoNumBridgePepper"]["protoNum"]
+	bench(b, v.Grammar, tests.RandomPuddingMilkshakeProtoNumParser)
 }
 
-func BenchmarkProtoKeyBridgePepperAndFountainTargetProto(b *testing.B) {
-	v := tests.BenchValidators["ProtoKeyBridgePepperAndFountainTarget"]["proto"]
-	bench(b, v.Grammar, tests.RandomPuddingMilkshakeProtoParser)
+func BenchmarkProtoNumBridgePepperAndFountainTargetProtoNum(b *testing.B) {
+	v := tests.BenchValidators["ProtoNumBridgePepperAndFountainTarget"]["protoNum"]
+	bench(b, v.Grammar, tests.RandomPuddingMilkshakeProtoNumParser)
 }
 
-func BenchmarkProtoKeyContextPersonProto(b *testing.B) {
-	v := tests.BenchValidators["ProtoKeyContextPerson"]["proto"]
-	bench(b, v.Grammar, tests.RandomPersonProtoParser)
+func BenchmarkProtoNumContextPersonProtoNum(b *testing.B) {
+	v := tests.BenchValidators["ProtoNumContextPerson"]["protoNum"]
+	bench(b, v.Grammar, tests.RandomPersonProtoNumParser)
 }
 
-func BenchmarkProtoKeyCorrectNotNameProto(b *testing.B) {
-	v := tests.BenchValidators["ProtoKeyCorrectNotName"]["proto"]
-	bench(b, v.Grammar, tests.RandomPersonProtoParser)
+func BenchmarkProtoNumCorrectNotNameProtoNum(b *testing.B) {
+	v := tests.BenchValidators["ProtoNumCorrectNotName"]["protoNum"]
+	bench(b, v.Grammar, tests.RandomPersonProtoNumParser)
 }
 
-func BenchmarkProtoKeyEmptyOrNilProto(b *testing.B) {
-	v := tests.BenchValidators["ProtoKeyEmptyOrNil"]["proto"]
-	bench(b, v.Grammar, tests.RandomPersonProtoParser)
+func BenchmarkProtoNumEmptyOrNilProtoNum(b *testing.B) {
+	v := tests.BenchValidators["ProtoNumEmptyOrNil"]["protoNum"]
+	bench(b, v.Grammar, tests.RandomPersonProtoNumParser)
 }
 
-func BenchmarkProtoKeyIncorrectNotNameProto(b *testing.B) {
-	v := tests.BenchValidators["ProtoKeyIncorrectNotName"]["proto"]
-	bench(b, v.Grammar, tests.RandomPersonProtoParser)
+func BenchmarkProtoNumIncorrectNotNameProtoNum(b *testing.B) {
+	v := tests.BenchValidators["ProtoNumIncorrectNotName"]["protoNum"]
+	bench(b, v.Grammar, tests.RandomPersonProtoNumParser)
 }
 
-func BenchmarkProtoKeyLenNameProto(b *testing.B) {
-	v := tests.BenchValidators["ProtoKeyLenName"]["proto"]
-	bench(b, v.Grammar, tests.RandomPersonProtoParser)
+func BenchmarkProtoNumLenNameProtoNum(b *testing.B) {
+	v := tests.BenchValidators["ProtoNumLenName"]["protoNum"]
+	bench(b, v.Grammar, tests.RandomPersonProtoNumParser)
 }
 
-func BenchmarkProtoKeyListIndexAddressProto(b *testing.B) {
-	v := tests.BenchValidators["ProtoKeyListIndexAddress"]["proto"]
-	bench(b, v.Grammar, tests.RandomPersonProtoParser)
+func BenchmarkProtoNumListIndexAddressProtoNum(b *testing.B) {
+	v := tests.BenchValidators["ProtoNumListIndexAddress"]["protoNum"]
+	bench(b, v.Grammar, tests.RandomPersonProtoNumParser)
 }
 
-func BenchmarkProtoKeyNilNameProto(b *testing.B) {
-	v := tests.BenchValidators["ProtoKeyNilName"]["proto"]
-	bench(b, v.Grammar, tests.RandomPersonProtoParser)
+func BenchmarkProtoNumNilNameProtoNum(b *testing.B) {
+	v := tests.BenchValidators["ProtoNumNilName"]["protoNum"]
+	bench(b, v.Grammar, tests.RandomPersonProtoNumParser)
 }
 
-func BenchmarkProtoKeyOrNameTelephoneProto(b *testing.B) {
-	v := tests.BenchValidators["ProtoKeyOrNameTelephone"]["proto"]
-	bench(b, v.Grammar, tests.RandomPersonProtoParser)
+func BenchmarkProtoNumOrNameTelephoneProtoNum(b *testing.B) {
+	v := tests.BenchValidators["ProtoNumOrNameTelephone"]["protoNum"]
+	bench(b, v.Grammar, tests.RandomPersonProtoNumParser)
 }
 
-func BenchmarkProtoKeyRecursiveSrcTreeProto(b *testing.B) {
-	v := tests.BenchValidators["ProtoKeyRecursiveSrcTree"]["proto"]
-	bench(b, v.Grammar, tests.RandomSrcTreeProtoParser)
+func BenchmarkProtoNumRecursiveSrcTreeProtoNum(b *testing.B) {
+	v := tests.BenchValidators["ProtoNumRecursiveSrcTree"]["protoNum"]
+	bench(b, v.Grammar, tests.RandomSrcTreeProtoNumParser)
 }
 
-func BenchmarkProtoKeyTypewriterPrisonDaisySledProto(b *testing.B) {
-	v := tests.BenchValidators["ProtoKeyTypewriterPrisonDaisySled"]["proto"]
-	bench(b, v.Grammar, tests.RandomTypewriterPrisonProtoParser)
+func BenchmarkProtoNumTypewriterPrisonDaisySledProtoNum(b *testing.B) {
+	v := tests.BenchValidators["ProtoNumTypewriterPrisonDaisySled"]["protoNum"]
+	bench(b, v.Grammar, tests.RandomTypewriterPrisonProtoNumParser)
 }
 
-func BenchmarkProtoKeyTypewriterPrisonMapSharkProto(b *testing.B) {
-	v := tests.BenchValidators["ProtoKeyTypewriterPrisonMapShark"]["proto"]
-	bench(b, v.Grammar, tests.RandomTypewriterPrisonProtoParser)
+func BenchmarkProtoNumTypewriterPrisonMapSharkProtoNum(b *testing.B) {
+	v := tests.BenchValidators["ProtoNumTypewriterPrisonMapShark"]["protoNum"]
+	bench(b, v.Grammar, tests.RandomTypewriterPrisonProtoNumParser)
 }
 
-func BenchmarkProtoKeyTypewriterPrisonMenuPaperclipProto(b *testing.B) {
-	v := tests.BenchValidators["ProtoKeyTypewriterPrisonMenuPaperclip"]["proto"]
-	bench(b, v.Grammar, tests.RandomTypewriterPrisonProtoParser)
+func BenchmarkProtoNumTypewriterPrisonMenuPaperclipProtoNum(b *testing.B) {
+	v := tests.BenchValidators["ProtoNumTypewriterPrisonMenuPaperclip"]["protoNum"]
+	bench(b, v.Grammar, tests.RandomTypewriterPrisonProtoNumParser)
 }
 
-func BenchmarkProtoKeyTypewriterPrisonScarBusStopProto(b *testing.B) {
-	v := tests.BenchValidators["ProtoKeyTypewriterPrisonScarBusStop"]["proto"]
-	bench(b, v.Grammar, tests.RandomTypewriterPrisonProtoParser)
+func BenchmarkProtoNumTypewriterPrisonScarBusStopProtoNum(b *testing.B) {
+	v := tests.BenchValidators["ProtoNumTypewriterPrisonScarBusStop"]["protoNum"]
+	bench(b, v.Grammar, tests.RandomTypewriterPrisonProtoNumParser)
 }
 
-func BenchmarkProtoKeyTypewriterPrisonSmileLetterProto(b *testing.B) {
-	v := tests.BenchValidators["ProtoKeyTypewriterPrisonSmileLetter"]["proto"]
-	bench(b, v.Grammar, tests.RandomTypewriterPrisonProtoParser)
+func BenchmarkProtoNumTypewriterPrisonSmileLetterProtoNum(b *testing.B) {
+	v := tests.BenchValidators["ProtoNumTypewriterPrisonSmileLetter"]["protoNum"]
+	bench(b, v.Grammar, tests.RandomTypewriterPrisonProtoNumParser)
 }

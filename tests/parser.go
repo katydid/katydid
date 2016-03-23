@@ -44,9 +44,9 @@ func ProtoEtc(m interface{}) Codecs {
 	return Codecs{
 		Description: getDesc(m),
 		Parsers: map[string]NewParser{
-			"reflect": Reflect(m).Parsers["reflect"],
-			"json":    Json(m).Parsers["json"],
-			"proto":   Proto(m).Parsers["proto"],
+			"reflect":   Reflect(m).Parsers["reflect"],
+			"json":      Json(m).Parsers["json"],
+			"protoName": ProtoName(m).Parsers["protoName"],
 		},
 	}
 }
@@ -84,14 +84,27 @@ func JsonString(s string) Codecs {
 	}
 }
 
-func Proto(m interface{}) Codecs {
+func ProtoName(m interface{}) Codecs {
 	messageName := reflect.TypeOf(m).Elem().Name()
 	packageName := "tests"
 	return Codecs{
 		Description: getDesc(m),
 		Parsers: map[string]NewParser{
-			"proto": func() serialize.Parser {
-				return NewProtoParser(packageName, messageName, m.(ProtoMessage))
+			"protoName": func() serialize.Parser {
+				return NewProtoNameParser(packageName, messageName, m.(ProtoMessage))
+			},
+		},
+	}
+}
+
+func ProtoNum(m interface{}) Codecs {
+	messageName := reflect.TypeOf(m).Elem().Name()
+	packageName := "tests"
+	return Codecs{
+		Description: getDesc(m),
+		Parsers: map[string]NewParser{
+			"protoNum": func() serialize.Parser {
+				return NewProtoNumParser(packageName, messageName, m.(ProtoMessage))
 			},
 		},
 	}
@@ -154,12 +167,24 @@ type ProtoMessage interface {
 	proto.Message
 }
 
-func NewProtoParser(pkg, msg string, m ProtoMessage) serialize.Parser {
+func NewProtoNameParser(pkg, msg string, m ProtoMessage) serialize.Parser {
 	data, err := proto.Marshal(m)
 	if err != nil {
 		panic(err)
 	}
-	s := pparser.NewProtoParser(pkg, msg, m.Description())
+	s := pparser.NewProtoNameParser(pkg, msg, m.Description())
+	if err := s.Init(data); err != nil {
+		panic(err)
+	}
+	return s
+}
+
+func NewProtoNumParser(pkg, msg string, m ProtoMessage) serialize.Parser {
+	data, err := proto.Marshal(m)
+	if err != nil {
+		panic(err)
+	}
+	s := pparser.NewProtoNumParser(pkg, msg, m.Description())
 	if err := s.Init(data); err != nil {
 		panic(err)
 	}

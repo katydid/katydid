@@ -134,8 +134,8 @@ var RecursiveSrcTree = G{
 }
 
 func init() {
-	ValidateProtoKeyEtc("RecursiveIoUtil", RecursiveSrcTree, IoUtilSrcTree, true)
-	ValidateProtoKeyEtc("RecursivePath", RecursiveSrcTree, PathSrcTree, true)
-	ValidateProtoKeyEtc("RecursiveRuntime", RecursiveSrcTree, RuntimeSrcTree, false)
-	ValidateProtoKeyEtc("RecursiveSyscall", RecursiveSrcTree, SyscallSrcTree, false)
+	ValidateProtoNumEtc("RecursiveIoUtil", RecursiveSrcTree, IoUtilSrcTree, true)
+	ValidateProtoNumEtc("RecursivePath", RecursiveSrcTree, PathSrcTree, true)
+	ValidateProtoNumEtc("RecursiveRuntime", RecursiveSrcTree, RuntimeSrcTree, false)
+	ValidateProtoNumEtc("RecursiveSyscall", RecursiveSrcTree, SyscallSrcTree, false)
 }

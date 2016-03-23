@@ -17,7 +17,7 @@ package tests
 import (
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/combinator"
-	"github.com/katydid/katydid/relapse/protokey"
+	"github.com/katydid/katydid/relapse/protonum"
 	"reflect"
 	"sort"
 )
@@ -32,14 +32,14 @@ type BenchValidator struct {
 
 var BenchValidators = make(map[string]map[string]BenchValidator)
 
-func BenchValidateProtoKey(name string, grammar combinator.G, m interface{}) {
+func BenchValidateProtoNum(name string, grammar combinator.G, m interface{}) {
 	packageName := "tests"
 	messageName := reflect.TypeOf(m).Elem().Name()
-	g, err := protokey.KeyTheGrammar(packageName, messageName, m.(ProtoMessage).Description(), grammar.Grammar())
+	g, err := protonum.FieldNamesToNumbers(packageName, messageName, m.(ProtoMessage).Description(), grammar.Grammar())
 	if err != nil {
 		panic(name + ": " + err.Error())
 	}
-	BenchValidate("ProtoKey"+name, combinator.G(relapse.NewRefsLookup(g)), []string{"proto"}, packageName, messageName)
+	BenchValidate("ProtoNum"+name, combinator.G(relapse.NewRefsLookup(g)), []string{"protoNum"}, packageName, messageName)
 }
 
 type benchValidatorList []interface{}

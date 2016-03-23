@@ -22,7 +22,7 @@ regenerate:
 	(cd mem && make regenerate)
 	(cd convert && make regenerate)
 	(cd lazymem && make regenerate)
-	(cd protokey && make regenerate)
+	(cd protonum && make regenerate)
 
 clean:
 	rm *.txt || true

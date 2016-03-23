@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package protokey
+package protonum
 
 import (
 	"github.com/katydid/katydid/expr/ast"
@@ -38,7 +38,7 @@ func TestKeyField(t *testing.T) {
 	p := relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZAny())
 	t.Logf("%v", p)
 	g := p.Grammar()
-	gkey, err := KeyTheGrammar("debug", "Debug", debug.DebugDescription(), g)
+	gkey, err := FieldNamesToNumbers("debug", "Debug", debug.DebugDescription(), g)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -55,7 +55,7 @@ func TestKeyOr(t *testing.T) {
 		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewZAny()),
 	)
 	g := p.Grammar()
-	gkey, err := KeyTheGrammar("debug", "Debug", debug.DebugDescription(), g)
+	gkey, err := FieldNamesToNumbers("debug", "Debug", debug.DebugDescription(), g)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -72,7 +72,7 @@ func TestKeyOr(t *testing.T) {
 func TestKeyTree(t *testing.T) {
 	p := relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZAny()))
 	g := p.Grammar()
-	gkey, err := KeyTheGrammar("debug", "Debug", debug.DebugDescription(), g)
+	gkey, err := FieldNamesToNumbers("debug", "Debug", debug.DebugDescription(), g)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -92,7 +92,7 @@ func TestKeyAnyName(t *testing.T) {
 		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewZAny()),
 	)
 	g := p.Grammar()
-	gkey, err := KeyTheGrammar("debug", "Debug", debug.DebugDescription(), g)
+	gkey, err := FieldNamesToNumbers("debug", "Debug", debug.DebugDescription(), g)
 	if err == nil {
 		t.Fatalf("Expected: Any Field Not Supported: Name: _, but got %v", gkey)
 	}
@@ -104,7 +104,7 @@ func TestKeyRecursive(t *testing.T) {
 		relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZAny()),
 	)
 	g := p.Grammar()
-	gkey, err := KeyTheGrammar("debug", "Debug", debug.DebugDescription(), g)
+	gkey, err := FieldNamesToNumbers("debug", "Debug", debug.DebugDescription(), g)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -119,7 +119,7 @@ func TestKeyLeftRecursive(t *testing.T) {
 		relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZAny()),
 	)
 	g := p.Grammar().AddRef("a", relapse.NewReference("main"))
-	gkey, err := KeyTheGrammar("debug", "Debug", debug.DebugDescription(), g)
+	gkey, err := FieldNamesToNumbers("debug", "Debug", debug.DebugDescription(), g)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -133,7 +133,7 @@ func TestKeyLeftRecursive(t *testing.T) {
 func TestKeyLeaf(t *testing.T) {
 	p := relapse.NewLeafNode(expr.NewStringVar())
 	g := p.Grammar()
-	gkey, err := KeyTheGrammar("debug", "Debug", debug.DebugDescription(), g)
+	gkey, err := FieldNamesToNumbers("debug", "Debug", debug.DebugDescription(), g)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -155,7 +155,7 @@ func TestKeyAnyArrayIndex(t *testing.T) {
 		relapse.NewZAny(),
 	)
 	g := p.Grammar()
-	gkey, err := KeyTheGrammar("debug", "Debug", debug.DebugDescription(), g)
+	gkey, err := FieldNamesToNumbers("debug", "Debug", debug.DebugDescription(), g)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -177,7 +177,7 @@ func TestRepeatedMessageWithNoFieldsOfTypeMessage(t *testing.T) {
 		relapse.NewZAny(),
 	)
 	g := p.Grammar()
-	gkey, err := KeyTheGrammar("protokey", "ProtoKey", ProtokeyDescription(), g)
+	gkey, err := FieldNamesToNumbers("protonum", "ProtoNum", ProtonumDescription(), g)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -188,7 +188,7 @@ func TestRepeatedMessageWithNoFieldsOfTypeMessage(t *testing.T) {
 func TestUnreachable(t *testing.T) {
 	p := relapse.NewTreeNode(relapse.NewStringName("NotC"), relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZAny())))
 	g := p.Grammar()
-	gkey, err := KeyTheGrammar("debug", "Debug", debug.DebugDescription(), g)
+	gkey, err := FieldNamesToNumbers("debug", "Debug", debug.DebugDescription(), g)
 	if err == nil {
 		t.Fatal("Expected: Unknown Field Error: Name: NotC, Msg: Debug, but got %v", gkey)
 	}
@@ -197,7 +197,7 @@ func TestUnreachable(t *testing.T) {
 func TestNotUnreachable(t *testing.T) {
 	p := relapse.NewTreeNode(relapse.NewAnyNameExcept(relapse.NewStringName("NotC")), relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZAny())))
 	g := p.Grammar()
-	gkey, err := KeyTheGrammar("debug", "Debug", debug.DebugDescription(), g)
+	gkey, err := FieldNamesToNumbers("debug", "Debug", debug.DebugDescription(), g)
 	if err == nil {
 		t.Fatalf("Expected: AnyNameExcept Not Supported Error: Name: !(NotC), but got %v", gkey)
 	}
@@ -209,7 +209,7 @@ func TestNotUnreachableArray(t *testing.T) {
 			relapse.NewZAny(),
 		))))
 	g := p.Grammar()
-	gkey, err := KeyTheGrammar("debug", "Debug", debug.DebugDescription(), g)
+	gkey, err := FieldNamesToNumbers("debug", "Debug", debug.DebugDescription(), g)
 	if err == nil {
 		t.Fatalf("Expected: AnyNameExcept Not Supported Error: Name: !(NotC), but got %v", gkey)
 	}
@@ -217,7 +217,7 @@ func TestNotUnreachableArray(t *testing.T) {
 
 func TestTopsyTurvy(t *testing.T) {
 	p := relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZAny()))
-	gkey, err := KeyTheGrammar("protokey", "TopsyTurvy", ProtokeyDescription(), p.Grammar())
+	gkey, err := FieldNamesToNumbers("protonum", "TopsyTurvy", ProtonumDescription(), p.Grammar())
 	if err == nil {
 		t.Fatalf("Expected: Any Field Not Supported: Name: _, but got %v", gkey)
 	}
@@ -225,7 +225,7 @@ func TestTopsyTurvy(t *testing.T) {
 
 func TestKnot(t *testing.T) {
 	p := relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewTreeNode(relapse.NewStringName("Elbow"), relapse.NewZAny())))
-	gkey, err := KeyTheGrammar("protokey", "Knot", ProtokeyDescription(), p.Grammar())
+	gkey, err := FieldNamesToNumbers("protonum", "Knot", ProtonumDescription(), p.Grammar())
 	if err == nil {
 		t.Fatal("Expected: Any Field Not Supported: Name: _, but got %v", gkey)
 	}
@@ -233,7 +233,7 @@ func TestKnot(t *testing.T) {
 
 func TestRecursiveKnotTurn(t *testing.T) {
 	p := relapse.NewOr(relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewReference("main")), relapse.NewTreeNode(relapse.NewStringName("Turn"), relapse.NewZAny()))
-	gkey, err := KeyTheGrammar("protokey", "Knot", ProtokeyDescription(), p.Grammar())
+	gkey, err := FieldNamesToNumbers("protonum", "Knot", ProtonumDescription(), p.Grammar())
 	if err == nil {
 		t.Fatal("Expected: Any Field Not Supported: Name: _, but got %v", gkey)
 	}
@@ -241,7 +241,7 @@ func TestRecursiveKnotTurn(t *testing.T) {
 
 func TestRecursiveKnotElbow(t *testing.T) {
 	p := relapse.NewOr(relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewReference("main")), relapse.NewTreeNode(relapse.NewStringName("Elbow"), relapse.NewZAny()))
-	gkey, err := KeyTheGrammar("protokey", "Knot", ProtokeyDescription(), p.Grammar())
+	gkey, err := FieldNamesToNumbers("protonum", "Knot", ProtonumDescription(), p.Grammar())
 	if err == nil {
 		t.Fatal("Expected: Any Field Not Supported: Name: _, but got %v", gkey)
 	}
@@ -252,7 +252,7 @@ func TestAnyIndex(t *testing.T) {
 		relapse.NewTreeNode(relapse.NewStringName("Key"), relapse.NewZAny()),
 		relapse.NewTreeNode(relapse.NewStringName("Value"), relapse.NewZAny()),
 	)))
-	gkey, err := KeyTheGrammar("protokey", "ProtoKey", ProtokeyDescription(), p.Grammar())
+	gkey, err := FieldNamesToNumbers("protonum", "ProtoNum", ProtonumDescription(), p.Grammar())
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package protokey
+package protonum
 
 import (
 	"fmt"
@@ -21,7 +21,7 @@ import (
 	"github.com/katydid/katydid/serialize/proto"
 )
 
-func KeyTheGrammar(pkgName, msgName string, desc *descriptor.FileDescriptorSet, grammar *relapse.Grammar) (*relapse.Grammar, error) {
+func FieldNamesToNumbers(pkgName, msgName string, desc *descriptor.FileDescriptorSet, grammar *relapse.Grammar) (*relapse.Grammar, error) {
 	g := grammar.Clone()
 	descMap, err := proto.NewDescriptorMap(pkgName, msgName, desc)
 	if err != nil {
@@ -29,29 +29,29 @@ func KeyTheGrammar(pkgName, msgName string, desc *descriptor.FileDescriptorSet, 
 	}
 	root := descMap.GetRoot()
 	refs := relapse.NewRefsLookup(g)
-	keyer := &keyer{
+	nameToNumber := &nameToNumber{
 		refs:    make(map[string]*context),
 		descMap: descMap,
 	}
-	keyer.refs["main"] = &context{root, false}
+	nameToNumber.refs["main"] = &context{root, false}
 	newRefs := make(map[string]*relapse.Pattern)
 	oldContexts := 0
 	newContexts := 1
 	for oldContexts != newContexts {
 		oldContexts = newContexts
-		for name, context := range keyer.refs {
-			newp, err := keyer.translate(context, refs[name])
+		for name, context := range nameToNumber.refs {
+			newp, err := nameToNumber.translate(context, refs[name])
 			if err != nil {
 				return nil, err
 			}
 			newRefs[name] = newp
 		}
-		newContexts = len(keyer.refs)
+		newContexts = len(nameToNumber.refs)
 	}
 	return relapse.NewGrammar(newRefs), nil
 }
 
-type keyer struct {
+type nameToNumber struct {
 	refs    map[string]*context
 	descMap proto.DescMap
 }
@@ -85,7 +85,7 @@ func (this *ErrDup) Error() string {
 	return fmt.Sprintf("Duplicate Reference Error: Name: %v, Context1: %v, Context2: %v", this.name, this.c1.msg.GetName(), this.c2.msg.GetName())
 }
 
-func (this *keyer) translate(context *context, p *relapse.Pattern) (*relapse.Pattern, error) {
+func (this *nameToNumber) translate(context *context, p *relapse.Pattern) (*relapse.Pattern, error) {
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *relapse.Empty, *relapse.LeafNode, *relapse.ZAny:
@@ -189,7 +189,7 @@ func getField(msg *descriptor.DescriptorProto, name string) *descriptor.FieldDes
 	return nil
 }
 
-func (this *keyer) translateName(current *context, name *relapse.NameExpr, child *relapse.Pattern) (*relapse.Pattern, error) {
+func (this *nameToNumber) translateName(current *context, name *relapse.NameExpr, child *relapse.Pattern) (*relapse.Pattern, error) {
 	switch n := name.GetValue().(type) {
 	case *relapse.Name:
 		if current.index {

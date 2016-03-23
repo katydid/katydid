@@ -15,13 +15,13 @@
 package tests
 
 func init() {
-	BenchValidateProtoKey("ContextPerson", ContextPerson, &Person{})
-	BenchValidateProtoKey("ListIndexAddress", ListIndexAddressPerson, &Person{})
-	BenchValidateProtoKey("NilName", NilNamePerson, &Person{})
-	BenchValidateProtoKey("LenName", LenNamePerson, &Person{})
-	BenchValidateProtoKey("EmptyOrNil", EmptyOrNilPerson, &Person{})
-	BenchValidateProtoKey("IncorrectNotName", NaiveNotNamePerson, &Person{})
-	BenchValidateProtoKey("CorrectNotName", ProperNotNamePerson, &Person{})
-	BenchValidateProtoKey("AndNameTelephone", AndNameTelephonePerson, &Person{})
-	BenchValidateProtoKey("OrNameTelephone", OrNameTelephonePerson, &Person{})
+	BenchValidateProtoNum("ContextPerson", ContextPerson, &Person{})
+	BenchValidateProtoNum("ListIndexAddress", ListIndexAddressPerson, &Person{})
+	BenchValidateProtoNum("NilName", NilNamePerson, &Person{})
+	BenchValidateProtoNum("LenName", LenNamePerson, &Person{})
+	BenchValidateProtoNum("EmptyOrNil", EmptyOrNilPerson, &Person{})
+	BenchValidateProtoNum("IncorrectNotName", NaiveNotNamePerson, &Person{})
+	BenchValidateProtoNum("CorrectNotName", ProperNotNamePerson, &Person{})
+	BenchValidateProtoNum("AndNameTelephone", AndNameTelephonePerson, &Person{})
+	BenchValidateProtoNum("OrNameTelephone", OrNameTelephonePerson, &Person{})
 }

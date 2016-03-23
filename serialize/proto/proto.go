@@ -77,8 +77,8 @@ func length(wireType int, buf []byte) (prefix int, l int, err error) {
 type protoParser struct {
 	descMap DescMap
 	state
-	stack []state
-	debug bool
+	stack      []state
+	fieldNames bool
 }
 
 type state struct {
@@ -94,14 +94,23 @@ type state struct {
 	indexRepeated int
 }
 
-type BytesParser interface {
+type Parser interface {
 	serialize.Parser
-	Init(buf []byte) error
+	Message() *descriptor.DescriptorProto
+	Field() *descriptor.FieldDescriptorProto
 }
 
 //Merging of fields and splitting of arrays are not supported by this parser for optimization reasons.
 //TODO: defaults and proto3
-func NewProtoParser(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet) *protoParser {
+func NewProtoNameParser(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet) *protoParser {
+	return newProtoParser(srcPackage, srcMessage, desc, true)
+}
+
+func NewProtoNumParser(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet) *protoParser {
+	return newProtoParser(srcPackage, srcMessage, desc, false)
+}
+
+func newProtoParser(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet, fieldNames bool) *protoParser {
 	descMap, err := NewDescriptorMap(srcPackage, srcMessage, desc)
 	if err != nil {
 		panic(err)
@@ -111,7 +120,8 @@ func NewProtoParser(srcPackage, srcMessage string, desc *descriptor.FileDescript
 		state: state{
 			parent: descMap.GetRoot(),
 		},
-		stack: make([]state, 0, 10),
+		stack:      make([]state, 0, 10),
+		fieldNames: fieldNames,
 	}
 }
 
@@ -120,6 +130,14 @@ func (s *protoParser) Reset() error {
 		return s.Init(s.stack[0].buf)
 	}
 	return s.Init(s.buf)
+}
+
+func (s *protoParser) Message() *descriptor.DescriptorProto {
+	return s.parent
+}
+
+func (s *protoParser) Field() *descriptor.FieldDescriptorProto {
+	return s.field
 }
 
 func (s *protoParser) Init(buf []byte) error {
@@ -285,7 +303,7 @@ func (s *protoParser) Int() (int64, error) {
 
 func (s *protoParser) Uint() (uint64, error) {
 	if !s.isLeaf {
-		if !s.debug {
+		if !s.fieldNames {
 			return uint64(s.field.GetNumber()), nil
 		}
 		return 0, serialize.ErrNotUint
@@ -323,7 +341,10 @@ func (s *protoParser) Bool() (bool, error) {
 
 func (s *protoParser) String() (string, error) {
 	if !s.isLeaf {
-		return s.field.GetName(), nil
+		if s.fieldNames {
+			return s.field.GetName(), nil
+		}
+		return "", serialize.ErrNotString
 	}
 	if s.field.GetType() != descriptor.FieldDescriptorProto_TYPE_STRING {
 		return "", serialize.ErrNotString

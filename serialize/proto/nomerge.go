@@ -16,11 +16,10 @@ package proto
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/serialize"
 	"io"
 )
 
-func NoLatentAppendingOrMerging(parser serialize.Parser) error {
+func NoLatentAppendingOrMerging(parser Parser) error {
 	seen := make(map[uint64]bool)
 	for {
 		if err := parser.Next(); err != nil {
@@ -32,15 +31,11 @@ func NoLatentAppendingOrMerging(parser serialize.Parser) error {
 		}
 		if !parser.IsLeaf() {
 			if _, err := parser.Int(); err != nil {
-				if key, err := parser.Uint(); err == nil {
-					name, err := parser.String()
-					if err != nil {
-						return err
+				if fieldNum, err := parser.Uint(); err == nil {
+					if _, ok := seen[fieldNum]; ok {
+						return fmt.Errorf("%s requires merging", parser.Field().GetName())
 					}
-					if _, ok := seen[key]; ok {
-						return fmt.Errorf(name + " requires merging")
-					}
-					seen[key] = true
+					seen[fieldNum] = true
 				} else {
 					panic("not an index, field or leaf: " + err.Error())
 				}

@@ -53,8 +53,8 @@ func TestAPocketRosesJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestAPocketRosesProto(t *testing.T) {
-	v := tests.Validators["APocketRoses"]["proto"]
+func TestAPocketRosesProtoName(t *testing.T) {
+	v := tests.Validators["APocketRoses"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -68,8 +68,8 @@ func TestAb21AnyJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestAb21AnyProto(t *testing.T) {
-	v := tests.Validators["Ab21Any"]["proto"]
+func TestAb21AnyProtoName(t *testing.T) {
+	v := tests.Validators["Ab21Any"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -83,8 +83,8 @@ func TestAb21InAnyExceptSaladWorryJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestAb21InAnyExceptSaladWorryProto(t *testing.T) {
-	v := tests.Validators["Ab21InAnyExceptSaladWorry"]["proto"]
+func TestAb21InAnyExceptSaladWorryProtoName(t *testing.T) {
+	v := tests.Validators["Ab21InAnyExceptSaladWorry"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -98,8 +98,8 @@ func TestAb21MagazineFrameAJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestAb21MagazineFrameAProto(t *testing.T) {
-	v := tests.Validators["Ab21MagazineFrameA"]["proto"]
+func TestAb21MagazineFrameAProtoName(t *testing.T) {
+	v := tests.Validators["Ab21MagazineFrameA"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -113,8 +113,8 @@ func TestAb21MagazineFrameSingleAJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestAb21MagazineFrameSingleAProto(t *testing.T) {
-	v := tests.Validators["Ab21MagazineFrameSingleA"]["proto"]
+func TestAb21MagazineFrameSingleAProtoName(t *testing.T) {
+	v := tests.Validators["Ab21MagazineFrameSingleA"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -128,8 +128,8 @@ func TestAb21NoneJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestAb21NoneProto(t *testing.T) {
-	v := tests.Validators["Ab21None"]["proto"]
+func TestAb21NoneProtoName(t *testing.T) {
+	v := tests.Validators["Ab21None"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -143,8 +143,8 @@ func TestAb21NotAFieldNameJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestAb21NotAFieldNameProto(t *testing.T) {
-	v := tests.Validators["Ab21NotAFieldName"]["proto"]
+func TestAb21NotAFieldNameProtoName(t *testing.T) {
+	v := tests.Validators["Ab21NotAFieldName"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -158,8 +158,8 @@ func TestAb21Spirit1Json(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestAb21Spirit1Proto(t *testing.T) {
-	v := tests.Validators["Ab21Spirit1"]["proto"]
+func TestAb21Spirit1ProtoName(t *testing.T) {
+	v := tests.Validators["Ab21Spirit1"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -173,8 +173,8 @@ func TestAb21Spirit2Json(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestAb21Spirit2Proto(t *testing.T) {
-	v := tests.Validators["Ab21Spirit2"]["proto"]
+func TestAb21Spirit2ProtoName(t *testing.T) {
+	v := tests.Validators["Ab21Spirit2"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -188,8 +188,8 @@ func TestAbcPocketRosesJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestAbcPocketRosesProto(t *testing.T) {
-	v := tests.Validators["AbcPocketRoses"]["proto"]
+func TestAbcPocketRosesProtoName(t *testing.T) {
+	v := tests.Validators["AbcPocketRoses"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -203,8 +203,8 @@ func TestAndNameTelephoneDavidJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestAndNameTelephoneDavidProto(t *testing.T) {
-	v := tests.Validators["AndNameTelephoneDavid"]["proto"]
+func TestAndNameTelephoneDavidProtoName(t *testing.T) {
+	v := tests.Validators["AndNameTelephoneDavid"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -218,8 +218,8 @@ func TestAndNameTelephoneJohnJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestAndNameTelephoneJohnProto(t *testing.T) {
-	v := tests.Validators["AndNameTelephoneJohn"]["proto"]
+func TestAndNameTelephoneJohnProtoName(t *testing.T) {
+	v := tests.Validators["AndNameTelephoneJohn"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -233,8 +233,8 @@ func TestAndNameTelephoneMoverJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestAndNameTelephoneMoverProto(t *testing.T) {
-	v := tests.Validators["AndNameTelephoneMover"]["proto"]
+func TestAndNameTelephoneMoverProtoName(t *testing.T) {
+	v := tests.Validators["AndNameTelephoneMover"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -248,8 +248,8 @@ func TestAndNameTelephoneSmithJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestAndNameTelephoneSmithProto(t *testing.T) {
-	v := tests.Validators["AndNameTelephoneSmith"]["proto"]
+func TestAndNameTelephoneSmithProtoName(t *testing.T) {
+	v := tests.Validators["AndNameTelephoneSmith"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -743,8 +743,8 @@ func TestBightTurnJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestBightTurnProto(t *testing.T) {
-	v := tests.Validators["BightTurn"]["proto"]
+func TestBightTurnProtoName(t *testing.T) {
+	v := tests.Validators["BightTurn"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -758,8 +758,8 @@ func TestContextDavidJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestContextDavidProto(t *testing.T) {
-	v := tests.Validators["ContextDavid"]["proto"]
+func TestContextDavidProtoName(t *testing.T) {
+	v := tests.Validators["ContextDavid"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -773,8 +773,8 @@ func TestContextRobertJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestContextRobertProto(t *testing.T) {
-	v := tests.Validators["ContextRobert"]["proto"]
+func TestContextRobertProtoName(t *testing.T) {
+	v := tests.Validators["ContextRobert"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -788,8 +788,8 @@ func TestCorrectTypeRobertJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestCorrectTypeRobertProto(t *testing.T) {
-	v := tests.Validators["CorrectTypeRobert"]["proto"]
+func TestCorrectTypeRobertProtoName(t *testing.T) {
+	v := tests.Validators["CorrectTypeRobert"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -803,8 +803,8 @@ func TestDPocketRosesJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestDPocketRosesProto(t *testing.T) {
-	v := tests.Validators["DPocketRoses"]["proto"]
+func TestDPocketRosesProtoName(t *testing.T) {
+	v := tests.Validators["DPocketRoses"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -823,8 +823,8 @@ func TestDontErrorGivenWrongTypeJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestDontErrorGivenWrongTypeProto(t *testing.T) {
-	v := tests.Validators["DontErrorGivenWrongType"]["proto"]
+func TestDontErrorGivenWrongTypeProtoName(t *testing.T) {
+	v := tests.Validators["DontErrorGivenWrongType"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -838,8 +838,8 @@ func TestEmptyOrNilJohnJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestEmptyOrNilJohnProto(t *testing.T) {
-	v := tests.Validators["EmptyOrNilJohn"]["proto"]
+func TestEmptyOrNilJohnProtoName(t *testing.T) {
+	v := tests.Validators["EmptyOrNilJohn"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -853,8 +853,8 @@ func TestEmptyOrNilNonameJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestEmptyOrNilNonameProto(t *testing.T) {
-	v := tests.Validators["EmptyOrNilNoname"]["proto"]
+func TestEmptyOrNilNonameProtoName(t *testing.T) {
+	v := tests.Validators["EmptyOrNilNoname"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -868,8 +868,8 @@ func TestEmptyOrNilSmithJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestEmptyOrNilSmithProto(t *testing.T) {
-	v := tests.Validators["EmptyOrNilSmith"]["proto"]
+func TestEmptyOrNilSmithProtoName(t *testing.T) {
+	v := tests.Validators["EmptyOrNilSmith"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -883,8 +883,8 @@ func TestFinalCPocketRosesJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestFinalCPocketRosesProto(t *testing.T) {
-	v := tests.Validators["FinalCPocketRoses"]["proto"]
+func TestFinalCPocketRosesProtoName(t *testing.T) {
+	v := tests.Validators["FinalCPocketRoses"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -898,8 +898,8 @@ func TestHiddenLeftRecursionDavidJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestHiddenLeftRecursionDavidProto(t *testing.T) {
-	v := tests.Validators["HiddenLeftRecursionDavid"]["proto"]
+func TestHiddenLeftRecursionDavidProtoName(t *testing.T) {
+	v := tests.Validators["HiddenLeftRecursionDavid"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -913,8 +913,8 @@ func TestHiddenLeftRecursionRobertJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestHiddenLeftRecursionRobertProto(t *testing.T) {
-	v := tests.Validators["HiddenLeftRecursionRobert"]["proto"]
+func TestHiddenLeftRecursionRobertProtoName(t *testing.T) {
+	v := tests.Validators["HiddenLeftRecursionRobert"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -928,8 +928,8 @@ func TestInSetPersonDavidJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestInSetPersonDavidProto(t *testing.T) {
-	v := tests.Validators["InSetPersonDavid"]["proto"]
+func TestInSetPersonDavidProtoName(t *testing.T) {
+	v := tests.Validators["InSetPersonDavid"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -943,8 +943,8 @@ func TestInSetPersonRobertJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestInSetPersonRobertProto(t *testing.T) {
-	v := tests.Validators["InSetPersonRobert"]["proto"]
+func TestInSetPersonRobertProtoName(t *testing.T) {
+	v := tests.Validators["InSetPersonRobert"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -958,8 +958,8 @@ func TestKnotKnotElbowJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestKnotKnotElbowProto(t *testing.T) {
-	v := tests.Validators["KnotKnotElbow"]["proto"]
+func TestKnotKnotElbowProtoName(t *testing.T) {
+	v := tests.Validators["KnotKnotElbow"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -973,8 +973,8 @@ func TestLeftRecursionDavidJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestLeftRecursionDavidProto(t *testing.T) {
-	v := tests.Validators["LeftRecursionDavid"]["proto"]
+func TestLeftRecursionDavidProtoName(t *testing.T) {
+	v := tests.Validators["LeftRecursionDavid"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -988,8 +988,8 @@ func TestLeftRecursionRobertJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestLeftRecursionRobertProto(t *testing.T) {
-	v := tests.Validators["LeftRecursionRobert"]["proto"]
+func TestLeftRecursionRobertProtoName(t *testing.T) {
+	v := tests.Validators["LeftRecursionRobert"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1003,8 +1003,8 @@ func TestLenNameJohnJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestLenNameJohnProto(t *testing.T) {
-	v := tests.Validators["LenNameJohn"]["proto"]
+func TestLenNameJohnProtoName(t *testing.T) {
+	v := tests.Validators["LenNameJohn"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1018,8 +1018,8 @@ func TestLenNameNonameJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestLenNameNonameProto(t *testing.T) {
-	v := tests.Validators["LenNameNoname"]["proto"]
+func TestLenNameNonameProtoName(t *testing.T) {
+	v := tests.Validators["LenNameNoname"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1033,8 +1033,8 @@ func TestLenNameSmithJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestLenNameSmithProto(t *testing.T) {
-	v := tests.Validators["LenNameSmith"]["proto"]
+func TestLenNameSmithProtoName(t *testing.T) {
+	v := tests.Validators["LenNameSmith"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1048,8 +1048,8 @@ func TestListIndexAddressMoverJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestListIndexAddressMoverProto(t *testing.T) {
-	v := tests.Validators["ListIndexAddressMover"]["proto"]
+func TestListIndexAddressMoverProtoName(t *testing.T) {
+	v := tests.Validators["ListIndexAddressMover"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1063,8 +1063,8 @@ func TestListIndexAddressRoutineJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestListIndexAddressRoutineProto(t *testing.T) {
-	v := tests.Validators["ListIndexAddressRoutine"]["proto"]
+func TestListIndexAddressRoutineProtoName(t *testing.T) {
+	v := tests.Validators["ListIndexAddressRoutine"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1078,8 +1078,8 @@ func TestListIndexAddressShakerJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestListIndexAddressShakerProto(t *testing.T) {
-	v := tests.Validators["ListIndexAddressShaker"]["proto"]
+func TestListIndexAddressShakerProtoName(t *testing.T) {
+	v := tests.Validators["ListIndexAddressShaker"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1093,8 +1093,8 @@ func TestListOfTelephonesDavidJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestListOfTelephonesDavidProto(t *testing.T) {
-	v := tests.Validators["ListOfTelephonesDavid"]["proto"]
+func TestListOfTelephonesDavidProtoName(t *testing.T) {
+	v := tests.Validators["ListOfTelephonesDavid"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1108,8 +1108,8 @@ func TestListOfTelephonesRoutineJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestListOfTelephonesRoutineProto(t *testing.T) {
-	v := tests.Validators["ListOfTelephonesRoutine"]["proto"]
+func TestListOfTelephonesRoutineProtoName(t *testing.T) {
+	v := tests.Validators["ListOfTelephonesRoutine"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1123,8 +1123,8 @@ func TestListOfTelephonesShakerJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestListOfTelephonesShakerProto(t *testing.T) {
-	v := tests.Validators["ListOfTelephonesShaker"]["proto"]
+func TestListOfTelephonesShakerProtoName(t *testing.T) {
+	v := tests.Validators["ListOfTelephonesShaker"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1138,8 +1138,8 @@ func TestNaiveNotNameDavidJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestNaiveNotNameDavidProto(t *testing.T) {
-	v := tests.Validators["NaiveNotNameDavid"]["proto"]
+func TestNaiveNotNameDavidProtoName(t *testing.T) {
+	v := tests.Validators["NaiveNotNameDavid"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1153,8 +1153,8 @@ func TestNaiveNotNameNonameJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestNaiveNotNameNonameProto(t *testing.T) {
-	v := tests.Validators["NaiveNotNameNoname"]["proto"]
+func TestNaiveNotNameNonameProtoName(t *testing.T) {
+	v := tests.Validators["NaiveNotNameNoname"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1168,8 +1168,8 @@ func TestNaiveNotNameRobertJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestNaiveNotNameRobertProto(t *testing.T) {
-	v := tests.Validators["NaiveNotNameRobert"]["proto"]
+func TestNaiveNotNameRobertProtoName(t *testing.T) {
+	v := tests.Validators["NaiveNotNameRobert"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1183,8 +1183,8 @@ func TestNaiveNotNameSmithJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestNaiveNotNameSmithProto(t *testing.T) {
-	v := tests.Validators["NaiveNotNameSmith"]["proto"]
+func TestNaiveNotNameSmithProtoName(t *testing.T) {
+	v := tests.Validators["NaiveNotNameSmith"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1198,8 +1198,8 @@ func TestNextAPocketRosesJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestNextAPocketRosesProto(t *testing.T) {
-	v := tests.Validators["NextAPocketRoses"]["proto"]
+func TestNextAPocketRosesProtoName(t *testing.T) {
+	v := tests.Validators["NextAPocketRoses"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1213,8 +1213,8 @@ func TestNilNameJohnJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestNilNameJohnProto(t *testing.T) {
-	v := tests.Validators["NilNameJohn"]["proto"]
+func TestNilNameJohnProtoName(t *testing.T) {
+	v := tests.Validators["NilNameJohn"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1228,8 +1228,8 @@ func TestNilNameNonameJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestNilNameNonameProto(t *testing.T) {
-	v := tests.Validators["NilNameNoname"]["proto"]
+func TestNilNameNonameProtoName(t *testing.T) {
+	v := tests.Validators["NilNameNoname"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1243,8 +1243,8 @@ func TestNilNameSmithJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestNilNameSmithProto(t *testing.T) {
-	v := tests.Validators["NilNameSmith"]["proto"]
+func TestNilNameSmithProtoName(t *testing.T) {
+	v := tests.Validators["NilNameSmith"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1268,8 +1268,8 @@ func TestOptionalAddressDavidPersonJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestOptionalAddressDavidPersonProto(t *testing.T) {
-	v := tests.Validators["OptionalAddressDavidPerson"]["proto"]
+func TestOptionalAddressDavidPersonProtoName(t *testing.T) {
+	v := tests.Validators["OptionalAddressDavidPerson"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1283,8 +1283,8 @@ func TestOptionalAddressMoverPersonJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestOptionalAddressMoverPersonProto(t *testing.T) {
-	v := tests.Validators["OptionalAddressMoverPerson"]["proto"]
+func TestOptionalAddressMoverPersonProtoName(t *testing.T) {
+	v := tests.Validators["OptionalAddressMoverPerson"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1298,8 +1298,8 @@ func TestOptionalAddressRobertPersonJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestOptionalAddressRobertPersonProto(t *testing.T) {
-	v := tests.Validators["OptionalAddressRobertPerson"]["proto"]
+func TestOptionalAddressRobertPersonProtoName(t *testing.T) {
+	v := tests.Validators["OptionalAddressRobertPerson"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1313,8 +1313,8 @@ func TestOptionalNameJohnPersonJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestOptionalNameJohnPersonProto(t *testing.T) {
-	v := tests.Validators["OptionalNameJohnPerson"]["proto"]
+func TestOptionalNameJohnPersonProtoName(t *testing.T) {
+	v := tests.Validators["OptionalNameJohnPerson"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1328,8 +1328,8 @@ func TestOptionalNameNonamePersonJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestOptionalNameNonamePersonProto(t *testing.T) {
-	v := tests.Validators["OptionalNameNonamePerson"]["proto"]
+func TestOptionalNameNonamePersonProtoName(t *testing.T) {
+	v := tests.Validators["OptionalNameNonamePerson"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1343,8 +1343,8 @@ func TestOptionalNameRoutinePersonJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestOptionalNameRoutinePersonProto(t *testing.T) {
-	v := tests.Validators["OptionalNameRoutinePerson"]["proto"]
+func TestOptionalNameRoutinePersonProtoName(t *testing.T) {
+	v := tests.Validators["OptionalNameRoutinePerson"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1358,8 +1358,8 @@ func TestOptionalNameShakerPersonJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestOptionalNameShakerPersonProto(t *testing.T) {
-	v := tests.Validators["OptionalNameShakerPerson"]["proto"]
+func TestOptionalNameShakerPersonProtoName(t *testing.T) {
+	v := tests.Validators["OptionalNameShakerPerson"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1373,8 +1373,8 @@ func TestOptionalNameSmithPersonJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestOptionalNameSmithPersonProto(t *testing.T) {
-	v := tests.Validators["OptionalNameSmithPerson"]["proto"]
+func TestOptionalNameSmithPersonProtoName(t *testing.T) {
+	v := tests.Validators["OptionalNameSmithPerson"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1388,8 +1388,8 @@ func TestOrNameTelephoneDavidJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestOrNameTelephoneDavidProto(t *testing.T) {
-	v := tests.Validators["OrNameTelephoneDavid"]["proto"]
+func TestOrNameTelephoneDavidProtoName(t *testing.T) {
+	v := tests.Validators["OrNameTelephoneDavid"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1403,8 +1403,8 @@ func TestOrNameTelephoneJohnJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestOrNameTelephoneJohnProto(t *testing.T) {
-	v := tests.Validators["OrNameTelephoneJohn"]["proto"]
+func TestOrNameTelephoneJohnProtoName(t *testing.T) {
+	v := tests.Validators["OrNameTelephoneJohn"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1418,8 +1418,8 @@ func TestOrNameTelephoneMoverJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestOrNameTelephoneMoverProto(t *testing.T) {
-	v := tests.Validators["OrNameTelephoneMover"]["proto"]
+func TestOrNameTelephoneMoverProtoName(t *testing.T) {
+	v := tests.Validators["OrNameTelephoneMover"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1433,8 +1433,8 @@ func TestOrNameTelephoneSmithJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestOrNameTelephoneSmithProto(t *testing.T) {
-	v := tests.Validators["OrNameTelephoneSmith"]["proto"]
+func TestOrNameTelephoneSmithProtoName(t *testing.T) {
+	v := tests.Validators["OrNameTelephoneSmith"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1728,8 +1728,8 @@ func TestProperNotNamePersonDavidJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProperNotNamePersonDavidProto(t *testing.T) {
-	v := tests.Validators["ProperNotNamePersonDavid"]["proto"]
+func TestProperNotNamePersonDavidProtoName(t *testing.T) {
+	v := tests.Validators["ProperNotNamePersonDavid"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1743,8 +1743,8 @@ func TestProperNotNamePersonNonameJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProperNotNamePersonNonameProto(t *testing.T) {
-	v := tests.Validators["ProperNotNamePersonNoname"]["proto"]
+func TestProperNotNamePersonNonameProtoName(t *testing.T) {
+	v := tests.Validators["ProperNotNamePersonNoname"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1758,8 +1758,8 @@ func TestProperNotNamePersonRobertJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProperNotNamePersonRobertProto(t *testing.T) {
-	v := tests.Validators["ProperNotNamePersonRobert"]["proto"]
+func TestProperNotNamePersonRobertProtoName(t *testing.T) {
+	v := tests.Validators["ProperNotNamePersonRobert"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1773,8 +1773,8 @@ func TestProperNotNamePersonSmithJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProperNotNamePersonSmithProto(t *testing.T) {
-	v := tests.Validators["ProperNotNamePersonSmith"]["proto"]
+func TestProperNotNamePersonSmithProtoName(t *testing.T) {
+	v := tests.Validators["ProperNotNamePersonSmith"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -1783,363 +1783,363 @@ func TestProperNotNamePersonSmithReflect(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyAPocketRosesProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyAPocketRoses"]["proto"]
+func TestProtoNumAPocketRosesProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumAPocketRoses"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyAb21AnyProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyAb21Any"]["proto"]
+func TestProtoNumAb21AnyProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumAb21Any"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyAb21MagazineFrameAProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyAb21MagazineFrameA"]["proto"]
+func TestProtoNumAb21MagazineFrameAProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumAb21MagazineFrameA"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyAb21MagazineFrameSingleAProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyAb21MagazineFrameSingleA"]["proto"]
+func TestProtoNumAb21MagazineFrameSingleAProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumAb21MagazineFrameSingleA"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyAb21NoneProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyAb21None"]["proto"]
+func TestProtoNumAb21NoneProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumAb21None"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyAb21Spirit1Proto(t *testing.T) {
-	v := tests.Validators["ProtoKeyAb21Spirit1"]["proto"]
+func TestProtoNumAb21Spirit1ProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumAb21Spirit1"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyAb21Spirit2Proto(t *testing.T) {
-	v := tests.Validators["ProtoKeyAb21Spirit2"]["proto"]
+func TestProtoNumAb21Spirit2ProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumAb21Spirit2"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyAbcPocketRosesProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyAbcPocketRoses"]["proto"]
+func TestProtoNumAbcPocketRosesProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumAbcPocketRoses"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyAndNameTelephoneDavidProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyAndNameTelephoneDavid"]["proto"]
+func TestProtoNumAndNameTelephoneDavidProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumAndNameTelephoneDavid"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyAndNameTelephoneJohnProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyAndNameTelephoneJohn"]["proto"]
+func TestProtoNumAndNameTelephoneJohnProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumAndNameTelephoneJohn"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyAndNameTelephoneMoverProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyAndNameTelephoneMover"]["proto"]
+func TestProtoNumAndNameTelephoneMoverProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumAndNameTelephoneMover"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyAndNameTelephoneSmithProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyAndNameTelephoneSmith"]["proto"]
+func TestProtoNumAndNameTelephoneSmithProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumAndNameTelephoneSmith"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyBenchBridgePepperAndFountainTargetProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyBenchBridgePepperAndFountainTarget"]["proto"]
+func TestProtoNumBenchBridgePepperAndFountainTargetProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumBenchBridgePepperAndFountainTarget"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyBridgePepperProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyBridgePepper"]["proto"]
+func TestProtoNumBridgePepperProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumBridgePepper"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyContextDavidProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyContextDavid"]["proto"]
+func TestProtoNumContextDavidProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumContextDavid"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyContextRobertProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyContextRobert"]["proto"]
+func TestProtoNumContextRobertProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumContextRobert"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyCorrectTypeRobertProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyCorrectTypeRobert"]["proto"]
+func TestProtoNumCorrectTypeRobertProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumCorrectTypeRobert"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyDPocketRosesProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyDPocketRoses"]["proto"]
+func TestProtoNumDPocketRosesProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumDPocketRoses"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyDontErrorGivenWrongTypeProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyDontErrorGivenWrongType"]["proto"]
+func TestProtoNumDontErrorGivenWrongTypeProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumDontErrorGivenWrongType"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyEmptyOrNilJohnProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyEmptyOrNilJohn"]["proto"]
+func TestProtoNumEmptyOrNilJohnProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumEmptyOrNilJohn"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyEmptyOrNilNonameProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyEmptyOrNilNoname"]["proto"]
+func TestProtoNumEmptyOrNilNonameProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumEmptyOrNilNoname"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyEmptyOrNilSmithProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyEmptyOrNilSmith"]["proto"]
+func TestProtoNumEmptyOrNilSmithProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumEmptyOrNilSmith"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyFinalCPocketRosesProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyFinalCPocketRoses"]["proto"]
+func TestProtoNumFinalCPocketRosesProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumFinalCPocketRoses"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyHiddenLeftRecursionDavidProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyHiddenLeftRecursionDavid"]["proto"]
+func TestProtoNumHiddenLeftRecursionDavidProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumHiddenLeftRecursionDavid"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyHiddenLeftRecursionRobertProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyHiddenLeftRecursionRobert"]["proto"]
+func TestProtoNumHiddenLeftRecursionRobertProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumHiddenLeftRecursionRobert"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyInSetPersonDavidProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyInSetPersonDavid"]["proto"]
+func TestProtoNumInSetPersonDavidProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumInSetPersonDavid"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyInSetPersonRobertProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyInSetPersonRobert"]["proto"]
+func TestProtoNumInSetPersonRobertProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumInSetPersonRobert"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyLeftRecursionDavidProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyLeftRecursionDavid"]["proto"]
+func TestProtoNumLeftRecursionDavidProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumLeftRecursionDavid"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyLeftRecursionRobertProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyLeftRecursionRobert"]["proto"]
+func TestProtoNumLeftRecursionRobertProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumLeftRecursionRobert"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyLenNameJohnProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyLenNameJohn"]["proto"]
+func TestProtoNumLenNameJohnProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumLenNameJohn"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyLenNameNonameProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyLenNameNoname"]["proto"]
+func TestProtoNumLenNameNonameProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumLenNameNoname"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyLenNameSmithProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyLenNameSmith"]["proto"]
+func TestProtoNumLenNameSmithProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumLenNameSmith"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyListIndexAddressMoverProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyListIndexAddressMover"]["proto"]
+func TestProtoNumListIndexAddressMoverProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumListIndexAddressMover"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyListIndexAddressRoutineProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyListIndexAddressRoutine"]["proto"]
+func TestProtoNumListIndexAddressRoutineProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumListIndexAddressRoutine"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyListIndexAddressShakerProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyListIndexAddressShaker"]["proto"]
+func TestProtoNumListIndexAddressShakerProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumListIndexAddressShaker"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyListOfTelephonesDavidProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyListOfTelephonesDavid"]["proto"]
+func TestProtoNumListOfTelephonesDavidProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumListOfTelephonesDavid"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyListOfTelephonesRoutineProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyListOfTelephonesRoutine"]["proto"]
+func TestProtoNumListOfTelephonesRoutineProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumListOfTelephonesRoutine"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyListOfTelephonesShakerProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyListOfTelephonesShaker"]["proto"]
+func TestProtoNumListOfTelephonesShakerProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumListOfTelephonesShaker"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyNaiveNotNameDavidProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyNaiveNotNameDavid"]["proto"]
+func TestProtoNumNaiveNotNameDavidProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumNaiveNotNameDavid"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyNaiveNotNameNonameProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyNaiveNotNameNoname"]["proto"]
+func TestProtoNumNaiveNotNameNonameProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumNaiveNotNameNoname"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyNaiveNotNameRobertProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyNaiveNotNameRobert"]["proto"]
+func TestProtoNumNaiveNotNameRobertProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumNaiveNotNameRobert"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyNaiveNotNameSmithProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyNaiveNotNameSmith"]["proto"]
+func TestProtoNumNaiveNotNameSmithProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumNaiveNotNameSmith"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyNextAPocketRosesProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyNextAPocketRoses"]["proto"]
+func TestProtoNumNextAPocketRosesProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumNextAPocketRoses"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyNilNameJohnProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyNilNameJohn"]["proto"]
+func TestProtoNumNilNameJohnProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumNilNameJohn"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyNilNameNonameProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyNilNameNoname"]["proto"]
+func TestProtoNumNilNameNonameProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumNilNameNoname"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyNilNameSmithProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyNilNameSmith"]["proto"]
+func TestProtoNumNilNameSmithProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumNilNameSmith"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyOptionalAddressDavidPersonProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyOptionalAddressDavidPerson"]["proto"]
+func TestProtoNumOptionalAddressDavidPersonProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumOptionalAddressDavidPerson"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyOptionalAddressMoverPersonProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyOptionalAddressMoverPerson"]["proto"]
+func TestProtoNumOptionalAddressMoverPersonProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumOptionalAddressMoverPerson"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyOptionalAddressRobertPersonProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyOptionalAddressRobertPerson"]["proto"]
+func TestProtoNumOptionalAddressRobertPersonProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumOptionalAddressRobertPerson"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyOptionalNameJohnPersonProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyOptionalNameJohnPerson"]["proto"]
+func TestProtoNumOptionalNameJohnPersonProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumOptionalNameJohnPerson"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyOptionalNameNonamePersonProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyOptionalNameNonamePerson"]["proto"]
+func TestProtoNumOptionalNameNonamePersonProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumOptionalNameNonamePerson"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyOptionalNameRoutinePersonProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyOptionalNameRoutinePerson"]["proto"]
+func TestProtoNumOptionalNameRoutinePersonProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumOptionalNameRoutinePerson"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyOptionalNameShakerPersonProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyOptionalNameShakerPerson"]["proto"]
+func TestProtoNumOptionalNameShakerPersonProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumOptionalNameShakerPerson"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyOptionalNameSmithPersonProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyOptionalNameSmithPerson"]["proto"]
+func TestProtoNumOptionalNameSmithPersonProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumOptionalNameSmithPerson"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyOrNameTelephoneDavidProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyOrNameTelephoneDavid"]["proto"]
+func TestProtoNumOrNameTelephoneDavidProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumOrNameTelephoneDavid"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyOrNameTelephoneJohnProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyOrNameTelephoneJohn"]["proto"]
+func TestProtoNumOrNameTelephoneJohnProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumOrNameTelephoneJohn"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyOrNameTelephoneMoverProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyOrNameTelephoneMover"]["proto"]
+func TestProtoNumOrNameTelephoneMoverProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumOrNameTelephoneMover"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyOrNameTelephoneSmithProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyOrNameTelephoneSmith"]["proto"]
+func TestProtoNumOrNameTelephoneSmithProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumOrNameTelephoneSmith"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyProperNotNamePersonDavidProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyProperNotNamePersonDavid"]["proto"]
+func TestProtoNumProperNotNamePersonDavidProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumProperNotNamePersonDavid"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyProperNotNamePersonNonameProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyProperNotNamePersonNoname"]["proto"]
+func TestProtoNumProperNotNamePersonNonameProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumProperNotNamePersonNoname"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyProperNotNamePersonRobertProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyProperNotNamePersonRobert"]["proto"]
+func TestProtoNumProperNotNamePersonRobertProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumProperNotNamePersonRobert"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyProperNotNamePersonSmithProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyProperNotNamePersonSmith"]["proto"]
+func TestProtoNumProperNotNamePersonSmithProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumProperNotNamePersonSmith"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyRecursiveIoUtilProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyRecursiveIoUtil"]["proto"]
+func TestProtoNumRecursiveIoUtilProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumRecursiveIoUtil"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyRecursivePathProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyRecursivePath"]["proto"]
+func TestProtoNumRecursivePathProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumRecursivePath"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyRecursiveRuntimeProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyRecursiveRuntime"]["proto"]
+func TestProtoNumRecursiveRuntimeProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumRecursiveRuntime"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyRecursiveSyscallProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyRecursiveSyscall"]["proto"]
+func TestProtoNumRecursiveSyscallProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumRecursiveSyscall"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyTypewriterPrisonDaisySledProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyTypewriterPrisonDaisySled"]["proto"]
+func TestProtoNumTypewriterPrisonDaisySledProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumTypewriterPrisonDaisySled"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyTypewriterPrisonMapSharkProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyTypewriterPrisonMapShark"]["proto"]
+func TestProtoNumTypewriterPrisonMapSharkProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumTypewriterPrisonMapShark"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyTypewriterPrisonMenuPaperclipProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyTypewriterPrisonMenuPaperclip"]["proto"]
+func TestProtoNumTypewriterPrisonMenuPaperclipProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumTypewriterPrisonMenuPaperclip"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyTypewriterPrisonScarBusStopProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyTypewriterPrisonScarBusStop"]["proto"]
+func TestProtoNumTypewriterPrisonScarBusStopProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumTypewriterPrisonScarBusStop"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyTypewriterPrisonSmileLetterProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyTypewriterPrisonSmileLetter"]["proto"]
+func TestProtoNumTypewriterPrisonSmileLetterProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumTypewriterPrisonSmileLetter"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestProtoKeyWrongTypeRobertProto(t *testing.T) {
-	v := tests.Validators["ProtoKeyWrongTypeRobert"]["proto"]
+func TestProtoNumWrongTypeRobertProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumWrongTypeRobert"]["protoNum"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -2148,8 +2148,8 @@ func TestRecursiveElbowBightTurnJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestRecursiveElbowBightTurnProto(t *testing.T) {
-	v := tests.Validators["RecursiveElbowBightTurn"]["proto"]
+func TestRecursiveElbowBightTurnProtoName(t *testing.T) {
+	v := tests.Validators["RecursiveElbowBightTurn"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -2163,8 +2163,8 @@ func TestRecursiveElbowKnotKnotElbowJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestRecursiveElbowKnotKnotElbowProto(t *testing.T) {
-	v := tests.Validators["RecursiveElbowKnotKnotElbow"]["proto"]
+func TestRecursiveElbowKnotKnotElbowProtoName(t *testing.T) {
+	v := tests.Validators["RecursiveElbowKnotKnotElbow"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -2178,8 +2178,8 @@ func TestRecursiveIoUtilJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestRecursiveIoUtilProto(t *testing.T) {
-	v := tests.Validators["RecursiveIoUtil"]["proto"]
+func TestRecursiveIoUtilProtoName(t *testing.T) {
+	v := tests.Validators["RecursiveIoUtil"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -2193,8 +2193,8 @@ func TestRecursivePathJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestRecursivePathProto(t *testing.T) {
-	v := tests.Validators["RecursivePath"]["proto"]
+func TestRecursivePathProtoName(t *testing.T) {
+	v := tests.Validators["RecursivePath"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -2208,8 +2208,8 @@ func TestRecursiveRuntimeJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestRecursiveRuntimeProto(t *testing.T) {
-	v := tests.Validators["RecursiveRuntime"]["proto"]
+func TestRecursiveRuntimeProtoName(t *testing.T) {
+	v := tests.Validators["RecursiveRuntime"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -2223,8 +2223,8 @@ func TestRecursiveSyscallJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestRecursiveSyscallProto(t *testing.T) {
-	v := tests.Validators["RecursiveSyscall"]["proto"]
+func TestRecursiveSyscallProtoName(t *testing.T) {
+	v := tests.Validators["RecursiveSyscall"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -2238,8 +2238,8 @@ func TestRecursiveTurnBightTurnJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestRecursiveTurnBightTurnProto(t *testing.T) {
-	v := tests.Validators["RecursiveTurnBightTurn"]["proto"]
+func TestRecursiveTurnBightTurnProtoName(t *testing.T) {
+	v := tests.Validators["RecursiveTurnBightTurn"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -2253,8 +2253,8 @@ func TestRecursiveTurnKnotKnotElbowJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestRecursiveTurnKnotKnotElbowProto(t *testing.T) {
-	v := tests.Validators["RecursiveTurnKnotKnotElbow"]["proto"]
+func TestRecursiveTurnKnotKnotElbowProtoName(t *testing.T) {
+	v := tests.Validators["RecursiveTurnKnotKnotElbow"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -2268,8 +2268,8 @@ func TestTopTop1Json(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestTopTop1Proto(t *testing.T) {
-	v := tests.Validators["TopTop1"]["proto"]
+func TestTopTop1ProtoName(t *testing.T) {
+	v := tests.Validators["TopTop1"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
@@ -2293,8 +2293,8 @@ func TestWrongTypeRobertJson(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
-func TestWrongTypeRobertProto(t *testing.T) {
-	v := tests.Validators["WrongTypeRobert"]["proto"]
+func TestWrongTypeRobertProtoName(t *testing.T) {
+	v := tests.Validators["WrongTypeRobert"]["protoName"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
