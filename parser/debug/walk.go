@@ -121,39 +121,6 @@ func Walk(p parser.Interface) Nodes {
 	return a
 }
 
-func StringWalk(p parser.Interface) Nodes {
-	a := make(Nodes, 0)
-	for {
-		if err := p.Next(); err != nil {
-			if err == io.EOF {
-				break
-			} else {
-				panic(err)
-			}
-		}
-		if p.IsLeaf() {
-			value := getValue(p)
-			a = append(a, Node{fmt.Sprintf("%v", value), nil})
-		} else {
-			var name string
-			index, err := p.Int()
-			if err == nil {
-				name = fmt.Sprintf("%d", index)
-			} else {
-				name, err = p.String()
-				if err != nil {
-					panic(err)
-				}
-			}
-			p.Down()
-			v := StringWalk(p)
-			p.Up()
-			a = append(a, Node{name, v})
-		}
-	}
-	return a
-}
-
 func NewRand() Rand {
 	return rand.New(rand.NewSource(time.Now().UnixNano()))
 }

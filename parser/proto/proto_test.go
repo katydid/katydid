@@ -108,7 +108,7 @@ func TestExtensionsSmallContainer(t *testing.T) {
 		panic(err)
 	}
 	p.Init(data)
-	nodes := debug.StringWalk(p)
+	nodes := debug.Walk(p)
 	if !nodes.Equal(prototests.AContainerOutput) {
 		t.Fatalf("expected %v, but got %v", prototests.AContainerOutput, nodes)
 	}
@@ -121,7 +121,7 @@ func TestExtensionsBigContainer(t *testing.T) {
 		panic(err)
 	}
 	p.Init(data)
-	nodes := debug.StringWalk(p)
+	nodes := debug.Walk(p)
 	if !nodes.Equal(prototests.ABigContainerOutput) {
 		t.Fatalf("expected %v, but got %v", prototests.ABigContainerOutput, nodes)
 	}
