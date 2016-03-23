@@ -40,7 +40,6 @@ regenerate:
 	(cd expr && make regenerate)
 	(cd tests && make regenerate)
 	(cd parser && make regenerate)
-	(cd viper && make regenerate)
 	(cd relapse && make regenerate)
 	(cd expr/funcs && go test -test.run=GenFuncList 2>../../list_of_functions.txt)
 	find . -name "*.pb.go" | xargs gofmt -l -s -w
@@ -50,13 +49,11 @@ regenerate:
 clean:
 	go clean ./...
 	(cd expr && make clean)
-	(cd viper && make clean)
 	(cd relapse && make clean)
 
 nuke: clean
 	(cd parser && make nuke)
 	(cd expr && make nuke)
-	(cd viper && make nuke)
 	(cd relapse && make nuke)
 	rm list_of_functions.txt || true
 	go clean -i ./...
