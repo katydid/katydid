@@ -15,7 +15,7 @@
 package relapse
 
 import (
-	"github.com/katydid/katydid/expr/ast"
+	"github.com/katydid/katydid/expr"
 )
 
 type RefLookup map[string]*Pattern

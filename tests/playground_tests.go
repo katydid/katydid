@@ -16,7 +16,7 @@ package tests
 
 import (
 	"encoding/json"
-	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse"
 	"github.com/katydid/katydid/relapse/combinator"
 	"github.com/katydid/katydid/relapse/parser"
 )

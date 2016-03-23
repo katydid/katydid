@@ -2,9 +2,9 @@ package parser
 
 import (
 	"github.com/gogo/protobuf/proto"
-	"github.com/katydid/katydid/expr/ast"
+	"github.com/katydid/katydid/expr"
 	"github.com/katydid/katydid/expr/types"
-	. "github.com/katydid/katydid/relapse/ast"
+	. "github.com/katydid/katydid/relapse"
 	"github.com/katydid/katydid/relapse/token"
 	"strconv"
 )

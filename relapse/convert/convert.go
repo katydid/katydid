@@ -15,7 +15,7 @@
 package convert
 
 import (
-	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse"
 	"github.com/katydid/katydid/relapse/mem"
 	"github.com/katydid/katydid/serialize"
 	"io"

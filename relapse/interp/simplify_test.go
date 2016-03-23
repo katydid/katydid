@@ -15,9 +15,9 @@
 package interp_test
 
 import (
-	"github.com/katydid/katydid/expr/ast"
+	"github.com/katydid/katydid/expr"
 	"github.com/katydid/katydid/expr/funcs"
-	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse"
 	"github.com/katydid/katydid/relapse/combinator"
 	. "github.com/katydid/katydid/relapse/interp"
 	"github.com/katydid/katydid/tests"

@@ -17,7 +17,7 @@ syntax = "proto2";
 package relapse;
 
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
-import "github.com/katydid/katydid/expr/ast/expr.proto";
+import "github.com/katydid/katydid/expr/expr.proto";
 
 option (gogoproto.goproto_stringer_all) = false;
 option (gogoproto.gostring_all) = true;

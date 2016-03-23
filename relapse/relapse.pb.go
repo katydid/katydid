@@ -32,7 +32,7 @@ import proto "github.com/gogo/protobuf/proto"
 import fmt "fmt"
 import math "math"
 import _ "github.com/gogo/protobuf/gogoproto"
-import expr "github.com/katydid/katydid/expr/ast"
+import expr "github.com/katydid/katydid/expr"
 
 import strings "strings"
 import github_com_gogo_protobuf_proto "github.com/gogo/protobuf/proto"

@@ -16,7 +16,7 @@ package eval
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/expr/ast"
+	"github.com/katydid/katydid/expr"
 	"github.com/katydid/katydid/expr/compose"
 	"github.com/katydid/katydid/serialize"
 	"github.com/katydid/katydid/viper/ast"

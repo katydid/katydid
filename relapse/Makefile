@@ -14,7 +14,7 @@
 
 regenerate:
 	./build.sh
-	(cd ast && make regenerate)
+	protoc --gogo_out=. -I=.:../../../../:../../../../github.com/gogo/protobuf/protobuf relapse.proto
 	rm ./util/litconv.go
 	rm ./util/rune.go
 	rmdir util

@@ -15,7 +15,7 @@
 package mem
 
 import (
-	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse"
 )
 
 var (

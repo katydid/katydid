@@ -16,7 +16,7 @@ package interp
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse"
 )
 
 //TODO improve nullable for left recursion using fix points

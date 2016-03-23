@@ -15,7 +15,7 @@
 package interp
 
 import (
-	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse"
 )
 
 // Returns true if there exists a tree that can satisfy the Grammar.

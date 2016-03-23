@@ -95,8 +95,8 @@ _byte_elem : _int_lit | _char_lit ;
 bytes_lit : _bytes '{' { _ws } [ _byte_elem { { _ws } ',' { _ws } _byte_elem } ] { _ws } '}' ;
 << 
 import (
-  . "github.com/katydid/katydid/relapse/ast"
-  "github.com/katydid/katydid/expr/ast"
+  . "github.com/katydid/katydid/relapse"
+  "github.com/katydid/katydid/expr"
   "github.com/katydid/katydid/expr/types"
   "github.com/gogo/protobuf/proto"
   "github.com/katydid/katydid/relapse/token"

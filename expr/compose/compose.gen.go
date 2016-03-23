@@ -4,7 +4,7 @@
 package compose
 
 import (
-	"github.com/katydid/katydid/expr/ast"
+	"github.com/katydid/katydid/expr"
 	"github.com/katydid/katydid/expr/funcs"
 	"github.com/katydid/katydid/expr/types"
 )

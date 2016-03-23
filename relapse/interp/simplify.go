@@ -16,11 +16,11 @@ package interp
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/expr/ast"
+	"github.com/katydid/katydid/expr"
 	"github.com/katydid/katydid/expr/compose"
 	"github.com/katydid/katydid/expr/funcs"
 	nameexpr "github.com/katydid/katydid/expr/name"
-	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse"
 )
 
 func checkRef(refs relapse.RefLookup, p *relapse.Pattern) *relapse.Pattern {

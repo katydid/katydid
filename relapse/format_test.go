@@ -15,7 +15,7 @@
 package relapse_test
 
 import (
-	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse"
 	"github.com/katydid/katydid/relapse/parser"
 	"testing"
 )

@@ -2,7 +2,7 @@ package parser
 
 import (
 	"github.com/gogo/protobuf/proto"
-	"github.com/katydid/katydid/expr/ast"
+	"github.com/katydid/katydid/expr"
 	"github.com/katydid/katydid/expr/token"
 	"github.com/katydid/katydid/expr/types"
 )

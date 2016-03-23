@@ -16,8 +16,8 @@ package protonum
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/expr/ast"
-	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/expr"
+	"github.com/katydid/katydid/relapse"
 )
 
 func topDown(pattern *relapse.Pattern, f func(*relapse.Pattern)) {

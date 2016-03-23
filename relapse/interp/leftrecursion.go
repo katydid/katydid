@@ -16,7 +16,7 @@ package interp
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse"
 )
 
 //TODO what about derived left recursion

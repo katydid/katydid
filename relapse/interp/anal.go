@@ -16,8 +16,8 @@ package interp
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/expr/ast"
-	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/expr"
+	"github.com/katydid/katydid/relapse"
 )
 
 // Experimental

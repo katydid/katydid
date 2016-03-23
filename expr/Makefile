@@ -15,7 +15,7 @@
 regenerate:
 	./build.sh
 	(cd types && make regenerate)
-	(cd ast && make regenerate)
+	protoc --gogo_out=. -I=.:../../../../:../../../../github.com/gogo/protobuf/protobuf expr.proto
 	(cd funcs && make regenerate)
 	(cd compose && make regenerate)
 	rm ./util/rune.go

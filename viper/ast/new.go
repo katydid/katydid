@@ -15,7 +15,7 @@
 package viper
 
 import (
-	"github.com/katydid/katydid/expr/ast"
+	"github.com/katydid/katydid/expr"
 )
 
 func newSpace() *expr.Space {
