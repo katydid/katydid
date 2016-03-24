@@ -19,6 +19,7 @@ import (
 	"reflect"
 )
 
+//FromGo is given the reflected type of a native type and returns the corresponding expression type.
 func FromGo(typ reflect.Type) Type {
 	kind := typ.Kind()
 	switch kind {

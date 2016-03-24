@@ -14,10 +14,12 @@
 
 package funcs
 
+//Const is an interface that when implemented implies that the function is actually a constant value.
 type Const interface {
 	IsConst()
 }
 
+//NewConst returns the appropriate constant function given a native go type or list of native go types.
 func NewConst(value interface{}) interface{} {
 	switch v := value.(type) {
 	case float64:

@@ -14,6 +14,7 @@
 
 package types
 
+//IsList returns whether the type is a list type
 func IsList(typ Type) bool {
 	switch typ {
 	case LIST_DOUBLE:
@@ -28,6 +29,7 @@ func IsList(typ Type) bool {
 	return true
 }
 
+//ListToSingle returns the respective type as if the type was not a list type.
 func ListToSingle(typ Type) Type {
 	switch typ {
 	case LIST_DOUBLE:
@@ -46,6 +48,7 @@ func ListToSingle(typ Type) Type {
 	panic("unreachable")
 }
 
+//SingleToList returns the list type of the respective type.
 func SingleToList(typ Type) Type {
 	switch typ {
 	case SINGLE_DOUBLE:
@@ -64,6 +67,7 @@ func SingleToList(typ Type) Type {
 	panic("unreachable")
 }
 
+//IsSingle returns whether the type is not a list type.
 func IsSingle(typ Type) bool {
 	switch typ {
 	case SINGLE_DOUBLE:

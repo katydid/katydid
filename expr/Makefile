@@ -27,13 +27,15 @@ clean:
 
 nuke: clean
 	(cd funcs && make nuke)
-	rm -rf ./errors
-	rm -rf ./lexer
+	rm -rf ./errors/errors.go
+	rm -rf ./lexer/acttab.go
+	rm -rf ./lexer/lexer.go
+	rm -rf ./lexer/transitiontable.go
 	rm -rf ./parser/action.go
 	rm -rf ./parser/actiontable.go
 	rm -rf ./parser/gototable.go
 	rm -rf ./parser/parser.go
 	rm -rf ./parser/productionstable.go
-	rm -rf ./token
+	rm -rf ./token/token.go
 	rm -rf ./util
 	rm -rf ./compose/compose.gen.go

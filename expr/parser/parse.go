@@ -20,6 +20,7 @@ import (
 	"github.com/katydid/katydid/expr/lexer"
 )
 
+//ErrWrongType contains the value that failed to assert to *expr.Expr
 type ErrWrongType struct {
 	typ string
 	res interface{}
@@ -29,6 +30,7 @@ func (this *ErrWrongType) Error() string {
 	return fmt.Sprintf("expected %s, but got %#v", this.typ, this.res)
 }
 
+//ParseExpr returns a parsed expression or error, given a string.
 func (this *Parser) ParseExpr(s string) (res *expr.Expr, err error) {
 	scanner := lexer.NewLexer([]byte(s))
 	e, err := this.Parse(scanner)

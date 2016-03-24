@@ -12,6 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+//compose-gen is a command that generates some of the code in the compose package.
 package main
 
 import (
