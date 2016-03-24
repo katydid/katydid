@@ -12,6 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+//The name package has functions for a parsed name expression which include compilation and evaluation.
 package name
 
 import (
@@ -23,6 +24,7 @@ import (
 	"github.com/katydid/katydid/parser"
 )
 
+//EvalName evaluates a name expression given a name value.
 func EvalName(nameExpr *expr.NameExpr, name parser.Value) bool {
 	f := NameToFunc(nameExpr)
 	b, err := compose.NewBoolFunc(f)
@@ -36,6 +38,36 @@ func EvalName(nameExpr *expr.NameExpr, name parser.Value) bool {
 	return v
 }
 
+//NameToFunc compiles a parsed name expression into a function.
+func NameToFunc(n *expr.NameExpr) funcs.Bool {
+	typ := n.GetValue()
+	switch v := typ.(type) {
+	case *expr.Name:
+		if v.DoubleValue != nil {
+			return funcs.DoubleEq(funcs.DoubleVar(), funcs.DoubleConst(v.GetDoubleValue()))
+		} else if v.IntValue != nil {
+			return funcs.IntEq(funcs.IntVar(), funcs.IntConst(v.GetIntValue()))
+		} else if v.UintValue != nil {
+			return funcs.UintEq(funcs.UintVar(), funcs.UintConst(v.GetUintValue()))
+		} else if v.BoolValue != nil {
+			return funcs.BoolEq(funcs.BoolVar(), funcs.BoolConst(v.GetBoolValue()))
+		} else if v.StringValue != nil {
+			return funcs.StringEq(funcs.StringVar(), funcs.StringConst(v.GetStringValue()))
+		} else if v.BytesValue != nil {
+			return funcs.BytesEq(funcs.BytesVar(), funcs.BytesConst(v.GetBytesValue()))
+		}
+		panic(fmt.Sprintf("unknown name expr name %#v", v))
+	case *expr.AnyName:
+		return funcs.BoolConst(true)
+	case *expr.AnyNameExcept:
+		return funcs.Not(NameToFunc(v.GetExcept()))
+	case *expr.NameChoice:
+		return funcs.Or(NameToFunc(v.GetLeft()), NameToFunc(v.GetRight()))
+	}
+	panic(fmt.Sprintf("unknown name expr typ %T", typ))
+}
+
+//FuncToName decompiles a function back into a name expression, if possible.
 func FuncToName(f funcs.Bool) *expr.NameExpr {
 	exprStr := funcs.Sprint(f)
 	expr, err := exprparser.NewParser().ParseExpr(exprStr)
@@ -99,32 +131,4 @@ func exprToName(e *expr.Expr) *expr.NameExpr {
 		}
 	}
 	panic("todo")
-}
-
-func NameToFunc(n *expr.NameExpr) funcs.Bool {
-	typ := n.GetValue()
-	switch v := typ.(type) {
-	case *expr.Name:
-		if v.DoubleValue != nil {
-			return funcs.DoubleEq(funcs.DoubleVar(), funcs.DoubleConst(v.GetDoubleValue()))
-		} else if v.IntValue != nil {
-			return funcs.IntEq(funcs.IntVar(), funcs.IntConst(v.GetIntValue()))
-		} else if v.UintValue != nil {
-			return funcs.UintEq(funcs.UintVar(), funcs.UintConst(v.GetUintValue()))
-		} else if v.BoolValue != nil {
-			return funcs.BoolEq(funcs.BoolVar(), funcs.BoolConst(v.GetBoolValue()))
-		} else if v.StringValue != nil {
-			return funcs.StringEq(funcs.StringVar(), funcs.StringConst(v.GetStringValue()))
-		} else if v.BytesValue != nil {
-			return funcs.BytesEq(funcs.BytesVar(), funcs.BytesConst(v.GetBytesValue()))
-		}
-		panic(fmt.Sprintf("unknown name expr name %#v", v))
-	case *expr.AnyName:
-		return funcs.BoolConst(true)
-	case *expr.AnyNameExcept:
-		return funcs.Not(NameToFunc(v.GetExcept()))
-	case *expr.NameChoice:
-		return funcs.Or(NameToFunc(v.GetLeft()), NameToFunc(v.GetRight()))
-	}
-	panic(fmt.Sprintf("unknown name expr typ %T", typ))
 }
