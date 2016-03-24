@@ -22,6 +22,6 @@ type Variable interface {
 	IsVariable()
 }
 
-type Decoder interface {
-	SetDecoder(dec parser.Value)
+type Setter interface {
+	SetValue(parser.Value)
 }

@@ -315,14 +315,14 @@ type ranger struct {
 
 const variableStr = `
 type var{{.Name}} struct {
-	Dec parser.Value
+	Value parser.Value
 }
 
-var _ Decoder = &var{{.Name}}{}
+var _ Setter = &var{{.Name}}{}
 var _ Variable = &var{{.Name}}{}
 
 func (this *var{{.Name}}) Eval() ({{.GoType}}, error) {
-	v, err := this.Dec.{{.Name}}()
+	v, err := this.Value.{{.Name}}()
 	if err != nil {
 		return {{.Default}}, err
 	}
@@ -331,8 +331,8 @@ func (this *var{{.Name}}) Eval() ({{.GoType}}, error) {
 
 func (this *var{{.Name}}) IsVariable() {}
 
-func (this *var{{.Name}}) SetDecoder(dec parser.Value) {
-	this.Dec = dec
+func (this *var{{.Name}}) SetValue(v parser.Value) {
+	this.Value = v
 }
 
 func (this *var{{.Name}}) String() string {

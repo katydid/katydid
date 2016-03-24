@@ -100,7 +100,7 @@ func sprint(i interface{}) string {
 	switch i.(type) {
 	case Const:
 		return name
-	case Decoder:
+	case Setter:
 		return name
 	case ListOf:
 		return name

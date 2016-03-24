@@ -22,17 +22,19 @@ import (
 	"reflect"
 )
 
+//Bool is an interface that represents a function, that given a value for a variable returns a boolean or an error.
 type Bool interface {
 	Eval(parser.Value) (bool, error)
 }
 
-type Decoder interface {
-	SetDecoder(parser.Value)
+//Setter is an interface that represents a variable in a function of which the value can be set.
+type Setter interface {
+	SetValue(parser.Value)
 }
 
 type composedBool struct {
-	Decoders []Decoder
-	Func     funcs.Bool
+	Setters []Setter
+	Func    funcs.Bool
 }
 
 type errInit struct {
@@ -45,11 +47,11 @@ func (this *errInit) Error() string {
 }
 
 var (
-	varTyp     = reflect.TypeOf((*funcs.Variable)(nil)).Elem()
-	decoderTyp = reflect.TypeOf((*funcs.Decoder)(nil)).Elem()
-	constTyp   = reflect.TypeOf((*funcs.Const)(nil)).Elem()
-	initTyp    = reflect.TypeOf((*funcs.Init)(nil)).Elem()
-	listOfTyp  = reflect.TypeOf((*funcs.ListOf)(nil)).Elem()
+	varTyp    = reflect.TypeOf((*funcs.Variable)(nil)).Elem()
+	setterTyp = reflect.TypeOf((*funcs.Setter)(nil)).Elem()
+	constTyp  = reflect.TypeOf((*funcs.Const)(nil)).Elem()
+	initTyp   = reflect.TypeOf((*funcs.Init)(nil)).Elem()
+	listOfTyp = reflect.TypeOf((*funcs.ListOf)(nil)).Elem()
 )
 
 var (
@@ -76,17 +78,17 @@ func NewBoolFunc(f funcs.Bool) (*composedBool, error) {
 			return nil, &errInit{i, err}
 		}
 	}
-	impls := FuncImplements(e, decoderTyp)
-	decs := make([]Decoder, len(impls))
+	impls := FuncImplements(e, setterTyp)
+	setters := make([]Setter, len(impls))
 	for i := range impls {
-		decs[i] = impls[i].(Decoder)
+		setters[i] = impls[i].(Setter)
 	}
-	return &composedBool{decs, e}, nil
+	return &composedBool{setters, e}, nil
 }
 
-func (this *composedBool) Eval(dec parser.Value) (bool, error) {
-	for _, v := range this.Decoders {
-		v.SetDecoder(dec)
+func (this *composedBool) Eval(val parser.Value) (bool, error) {
+	for _, s := range this.Setters {
+		s.SetValue(val)
 	}
 	return this.Func.Eval()
 }

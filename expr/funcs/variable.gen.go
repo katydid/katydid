@@ -8,14 +8,14 @@ import (
 )
 
 type varDouble struct {
-	Dec parser.Value
+	Value parser.Value
 }
 
-var _ Decoder = &varDouble{}
+var _ Setter = &varDouble{}
 var _ Variable = &varDouble{}
 
 func (this *varDouble) Eval() (float64, error) {
-	v, err := this.Dec.Double()
+	v, err := this.Value.Double()
 	if err != nil {
 		return 0, err
 	}
@@ -24,8 +24,8 @@ func (this *varDouble) Eval() (float64, error) {
 
 func (this *varDouble) IsVariable() {}
 
-func (this *varDouble) SetDecoder(dec parser.Value) {
-	this.Dec = dec
+func (this *varDouble) SetValue(v parser.Value) {
+	this.Value = v
 }
 
 func (this *varDouble) String() string {
@@ -37,14 +37,14 @@ func DoubleVar() *varDouble {
 }
 
 type varInt struct {
-	Dec parser.Value
+	Value parser.Value
 }
 
-var _ Decoder = &varInt{}
+var _ Setter = &varInt{}
 var _ Variable = &varInt{}
 
 func (this *varInt) Eval() (int64, error) {
-	v, err := this.Dec.Int()
+	v, err := this.Value.Int()
 	if err != nil {
 		return 0, err
 	}
@@ -53,8 +53,8 @@ func (this *varInt) Eval() (int64, error) {
 
 func (this *varInt) IsVariable() {}
 
-func (this *varInt) SetDecoder(dec parser.Value) {
-	this.Dec = dec
+func (this *varInt) SetValue(v parser.Value) {
+	this.Value = v
 }
 
 func (this *varInt) String() string {
@@ -66,14 +66,14 @@ func IntVar() *varInt {
 }
 
 type varUint struct {
-	Dec parser.Value
+	Value parser.Value
 }
 
-var _ Decoder = &varUint{}
+var _ Setter = &varUint{}
 var _ Variable = &varUint{}
 
 func (this *varUint) Eval() (uint64, error) {
-	v, err := this.Dec.Uint()
+	v, err := this.Value.Uint()
 	if err != nil {
 		return 0, err
 	}
@@ -82,8 +82,8 @@ func (this *varUint) Eval() (uint64, error) {
 
 func (this *varUint) IsVariable() {}
 
-func (this *varUint) SetDecoder(dec parser.Value) {
-	this.Dec = dec
+func (this *varUint) SetValue(v parser.Value) {
+	this.Value = v
 }
 
 func (this *varUint) String() string {
@@ -95,14 +95,14 @@ func UintVar() *varUint {
 }
 
 type varBool struct {
-	Dec parser.Value
+	Value parser.Value
 }
 
-var _ Decoder = &varBool{}
+var _ Setter = &varBool{}
 var _ Variable = &varBool{}
 
 func (this *varBool) Eval() (bool, error) {
-	v, err := this.Dec.Bool()
+	v, err := this.Value.Bool()
 	if err != nil {
 		return false, err
 	}
@@ -111,8 +111,8 @@ func (this *varBool) Eval() (bool, error) {
 
 func (this *varBool) IsVariable() {}
 
-func (this *varBool) SetDecoder(dec parser.Value) {
-	this.Dec = dec
+func (this *varBool) SetValue(v parser.Value) {
+	this.Value = v
 }
 
 func (this *varBool) String() string {
@@ -124,14 +124,14 @@ func BoolVar() *varBool {
 }
 
 type varString struct {
-	Dec parser.Value
+	Value parser.Value
 }
 
-var _ Decoder = &varString{}
+var _ Setter = &varString{}
 var _ Variable = &varString{}
 
 func (this *varString) Eval() (string, error) {
-	v, err := this.Dec.String()
+	v, err := this.Value.String()
 	if err != nil {
 		return "", err
 	}
@@ -140,8 +140,8 @@ func (this *varString) Eval() (string, error) {
 
 func (this *varString) IsVariable() {}
 
-func (this *varString) SetDecoder(dec parser.Value) {
-	this.Dec = dec
+func (this *varString) SetValue(v parser.Value) {
+	this.Value = v
 }
 
 func (this *varString) String() string {
@@ -153,14 +153,14 @@ func StringVar() *varString {
 }
 
 type varBytes struct {
-	Dec parser.Value
+	Value parser.Value
 }
 
-var _ Decoder = &varBytes{}
+var _ Setter = &varBytes{}
 var _ Variable = &varBytes{}
 
 func (this *varBytes) Eval() ([]byte, error) {
-	v, err := this.Dec.Bytes()
+	v, err := this.Value.Bytes()
 	if err != nil {
 		return nil, err
 	}
@@ -169,8 +169,8 @@ func (this *varBytes) Eval() ([]byte, error) {
 
 func (this *varBytes) IsVariable() {}
 
-func (this *varBytes) SetDecoder(dec parser.Value) {
-	this.Dec = dec
+func (this *varBytes) SetValue(v parser.Value) {
+	this.Value = v
 }
 
 func (this *varBytes) String() string {
