@@ -75,7 +75,7 @@ type composer struct {
 }
 
 func main() {
-	gen := gen.NewFunc("compose")
+	gen := gen.NewPackage("compose")
 	gen(composeStr, "compose.gen.go", []interface{}{
 		&composer{"Double", "SINGLE_DOUBLE", "Double", "Doubles", "LIST_DOUBLE"},
 		&composer{"Int", "SINGLE_INT", "Int", "Ints", "LIST_INT"},

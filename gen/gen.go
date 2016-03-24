@@ -24,12 +24,14 @@ import (
 	"text/template"
 )
 
+//CapFirst capitializes the first letter of a string. This function is undefined for non lowercase english alphabet characters.
 func CapFirst(s string) string {
 	b := []byte(s)
 	b[0] ^= ' '
 	return string(b)
 }
 
+//LowerFirst lowercases the first letter of a string. This function is undefined for non uppercase english alphabet characters.
 func LowerFirst(s string) string {
 	b := []byte(s)
 	b[0] |= ('a' - 'A')
@@ -46,7 +48,10 @@ type gen struct {
 	dir  string
 }
 
-func NewFunc(packageName string) func(template string, filename string, objects []interface{}, imports ...string) {
+//NewPackage is given a packageName and returns a function, which when called generates code for a specific package.
+//Each call of the returned function is used to generate a specific file.
+//Given a template, filename, a list of objects which will each be used to execute the template and some top level imports the file is generated.
+func NewPackage(packageName string) func(template string, filename string, objects []interface{}, imports ...string) {
 	dir := "."
 	flag.Parse()
 	args := flag.Args()

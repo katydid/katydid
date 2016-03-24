@@ -418,7 +418,7 @@ type inSeter struct {
 }
 
 func main() {
-	gen := gen.NewFunc("funcs")
+	gen := gen.NewPackage("funcs")
 	gen(compareStr, "compare.gen.go", []interface{}{
 		&compare{"ge", ">=", "double", "", "Double", "false"},
 		&compare{"ge", ">=", "int", "", "Int", "false"},

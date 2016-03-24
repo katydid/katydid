@@ -52,7 +52,7 @@ func (v *{{.Name}}Value) {{.CName}}() ({{.GoType}}, error) {
 `
 
 func main() {
-	gen := gen.NewFunc("parser")
+	gen := gen.NewPackage("parser")
 	gen(valueStr, "value.gen.go", []interface{}{
 		&valuer{"Double", "float64", "0"},
 		&valuer{"Int", "int64", "0"},

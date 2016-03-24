@@ -34,7 +34,7 @@ func Benchmark{{.Name}}{{capFirst .CodecName}}(b *testing.B) {
 `
 
 func main() {
-	gen := gen.NewFunc("mem_test")
+	gen := gen.NewPackage("mem_test")
 	gen(testStr, "mem.gen_test.go", tests.ValidatorList(), `"testing"`, `"github.com/katydid/katydid/tests"`)
 	gen(benchStr, "mem.gen_bench_test.go", tests.BenchValidatorList(), `"testing"`, `"github.com/katydid/katydid/tests"`)
 }
