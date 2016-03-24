@@ -15,7 +15,7 @@ func eq(v1 double,v2 double) bool
 func eq(v1 int,v2 int) bool
 func eq(v1 string,v2 string) bool
 func eq(v1 uint,v2 uint) bool
-func eqFold(v1 string,v2 string) bool
+func eqFold(s string,t string) bool
 func ge(v1 []byte,v2 []byte) bool
 func ge(v1 double,v2 double) bool
 func ge(v1 int,v2 int) bool

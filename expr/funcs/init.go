@@ -14,6 +14,7 @@
 
 package funcs
 
+//Init is an interface that when implemented lets the function composition know that this function needs to be initialized.
 type Init interface {
 	Init() error
 }

@@ -27,6 +27,7 @@ func toString(s string) string {
 	return strings.ToLower(strings.Replace(strings.Replace(strings.Replace(s, "_BYTES", "_[]byte", 1), "SINGLE_", "", 1), "LIST_", "[]", 1))
 }
 
+//TestGenFunList generates the current list of functions.
 func TestGenFuncList(t *testing.T) {
 	funcs := []string{}
 	for name, us := range funcsMap.nameToUniq {

@@ -18,6 +18,7 @@ import (
 	"fmt"
 )
 
+//ErrRangeCheck specifies a range check error that resulted while trying to access an element in a list.
 type ErrRangeCheck struct {
 	Index int
 	Len   int
@@ -27,10 +28,12 @@ func (this ErrRangeCheck) Error() string {
 	return fmt.Sprintf("range check error: trying to access index %d in list of length %d", this.Index, this.Len)
 }
 
+//NewRangeCheckErr returns a range check error
 func NewRangeCheckErr(index, l int) ErrRangeCheck {
 	return ErrRangeCheck{index, l}
 }
 
+//ErrRange specifies a range error that tried to slice a list where the first specified index is bigger than the last specified index.
 type ErrRange struct {
 	First int
 	Last  int
@@ -40,6 +43,7 @@ func (this ErrRange) Error() string {
 	return fmt.Sprintf("range error: first %d > last %d", this.First, this.Last)
 }
 
+//NewRangeErr returns a range error
 func NewRangeErr(first, last int) ErrRange {
 	return ErrRange{first, last}
 }

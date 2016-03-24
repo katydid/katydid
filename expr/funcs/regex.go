@@ -18,8 +18,9 @@ import (
 	"regexp"
 )
 
-func Regex(e ConstString, s String) Bool {
-	return &regex{Expr: e, S: s}
+//Regex returns a new regex function given the first parameter as the expression string that needs to compiled and the second as the regex that should be matched.
+func Regex(expr ConstString, input String) Bool {
+	return &regex{Expr: expr, S: input}
 }
 
 type regex struct {

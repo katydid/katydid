@@ -21,6 +21,73 @@ import (
 	"strings"
 )
 
+//Register registers a function as function that can composed.
+//fnc is actually a struct type since structs are the way that functions are implemeneted to allow for dynamic composition.
+func Register(name string, fnc interface{}) {
+	RegisterFactory(name, func() interface{} {
+		return reflect.New(reflect.TypeOf(fnc).Elem()).Interface()
+	})
+}
+
+//RegisterFactory registers a function as function that can be composed, but expects a "new" function that returns the function.
+func RegisterFactory(name string, newFunc func() interface{}) {
+	rfunc := reflect.ValueOf(newFunc())
+	returnType := rfunc.MethodByName("Eval").Type()
+	uniqName := rfunc.Elem().Type().Name()
+	lenFields := rfunc.Elem().NumField()
+	res := &funk{
+		name:     name,
+		uniqName: uniqName,
+		Out:      types.FromGo(returnType.Out(0)),
+		newfnc:   newFunc,
+	}
+	for i := 0; i < lenFields; i++ {
+		meth, ok := rfunc.Elem().Field(i).Type().MethodByName("Eval")
+		if !ok {
+			continue
+		}
+		res.InConst = append(res.InConst, IsConst(rfunc.Elem().Field(i).Type()))
+		res.In = append(res.In, types.FromGo(meth.Type.Out(0)))
+		res.InNames = append(res.InNames, rfunc.Elem().Type().Field(i).Name)
+	}
+	funcsMap.register(res)
+}
+
+//IsConst returns whether a reflected type is a function that is actually a constant value.
+func IsConst(typ reflect.Type) bool {
+	switch typ {
+	case typConstDouble:
+	case typConstInt:
+	case typConstUint:
+	case typConstBool:
+	case typConstString:
+	case typConstBytes:
+	case typConstDoubles:
+	case typConstInts:
+	case typConstUints:
+	case typConstBools:
+	case typConstStrings:
+	case typConstListOfBytes:
+	default:
+		return false
+	}
+	return true
+}
+
+//Which returns the unique name of the function given the function name and parameter types.
+func Which(name string, ins ...types.Type) (string, error) {
+	return funcsMap.which(name, ins...)
+}
+
+//Out returns the output type given the unique function name.
+func Out(uniq string) (types.Type, error) {
+	u, ok := funcsMap.uniqToFunc[uniq]
+	if !ok {
+		return 0, &errUnknownFunction{uniq, nil}
+	}
+	return u.Out, nil
+}
+
 type errUnknownFunction struct {
 	f   string
 	ins []string
@@ -116,55 +183,6 @@ func (this *funk) String() string {
 	return fmt.Sprintf("func %v as %v(%v) %v", this.uniqName, this.name, strings.Join(ins, ","), this.Out.String())
 }
 
-func Register(name string, fnc interface{}) {
-	RegisterFactory(name, func() interface{} {
-		return reflect.New(reflect.TypeOf(fnc).Elem()).Interface()
-	})
-}
-
-func RegisterFactory(name string, newFunc func() interface{}) {
-	rfunc := reflect.ValueOf(newFunc())
-	returnType := rfunc.MethodByName("Eval").Type()
-	uniqName := rfunc.Elem().Type().Name()
-	lenFields := rfunc.Elem().NumField()
-	res := &funk{
-		name:     name,
-		uniqName: uniqName,
-		Out:      types.FromGo(returnType.Out(0)),
-		newfnc:   newFunc,
-	}
-	for i := 0; i < lenFields; i++ {
-		meth, ok := rfunc.Elem().Field(i).Type().MethodByName("Eval")
-		if !ok {
-			continue
-		}
-		res.InConst = append(res.InConst, IsConst(rfunc.Elem().Field(i).Type()))
-		res.In = append(res.In, types.FromGo(meth.Type.Out(0)))
-		res.InNames = append(res.InNames, rfunc.Elem().Type().Field(i).Name)
-	}
-	funcsMap.register(res)
-}
-
-func IsConst(typ reflect.Type) bool {
-	switch typ {
-	case typConstDouble:
-	case typConstInt:
-	case typConstUint:
-	case typConstBool:
-	case typConstString:
-	case typConstBytes:
-	case typConstDoubles:
-	case typConstInts:
-	case typConstUints:
-	case typConstBools:
-	case typConstStrings:
-	case typConstListOfBytes:
-	default:
-		return false
-	}
-	return true
-}
-
 func newFunc(uniq string, values ...interface{}) (interface{}, error) {
 	f, ok := funcsMap.uniqToFunc[uniq]
 	if !ok {
@@ -180,16 +198,4 @@ func newFunc(uniq string, values ...interface{}) (interface{}, error) {
 		j++
 	}
 	return newf.Addr().Interface(), nil
-}
-
-func Which(name string, ins ...types.Type) (string, error) {
-	return funcsMap.which(name, ins...)
-}
-
-func Out(uniq string) (types.Type, error) {
-	u, ok := funcsMap.uniqToFunc[uniq]
-	if !ok {
-		return 0, &errUnknownFunction{uniq, nil}
-	}
-	return u.Out, nil
 }

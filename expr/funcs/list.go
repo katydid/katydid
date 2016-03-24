@@ -14,6 +14,7 @@
 
 package funcs
 
+//ListOf is an interface that when implemented specifies that this function does not only return a typed list, but is a typed list.
 type ListOf interface {
 	IsListOf()
 }

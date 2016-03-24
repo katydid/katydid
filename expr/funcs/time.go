@@ -16,6 +16,7 @@ package funcs
 
 import "time"
 
+//Now returns a new now function.
 func Now() Int {
 	return &now{}
 }

@@ -14,6 +14,7 @@
 
 package funcs
 
+//Not returns a new not function with the input function as its parameter.
 func Not(b Bool) Bool {
 	return &not{b}
 }
@@ -34,6 +35,7 @@ func init() {
 	Register("not", new(not))
 }
 
+//And returns a new and function with the two input functions as its parameters.
 func And(a, b Bool) Bool {
 	return &and{a, b}
 }
@@ -55,6 +57,7 @@ func init() {
 	Register("and", new(and))
 }
 
+//Or returns a new or function with the two input functions as its parameters.
 func Or(a, b Bool) Bool {
 	return &or{a, b}
 }

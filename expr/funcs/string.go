@@ -18,6 +18,7 @@ import (
 	"strings"
 )
 
+//ToLower returns a toLower function with the input function as its parameter.
 func ToLower(s String) String {
 	return &toLower{s}
 }
@@ -38,6 +39,7 @@ func init() {
 	Register("toLower", new(toLower))
 }
 
+//ToUpper returns a toUpper function with the input function as its parameter.
 func ToUpper(s String) String {
 	return &toUpper{s}
 }
@@ -58,6 +60,7 @@ func init() {
 	Register("toUpper", new(toUpper))
 }
 
+//Contains returns a contains function with the two input function as its parameter.
 func Contains(s, sub String) Bool {
 	return &contains{s, sub}
 }
@@ -83,31 +86,33 @@ func init() {
 	Register("contains", new(contains))
 }
 
-func EqualFold(a, b String) Bool {
-	return &equalFold{a, b}
+//EqualFold returns a eqFold function with the two input functions as its parameters.
+func EqualFold(s, t String) Bool {
+	return &equalFold{s, t}
 }
 
 type equalFold struct {
-	V1 String
-	V2 String
+	S String
+	T String
 }
 
 func (this *equalFold) Eval() (bool, error) {
-	v1, err := this.V1.Eval()
+	s, err := this.S.Eval()
 	if err != nil {
 		return false, err
 	}
-	v2, err := this.V2.Eval()
+	t, err := this.T.Eval()
 	if err != nil {
 		return false, err
 	}
-	return strings.EqualFold(v1, v2), nil
+	return strings.EqualFold(s, t), nil
 }
 
 func init() {
 	Register("eqFold", new(equalFold))
 }
 
+//HasPrefix returns a hasPrefix function with the two input functions as its parameters.
 func HasPrefix(a, b String) Bool {
 	return &hasPrefix{a, b}
 }
@@ -133,6 +138,7 @@ func init() {
 	Register("hasPrefix", new(hasPrefix))
 }
 
+//HasSuffix returns a hasSuffix function with the two input functions as its parameters.
 func HasSuffix(a, b String) Bool {
 	return &hasSuffix{a, b}
 }
