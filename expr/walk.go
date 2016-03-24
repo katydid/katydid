@@ -14,10 +14,13 @@
 
 package expr
 
+//Visitor is used to do a top down walk through the expression tree using the Walk methods.
 type Visitor interface {
+	//Visit takes in an ast type and should return another type that implementes the Visitor interface.
 	Visit(node interface{}) interface{}
 }
 
+//Walk visits every possible Expr field that is not nil and not of type Space.
 func (this *Expr) Walk(v Visitor) {
 	v = v.Visit(this).(Visitor)
 	if this.Terminal != nil {
@@ -34,6 +37,7 @@ func (this *Expr) Walk(v Visitor) {
 	}
 }
 
+//Walk visits every possible NameExpr field that is not nil and not of type Space.
 func (this *NameExpr) Walk(v Visitor) {
 	v = v.Visit(this).(Visitor)
 	if this.Name != nil {
@@ -50,14 +54,17 @@ func (this *NameExpr) Walk(v Visitor) {
 	}
 }
 
+//Walk visits Name.
 func (this *Name) Walk(v Visitor) {
 	v = v.Visit(this).(Visitor)
 }
 
+//Walk visits AnyName.
 func (this *AnyName) Walk(v Visitor) {
 	v = v.Visit(this).(Visitor)
 }
 
+//Walk visits AnyNameExcept and its NameExpr.
 func (this *AnyNameExcept) Walk(v Visitor) {
 	v = v.Visit(this).(Visitor)
 	if this.Except != nil {
@@ -65,6 +72,7 @@ func (this *AnyNameExcept) Walk(v Visitor) {
 	}
 }
 
+//Walk visits NameChoice and its NameExpr types.
 func (this *NameChoice) Walk(v Visitor) {
 	v = v.Visit(this).(Visitor)
 	if this.Left != nil {
@@ -75,6 +83,7 @@ func (this *NameChoice) Walk(v Visitor) {
 	}
 }
 
+//Walk visits List and each element in the list.
 func (this *List) Walk(v Visitor) {
 	v = v.Visit(this).(Visitor)
 	for _, e := range this.GetElems() {
@@ -82,6 +91,7 @@ func (this *List) Walk(v Visitor) {
 	}
 }
 
+//Walk visits Function and every parameter.
 func (this *Function) Walk(v Visitor) {
 	v = v.Visit(this).(Visitor)
 	for _, e := range this.GetParams() {
@@ -89,11 +99,13 @@ func (this *Function) Walk(v Visitor) {
 	}
 }
 
+//Walk visits BuiltIn and its Expr.
 func (this *BuiltIn) Walk(v Visitor) {
 	v = v.Visit(this).(Visitor)
 	this.Expr.Walk(v)
 }
 
+//Walk visits Terminal and its possible Variable.
 func (this *Terminal) Walk(v Visitor) {
 	v = v.Visit(this).(Visitor)
 	if this.Variable != nil {
@@ -101,6 +113,7 @@ func (this *Terminal) Walk(v Visitor) {
 	}
 }
 
+//Walk visits Variable.
 func (this *Variable) Walk(v Visitor) {
 	v = v.Visit(this).(Visitor)
 }

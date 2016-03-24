@@ -14,6 +14,7 @@
 
 package expr
 
+//NewEqual returns an builtin equal expression.
 func NewEqual(e *Expr) *Expr {
 	return &Expr{
 		BuiltIn: &BuiltIn{
@@ -23,6 +24,7 @@ func NewEqual(e *Expr) *Expr {
 	}
 }
 
+//NewNotEqual returns an builtin not equal expression.
 func NewNotEqual(e *Expr) *Expr {
 	return &Expr{
 		BuiltIn: &BuiltIn{
@@ -32,6 +34,7 @@ func NewNotEqual(e *Expr) *Expr {
 	}
 }
 
+//NewLessThan returns an builtin less than expression.
 func NewLessThan(e *Expr) *Expr {
 	return &Expr{
 		BuiltIn: &BuiltIn{
@@ -41,6 +44,7 @@ func NewLessThan(e *Expr) *Expr {
 	}
 }
 
+//NewGreaterThan returns an builtin greater than expression.
 func NewGreaterThan(e *Expr) *Expr {
 	return &Expr{
 		BuiltIn: &BuiltIn{
@@ -50,6 +54,7 @@ func NewGreaterThan(e *Expr) *Expr {
 	}
 }
 
+//NewLessEqual returns an builtin less than or equal expression.
 func NewLessEqual(e *Expr) *Expr {
 	return &Expr{
 		BuiltIn: &BuiltIn{
@@ -59,6 +64,7 @@ func NewLessEqual(e *Expr) *Expr {
 	}
 }
 
+//NewGreaterEqual returns an builtin greater than or equal expression.
 func NewGreaterEqual(e *Expr) *Expr {
 	return &Expr{
 		BuiltIn: &BuiltIn{
@@ -68,6 +74,7 @@ func NewGreaterEqual(e *Expr) *Expr {
 	}
 }
 
+//NewRegex returns an builtin regular expression.
 func NewRegex(e *Expr) *Expr {
 	return &Expr{
 		BuiltIn: &BuiltIn{
@@ -77,6 +84,7 @@ func NewRegex(e *Expr) *Expr {
 	}
 }
 
+//NewContains returns an builtin contains expression.
 func NewContains(e *Expr) *Expr {
 	return &Expr{
 		BuiltIn: &BuiltIn{
@@ -86,6 +94,7 @@ func NewContains(e *Expr) *Expr {
 	}
 }
 
+//NewHasPrefix returns an builtin has prefix expression.
 func NewHasPrefix(e *Expr) *Expr {
 	return &Expr{
 		BuiltIn: &BuiltIn{
@@ -95,6 +104,7 @@ func NewHasPrefix(e *Expr) *Expr {
 	}
 }
 
+//NewHasSuffix returns an builtin has suffix expression.
 func NewHasSuffix(e *Expr) *Expr {
 	return &Expr{
 		BuiltIn: &BuiltIn{
@@ -104,6 +114,7 @@ func NewHasSuffix(e *Expr) *Expr {
 	}
 }
 
+//NewType returns an builtin type expression.
 func NewType(e *Expr) *Expr {
 	return &Expr{
 		BuiltIn: &BuiltIn{

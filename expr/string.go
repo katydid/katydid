@@ -22,6 +22,7 @@ import (
 	"strings"
 )
 
+//String returns the parsable expression string.
 func (this *Expr) String() string {
 	space := this.Comma.String()
 	if this.Terminal != nil {
@@ -36,6 +37,7 @@ func (this *Expr) String() string {
 	return this.BuiltIn.String()
 }
 
+//String returns the parsable name expression string.
 func (this *NameExpr) String() string {
 	v := this.GetValue()
 	return v.(interface {
@@ -55,6 +57,7 @@ func isId(s string) bool {
 	return idRegexp.MatchString(s)
 }
 
+//String returns the parsable name string.
 func (this *Name) String() string {
 	if this.DoubleValue != nil {
 		return this.Before.String() + strconv.FormatFloat(this.GetDoubleValue(), 'f', -1, 10)
@@ -80,21 +83,25 @@ func (this *Name) String() string {
 	panic("unreachable")
 }
 
+//String returns the parsable any name string.
 func (this *AnyName) String() string {
 	return this.Underscore.String()
 }
 
+//String returns the parsable any name except string.
 func (this *AnyNameExcept) String() string {
 	return this.Exclamation.String() + this.OpenParen.String() +
 		this.Except.String() + this.CloseParen.String()
 }
 
+//String returns the parsable name choice string.
 func (this *NameChoice) String() string {
 	return this.OpenParen.String() + this.Left.String() +
 		this.Pipe.String() + this.Right.String() +
 		this.CloseParen.String()
 }
 
+//String returns the parsable typed list string.
 func (this *List) String() string {
 	es := make([]string, len(this.GetElems()))
 	for i, v := range this.GetElems() {
@@ -121,6 +128,7 @@ func listTypeToString(typ types.Type) string {
 	panic("unreachable")
 }
 
+//String returns the parsable function string.
 func (this *Function) String() string {
 	ps := make([]string, len(this.GetParams()))
 	for i, v := range this.GetParams() {
@@ -129,10 +137,12 @@ func (this *Function) String() string {
 	return this.Before.String() + this.GetName() + this.OpenParen.String() + strings.Join(ps, "") + this.CloseParen.String()
 }
 
+//String returns the parsable builtin string.
 func (this *BuiltIn) String() string {
 	return this.Symbol.String() + this.Expr.String()
 }
 
+//String returns the parsable terminal string.
 func (this *Terminal) String() string {
 	if this.DoubleValue != nil {
 		return this.Before.String() + strconv.FormatFloat(this.GetDoubleValue(), 'f', -1, 64)
@@ -158,6 +168,7 @@ func (this *Terminal) String() string {
 	panic("unreachable")
 }
 
+//String returns the parsable variable string.
 func (this *Variable) String() string {
 	typ := this.GetType()
 	if types.IsList(typ) {
@@ -180,6 +191,7 @@ func (this *Variable) String() string {
 	panic(fmt.Errorf("unknown type %s", this.GetType()))
 }
 
+//String returns the parsable keyword string.
 func (this *Keyword) String() string {
 	if this == nil {
 		return ""
@@ -187,6 +199,7 @@ func (this *Keyword) String() string {
 	return this.Before.String() + this.Value
 }
 
+//String returns the parsable space string.
 func (this *Space) String() string {
 	if this == nil {
 		return ""

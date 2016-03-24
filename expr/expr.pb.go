@@ -10,11 +10,6 @@
 
 	It has these top-level messages:
 		Expr
-		NameExpr
-		Name
-		AnyName
-		AnyNameExcept
-		NameChoice
 		List
 		Function
 		BuiltIn
@@ -22,6 +17,11 @@
 		Variable
 		Keyword
 		Space
+		NameExpr
+		Name
+		AnyName
+		AnyNameExcept
+		NameChoice
 */
 package expr
 
@@ -46,6 +46,7 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
+// Expr is a union of all possible expression types, terminal, list, function and builtin function.
 type Expr struct {
 	Comma    *Keyword  `protobuf:"bytes,1,opt,name=Comma" json:"Comma,omitempty"`
 	Terminal *Terminal `protobuf:"bytes,2,opt,name=Terminal" json:"Terminal,omitempty"`
@@ -92,204 +93,7 @@ func (m *Expr) GetBuiltIn() *BuiltIn {
 	return nil
 }
 
-type NameExpr struct {
-	Name          *Name          `protobuf:"bytes,1,opt,name=Name" json:"Name,omitempty"`
-	AnyName       *AnyName       `protobuf:"bytes,2,opt,name=AnyName" json:"AnyName,omitempty"`
-	AnyNameExcept *AnyNameExcept `protobuf:"bytes,3,opt,name=AnyNameExcept" json:"AnyNameExcept,omitempty"`
-	NameChoice    *NameChoice    `protobuf:"bytes,4,opt,name=NameChoice" json:"NameChoice,omitempty"`
-}
-
-func (m *NameExpr) Reset()      { *m = NameExpr{} }
-func (*NameExpr) ProtoMessage() {}
-
-func (m *NameExpr) GetName() *Name {
-	if m != nil {
-		return m.Name
-	}
-	return nil
-}
-
-func (m *NameExpr) GetAnyName() *AnyName {
-	if m != nil {
-		return m.AnyName
-	}
-	return nil
-}
-
-func (m *NameExpr) GetAnyNameExcept() *AnyNameExcept {
-	if m != nil {
-		return m.AnyNameExcept
-	}
-	return nil
-}
-
-func (m *NameExpr) GetNameChoice() *NameChoice {
-	if m != nil {
-		return m.NameChoice
-	}
-	return nil
-}
-
-type Name struct {
-	Before      *Space   `protobuf:"bytes,1,opt,name=Before" json:"Before,omitempty"`
-	DoubleValue *float64 `protobuf:"fixed64,3,opt,name=DoubleValue" json:"DoubleValue,omitempty"`
-	IntValue    *int64   `protobuf:"varint,5,opt,name=IntValue" json:"IntValue,omitempty"`
-	UintValue   *uint64  `protobuf:"varint,6,opt,name=UintValue" json:"UintValue,omitempty"`
-	BoolValue   *bool    `protobuf:"varint,8,opt,name=BoolValue" json:"BoolValue,omitempty"`
-	StringValue *string  `protobuf:"bytes,9,opt,name=StringValue" json:"StringValue,omitempty"`
-	BytesValue  []byte   `protobuf:"bytes,10,opt,name=BytesValue" json:"BytesValue,omitempty"`
-}
-
-func (m *Name) Reset()      { *m = Name{} }
-func (*Name) ProtoMessage() {}
-
-func (m *Name) GetBefore() *Space {
-	if m != nil {
-		return m.Before
-	}
-	return nil
-}
-
-func (m *Name) GetDoubleValue() float64 {
-	if m != nil && m.DoubleValue != nil {
-		return *m.DoubleValue
-	}
-	return 0
-}
-
-func (m *Name) GetIntValue() int64 {
-	if m != nil && m.IntValue != nil {
-		return *m.IntValue
-	}
-	return 0
-}
-
-func (m *Name) GetUintValue() uint64 {
-	if m != nil && m.UintValue != nil {
-		return *m.UintValue
-	}
-	return 0
-}
-
-func (m *Name) GetBoolValue() bool {
-	if m != nil && m.BoolValue != nil {
-		return *m.BoolValue
-	}
-	return false
-}
-
-func (m *Name) GetStringValue() string {
-	if m != nil && m.StringValue != nil {
-		return *m.StringValue
-	}
-	return ""
-}
-
-func (m *Name) GetBytesValue() []byte {
-	if m != nil {
-		return m.BytesValue
-	}
-	return nil
-}
-
-type AnyName struct {
-	Underscore *Keyword `protobuf:"bytes,1,opt,name=Underscore" json:"Underscore,omitempty"`
-}
-
-func (m *AnyName) Reset()      { *m = AnyName{} }
-func (*AnyName) ProtoMessage() {}
-
-func (m *AnyName) GetUnderscore() *Keyword {
-	if m != nil {
-		return m.Underscore
-	}
-	return nil
-}
-
-type AnyNameExcept struct {
-	Exclamation *Keyword  `protobuf:"bytes,1,opt,name=Exclamation" json:"Exclamation,omitempty"`
-	OpenParen   *Keyword  `protobuf:"bytes,2,opt,name=OpenParen" json:"OpenParen,omitempty"`
-	Except      *NameExpr `protobuf:"bytes,3,opt,name=Except" json:"Except,omitempty"`
-	CloseParen  *Keyword  `protobuf:"bytes,4,opt,name=CloseParen" json:"CloseParen,omitempty"`
-}
-
-func (m *AnyNameExcept) Reset()      { *m = AnyNameExcept{} }
-func (*AnyNameExcept) ProtoMessage() {}
-
-func (m *AnyNameExcept) GetExclamation() *Keyword {
-	if m != nil {
-		return m.Exclamation
-	}
-	return nil
-}
-
-func (m *AnyNameExcept) GetOpenParen() *Keyword {
-	if m != nil {
-		return m.OpenParen
-	}
-	return nil
-}
-
-func (m *AnyNameExcept) GetExcept() *NameExpr {
-	if m != nil {
-		return m.Except
-	}
-	return nil
-}
-
-func (m *AnyNameExcept) GetCloseParen() *Keyword {
-	if m != nil {
-		return m.CloseParen
-	}
-	return nil
-}
-
-type NameChoice struct {
-	OpenParen  *Keyword  `protobuf:"bytes,1,opt,name=OpenParen" json:"OpenParen,omitempty"`
-	Left       *NameExpr `protobuf:"bytes,2,opt,name=Left" json:"Left,omitempty"`
-	Pipe       *Keyword  `protobuf:"bytes,3,opt,name=Pipe" json:"Pipe,omitempty"`
-	Right      *NameExpr `protobuf:"bytes,4,opt,name=Right" json:"Right,omitempty"`
-	CloseParen *Keyword  `protobuf:"bytes,5,opt,name=CloseParen" json:"CloseParen,omitempty"`
-}
-
-func (m *NameChoice) Reset()      { *m = NameChoice{} }
-func (*NameChoice) ProtoMessage() {}
-
-func (m *NameChoice) GetOpenParen() *Keyword {
-	if m != nil {
-		return m.OpenParen
-	}
-	return nil
-}
-
-func (m *NameChoice) GetLeft() *NameExpr {
-	if m != nil {
-		return m.Left
-	}
-	return nil
-}
-
-func (m *NameChoice) GetPipe() *Keyword {
-	if m != nil {
-		return m.Pipe
-	}
-	return nil
-}
-
-func (m *NameChoice) GetRight() *NameExpr {
-	if m != nil {
-		return m.Right
-	}
-	return nil
-}
-
-func (m *NameChoice) GetCloseParen() *Keyword {
-	if m != nil {
-		return m.CloseParen
-	}
-	return nil
-}
-
+// List is an expression that represents a typed list of expressions.
 type List struct {
 	Before     *Space     `protobuf:"bytes,1,opt,name=Before" json:"Before,omitempty"`
 	Type       types.Type `protobuf:"varint,2,opt,name=Type,enum=types.Type" json:"Type"`
@@ -336,6 +140,7 @@ func (m *List) GetCloseCurly() *Keyword {
 	return nil
 }
 
+// Function is an expression that represents a function expression, which contains a function name and a list parameters.
 type Function struct {
 	Before     *Space   `protobuf:"bytes,1,opt,name=Before" json:"Before,omitempty"`
 	Name       string   `protobuf:"bytes,2,opt,name=Name" json:"Name"`
@@ -382,6 +187,7 @@ func (m *Function) GetCloseParen() *Keyword {
 	return nil
 }
 
+// BuiltIn is an expression that represents a builtin function.  This is represented by a symbol and an expression.
 type BuiltIn struct {
 	Symbol *Keyword `protobuf:"bytes,1,opt,name=Symbol" json:"Symbol,omitempty"`
 	Expr   *Expr    `protobuf:"bytes,2,opt,name=Expr" json:"Expr,omitempty"`
@@ -404,6 +210,7 @@ func (m *BuiltIn) GetExpr() *Expr {
 	return nil
 }
 
+// Terminal is an expression that represents a literal value or variable.
 type Terminal struct {
 	Before      *Space    `protobuf:"bytes,1,opt,name=Before" json:"Before,omitempty"`
 	Literal     string    `protobuf:"bytes,2,opt,name=Literal" json:"Literal"`
@@ -482,6 +289,7 @@ func (m *Terminal) GetVariable() *Variable {
 	return nil
 }
 
+// Variable is a terminal.
 type Variable struct {
 	Type types.Type `protobuf:"varint,2,opt,name=Type,enum=types.Type" json:"Type"`
 }
@@ -496,6 +304,7 @@ func (m *Variable) GetType() types.Type {
 	return types.UNKNOWN
 }
 
+// Keyword represents any possible keyword.
 type Keyword struct {
 	Before *Space `protobuf:"bytes,1,opt,name=Before" json:"Before,omitempty"`
 	Value  string `protobuf:"bytes,2,opt,name=Value" json:"Value"`
@@ -518,6 +327,7 @@ func (m *Keyword) GetValue() string {
 	return ""
 }
 
+// Space represents a comment or white space.
 type Space struct {
 	Space []string `protobuf:"bytes,1,rep,name=Space" json:"Space,omitempty"`
 }
@@ -532,13 +342,211 @@ func (m *Space) GetSpace() []string {
 	return nil
 }
 
+// NameExpr is a special type of expression for field names that contains a union of all the possible name expressions.
+type NameExpr struct {
+	Name          *Name          `protobuf:"bytes,1,opt,name=Name" json:"Name,omitempty"`
+	AnyName       *AnyName       `protobuf:"bytes,2,opt,name=AnyName" json:"AnyName,omitempty"`
+	AnyNameExcept *AnyNameExcept `protobuf:"bytes,3,opt,name=AnyNameExcept" json:"AnyNameExcept,omitempty"`
+	NameChoice    *NameChoice    `protobuf:"bytes,4,opt,name=NameChoice" json:"NameChoice,omitempty"`
+}
+
+func (m *NameExpr) Reset()      { *m = NameExpr{} }
+func (*NameExpr) ProtoMessage() {}
+
+func (m *NameExpr) GetName() *Name {
+	if m != nil {
+		return m.Name
+	}
+	return nil
+}
+
+func (m *NameExpr) GetAnyName() *AnyName {
+	if m != nil {
+		return m.AnyName
+	}
+	return nil
+}
+
+func (m *NameExpr) GetAnyNameExcept() *AnyNameExcept {
+	if m != nil {
+		return m.AnyNameExcept
+	}
+	return nil
+}
+
+func (m *NameExpr) GetNameChoice() *NameChoice {
+	if m != nil {
+		return m.NameChoice
+	}
+	return nil
+}
+
+// Name is a name expression and represents a union of all possible name type values.
+type Name struct {
+	Before      *Space   `protobuf:"bytes,1,opt,name=Before" json:"Before,omitempty"`
+	DoubleValue *float64 `protobuf:"fixed64,3,opt,name=DoubleValue" json:"DoubleValue,omitempty"`
+	IntValue    *int64   `protobuf:"varint,5,opt,name=IntValue" json:"IntValue,omitempty"`
+	UintValue   *uint64  `protobuf:"varint,6,opt,name=UintValue" json:"UintValue,omitempty"`
+	BoolValue   *bool    `protobuf:"varint,8,opt,name=BoolValue" json:"BoolValue,omitempty"`
+	StringValue *string  `protobuf:"bytes,9,opt,name=StringValue" json:"StringValue,omitempty"`
+	BytesValue  []byte   `protobuf:"bytes,10,opt,name=BytesValue" json:"BytesValue,omitempty"`
+}
+
+func (m *Name) Reset()      { *m = Name{} }
+func (*Name) ProtoMessage() {}
+
+func (m *Name) GetBefore() *Space {
+	if m != nil {
+		return m.Before
+	}
+	return nil
+}
+
+func (m *Name) GetDoubleValue() float64 {
+	if m != nil && m.DoubleValue != nil {
+		return *m.DoubleValue
+	}
+	return 0
+}
+
+func (m *Name) GetIntValue() int64 {
+	if m != nil && m.IntValue != nil {
+		return *m.IntValue
+	}
+	return 0
+}
+
+func (m *Name) GetUintValue() uint64 {
+	if m != nil && m.UintValue != nil {
+		return *m.UintValue
+	}
+	return 0
+}
+
+func (m *Name) GetBoolValue() bool {
+	if m != nil && m.BoolValue != nil {
+		return *m.BoolValue
+	}
+	return false
+}
+
+func (m *Name) GetStringValue() string {
+	if m != nil && m.StringValue != nil {
+		return *m.StringValue
+	}
+	return ""
+}
+
+func (m *Name) GetBytesValue() []byte {
+	if m != nil {
+		return m.BytesValue
+	}
+	return nil
+}
+
+// AnyName is a name expression that represents any name.
+type AnyName struct {
+	Underscore *Keyword `protobuf:"bytes,1,opt,name=Underscore" json:"Underscore,omitempty"`
+}
+
+func (m *AnyName) Reset()      { *m = AnyName{} }
+func (*AnyName) ProtoMessage() {}
+
+func (m *AnyName) GetUnderscore() *Keyword {
+	if m != nil {
+		return m.Underscore
+	}
+	return nil
+}
+
+// AnyNameExpr is a name expression that represents any name except the specified name expression.
+type AnyNameExcept struct {
+	Exclamation *Keyword  `protobuf:"bytes,1,opt,name=Exclamation" json:"Exclamation,omitempty"`
+	OpenParen   *Keyword  `protobuf:"bytes,2,opt,name=OpenParen" json:"OpenParen,omitempty"`
+	Except      *NameExpr `protobuf:"bytes,3,opt,name=Except" json:"Except,omitempty"`
+	CloseParen  *Keyword  `protobuf:"bytes,4,opt,name=CloseParen" json:"CloseParen,omitempty"`
+}
+
+func (m *AnyNameExcept) Reset()      { *m = AnyNameExcept{} }
+func (*AnyNameExcept) ProtoMessage() {}
+
+func (m *AnyNameExcept) GetExclamation() *Keyword {
+	if m != nil {
+		return m.Exclamation
+	}
+	return nil
+}
+
+func (m *AnyNameExcept) GetOpenParen() *Keyword {
+	if m != nil {
+		return m.OpenParen
+	}
+	return nil
+}
+
+func (m *AnyNameExcept) GetExcept() *NameExpr {
+	if m != nil {
+		return m.Except
+	}
+	return nil
+}
+
+func (m *AnyNameExcept) GetCloseParen() *Keyword {
+	if m != nil {
+		return m.CloseParen
+	}
+	return nil
+}
+
+// NameChoice is a name expression that represents a choice between two possible name expressions.
+type NameChoice struct {
+	OpenParen  *Keyword  `protobuf:"bytes,1,opt,name=OpenParen" json:"OpenParen,omitempty"`
+	Left       *NameExpr `protobuf:"bytes,2,opt,name=Left" json:"Left,omitempty"`
+	Pipe       *Keyword  `protobuf:"bytes,3,opt,name=Pipe" json:"Pipe,omitempty"`
+	Right      *NameExpr `protobuf:"bytes,4,opt,name=Right" json:"Right,omitempty"`
+	CloseParen *Keyword  `protobuf:"bytes,5,opt,name=CloseParen" json:"CloseParen,omitempty"`
+}
+
+func (m *NameChoice) Reset()      { *m = NameChoice{} }
+func (*NameChoice) ProtoMessage() {}
+
+func (m *NameChoice) GetOpenParen() *Keyword {
+	if m != nil {
+		return m.OpenParen
+	}
+	return nil
+}
+
+func (m *NameChoice) GetLeft() *NameExpr {
+	if m != nil {
+		return m.Left
+	}
+	return nil
+}
+
+func (m *NameChoice) GetPipe() *Keyword {
+	if m != nil {
+		return m.Pipe
+	}
+	return nil
+}
+
+func (m *NameChoice) GetRight() *NameExpr {
+	if m != nil {
+		return m.Right
+	}
+	return nil
+}
+
+func (m *NameChoice) GetCloseParen() *Keyword {
+	if m != nil {
+		return m.CloseParen
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*Expr)(nil), "expr.Expr")
-	proto.RegisterType((*NameExpr)(nil), "expr.NameExpr")
-	proto.RegisterType((*Name)(nil), "expr.Name")
-	proto.RegisterType((*AnyName)(nil), "expr.AnyName")
-	proto.RegisterType((*AnyNameExcept)(nil), "expr.AnyNameExcept")
-	proto.RegisterType((*NameChoice)(nil), "expr.NameChoice")
 	proto.RegisterType((*List)(nil), "expr.List")
 	proto.RegisterType((*Function)(nil), "expr.Function")
 	proto.RegisterType((*BuiltIn)(nil), "expr.BuiltIn")
@@ -546,6 +554,11 @@ func init() {
 	proto.RegisterType((*Variable)(nil), "expr.Variable")
 	proto.RegisterType((*Keyword)(nil), "expr.Keyword")
 	proto.RegisterType((*Space)(nil), "expr.Space")
+	proto.RegisterType((*NameExpr)(nil), "expr.NameExpr")
+	proto.RegisterType((*Name)(nil), "expr.Name")
+	proto.RegisterType((*AnyName)(nil), "expr.AnyName")
+	proto.RegisterType((*AnyNameExcept)(nil), "expr.AnyNameExcept")
+	proto.RegisterType((*NameChoice)(nil), "expr.NameChoice")
 }
 func (this *Expr) Equal(that interface{}) bool {
 	if that == nil {
@@ -580,209 +593,6 @@ func (this *Expr) Equal(that interface{}) bool {
 		return false
 	}
 	if !this.BuiltIn.Equal(that1.BuiltIn) {
-		return false
-	}
-	return true
-}
-func (this *NameExpr) Equal(that interface{}) bool {
-	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
-	}
-
-	that1, ok := that.(*NameExpr)
-	if !ok {
-		return false
-	}
-	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
-	} else if this == nil {
-		return false
-	}
-	if !this.Name.Equal(that1.Name) {
-		return false
-	}
-	if !this.AnyName.Equal(that1.AnyName) {
-		return false
-	}
-	if !this.AnyNameExcept.Equal(that1.AnyNameExcept) {
-		return false
-	}
-	if !this.NameChoice.Equal(that1.NameChoice) {
-		return false
-	}
-	return true
-}
-func (this *Name) Equal(that interface{}) bool {
-	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
-	}
-
-	that1, ok := that.(*Name)
-	if !ok {
-		return false
-	}
-	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
-	} else if this == nil {
-		return false
-	}
-	if !this.Before.Equal(that1.Before) {
-		return false
-	}
-	if this.DoubleValue != nil && that1.DoubleValue != nil {
-		if *this.DoubleValue != *that1.DoubleValue {
-			return false
-		}
-	} else if this.DoubleValue != nil {
-		return false
-	} else if that1.DoubleValue != nil {
-		return false
-	}
-	if this.IntValue != nil && that1.IntValue != nil {
-		if *this.IntValue != *that1.IntValue {
-			return false
-		}
-	} else if this.IntValue != nil {
-		return false
-	} else if that1.IntValue != nil {
-		return false
-	}
-	if this.UintValue != nil && that1.UintValue != nil {
-		if *this.UintValue != *that1.UintValue {
-			return false
-		}
-	} else if this.UintValue != nil {
-		return false
-	} else if that1.UintValue != nil {
-		return false
-	}
-	if this.BoolValue != nil && that1.BoolValue != nil {
-		if *this.BoolValue != *that1.BoolValue {
-			return false
-		}
-	} else if this.BoolValue != nil {
-		return false
-	} else if that1.BoolValue != nil {
-		return false
-	}
-	if this.StringValue != nil && that1.StringValue != nil {
-		if *this.StringValue != *that1.StringValue {
-			return false
-		}
-	} else if this.StringValue != nil {
-		return false
-	} else if that1.StringValue != nil {
-		return false
-	}
-	if !bytes.Equal(this.BytesValue, that1.BytesValue) {
-		return false
-	}
-	return true
-}
-func (this *AnyName) Equal(that interface{}) bool {
-	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
-	}
-
-	that1, ok := that.(*AnyName)
-	if !ok {
-		return false
-	}
-	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
-	} else if this == nil {
-		return false
-	}
-	if !this.Underscore.Equal(that1.Underscore) {
-		return false
-	}
-	return true
-}
-func (this *AnyNameExcept) Equal(that interface{}) bool {
-	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
-	}
-
-	that1, ok := that.(*AnyNameExcept)
-	if !ok {
-		return false
-	}
-	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
-	} else if this == nil {
-		return false
-	}
-	if !this.Exclamation.Equal(that1.Exclamation) {
-		return false
-	}
-	if !this.OpenParen.Equal(that1.OpenParen) {
-		return false
-	}
-	if !this.Except.Equal(that1.Except) {
-		return false
-	}
-	if !this.CloseParen.Equal(that1.CloseParen) {
-		return false
-	}
-	return true
-}
-func (this *NameChoice) Equal(that interface{}) bool {
-	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
-	}
-
-	that1, ok := that.(*NameChoice)
-	if !ok {
-		return false
-	}
-	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
-	} else if this == nil {
-		return false
-	}
-	if !this.OpenParen.Equal(that1.OpenParen) {
-		return false
-	}
-	if !this.Left.Equal(that1.Left) {
-		return false
-	}
-	if !this.Pipe.Equal(that1.Pipe) {
-		return false
-	}
-	if !this.Right.Equal(that1.Right) {
-		return false
-	}
-	if !this.CloseParen.Equal(that1.CloseParen) {
 		return false
 	}
 	return true
@@ -1061,6 +871,209 @@ func (this *Space) Equal(that interface{}) bool {
 	}
 	return true
 }
+func (this *NameExpr) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*NameExpr)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Name.Equal(that1.Name) {
+		return false
+	}
+	if !this.AnyName.Equal(that1.AnyName) {
+		return false
+	}
+	if !this.AnyNameExcept.Equal(that1.AnyNameExcept) {
+		return false
+	}
+	if !this.NameChoice.Equal(that1.NameChoice) {
+		return false
+	}
+	return true
+}
+func (this *Name) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Name)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Before.Equal(that1.Before) {
+		return false
+	}
+	if this.DoubleValue != nil && that1.DoubleValue != nil {
+		if *this.DoubleValue != *that1.DoubleValue {
+			return false
+		}
+	} else if this.DoubleValue != nil {
+		return false
+	} else if that1.DoubleValue != nil {
+		return false
+	}
+	if this.IntValue != nil && that1.IntValue != nil {
+		if *this.IntValue != *that1.IntValue {
+			return false
+		}
+	} else if this.IntValue != nil {
+		return false
+	} else if that1.IntValue != nil {
+		return false
+	}
+	if this.UintValue != nil && that1.UintValue != nil {
+		if *this.UintValue != *that1.UintValue {
+			return false
+		}
+	} else if this.UintValue != nil {
+		return false
+	} else if that1.UintValue != nil {
+		return false
+	}
+	if this.BoolValue != nil && that1.BoolValue != nil {
+		if *this.BoolValue != *that1.BoolValue {
+			return false
+		}
+	} else if this.BoolValue != nil {
+		return false
+	} else if that1.BoolValue != nil {
+		return false
+	}
+	if this.StringValue != nil && that1.StringValue != nil {
+		if *this.StringValue != *that1.StringValue {
+			return false
+		}
+	} else if this.StringValue != nil {
+		return false
+	} else if that1.StringValue != nil {
+		return false
+	}
+	if !bytes.Equal(this.BytesValue, that1.BytesValue) {
+		return false
+	}
+	return true
+}
+func (this *AnyName) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*AnyName)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Underscore.Equal(that1.Underscore) {
+		return false
+	}
+	return true
+}
+func (this *AnyNameExcept) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*AnyNameExcept)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.Exclamation.Equal(that1.Exclamation) {
+		return false
+	}
+	if !this.OpenParen.Equal(that1.OpenParen) {
+		return false
+	}
+	if !this.Except.Equal(that1.Except) {
+		return false
+	}
+	if !this.CloseParen.Equal(that1.CloseParen) {
+		return false
+	}
+	return true
+}
+func (this *NameChoice) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*NameChoice)
+	if !ok {
+		return false
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.OpenParen.Equal(that1.OpenParen) {
+		return false
+	}
+	if !this.Left.Equal(that1.Left) {
+		return false
+	}
+	if !this.Pipe.Equal(that1.Pipe) {
+		return false
+	}
+	if !this.Right.Equal(that1.Right) {
+		return false
+	}
+	if !this.CloseParen.Equal(that1.CloseParen) {
+		return false
+	}
+	return true
+}
 func (this *Expr) GoString() string {
 	if this == nil {
 		return "nil"
@@ -1081,114 +1094,6 @@ func (this *Expr) GoString() string {
 	}
 	if this.BuiltIn != nil {
 		s = append(s, "BuiltIn: "+fmt.Sprintf("%#v", this.BuiltIn)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *NameExpr) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 8)
-	s = append(s, "&expr.NameExpr{")
-	if this.Name != nil {
-		s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
-	}
-	if this.AnyName != nil {
-		s = append(s, "AnyName: "+fmt.Sprintf("%#v", this.AnyName)+",\n")
-	}
-	if this.AnyNameExcept != nil {
-		s = append(s, "AnyNameExcept: "+fmt.Sprintf("%#v", this.AnyNameExcept)+",\n")
-	}
-	if this.NameChoice != nil {
-		s = append(s, "NameChoice: "+fmt.Sprintf("%#v", this.NameChoice)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *Name) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 11)
-	s = append(s, "&expr.Name{")
-	if this.Before != nil {
-		s = append(s, "Before: "+fmt.Sprintf("%#v", this.Before)+",\n")
-	}
-	if this.DoubleValue != nil {
-		s = append(s, "DoubleValue: "+valueToGoStringExpr(this.DoubleValue, "float64")+",\n")
-	}
-	if this.IntValue != nil {
-		s = append(s, "IntValue: "+valueToGoStringExpr(this.IntValue, "int64")+",\n")
-	}
-	if this.UintValue != nil {
-		s = append(s, "UintValue: "+valueToGoStringExpr(this.UintValue, "uint64")+",\n")
-	}
-	if this.BoolValue != nil {
-		s = append(s, "BoolValue: "+valueToGoStringExpr(this.BoolValue, "bool")+",\n")
-	}
-	if this.StringValue != nil {
-		s = append(s, "StringValue: "+valueToGoStringExpr(this.StringValue, "string")+",\n")
-	}
-	if this.BytesValue != nil {
-		s = append(s, "BytesValue: "+valueToGoStringExpr(this.BytesValue, "byte")+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *AnyName) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 5)
-	s = append(s, "&expr.AnyName{")
-	if this.Underscore != nil {
-		s = append(s, "Underscore: "+fmt.Sprintf("%#v", this.Underscore)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *AnyNameExcept) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 8)
-	s = append(s, "&expr.AnyNameExcept{")
-	if this.Exclamation != nil {
-		s = append(s, "Exclamation: "+fmt.Sprintf("%#v", this.Exclamation)+",\n")
-	}
-	if this.OpenParen != nil {
-		s = append(s, "OpenParen: "+fmt.Sprintf("%#v", this.OpenParen)+",\n")
-	}
-	if this.Except != nil {
-		s = append(s, "Except: "+fmt.Sprintf("%#v", this.Except)+",\n")
-	}
-	if this.CloseParen != nil {
-		s = append(s, "CloseParen: "+fmt.Sprintf("%#v", this.CloseParen)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *NameChoice) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 9)
-	s = append(s, "&expr.NameChoice{")
-	if this.OpenParen != nil {
-		s = append(s, "OpenParen: "+fmt.Sprintf("%#v", this.OpenParen)+",\n")
-	}
-	if this.Left != nil {
-		s = append(s, "Left: "+fmt.Sprintf("%#v", this.Left)+",\n")
-	}
-	if this.Pipe != nil {
-		s = append(s, "Pipe: "+fmt.Sprintf("%#v", this.Pipe)+",\n")
-	}
-	if this.Right != nil {
-		s = append(s, "Right: "+fmt.Sprintf("%#v", this.Right)+",\n")
-	}
-	if this.CloseParen != nil {
-		s = append(s, "CloseParen: "+fmt.Sprintf("%#v", this.CloseParen)+",\n")
 	}
 	s = append(s, "}")
 	return strings.Join(s, "")
@@ -1321,6 +1226,114 @@ func (this *Space) GoString() string {
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
+func (this *NameExpr) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 8)
+	s = append(s, "&expr.NameExpr{")
+	if this.Name != nil {
+		s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
+	}
+	if this.AnyName != nil {
+		s = append(s, "AnyName: "+fmt.Sprintf("%#v", this.AnyName)+",\n")
+	}
+	if this.AnyNameExcept != nil {
+		s = append(s, "AnyNameExcept: "+fmt.Sprintf("%#v", this.AnyNameExcept)+",\n")
+	}
+	if this.NameChoice != nil {
+		s = append(s, "NameChoice: "+fmt.Sprintf("%#v", this.NameChoice)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *Name) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 11)
+	s = append(s, "&expr.Name{")
+	if this.Before != nil {
+		s = append(s, "Before: "+fmt.Sprintf("%#v", this.Before)+",\n")
+	}
+	if this.DoubleValue != nil {
+		s = append(s, "DoubleValue: "+valueToGoStringExpr(this.DoubleValue, "float64")+",\n")
+	}
+	if this.IntValue != nil {
+		s = append(s, "IntValue: "+valueToGoStringExpr(this.IntValue, "int64")+",\n")
+	}
+	if this.UintValue != nil {
+		s = append(s, "UintValue: "+valueToGoStringExpr(this.UintValue, "uint64")+",\n")
+	}
+	if this.BoolValue != nil {
+		s = append(s, "BoolValue: "+valueToGoStringExpr(this.BoolValue, "bool")+",\n")
+	}
+	if this.StringValue != nil {
+		s = append(s, "StringValue: "+valueToGoStringExpr(this.StringValue, "string")+",\n")
+	}
+	if this.BytesValue != nil {
+		s = append(s, "BytesValue: "+valueToGoStringExpr(this.BytesValue, "byte")+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *AnyName) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 5)
+	s = append(s, "&expr.AnyName{")
+	if this.Underscore != nil {
+		s = append(s, "Underscore: "+fmt.Sprintf("%#v", this.Underscore)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *AnyNameExcept) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 8)
+	s = append(s, "&expr.AnyNameExcept{")
+	if this.Exclamation != nil {
+		s = append(s, "Exclamation: "+fmt.Sprintf("%#v", this.Exclamation)+",\n")
+	}
+	if this.OpenParen != nil {
+		s = append(s, "OpenParen: "+fmt.Sprintf("%#v", this.OpenParen)+",\n")
+	}
+	if this.Except != nil {
+		s = append(s, "Except: "+fmt.Sprintf("%#v", this.Except)+",\n")
+	}
+	if this.CloseParen != nil {
+		s = append(s, "CloseParen: "+fmt.Sprintf("%#v", this.CloseParen)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *NameChoice) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 9)
+	s = append(s, "&expr.NameChoice{")
+	if this.OpenParen != nil {
+		s = append(s, "OpenParen: "+fmt.Sprintf("%#v", this.OpenParen)+",\n")
+	}
+	if this.Left != nil {
+		s = append(s, "Left: "+fmt.Sprintf("%#v", this.Left)+",\n")
+	}
+	if this.Pipe != nil {
+		s = append(s, "Pipe: "+fmt.Sprintf("%#v", this.Pipe)+",\n")
+	}
+	if this.Right != nil {
+		s = append(s, "Right: "+fmt.Sprintf("%#v", this.Right)+",\n")
+	}
+	if this.CloseParen != nil {
+		s = append(s, "CloseParen: "+fmt.Sprintf("%#v", this.CloseParen)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
 func valueToGoStringExpr(v interface{}, typ string) string {
 	rv := reflect.ValueOf(v)
 	if rv.IsNil() {
@@ -1414,6 +1427,338 @@ func (m *Expr) MarshalTo(data []byte) (int, error) {
 	return i, nil
 }
 
+func (m *List) Marshal() (data []byte, err error) {
+	size := m.Size()
+	data = make([]byte, size)
+	n, err := m.MarshalTo(data)
+	if err != nil {
+		return nil, err
+	}
+	return data[:n], nil
+}
+
+func (m *List) MarshalTo(data []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Before != nil {
+		data[i] = 0xa
+		i++
+		i = encodeVarintExpr(data, i, uint64(m.Before.Size()))
+		n6, err := m.Before.MarshalTo(data[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n6
+	}
+	data[i] = 0x10
+	i++
+	i = encodeVarintExpr(data, i, uint64(m.Type))
+	if m.OpenCurly != nil {
+		data[i] = 0x1a
+		i++
+		i = encodeVarintExpr(data, i, uint64(m.OpenCurly.Size()))
+		n7, err := m.OpenCurly.MarshalTo(data[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n7
+	}
+	if len(m.Elems) > 0 {
+		for _, msg := range m.Elems {
+			data[i] = 0x22
+			i++
+			i = encodeVarintExpr(data, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(data[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	if m.CloseCurly != nil {
+		data[i] = 0x2a
+		i++
+		i = encodeVarintExpr(data, i, uint64(m.CloseCurly.Size()))
+		n8, err := m.CloseCurly.MarshalTo(data[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n8
+	}
+	return i, nil
+}
+
+func (m *Function) Marshal() (data []byte, err error) {
+	size := m.Size()
+	data = make([]byte, size)
+	n, err := m.MarshalTo(data)
+	if err != nil {
+		return nil, err
+	}
+	return data[:n], nil
+}
+
+func (m *Function) MarshalTo(data []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Before != nil {
+		data[i] = 0xa
+		i++
+		i = encodeVarintExpr(data, i, uint64(m.Before.Size()))
+		n9, err := m.Before.MarshalTo(data[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n9
+	}
+	data[i] = 0x12
+	i++
+	i = encodeVarintExpr(data, i, uint64(len(m.Name)))
+	i += copy(data[i:], m.Name)
+	if m.OpenParen != nil {
+		data[i] = 0x1a
+		i++
+		i = encodeVarintExpr(data, i, uint64(m.OpenParen.Size()))
+		n10, err := m.OpenParen.MarshalTo(data[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n10
+	}
+	if len(m.Params) > 0 {
+		for _, msg := range m.Params {
+			data[i] = 0x22
+			i++
+			i = encodeVarintExpr(data, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(data[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	if m.CloseParen != nil {
+		data[i] = 0x2a
+		i++
+		i = encodeVarintExpr(data, i, uint64(m.CloseParen.Size()))
+		n11, err := m.CloseParen.MarshalTo(data[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n11
+	}
+	return i, nil
+}
+
+func (m *BuiltIn) Marshal() (data []byte, err error) {
+	size := m.Size()
+	data = make([]byte, size)
+	n, err := m.MarshalTo(data)
+	if err != nil {
+		return nil, err
+	}
+	return data[:n], nil
+}
+
+func (m *BuiltIn) MarshalTo(data []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Symbol != nil {
+		data[i] = 0xa
+		i++
+		i = encodeVarintExpr(data, i, uint64(m.Symbol.Size()))
+		n12, err := m.Symbol.MarshalTo(data[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n12
+	}
+	if m.Expr != nil {
+		data[i] = 0x12
+		i++
+		i = encodeVarintExpr(data, i, uint64(m.Expr.Size()))
+		n13, err := m.Expr.MarshalTo(data[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n13
+	}
+	return i, nil
+}
+
+func (m *Terminal) Marshal() (data []byte, err error) {
+	size := m.Size()
+	data = make([]byte, size)
+	n, err := m.MarshalTo(data)
+	if err != nil {
+		return nil, err
+	}
+	return data[:n], nil
+}
+
+func (m *Terminal) MarshalTo(data []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Before != nil {
+		data[i] = 0xa
+		i++
+		i = encodeVarintExpr(data, i, uint64(m.Before.Size()))
+		n14, err := m.Before.MarshalTo(data[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n14
+	}
+	data[i] = 0x12
+	i++
+	i = encodeVarintExpr(data, i, uint64(len(m.Literal)))
+	i += copy(data[i:], m.Literal)
+	if m.DoubleValue != nil {
+		data[i] = 0x19
+		i++
+		i = encodeFixed64Expr(data, i, uint64(math.Float64bits(*m.DoubleValue)))
+	}
+	if m.IntValue != nil {
+		data[i] = 0x28
+		i++
+		i = encodeVarintExpr(data, i, uint64(*m.IntValue))
+	}
+	if m.UintValue != nil {
+		data[i] = 0x30
+		i++
+		i = encodeVarintExpr(data, i, uint64(*m.UintValue))
+	}
+	if m.BoolValue != nil {
+		data[i] = 0x40
+		i++
+		if *m.BoolValue {
+			data[i] = 1
+		} else {
+			data[i] = 0
+		}
+		i++
+	}
+	if m.StringValue != nil {
+		data[i] = 0x4a
+		i++
+		i = encodeVarintExpr(data, i, uint64(len(*m.StringValue)))
+		i += copy(data[i:], *m.StringValue)
+	}
+	if m.BytesValue != nil {
+		data[i] = 0x52
+		i++
+		i = encodeVarintExpr(data, i, uint64(len(m.BytesValue)))
+		i += copy(data[i:], m.BytesValue)
+	}
+	if m.Variable != nil {
+		data[i] = 0x92
+		i++
+		data[i] = 0x3
+		i++
+		i = encodeVarintExpr(data, i, uint64(m.Variable.Size()))
+		n15, err := m.Variable.MarshalTo(data[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n15
+	}
+	return i, nil
+}
+
+func (m *Variable) Marshal() (data []byte, err error) {
+	size := m.Size()
+	data = make([]byte, size)
+	n, err := m.MarshalTo(data)
+	if err != nil {
+		return nil, err
+	}
+	return data[:n], nil
+}
+
+func (m *Variable) MarshalTo(data []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	data[i] = 0x10
+	i++
+	i = encodeVarintExpr(data, i, uint64(m.Type))
+	return i, nil
+}
+
+func (m *Keyword) Marshal() (data []byte, err error) {
+	size := m.Size()
+	data = make([]byte, size)
+	n, err := m.MarshalTo(data)
+	if err != nil {
+		return nil, err
+	}
+	return data[:n], nil
+}
+
+func (m *Keyword) MarshalTo(data []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Before != nil {
+		data[i] = 0xa
+		i++
+		i = encodeVarintExpr(data, i, uint64(m.Before.Size()))
+		n16, err := m.Before.MarshalTo(data[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n16
+	}
+	data[i] = 0x12
+	i++
+	i = encodeVarintExpr(data, i, uint64(len(m.Value)))
+	i += copy(data[i:], m.Value)
+	return i, nil
+}
+
+func (m *Space) Marshal() (data []byte, err error) {
+	size := m.Size()
+	data = make([]byte, size)
+	n, err := m.MarshalTo(data)
+	if err != nil {
+		return nil, err
+	}
+	return data[:n], nil
+}
+
+func (m *Space) MarshalTo(data []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Space) > 0 {
+		for _, s := range m.Space {
+			data[i] = 0xa
+			i++
+			l = len(s)
+			for l >= 1<<7 {
+				data[i] = uint8(uint64(l)&0x7f | 0x80)
+				l >>= 7
+				i++
+			}
+			data[i] = uint8(l)
+			i++
+			i += copy(data[i:], s)
+		}
+	}
+	return i, nil
+}
+
 func (m *NameExpr) Marshal() (data []byte, err error) {
 	size := m.Size()
 	data = make([]byte, size)
@@ -1433,41 +1778,41 @@ func (m *NameExpr) MarshalTo(data []byte) (int, error) {
 		data[i] = 0xa
 		i++
 		i = encodeVarintExpr(data, i, uint64(m.Name.Size()))
-		n6, err := m.Name.MarshalTo(data[i:])
+		n17, err := m.Name.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n6
+		i += n17
 	}
 	if m.AnyName != nil {
 		data[i] = 0x12
 		i++
 		i = encodeVarintExpr(data, i, uint64(m.AnyName.Size()))
-		n7, err := m.AnyName.MarshalTo(data[i:])
+		n18, err := m.AnyName.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n7
+		i += n18
 	}
 	if m.AnyNameExcept != nil {
 		data[i] = 0x1a
 		i++
 		i = encodeVarintExpr(data, i, uint64(m.AnyNameExcept.Size()))
-		n8, err := m.AnyNameExcept.MarshalTo(data[i:])
+		n19, err := m.AnyNameExcept.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n8
+		i += n19
 	}
 	if m.NameChoice != nil {
 		data[i] = 0x22
 		i++
 		i = encodeVarintExpr(data, i, uint64(m.NameChoice.Size()))
-		n9, err := m.NameChoice.MarshalTo(data[i:])
+		n20, err := m.NameChoice.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n9
+		i += n20
 	}
 	return i, nil
 }
@@ -1491,11 +1836,11 @@ func (m *Name) MarshalTo(data []byte) (int, error) {
 		data[i] = 0xa
 		i++
 		i = encodeVarintExpr(data, i, uint64(m.Before.Size()))
-		n10, err := m.Before.MarshalTo(data[i:])
+		n21, err := m.Before.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n10
+		i += n21
 	}
 	if m.DoubleValue != nil {
 		data[i] = 0x19
@@ -1556,11 +1901,11 @@ func (m *AnyName) MarshalTo(data []byte) (int, error) {
 		data[i] = 0xa
 		i++
 		i = encodeVarintExpr(data, i, uint64(m.Underscore.Size()))
-		n11, err := m.Underscore.MarshalTo(data[i:])
+		n22, err := m.Underscore.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n11
+		i += n22
 	}
 	return i, nil
 }
@@ -1584,41 +1929,41 @@ func (m *AnyNameExcept) MarshalTo(data []byte) (int, error) {
 		data[i] = 0xa
 		i++
 		i = encodeVarintExpr(data, i, uint64(m.Exclamation.Size()))
-		n12, err := m.Exclamation.MarshalTo(data[i:])
+		n23, err := m.Exclamation.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n12
+		i += n23
 	}
 	if m.OpenParen != nil {
 		data[i] = 0x12
 		i++
 		i = encodeVarintExpr(data, i, uint64(m.OpenParen.Size()))
-		n13, err := m.OpenParen.MarshalTo(data[i:])
+		n24, err := m.OpenParen.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n13
+		i += n24
 	}
 	if m.Except != nil {
 		data[i] = 0x1a
 		i++
 		i = encodeVarintExpr(data, i, uint64(m.Except.Size()))
-		n14, err := m.Except.MarshalTo(data[i:])
+		n25, err := m.Except.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n14
+		i += n25
 	}
 	if m.CloseParen != nil {
 		data[i] = 0x22
 		i++
 		i = encodeVarintExpr(data, i, uint64(m.CloseParen.Size()))
-		n15, err := m.CloseParen.MarshalTo(data[i:])
+		n26, err := m.CloseParen.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n15
+		i += n26
 	}
 	return i, nil
 }
@@ -1642,383 +1987,51 @@ func (m *NameChoice) MarshalTo(data []byte) (int, error) {
 		data[i] = 0xa
 		i++
 		i = encodeVarintExpr(data, i, uint64(m.OpenParen.Size()))
-		n16, err := m.OpenParen.MarshalTo(data[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n16
-	}
-	if m.Left != nil {
-		data[i] = 0x12
-		i++
-		i = encodeVarintExpr(data, i, uint64(m.Left.Size()))
-		n17, err := m.Left.MarshalTo(data[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n17
-	}
-	if m.Pipe != nil {
-		data[i] = 0x1a
-		i++
-		i = encodeVarintExpr(data, i, uint64(m.Pipe.Size()))
-		n18, err := m.Pipe.MarshalTo(data[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n18
-	}
-	if m.Right != nil {
-		data[i] = 0x22
-		i++
-		i = encodeVarintExpr(data, i, uint64(m.Right.Size()))
-		n19, err := m.Right.MarshalTo(data[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n19
-	}
-	if m.CloseParen != nil {
-		data[i] = 0x2a
-		i++
-		i = encodeVarintExpr(data, i, uint64(m.CloseParen.Size()))
-		n20, err := m.CloseParen.MarshalTo(data[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n20
-	}
-	return i, nil
-}
-
-func (m *List) Marshal() (data []byte, err error) {
-	size := m.Size()
-	data = make([]byte, size)
-	n, err := m.MarshalTo(data)
-	if err != nil {
-		return nil, err
-	}
-	return data[:n], nil
-}
-
-func (m *List) MarshalTo(data []byte) (int, error) {
-	var i int
-	_ = i
-	var l int
-	_ = l
-	if m.Before != nil {
-		data[i] = 0xa
-		i++
-		i = encodeVarintExpr(data, i, uint64(m.Before.Size()))
-		n21, err := m.Before.MarshalTo(data[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n21
-	}
-	data[i] = 0x10
-	i++
-	i = encodeVarintExpr(data, i, uint64(m.Type))
-	if m.OpenCurly != nil {
-		data[i] = 0x1a
-		i++
-		i = encodeVarintExpr(data, i, uint64(m.OpenCurly.Size()))
-		n22, err := m.OpenCurly.MarshalTo(data[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n22
-	}
-	if len(m.Elems) > 0 {
-		for _, msg := range m.Elems {
-			data[i] = 0x22
-			i++
-			i = encodeVarintExpr(data, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(data[i:])
-			if err != nil {
-				return 0, err
-			}
-			i += n
-		}
-	}
-	if m.CloseCurly != nil {
-		data[i] = 0x2a
-		i++
-		i = encodeVarintExpr(data, i, uint64(m.CloseCurly.Size()))
-		n23, err := m.CloseCurly.MarshalTo(data[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n23
-	}
-	return i, nil
-}
-
-func (m *Function) Marshal() (data []byte, err error) {
-	size := m.Size()
-	data = make([]byte, size)
-	n, err := m.MarshalTo(data)
-	if err != nil {
-		return nil, err
-	}
-	return data[:n], nil
-}
-
-func (m *Function) MarshalTo(data []byte) (int, error) {
-	var i int
-	_ = i
-	var l int
-	_ = l
-	if m.Before != nil {
-		data[i] = 0xa
-		i++
-		i = encodeVarintExpr(data, i, uint64(m.Before.Size()))
-		n24, err := m.Before.MarshalTo(data[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n24
-	}
-	data[i] = 0x12
-	i++
-	i = encodeVarintExpr(data, i, uint64(len(m.Name)))
-	i += copy(data[i:], m.Name)
-	if m.OpenParen != nil {
-		data[i] = 0x1a
-		i++
-		i = encodeVarintExpr(data, i, uint64(m.OpenParen.Size()))
-		n25, err := m.OpenParen.MarshalTo(data[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n25
-	}
-	if len(m.Params) > 0 {
-		for _, msg := range m.Params {
-			data[i] = 0x22
-			i++
-			i = encodeVarintExpr(data, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(data[i:])
-			if err != nil {
-				return 0, err
-			}
-			i += n
-		}
-	}
-	if m.CloseParen != nil {
-		data[i] = 0x2a
-		i++
-		i = encodeVarintExpr(data, i, uint64(m.CloseParen.Size()))
-		n26, err := m.CloseParen.MarshalTo(data[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n26
-	}
-	return i, nil
-}
-
-func (m *BuiltIn) Marshal() (data []byte, err error) {
-	size := m.Size()
-	data = make([]byte, size)
-	n, err := m.MarshalTo(data)
-	if err != nil {
-		return nil, err
-	}
-	return data[:n], nil
-}
-
-func (m *BuiltIn) MarshalTo(data []byte) (int, error) {
-	var i int
-	_ = i
-	var l int
-	_ = l
-	if m.Symbol != nil {
-		data[i] = 0xa
-		i++
-		i = encodeVarintExpr(data, i, uint64(m.Symbol.Size()))
-		n27, err := m.Symbol.MarshalTo(data[i:])
+		n27, err := m.OpenParen.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n27
 	}
-	if m.Expr != nil {
+	if m.Left != nil {
 		data[i] = 0x12
 		i++
-		i = encodeVarintExpr(data, i, uint64(m.Expr.Size()))
-		n28, err := m.Expr.MarshalTo(data[i:])
+		i = encodeVarintExpr(data, i, uint64(m.Left.Size()))
+		n28, err := m.Left.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n28
 	}
-	return i, nil
-}
-
-func (m *Terminal) Marshal() (data []byte, err error) {
-	size := m.Size()
-	data = make([]byte, size)
-	n, err := m.MarshalTo(data)
-	if err != nil {
-		return nil, err
-	}
-	return data[:n], nil
-}
-
-func (m *Terminal) MarshalTo(data []byte) (int, error) {
-	var i int
-	_ = i
-	var l int
-	_ = l
-	if m.Before != nil {
-		data[i] = 0xa
+	if m.Pipe != nil {
+		data[i] = 0x1a
 		i++
-		i = encodeVarintExpr(data, i, uint64(m.Before.Size()))
-		n29, err := m.Before.MarshalTo(data[i:])
+		i = encodeVarintExpr(data, i, uint64(m.Pipe.Size()))
+		n29, err := m.Pipe.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n29
 	}
-	data[i] = 0x12
-	i++
-	i = encodeVarintExpr(data, i, uint64(len(m.Literal)))
-	i += copy(data[i:], m.Literal)
-	if m.DoubleValue != nil {
-		data[i] = 0x19
+	if m.Right != nil {
+		data[i] = 0x22
 		i++
-		i = encodeFixed64Expr(data, i, uint64(math.Float64bits(*m.DoubleValue)))
-	}
-	if m.IntValue != nil {
-		data[i] = 0x28
-		i++
-		i = encodeVarintExpr(data, i, uint64(*m.IntValue))
-	}
-	if m.UintValue != nil {
-		data[i] = 0x30
-		i++
-		i = encodeVarintExpr(data, i, uint64(*m.UintValue))
-	}
-	if m.BoolValue != nil {
-		data[i] = 0x40
-		i++
-		if *m.BoolValue {
-			data[i] = 1
-		} else {
-			data[i] = 0
-		}
-		i++
-	}
-	if m.StringValue != nil {
-		data[i] = 0x4a
-		i++
-		i = encodeVarintExpr(data, i, uint64(len(*m.StringValue)))
-		i += copy(data[i:], *m.StringValue)
-	}
-	if m.BytesValue != nil {
-		data[i] = 0x52
-		i++
-		i = encodeVarintExpr(data, i, uint64(len(m.BytesValue)))
-		i += copy(data[i:], m.BytesValue)
-	}
-	if m.Variable != nil {
-		data[i] = 0x92
-		i++
-		data[i] = 0x3
-		i++
-		i = encodeVarintExpr(data, i, uint64(m.Variable.Size()))
-		n30, err := m.Variable.MarshalTo(data[i:])
+		i = encodeVarintExpr(data, i, uint64(m.Right.Size()))
+		n30, err := m.Right.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n30
 	}
-	return i, nil
-}
-
-func (m *Variable) Marshal() (data []byte, err error) {
-	size := m.Size()
-	data = make([]byte, size)
-	n, err := m.MarshalTo(data)
-	if err != nil {
-		return nil, err
-	}
-	return data[:n], nil
-}
-
-func (m *Variable) MarshalTo(data []byte) (int, error) {
-	var i int
-	_ = i
-	var l int
-	_ = l
-	data[i] = 0x10
-	i++
-	i = encodeVarintExpr(data, i, uint64(m.Type))
-	return i, nil
-}
-
-func (m *Keyword) Marshal() (data []byte, err error) {
-	size := m.Size()
-	data = make([]byte, size)
-	n, err := m.MarshalTo(data)
-	if err != nil {
-		return nil, err
-	}
-	return data[:n], nil
-}
-
-func (m *Keyword) MarshalTo(data []byte) (int, error) {
-	var i int
-	_ = i
-	var l int
-	_ = l
-	if m.Before != nil {
-		data[i] = 0xa
+	if m.CloseParen != nil {
+		data[i] = 0x2a
 		i++
-		i = encodeVarintExpr(data, i, uint64(m.Before.Size()))
-		n31, err := m.Before.MarshalTo(data[i:])
+		i = encodeVarintExpr(data, i, uint64(m.CloseParen.Size()))
+		n31, err := m.CloseParen.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n31
-	}
-	data[i] = 0x12
-	i++
-	i = encodeVarintExpr(data, i, uint64(len(m.Value)))
-	i += copy(data[i:], m.Value)
-	return i, nil
-}
-
-func (m *Space) Marshal() (data []byte, err error) {
-	size := m.Size()
-	data = make([]byte, size)
-	n, err := m.MarshalTo(data)
-	if err != nil {
-		return nil, err
-	}
-	return data[:n], nil
-}
-
-func (m *Space) MarshalTo(data []byte) (int, error) {
-	var i int
-	_ = i
-	var l int
-	_ = l
-	if len(m.Space) > 0 {
-		for _, s := range m.Space {
-			data[i] = 0xa
-			i++
-			l = len(s)
-			for l >= 1<<7 {
-				data[i] = uint8(uint64(l)&0x7f | 0x80)
-				l >>= 7
-				i++
-			}
-			data[i] = uint8(l)
-			i++
-			i += copy(data[i:], s)
-		}
 	}
 	return i, nil
 }
@@ -2071,116 +2084,6 @@ func (m *Expr) Size() (n int) {
 	}
 	if m.BuiltIn != nil {
 		l = m.BuiltIn.Size()
-		n += 1 + l + sovExpr(uint64(l))
-	}
-	return n
-}
-
-func (m *NameExpr) Size() (n int) {
-	var l int
-	_ = l
-	if m.Name != nil {
-		l = m.Name.Size()
-		n += 1 + l + sovExpr(uint64(l))
-	}
-	if m.AnyName != nil {
-		l = m.AnyName.Size()
-		n += 1 + l + sovExpr(uint64(l))
-	}
-	if m.AnyNameExcept != nil {
-		l = m.AnyNameExcept.Size()
-		n += 1 + l + sovExpr(uint64(l))
-	}
-	if m.NameChoice != nil {
-		l = m.NameChoice.Size()
-		n += 1 + l + sovExpr(uint64(l))
-	}
-	return n
-}
-
-func (m *Name) Size() (n int) {
-	var l int
-	_ = l
-	if m.Before != nil {
-		l = m.Before.Size()
-		n += 1 + l + sovExpr(uint64(l))
-	}
-	if m.DoubleValue != nil {
-		n += 9
-	}
-	if m.IntValue != nil {
-		n += 1 + sovExpr(uint64(*m.IntValue))
-	}
-	if m.UintValue != nil {
-		n += 1 + sovExpr(uint64(*m.UintValue))
-	}
-	if m.BoolValue != nil {
-		n += 2
-	}
-	if m.StringValue != nil {
-		l = len(*m.StringValue)
-		n += 1 + l + sovExpr(uint64(l))
-	}
-	if m.BytesValue != nil {
-		l = len(m.BytesValue)
-		n += 1 + l + sovExpr(uint64(l))
-	}
-	return n
-}
-
-func (m *AnyName) Size() (n int) {
-	var l int
-	_ = l
-	if m.Underscore != nil {
-		l = m.Underscore.Size()
-		n += 1 + l + sovExpr(uint64(l))
-	}
-	return n
-}
-
-func (m *AnyNameExcept) Size() (n int) {
-	var l int
-	_ = l
-	if m.Exclamation != nil {
-		l = m.Exclamation.Size()
-		n += 1 + l + sovExpr(uint64(l))
-	}
-	if m.OpenParen != nil {
-		l = m.OpenParen.Size()
-		n += 1 + l + sovExpr(uint64(l))
-	}
-	if m.Except != nil {
-		l = m.Except.Size()
-		n += 1 + l + sovExpr(uint64(l))
-	}
-	if m.CloseParen != nil {
-		l = m.CloseParen.Size()
-		n += 1 + l + sovExpr(uint64(l))
-	}
-	return n
-}
-
-func (m *NameChoice) Size() (n int) {
-	var l int
-	_ = l
-	if m.OpenParen != nil {
-		l = m.OpenParen.Size()
-		n += 1 + l + sovExpr(uint64(l))
-	}
-	if m.Left != nil {
-		l = m.Left.Size()
-		n += 1 + l + sovExpr(uint64(l))
-	}
-	if m.Pipe != nil {
-		l = m.Pipe.Size()
-		n += 1 + l + sovExpr(uint64(l))
-	}
-	if m.Right != nil {
-		l = m.Right.Size()
-		n += 1 + l + sovExpr(uint64(l))
-	}
-	if m.CloseParen != nil {
-		l = m.CloseParen.Size()
 		n += 1 + l + sovExpr(uint64(l))
 	}
 	return n
@@ -2314,6 +2217,116 @@ func (m *Space) Size() (n int) {
 			l = len(s)
 			n += 1 + l + sovExpr(uint64(l))
 		}
+	}
+	return n
+}
+
+func (m *NameExpr) Size() (n int) {
+	var l int
+	_ = l
+	if m.Name != nil {
+		l = m.Name.Size()
+		n += 1 + l + sovExpr(uint64(l))
+	}
+	if m.AnyName != nil {
+		l = m.AnyName.Size()
+		n += 1 + l + sovExpr(uint64(l))
+	}
+	if m.AnyNameExcept != nil {
+		l = m.AnyNameExcept.Size()
+		n += 1 + l + sovExpr(uint64(l))
+	}
+	if m.NameChoice != nil {
+		l = m.NameChoice.Size()
+		n += 1 + l + sovExpr(uint64(l))
+	}
+	return n
+}
+
+func (m *Name) Size() (n int) {
+	var l int
+	_ = l
+	if m.Before != nil {
+		l = m.Before.Size()
+		n += 1 + l + sovExpr(uint64(l))
+	}
+	if m.DoubleValue != nil {
+		n += 9
+	}
+	if m.IntValue != nil {
+		n += 1 + sovExpr(uint64(*m.IntValue))
+	}
+	if m.UintValue != nil {
+		n += 1 + sovExpr(uint64(*m.UintValue))
+	}
+	if m.BoolValue != nil {
+		n += 2
+	}
+	if m.StringValue != nil {
+		l = len(*m.StringValue)
+		n += 1 + l + sovExpr(uint64(l))
+	}
+	if m.BytesValue != nil {
+		l = len(m.BytesValue)
+		n += 1 + l + sovExpr(uint64(l))
+	}
+	return n
+}
+
+func (m *AnyName) Size() (n int) {
+	var l int
+	_ = l
+	if m.Underscore != nil {
+		l = m.Underscore.Size()
+		n += 1 + l + sovExpr(uint64(l))
+	}
+	return n
+}
+
+func (m *AnyNameExcept) Size() (n int) {
+	var l int
+	_ = l
+	if m.Exclamation != nil {
+		l = m.Exclamation.Size()
+		n += 1 + l + sovExpr(uint64(l))
+	}
+	if m.OpenParen != nil {
+		l = m.OpenParen.Size()
+		n += 1 + l + sovExpr(uint64(l))
+	}
+	if m.Except != nil {
+		l = m.Except.Size()
+		n += 1 + l + sovExpr(uint64(l))
+	}
+	if m.CloseParen != nil {
+		l = m.CloseParen.Size()
+		n += 1 + l + sovExpr(uint64(l))
+	}
+	return n
+}
+
+func (m *NameChoice) Size() (n int) {
+	var l int
+	_ = l
+	if m.OpenParen != nil {
+		l = m.OpenParen.Size()
+		n += 1 + l + sovExpr(uint64(l))
+	}
+	if m.Left != nil {
+		l = m.Left.Size()
+		n += 1 + l + sovExpr(uint64(l))
+	}
+	if m.Pipe != nil {
+		l = m.Pipe.Size()
+		n += 1 + l + sovExpr(uint64(l))
+	}
+	if m.Right != nil {
+		l = m.Right.Size()
+		n += 1 + l + sovExpr(uint64(l))
+	}
+	if m.CloseParen != nil {
+		l = m.CloseParen.Size()
+		n += 1 + l + sovExpr(uint64(l))
 	}
 	return n
 }
@@ -2553,889 +2566,6 @@ func (m *Expr) Unmarshal(data []byte) error {
 				m.BuiltIn = &BuiltIn{}
 			}
 			if err := m.BuiltIn.Unmarshal(data[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipExpr(data[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthExpr
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *NameExpr) Unmarshal(data []byte) error {
-	l := len(data)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowExpr
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := data[iNdEx]
-			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: NameExpr: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: NameExpr: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExpr
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := data[iNdEx]
-				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthExpr
-			}
-			postIndex := iNdEx + msglen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Name == nil {
-				m.Name = &Name{}
-			}
-			if err := m.Name.Unmarshal(data[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AnyName", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExpr
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := data[iNdEx]
-				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthExpr
-			}
-			postIndex := iNdEx + msglen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.AnyName == nil {
-				m.AnyName = &AnyName{}
-			}
-			if err := m.AnyName.Unmarshal(data[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AnyNameExcept", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExpr
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := data[iNdEx]
-				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthExpr
-			}
-			postIndex := iNdEx + msglen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.AnyNameExcept == nil {
-				m.AnyNameExcept = &AnyNameExcept{}
-			}
-			if err := m.AnyNameExcept.Unmarshal(data[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 4:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field NameChoice", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExpr
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := data[iNdEx]
-				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthExpr
-			}
-			postIndex := iNdEx + msglen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.NameChoice == nil {
-				m.NameChoice = &NameChoice{}
-			}
-			if err := m.NameChoice.Unmarshal(data[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipExpr(data[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthExpr
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *Name) Unmarshal(data []byte) error {
-	l := len(data)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowExpr
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := data[iNdEx]
-			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: Name: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Name: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Before", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExpr
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := data[iNdEx]
-				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthExpr
-			}
-			postIndex := iNdEx + msglen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Before == nil {
-				m.Before = &Space{}
-			}
-			if err := m.Before.Unmarshal(data[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 3:
-			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DoubleValue", wireType)
-			}
-			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += 8
-			v = uint64(data[iNdEx-8])
-			v |= uint64(data[iNdEx-7]) << 8
-			v |= uint64(data[iNdEx-6]) << 16
-			v |= uint64(data[iNdEx-5]) << 24
-			v |= uint64(data[iNdEx-4]) << 32
-			v |= uint64(data[iNdEx-3]) << 40
-			v |= uint64(data[iNdEx-2]) << 48
-			v |= uint64(data[iNdEx-1]) << 56
-			v2 := float64(math.Float64frombits(v))
-			m.DoubleValue = &v2
-		case 5:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field IntValue", wireType)
-			}
-			var v int64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExpr
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := data[iNdEx]
-				iNdEx++
-				v |= (int64(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			m.IntValue = &v
-		case 6:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field UintValue", wireType)
-			}
-			var v uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExpr
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := data[iNdEx]
-				iNdEx++
-				v |= (uint64(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			m.UintValue = &v
-		case 8:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field BoolValue", wireType)
-			}
-			var v int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExpr
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := data[iNdEx]
-				iNdEx++
-				v |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			b := bool(v != 0)
-			m.BoolValue = &b
-		case 9:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field StringValue", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExpr
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := data[iNdEx]
-				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthExpr
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			s := string(data[iNdEx:postIndex])
-			m.StringValue = &s
-			iNdEx = postIndex
-		case 10:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field BytesValue", wireType)
-			}
-			var byteLen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExpr
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := data[iNdEx]
-				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if byteLen < 0 {
-				return ErrInvalidLengthExpr
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.BytesValue = append([]byte{}, data[iNdEx:postIndex]...)
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipExpr(data[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthExpr
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *AnyName) Unmarshal(data []byte) error {
-	l := len(data)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowExpr
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := data[iNdEx]
-			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: AnyName: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: AnyName: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Underscore", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExpr
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := data[iNdEx]
-				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthExpr
-			}
-			postIndex := iNdEx + msglen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Underscore == nil {
-				m.Underscore = &Keyword{}
-			}
-			if err := m.Underscore.Unmarshal(data[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipExpr(data[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthExpr
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *AnyNameExcept) Unmarshal(data []byte) error {
-	l := len(data)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowExpr
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := data[iNdEx]
-			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: AnyNameExcept: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: AnyNameExcept: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Exclamation", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExpr
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := data[iNdEx]
-				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthExpr
-			}
-			postIndex := iNdEx + msglen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Exclamation == nil {
-				m.Exclamation = &Keyword{}
-			}
-			if err := m.Exclamation.Unmarshal(data[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OpenParen", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExpr
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := data[iNdEx]
-				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthExpr
-			}
-			postIndex := iNdEx + msglen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.OpenParen == nil {
-				m.OpenParen = &Keyword{}
-			}
-			if err := m.OpenParen.Unmarshal(data[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Except", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExpr
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := data[iNdEx]
-				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthExpr
-			}
-			postIndex := iNdEx + msglen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Except == nil {
-				m.Except = &NameExpr{}
-			}
-			if err := m.Except.Unmarshal(data[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 4:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field CloseParen", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExpr
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := data[iNdEx]
-				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthExpr
-			}
-			postIndex := iNdEx + msglen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.CloseParen == nil {
-				m.CloseParen = &Keyword{}
-			}
-			if err := m.CloseParen.Unmarshal(data[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipExpr(data[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthExpr
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *NameChoice) Unmarshal(data []byte) error {
-	l := len(data)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowExpr
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := data[iNdEx]
-			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: NameChoice: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: NameChoice: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OpenParen", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExpr
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := data[iNdEx]
-				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthExpr
-			}
-			postIndex := iNdEx + msglen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.OpenParen == nil {
-				m.OpenParen = &Keyword{}
-			}
-			if err := m.OpenParen.Unmarshal(data[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Left", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExpr
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := data[iNdEx]
-				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthExpr
-			}
-			postIndex := iNdEx + msglen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Left == nil {
-				m.Left = &NameExpr{}
-			}
-			if err := m.Left.Unmarshal(data[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Pipe", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExpr
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := data[iNdEx]
-				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthExpr
-			}
-			postIndex := iNdEx + msglen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Pipe == nil {
-				m.Pipe = &Keyword{}
-			}
-			if err := m.Pipe.Unmarshal(data[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 4:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Right", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExpr
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := data[iNdEx]
-				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthExpr
-			}
-			postIndex := iNdEx + msglen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Right == nil {
-				m.Right = &NameExpr{}
-			}
-			if err := m.Right.Unmarshal(data[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 5:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field CloseParen", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExpr
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := data[iNdEx]
-				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthExpr
-			}
-			postIndex := iNdEx + msglen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.CloseParen == nil {
-				m.CloseParen = &Keyword{}
-			}
-			if err := m.CloseParen.Unmarshal(data[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -4505,6 +3635,889 @@ func (m *Space) Unmarshal(data []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.Space = append(m.Space, string(data[iNdEx:postIndex]))
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipExpr(data[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthExpr
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *NameExpr) Unmarshal(data []byte) error {
+	l := len(data)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowExpr
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := data[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: NameExpr: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: NameExpr: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowExpr
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthExpr
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Name == nil {
+				m.Name = &Name{}
+			}
+			if err := m.Name.Unmarshal(data[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AnyName", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowExpr
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthExpr
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.AnyName == nil {
+				m.AnyName = &AnyName{}
+			}
+			if err := m.AnyName.Unmarshal(data[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AnyNameExcept", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowExpr
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthExpr
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.AnyNameExcept == nil {
+				m.AnyNameExcept = &AnyNameExcept{}
+			}
+			if err := m.AnyNameExcept.Unmarshal(data[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NameChoice", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowExpr
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthExpr
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.NameChoice == nil {
+				m.NameChoice = &NameChoice{}
+			}
+			if err := m.NameChoice.Unmarshal(data[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipExpr(data[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthExpr
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Name) Unmarshal(data []byte) error {
+	l := len(data)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowExpr
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := data[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Name: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Name: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Before", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowExpr
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthExpr
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Before == nil {
+				m.Before = &Space{}
+			}
+			if err := m.Before.Unmarshal(data[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 1 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DoubleValue", wireType)
+			}
+			var v uint64
+			if (iNdEx + 8) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += 8
+			v = uint64(data[iNdEx-8])
+			v |= uint64(data[iNdEx-7]) << 8
+			v |= uint64(data[iNdEx-6]) << 16
+			v |= uint64(data[iNdEx-5]) << 24
+			v |= uint64(data[iNdEx-4]) << 32
+			v |= uint64(data[iNdEx-3]) << 40
+			v |= uint64(data[iNdEx-2]) << 48
+			v |= uint64(data[iNdEx-1]) << 56
+			v2 := float64(math.Float64frombits(v))
+			m.DoubleValue = &v2
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field IntValue", wireType)
+			}
+			var v int64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowExpr
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				v |= (int64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.IntValue = &v
+		case 6:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UintValue", wireType)
+			}
+			var v uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowExpr
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				v |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.UintValue = &v
+		case 8:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BoolValue", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowExpr
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				v |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			b := bool(v != 0)
+			m.BoolValue = &b
+		case 9:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StringValue", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowExpr
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthExpr
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			s := string(data[iNdEx:postIndex])
+			m.StringValue = &s
+			iNdEx = postIndex
+		case 10:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BytesValue", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowExpr
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				byteLen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthExpr
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.BytesValue = append([]byte{}, data[iNdEx:postIndex]...)
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipExpr(data[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthExpr
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *AnyName) Unmarshal(data []byte) error {
+	l := len(data)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowExpr
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := data[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: AnyName: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: AnyName: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Underscore", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowExpr
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthExpr
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Underscore == nil {
+				m.Underscore = &Keyword{}
+			}
+			if err := m.Underscore.Unmarshal(data[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipExpr(data[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthExpr
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *AnyNameExcept) Unmarshal(data []byte) error {
+	l := len(data)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowExpr
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := data[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: AnyNameExcept: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: AnyNameExcept: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Exclamation", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowExpr
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthExpr
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Exclamation == nil {
+				m.Exclamation = &Keyword{}
+			}
+			if err := m.Exclamation.Unmarshal(data[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OpenParen", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowExpr
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthExpr
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.OpenParen == nil {
+				m.OpenParen = &Keyword{}
+			}
+			if err := m.OpenParen.Unmarshal(data[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Except", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowExpr
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthExpr
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Except == nil {
+				m.Except = &NameExpr{}
+			}
+			if err := m.Except.Unmarshal(data[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CloseParen", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowExpr
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthExpr
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.CloseParen == nil {
+				m.CloseParen = &Keyword{}
+			}
+			if err := m.CloseParen.Unmarshal(data[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipExpr(data[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthExpr
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *NameChoice) Unmarshal(data []byte) error {
+	l := len(data)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowExpr
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := data[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: NameChoice: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: NameChoice: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OpenParen", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowExpr
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthExpr
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.OpenParen == nil {
+				m.OpenParen = &Keyword{}
+			}
+			if err := m.OpenParen.Unmarshal(data[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Left", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowExpr
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthExpr
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Left == nil {
+				m.Left = &NameExpr{}
+			}
+			if err := m.Left.Unmarshal(data[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pipe", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowExpr
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthExpr
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pipe == nil {
+				m.Pipe = &Keyword{}
+			}
+			if err := m.Pipe.Unmarshal(data[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Right", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowExpr
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthExpr
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Right == nil {
+				m.Right = &NameExpr{}
+			}
+			if err := m.Right.Unmarshal(data[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CloseParen", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowExpr
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthExpr
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.CloseParen == nil {
+				m.CloseParen = &Keyword{}
+			}
+			if err := m.CloseParen.Unmarshal(data[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

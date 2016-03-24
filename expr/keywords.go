@@ -91,3 +91,21 @@ func newColonColon() *Keyword {
 		Value: "::",
 	}
 }
+
+func newUnderscore() *Keyword {
+	return &Keyword{
+		Value: "_",
+	}
+}
+
+func newExclamation() *Keyword {
+	return &Keyword{
+		Value: "!",
+	}
+}
+
+func newPipe() *Keyword {
+	return &Keyword{
+		Value: "|",
+	}
+}
