@@ -54,10 +54,7 @@ var (
 	listOfTyp = reflect.TypeOf((*funcs.ListOf)(nil)).Elem()
 )
 
-var (
-	debug = true
-)
-
+//NewBool constructs a boolean function from a parsed expression.
 func NewBool(expr *expr.Expr) (funcs.Bool, error) {
 	expr2, err := rewriteBuiltIn(expr)
 	if err != nil {
@@ -66,7 +63,8 @@ func NewBool(expr *expr.Expr) (funcs.Bool, error) {
 	return composeBool(expr2)
 }
 
-func NewBoolFunc(f funcs.Bool) (*composedBool, error) {
+//NewBoolFunc returns the same function that it was given, but that has been trimmed and which is ready for variable values and evaluation.
+func NewBoolFunc(f funcs.Bool) (Bool, error) {
 	e, err := TrimBool(f)
 	if err != nil {
 		return nil, err
@@ -86,6 +84,7 @@ func NewBoolFunc(f funcs.Bool) (*composedBool, error) {
 	return &composedBool{setters, e}, nil
 }
 
+//Eval evaluates the function given a value.
 func (this *composedBool) Eval(val parser.Value) (bool, error) {
 	for _, s := range this.Setters {
 		s.SetValue(val)
@@ -93,6 +92,7 @@ func (this *composedBool) Eval(val parser.Value) (bool, error) {
 	return this.Func.Eval()
 }
 
+//FuncImplements returns all the functions in the function tree that implements the provided type.
 func FuncImplements(i interface{}, typ reflect.Type) []interface{} {
 	e := reflect.ValueOf(i).Elem()
 	var is []interface{}
@@ -101,7 +101,7 @@ func FuncImplements(i interface{}, typ reflect.Type) []interface{} {
 			continue
 		}
 		if e.Field(i).Elem().Type().Implements(listOfTyp) {
-			is = append(is, ListImplements(e.Field(i).Interface(), typ)...)
+			is = append(is, listImplements(e.Field(i).Interface(), typ)...)
 		} else {
 			is = append(is, FuncImplements(e.Field(i).Interface(), typ)...)
 		}
@@ -112,7 +112,7 @@ func FuncImplements(i interface{}, typ reflect.Type) []interface{} {
 	return is
 }
 
-func ListImplements(i interface{}, typ reflect.Type) []interface{} {
+func listImplements(i interface{}, typ reflect.Type) []interface{} {
 	e := reflect.ValueOf(i).Elem()
 	var is []interface{}
 	list := e.Field(0)

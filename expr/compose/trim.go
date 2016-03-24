@@ -29,6 +29,8 @@ func (this *errNotConst) Error() string {
 	return fmt.Sprintf("%s has constant %s which has a variable parameter", reflect.ValueOf(this.f).Elem().Type().Name(), this.field.Elem().Type())
 }
 
+//TrimBool returns a simplified version of the function work that can be done at compile time has been completed.
+//This means that any part of the function, that does not contain any variables, has been evaluated and replaced with a constant.
 func TrimBool(f funcs.Bool) (funcs.Bool, error) {
 	trimmed, err := trim(f)
 	if err != nil {

@@ -51,7 +51,7 @@ func TestComposeNot(t *testing.T) {
 	if r != true {
 		t.Fatalf("expected true")
 	}
-	str := funcs.Sprint(f.Func)
+	str := funcs.Sprint(f.(*composedBool).Func)
 	if str != "true" {
 		t.Fatalf("trimming did not work: %s", str)
 	}
@@ -86,7 +86,7 @@ func TestComposeContains(t *testing.T) {
 	if r != false {
 		t.Fatalf("expected false")
 	}
-	if strings.Contains(funcs.Sprint(f.Func), "toLower(`TheStreet`)") {
+	if strings.Contains(funcs.Sprint(f.(*composedBool).Func), "toLower(`TheStreet`)") {
 		t.Fatalf("trimming did not work")
 	}
 }
@@ -138,7 +138,7 @@ func TestComposeListBool(t *testing.T) {
 	if r != true {
 		t.Fatalf("expected true")
 	}
-	str := funcs.Sprint(f.Func)
+	str := funcs.Sprint(f.(*composedBool).Func)
 	if str != "true" {
 		t.Fatalf("trimming did not work: %s", str)
 	}
@@ -172,7 +172,7 @@ func TestComposeListInt64(t *testing.T) {
 	if r != true {
 		t.Fatalf("expected true")
 	}
-	t.Logf("%s", funcs.Sprint(f.Func))
+	t.Logf("%s", funcs.Sprint(f.(*composedBool).Func))
 }
 
 func TestComposeRegex(t *testing.T) {
@@ -257,7 +257,7 @@ func TestNoTrim(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	str := funcs.Sprint(f.Func)
+	str := funcs.Sprint(f.(*composedBool).Func)
 	if str == "false" {
 		t.Fatalf("too much trimming")
 	}
@@ -289,7 +289,7 @@ func TestList(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	str := funcs.Sprint(f.Func)
+	str := funcs.Sprint(f.(*composedBool).Func)
 	if str != "true" {
 		t.Fatalf("not enough trimming on %s", str)
 	}

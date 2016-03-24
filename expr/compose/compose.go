@@ -12,6 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+//The compose package compiles a parsed expression for evaluation.
 package compose
 
 import (
@@ -20,6 +21,62 @@ import (
 	"github.com/katydid/katydid/expr/funcs"
 	"github.com/katydid/katydid/expr/types"
 )
+
+//Which returns the type that the expression will return.
+func Which(expr *expr.Expr) (types.Type, error) {
+	if expr.Terminal != nil {
+		term := expr.GetTerminal()
+		if term.DoubleValue != nil {
+			return types.SINGLE_DOUBLE, nil
+		}
+		if term.IntValue != nil {
+			return types.SINGLE_INT, nil
+		}
+		if term.UintValue != nil {
+			return types.SINGLE_UINT, nil
+		}
+		if term.BoolValue != nil {
+			return types.SINGLE_BOOL, nil
+		}
+		if term.StringValue != nil {
+			return types.SINGLE_STRING, nil
+		}
+		if term.BytesValue != nil {
+			return types.SINGLE_BYTES, nil
+		}
+		if term.Variable != nil {
+			return term.Variable.Type, nil
+		}
+	}
+	if expr.List != nil {
+		return expr.GetList().GetType(), nil
+	}
+	if expr.Function != nil {
+		fnc := expr.GetFunction()
+		uniq, err := WhichFunc(fnc)
+		if err != nil {
+			return 0, err
+		}
+		return funcs.Out(uniq)
+	}
+	return 0, &errUnknownType{expr}
+}
+
+//WhichFunc returns the unique name of the function, given the types of the parameters.
+//For example, a function named eq could have a unique name of intEq, doubleEq, etc.
+func WhichFunc(fnc *expr.Function) (string, error) {
+	types := make([]types.Type, 0, len(fnc.GetParams()))
+	for _, p := range fnc.GetParams() {
+		typ, err := Which(p)
+		if err != nil {
+			return "", err
+		}
+		if typ > 0 {
+			types = append(types, typ)
+		}
+	}
+	return funcs.Which(fnc.GetName(), types...)
+}
 
 type errExpected struct {
 	typ  string
@@ -136,57 +193,4 @@ func newValue(p *expr.Expr) (interface{}, error) {
 		return composeListOfBytes(p)
 	}
 	panic("not implemented")
-}
-
-func WhichFunc(fnc *expr.Function) (string, error) {
-	types := make([]types.Type, 0, len(fnc.GetParams()))
-	for _, p := range fnc.GetParams() {
-		typ, err := Which(p)
-		if err != nil {
-			return "", err
-		}
-		if typ > 0 {
-			types = append(types, typ)
-		}
-	}
-	return funcs.Which(fnc.GetName(), types...)
-}
-
-func Which(expr *expr.Expr) (types.Type, error) {
-	if expr.Terminal != nil {
-		term := expr.GetTerminal()
-		if term.DoubleValue != nil {
-			return types.SINGLE_DOUBLE, nil
-		}
-		if term.IntValue != nil {
-			return types.SINGLE_INT, nil
-		}
-		if term.UintValue != nil {
-			return types.SINGLE_UINT, nil
-		}
-		if term.BoolValue != nil {
-			return types.SINGLE_BOOL, nil
-		}
-		if term.StringValue != nil {
-			return types.SINGLE_STRING, nil
-		}
-		if term.BytesValue != nil {
-			return types.SINGLE_BYTES, nil
-		}
-		if term.Variable != nil {
-			return term.Variable.Type, nil
-		}
-	}
-	if expr.List != nil {
-		return expr.GetList().GetType(), nil
-	}
-	if expr.Function != nil {
-		fnc := expr.GetFunction()
-		uniq, err := WhichFunc(fnc)
-		if err != nil {
-			return 0, err
-		}
-		return funcs.Out(uniq)
-	}
-	return 0, &errUnknownType{expr}
 }
