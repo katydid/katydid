@@ -15,7 +15,6 @@
 package parser_test
 
 import (
-	"github.com/katydid/katydid/relapse/lexer"
 	"github.com/katydid/katydid/relapse/parser"
 	"testing"
 )
@@ -130,8 +129,7 @@ func TestParse(t *testing.T) {
 	p := parser.NewParser()
 	for i, patternDecl := range patternDecls {
 		t.Logf("parsing %d", i)
-		scanner := lexer.NewLexer([]byte(patternDecl))
-		st, err := p.ParseGrammar(scanner)
+		st, err := p.ParseGrammar(patternDecl)
 		if err != nil {
 			t.Errorf("err = %v, input = %s", err, patternDecl)
 		} else {

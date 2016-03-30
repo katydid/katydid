@@ -20,13 +20,12 @@ import (
 	"github.com/katydid/katydid/expr/lexer"
 )
 
-//ErrWrongType contains the value that failed to assert to *expr.Expr
-type ErrWrongType struct {
+type errWrongType struct {
 	typ string
 	res interface{}
 }
 
-func (this *ErrWrongType) Error() string {
+func (this *errWrongType) Error() string {
 	return fmt.Sprintf("expected %s, but got %#v", this.typ, this.res)
 }
 
@@ -39,7 +38,7 @@ func (this *Parser) ParseExpr(s string) (res *expr.Expr, err error) {
 	}
 	expr, ok := e.(*expr.Expr)
 	if !ok {
-		return nil, &ErrWrongType{"*expr.Expr", e}
+		return nil, &errWrongType{"*expr.Expr", e}
 	}
 	return expr, nil
 }

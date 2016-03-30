@@ -20,29 +20,31 @@ import (
 	"github.com/katydid/katydid/relapse/lexer"
 )
 
-type ErrWrongType struct {
+type errWrongType struct {
 	typ string
 	res interface{}
 }
 
-func (this *ErrWrongType) Error() string {
+func (this *errWrongType) Error() string {
 	return fmt.Sprintf("expected %s, but got %#v", this.typ, this.res)
 }
 
-func (this *Parser) ParseGrammar(scanner Scanner) (*relapse.Grammar, error) {
+//ParseGrammar parses a relapse grammar and returns an abstract syntax tree.
+func (this *Parser) ParseGrammar(s string) (*relapse.Grammar, error) {
+	scanner := lexer.NewLexer([]byte(s))
 	g, err := this.Parse(scanner)
 	if err != nil {
 		return nil, err
 	}
 	gram, ok := g.(*relapse.Grammar)
 	if !ok {
-		return nil, &ErrWrongType{"*relapse.Grammar", g}
+		return nil, &errWrongType{"*relapse.Grammar", g}
 	}
 	return gram, nil
 }
 
+//ParseGrammar parses a relapse grammar and returns an abstract syntax tree.
 func ParseGrammar(s string) (*relapse.Grammar, error) {
 	p := NewParser()
-	scanner := lexer.NewLexer([]byte(s))
-	return p.ParseGrammar(scanner)
+	return p.ParseGrammar(s)
 }
