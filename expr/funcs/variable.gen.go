@@ -32,6 +32,7 @@ func (this *varDouble) String() string {
 	return "$double"
 }
 
+//DoubleVar returns a variable of type Double
 func DoubleVar() *varDouble {
 	return &varDouble{}
 }
@@ -61,6 +62,7 @@ func (this *varInt) String() string {
 	return "$int"
 }
 
+//IntVar returns a variable of type Int
 func IntVar() *varInt {
 	return &varInt{}
 }
@@ -90,6 +92,7 @@ func (this *varUint) String() string {
 	return "$uint"
 }
 
+//UintVar returns a variable of type Uint
 func UintVar() *varUint {
 	return &varUint{}
 }
@@ -119,6 +122,7 @@ func (this *varBool) String() string {
 	return "$bool"
 }
 
+//BoolVar returns a variable of type Bool
 func BoolVar() *varBool {
 	return &varBool{}
 }
@@ -148,6 +152,7 @@ func (this *varString) String() string {
 	return "$string"
 }
 
+//StringVar returns a variable of type String
 func StringVar() *varString {
 	return &varString{}
 }
@@ -177,6 +182,7 @@ func (this *varBytes) String() string {
 	return "$[]byte"
 }
 
+//BytesVar returns a variable of type Bytes
 func BytesVar() *varBytes {
 	return &varBytes{}
 }

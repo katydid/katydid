@@ -119,7 +119,7 @@ var SyscallSrcTree = &SrcTree{
 var RecursiveSrcTree = G{
 	"main": AnyOf(
 		InOrder(
-			In("PackageName", Value(StringVarEq(StringConst("io")))),
+			In("PackageName", Value(StringEq(StringVar(), StringConst("io")))),
 			Any(),
 		),
 		InOrder(

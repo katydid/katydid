@@ -49,6 +49,7 @@ func init() {
 	Register("range", new(rangeDoubles))
 }
 
+//RangeDoubles returns a function that returns a range of elements from a list.
 func RangeDoubles(list Doubles, from, to Int) Doubles {
 	return &rangeDoubles{
 		List:  list,
@@ -103,6 +104,7 @@ func init() {
 	Register("range", new(rangeInts))
 }
 
+//RangeInts returns a function that returns a range of elements from a list.
 func RangeInts(list Ints, from, to Int) Ints {
 	return &rangeInts{
 		List:  list,
@@ -157,6 +159,7 @@ func init() {
 	Register("range", new(rangeUints))
 }
 
+//RangeUints returns a function that returns a range of elements from a list.
 func RangeUints(list Uints, from, to Int) Uints {
 	return &rangeUints{
 		List:  list,
@@ -211,6 +214,7 @@ func init() {
 	Register("range", new(rangeBools))
 }
 
+//RangeBools returns a function that returns a range of elements from a list.
 func RangeBools(list Bools, from, to Int) Bools {
 	return &rangeBools{
 		List:  list,
@@ -265,6 +269,7 @@ func init() {
 	Register("range", new(rangeStrings))
 }
 
+//RangeStrings returns a function that returns a range of elements from a list.
 func RangeStrings(list Strings, from, to Int) Strings {
 	return &rangeStrings{
 		List:  list,
@@ -319,6 +324,7 @@ func init() {
 	Register("range", new(rangeListOfBytes))
 }
 
+//RangeListOfBytes returns a function that returns a range of elements from a list.
 func RangeListOfBytes(list ListOfBytes, from, to Int) ListOfBytes {
 	return &rangeListOfBytes{
 		List:  list,

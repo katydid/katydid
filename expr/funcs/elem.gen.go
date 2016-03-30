@@ -34,10 +34,11 @@ func init() {
 	Register("elem", new(elemDoubles))
 }
 
-func ElemDoubles(list Doubles, index Int) Double {
+//ElemDoubles returns a function that returns the n'th element of the list.
+func ElemDoubles(list Doubles, n Int) Double {
 	return &elemDoubles{
 		List:  list,
-		Index: index,
+		Index: n,
 	}
 }
 
@@ -72,10 +73,11 @@ func init() {
 	Register("elem", new(elemInts))
 }
 
-func ElemInts(list Ints, index Int) Int {
+//ElemInts returns a function that returns the n'th element of the list.
+func ElemInts(list Ints, n Int) Int {
 	return &elemInts{
 		List:  list,
-		Index: index,
+		Index: n,
 	}
 }
 
@@ -110,10 +112,11 @@ func init() {
 	Register("elem", new(elemUints))
 }
 
-func ElemUints(list Uints, index Int) Uint {
+//ElemUints returns a function that returns the n'th element of the list.
+func ElemUints(list Uints, n Int) Uint {
 	return &elemUints{
 		List:  list,
-		Index: index,
+		Index: n,
 	}
 }
 
@@ -148,10 +151,11 @@ func init() {
 	Register("elem", new(elemBools))
 }
 
-func ElemBools(list Bools, index Int) Bool {
+//ElemBools returns a function that returns the n'th element of the list.
+func ElemBools(list Bools, n Int) Bool {
 	return &elemBools{
 		List:  list,
-		Index: index,
+		Index: n,
 	}
 }
 
@@ -186,10 +190,11 @@ func init() {
 	Register("elem", new(elemStrings))
 }
 
-func ElemStrings(list Strings, index Int) String {
+//ElemStrings returns a function that returns the n'th element of the list.
+func ElemStrings(list Strings, n Int) String {
 	return &elemStrings{
 		List:  list,
-		Index: index,
+		Index: n,
 	}
 }
 
@@ -224,9 +229,10 @@ func init() {
 	Register("elem", new(elemListOfBytes))
 }
 
-func ElemListOfBytes(list ListOfBytes, index Int) Bytes {
+//ElemListOfBytes returns a function that returns the n'th element of the list.
+func ElemListOfBytes(list ListOfBytes, n Int) Bytes {
 	return &elemListOfBytes{
 		List:  list,
-		Index: index,
+		Index: n,
 	}
 }

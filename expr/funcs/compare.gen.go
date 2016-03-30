@@ -28,12 +28,9 @@ func init() {
 	Register("ge", new(doubleGE))
 }
 
+// DoubleGE returns a new greater than or equal function.
 func DoubleGE(a, b Double) Bool {
 	return &doubleGE{V1: a, V2: b}
-}
-
-func DoubleVarGE(a Double) Bool {
-	return &doubleGE{V1: a, V2: DoubleVar()}
 }
 
 type intGE struct {
@@ -57,12 +54,9 @@ func init() {
 	Register("ge", new(intGE))
 }
 
+// IntGE returns a new greater than or equal function.
 func IntGE(a, b Int) Bool {
 	return &intGE{V1: a, V2: b}
-}
-
-func IntVarGE(a Int) Bool {
-	return &intGE{V1: a, V2: IntVar()}
 }
 
 type uintGE struct {
@@ -86,12 +80,9 @@ func init() {
 	Register("ge", new(uintGE))
 }
 
+// UintGE returns a new greater than or equal function.
 func UintGE(a, b Uint) Bool {
 	return &uintGE{V1: a, V2: b}
-}
-
-func UintVarGE(a Uint) Bool {
-	return &uintGE{V1: a, V2: UintVar()}
 }
 
 type bytesGE struct {
@@ -115,12 +106,9 @@ func init() {
 	Register("ge", new(bytesGE))
 }
 
+// BytesGE returns a new greater than or equal function.
 func BytesGE(a, b Bytes) Bool {
 	return &bytesGE{V1: a, V2: b}
-}
-
-func BytesVarGE(a Bytes) Bool {
-	return &bytesGE{V1: a, V2: BytesVar()}
 }
 
 type doubleGt struct {
@@ -144,12 +132,9 @@ func init() {
 	Register("gt", new(doubleGt))
 }
 
+// DoubleGt returns a new greater than function.
 func DoubleGt(a, b Double) Bool {
 	return &doubleGt{V1: a, V2: b}
-}
-
-func DoubleVarGt(a Double) Bool {
-	return &doubleGt{V1: a, V2: DoubleVar()}
 }
 
 type intGt struct {
@@ -173,12 +158,9 @@ func init() {
 	Register("gt", new(intGt))
 }
 
+// IntGt returns a new greater than function.
 func IntGt(a, b Int) Bool {
 	return &intGt{V1: a, V2: b}
-}
-
-func IntVarGt(a Int) Bool {
-	return &intGt{V1: a, V2: IntVar()}
 }
 
 type uintGt struct {
@@ -202,12 +184,9 @@ func init() {
 	Register("gt", new(uintGt))
 }
 
+// UintGt returns a new greater than function.
 func UintGt(a, b Uint) Bool {
 	return &uintGt{V1: a, V2: b}
-}
-
-func UintVarGt(a Uint) Bool {
-	return &uintGt{V1: a, V2: UintVar()}
 }
 
 type bytesGt struct {
@@ -231,12 +210,9 @@ func init() {
 	Register("gt", new(bytesGt))
 }
 
+// BytesGt returns a new greater than function.
 func BytesGt(a, b Bytes) Bool {
 	return &bytesGt{V1: a, V2: b}
-}
-
-func BytesVarGt(a Bytes) Bool {
-	return &bytesGt{V1: a, V2: BytesVar()}
 }
 
 type doubleLE struct {
@@ -260,12 +236,9 @@ func init() {
 	Register("le", new(doubleLE))
 }
 
+// DoubleLE returns a new less than or equal function.
 func DoubleLE(a, b Double) Bool {
 	return &doubleLE{V1: a, V2: b}
-}
-
-func DoubleVarLE(a Double) Bool {
-	return &doubleLE{V1: a, V2: DoubleVar()}
 }
 
 type intLE struct {
@@ -289,12 +262,9 @@ func init() {
 	Register("le", new(intLE))
 }
 
+// IntLE returns a new less than or equal function.
 func IntLE(a, b Int) Bool {
 	return &intLE{V1: a, V2: b}
-}
-
-func IntVarLE(a Int) Bool {
-	return &intLE{V1: a, V2: IntVar()}
 }
 
 type uintLE struct {
@@ -318,12 +288,9 @@ func init() {
 	Register("le", new(uintLE))
 }
 
+// UintLE returns a new less than or equal function.
 func UintLE(a, b Uint) Bool {
 	return &uintLE{V1: a, V2: b}
-}
-
-func UintVarLE(a Uint) Bool {
-	return &uintLE{V1: a, V2: UintVar()}
 }
 
 type bytesLE struct {
@@ -347,12 +314,9 @@ func init() {
 	Register("le", new(bytesLE))
 }
 
+// BytesLE returns a new less than or equal function.
 func BytesLE(a, b Bytes) Bool {
 	return &bytesLE{V1: a, V2: b}
-}
-
-func BytesVarLE(a Bytes) Bool {
-	return &bytesLE{V1: a, V2: BytesVar()}
 }
 
 type doubleLt struct {
@@ -376,12 +340,9 @@ func init() {
 	Register("lt", new(doubleLt))
 }
 
+// DoubleLt returns a new less than function.
 func DoubleLt(a, b Double) Bool {
 	return &doubleLt{V1: a, V2: b}
-}
-
-func DoubleVarLt(a Double) Bool {
-	return &doubleLt{V1: a, V2: DoubleVar()}
 }
 
 type intLt struct {
@@ -405,12 +366,9 @@ func init() {
 	Register("lt", new(intLt))
 }
 
+// IntLt returns a new less than function.
 func IntLt(a, b Int) Bool {
 	return &intLt{V1: a, V2: b}
-}
-
-func IntVarLt(a Int) Bool {
-	return &intLt{V1: a, V2: IntVar()}
 }
 
 type uintLt struct {
@@ -434,12 +392,9 @@ func init() {
 	Register("lt", new(uintLt))
 }
 
+// UintLt returns a new less than function.
 func UintLt(a, b Uint) Bool {
 	return &uintLt{V1: a, V2: b}
-}
-
-func UintVarLt(a Uint) Bool {
-	return &uintLt{V1: a, V2: UintVar()}
 }
 
 type bytesLt struct {
@@ -463,12 +418,9 @@ func init() {
 	Register("lt", new(bytesLt))
 }
 
+// BytesLt returns a new less than function.
 func BytesLt(a, b Bytes) Bool {
 	return &bytesLt{V1: a, V2: b}
-}
-
-func BytesVarLt(a Bytes) Bool {
-	return &bytesLt{V1: a, V2: BytesVar()}
 }
 
 type doubleEq struct {
@@ -492,12 +444,9 @@ func init() {
 	Register("eq", new(doubleEq))
 }
 
+// DoubleEq returns a new equal function.
 func DoubleEq(a, b Double) Bool {
 	return &doubleEq{V1: a, V2: b}
-}
-
-func DoubleVarEq(a Double) Bool {
-	return &doubleEq{V1: a, V2: DoubleVar()}
 }
 
 type intEq struct {
@@ -521,12 +470,9 @@ func init() {
 	Register("eq", new(intEq))
 }
 
+// IntEq returns a new equal function.
 func IntEq(a, b Int) Bool {
 	return &intEq{V1: a, V2: b}
-}
-
-func IntVarEq(a Int) Bool {
-	return &intEq{V1: a, V2: IntVar()}
 }
 
 type uintEq struct {
@@ -550,12 +496,9 @@ func init() {
 	Register("eq", new(uintEq))
 }
 
+// UintEq returns a new equal function.
 func UintEq(a, b Uint) Bool {
 	return &uintEq{V1: a, V2: b}
-}
-
-func UintVarEq(a Uint) Bool {
-	return &uintEq{V1: a, V2: UintVar()}
 }
 
 type boolEq struct {
@@ -579,12 +522,9 @@ func init() {
 	Register("eq", new(boolEq))
 }
 
+// BoolEq returns a new equal function.
 func BoolEq(a, b Bool) Bool {
 	return &boolEq{V1: a, V2: b}
-}
-
-func BoolVarEq(a Bool) Bool {
-	return &boolEq{V1: a, V2: BoolVar()}
 }
 
 type stringEq struct {
@@ -608,12 +548,9 @@ func init() {
 	Register("eq", new(stringEq))
 }
 
+// StringEq returns a new equal function.
 func StringEq(a, b String) Bool {
 	return &stringEq{V1: a, V2: b}
-}
-
-func StringVarEq(a String) Bool {
-	return &stringEq{V1: a, V2: StringVar()}
 }
 
 type bytesEq struct {
@@ -637,12 +574,9 @@ func init() {
 	Register("eq", new(bytesEq))
 }
 
+// BytesEq returns a new equal function.
 func BytesEq(a, b Bytes) Bool {
 	return &bytesEq{V1: a, V2: b}
-}
-
-func BytesVarEq(a Bytes) Bool {
-	return &bytesEq{V1: a, V2: BytesVar()}
 }
 
 type doubleNe struct {
@@ -666,12 +600,9 @@ func init() {
 	Register("ne", new(doubleNe))
 }
 
+// DoubleNe returns a new not equal function.
 func DoubleNe(a, b Double) Bool {
 	return &doubleNe{V1: a, V2: b}
-}
-
-func DoubleVarNe(a Double) Bool {
-	return &doubleNe{V1: a, V2: DoubleVar()}
 }
 
 type intNe struct {
@@ -695,12 +626,9 @@ func init() {
 	Register("ne", new(intNe))
 }
 
+// IntNe returns a new not equal function.
 func IntNe(a, b Int) Bool {
 	return &intNe{V1: a, V2: b}
-}
-
-func IntVarNe(a Int) Bool {
-	return &intNe{V1: a, V2: IntVar()}
 }
 
 type uintNe struct {
@@ -724,12 +652,9 @@ func init() {
 	Register("ne", new(uintNe))
 }
 
+// UintNe returns a new not equal function.
 func UintNe(a, b Uint) Bool {
 	return &uintNe{V1: a, V2: b}
-}
-
-func UintVarNe(a Uint) Bool {
-	return &uintNe{V1: a, V2: UintVar()}
 }
 
 type boolNe struct {
@@ -753,12 +678,9 @@ func init() {
 	Register("ne", new(boolNe))
 }
 
+// BoolNe returns a new not equal function.
 func BoolNe(a, b Bool) Bool {
 	return &boolNe{V1: a, V2: b}
-}
-
-func BoolVarNe(a Bool) Bool {
-	return &boolNe{V1: a, V2: BoolVar()}
 }
 
 type stringNe struct {
@@ -782,12 +704,9 @@ func init() {
 	Register("ne", new(stringNe))
 }
 
+// StringNe returns a new not equal function.
 func StringNe(a, b String) Bool {
 	return &stringNe{V1: a, V2: b}
-}
-
-func StringVarNe(a String) Bool {
-	return &stringNe{V1: a, V2: StringVar()}
 }
 
 type bytesNe struct {
@@ -811,10 +730,7 @@ func init() {
 	Register("ne", new(bytesNe))
 }
 
+// BytesNe returns a new not equal function.
 func BytesNe(a, b Bytes) Bool {
 	return &bytesNe{V1: a, V2: b}
-}
-
-func BytesVarNe(a Bytes) Bool {
-	return &bytesNe{V1: a, V2: BytesVar()}
 }

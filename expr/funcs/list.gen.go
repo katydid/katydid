@@ -11,6 +11,7 @@ type listOfDouble struct {
 	List []Double
 }
 
+//NewListOfDouble returns a new function that when evaluated returns a list of type Double
 func NewListOfDouble(v []Double) Doubles {
 	return &listOfDouble{v}
 }
@@ -41,6 +42,7 @@ type listOfInt struct {
 	List []Int
 }
 
+//NewListOfInt returns a new function that when evaluated returns a list of type Int
 func NewListOfInt(v []Int) Ints {
 	return &listOfInt{v}
 }
@@ -71,6 +73,7 @@ type listOfUint struct {
 	List []Uint
 }
 
+//NewListOfUint returns a new function that when evaluated returns a list of type Uint
 func NewListOfUint(v []Uint) Uints {
 	return &listOfUint{v}
 }
@@ -101,6 +104,7 @@ type listOfBool struct {
 	List []Bool
 }
 
+//NewListOfBool returns a new function that when evaluated returns a list of type Bool
 func NewListOfBool(v []Bool) Bools {
 	return &listOfBool{v}
 }
@@ -131,6 +135,7 @@ type listOfString struct {
 	List []String
 }
 
+//NewListOfString returns a new function that when evaluated returns a list of type String
 func NewListOfString(v []String) Strings {
 	return &listOfString{v}
 }
@@ -161,6 +166,7 @@ type listOfBytes struct {
 	List []Bytes
 }
 
+//NewListOfBytes returns a new function that when evaluated returns a list of type Bytes
 func NewListOfBytes(v []Bytes) ListOfBytes {
 	return &listOfBytes{v}
 }

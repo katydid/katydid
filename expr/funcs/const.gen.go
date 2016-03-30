@@ -19,6 +19,7 @@ type constDouble struct {
 	v float64
 }
 
+//DoubleConst returns a new constant function of type Double
 func DoubleConst(v float64) ConstDouble {
 	return &constDouble{v}
 }
@@ -43,6 +44,7 @@ type constInt struct {
 	v int64
 }
 
+//IntConst returns a new constant function of type Int
 func IntConst(v int64) ConstInt {
 	return &constInt{v}
 }
@@ -67,6 +69,7 @@ type constUint struct {
 	v uint64
 }
 
+//UintConst returns a new constant function of type Uint
 func UintConst(v uint64) ConstUint {
 	return &constUint{v}
 }
@@ -91,6 +94,7 @@ type constBool struct {
 	v bool
 }
 
+//BoolConst returns a new constant function of type Bool
 func BoolConst(v bool) ConstBool {
 	return &constBool{v}
 }
@@ -115,6 +119,7 @@ type constString struct {
 	v string
 }
 
+//StringConst returns a new constant function of type String
 func StringConst(v string) ConstString {
 	return &constString{v}
 }
@@ -139,6 +144,7 @@ type constBytes struct {
 	v []byte
 }
 
+//BytesConst returns a new constant function of type Bytes
 func BytesConst(v []byte) ConstBytes {
 	return &constBytes{v}
 }
@@ -163,6 +169,7 @@ type constDoubles struct {
 	v []float64
 }
 
+//DoublesConst returns a new constant function of type Doubles
 func DoublesConst(v []float64) ConstDoubles {
 	return &constDoubles{v}
 }
@@ -191,6 +198,7 @@ type constInts struct {
 	v []int64
 }
 
+//IntsConst returns a new constant function of type Ints
 func IntsConst(v []int64) ConstInts {
 	return &constInts{v}
 }
@@ -219,6 +227,7 @@ type constUints struct {
 	v []uint64
 }
 
+//UintsConst returns a new constant function of type Uints
 func UintsConst(v []uint64) ConstUints {
 	return &constUints{v}
 }
@@ -247,6 +256,7 @@ type constBools struct {
 	v []bool
 }
 
+//BoolsConst returns a new constant function of type Bools
 func BoolsConst(v []bool) ConstBools {
 	return &constBools{v}
 }
@@ -275,6 +285,7 @@ type constStrings struct {
 	v []string
 }
 
+//StringsConst returns a new constant function of type Strings
 func StringsConst(v []string) ConstStrings {
 	return &constStrings{v}
 }
@@ -303,6 +314,7 @@ type constListOfBytes struct {
 	v [][]byte
 }
 
+//ListOfBytesConst returns a new constant function of type ListOfBytes
 func ListOfBytesConst(v [][]byte) ConstListOfBytes {
 	return &constListOfBytes{v}
 }

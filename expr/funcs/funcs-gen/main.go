@@ -42,12 +42,9 @@ func init() {
 	Register("{{.Name}}", new({{.Type}}{{.CName}}))
 }
 
+// {{.CType}}{{.CName}} returns a new {{.Comment}} function.
 func {{.CType}}{{.CName}}(a, b {{.CType}}) Bool {
 	return &{{.Type}}{{.CName}}{V1: a, V2: b}
-}
-
-func {{.CType}}Var{{.CName}}(a {{.CType}}) Bool {
-	return &{{.Type}}{{.CName}}{V1: a, V2: {{.CType}}Var()}
 }
 `
 
@@ -58,6 +55,7 @@ type compare struct {
 	Eval     string
 	CType    string
 	Error    string
+	Comment  string
 }
 
 func (this *compare) CName() string {
@@ -68,6 +66,8 @@ func (this *compare) CName() string {
 }
 
 const newFuncStr = `
+//New{{.}}Func dynamically creates and asserts the returning function is of type {{.}}.
+//This function is used by the compose library to compile functions together.
 func New{{.}}Func(uniq string, values ...interface{}) ({{.}}, error) {
 	f, err := newFunc(uniq, values...)
 	if err != nil {
@@ -88,6 +88,7 @@ type const{{.CType}} struct {
 	v {{.GoType}}
 }
 
+//{{.CType}}Const returns a new constant function of type {{.CType}}
 func {{.CType}}Const(v {{.GoType}}) Const{{.CType}} {
 	return &const{{.CType}}{v}
 }
@@ -119,6 +120,7 @@ type listOf{{.FuncType}} struct {
 	List []{{.FuncType}}
 }
 
+//NewListOf{{.FuncType}} returns a new function that when evaluated returns a list of type {{.FuncType}}
 func NewListOf{{.FuncType}}(v []{{.FuncType}}) {{.CType}} {
 	return &listOf{{.FuncType}}{v}
 }
@@ -173,6 +175,7 @@ func init() {
 	Register("print", new(print{{.Name}}))
 }
 
+//Print{{.Name}} returns a function that prints out the value of the argument function and returns its value.
 func Print{{.Name}}(e {{.Name}}) {{.Name}} {
 	return &print{{.Name}}{E: e}
 }
@@ -200,6 +203,7 @@ func init() {
 	Register("length", new(len{{.}}))
 }
 
+//Len{{.}} returns a function that returns the length of a list of type {{.}}
 func Len{{.}}(e {{.}}) Int {
 	return &len{{.}}{E: e}
 }
@@ -237,10 +241,11 @@ func init() {
 	Register("elem", new(elem{{.ListType}}))
 }
 
-func Elem{{.ListType}}(list {{.ListType}}, index Int) {{.ThrowType}} {
+//Elem{{.ListType}} returns a function that returns the n'th element of the list.
+func Elem{{.ListType}}(list {{.ListType}}, n Int) {{.ThrowType}} {
 	return &elem{{.ListType}}{
 		List: list,
-		Index: index,
+		Index: n,
 	}
 }
 `
@@ -299,6 +304,7 @@ func init() {
 	Register("range", new(range{{.ListType}}))
 }
 
+//Range{{.ListType}} returns a function that returns a range of elements from a list.
 func Range{{.ListType}}(list {{.ListType}}, from, to Int) {{.ListType}} {
 	return &range{{.ListType}}{
 		List: list,
@@ -339,6 +345,7 @@ func (this *var{{.Name}}) String() string {
 	return "${{.Decode}}"
 }
 
+//{{.Name}}Var returns a variable of type {{.Name}}
 func {{.Name}}Var() *var{{.Name}} {
 	return &var{{.Name}}{}
 }
@@ -366,6 +373,7 @@ func init() {
 	Register("type", new(typ{{.Name}}))
 }
 
+//Type{{.Name}} returns a function that returns true if the error returned by the argument function is nil.
 func Type{{.Name}}(v {{.Name}}) Bool {
 	return &typ{{.Name}}{E: v}
 }
@@ -407,8 +415,9 @@ func init() {
 	Register("contains", new(inSet{{.Name}}))
 }
 
-func Contains{{.Name}}(e {{.Name}}, l {{.ConstListType}}) Bool {
-	return &inSet{{.Name}}{e, l, nil}
+//Contains{{.Name}} returns a function that checks when the element if contained in the list.
+func Contains{{.Name}}(element {{.Name}}, list {{.ConstListType}}) Bool {
+	return &inSet{{.Name}}{element, list, nil}
 }
 `
 
@@ -421,34 +430,34 @@ type inSeter struct {
 func main() {
 	gen := gen.NewPackage("funcs")
 	gen(compareStr, "compare.gen.go", []interface{}{
-		&compare{"ge", ">=", "double", "", "Double", "false"},
-		&compare{"ge", ">=", "int", "", "Int", "false"},
-		&compare{"ge", ">=", "uint", "", "Uint", "false"},
-		&compare{"ge", "", "bytes", "return bytes.Compare(v1, v2) >= 0, nil", "Bytes", "false"},
-		&compare{"gt", ">", "double", "", "Double", "false"},
-		&compare{"gt", ">", "int", "", "Int", "false"},
-		&compare{"gt", ">", "uint", "", "Uint", "false"},
-		&compare{"gt", "", "bytes", "return bytes.Compare(v1, v2) > 0, nil", "Bytes", "false"},
-		&compare{"le", "<=", "double", "", "Double", "false"},
-		&compare{"le", "<=", "int", "", "Int", "false"},
-		&compare{"le", "<=", "uint", "", "Uint", "false"},
-		&compare{"le", "", "bytes", "return bytes.Compare(v1, v2) <= 0, nil", "Bytes", "false"},
-		&compare{"lt", "<", "double", "", "Double", "false"},
-		&compare{"lt", "<", "int", "", "Int", "false"},
-		&compare{"lt", "<", "uint", "", "Uint", "false"},
-		&compare{"lt", "", "bytes", "return bytes.Compare(v1, v2) < 0, nil", "Bytes", "false"},
-		&compare{"eq", "==", "double", "", "Double", "false"},
-		&compare{"eq", "==", "int", "", "Int", "false"},
-		&compare{"eq", "==", "uint", "", "Uint", "false"},
-		&compare{"eq", "==", "bool", "", "Bool", "false"},
-		&compare{"eq", "==", "string", "", "String", "false"},
-		&compare{"eq", "", "bytes", "return bytes.Equal(v1, v2), nil", "Bytes", "false"},
-		&compare{"ne", "!=", "double", "", "Double", "false"},
-		&compare{"ne", "!=", "int", "", "Int", "false"},
-		&compare{"ne", "!=", "uint", "", "Uint", "false"},
-		&compare{"ne", "!=", "bool", "", "Bool", "false"},
-		&compare{"ne", "!=", "string", "", "String", "false"},
-		&compare{"ne", "", "bytes", "return !bytes.Equal(v1, v2), nil", "Bytes", "false"},
+		&compare{"ge", ">=", "double", "", "Double", "false", "greater than or equal"},
+		&compare{"ge", ">=", "int", "", "Int", "false", "greater than or equal"},
+		&compare{"ge", ">=", "uint", "", "Uint", "false", "greater than or equal"},
+		&compare{"ge", "", "bytes", "return bytes.Compare(v1, v2) >= 0, nil", "Bytes", "false", "greater than or equal"},
+		&compare{"gt", ">", "double", "", "Double", "false", "greater than"},
+		&compare{"gt", ">", "int", "", "Int", "false", "greater than"},
+		&compare{"gt", ">", "uint", "", "Uint", "false", "greater than"},
+		&compare{"gt", "", "bytes", "return bytes.Compare(v1, v2) > 0, nil", "Bytes", "false", "greater than"},
+		&compare{"le", "<=", "double", "", "Double", "false", "less than or equal"},
+		&compare{"le", "<=", "int", "", "Int", "false", "less than or equal"},
+		&compare{"le", "<=", "uint", "", "Uint", "false", "less than or equal"},
+		&compare{"le", "", "bytes", "return bytes.Compare(v1, v2) <= 0, nil", "Bytes", "false", "less than or equal"},
+		&compare{"lt", "<", "double", "", "Double", "false", "less than"},
+		&compare{"lt", "<", "int", "", "Int", "false", "less than"},
+		&compare{"lt", "<", "uint", "", "Uint", "false", "less than"},
+		&compare{"lt", "", "bytes", "return bytes.Compare(v1, v2) < 0, nil", "Bytes", "false", "less than"},
+		&compare{"eq", "==", "double", "", "Double", "false", "equal"},
+		&compare{"eq", "==", "int", "", "Int", "false", "equal"},
+		&compare{"eq", "==", "uint", "", "Uint", "false", "equal"},
+		&compare{"eq", "==", "bool", "", "Bool", "false", "equal"},
+		&compare{"eq", "==", "string", "", "String", "false", "equal"},
+		&compare{"eq", "", "bytes", "return bytes.Equal(v1, v2), nil", "Bytes", "false", "equal"},
+		&compare{"ne", "!=", "double", "", "Double", "false", "not equal"},
+		&compare{"ne", "!=", "int", "", "Int", "false", "not equal"},
+		&compare{"ne", "!=", "uint", "", "Uint", "false", "not equal"},
+		&compare{"ne", "!=", "bool", "", "Bool", "false", "not equal"},
+		&compare{"ne", "!=", "string", "", "String", "false", "not equal"},
+		&compare{"ne", "", "bytes", "return !bytes.Equal(v1, v2), nil", "Bytes", "false", "not equal"},
 	}, `"bytes"`)
 	gen(newFuncStr, "newfunc.gen.go", []interface{}{
 		"Double",

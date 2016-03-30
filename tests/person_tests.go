@@ -48,8 +48,8 @@ var RobertPerson = &Person{
 
 //Has this person ever lived at 456 TheStreet
 var ContextPerson = G{"main": InPath("Addresses", InAny(InOrder(
-	In("Number", Value(IntVarEq(IntConst(456)))),
-	In("Street", Value(StringVarEq(StringConst("TheStreet")))),
+	In("Number", Value(IntEq(IntVar(), IntConst(456)))),
+	In("Street", Value(StringEq(StringVar(), StringConst("TheStreet")))),
 )))}
 
 func init() {
@@ -58,8 +58,8 @@ func init() {
 }
 
 var XmlContextPerson = G{"main": In("Person", InPath("Addresses",
-	In("Number", Value(IntVarEq(IntConst(456)))),
-	In("Street", Value(StringVarEq(StringConst("TheStreet")))),
+	In("Number", Value(IntEq(IntVar(), IntConst(456)))),
+	In("Street", Value(StringEq(StringVar(), StringConst("TheStreet")))),
 	Any(),
 ))}
 
@@ -173,8 +173,8 @@ var ListIndexAddressPerson = G{
 		Any(),
 		In("Addresses",
 			Any(),
-			InAny(InPath("Number", Value(IntVarEq(IntConst(2))))),
-			InAny(InPath("Number", Value(IntVarEq(IntConst(1))))),
+			InAny(InPath("Number", Value(IntEq(IntVar(), IntConst(2))))),
+			InAny(InPath("Number", Value(IntEq(IntVar(), IntConst(1))))),
 		),
 		Any(),
 	),

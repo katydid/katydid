@@ -16,6 +16,7 @@ func init() {
 	Register("type", new(typDouble))
 }
 
+//TypeDouble returns a function that returns true if the error returned by the argument function is nil.
 func TypeDouble(v Double) Bool {
 	return &typDouble{E: v}
 }
@@ -33,6 +34,7 @@ func init() {
 	Register("type", new(typInt))
 }
 
+//TypeInt returns a function that returns true if the error returned by the argument function is nil.
 func TypeInt(v Int) Bool {
 	return &typInt{E: v}
 }
@@ -50,6 +52,7 @@ func init() {
 	Register("type", new(typUint))
 }
 
+//TypeUint returns a function that returns true if the error returned by the argument function is nil.
 func TypeUint(v Uint) Bool {
 	return &typUint{E: v}
 }
@@ -67,6 +70,7 @@ func init() {
 	Register("type", new(typBool))
 }
 
+//TypeBool returns a function that returns true if the error returned by the argument function is nil.
 func TypeBool(v Bool) Bool {
 	return &typBool{E: v}
 }
@@ -84,6 +88,7 @@ func init() {
 	Register("type", new(typString))
 }
 
+//TypeString returns a function that returns true if the error returned by the argument function is nil.
 func TypeString(v String) Bool {
 	return &typString{E: v}
 }
@@ -101,6 +106,7 @@ func init() {
 	Register("type", new(typBytes))
 }
 
+//TypeBytes returns a function that returns true if the error returned by the argument function is nil.
 func TypeBytes(v Bytes) Bool {
 	return &typBytes{E: v}
 }

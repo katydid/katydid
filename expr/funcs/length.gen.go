@@ -19,6 +19,7 @@ func init() {
 	Register("length", new(lenDoubles))
 }
 
+//LenDoubles returns a function that returns the length of a list of type Doubles
 func LenDoubles(e Doubles) Int {
 	return &lenDoubles{E: e}
 }
@@ -39,6 +40,7 @@ func init() {
 	Register("length", new(lenInts))
 }
 
+//LenInts returns a function that returns the length of a list of type Ints
 func LenInts(e Ints) Int {
 	return &lenInts{E: e}
 }
@@ -59,6 +61,7 @@ func init() {
 	Register("length", new(lenUints))
 }
 
+//LenUints returns a function that returns the length of a list of type Uints
 func LenUints(e Uints) Int {
 	return &lenUints{E: e}
 }
@@ -79,6 +82,7 @@ func init() {
 	Register("length", new(lenBools))
 }
 
+//LenBools returns a function that returns the length of a list of type Bools
 func LenBools(e Bools) Int {
 	return &lenBools{E: e}
 }
@@ -99,6 +103,7 @@ func init() {
 	Register("length", new(lenStrings))
 }
 
+//LenStrings returns a function that returns the length of a list of type Strings
 func LenStrings(e Strings) Int {
 	return &lenStrings{E: e}
 }
@@ -119,6 +124,7 @@ func init() {
 	Register("length", new(lenListOfBytes))
 }
 
+//LenListOfBytes returns a function that returns the length of a list of type ListOfBytes
 func LenListOfBytes(e ListOfBytes) Int {
 	return &lenListOfBytes{E: e}
 }
@@ -139,6 +145,7 @@ func init() {
 	Register("length", new(lenString))
 }
 
+//LenString returns a function that returns the length of a list of type String
 func LenString(e String) Int {
 	return &lenString{E: e}
 }
@@ -159,6 +166,7 @@ func init() {
 	Register("length", new(lenBytes))
 }
 
+//LenBytes returns a function that returns the length of a list of type Bytes
 func LenBytes(e Bytes) Int {
 	return &lenBytes{E: e}
 }

@@ -27,6 +27,7 @@ func init() {
 	Register("print", new(printDouble))
 }
 
+//PrintDouble returns a function that prints out the value of the argument function and returns its value.
 func PrintDouble(e Double) Double {
 	return &printDouble{E: e}
 }
@@ -51,6 +52,7 @@ func init() {
 	Register("print", new(printInt))
 }
 
+//PrintInt returns a function that prints out the value of the argument function and returns its value.
 func PrintInt(e Int) Int {
 	return &printInt{E: e}
 }
@@ -75,6 +77,7 @@ func init() {
 	Register("print", new(printUint))
 }
 
+//PrintUint returns a function that prints out the value of the argument function and returns its value.
 func PrintUint(e Uint) Uint {
 	return &printUint{E: e}
 }
@@ -99,6 +102,7 @@ func init() {
 	Register("print", new(printBool))
 }
 
+//PrintBool returns a function that prints out the value of the argument function and returns its value.
 func PrintBool(e Bool) Bool {
 	return &printBool{E: e}
 }
@@ -123,6 +127,7 @@ func init() {
 	Register("print", new(printString))
 }
 
+//PrintString returns a function that prints out the value of the argument function and returns its value.
 func PrintString(e String) String {
 	return &printString{E: e}
 }
@@ -147,6 +152,7 @@ func init() {
 	Register("print", new(printBytes))
 }
 
+//PrintBytes returns a function that prints out the value of the argument function and returns its value.
 func PrintBytes(e Bytes) Bytes {
 	return &printBytes{E: e}
 }
@@ -171,6 +177,7 @@ func init() {
 	Register("print", new(printDoubles))
 }
 
+//PrintDoubles returns a function that prints out the value of the argument function and returns its value.
 func PrintDoubles(e Doubles) Doubles {
 	return &printDoubles{E: e}
 }
@@ -195,6 +202,7 @@ func init() {
 	Register("print", new(printInts))
 }
 
+//PrintInts returns a function that prints out the value of the argument function and returns its value.
 func PrintInts(e Ints) Ints {
 	return &printInts{E: e}
 }
@@ -219,6 +227,7 @@ func init() {
 	Register("print", new(printUints))
 }
 
+//PrintUints returns a function that prints out the value of the argument function and returns its value.
 func PrintUints(e Uints) Uints {
 	return &printUints{E: e}
 }
@@ -243,6 +252,7 @@ func init() {
 	Register("print", new(printBools))
 }
 
+//PrintBools returns a function that prints out the value of the argument function and returns its value.
 func PrintBools(e Bools) Bools {
 	return &printBools{E: e}
 }
@@ -267,6 +277,7 @@ func init() {
 	Register("print", new(printStrings))
 }
 
+//PrintStrings returns a function that prints out the value of the argument function and returns its value.
 func PrintStrings(e Strings) Strings {
 	return &printStrings{E: e}
 }
@@ -291,6 +302,7 @@ func init() {
 	Register("print", new(printListOfBytes))
 }
 
+//PrintListOfBytes returns a function that prints out the value of the argument function and returns its value.
 func PrintListOfBytes(e ListOfBytes) ListOfBytes {
 	return &printListOfBytes{E: e}
 }
