@@ -37,6 +37,7 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
+// ProtoNum is used for testing of the protonum package.
 type ProtoNum struct {
 	KeyValue         []*KeyValue `protobuf:"bytes,2,rep,name=KeyValue" json:"KeyValue,omitempty"`
 	XXX_unrecognized []byte      `json:"-"`
@@ -53,6 +54,7 @@ func (m *ProtoNum) GetKeyValue() []*KeyValue {
 	return nil
 }
 
+// KeyValue is used for testing of the protonum package.
 type KeyValue struct {
 	Key              *string `protobuf:"bytes,1,opt,name=Key" json:"Key,omitempty"`
 	Value            *string `protobuf:"bytes,2,opt,name=Value" json:"Value,omitempty"`
@@ -77,6 +79,7 @@ func (m *KeyValue) GetValue() string {
 	return ""
 }
 
+// TopsyTurvy is used for testing of the protonum package.
 type TopsyTurvy struct {
 	Topsy            *Topsy `protobuf:"bytes,1,opt,name=Topsy" json:"Topsy,omitempty"`
 	Turvy            *Turvy `protobuf:"bytes,2,opt,name=Turvy" json:"Turvy,omitempty"`
@@ -101,6 +104,7 @@ func (m *TopsyTurvy) GetTurvy() *Turvy {
 	return nil
 }
 
+// Topsy is used for testing of the protonum package.
 type Topsy struct {
 	A                *int64 `protobuf:"varint,1,opt,name=A" json:"A,omitempty"`
 	B                *int64 `protobuf:"varint,2,opt,name=B" json:"B,omitempty"`
@@ -125,6 +129,7 @@ func (m *Topsy) GetB() int64 {
 	return 0
 }
 
+// Turvy is used for testing of the protonum package.
 type Turvy struct {
 	B                *int64 `protobuf:"varint,1,opt,name=B" json:"B,omitempty"`
 	A                *int64 `protobuf:"varint,2,opt,name=A" json:"A,omitempty"`
@@ -149,6 +154,7 @@ func (m *Turvy) GetA() int64 {
 	return 0
 }
 
+// Knot is used for testing of the protonum package.
 type Knot struct {
 	Bight            []*BightKnot `protobuf:"bytes,1,rep,name=Bight" json:"Bight,omitempty"`
 	Elbow            *bool        `protobuf:"varint,2,opt,name=Elbow" json:"Elbow,omitempty"`
@@ -181,6 +187,7 @@ func (m *Knot) GetBitterEnd() *Knot {
 	return nil
 }
 
+// BightKnot is used for testing of the protonum package.
 type BightKnot struct {
 	Loop             *Knot  `protobuf:"bytes,1,opt,name=Loop" json:"Loop,omitempty"`
 	Turn             *bool  `protobuf:"varint,2,opt,name=Turn" json:"Turn,omitempty"`

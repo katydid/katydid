@@ -12,6 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+//Package protonum is used to rewrite field names to field numbers in relapse grammars.
 package protonum
 
 import (
@@ -22,6 +23,8 @@ import (
 	"github.com/katydid/katydid/relapse"
 )
 
+//FieldNamesToNumbers rewrites field names contained in the grammar to their respective field numbers found in the protocol buffer filedescriptorset.
+//This allows for more speedy field comparisons in validation when used in conjunction with the ProtoNumParser.
 func FieldNamesToNumbers(pkgName, msgName string, desc *descriptor.FileDescriptorSet, grammar *relapse.Grammar) (*relapse.Grammar, error) {
 	g := grammar.Clone()
 	descMap, err := proto.NewDescriptorMap(pkgName, msgName, desc)
@@ -137,46 +140,46 @@ func (this *nameToNumber) translate(context *context, p *relapse.Pattern) (*rela
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
 
-type ErrExpectedArray struct {
+type errExpectedArray struct {
 	name string
 	c    *context
 }
 
-func (this *ErrExpectedArray) Error() string {
+func (this *errExpectedArray) Error() string {
 	return fmt.Sprintf("Expected Array Error: Name: %v, Msg: %v", this.name, this.c.msg.GetName())
 }
 
-type ErrExpectedField struct {
+type errExpectedField struct {
 	name string
 	c    *context
 }
 
-func (this *ErrExpectedField) Error() string {
+func (this *errExpectedField) Error() string {
 	return fmt.Sprintf("Expected Field Error: Name: %v, Msg: %v", this.name, this.c.msg.GetName())
 }
 
-type ErrAnyFieldNotSupported struct {
+type errAnyFieldNotSupported struct {
 	name string
 }
 
-func (this *ErrAnyFieldNotSupported) Error() string {
+func (this *errAnyFieldNotSupported) Error() string {
 	return fmt.Sprintf("Any Field Not Supported: Name: %v", this.name)
 }
 
-type ErrAnyNameExceptNotSupported struct {
+type errAnyNameExceptNotSupported struct {
 	name string
 }
 
-func (this *ErrAnyNameExceptNotSupported) Error() string {
+func (this *errAnyNameExceptNotSupported) Error() string {
 	return fmt.Sprintf("AnyNameExcept Not Supported Error: Name: %v", this.name)
 }
 
-type ErrUnknownField struct {
+type errUnknownField struct {
 	name string
 	c    *context
 }
 
-func (this *ErrUnknownField) Error() string {
+func (this *errUnknownField) Error() string {
 	return fmt.Sprintf("Unknown Field Error: Name: %v, Msg: %v", this.name, this.c.msg.GetName())
 }
 
@@ -195,7 +198,7 @@ func (this *nameToNumber) translateName(current *context, name *expr.NameExpr, c
 	case *expr.Name:
 		if current.index {
 			if n.IntValue == nil {
-				return nil, &ErrExpectedArray{name.String(), current}
+				return nil, &errExpectedArray{name.String(), current}
 			}
 			c := &context{current.msg, false}
 			newp, err := this.translate(c, child)
@@ -205,11 +208,11 @@ func (this *nameToNumber) translateName(current *context, name *expr.NameExpr, c
 			return relapse.NewTreeNode(name, newp), nil
 		}
 		if n.StringValue == nil {
-			return nil, &ErrExpectedField{name.String(), current}
+			return nil, &errExpectedField{name.String(), current}
 		}
 		f := getField(current.msg, n.GetStringValue())
 		if f == nil {
-			return nil, &ErrUnknownField{name.String(), current}
+			return nil, &errUnknownField{name.String(), current}
 		}
 		msg := this.descMap.LookupMessage(f)
 		c := &context{msg, f.IsRepeated()}
@@ -228,10 +231,10 @@ func (this *nameToNumber) translateName(current *context, name *expr.NameExpr, c
 			}
 			return relapse.NewTreeNode(name, newp), nil
 		} else {
-			return nil, &ErrAnyFieldNotSupported{name.String()}
+			return nil, &errAnyFieldNotSupported{name.String()}
 		}
 	case *expr.AnyNameExcept:
-		return nil, &ErrAnyNameExceptNotSupported{name.String()}
+		return nil, &errAnyNameExceptNotSupported{name.String()}
 	case *expr.NameChoice:
 		l, err1 := this.translateName(current, n.GetLeft(), child)
 		r, err2 := this.translateName(current, n.GetRight(), child)

@@ -21,36 +21,43 @@ import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 option (gogoproto.gostring_all) = true;
 option (gogoproto.description_all) = true;
 
+//ProtoNum is used for testing of the protonum package.
 message ProtoNum {
 	repeated KeyValue KeyValue = 2;
 }
 
+//KeyValue is used for testing of the protonum package.
 message KeyValue {
 	optional string Key = 1;
 	optional string Value = 2;
 }
 
+//TopsyTurvy is used for testing of the protonum package.
 message TopsyTurvy {
 	optional Topsy Topsy = 1;
 	optional Turvy Turvy = 2;
 }
 
+//Topsy is used for testing of the protonum package.
 message Topsy {
 	optional int64 A = 1;
 	optional int64 B = 2;
 }
 
+//Turvy is used for testing of the protonum package.
 message Turvy {
 	optional int64 B = 1;
 	optional int64 A = 2;
 }
 
+//Knot is used for testing of the protonum package.
 message Knot {
 	repeated BightKnot Bight = 1;
 	optional bool Elbow = 2;
 	optional Knot BitterEnd = 3;
 }
 
+//BightKnot is used for testing of the protonum package.
 message BightKnot {
 	optional Knot Loop = 1;
 	optional bool Turn = 2;
