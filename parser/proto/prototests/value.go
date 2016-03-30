@@ -19,6 +19,7 @@ import (
 	. "github.com/katydid/katydid/parser/debug"
 )
 
+//AContainer is a populated Container instance.
 var AContainer = &Container{
 	Field1: proto.Int64(123),
 }
@@ -36,6 +37,7 @@ func init() {
 	}
 }
 
+//AContainerOutput is a populated Container instance that has been parsed into debug.Nodes.
 var AContainerOutput = Nodes{
 	Field(`FieldA`, `0.123`),
 	Nested(`FieldB`,
@@ -47,11 +49,13 @@ var AContainerOutput = Nodes{
 	Field(`Field1`, `123`),
 }
 
+//ABigContainer is a populated BigContainer instance.
 var ABigContainer = &BigContainer{
 	Field13: proto.Int64(987),
 	M:       AContainer,
 }
 
+//ABigContainer is a populated BigContainer instance that has been parsed into debug.Nodes.
 var ABigContainerOutput = Nodes{
 	Nested(`M`, AContainerOutput...),
 	Field(`Field13`, `987`),

@@ -12,6 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+//Package json contains the implementation of a JSON parser.
 package json
 
 import (
@@ -22,6 +23,7 @@ import (
 	"strconv"
 )
 
+//ErrUnquote returns an error that resulted from trying to unquote a string.
 var ErrUnquote = fmt.Errorf("json: error unquoting string")
 
 func errInString(buf []byte) error {
@@ -519,7 +521,15 @@ func (s *jsonParser) Bytes() ([]byte, error) {
 	return nil, parser.ErrNotBytes
 }
 
-func NewJsonParser() *jsonParser {
+//JsonParser is a parser for JSON
+type JsonParser interface {
+	parser.Interface
+	//Init initialises the parser with a byte buffer containing JSON.
+	Init(buf []byte) error
+}
+
+//NewJsonParser returns a new JSON parser.
+func NewJsonParser() JsonParser {
 	return &jsonParser{
 		state: state{
 			firstObjectValue: true,

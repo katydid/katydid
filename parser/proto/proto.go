@@ -12,6 +12,12 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+//Package proto contains an implementation of a protocol buffer parser.
+//
+//Merging of fields and splitting of arrays are not supported by this parser for optimization reasons.
+//Use the NoLatentAppendingOrMerging function to check whether the marshaled buffer conforms to the limitations.
+//
+//TODO: defaults and proto3
 package proto
 
 import (
@@ -94,20 +100,29 @@ type state struct {
 	indexRepeated int
 }
 
-type Parser interface {
+//ProtoParser represents a protocol buffer parser.
+type ProtoParser interface {
 	parser.Interface
+	//Init initialises the parser with a marshaled protocol buffer.
+	Init([]byte) error
+	//Reset resets the parser to go back to the beginnig.
+	Reset() error
+	//Message returns the current message's descriptor.
 	Message() *descriptor.DescriptorProto
+	//Field returns the current field's descriptor.
 	Field() *descriptor.FieldDescriptorProto
 }
 
-//Merging of fields and splitting of arrays are not supported by this parser for optimization reasons.
-//TODO: defaults and proto3
-func NewProtoNameParser(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet) *protoParser {
-	return newProtoParser(srcPackage, srcMessage, desc, true)
+//NewProtoNameParser returns a new protocol buffer parser the specific root message.
+//When the value of a field name is requested this parser will return the field name using the String method.
+func NewProtoNameParser(rootPackage, rootMessage string, desc *descriptor.FileDescriptorSet) *protoParser {
+	return newProtoParser(rootPackage, rootMessage, desc, true)
 }
 
-func NewProtoNumParser(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet) *protoParser {
-	return newProtoParser(srcPackage, srcMessage, desc, false)
+//NewProtoNumParser returns a new protocol buffer parser the specific root message.
+//When the value of a field name is requested this parser will return the field number using the Uint method.
+func NewProtoNumParser(rootPackage, rootMessage string, desc *descriptor.FileDescriptorSet) *protoParser {
+	return newProtoParser(rootPackage, rootMessage, desc, false)
 }
 
 func newProtoParser(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet, fieldNames bool) *protoParser {

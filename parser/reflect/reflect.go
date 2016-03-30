@@ -12,6 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+//Package reflect contains an implementation of a parser for a reflected go structure.
 package reflect
 
 import (
@@ -68,11 +69,19 @@ func isSlice(v reflect.Value) bool {
 	return v.Kind() == reflect.Slice && v.Type().Elem().Kind() != reflect.Uint8
 }
 
-func NewReflectParser() *reflectParser {
+//ReflectParser is a parser for a reflected go structure.
+type ReflectParser interface {
+	parser.Interface
+	//Init initialises the parser with a value of reflected go structure.
+	Init(value reflect.Value) ReflectParser
+}
+
+//NewReflectParser returns a new reflect parser.
+func NewReflectParser() ReflectParser {
 	return &reflectParser{stack: make([]state, 0, 10)}
 }
 
-func (s *reflectParser) Init(value reflect.Value) *reflectParser {
+func (s *reflectParser) Init(value reflect.Value) ReflectParser {
 	s.state = newState(value)
 	return s
 }

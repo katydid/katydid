@@ -19,7 +19,10 @@ import (
 	"io"
 )
 
-func NoLatentAppendingOrMerging(parser Parser) error {
+//NoLatentAppendingOrMerging returns whether the current parser has some latent fields.
+//Latent fields are those fields you have already seen on your walk, but then after seeing a different field you see this field again.
+//This typically happens when the protocol buffer user created an object marshaled it and then merged it with another value.
+func NoLatentAppendingOrMerging(parser ProtoParser) error {
 	seen := make(map[uint64]bool)
 	for {
 		if err := parser.Next(); err != nil {

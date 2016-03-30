@@ -12,6 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+//Package xml contains a parser for XML.
 package xml
 
 import (
@@ -34,7 +35,15 @@ type xmlParser struct {
 	attrFirst bool
 }
 
-func NewXMLParser() *xmlParser {
+//XMLParser is an xml parser.
+type XMLParser interface {
+	parser.Interface
+	//Init intialises the parser with a byte buffer containing xml.
+	Init([]byte) error
+}
+
+//NewXMLParser returns a new xml parser.
+func NewXMLParser() XMLParser {
 	return &xmlParser{}
 }
 

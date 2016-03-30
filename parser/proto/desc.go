@@ -27,9 +27,13 @@ func (this *errUnknown) Error() string {
 	return "Could not find " + this.msg
 }
 
+//DescMap is a map of the descriptor.FileDescriptorSet
 type DescMap interface {
+	//GetRoot returns the root message that was used to create this map.
 	GetRoot() *descriptor.DescriptorProto
+	//LookupMessage returns the message descriptor of the field type.
 	LookupMessage(field *descriptor.FieldDescriptorProto) *descriptor.DescriptorProto
+	//LookupField returns the field in the message which has the corresponding key.
 	LookupField(msg *descriptor.DescriptorProto, key uint64) (*descriptor.FieldDescriptorProto, bool)
 }
 
@@ -40,6 +44,7 @@ type descMap struct {
 	msgToField map[*descriptor.DescriptorProto]map[uint64]*descriptor.FieldDescriptorProto
 }
 
+//NewDescriptorMap returns a map of the FileDescriptorSet starting at the message represented by the package name and message name.
 func NewDescriptorMap(pkgName, msgName string, desc *descriptor.FileDescriptorSet) (DescMap, error) {
 	root := desc.GetMessage(pkgName, msgName)
 	d := &descMap{

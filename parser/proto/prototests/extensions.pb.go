@@ -28,6 +28,7 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
+// Container contains a field and some extensions.
 type Container struct {
 	Field1           *int64                    `protobuf:"varint,1,opt,name=Field1" json:"Field1,omitempty"`
 	XXX_extensions   map[int32]proto.Extension `json:"-"`
@@ -91,6 +92,7 @@ func (m *Big) GetBigField() int64 {
 	return 0
 }
 
+// BigContainer contains 3 fields and two extension ranges.
 type BigContainer struct {
 	Field2           *int64                    `protobuf:"varint,2,opt,name=Field2" json:"Field2,omitempty"`
 	Field13          *int64                    `protobuf:"varint,13,opt,name=Field13" json:"Field13,omitempty"`

@@ -18,6 +18,7 @@ package prototests;
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 option (gogoproto.description_all) = true;
 
+//Container contains a field and some extensions.
 message Container {
 	optional int64 Field1 = 1;
 	extensions 100 to 199;
@@ -37,6 +38,7 @@ message Big {
 	optional int64 BigField = 1;
 }
 
+//BigContainer contains 3 fields and two extension ranges.
 message BigContainer {
 	optional int64 Field2 = 2;
 	extensions 14 to 16;
