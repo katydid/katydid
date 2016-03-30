@@ -19,4 +19,5 @@ regenerate:
 	cd proto && make regenerate
 
 nuke:
-	rm value.gen.go || true
+	(cd debug && make nuke)
+	rm err.gen.go || true

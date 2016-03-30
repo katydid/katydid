@@ -18,7 +18,7 @@ import (
 	"github.com/katydid/katydid/expr/compose"
 	. "github.com/katydid/katydid/expr/funcs"
 	exprparser "github.com/katydid/katydid/expr/parser"
-	"github.com/katydid/katydid/parser"
+	"github.com/katydid/katydid/parser/debug"
 	"testing"
 )
 
@@ -37,7 +37,7 @@ func TestNoEqualError(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if v, err := f.Eval(parser.NewStringValue("0")); err != nil {
+	if v, err := f.Eval(debug.NewStringValue("0")); err != nil {
 		t.Fatal(err)
 	} else if v {
 		t.Fatalf("expected false")

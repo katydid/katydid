@@ -18,6 +18,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 )
 
+//Input is a sample instance of the Debug struct.
 var Input = &Debug{
 	A: int64(1),
 	B: []string{"b2", "b3"},
@@ -37,24 +38,7 @@ var Input = &Debug{
 	F: []uint32{5},
 }
 
-func Field(name string, value string) Node {
-	return Node{
-		Label: name,
-		Children: Nodes{
-			Node{
-				Label: value,
-			},
-		},
-	}
-}
-
-func Nested(name string, fs ...Node) Node {
-	return Node{
-		Label:    name,
-		Children: Nodes(fs),
-	}
-}
-
+//Output is a sample instance of Nodes that repesents the Input variable after it has been parsed by Walk.
 var Output = Nodes{
 	Field(`A`, `1`),
 	Nested(`B`,
@@ -83,4 +67,25 @@ var Output = Nodes{
 	Nested(`F`,
 		Field(`0`, `5`),
 	),
+}
+
+//Field is a helper function for creating a Node with a label and one child label.
+//This is how a field with a value is typically represented.
+func Field(name string, value string) Node {
+	return Node{
+		Label: name,
+		Children: Nodes{
+			Node{
+				Label: value,
+			},
+		},
+	}
+}
+
+//Nested is a helper function for creating a Node.
+func Nested(name string, fs ...Node) Node {
+	return Node{
+		Label:    name,
+		Children: Nodes(fs),
+	}
 }

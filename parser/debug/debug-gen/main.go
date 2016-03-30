@@ -12,6 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+//debug-gen is a command that generates some of the code in the debug package.
 package main
 
 import (
@@ -30,18 +31,34 @@ func (v *valuer) Name() string {
 }
 
 const valueStr = `
-//ErrNot{{.CName}} is an error that represents a type error.
-var	ErrNot{{.CName}} = fmt.Errorf("value is not a {{.Name}}")
+func (*errValue) {{.CName}}() ({{.GoType}}, error) {
+	return {{.Default}}, parser.ErrNot{{.CName}}
+}
+
+type {{.Name}}Value struct {
+	*errValue
+	v {{.GoType}}
+}
+
+//New{{.CName}}Value wraps a native go type into a parser.Value.
+func New{{.CName}}Value(v {{.GoType}}) parser.Value {
+	return &{{.Name}}Value{&errValue{}, v}
+}
+
+func (v *{{.Name}}Value) {{.CName}}() ({{.GoType}}, error) {
+	return v.v, nil
+}
+
 `
 
 func main() {
-	gen := gen.NewPackage("parser")
-	gen(valueStr, "err.gen.go", []interface{}{
+	gen := gen.NewPackage("debug")
+	gen(valueStr, "value.gen.go", []interface{}{
 		&valuer{"Double", "float64", "0"},
 		&valuer{"Int", "int64", "0"},
 		&valuer{"Uint", "uint64", "0"},
 		&valuer{"Bool", "bool", "false"},
 		&valuer{"String", "string", `""`},
 		&valuer{"Bytes", "[]byte", "nil"},
-	}, `"fmt"`)
+	}, `"github.com/katydid/katydid/parser"`)
 }

@@ -16,6 +16,19 @@ package parser
 
 import "fmt"
 
+//A type conforming to the parser.Interface interface, abstracts away the implementation details of a parser.
+//This allows the parser to be used by other katydid functions, like relapse validation.
+type Interface interface {
+	Next() error
+	IsLeaf() bool
+	Up()
+	Down()
+	Value
+}
+
+//A type confirming to the parser.Value interface, repesents one native value, tree node label (field name) or some repesentation a node label.
+//Typically only one of the methods returns a value without an error, but more than one method can return without an error.
+//For example a positive json number can return an errorless value for the Double, Int and Uint methods.
 type Value interface {
 	Double() (float64, error)
 	Int() (int64, error)
@@ -25,16 +38,7 @@ type Value interface {
 	Bytes() ([]byte, error)
 }
 
-type errValue struct{}
-
-type Interface interface {
-	Next() error
-	IsLeaf() bool
-	Up()
-	Down()
-	Value
-}
-
+//Sprint returns a value printed as a string.
 func Sprint(value Value) string {
 	return fmt.Sprintf("%#v", getValue(value))
 }
