@@ -20,7 +20,7 @@ import (
 	"github.com/katydid/katydid/relapse"
 	"github.com/katydid/katydid/relapse/combinator"
 	. "github.com/katydid/katydid/relapse/interp"
-	"github.com/katydid/katydid/tests"
+	"github.com/katydid/katydid/relapse/tests"
 	"testing"
 )
 

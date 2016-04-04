@@ -19,7 +19,7 @@ import (
 	reflectparser "github.com/katydid/katydid/parser/reflect"
 	. "github.com/katydid/katydid/relapse/combinator"
 	"github.com/katydid/katydid/relapse/convert"
-	"github.com/katydid/katydid/tests"
+	"github.com/katydid/katydid/relapse/tests"
 	"reflect"
 	"testing"
 )

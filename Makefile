@@ -38,7 +38,6 @@ bench:
 
 regenerate:
 	(cd expr && make regenerate)
-	(cd tests && make regenerate)
 	(cd parser && make regenerate)
 	(cd relapse && make regenerate)
 	(cd expr/funcs && go test -test.run=GenFuncList 2>../../list_of_functions.txt)

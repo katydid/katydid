@@ -4,7 +4,7 @@
 package lazymem_test
 
 import (
-	"github.com/katydid/katydid/tests"
+	"github.com/katydid/katydid/relapse/tests"
 	"testing"
 )
 

@@ -18,6 +18,7 @@ regenerate:
 	rm ./util/litconv.go
 	rm ./util/rune.go
 	rmdir util
+	(cd tests && make regenerate)
 	(cd interp && make regenerate)
 	(cd mem && make regenerate)
 	(cd convert && make regenerate)

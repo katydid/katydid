@@ -5,7 +5,7 @@ package mem_test
 
 import (
 "testing"
-"github.com/katydid/katydid/tests"
+"github.com/katydid/katydid/relapse/tests"
 )
 
 

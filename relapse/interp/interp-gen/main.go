@@ -16,7 +16,7 @@ package main
 
 import (
 	"github.com/katydid/katydid/gen"
-	"github.com/katydid/katydid/tests"
+	"github.com/katydid/katydid/relapse/tests"
 )
 
 const testStr = `
@@ -35,6 +35,6 @@ func Benchmark{{.Name}}{{capFirst .CodecName}}(b *testing.B) {
 
 func main() {
 	gen := gen.NewPackage("interp_test")
-	gen(testStr, "interp.gen_test.go", tests.ValidatorList(), `"testing"`, `"github.com/katydid/katydid/tests"`)
-	gen(benchStr, "interp.gen_bench_test.go", tests.BenchValidatorList(), `"testing"`, `"github.com/katydid/katydid/tests"`)
+	gen(testStr, "interp.gen_test.go", tests.ValidatorList(), `"testing"`, `"github.com/katydid/katydid/relapse/tests"`)
+	gen(benchStr, "interp.gen_bench_test.go", tests.BenchValidatorList(), `"testing"`, `"github.com/katydid/katydid/relapse/tests"`)
 }
