@@ -15,7 +15,7 @@
 package interp_test
 
 import (
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	. "github.com/katydid/katydid/relapse/combinator"
 	. "github.com/katydid/katydid/relapse/funcs"
 	"github.com/katydid/katydid/relapse/interp"
@@ -26,7 +26,7 @@ var alwaysFalse = Value(BoolConst(false))
 var f = Value(StringEq(StringVar(), StringConst("#")))
 var f2 = Value(StringEq(StringVar(), StringConst("?")))
 
-func getExpr(pattern *relapse.Pattern) *relapse.Expr {
+func getExpr(pattern *ast.Pattern) *ast.Expr {
 	return pattern.GetLeafNode().GetExpr()
 }
 
@@ -35,7 +35,7 @@ func TestAnal1(t *testing.T) {
 		"main": In("A", In("B", In("c", f))),
 	}.Grammar()
 	newg := g.Clone()
-	path := []*relapse.NameExpr{relapse.NewStringName("A"), relapse.NewStringName("B"), relapse.NewStringName("c")}
+	path := []*ast.NameExpr{ast.NewStringName("A"), ast.NewStringName("B"), ast.NewStringName("c")}
 	leafs := interp.ChildrenOf(newg, path)
 	leafs = interp.LeafNodesOf(newg, leafs...)
 	if len(leafs) != 1 {
@@ -64,7 +64,7 @@ func TestAnal2(t *testing.T) {
 		),
 	}.Grammar()
 	newg := g.Clone()
-	path := []*relapse.NameExpr{relapse.NewStringName("A"), relapse.NewStringName("B"), relapse.NewStringName("c")}
+	path := []*ast.NameExpr{ast.NewStringName("A"), ast.NewStringName("B"), ast.NewStringName("c")}
 	leafs := interp.ChildrenOf(newg, path)
 	leafs = interp.LeafNodesOf(newg, leafs...)
 	if len(leafs) != 1 {
@@ -93,7 +93,7 @@ func TestAnal3(t *testing.T) {
 		),
 	}.Grammar()
 	newg := g.Clone()
-	path := []*relapse.NameExpr{relapse.NewStringName("A"), relapse.NewStringName("B"), relapse.NewStringName("c")}
+	path := []*ast.NameExpr{ast.NewStringName("A"), ast.NewStringName("B"), ast.NewStringName("c")}
 	leafs := interp.ChildrenOf(newg, path)
 	leafs = interp.LeafNodesOf(newg, leafs...)
 	if len(leafs) != 1 {
@@ -125,7 +125,7 @@ func TestAnal4(t *testing.T) {
 		),
 	}.Grammar()
 	newg := g.Clone()
-	path := []*relapse.NameExpr{relapse.NewStringName("A"), relapse.NewStringName("B"), relapse.NewStringName("c")}
+	path := []*ast.NameExpr{ast.NewStringName("A"), ast.NewStringName("B"), ast.NewStringName("c")}
 	leafs := interp.ChildrenOf(newg, path)
 	leafs = interp.LeafNodesOf(newg, leafs...)
 	if len(leafs) != 2 {
@@ -150,7 +150,7 @@ func TestAnal5Repeated(t *testing.T) {
 		"main": In("A", InAny(In("c", InAny(f)))),
 	}.Grammar()
 	newg := g.Clone()
-	path := []*relapse.NameExpr{relapse.NewStringName("A"), relapse.NewAnyName(), relapse.NewStringName("c"), relapse.NewAnyName()}
+	path := []*ast.NameExpr{ast.NewStringName("A"), ast.NewAnyName(), ast.NewStringName("c"), ast.NewAnyName()}
 	leafs := interp.ChildrenOf(newg, path)
 	leafs = interp.LeafNodesOf(newg, leafs...)
 	if len(leafs) != 1 {
@@ -173,13 +173,13 @@ func TestAnal6TreeNode(t *testing.T) {
 		"main": In("A", In("B", In("c", f))),
 	}.Grammar()
 	newg := g.Clone()
-	path := []*relapse.NameExpr{relapse.NewStringName("A")}
+	path := []*ast.NameExpr{ast.NewStringName("A")}
 	trees := interp.ChildrenOf(newg, path)
 	trees = interp.TreeNodesOf(newg, trees...)
 	if len(trees) != 1 {
 		t.Fatalf("expected %d trees, but got %d", 1, len(trees))
 	}
-	trees[0].TreeNode.Name = relapse.NewAnyNameExcept(relapse.NewAnyName())
+	trees[0].TreeNode.Name = ast.NewAnyNameExcept(ast.NewAnyName())
 	if interp.Satisfiable(newg) {
 		t.Fatalf("should be unsatisfiable: %s", newg)
 	}
@@ -202,14 +202,14 @@ func TestAnal7TreeNodes(t *testing.T) {
 		),
 	}.Grammar()
 	newg := g.Clone()
-	path := []*relapse.NameExpr{relapse.NewStringName("A")}
+	path := []*ast.NameExpr{ast.NewStringName("A")}
 	trees := interp.ChildrenOf(newg, path)
 	trees = interp.TreeNodesOf(newg, trees...)
 	if len(trees) != 2 {
 		t.Fatalf("expected %d trees, but got %d", 2, len(trees))
 	}
 	for i := range trees {
-		trees[i].TreeNode.Name = relapse.NewAnyNameExcept(relapse.NewAnyName())
+		trees[i].TreeNode.Name = ast.NewAnyNameExcept(ast.NewAnyName())
 	}
 	if interp.Satisfiable(newg) {
 		t.Fatalf("should be unsatisfiable: %s", newg)
@@ -233,15 +233,15 @@ func TestAnal8TreeNodes2(t *testing.T) {
 		),
 	}.Grammar()
 	newg := g.Clone()
-	path := []*relapse.NameExpr{relapse.NewStringName("A")}
+	path := []*ast.NameExpr{ast.NewStringName("A")}
 	trees := interp.ChildrenOf(newg, path)
 	trees = interp.TreeNodesOf(newg, trees...)
 	if len(trees) != 2 {
 		t.Fatalf("expected %d trees, but got %d", 2, len(trees))
 	}
 	for i := range trees {
-		if trees[i].TreeNode.Name.Equal(relapse.NewStringName("B")) {
-			trees[i].TreeNode.Name = relapse.NewAnyNameExcept(relapse.NewAnyName())
+		if trees[i].TreeNode.Name.Equal(ast.NewStringName("B")) {
+			trees[i].TreeNode.Name = ast.NewAnyNameExcept(ast.NewAnyName())
 		}
 	}
 	if !interp.Satisfiable(newg) {

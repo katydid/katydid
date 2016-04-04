@@ -15,7 +15,7 @@
 package lazymem
 
 import (
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	. "github.com/katydid/katydid/relapse/combinator"
 	//"github.com/katydid/katydid/tests"
 	"testing"
@@ -39,7 +39,7 @@ func TestConvertRecursiveTurn(t *testing.T) {
 
 func TestConvertRecursiveIoUtilProto(t *testing.T) {
 	//([*,Imports:._:@main]|<empty>)
-	g := G{"main": AnyOf(InOrder(Any(), In("Imports", InAnyPath(Eval("main")))), relapse.NewEmpty())}.Grammar()
+	g := G{"main": AnyOf(InOrder(Any(), In("Imports", InAnyPath(Eval("main")))), ast.NewEmpty())}.Grammar()
 	//g := tests.RecursiveSrcTree.Grammar()
 	t.Logf("%v", g)
 	p := ConvertGrammar(g)

@@ -16,58 +16,58 @@ package interp
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 )
 
 //TODO what about derived left recursion
 //TODO what about right recursion when left is nullable
-func HasLeftRecursion(g *relapse.Grammar) bool {
-	refs := relapse.NewRefsLookup(g)
-	visited := make(map[*relapse.Pattern]bool)
+func HasLeftRecursion(g *ast.Grammar) bool {
+	refs := ast.NewRefsLookup(g)
+	visited := make(map[*ast.Pattern]bool)
 	return hasLeftRecursion(visited, refs, refs["main"])
 }
 
-func hasLeftRecursion(visited map[*relapse.Pattern]bool, refs relapse.RefLookup, p *relapse.Pattern) bool {
+func hasLeftRecursion(visited map[*ast.Pattern]bool, refs ast.RefLookup, p *ast.Pattern) bool {
 	if _, ok := visited[p]; ok {
 		return true
 	}
 	visited[p] = true
 	typ := p.GetValue()
 	switch v := typ.(type) {
-	case *relapse.Empty:
+	case *ast.Empty:
 		return false
-	case *relapse.TreeNode:
+	case *ast.TreeNode:
 		return false
-	case *relapse.LeafNode:
+	case *ast.LeafNode:
 		return false
-	case *relapse.Concat:
+	case *ast.Concat:
 		return hasLeftRecursion(visited, refs, v.GetLeftPattern())
-	case *relapse.Or:
+	case *ast.Or:
 		return hasLeftRecursion(visited, refs, v.GetLeftPattern())
-	case *relapse.And:
+	case *ast.And:
 		return hasLeftRecursion(visited, refs, v.GetLeftPattern())
-	case *relapse.ZeroOrMore:
+	case *ast.ZeroOrMore:
 		return hasLeftRecursion(visited, refs, v.GetPattern())
-	case *relapse.Reference:
+	case *ast.Reference:
 		return hasLeftRecursion(visited, refs, refs[v.GetName()])
-	case *relapse.Not:
+	case *ast.Not:
 		return hasLeftRecursion(visited, refs, v.GetPattern())
-	case *relapse.ZAny:
+	case *ast.ZAny:
 		return false
-	case *relapse.Contains:
+	case *ast.Contains:
 		return hasLeftRecursion(visited, refs, v.GetPattern())
-	case *relapse.Optional:
+	case *ast.Optional:
 		return false //TODO
-	case *relapse.Interleave:
+	case *ast.Interleave:
 		return false //TODO
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
 
-func HasRecursion(g *relapse.Grammar) bool {
-	refs := relapse.NewRefsLookup(g)
+func HasRecursion(g *ast.Grammar) bool {
+	refs := ast.NewRefsLookup(g)
 	for name, _ := range refs {
-		visited := make(map[*relapse.Pattern]bool)
+		visited := make(map[*ast.Pattern]bool)
 		if hasRecursion(visited, refs, refs[name]) {
 			return true
 		}
@@ -75,38 +75,38 @@ func HasRecursion(g *relapse.Grammar) bool {
 	return false
 }
 
-func hasRecursion(visited map[*relapse.Pattern]bool, refs relapse.RefLookup, p *relapse.Pattern) bool {
+func hasRecursion(visited map[*ast.Pattern]bool, refs ast.RefLookup, p *ast.Pattern) bool {
 	if _, ok := visited[p]; ok {
 		return true
 	}
 	visited[p] = true
 	typ := p.GetValue()
 	switch v := typ.(type) {
-	case *relapse.Empty:
+	case *ast.Empty:
 		return false
-	case *relapse.TreeNode:
+	case *ast.TreeNode:
 		return false
-	case *relapse.LeafNode:
+	case *ast.LeafNode:
 		return false
-	case *relapse.Concat:
+	case *ast.Concat:
 		return hasRecursion(visited, refs, v.GetLeftPattern()) || hasRecursion(visited, refs, v.GetRightPattern())
-	case *relapse.Or:
+	case *ast.Or:
 		return hasRecursion(visited, refs, v.GetLeftPattern()) || hasRecursion(visited, refs, v.GetRightPattern())
-	case *relapse.And:
+	case *ast.And:
 		return hasRecursion(visited, refs, v.GetLeftPattern()) || hasRecursion(visited, refs, v.GetRightPattern())
-	case *relapse.ZeroOrMore:
+	case *ast.ZeroOrMore:
 		return hasRecursion(visited, refs, v.GetPattern())
-	case *relapse.Reference:
+	case *ast.Reference:
 		return hasRecursion(visited, refs, refs[v.GetName()])
-	case *relapse.Not:
+	case *ast.Not:
 		return hasRecursion(visited, refs, v.GetPattern())
-	case *relapse.ZAny:
+	case *ast.ZAny:
 		return false
-	case *relapse.Contains:
+	case *ast.Contains:
 		return hasRecursion(visited, refs, v.GetPattern())
-	case *relapse.Optional:
+	case *ast.Optional:
 		return hasRecursion(visited, refs, v.GetPattern())
-	case *relapse.Interleave:
+	case *ast.Interleave:
 		return hasRecursion(visited, refs, v.GetLeftPattern()) || hasRecursion(visited, refs, v.GetRightPattern())
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))

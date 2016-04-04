@@ -16,7 +16,7 @@ package mem
 
 import (
 	"github.com/katydid/katydid/parser"
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/compose"
 	"github.com/katydid/katydid/relapse/funcs"
 	"reflect"
@@ -92,7 +92,7 @@ type callNode struct {
 	cond funcs.Bool
 	then *callNode
 	els  *callNode
-	term []*relapse.Pattern
+	term []*ast.Pattern
 }
 
 func addtab(s string) string {
@@ -117,7 +117,7 @@ func (this *callNode) String() string {
 	return "{\n" + sfunc + "\nThen:\n" + sthen + "\nElse:\n" + sels + "}"
 }
 
-func (this *callNode) eval(label parser.Value) []*relapse.Pattern {
+func (this *callNode) eval(label parser.Value) []*ast.Pattern {
 	if this.term != nil {
 		return this.term
 	}
@@ -138,7 +138,7 @@ func (this *callNode) eval(label parser.Value) []*relapse.Pattern {
 func newCallTree(callables []*callable) *callNode {
 	if len(callables) == 0 {
 		return &callNode{
-			term: []*relapse.Pattern{},
+			term: []*ast.Pattern{},
 		}
 	}
 	top := newCallNode(callables[0])
@@ -155,20 +155,20 @@ func newCallTree(callables []*callable) *callNode {
 func newCallNode(call *callable) *callNode {
 	c := &callNode{}
 	if call.els == nil {
-		c.term = []*relapse.Pattern{call.then}
+		c.term = []*ast.Pattern{call.then}
 	} else if call.then.Equal(call.els) {
-		c.term = []*relapse.Pattern{call.then}
+		c.term = []*ast.Pattern{call.then}
 	} else {
 		c.cond = call.cond
-		c.then = &callNode{term: []*relapse.Pattern{call.then}}
-		c.els = &callNode{term: []*relapse.Pattern{call.els}}
+		c.then = &callNode{term: []*ast.Pattern{call.then}}
+		c.els = &callNode{term: []*ast.Pattern{call.els}}
 	}
 	return c
 }
 
-func appendCallTerm(top *callNode, term *relapse.Pattern) *callNode {
+func appendCallTerm(top *callNode, term *ast.Pattern) *callNode {
 	if top.term != nil {
-		return &callNode{term: append([]*relapse.Pattern{}, append(top.term, term)...)}
+		return &callNode{term: append([]*ast.Pattern{}, append(top.term, term)...)}
 	}
 	then := appendCallTerm(top.then, term)
 	els := appendCallTerm(top.els, term)
@@ -179,10 +179,10 @@ func appendCallTerm(top *callNode, term *relapse.Pattern) *callNode {
 	}
 }
 
-func appendCallNode(top *callNode, cond funcs.Bool, then, els *relapse.Pattern) *callNode {
+func appendCallNode(top *callNode, cond funcs.Bool, then, els *ast.Pattern) *callNode {
 	if top.term != nil {
-		thens := append([]*relapse.Pattern{}, append(top.term, then)...)
-		elss := append([]*relapse.Pattern{}, append(top.term, els)...)
+		thens := append([]*ast.Pattern{}, append(top.term, then)...)
+		elss := append([]*ast.Pattern{}, append(top.term, els)...)
 		return &callNode{
 			cond: cond,
 			then: &callNode{term: thens},
@@ -227,11 +227,11 @@ func appendCallNode(top *callNode, cond funcs.Bool, then, els *relapse.Pattern) 
 
 type callable struct {
 	cond funcs.Bool
-	then *relapse.Pattern
-	els  *relapse.Pattern
+	then *ast.Pattern
+	els  *ast.Pattern
 }
 
-func (this *callable) eval(label parser.Value) *relapse.Pattern {
+func (this *callable) eval(label parser.Value) *ast.Pattern {
 	if this.els == nil {
 		return this.then
 	}

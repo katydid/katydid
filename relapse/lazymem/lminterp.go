@@ -17,7 +17,7 @@ package lazymem
 import (
 	"fmt"
 	"github.com/katydid/katydid/parser"
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	"io"
 	"strconv"
 )
@@ -66,12 +66,12 @@ func (this *Interpreter) Interpret(tree parser.Interface) bool {
 	return Nullable(res)
 }
 
-func NewInterpreter(g *relapse.Grammar) *Interpreter {
+func NewInterpreter(g *ast.Grammar) *Interpreter {
 	p := ConvertGrammar(g)
 	return &Interpreter{Simplify(p)}
 }
 
-func Interpret(g *relapse.Grammar, tree parser.Interface) bool {
+func Interpret(g *ast.Grammar, tree parser.Interface) bool {
 	return NewInterpreter(g).Interpret(tree)
 }
 

@@ -16,97 +16,97 @@ package interp
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/compose"
 	"github.com/katydid/katydid/relapse/funcs"
 	nameexpr "github.com/katydid/katydid/relapse/name"
 )
 
-func checkRef(refs relapse.RefLookup, p *relapse.Pattern) *relapse.Pattern {
+func checkRef(refs ast.RefLookup, p *ast.Pattern) *ast.Pattern {
 	for name, rpat := range refs {
 		if rpat.Equal(p) {
-			return relapse.NewReference(name)
+			return ast.NewReference(name)
 		}
 	}
 	return p
 }
 
-func SimplifyGrammar(g *relapse.Grammar) *relapse.Grammar {
-	refs := relapse.NewRefsLookup(g)
+func SimplifyGrammar(g *ast.Grammar) *ast.Grammar {
+	refs := ast.NewRefsLookup(g)
 	p := Simplify(refs, refs["main"])
 	refs["main"] = p
-	return relapse.NewGrammar(refs)
+	return ast.NewGrammar(refs)
 }
 
-func Simplify(refs relapse.RefLookup, p *relapse.Pattern) *relapse.Pattern {
+func Simplify(refs ast.RefLookup, p *ast.Pattern) *ast.Pattern {
 	return simplify(refs, p, true)
 }
 
-func simplify(refs relapse.RefLookup, p *relapse.Pattern, top bool) *relapse.Pattern {
-	cRef := func(cp *relapse.Pattern) *relapse.Pattern {
+func simplify(refs ast.RefLookup, p *ast.Pattern, top bool) *ast.Pattern {
+	cRef := func(cp *ast.Pattern) *ast.Pattern {
 		if top {
 			return cp
 		}
 		return checkRef(refs, cp)
 	}
-	simp := func(sp *relapse.Pattern) *relapse.Pattern {
+	simp := func(sp *ast.Pattern) *ast.Pattern {
 		return simplify(refs, sp, false)
 	}
 	typ := p.GetValue()
 	switch v := typ.(type) {
-	case *relapse.Empty:
+	case *ast.Empty:
 		return p
-	case *relapse.TreeNode:
+	case *ast.TreeNode:
 		child := simp(v.GetPattern())
 		if isNotZany(child) {
-			return relapse.NewNot(relapse.NewZAny())
+			return ast.NewNot(ast.NewZAny())
 		}
 		name := v.GetName()
 		b := nameexpr.NameToFunc(v.GetName())
 		if funcs.IsFalse(b) {
-			return relapse.NewNot(relapse.NewZAny())
+			return ast.NewNot(ast.NewZAny())
 		}
 		if funcs.IsTrue(b) {
-			name = relapse.NewAnyName()
+			name = ast.NewAnyName()
 		}
-		return cRef(relapse.NewTreeNode(name, child))
-	case *relapse.LeafNode:
+		return cRef(ast.NewTreeNode(name, child))
+	case *ast.LeafNode:
 		b, err := compose.NewBool(v.GetExpr())
 		if err != nil {
 			panic(err)
 		}
 		if funcs.IsFalse(b) {
-			return relapse.NewNot(relapse.NewZAny())
+			return ast.NewNot(ast.NewZAny())
 		}
 		return p
-	case *relapse.Concat:
+	case *ast.Concat:
 		return cRef(simplifyConcat(
 			simp(v.GetLeftPattern()),
 			simp(v.GetRightPattern()),
 		))
-	case *relapse.Or:
+	case *ast.Or:
 		return cRef(simplifyOr(refs,
 			simp(v.GetLeftPattern()),
 			simp(v.GetRightPattern()),
 		))
-	case *relapse.And:
+	case *ast.And:
 		return cRef(simplifyAnd(refs,
 			simp(v.GetLeftPattern()),
 			simp(v.GetRightPattern()),
 		))
-	case *relapse.ZeroOrMore:
+	case *ast.ZeroOrMore:
 		return cRef(simplifyZeroOrMore(simp(v.GetPattern())))
-	case *relapse.Reference:
+	case *ast.Reference:
 		return p
-	case *relapse.Not:
+	case *ast.Not:
 		return cRef(simplifyNot(simp(v.GetPattern())))
-	case *relapse.ZAny:
+	case *ast.ZAny:
 		return p
-	case *relapse.Contains:
+	case *ast.Contains:
 		return cRef(simplifyContains(simp(v.GetPattern())))
-	case *relapse.Optional:
+	case *ast.Optional:
 		return simplifyOptional(simp(v.GetPattern()))
-	case *relapse.Interleave:
+	case *ast.Interleave:
 		return cRef(simplifyInterleave(refs,
 			simp(v.GetLeftPattern()),
 			simp(v.GetRightPattern()),
@@ -115,26 +115,26 @@ func simplify(refs relapse.RefLookup, p *relapse.Pattern, top bool) *relapse.Pat
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
 
-func isNotZany(p *relapse.Pattern) bool {
+func isNotZany(p *ast.Pattern) bool {
 	return p.Not != nil && p.GetNot().GetPattern().ZAny != nil
 }
 
-func isEmpty(p *relapse.Pattern) bool {
+func isEmpty(p *ast.Pattern) bool {
 	return p.Empty != nil
 }
 
-func isZany(p *relapse.Pattern) bool {
+func isZany(p *ast.Pattern) bool {
 	return p.ZAny != nil
 }
 
-func simplifyConcat(p1, p2 *relapse.Pattern) *relapse.Pattern {
+func simplifyConcat(p1, p2 *ast.Pattern) *ast.Pattern {
 	if isNotZany(p1) || isNotZany(p2) {
-		return relapse.NewNot(relapse.NewZAny())
+		return ast.NewNot(ast.NewZAny())
 	}
 	if p1.Concat != nil {
 		return simplifyConcat(
 			p1.Concat.GetLeftPattern(),
-			relapse.NewConcat(p1.Concat.GetRightPattern(), p2),
+			ast.NewConcat(p1.Concat.GetRightPattern(), p2),
 		)
 	}
 	if isEmpty(p1) {
@@ -145,20 +145,20 @@ func simplifyConcat(p1, p2 *relapse.Pattern) *relapse.Pattern {
 	}
 	if isZany(p1) && p2.Concat != nil {
 		if l := p2.Concat.GetLeftPattern(); isZany(p2.Concat.GetRightPattern()) {
-			return relapse.NewContains(l)
+			return ast.NewContains(l)
 		}
 	}
-	return relapse.NewConcat(p1, p2)
+	return ast.NewConcat(p1, p2)
 }
 
-func getOrs(p *relapse.Pattern) []*relapse.Pattern {
+func getOrs(p *ast.Pattern) []*ast.Pattern {
 	if p.Or != nil {
 		return append(getOrs(p.Or.GetLeftPattern()), getOrs(p.Or.GetRightPattern())...)
 	}
-	return []*relapse.Pattern{p}
+	return []*ast.Pattern{p}
 }
 
-func simplifyOr(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
+func simplifyOr(refs ast.RefLookup, p1, p2 *ast.Pattern) *ast.Pattern {
 	if isNotZany(p1) {
 		return p2
 	}
@@ -166,7 +166,7 @@ func simplifyOr(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Patter
 		return p1
 	}
 	if isZany(p1) || isZany(p2) {
-		return relapse.NewZAny()
+		return ast.NewZAny()
 	}
 	if isEmpty(p1) && Nullable(refs, p2) {
 		return p2
@@ -177,29 +177,29 @@ func simplifyOr(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Patter
 	left := getOrs(p1)
 	right := getOrs(p2)
 	list := append(left, right...)
-	list = relapse.Set(list)
-	list = simplifyChildren(list, func(left, right *relapse.Pattern) *relapse.Pattern {
+	list = ast.Set(list)
+	list = simplifyChildren(list, func(left, right *ast.Pattern) *ast.Pattern {
 		return simplifyOr(refs, left, right)
 	})
-	relapse.Sort(list)
-	var p *relapse.Pattern = list[0]
+	ast.Sort(list)
+	var p *ast.Pattern = list[0]
 	for i := range list {
 		if i == 0 {
 			continue
 		}
-		p = relapse.NewOr(p, list[i])
+		p = ast.NewOr(p, list[i])
 	}
 	return p
 }
 
-func getAnds(p *relapse.Pattern) []*relapse.Pattern {
+func getAnds(p *ast.Pattern) []*ast.Pattern {
 	if p.And != nil {
 		return append(getAnds(p.And.GetLeftPattern()), getAnds(p.And.GetRightPattern())...)
 	}
-	return []*relapse.Pattern{p}
+	return []*ast.Pattern{p}
 }
 
-func simplifyChildren(children []*relapse.Pattern, op func(left, right *relapse.Pattern) *relapse.Pattern) []*relapse.Pattern {
+func simplifyChildren(children []*ast.Pattern, op func(left, right *ast.Pattern) *ast.Pattern) []*ast.Pattern {
 	if len(children) == 0 || len(children) == 1 {
 		return children
 	}
@@ -208,17 +208,17 @@ func simplifyChildren(children []*relapse.Pattern, op func(left, right *relapse.
 	t1 := children[1].TreeNode
 	if t0 != nil && t1 != nil {
 		if t0.GetName().Equal(t1.GetName()) {
-			newchild := relapse.NewTreeNode(t0.GetName(), op(t0.GetPattern(), t1.GetPattern()))
+			newchild := ast.NewTreeNode(t0.GetName(), op(t0.GetPattern(), t1.GetPattern()))
 			children[1] = newchild
 			return simplifyChildren(children[1:], op)
 		}
 	}
-	return append([]*relapse.Pattern{children[0]}, simplifyChildren(children[1:], op)...)
+	return append([]*ast.Pattern{children[0]}, simplifyChildren(children[1:], op)...)
 }
 
-func simplifyAnd(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
+func simplifyAnd(refs ast.RefLookup, p1, p2 *ast.Pattern) *ast.Pattern {
 	if isNotZany(p1) || isNotZany(p2) {
-		return relapse.NewNot(relapse.NewZAny())
+		return ast.NewNot(ast.NewZAny())
 	}
 	if isZany(p1) {
 		return p2
@@ -228,67 +228,67 @@ func simplifyAnd(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Patte
 	}
 	if isEmpty(p1) {
 		if Nullable(refs, p2) {
-			return relapse.NewEmpty()
+			return ast.NewEmpty()
 		} else {
-			return relapse.NewNot(relapse.NewZAny())
+			return ast.NewNot(ast.NewZAny())
 		}
 	}
 	if isEmpty(p2) {
 		if Nullable(refs, p1) {
-			return relapse.NewEmpty()
+			return ast.NewEmpty()
 		} else {
-			return relapse.NewNot(relapse.NewZAny())
+			return ast.NewNot(ast.NewZAny())
 		}
 	}
 	left := getAnds(p1)
 	right := getAnds(p2)
 	list := append(left, right...)
-	list = relapse.Set(list)
-	list = simplifyChildren(list, func(left, right *relapse.Pattern) *relapse.Pattern {
+	list = ast.Set(list)
+	list = simplifyChildren(list, func(left, right *ast.Pattern) *ast.Pattern {
 		return simplifyAnd(refs, left, right)
 	})
-	relapse.Sort(list)
-	var p *relapse.Pattern = list[0]
+	ast.Sort(list)
+	var p *ast.Pattern = list[0]
 	for i := range list {
 		if i == 0 {
 			continue
 		}
-		p = relapse.NewAnd(p, list[i])
+		p = ast.NewAnd(p, list[i])
 	}
 	return p
 }
 
-func simplifyZeroOrMore(p *relapse.Pattern) *relapse.Pattern {
+func simplifyZeroOrMore(p *ast.Pattern) *ast.Pattern {
 	if p.ZeroOrMore != nil {
 		return p
 	}
-	return relapse.NewZeroOrMore(p)
+	return ast.NewZeroOrMore(p)
 }
 
-func simplifyNot(p *relapse.Pattern) *relapse.Pattern {
+func simplifyNot(p *ast.Pattern) *ast.Pattern {
 	if p.Not != nil {
 		return p.Not.GetPattern()
 	}
-	return relapse.NewNot(p)
+	return ast.NewNot(p)
 }
 
-func simplifyOptional(p *relapse.Pattern) *relapse.Pattern {
+func simplifyOptional(p *ast.Pattern) *ast.Pattern {
 	if isEmpty(p) {
-		return relapse.NewEmpty()
+		return ast.NewEmpty()
 	}
-	return relapse.NewOptional(p)
+	return ast.NewOptional(p)
 }
 
-func getInterleaves(p *relapse.Pattern) []*relapse.Pattern {
+func getInterleaves(p *ast.Pattern) []*ast.Pattern {
 	if p.Interleave != nil {
 		return append(getInterleaves(p.Interleave.GetLeftPattern()), getInterleaves(p.Interleave.GetRightPattern())...)
 	}
-	return []*relapse.Pattern{p}
+	return []*ast.Pattern{p}
 }
 
-func simplifyInterleave(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relapse.Pattern {
+func simplifyInterleave(refs ast.RefLookup, p1, p2 *ast.Pattern) *ast.Pattern {
 	if isNotZany(p1) || isNotZany(p2) {
-		return relapse.NewNot(relapse.NewZAny())
+		return ast.NewNot(ast.NewZAny())
 	}
 	if isEmpty(p1) {
 		return p2
@@ -302,24 +302,24 @@ func simplifyInterleave(refs relapse.RefLookup, p1, p2 *relapse.Pattern) *relaps
 	left := getInterleaves(p1)
 	right := getInterleaves(p2)
 	list := append(left, right...)
-	list = relapse.Set(list)
-	relapse.Sort(list)
-	var p *relapse.Pattern = list[0]
+	list = ast.Set(list)
+	ast.Sort(list)
+	var p *ast.Pattern = list[0]
 	for i := range list {
 		if i == 0 {
 			continue
 		}
-		p = relapse.NewInterleave(p, list[i])
+		p = ast.NewInterleave(p, list[i])
 	}
 	return p
 }
 
-func simplifyContains(p *relapse.Pattern) *relapse.Pattern {
+func simplifyContains(p *ast.Pattern) *ast.Pattern {
 	if isEmpty(p) || isZany(p) {
-		return relapse.NewZAny()
+		return ast.NewZAny()
 	}
 	if isNotZany(p) {
 		return p
 	}
-	return relapse.NewContains(p)
+	return ast.NewContains(p)
 }

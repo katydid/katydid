@@ -16,51 +16,51 @@ package protonum
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 )
 
-func topDown(pattern *relapse.Pattern, f func(*relapse.Pattern)) {
+func topDown(pattern *ast.Pattern, f func(*ast.Pattern)) {
 	f(pattern)
 	typ := pattern.GetValue()
 	switch v := typ.(type) {
-	case *relapse.TreeNode:
+	case *ast.TreeNode:
 		topDown(v.GetPattern(), f)
-	case *relapse.Concat:
+	case *ast.Concat:
 		topDown(v.GetLeftPattern(), f)
 		topDown(v.GetRightPattern(), f)
-	case *relapse.Or:
+	case *ast.Or:
 		topDown(v.GetLeftPattern(), f)
 		topDown(v.GetRightPattern(), f)
-	case *relapse.And:
+	case *ast.And:
 		topDown(v.GetLeftPattern(), f)
 		topDown(v.GetRightPattern(), f)
-	case *relapse.ZeroOrMore:
+	case *ast.ZeroOrMore:
 		topDown(v.GetPattern(), f)
-	case *relapse.Not:
+	case *ast.Not:
 		topDown(v.GetPattern(), f)
-	case *relapse.Contains:
+	case *ast.Contains:
 		topDown(v.GetPattern(), f)
-	case *relapse.Optional:
+	case *ast.Optional:
 		topDown(v.GetPattern(), f)
-	case *relapse.Interleave:
+	case *ast.Interleave:
 		topDown(v.GetLeftPattern(), f)
 		topDown(v.GetRightPattern(), f)
-	case *relapse.Empty, *relapse.LeafNode, *relapse.Reference, *relapse.ZAny:
+	case *ast.Empty, *ast.LeafNode, *ast.Reference, *ast.ZAny:
 		// do nothing
 	default:
 		panic(fmt.Sprintf("unknown pattern typ %T", typ))
 	}
 }
 
-func topDownName(n *relapse.NameExpr, f func(*relapse.NameExpr)) {
+func topDownName(n *ast.NameExpr, f func(*ast.NameExpr)) {
 	f(n)
 	typ := n.GetValue()
 	switch v := typ.(type) {
-	case *relapse.Name, *relapse.AnyName:
+	case *ast.Name, *ast.AnyName:
 		//do nothing
-	case *relapse.AnyNameExcept:
+	case *ast.AnyNameExcept:
 		topDownName(v.GetExcept(), f)
-	case *relapse.NameChoice:
+	case *ast.NameChoice:
 		topDownName(v.GetLeft(), f)
 		topDownName(v.GetRight(), f)
 	default:
@@ -68,34 +68,34 @@ func topDownName(n *relapse.NameExpr, f func(*relapse.NameExpr)) {
 	}
 }
 
-func allNames(p *relapse.Pattern, f func(*relapse.NameExpr) bool) bool {
+func allNames(p *ast.Pattern, f func(*ast.NameExpr) bool) bool {
 	ret := true
-	topDown(p, func(p *relapse.Pattern) {
+	topDown(p, func(p *ast.Pattern) {
 		if p.TreeNode == nil {
 			return
 		}
-		topDownName(p.TreeNode.GetName(), func(n *relapse.NameExpr) {
+		topDownName(p.TreeNode.GetName(), func(n *ast.NameExpr) {
 			ret = ret && f(n)
 		})
 	})
 	return ret
 }
 
-func anyNames(p *relapse.Pattern, f func(*relapse.NameExpr) bool) bool {
+func anyNames(p *ast.Pattern, f func(*ast.NameExpr) bool) bool {
 	ret := false
-	topDown(p, func(p *relapse.Pattern) {
+	topDown(p, func(p *ast.Pattern) {
 		if p.TreeNode == nil {
 			return
 		}
-		topDownName(p.TreeNode.GetName(), func(n *relapse.NameExpr) {
+		topDownName(p.TreeNode.GetName(), func(n *ast.NameExpr) {
 			ret = ret || f(n)
 		})
 	})
 	return ret
 }
 
-func anyStringNames(p *relapse.Pattern) bool {
-	return anyNames(p, func(n *relapse.NameExpr) bool {
+func anyStringNames(p *ast.Pattern) bool {
+	return anyNames(p, func(n *ast.NameExpr) bool {
 		if n.GetName() == nil {
 			return false
 		}
@@ -103,8 +103,8 @@ func anyStringNames(p *relapse.Pattern) bool {
 	})
 }
 
-func onlyUintNames(p *relapse.Pattern) bool {
-	return allNames(p, func(n *relapse.NameExpr) bool {
+func onlyUintNames(p *ast.Pattern) bool {
+	return allNames(p, func(n *ast.NameExpr) bool {
 		if n.GetName() == nil {
 			return true
 		}

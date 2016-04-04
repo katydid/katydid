@@ -15,7 +15,7 @@
 package tests
 
 import (
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/combinator"
 	"github.com/katydid/katydid/relapse/protonum"
 	"reflect"
@@ -25,7 +25,7 @@ import (
 type BenchValidator struct {
 	Name        string
 	CodecName   string
-	Grammar     *relapse.Grammar
+	Grammar     *ast.Grammar
 	PackageName string
 	MessageName string
 }
@@ -39,7 +39,7 @@ func BenchValidateProtoNum(name string, grammar combinator.G, m interface{}) {
 	if err != nil {
 		panic(name + ": " + err.Error())
 	}
-	BenchValidate("ProtoNum"+name, combinator.G(relapse.NewRefsLookup(g)), []string{"protoNum"}, packageName, messageName)
+	BenchValidate("ProtoNum"+name, combinator.G(ast.NewRefsLookup(g)), []string{"protoNum"}, packageName, messageName)
 }
 
 type benchValidatorList []interface{}

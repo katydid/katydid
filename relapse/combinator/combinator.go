@@ -18,137 +18,137 @@ package combinator
 import (
 	"fmt"
 
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/funcs"
 	exprparser "github.com/katydid/katydid/relapse/parser"
 )
 
 //G represents the relapse Grammar.
 //This consists of a "main" map key with the main pattern value and any other references.
-type G map[string]*relapse.Pattern
+type G map[string]*ast.Pattern
 
 //Grammar returns G as a proper relapse.Grammar
-func (g G) Grammar() *relapse.Grammar {
-	return relapse.NewGrammar(g)
+func (g G) Grammar() *ast.Grammar {
+	return ast.NewGrammar(g)
 }
 
 //Any represents a zero or more of anything pattern.
-func Any() *relapse.Pattern {
-	return relapse.NewZAny()
+func Any() *ast.Pattern {
+	return ast.NewZAny()
 }
 
-func concat(p *relapse.Pattern, ps ...*relapse.Pattern) *relapse.Pattern {
+func concat(p *ast.Pattern, ps ...*ast.Pattern) *ast.Pattern {
 	if len(ps) == 0 {
 		return p
 	}
-	pss := append([]*relapse.Pattern{p}, ps...)
-	return relapse.NewConcat(pss...)
+	pss := append([]*ast.Pattern{p}, ps...)
+	return ast.NewConcat(pss...)
 }
 
 //InPath represents an ordered list of patterns in a field path.
-func InPath(name string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewContains(relapse.NewTreeNode(relapse.NewStringName(name), concat(child, children...)))
+func InPath(name string, child *ast.Pattern, children ...*ast.Pattern) *ast.Pattern {
+	return ast.NewContains(ast.NewTreeNode(ast.NewStringName(name), concat(child, children...)))
 }
 
 //InAnyPath represents an ordered list of patterns in any path.
-func InAnyPath(child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewContains(relapse.NewTreeNode(relapse.NewAnyName(), concat(child, children...)))
+func InAnyPath(child *ast.Pattern, children ...*ast.Pattern) *ast.Pattern {
+	return ast.NewContains(ast.NewTreeNode(ast.NewAnyName(), concat(child, children...)))
 }
 
 //In represents an ordered list of patterns in a field.
-func In(name string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewTreeNode(relapse.NewStringName(name), concat(child, children...))
+func In(name string, child *ast.Pattern, children ...*ast.Pattern) *ast.Pattern {
+	return ast.NewTreeNode(ast.NewStringName(name), concat(child, children...))
 }
 
 //Elem repesents an ordered list of patterns in an specific array element.
-func Elem(index int, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewTreeNode(relapse.NewIntName(int64(index)), concat(child, children...))
+func Elem(index int, child *ast.Pattern, children ...*ast.Pattern) *ast.Pattern {
+	return ast.NewTreeNode(ast.NewIntName(int64(index)), concat(child, children...))
 }
 
 //InAny represents an ordered list of patterns in any field or index.
-func InAny(child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewTreeNode(relapse.NewAnyName(), concat(child, children...))
+func InAny(child *ast.Pattern, children ...*ast.Pattern) *ast.Pattern {
+	return ast.NewTreeNode(ast.NewAnyName(), concat(child, children...))
 }
 
 //InAnyExcept represents an ordered list of patterns in any field except the specified one.
-func InAnyExcept(name string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewTreeNode(relapse.NewAnyNameExcept(relapse.NewStringName(name)), concat(child, children...))
+func InAnyExcept(name string, child *ast.Pattern, children ...*ast.Pattern) *ast.Pattern {
+	return ast.NewTreeNode(ast.NewAnyNameExcept(ast.NewStringName(name)), concat(child, children...))
 }
 
-func nameChoice(p string, ps ...string) *relapse.NameExpr {
+func nameChoice(p string, ps ...string) *ast.NameExpr {
 	if len(ps) == 0 {
-		return relapse.NewStringName(p)
+		return ast.NewStringName(p)
 	}
-	return relapse.NewNameChoice(relapse.NewStringName(p), nameChoice(ps[0], ps[1:]...))
+	return ast.NewNameChoice(ast.NewStringName(p), nameChoice(ps[0], ps[1:]...))
 }
 
 //InAnyOf represents an ordered list of patterns in any of the specified fields.
-func InAnyOf(names []string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
+func InAnyOf(names []string, child *ast.Pattern, children ...*ast.Pattern) *ast.Pattern {
 	if len(names) < 2 {
 		panic("less than two names is not really a choice, is it?")
 	}
-	return relapse.NewTreeNode(nameChoice(names[0], names[1:]...), concat(child, children...))
+	return ast.NewTreeNode(nameChoice(names[0], names[1:]...), concat(child, children...))
 }
 
 //Value represents a field value.
-func Value(f funcs.Bool) *relapse.Pattern {
+func Value(f funcs.Bool) *ast.Pattern {
 	exprStr := funcs.Sprint(f)
 	expr, err := exprparser.NewParser().ParseExpr(exprStr)
 	if err != nil {
 		panic(fmt.Sprintf("parse error: %v, given input: %s", err, exprStr))
 	}
-	return relapse.NewLeafNode(expr)
+	return ast.NewLeafNode(expr)
 }
 
 //None represents no possible match.
-func None() *relapse.Pattern {
-	return relapse.NewNot(relapse.NewZAny())
+func None() *ast.Pattern {
+	return ast.NewNot(ast.NewZAny())
 }
 
 //Eval represents the evaluation of a reference name.
-func Eval(name string) *relapse.Pattern {
-	return relapse.NewReference(name)
+func Eval(name string) *ast.Pattern {
+	return ast.NewReference(name)
 }
 
 //InOrder represents an ordered list of patterns.
-func InOrder(child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
+func InOrder(child *ast.Pattern, children ...*ast.Pattern) *ast.Pattern {
 	return concat(child, children...)
 }
 
 //AllOf represents an intersection of patterns.
-func AllOf(patterns ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewAnd(patterns...)
+func AllOf(patterns ...*ast.Pattern) *ast.Pattern {
+	return ast.NewAnd(patterns...)
 }
 
 //AnyOf represents a union of patterns.
-func AnyOf(patterns ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewOr(patterns...)
+func AnyOf(patterns ...*ast.Pattern) *ast.Pattern {
+	return ast.NewOr(patterns...)
 }
 
 //OppositeOf represents a compliment of a pattern.
-func OppositeOf(p *relapse.Pattern) *relapse.Pattern {
-	return relapse.NewNot(p)
+func OppositeOf(p *ast.Pattern) *ast.Pattern {
+	return ast.NewNot(p)
 }
 
 //Many represents zero or more of the input pattern.
-func Many(p *relapse.Pattern) *relapse.Pattern {
-	return relapse.NewZeroOrMore(p)
+func Many(p *ast.Pattern) *ast.Pattern {
+	return ast.NewZeroOrMore(p)
 }
 
 //Maybe represents an optional pattern.
-func Maybe(p *relapse.Pattern) *relapse.Pattern {
-	return relapse.NewOptional(p)
+func Maybe(p *ast.Pattern) *ast.Pattern {
+	return ast.NewOptional(p)
 }
 
-func interleave(p *relapse.Pattern, ps ...*relapse.Pattern) *relapse.Pattern {
+func interleave(p *ast.Pattern, ps ...*ast.Pattern) *ast.Pattern {
 	if len(ps) == 0 {
 		return p
 	}
-	pss := append([]*relapse.Pattern{p}, ps...)
-	return relapse.NewInterleave(pss...)
+	pss := append([]*ast.Pattern{p}, ps...)
+	return ast.NewInterleave(pss...)
 }
 
 //InAnyOrder represents interleaved patterns.
-func InAnyOrder(child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
+func InAnyOrder(child *ast.Pattern, children ...*ast.Pattern) *ast.Pattern {
 	return interleave(child, children...)
 }

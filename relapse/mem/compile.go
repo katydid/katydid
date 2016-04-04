@@ -16,12 +16,12 @@ package mem
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/interp"
 )
 
-func Compile(g *relapse.Grammar) *Mem {
-	refs := relapse.NewRefsLookup(g)
+func Compile(g *ast.Grammar) *Mem {
+	refs := ast.NewRefsLookup(g)
 	for name, p := range refs {
 		refs[name] = interp.Simplify(refs, p)
 	}
@@ -42,7 +42,7 @@ func Compile(g *relapse.Grammar) *Mem {
 	return mem
 }
 
-func Prints(prefix string, state int, patterns []*relapse.Pattern) {
+func Prints(prefix string, state int, patterns []*ast.Pattern) {
 	fmt.Printf(prefix+":%d:", state)
 	for _, p := range patterns {
 		fmt.Printf("%v, ", p.String())

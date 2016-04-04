@@ -15,7 +15,7 @@
 package compose
 
 import (
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/types"
 )
 
@@ -47,7 +47,7 @@ func symbolToFunc(symbol string) string {
 	panic("unknown builtin symbol `" + symbol + "`")
 }
 
-func rewriteBuiltIn(e *relapse.Expr) (*relapse.Expr, error) {
+func rewriteBuiltIn(e *ast.Expr) (*ast.Expr, error) {
 	if e.BuiltIn == nil {
 		return e, nil
 	}
@@ -60,13 +60,13 @@ func rewriteBuiltIn(e *relapse.Expr) (*relapse.Expr, error) {
 	if types.IsList(typ) {
 		typ = types.ListToSingle(typ)
 	}
-	left := relapse.NewVar(typ)
+	left := ast.NewVar(typ)
 	funcName := symbolToFunc(s)
-	e2 := relapse.NewNestedFunction(funcName, left, right)
+	e2 := ast.NewNestedFunction(funcName, left, right)
 	if funcName == "regex" {
-		e2 = relapse.NewNestedFunction(funcName, right, relapse.NewVar(types.SINGLE_STRING))
+		e2 = ast.NewNestedFunction(funcName, right, ast.NewVar(types.SINGLE_STRING))
 	} else if funcName == "type" {
-		e2 = relapse.NewNestedFunction(funcName, right)
+		e2 = ast.NewNestedFunction(funcName, right)
 	}
 	return e2, nil
 }

@@ -15,13 +15,13 @@
 package interp
 
 import (
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 )
 
 // Returns true if there exists a tree that can satisfy the Grammar.
 // This function may return some false positives.
-func Satisfiable(g *relapse.Grammar) bool {
-	refs := relapse.NewRefsLookup(g)
+func Satisfiable(g *ast.Grammar) bool {
+	refs := ast.NewRefsLookup(g)
 	p := refs["main"]
 	sp := Simplify(refs, p)
 	return !isNotZany(sp)

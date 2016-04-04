@@ -18,14 +18,14 @@ package name
 import (
 	"fmt"
 	"github.com/katydid/katydid/parser"
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/compose"
 	"github.com/katydid/katydid/relapse/funcs"
 	relapseparser "github.com/katydid/katydid/relapse/parser"
 )
 
 //EvalName evaluates a name expression given a name value.
-func EvalName(nameExpr *relapse.NameExpr, name parser.Value) bool {
+func EvalName(nameExpr *ast.NameExpr, name parser.Value) bool {
 	f := NameToFunc(nameExpr)
 	b, err := compose.NewBoolFunc(f)
 	if err != nil {
@@ -39,10 +39,10 @@ func EvalName(nameExpr *relapse.NameExpr, name parser.Value) bool {
 }
 
 //NameToFunc compiles a parsed name expression into a function.
-func NameToFunc(n *relapse.NameExpr) funcs.Bool {
+func NameToFunc(n *ast.NameExpr) funcs.Bool {
 	typ := n.GetValue()
 	switch v := typ.(type) {
-	case *relapse.Name:
+	case *ast.Name:
 		if v.DoubleValue != nil {
 			return funcs.DoubleEq(funcs.DoubleVar(), funcs.DoubleConst(v.GetDoubleValue()))
 		} else if v.IntValue != nil {
@@ -57,18 +57,18 @@ func NameToFunc(n *relapse.NameExpr) funcs.Bool {
 			return funcs.BytesEq(funcs.BytesVar(), funcs.BytesConst(v.GetBytesValue()))
 		}
 		panic(fmt.Sprintf("unknown name expr name %#v", v))
-	case *relapse.AnyName:
+	case *ast.AnyName:
 		return funcs.BoolConst(true)
-	case *relapse.AnyNameExcept:
+	case *ast.AnyNameExcept:
 		return funcs.Not(NameToFunc(v.GetExcept()))
-	case *relapse.NameChoice:
+	case *ast.NameChoice:
 		return funcs.Or(NameToFunc(v.GetLeft()), NameToFunc(v.GetRight()))
 	}
 	panic(fmt.Sprintf("unknown name expr typ %T", typ))
 }
 
 //FuncToName decompiles a function back into a name expression, if possible.
-func FuncToName(f funcs.Bool) *relapse.NameExpr {
+func FuncToName(f funcs.Bool) *ast.NameExpr {
 	exprStr := funcs.Sprint(f)
 	expr, err := relapseparser.NewParser().ParseExpr(exprStr)
 	if err != nil {
@@ -77,28 +77,28 @@ func FuncToName(f funcs.Bool) *relapse.NameExpr {
 	return exprToName(expr)
 }
 
-func exprToName(e *relapse.Expr) *relapse.NameExpr {
+func exprToName(e *ast.Expr) *ast.NameExpr {
 	if e.GetBuiltIn() != nil {
 		if e.GetBuiltIn().GetSymbol().String() == "==" {
 			if e.GetBuiltIn().GetExpr().GetTerminal() != nil {
 				t := e.GetBuiltIn().GetExpr().GetTerminal()
 				if t.DoubleValue != nil {
-					return relapse.NewDoubleName(t.GetDoubleValue())
+					return ast.NewDoubleName(t.GetDoubleValue())
 				}
 				if t.IntValue != nil {
-					return relapse.NewIntName(t.GetIntValue())
+					return ast.NewIntName(t.GetIntValue())
 				}
 				if t.UintValue != nil {
-					return relapse.NewUintName(t.GetUintValue())
+					return ast.NewUintName(t.GetUintValue())
 				}
 				if t.BoolValue != nil {
-					return relapse.NewBoolName(t.GetBoolValue())
+					return ast.NewBoolName(t.GetBoolValue())
 				}
 				if t.StringValue != nil {
-					return relapse.NewStringName(t.GetStringValue())
+					return ast.NewStringName(t.GetStringValue())
 				}
 				if t.BytesValue != nil {
-					return relapse.NewBytesName(t.GetBytesValue())
+					return ast.NewBytesName(t.GetBytesValue())
 				}
 			} else {
 				panic("todo")
@@ -109,10 +109,10 @@ func exprToName(e *relapse.Expr) *relapse.NameExpr {
 	}
 	if e.GetFunction() != nil {
 		if e.GetFunction().GetName() == "not" {
-			return relapse.NewAnyNameExcept(exprToName(e.GetFunction().GetParams()[0]))
+			return ast.NewAnyNameExcept(exprToName(e.GetFunction().GetParams()[0]))
 		}
 		if e.GetFunction().GetName() == "or" {
-			return relapse.NewNameChoice(
+			return ast.NewNameChoice(
 				exprToName(e.GetFunction().GetParams()[0]),
 				exprToName(e.GetFunction().GetParams()[1]),
 			)
@@ -122,7 +122,7 @@ func exprToName(e *relapse.Expr) *relapse.NameExpr {
 	if e.GetTerminal() != nil {
 		if e.GetTerminal().BoolValue != nil {
 			if e.GetTerminal().GetBoolValue() {
-				return relapse.NewAnyName()
+				return ast.NewAnyName()
 			} else {
 				panic("todo")
 			}

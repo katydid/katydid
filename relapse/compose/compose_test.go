@@ -17,19 +17,19 @@ package compose
 import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/katydid/katydid/parser/debug"
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/funcs"
 	"strings"
 	"testing"
 )
 
 func TestComposeNot(t *testing.T) {
-	expr := &relapse.Expr{
-		Function: &relapse.Function{
+	expr := &ast.Expr{
+		Function: &ast.Function{
 			Name: "not",
-			Params: []*relapse.Expr{
+			Params: []*ast.Expr{
 				{
-					Terminal: &relapse.Terminal{
+					Terminal: &ast.Terminal{
 						BoolValue: proto.Bool(false),
 					},
 				},
@@ -60,9 +60,9 @@ func TestComposeNot(t *testing.T) {
 //contains(toLower(decString(test.Address.Street.value)), toLower("TheStreet"))
 
 func TestComposeContains(t *testing.T) {
-	expr := relapse.NewNestedFunction("contains",
-		relapse.NewNestedFunction("toLower", relapse.NewStringVar()),
-		relapse.NewNestedFunction("toLower", relapse.NewStringConst("TheStreet")),
+	expr := ast.NewNestedFunction("contains",
+		ast.NewNestedFunction("toLower", ast.NewStringVar()),
+		ast.NewNestedFunction("toLower", ast.NewStringConst("TheStreet")),
 	)
 	b, err := NewBool(expr)
 	if err != nil {
@@ -92,9 +92,9 @@ func TestComposeContains(t *testing.T) {
 }
 
 func TestComposeStringEq(t *testing.T) {
-	expr := relapse.NewNestedFunction("eq",
-		relapse.NewNestedFunction("toLower", relapse.NewStringVar()),
-		relapse.NewNestedFunction("toLower", relapse.NewStringConst("TheStreet")),
+	expr := ast.NewNestedFunction("eq",
+		ast.NewNestedFunction("toLower", ast.NewStringVar()),
+		ast.NewNestedFunction("toLower", ast.NewStringConst("TheStreet")),
 	)
 	b, err := NewBool(expr)
 	if err != nil {
@@ -114,14 +114,14 @@ func TestComposeStringEq(t *testing.T) {
 }
 
 func TestComposeListBool(t *testing.T) {
-	expr := relapse.NewNestedFunction("eq",
-		relapse.NewNestedFunction("length",
-			relapse.NewBoolList(
-				relapse.NewTrue(),
-				relapse.NewFalse(),
+	expr := ast.NewNestedFunction("eq",
+		ast.NewNestedFunction("length",
+			ast.NewBoolList(
+				ast.NewTrue(),
+				ast.NewFalse(),
 			),
 		),
-		relapse.NewIntConst(2),
+		ast.NewIntConst(2),
 	)
 	b, err := NewBool(expr)
 	if err != nil {
@@ -145,17 +145,17 @@ func TestComposeListBool(t *testing.T) {
 }
 
 func TestComposeListInt64(t *testing.T) {
-	expr := relapse.NewNestedFunction("eq",
-		relapse.NewNestedFunction("elem",
-			relapse.NewNestedFunction("print",
-				relapse.NewIntList(
-					relapse.NewIntConst(1),
-					relapse.NewIntConst(2),
+	expr := ast.NewNestedFunction("eq",
+		ast.NewNestedFunction("elem",
+			ast.NewNestedFunction("print",
+				ast.NewIntList(
+					ast.NewIntConst(1),
+					ast.NewIntConst(2),
 				),
 			),
-			relapse.NewIntConst(1),
+			ast.NewIntConst(1),
 		),
-		relapse.NewIntConst(2),
+		ast.NewIntConst(2),
 	)
 	b, err := NewBool(expr)
 	if err != nil {
@@ -176,9 +176,9 @@ func TestComposeListInt64(t *testing.T) {
 }
 
 func TestComposeRegex(t *testing.T) {
-	expr := relapse.NewNestedFunction("regex",
-		relapse.NewStringConst("ab"),
-		relapse.NewStringVar(),
+	expr := ast.NewNestedFunction("regex",
+		ast.NewStringConst("ab"),
+		ast.NewStringVar(),
 	)
 	b, err := NewBool(expr)
 	if err != nil {
@@ -198,9 +198,9 @@ func TestComposeRegex(t *testing.T) {
 }
 
 func TestConst(t *testing.T) {
-	expr := relapse.NewNestedFunction("regex",
-		relapse.NewStringVar(),
-		relapse.NewStringConst("ab"),
+	expr := ast.NewNestedFunction("regex",
+		ast.NewStringVar(),
+		ast.NewStringConst("ab"),
 	)
 	b, err := NewBool(expr)
 	if err != nil {
@@ -216,9 +216,9 @@ func TestConst(t *testing.T) {
 }
 
 func TestTrimInit(t *testing.T) {
-	expr := relapse.NewNestedFunction("regex",
-		relapse.NewStringConst(".*"),
-		relapse.NewStringConst("ab"),
+	expr := ast.NewNestedFunction("regex",
+		ast.NewStringConst(".*"),
+		ast.NewStringConst("ab"),
 	)
 	b, err := NewBool(expr)
 	if err != nil {
@@ -238,16 +238,16 @@ func TestTrimInit(t *testing.T) {
 }
 
 func TestNoTrim(t *testing.T) {
-	expr := relapse.NewNestedFunction("eq",
-		relapse.NewNestedFunction("elem",
-			relapse.NewStringList(
-				relapse.NewNestedFunction("print",
-					relapse.NewStringVar(),
+	expr := ast.NewNestedFunction("eq",
+		ast.NewNestedFunction("elem",
+			ast.NewStringList(
+				ast.NewNestedFunction("print",
+					ast.NewStringVar(),
 				),
 			),
-			relapse.NewIntConst(0),
+			ast.NewIntConst(0),
 		),
-		relapse.NewStringConst("abc"),
+		ast.NewStringConst("abc"),
 	)
 	b, err := NewBool(expr)
 	if err != nil {
@@ -272,14 +272,14 @@ func TestNoTrim(t *testing.T) {
 }
 
 func TestList(t *testing.T) {
-	expr := relapse.NewNestedFunction("eq",
-		relapse.NewNestedFunction("elem",
-			relapse.NewStringList(
-				relapse.NewStringConst("abc"),
+	expr := ast.NewNestedFunction("eq",
+		ast.NewNestedFunction("elem",
+			ast.NewStringList(
+				ast.NewStringConst("abc"),
 			),
-			relapse.NewIntConst(0),
+			ast.NewIntConst(0),
 		),
-		relapse.NewStringConst("abc"),
+		ast.NewStringConst("abc"),
 	)
 	b, err := NewBool(expr)
 	if err != nil {
@@ -303,8 +303,8 @@ func TestList(t *testing.T) {
 }
 
 func TestComposeBuiltInRegex(t *testing.T) {
-	expr := relapse.NewRegex(
-		relapse.NewStringConst("ab"),
+	expr := ast.NewRegex(
+		ast.NewStringConst("ab"),
 	)
 	b, err := NewBool(expr)
 	if err != nil {
@@ -324,8 +324,8 @@ func TestComposeBuiltInRegex(t *testing.T) {
 }
 
 func TestComposeBuiltInEqual(t *testing.T) {
-	expr := relapse.NewEqual(
-		relapse.NewIntConst(123),
+	expr := ast.NewEqual(
+		ast.NewIntConst(123),
 	)
 	b, err := NewBool(expr)
 	if err != nil {

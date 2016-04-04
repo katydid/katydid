@@ -16,13 +16,13 @@ package auto
 
 import (
 	"github.com/katydid/katydid/parser"
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/mem"
 	"io"
 	"reflect"
 )
 
-func Compile(g *relapse.Grammar) *Auto {
+func Compile(g *ast.Grammar) *Auto {
 	mem := mem.Compile(g)
 	return &Auto{
 		Refs:        mem.Refs,
@@ -41,7 +41,7 @@ func Compile(g *relapse.Grammar) *Auto {
 }
 
 type Auto struct {
-	Refs        map[string]*relapse.Pattern
+	Refs        map[string]*ast.Pattern
 	PatternsMap mem.PatternsIndexedSet
 	Calls       map[int]*mem.CallNode
 	Returns     map[int]map[int]int

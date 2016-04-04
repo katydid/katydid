@@ -16,7 +16,7 @@ package tests
 
 import (
 	"encoding/json"
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/combinator"
 	"github.com/katydid/katydid/relapse/parser"
 )
@@ -115,8 +115,8 @@ func init() {
 	if err := json.Unmarshal([]byte(playgroundJson), &m); err != nil {
 		panic(err)
 	}
-	trueG := combinator.G(relapse.NewRefsLookup(playgroundTrueGrammar))
-	falseG := combinator.G(relapse.NewRefsLookup(playgroundFalseGrammar))
+	trueG := combinator.G(ast.NewRefsLookup(playgroundTrueGrammar))
+	falseG := combinator.G(ast.NewRefsLookup(playgroundFalseGrammar))
 	Validate("PlaygroundTrue", trueG, Json(m), true)
 	Validate("PlaygroundFalse", falseG, Json(m), false)
 }

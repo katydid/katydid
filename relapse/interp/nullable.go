@@ -16,40 +16,40 @@ package interp
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 )
 
 //TODO improve nullable for left recursion using fix points
 // https://github.com/kennknowles/go-yid/blob/master/src/yid/nullable.go
 //This is a naive implementation and it does not handle left recursion
-func Nullable(refs relapse.RefLookup, p *relapse.Pattern) bool {
+func Nullable(refs ast.RefLookup, p *ast.Pattern) bool {
 	typ := p.GetValue()
 	switch v := typ.(type) {
-	case *relapse.Empty:
+	case *ast.Empty:
 		return true
-	case *relapse.TreeNode:
+	case *ast.TreeNode:
 		return false
-	case *relapse.LeafNode:
+	case *ast.LeafNode:
 		return false
-	case *relapse.Concat:
+	case *ast.Concat:
 		return Nullable(refs, v.GetLeftPattern()) && Nullable(refs, v.GetRightPattern())
-	case *relapse.Or:
+	case *ast.Or:
 		return Nullable(refs, v.GetLeftPattern()) || Nullable(refs, v.GetRightPattern())
-	case *relapse.And:
+	case *ast.And:
 		return Nullable(refs, v.GetLeftPattern()) && Nullable(refs, v.GetRightPattern())
-	case *relapse.ZeroOrMore:
+	case *ast.ZeroOrMore:
 		return true
-	case *relapse.Reference:
+	case *ast.Reference:
 		return Nullable(refs, refs[v.GetName()])
-	case *relapse.Not:
+	case *ast.Not:
 		return !(Nullable(refs, v.GetPattern()))
-	case *relapse.ZAny:
+	case *ast.ZAny:
 		return true
-	case *relapse.Contains:
+	case *ast.Contains:
 		return Nullable(refs, v.GetPattern())
-	case *relapse.Optional:
+	case *ast.Optional:
 		return true
-	case *relapse.Interleave:
+	case *ast.Interleave:
 		return Nullable(refs, v.GetLeftPattern()) && Nullable(refs, v.GetRightPattern())
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))

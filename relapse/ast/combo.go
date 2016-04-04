@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package relapse
+package ast
 
 func (this *Pattern) Grammar() *Grammar {
 	return NewGrammar(map[string]*Pattern{"main": this})

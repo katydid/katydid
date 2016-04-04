@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package relapse
+package ast
 
 //Visitor is used to do a top down walk through the expression tree using the Walk methods.
 type Visitor interface {

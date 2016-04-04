@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package relapse
+package ast
 
 //NewEqual returns an builtin equal expression.
 func NewEqual(e *Expr) *Expr {

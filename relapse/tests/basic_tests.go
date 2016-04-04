@@ -15,13 +15,13 @@
 package tests
 
 import (
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	. "github.com/katydid/katydid/relapse/combinator"
 	. "github.com/katydid/katydid/relapse/funcs"
 )
 
 func init() {
-	basicNone := G{"main": relapse.NewNot(relapse.NewZAny())}
+	basicNone := G{"main": ast.NewNot(ast.NewZAny())}
 	Validate(
 		"BasicNone_A",
 		basicNone,
@@ -29,7 +29,7 @@ func init() {
 		false,
 	)
 
-	basicA := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())}
+	basicA := G{"main": ast.NewTreeNode(ast.NewStringName("A"), ast.NewEmpty())}
 	Validate(
 		"BasicA_A",
 		basicA,
@@ -43,7 +43,7 @@ func init() {
 		false,
 	)
 
-	basicNotA := G{"main": relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty()))}
+	basicNotA := G{"main": ast.NewNot(ast.NewTreeNode(ast.NewStringName("A"), ast.NewEmpty()))}
 	Validate(
 		"BasicNotA_A",
 		basicNotA,
@@ -57,7 +57,7 @@ func init() {
 		true,
 	)
 
-	basicAB := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()))}
+	basicAB := G{"main": ast.NewTreeNode(ast.NewStringName("A"), ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty()))}
 	Validate(
 		"BasicAB_AB",
 		basicAB,
@@ -71,7 +71,7 @@ func init() {
 		false,
 	)
 
-	basicALeafB := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), Value(StringEq(StringConst("B"), StringVar())))}
+	basicALeafB := G{"main": ast.NewTreeNode(ast.NewStringName("A"), Value(StringEq(StringConst("B"), StringVar())))}
 	Validate(
 		"BasicALeafB_AB",
 		basicALeafB,
@@ -85,9 +85,9 @@ func init() {
 		false,
 	)
 
-	basicConcatBC := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
-		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
-		relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+	basicConcatBC := G{"main": ast.NewTreeNode(ast.NewStringName("A"), ast.NewConcat(
+		ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty()),
+		ast.NewTreeNode(ast.NewStringName("C"), ast.NewEmpty()),
 	))}
 	Validate(
 		"BasicConcatBC_BC",
@@ -102,9 +102,9 @@ func init() {
 		false,
 	)
 
-	basicNotConcatBC := G{"main": relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
-		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
-		relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+	basicNotConcatBC := G{"main": ast.NewNot(ast.NewTreeNode(ast.NewStringName("A"), ast.NewConcat(
+		ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty()),
+		ast.NewTreeNode(ast.NewStringName("C"), ast.NewEmpty()),
 	)))}
 	Validate(
 		"BasicNotConcatBC_BC",
@@ -119,9 +119,9 @@ func init() {
 		true,
 	)
 
-	basicAorB := G{"main": relapse.NewOr(
-		relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty()),
-		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+	basicAorB := G{"main": ast.NewOr(
+		ast.NewTreeNode(ast.NewStringName("A"), ast.NewEmpty()),
+		ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty()),
 	)}
 	Validate(
 		"BasicAorB_A",
@@ -137,9 +137,9 @@ func init() {
 		false,
 	)
 
-	basicTreeAAorBB := G{"main": relapse.NewOr(
-		relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
-		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
+	basicTreeAAorBB := G{"main": ast.NewOr(
+		ast.NewTreeNode(ast.NewStringName("A"), ast.NewTreeNode(ast.NewStringName("A"), ast.NewEmpty())),
+		ast.NewTreeNode(ast.NewStringName("B"), ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty())),
 	)}
 	Validate(
 		"BasicTreeAAorBB_AA",
@@ -154,9 +154,9 @@ func init() {
 		false,
 	)
 
-	basicTreeBAorBB := G{"main": relapse.NewOr(
-		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
-		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
+	basicTreeBAorBB := G{"main": ast.NewOr(
+		ast.NewTreeNode(ast.NewStringName("B"), ast.NewTreeNode(ast.NewStringName("A"), ast.NewEmpty())),
+		ast.NewTreeNode(ast.NewStringName("B"), ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty())),
 	)}
 	Validate(
 		"BasicTreeBAorBB_BA",
@@ -171,17 +171,17 @@ func init() {
 		false,
 	)
 
-	basicTreeAOrOrC := G{"main": relapse.NewOr(
-		relapse.NewTreeNode(relapse.NewStringName("A"),
-			relapse.NewOr(
-				relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty()),
-				relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+	basicTreeAOrOrC := G{"main": ast.NewOr(
+		ast.NewTreeNode(ast.NewStringName("A"),
+			ast.NewOr(
+				ast.NewTreeNode(ast.NewStringName("A"), ast.NewEmpty()),
+				ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty()),
 			),
 		),
-		relapse.NewTreeNode(relapse.NewStringName("C"),
-			relapse.NewOr(
-				relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
-				relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+		ast.NewTreeNode(ast.NewStringName("C"),
+			ast.NewOr(
+				ast.NewTreeNode(ast.NewStringName("C"), ast.NewEmpty()),
+				ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty()),
 			),
 		),
 	)}
@@ -198,9 +198,9 @@ func init() {
 		false,
 	)
 
-	basicConcatZAnyC := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
-		relapse.NewZAny(),
-		relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+	basicConcatZAnyC := G{"main": ast.NewTreeNode(ast.NewStringName("A"), ast.NewConcat(
+		ast.NewZAny(),
+		ast.NewTreeNode(ast.NewStringName("C"), ast.NewEmpty()),
 	))}
 	Validate(
 		"BasicConcatZAnyC_AC",
@@ -246,8 +246,8 @@ func init() {
 		false,
 	)
 
-	basicZeroOrMoreB0 := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZeroOrMore(
-		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+	basicZeroOrMoreB0 := G{"main": ast.NewTreeNode(ast.NewStringName("A"), ast.NewZeroOrMore(
+		ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty()),
 	))}
 	Validate(
 		"BasicZeroOrMoreB_0",
@@ -280,8 +280,8 @@ func init() {
 		false,
 	)
 
-	basicZeroOrMoreEmpty := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZeroOrMore(
-		relapse.NewEmpty(),
+	basicZeroOrMoreEmpty := G{"main": ast.NewTreeNode(ast.NewStringName("A"), ast.NewZeroOrMore(
+		ast.NewEmpty(),
 	))}
 	Validate(
 		"BasicZeroOrMoreEmpty_Empty",
@@ -296,8 +296,8 @@ func init() {
 		false,
 	)
 
-	basicZeroOrMoreZeroOrMoreB := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZeroOrMore(
-		relapse.NewZeroOrMore(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
+	basicZeroOrMoreZeroOrMoreB := G{"main": ast.NewTreeNode(ast.NewStringName("A"), ast.NewZeroOrMore(
+		ast.NewZeroOrMore(ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty())),
 	))}
 	Validate(
 		"BasicZeroOrMoreZeroOrMoreB_BB",
@@ -312,12 +312,12 @@ func init() {
 		false,
 	)
 
-	basicConcatOrEmpty := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
-		relapse.NewOr(
-			relapse.NewEmpty(),
-			relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+	basicConcatOrEmpty := G{"main": ast.NewTreeNode(ast.NewStringName("A"), ast.NewConcat(
+		ast.NewOr(
+			ast.NewEmpty(),
+			ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty()),
 		),
-		relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+		ast.NewTreeNode(ast.NewStringName("C"), ast.NewEmpty()),
 	))}
 	Validate(
 		"BasicConcatOrEmpty_BC",
@@ -338,10 +338,10 @@ func init() {
 		false,
 	)
 
-	basicZeroOrMoreBOrEmpty := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewZeroOrMore(
-		relapse.NewOr(
-			relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
-			relapse.NewEmpty(),
+	basicZeroOrMoreBOrEmpty := G{"main": ast.NewTreeNode(ast.NewStringName("A"), ast.NewZeroOrMore(
+		ast.NewOr(
+			ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty()),
+			ast.NewEmpty(),
 		),
 	))}
 	Validate(
@@ -357,10 +357,10 @@ func init() {
 		false,
 	)
 
-	basicConcatCStar := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
-		relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
-		relapse.NewZeroOrMore(
-			relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+	basicConcatCStar := G{"main": ast.NewTreeNode(ast.NewStringName("A"), ast.NewConcat(
+		ast.NewTreeNode(ast.NewStringName("C"), ast.NewEmpty()),
+		ast.NewZeroOrMore(
+			ast.NewTreeNode(ast.NewStringName("C"), ast.NewEmpty()),
 		),
 	))}
 	Validate(
@@ -400,9 +400,9 @@ func init() {
 		false,
 	)
 
-	basicTreeAandA := G{"main": relapse.NewAnd(
-		relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
-		relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
+	basicTreeAandA := G{"main": ast.NewAnd(
+		ast.NewTreeNode(ast.NewStringName("A"), ast.NewTreeNode(ast.NewStringName("A"), ast.NewEmpty())),
+		ast.NewTreeNode(ast.NewStringName("A"), ast.NewTreeNode(ast.NewStringName("A"), ast.NewEmpty())),
 	)}
 	Validate(
 		"BasicTreeAandA_A",
@@ -417,9 +417,9 @@ func init() {
 		false,
 	)
 
-	basicTreeAandB := G{"main": relapse.NewAnd(
-		relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
-		relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
+	basicTreeAandB := G{"main": ast.NewAnd(
+		ast.NewTreeNode(ast.NewStringName("A"), ast.NewTreeNode(ast.NewStringName("A"), ast.NewEmpty())),
+		ast.NewTreeNode(ast.NewStringName("A"), ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty())),
 	)}
 	Validate(
 		"BasicTreeAandB_B",
@@ -428,14 +428,14 @@ func init() {
 		false,
 	)
 
-	basicAndBAnyC := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewAnd(
-		relapse.NewConcat(
-			relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
-			relapse.NewZAny(),
+	basicAndBAnyC := G{"main": ast.NewTreeNode(ast.NewStringName("A"), ast.NewAnd(
+		ast.NewConcat(
+			ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty()),
+			ast.NewZAny(),
 		),
-		relapse.NewConcat(
-			relapse.NewZAny(),
-			relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+		ast.NewConcat(
+			ast.NewZAny(),
+			ast.NewTreeNode(ast.NewStringName("C"), ast.NewEmpty()),
 		),
 	))}
 	Validate(
@@ -469,17 +469,17 @@ func init() {
 		true,
 	)
 
-	basicTreeAndBAnyC := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewAnd(
-		relapse.NewConcat(
-			relapse.NewTreeNode(relapse.NewStringName("A"),
-				relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+	basicTreeAndBAnyC := G{"main": ast.NewTreeNode(ast.NewStringName("A"), ast.NewAnd(
+		ast.NewConcat(
+			ast.NewTreeNode(ast.NewStringName("A"),
+				ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty()),
 			),
-			relapse.NewZAny(),
+			ast.NewZAny(),
 		),
-		relapse.NewConcat(
-			relapse.NewZAny(),
-			relapse.NewTreeNode(relapse.NewStringName("A"),
-				relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+		ast.NewConcat(
+			ast.NewZAny(),
+			ast.NewTreeNode(ast.NewStringName("A"),
+				ast.NewTreeNode(ast.NewStringName("C"), ast.NewEmpty()),
 			),
 		),
 	))}
@@ -508,8 +508,8 @@ func init() {
 		false,
 	)
 
-	basicAContainsB := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewContains(
-		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+	basicAContainsB := G{"main": ast.NewTreeNode(ast.NewStringName("A"), ast.NewContains(
+		ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty()),
 	))}
 	Validate(
 		"BasicAContainsB_B",
@@ -536,8 +536,8 @@ func init() {
 		false,
 	)
 
-	basicOptionalB := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewOptional(
-		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
+	basicOptionalB := G{"main": ast.NewTreeNode(ast.NewStringName("A"), ast.NewOptional(
+		ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty()),
 	))}
 	Validate(
 		"BasicOptionalB_Empty",
@@ -564,9 +564,9 @@ func init() {
 		false,
 	)
 
-	basicInterleaveBC := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewInterleave(
-		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
-		relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+	basicInterleaveBC := G{"main": ast.NewTreeNode(ast.NewStringName("A"), ast.NewInterleave(
+		ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty()),
+		ast.NewTreeNode(ast.NewStringName("C"), ast.NewEmpty()),
 	))}
 	Validate(
 		"BasicInterleaveBC_BC",
@@ -587,11 +587,11 @@ func init() {
 		false,
 	)
 
-	basicInterleaveBAnyC := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewInterleave(
-		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
-		relapse.NewInterleave(
-			relapse.NewZAny(),
-			relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty()),
+	basicInterleaveBAnyC := G{"main": ast.NewTreeNode(ast.NewStringName("A"), ast.NewInterleave(
+		ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty()),
+		ast.NewInterleave(
+			ast.NewZAny(),
+			ast.NewTreeNode(ast.NewStringName("C"), ast.NewEmpty()),
 		),
 	))}
 	Validate(
@@ -631,9 +631,9 @@ func init() {
 		false,
 	)
 
-	basicRefLoop := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewOr(
-		relapse.NewEmpty(),
-		relapse.NewReference("main"),
+	basicRefLoop := G{"main": ast.NewTreeNode(ast.NewStringName("A"), ast.NewOr(
+		ast.NewEmpty(),
+		ast.NewReference("main"),
 	))}
 	Validate(
 		"BasicRefLoop_A",
@@ -654,10 +654,10 @@ func init() {
 		false,
 	)
 
-	basicConcatBOptionalD := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"),
-		relapse.NewConcat(
-			relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()),
-			relapse.NewOptional(relapse.NewTreeNode(relapse.NewStringName("D"), relapse.NewEmpty())),
+	basicConcatBOptionalD := G{"main": ast.NewTreeNode(ast.NewStringName("A"),
+		ast.NewConcat(
+			ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty()),
+			ast.NewOptional(ast.NewTreeNode(ast.NewStringName("D"), ast.NewEmpty())),
 		),
 	)}
 	Validate(
@@ -680,9 +680,9 @@ func init() {
 	)
 
 	//!(B:<empty>) can be <empty> and * can be B:<empty> which means B:<empty> can be accepted
-	basicAnyNotB := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
-		relapse.NewZAny(),
-		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
+	basicAnyNotB := G{"main": ast.NewTreeNode(ast.NewStringName("A"), ast.NewConcat(
+		ast.NewZAny(),
+		ast.NewNot(ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty())),
 	))}
 	Validate(
 		"BasicAnyNotB_B",
@@ -697,10 +697,10 @@ func init() {
 		true,
 	)
 
-	basicNotAndBStarC := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewNot(
-		relapse.NewAnd(
-			relapse.NewConcat(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty()), relapse.NewZAny()),
-			relapse.NewConcat(relapse.NewZAny(), relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewEmpty())),
+	basicNotAndBStarC := G{"main": ast.NewTreeNode(ast.NewStringName("A"), ast.NewNot(
+		ast.NewAnd(
+			ast.NewConcat(ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty()), ast.NewZAny()),
+			ast.NewConcat(ast.NewZAny(), ast.NewTreeNode(ast.NewStringName("C"), ast.NewEmpty())),
 		),
 	))}
 	Validate(
@@ -716,9 +716,9 @@ func init() {
 		true,
 	)
 
-	basicAndNotAB := G{"main": relapse.NewAnd(
-		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
-		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
+	basicAndNotAB := G{"main": ast.NewAnd(
+		ast.NewNot(ast.NewTreeNode(ast.NewStringName("A"), ast.NewEmpty())),
+		ast.NewNot(ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty())),
 	)}
 	Validate(
 		"BasicAndNotAB_A",
@@ -739,9 +739,9 @@ func init() {
 		true,
 	)
 
-	basicOrNotAB := G{"main": relapse.NewOr(
-		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewEmpty())),
-		relapse.NewNot(relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewEmpty())),
+	basicOrNotAB := G{"main": ast.NewOr(
+		ast.NewNot(ast.NewTreeNode(ast.NewStringName("A"), ast.NewEmpty())),
+		ast.NewNot(ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty())),
 	)}
 	Validate(
 		"BasicOrNotAB_A",
@@ -757,10 +757,10 @@ func init() {
 	)
 
 	//deeper fundamental flaw
-	basicAEndsWithBContainsAnyD := G{"main": relapse.NewTreeNode(relapse.NewStringName("A"), relapse.NewConcat(
-		relapse.NewZAny(),
-		relapse.NewTreeNode(relapse.NewStringName("B"),
-			relapse.NewContains(relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewTreeNode(relapse.NewStringName("D"), relapse.NewEmpty()))),
+	basicAEndsWithBContainsAnyD := G{"main": ast.NewTreeNode(ast.NewStringName("A"), ast.NewConcat(
+		ast.NewZAny(),
+		ast.NewTreeNode(ast.NewStringName("B"),
+			ast.NewContains(ast.NewTreeNode(ast.NewAnyName(), ast.NewTreeNode(ast.NewStringName("D"), ast.NewEmpty()))),
 		)),
 	)}
 	Validate(
@@ -777,8 +777,8 @@ func init() {
 	)
 
 	basicAndContainsTree := G{"main": In("A", AllOf(
-		InPath("B", In("C", relapse.NewEmpty())),
-		InPath("B", In("D", relapse.NewEmpty())),
+		InPath("B", In("C", ast.NewEmpty())),
+		InPath("B", In("D", ast.NewEmpty())),
 	))}
 	Validate(
 		"BasicAndContainsTree_BCBD",

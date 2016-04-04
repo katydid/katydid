@@ -1,4 +1,4 @@
-//  Copyright 2015 Walter Schulze
+//  Copyright 2016 Walter Schulze
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -12,24 +12,22 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package relapse
+package ast
 
-import (
-	"github.com/gogo/protobuf/proto"
-)
-
-func (this *Grammar) Clone() *Grammar {
-	return proto.Clone(this).(*Grammar)
-}
-
-func (this RefLookup) Clone() RefLookup {
-	that := make(RefLookup, len(this))
-	for name, _ := range this {
-		that[name] = this[name].Clone()
+func Filter(f func(p *Pattern) bool, ps []*Pattern) []*Pattern {
+	fs := make([]*Pattern, 0, len(ps))
+	for i, p := range ps {
+		if f(p) {
+			fs = append(fs, ps[i])
+		}
 	}
-	return that
+	return fs
 }
 
-func (this *Pattern) Clone() *Pattern {
-	return proto.Clone(this).(*Pattern)
+func Map(f func(p *Pattern) *Pattern, ps []*Pattern) []*Pattern {
+	fs := make([]*Pattern, len(ps))
+	for i, p := range ps {
+		fs[i] = f(p)
+	}
+	return fs
 }

@@ -15,13 +15,13 @@
 package mem
 
 import (
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 )
 
 var (
-	zignore = []*relapse.Pattern{
-		relapse.NewZAny(),
-		relapse.NewNot(relapse.NewZAny()),
+	zignore = []*ast.Pattern{
+		ast.NewZAny(),
+		ast.NewNot(ast.NewZAny()),
 	}
 	zignoreb = []bool{
 		true,
@@ -29,21 +29,21 @@ var (
 	}
 )
 
-func zip(patterns []*relapse.Pattern) ([]*relapse.Pattern, []int) {
-	zipped := relapse.Set(patterns)
-	relapse.Sort(zipped)
+func zip(patterns []*ast.Pattern) ([]*ast.Pattern, []int) {
+	zipped := ast.Set(patterns)
+	ast.Sort(zipped)
 
-	if index := relapse.Index(zipped, zignore[0]); index != -1 {
-		zipped = relapse.Remove(zipped, index)
+	if index := ast.Index(zipped, zignore[0]); index != -1 {
+		zipped = ast.Remove(zipped, index)
 	}
-	if index := relapse.Index(zipped, zignore[1]); index != -1 {
-		zipped = relapse.Remove(zipped, index)
+	if index := ast.Index(zipped, zignore[1]); index != -1 {
+		zipped = ast.Remove(zipped, index)
 	}
 	indexes := make([]int, len(patterns))
 	for i, pattern := range patterns {
-		index := relapse.Index(zipped, pattern)
+		index := ast.Index(zipped, pattern)
 		if index == -1 {
-			index = relapse.Index(zignore, pattern)
+			index = ast.Index(zignore, pattern)
 			index *= -1
 			index -= 1
 		}
@@ -52,8 +52,8 @@ func zip(patterns []*relapse.Pattern) ([]*relapse.Pattern, []int) {
 	return zipped, indexes
 }
 
-func unzip(patterns []*relapse.Pattern, indexes []int) []*relapse.Pattern {
-	res := make([]*relapse.Pattern, len(indexes))
+func unzip(patterns []*ast.Pattern, indexes []int) []*ast.Pattern {
+	res := make([]*ast.Pattern, len(indexes))
 	for i, index := range indexes {
 		if index >= 0 {
 			res[i] = patterns[index]

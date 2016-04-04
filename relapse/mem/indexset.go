@@ -15,7 +15,7 @@
 package mem
 
 import (
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 )
 
 type IntsIndexedSet [][]int
@@ -51,22 +51,22 @@ func (this *IntsIndexedSet) add(zi []int) int {
 	return len(*this) - 1
 }
 
-type PatternsIndexedSet [][]*relapse.Pattern
+type PatternsIndexedSet [][]*ast.Pattern
 
 func newPatternsIndexedSet() PatternsIndexedSet {
-	return PatternsIndexedSet([][]*relapse.Pattern{})
+	return PatternsIndexedSet([][]*ast.Pattern{})
 }
 
-func (this PatternsIndexedSet) index(patterns []*relapse.Pattern) int {
+func (this PatternsIndexedSet) index(patterns []*ast.Pattern) int {
 	for i, ps := range this {
-		if relapse.Equals(ps, patterns) {
+		if ast.Equals(ps, patterns) {
 			return i
 		}
 	}
 	return -1
 }
 
-func (this *PatternsIndexedSet) add(patterns []*relapse.Pattern) int {
+func (this *PatternsIndexedSet) add(patterns []*ast.Pattern) int {
 	index := this.index(patterns)
 	if index != -1 {
 		return index

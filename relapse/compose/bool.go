@@ -17,7 +17,7 @@ package compose
 import (
 	"fmt"
 	"github.com/katydid/katydid/parser"
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/funcs"
 	"reflect"
 )
@@ -55,7 +55,7 @@ var (
 )
 
 //NewBool constructs a boolean function from a parsed expression.
-func NewBool(expr *relapse.Expr) (funcs.Bool, error) {
+func NewBool(expr *ast.Expr) (funcs.Bool, error) {
 	expr2, err := rewriteBuiltIn(expr)
 	if err != nil {
 		return nil, err

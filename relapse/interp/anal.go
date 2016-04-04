@@ -16,57 +16,57 @@ package interp
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 )
 
 // Experimental
-func ChildrenOf(g *relapse.Grammar, path []*relapse.NameExpr) []*relapse.Pattern {
-	refs := relapse.NewRefsLookup(g)
+func ChildrenOf(g *ast.Grammar, path []*ast.NameExpr) []*ast.Pattern {
+	refs := ast.NewRefsLookup(g)
 	p := refs["main"]
 	return childrenOf(refs, p, path)
 }
 
-func childrenOf(refs relapse.RefLookup, p *relapse.Pattern, path []*relapse.NameExpr) []*relapse.Pattern {
+func childrenOf(refs ast.RefLookup, p *ast.Pattern, path []*ast.NameExpr) []*ast.Pattern {
 	if len(path) == 0 {
-		return []*relapse.Pattern{p}
+		return []*ast.Pattern{p}
 	}
 	typ := p.GetValue()
 	switch v := typ.(type) {
-	case *relapse.Empty:
+	case *ast.Empty:
 		return nil
-	case *relapse.TreeNode:
+	case *ast.TreeNode:
 		if !v.GetName().Equal(path[0]) {
 			return nil
 		}
 		return childrenOf(refs, v.GetPattern(), path[1:])
-	case *relapse.LeafNode:
+	case *ast.LeafNode:
 		return nil
-	case *relapse.Concat:
+	case *ast.Concat:
 		left := childrenOf(refs, v.GetLeftPattern(), path)
 		right := childrenOf(refs, v.GetRightPattern(), path)
-		return append(append([]*relapse.Pattern{}, left...), right...)
-	case *relapse.Or:
+		return append(append([]*ast.Pattern{}, left...), right...)
+	case *ast.Or:
 		left := childrenOf(refs, v.GetLeftPattern(), path)
 		right := childrenOf(refs, v.GetRightPattern(), path)
-		return append(append([]*relapse.Pattern{}, left...), right...)
-	case *relapse.And:
+		return append(append([]*ast.Pattern{}, left...), right...)
+	case *ast.And:
 		left := childrenOf(refs, v.GetLeftPattern(), path)
 		right := childrenOf(refs, v.GetRightPattern(), path)
-		return append(append([]*relapse.Pattern{}, left...), right...)
-	case *relapse.ZeroOrMore:
+		return append(append([]*ast.Pattern{}, left...), right...)
+	case *ast.ZeroOrMore:
 		return childrenOf(refs, v.GetPattern(), path)
-	case *relapse.Reference:
+	case *ast.Reference:
 		return childrenOf(refs, refs[v.GetName()], path)
-	case *relapse.Not:
+	case *ast.Not:
 		return nil
-	case *relapse.ZAny:
+	case *ast.ZAny:
 		return nil
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
 
 //Experimental
-func CompareVarExpr(a, b *relapse.Expr) bool {
+func CompareVarExpr(a, b *ast.Expr) bool {
 	if !a.HasVar() && !b.HasVar() {
 		return true
 	}
@@ -101,7 +101,7 @@ func CompareVarExpr(a, b *relapse.Expr) bool {
 	return false
 }
 
-func compareVarExprs(as, bs []*relapse.Expr) bool {
+func compareVarExprs(as, bs []*ast.Expr) bool {
 	if len(as) != len(bs) {
 		return false
 	}
@@ -114,61 +114,61 @@ func compareVarExprs(as, bs []*relapse.Expr) bool {
 }
 
 //Experimental
-func LeafNodesOf(g *relapse.Grammar, ps ...*relapse.Pattern) []*relapse.Pattern {
-	return ofs(relapse.NewRefsLookup(g), ps, func(p1 *relapse.Pattern) bool {
+func LeafNodesOf(g *ast.Grammar, ps ...*ast.Pattern) []*ast.Pattern {
+	return ofs(ast.NewRefsLookup(g), ps, func(p1 *ast.Pattern) bool {
 		return p1.LeafNode != nil
 	})
 }
 
 //Experimental
-func TreeNodesOf(g *relapse.Grammar, ps ...*relapse.Pattern) []*relapse.Pattern {
-	return ofs(relapse.NewRefsLookup(g), ps, func(p1 *relapse.Pattern) bool {
+func TreeNodesOf(g *ast.Grammar, ps ...*ast.Pattern) []*ast.Pattern {
+	return ofs(ast.NewRefsLookup(g), ps, func(p1 *ast.Pattern) bool {
 		return p1.TreeNode != nil
 	})
 }
 
-func ofs(refs relapse.RefLookup, ps []*relapse.Pattern, f func(p *relapse.Pattern) bool) []*relapse.Pattern {
-	fs := []*relapse.Pattern{}
+func ofs(refs ast.RefLookup, ps []*ast.Pattern, f func(p *ast.Pattern) bool) []*ast.Pattern {
+	fs := []*ast.Pattern{}
 	for _, p := range ps {
 		fs = append(fs, of(refs, p, f)...)
 	}
 	return fs
 }
 
-func of(refs relapse.RefLookup, p *relapse.Pattern, f func(p *relapse.Pattern) bool) []*relapse.Pattern {
+func of(refs ast.RefLookup, p *ast.Pattern, f func(p *ast.Pattern) bool) []*ast.Pattern {
 	typ := p.GetValue()
 	switch v := typ.(type) {
-	case *relapse.Empty:
+	case *ast.Empty:
 		return nil
-	case *relapse.TreeNode:
+	case *ast.TreeNode:
 		if f(p) {
-			return []*relapse.Pattern{p}
+			return []*ast.Pattern{p}
 		}
 		return nil
-	case *relapse.LeafNode:
+	case *ast.LeafNode:
 		if f(p) {
-			return []*relapse.Pattern{p}
+			return []*ast.Pattern{p}
 		}
 		return nil
-	case *relapse.Concat:
+	case *ast.Concat:
 		left := of(refs, v.GetLeftPattern(), f)
 		right := of(refs, v.GetRightPattern(), f)
-		return append(append([]*relapse.Pattern{}, left...), right...)
-	case *relapse.Or:
+		return append(append([]*ast.Pattern{}, left...), right...)
+	case *ast.Or:
 		left := of(refs, v.GetLeftPattern(), f)
 		right := of(refs, v.GetRightPattern(), f)
-		return append(append([]*relapse.Pattern{}, left...), right...)
-	case *relapse.And:
+		return append(append([]*ast.Pattern{}, left...), right...)
+	case *ast.And:
 		left := of(refs, v.GetLeftPattern(), f)
 		right := of(refs, v.GetRightPattern(), f)
-		return append(append([]*relapse.Pattern{}, left...), right...)
-	case *relapse.ZeroOrMore:
+		return append(append([]*ast.Pattern{}, left...), right...)
+	case *ast.ZeroOrMore:
 		return of(refs, v.GetPattern(), f)
-	case *relapse.Reference:
+	case *ast.Reference:
 		return of(refs, refs[v.GetName()], f)
-	case *relapse.Not:
+	case *ast.Not:
 		return nil
-	case *relapse.ZAny:
+	case *ast.ZAny:
 		return nil
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))

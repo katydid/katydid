@@ -3,7 +3,7 @@
 // DO NOT EDIT!
 
 /*
-	Package relapse is a generated protocol buffer package.
+	Package ast is a generated protocol buffer package.
 
 	It is generated from these files:
 		relapse.proto
@@ -39,7 +39,7 @@
 		AnyNameExcept
 		NameChoice
 */
-package relapse
+package ast
 
 import proto "github.com/gogo/protobuf/proto"
 import fmt "fmt"
@@ -1186,35 +1186,35 @@ func (m *NameChoice) GetCloseParen() *Keyword {
 }
 
 func init() {
-	proto.RegisterType((*Grammar)(nil), "relapse.Grammar")
-	proto.RegisterType((*PatternDecl)(nil), "relapse.PatternDecl")
-	proto.RegisterType((*Pattern)(nil), "relapse.Pattern")
-	proto.RegisterType((*Empty)(nil), "relapse.Empty")
-	proto.RegisterType((*TreeNode)(nil), "relapse.TreeNode")
-	proto.RegisterType((*Contains)(nil), "relapse.Contains")
-	proto.RegisterType((*LeafNode)(nil), "relapse.LeafNode")
-	proto.RegisterType((*Concat)(nil), "relapse.Concat")
-	proto.RegisterType((*Or)(nil), "relapse.Or")
-	proto.RegisterType((*And)(nil), "relapse.And")
-	proto.RegisterType((*ZeroOrMore)(nil), "relapse.ZeroOrMore")
-	proto.RegisterType((*Reference)(nil), "relapse.Reference")
-	proto.RegisterType((*Not)(nil), "relapse.Not")
-	proto.RegisterType((*ZAny)(nil), "relapse.ZAny")
-	proto.RegisterType((*Optional)(nil), "relapse.Optional")
-	proto.RegisterType((*Interleave)(nil), "relapse.Interleave")
-	proto.RegisterType((*Expr)(nil), "relapse.Expr")
-	proto.RegisterType((*List)(nil), "relapse.List")
-	proto.RegisterType((*Function)(nil), "relapse.Function")
-	proto.RegisterType((*BuiltIn)(nil), "relapse.BuiltIn")
-	proto.RegisterType((*Terminal)(nil), "relapse.Terminal")
-	proto.RegisterType((*Variable)(nil), "relapse.Variable")
-	proto.RegisterType((*Keyword)(nil), "relapse.Keyword")
-	proto.RegisterType((*Space)(nil), "relapse.Space")
-	proto.RegisterType((*NameExpr)(nil), "relapse.NameExpr")
-	proto.RegisterType((*Name)(nil), "relapse.Name")
-	proto.RegisterType((*AnyName)(nil), "relapse.AnyName")
-	proto.RegisterType((*AnyNameExcept)(nil), "relapse.AnyNameExcept")
-	proto.RegisterType((*NameChoice)(nil), "relapse.NameChoice")
+	proto.RegisterType((*Grammar)(nil), "ast.Grammar")
+	proto.RegisterType((*PatternDecl)(nil), "ast.PatternDecl")
+	proto.RegisterType((*Pattern)(nil), "ast.Pattern")
+	proto.RegisterType((*Empty)(nil), "ast.Empty")
+	proto.RegisterType((*TreeNode)(nil), "ast.TreeNode")
+	proto.RegisterType((*Contains)(nil), "ast.Contains")
+	proto.RegisterType((*LeafNode)(nil), "ast.LeafNode")
+	proto.RegisterType((*Concat)(nil), "ast.Concat")
+	proto.RegisterType((*Or)(nil), "ast.Or")
+	proto.RegisterType((*And)(nil), "ast.And")
+	proto.RegisterType((*ZeroOrMore)(nil), "ast.ZeroOrMore")
+	proto.RegisterType((*Reference)(nil), "ast.Reference")
+	proto.RegisterType((*Not)(nil), "ast.Not")
+	proto.RegisterType((*ZAny)(nil), "ast.ZAny")
+	proto.RegisterType((*Optional)(nil), "ast.Optional")
+	proto.RegisterType((*Interleave)(nil), "ast.Interleave")
+	proto.RegisterType((*Expr)(nil), "ast.Expr")
+	proto.RegisterType((*List)(nil), "ast.List")
+	proto.RegisterType((*Function)(nil), "ast.Function")
+	proto.RegisterType((*BuiltIn)(nil), "ast.BuiltIn")
+	proto.RegisterType((*Terminal)(nil), "ast.Terminal")
+	proto.RegisterType((*Variable)(nil), "ast.Variable")
+	proto.RegisterType((*Keyword)(nil), "ast.Keyword")
+	proto.RegisterType((*Space)(nil), "ast.Space")
+	proto.RegisterType((*NameExpr)(nil), "ast.NameExpr")
+	proto.RegisterType((*Name)(nil), "ast.Name")
+	proto.RegisterType((*AnyName)(nil), "ast.AnyName")
+	proto.RegisterType((*AnyNameExcept)(nil), "ast.AnyNameExcept")
+	proto.RegisterType((*NameChoice)(nil), "ast.NameChoice")
 }
 func (this *Grammar) Equal(that interface{}) bool {
 	if that == nil {
@@ -2290,7 +2290,7 @@ func (this *Grammar) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 7)
-	s = append(s, "&relapse.Grammar{")
+	s = append(s, "&ast.Grammar{")
 	if this.TopPattern != nil {
 		s = append(s, "TopPattern: "+fmt.Sprintf("%#v", this.TopPattern)+",\n")
 	}
@@ -2308,7 +2308,7 @@ func (this *PatternDecl) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 9)
-	s = append(s, "&relapse.PatternDecl{")
+	s = append(s, "&ast.PatternDecl{")
 	if this.Hash != nil {
 		s = append(s, "Hash: "+fmt.Sprintf("%#v", this.Hash)+",\n")
 	}
@@ -2330,7 +2330,7 @@ func (this *Pattern) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 17)
-	s = append(s, "&relapse.Pattern{")
+	s = append(s, "&ast.Pattern{")
 	if this.Empty != nil {
 		s = append(s, "Empty: "+fmt.Sprintf("%#v", this.Empty)+",\n")
 	}
@@ -2378,7 +2378,7 @@ func (this *Empty) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 5)
-	s = append(s, "&relapse.Empty{")
+	s = append(s, "&ast.Empty{")
 	if this.Empty != nil {
 		s = append(s, "Empty: "+fmt.Sprintf("%#v", this.Empty)+",\n")
 	}
@@ -2390,7 +2390,7 @@ func (this *TreeNode) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 7)
-	s = append(s, "&relapse.TreeNode{")
+	s = append(s, "&ast.TreeNode{")
 	if this.Name != nil {
 		s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
 	}
@@ -2408,7 +2408,7 @@ func (this *Contains) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 6)
-	s = append(s, "&relapse.Contains{")
+	s = append(s, "&ast.Contains{")
 	if this.Dot != nil {
 		s = append(s, "Dot: "+fmt.Sprintf("%#v", this.Dot)+",\n")
 	}
@@ -2423,7 +2423,7 @@ func (this *LeafNode) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 5)
-	s = append(s, "&relapse.LeafNode{")
+	s = append(s, "&ast.LeafNode{")
 	if this.Expr != nil {
 		s = append(s, "Expr: "+fmt.Sprintf("%#v", this.Expr)+",\n")
 	}
@@ -2435,7 +2435,7 @@ func (this *Concat) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 10)
-	s = append(s, "&relapse.Concat{")
+	s = append(s, "&ast.Concat{")
 	if this.OpenBracket != nil {
 		s = append(s, "OpenBracket: "+fmt.Sprintf("%#v", this.OpenBracket)+",\n")
 	}
@@ -2462,7 +2462,7 @@ func (this *Or) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 9)
-	s = append(s, "&relapse.Or{")
+	s = append(s, "&ast.Or{")
 	if this.OpenParen != nil {
 		s = append(s, "OpenParen: "+fmt.Sprintf("%#v", this.OpenParen)+",\n")
 	}
@@ -2486,7 +2486,7 @@ func (this *And) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 9)
-	s = append(s, "&relapse.And{")
+	s = append(s, "&ast.And{")
 	if this.OpenParen != nil {
 		s = append(s, "OpenParen: "+fmt.Sprintf("%#v", this.OpenParen)+",\n")
 	}
@@ -2510,7 +2510,7 @@ func (this *ZeroOrMore) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 8)
-	s = append(s, "&relapse.ZeroOrMore{")
+	s = append(s, "&ast.ZeroOrMore{")
 	if this.OpenParen != nil {
 		s = append(s, "OpenParen: "+fmt.Sprintf("%#v", this.OpenParen)+",\n")
 	}
@@ -2531,7 +2531,7 @@ func (this *Reference) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 6)
-	s = append(s, "&relapse.Reference{")
+	s = append(s, "&ast.Reference{")
 	if this.At != nil {
 		s = append(s, "At: "+fmt.Sprintf("%#v", this.At)+",\n")
 	}
@@ -2544,7 +2544,7 @@ func (this *Not) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 8)
-	s = append(s, "&relapse.Not{")
+	s = append(s, "&ast.Not{")
 	if this.Exclamation != nil {
 		s = append(s, "Exclamation: "+fmt.Sprintf("%#v", this.Exclamation)+",\n")
 	}
@@ -2565,7 +2565,7 @@ func (this *ZAny) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 5)
-	s = append(s, "&relapse.ZAny{")
+	s = append(s, "&ast.ZAny{")
 	if this.Star != nil {
 		s = append(s, "Star: "+fmt.Sprintf("%#v", this.Star)+",\n")
 	}
@@ -2577,7 +2577,7 @@ func (this *Optional) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 8)
-	s = append(s, "&relapse.Optional{")
+	s = append(s, "&ast.Optional{")
 	if this.OpenParen != nil {
 		s = append(s, "OpenParen: "+fmt.Sprintf("%#v", this.OpenParen)+",\n")
 	}
@@ -2598,7 +2598,7 @@ func (this *Interleave) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 10)
-	s = append(s, "&relapse.Interleave{")
+	s = append(s, "&ast.Interleave{")
 	if this.OpenCurly != nil {
 		s = append(s, "OpenCurly: "+fmt.Sprintf("%#v", this.OpenCurly)+",\n")
 	}
@@ -2625,7 +2625,7 @@ func (this *Expr) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 10)
-	s = append(s, "&relapse.Expr{")
+	s = append(s, "&ast.Expr{")
 	if this.RightArrow != nil {
 		s = append(s, "RightArrow: "+fmt.Sprintf("%#v", this.RightArrow)+",\n")
 	}
@@ -2652,7 +2652,7 @@ func (this *List) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 9)
-	s = append(s, "&relapse.List{")
+	s = append(s, "&ast.List{")
 	if this.Before != nil {
 		s = append(s, "Before: "+fmt.Sprintf("%#v", this.Before)+",\n")
 	}
@@ -2674,7 +2674,7 @@ func (this *Function) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 9)
-	s = append(s, "&relapse.Function{")
+	s = append(s, "&ast.Function{")
 	if this.Before != nil {
 		s = append(s, "Before: "+fmt.Sprintf("%#v", this.Before)+",\n")
 	}
@@ -2696,7 +2696,7 @@ func (this *BuiltIn) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 6)
-	s = append(s, "&relapse.BuiltIn{")
+	s = append(s, "&ast.BuiltIn{")
 	if this.Symbol != nil {
 		s = append(s, "Symbol: "+fmt.Sprintf("%#v", this.Symbol)+",\n")
 	}
@@ -2711,7 +2711,7 @@ func (this *Terminal) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 13)
-	s = append(s, "&relapse.Terminal{")
+	s = append(s, "&ast.Terminal{")
 	if this.Before != nil {
 		s = append(s, "Before: "+fmt.Sprintf("%#v", this.Before)+",\n")
 	}
@@ -2745,7 +2745,7 @@ func (this *Variable) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 5)
-	s = append(s, "&relapse.Variable{")
+	s = append(s, "&ast.Variable{")
 	s = append(s, "Type: "+fmt.Sprintf("%#v", this.Type)+",\n")
 	s = append(s, "}")
 	return strings.Join(s, "")
@@ -2755,7 +2755,7 @@ func (this *Keyword) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 6)
-	s = append(s, "&relapse.Keyword{")
+	s = append(s, "&ast.Keyword{")
 	if this.Before != nil {
 		s = append(s, "Before: "+fmt.Sprintf("%#v", this.Before)+",\n")
 	}
@@ -2768,7 +2768,7 @@ func (this *Space) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 5)
-	s = append(s, "&relapse.Space{")
+	s = append(s, "&ast.Space{")
 	if this.Space != nil {
 		s = append(s, "Space: "+fmt.Sprintf("%#v", this.Space)+",\n")
 	}
@@ -2780,7 +2780,7 @@ func (this *NameExpr) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 8)
-	s = append(s, "&relapse.NameExpr{")
+	s = append(s, "&ast.NameExpr{")
 	if this.Name != nil {
 		s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
 	}
@@ -2801,7 +2801,7 @@ func (this *Name) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 11)
-	s = append(s, "&relapse.Name{")
+	s = append(s, "&ast.Name{")
 	if this.Before != nil {
 		s = append(s, "Before: "+fmt.Sprintf("%#v", this.Before)+",\n")
 	}
@@ -2831,7 +2831,7 @@ func (this *AnyName) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 5)
-	s = append(s, "&relapse.AnyName{")
+	s = append(s, "&ast.AnyName{")
 	if this.Underscore != nil {
 		s = append(s, "Underscore: "+fmt.Sprintf("%#v", this.Underscore)+",\n")
 	}
@@ -2843,7 +2843,7 @@ func (this *AnyNameExcept) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 8)
-	s = append(s, "&relapse.AnyNameExcept{")
+	s = append(s, "&ast.AnyNameExcept{")
 	if this.Exclamation != nil {
 		s = append(s, "Exclamation: "+fmt.Sprintf("%#v", this.Exclamation)+",\n")
 	}
@@ -2864,7 +2864,7 @@ func (this *NameChoice) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 9)
-	s = append(s, "&relapse.NameChoice{")
+	s = append(s, "&ast.NameChoice{")
 	if this.OpenParen != nil {
 		s = append(s, "OpenParen: "+fmt.Sprintf("%#v", this.OpenParen)+",\n")
 	}

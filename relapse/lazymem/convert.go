@@ -16,12 +16,12 @@ package lazymem
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/interp"
 )
 
-func ConvertGrammar(g *relapse.Grammar) *Pattern {
-	refs := relapse.NewRefsLookup(g)
+func ConvertGrammar(g *ast.Grammar) *Pattern {
+	refs := ast.NewRefsLookup(g)
 	lazyRefs := make(map[string]*Pattern)
 	for name, _ := range refs {
 		lazyRefs[name] = &Pattern{}
@@ -35,41 +35,41 @@ func ConvertGrammar(g *relapse.Grammar) *Pattern {
 	return lazyRefs["main"]
 }
 
-func newPattern(refs map[string]*Pattern, p *relapse.Pattern) *Pattern {
+func newPattern(refs map[string]*Pattern, p *ast.Pattern) *Pattern {
 	typ := p.GetValue()
 	switch v := typ.(type) {
-	case *relapse.Empty:
+	case *ast.Empty:
 		return NewEmpty()
-	case *relapse.TreeNode:
+	case *ast.TreeNode:
 		return NewTreeNode(v.GetName(), newPattern(refs, v.GetPattern()))
-	case *relapse.LeafNode:
+	case *ast.LeafNode:
 		return NewLeafNode(v.GetExpr())
-	case *relapse.Concat:
+	case *ast.Concat:
 		return NewConcat(newPattern(refs, v.GetLeftPattern()), newPattern(refs, v.GetRightPattern()))
-	case *relapse.Or:
+	case *ast.Or:
 		return NewOr(newPattern(refs, v.GetLeftPattern()), newPattern(refs, v.GetRightPattern()))
-	case *relapse.And:
+	case *ast.And:
 		return NewAnd(newPattern(refs, v.GetLeftPattern()), newPattern(refs, v.GetRightPattern()))
-	case *relapse.ZeroOrMore:
+	case *ast.ZeroOrMore:
 		return NewZeroOrMore(newPattern(refs, v.GetPattern()))
-	case *relapse.Not:
+	case *ast.Not:
 		return NewNot(newPattern(refs, v.GetPattern()))
-	case *relapse.Reference:
+	case *ast.Reference:
 		return NewLazyPattern(v.GetName(), refs[v.GetName()])
-	case *relapse.ZAny:
+	case *ast.ZAny:
 		return NewZAny()
-	case *relapse.Contains:
+	case *ast.Contains:
 		return NewContains(newPattern(refs, v.GetPattern()))
-	case *relapse.Optional:
+	case *ast.Optional:
 		return NewOptional(newPattern(refs, v.GetPattern()))
-	case *relapse.Interleave:
+	case *ast.Interleave:
 		return NewInterleave(newPattern(refs, v.GetLeftPattern()), newPattern(refs, v.GetRightPattern()))
 	}
 	panic(fmt.Sprintf("unknown Pattern typ %T", typ))
 }
 
-func ConvertPattern(p *Pattern) *relapse.Grammar {
-	refs := make(map[string]*relapse.Pattern)
+func ConvertPattern(p *Pattern) *ast.Grammar {
+	refs := make(map[string]*ast.Pattern)
 	visited := make(map[*Pattern]string)
 	visited[p] = "main"
 	changed := true
@@ -93,57 +93,57 @@ func ConvertPattern(p *Pattern) *relapse.Grammar {
 			refs[name] = interp.Simplify(refs, pat)
 		}
 	}
-	return relapse.NewGrammar(refs)
+	return ast.NewGrammar(refs)
 }
 
-func convertPattern(visited map[*Pattern]string, p *Pattern) *relapse.Pattern {
+func convertPattern(visited map[*Pattern]string, p *Pattern) *ast.Pattern {
 	if p.thunk != nil {
 		if _, ok := visited[p]; !ok {
 			visited[p] = p.name
 		}
-		return relapse.NewReference(visited[p])
+		return ast.NewReference(visited[p])
 	}
 	typ := p.head.GetValue()
 	switch v := typ.(type) {
 	case *Empty:
-		return relapse.NewEmpty()
+		return ast.NewEmpty()
 	case *Node:
 		if v.Name != nil {
 			c := convertPattern(visited, v.Pattern)
-			return relapse.NewTreeNode(v.Name, c)
+			return ast.NewTreeNode(v.Name, c)
 		} else {
-			return relapse.NewLeafNode(v.Expr)
+			return ast.NewLeafNode(v.Expr)
 		}
 	case *Concat:
 		left := convertPattern(visited, v.Left)
 		right := convertPattern(visited, v.Right)
-		return relapse.NewConcat(left, right)
+		return ast.NewConcat(left, right)
 	case *Or:
 		left := convertPattern(visited, v.Left)
 		right := convertPattern(visited, v.Right)
-		return relapse.NewOr(left, right)
+		return ast.NewOr(left, right)
 	case *And:
 		left := convertPattern(visited, v.Left)
 		right := convertPattern(visited, v.Right)
-		return relapse.NewAnd(left, right)
+		return ast.NewAnd(left, right)
 	case *ZeroOrMore:
 		c := convertPattern(visited, v.Pattern)
-		return relapse.NewZeroOrMore(c)
+		return ast.NewZeroOrMore(c)
 	case *Not:
 		c := convertPattern(visited, v.Pattern)
-		return relapse.NewNot(c)
+		return ast.NewNot(c)
 	case *ZAny:
-		return relapse.NewZAny()
+		return ast.NewZAny()
 	case *Optional:
 		c := convertPattern(visited, v.Pattern)
-		return relapse.NewOptional(c)
+		return ast.NewOptional(c)
 	case *Contains:
 		c := convertPattern(visited, v.Pattern)
-		return relapse.NewContains(c)
+		return ast.NewContains(c)
 	case *Interleave:
 		left := convertPattern(visited, v.Left)
 		right := convertPattern(visited, v.Right)
-		return relapse.NewInterleave(left, right)
+		return ast.NewInterleave(left, right)
 	}
 	panic(fmt.Sprintf("unknown Pattern typ %T", typ))
 }

@@ -20,7 +20,7 @@ import (
 )
 
 const composeStr = `
-func compose{{.SingleName}}(expr *relapse.Expr) (funcs.{{.SingleName}}, error) {
+func compose{{.SingleName}}(expr *ast.Expr) (funcs.{{.SingleName}}, error) {
 	uniq, err := prep(expr, types.{{.SingleType}})
 	if err != nil {
 		return nil, err
@@ -39,7 +39,7 @@ func compose{{.SingleName}}(expr *relapse.Expr) (funcs.{{.SingleName}}, error) {
 	return funcs.New{{.SingleName}}Func(uniq, values...)
 }
 
-func compose{{.ListName}}(expr *relapse.Expr) (funcs.{{.ListName}}, error) {
+func compose{{.ListName}}(expr *ast.Expr) (funcs.{{.ListName}}, error) {
 	uniq, err := prep(expr, types.{{.ListType}})
 	if err != nil {
 		return nil, err
@@ -85,7 +85,7 @@ func main() {
 		&composer{"String", "SINGLE_STRING", "String", "Strings", "LIST_STRING"},
 		&composer{"Bytes", "SINGLE_BYTES", "Bytes", "ListOfBytes", "LIST_BYTES"},
 	},
-		`"github.com/katydid/katydid/relapse"`,
+		`"github.com/katydid/katydid/relapse/ast"`,
 		`"github.com/katydid/katydid/relapse/funcs"`,
 		`"github.com/katydid/katydid/relapse/types"`)
 }

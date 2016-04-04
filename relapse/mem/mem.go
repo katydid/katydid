@@ -16,7 +16,7 @@ package mem
 
 import (
 	"github.com/katydid/katydid/parser"
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/interp"
 )
 
@@ -26,14 +26,14 @@ func (mem *Mem) Interpret(p parser.Interface) bool {
 	return mem.accept(final)
 }
 
-func New(g *relapse.Grammar) *Mem {
-	refs := relapse.NewRefsLookup(g)
+func New(g *ast.Grammar) *Mem {
+	refs := ast.NewRefsLookup(g)
 	mem := newMem(refs)
 	return mem
 }
 
 type Mem struct {
-	Refs        map[string]*relapse.Pattern
+	Refs        map[string]*ast.Pattern
 	PatternsMap PatternsIndexedSet
 	Calls       map[int]*CallNode
 	Returns     map[int]map[int]int
@@ -48,7 +48,7 @@ type Mem struct {
 	Accept map[int]bool
 }
 
-func newMem(refs map[string]*relapse.Pattern) *Mem {
+func newMem(refs map[string]*ast.Pattern) *Mem {
 	m := &Mem{
 		Refs:        refs,
 		PatternsMap: newPatternsIndexedSet(),
@@ -62,7 +62,7 @@ func newMem(refs map[string]*relapse.Pattern) *Mem {
 		Nullables:       newBoolsIndexedSet(),
 		Accept:          make(map[int]bool),
 	}
-	start := m.PatternsMap.add([]*relapse.Pattern{refs["main"]})
+	start := m.PatternsMap.add([]*ast.Pattern{refs["main"]})
 	m.Start = start
 	return m
 }

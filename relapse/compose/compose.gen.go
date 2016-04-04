@@ -4,12 +4,12 @@
 package compose
 
 import (
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/funcs"
 	"github.com/katydid/katydid/relapse/types"
 )
 
-func composeDouble(expr *relapse.Expr) (funcs.Double, error) {
+func composeDouble(expr *ast.Expr) (funcs.Double, error) {
 	uniq, err := prep(expr, types.SINGLE_DOUBLE)
 	if err != nil {
 		return nil, err
@@ -28,7 +28,7 @@ func composeDouble(expr *relapse.Expr) (funcs.Double, error) {
 	return funcs.NewDoubleFunc(uniq, values...)
 }
 
-func composeDoubles(expr *relapse.Expr) (funcs.Doubles, error) {
+func composeDoubles(expr *ast.Expr) (funcs.Doubles, error) {
 	uniq, err := prep(expr, types.LIST_DOUBLE)
 	if err != nil {
 		return nil, err
@@ -55,7 +55,7 @@ func composeDoubles(expr *relapse.Expr) (funcs.Doubles, error) {
 	return funcs.NewDoublesFunc(uniq, values...)
 }
 
-func composeInt(expr *relapse.Expr) (funcs.Int, error) {
+func composeInt(expr *ast.Expr) (funcs.Int, error) {
 	uniq, err := prep(expr, types.SINGLE_INT)
 	if err != nil {
 		return nil, err
@@ -74,7 +74,7 @@ func composeInt(expr *relapse.Expr) (funcs.Int, error) {
 	return funcs.NewIntFunc(uniq, values...)
 }
 
-func composeInts(expr *relapse.Expr) (funcs.Ints, error) {
+func composeInts(expr *ast.Expr) (funcs.Ints, error) {
 	uniq, err := prep(expr, types.LIST_INT)
 	if err != nil {
 		return nil, err
@@ -101,7 +101,7 @@ func composeInts(expr *relapse.Expr) (funcs.Ints, error) {
 	return funcs.NewIntsFunc(uniq, values...)
 }
 
-func composeUint(expr *relapse.Expr) (funcs.Uint, error) {
+func composeUint(expr *ast.Expr) (funcs.Uint, error) {
 	uniq, err := prep(expr, types.SINGLE_UINT)
 	if err != nil {
 		return nil, err
@@ -120,7 +120,7 @@ func composeUint(expr *relapse.Expr) (funcs.Uint, error) {
 	return funcs.NewUintFunc(uniq, values...)
 }
 
-func composeUints(expr *relapse.Expr) (funcs.Uints, error) {
+func composeUints(expr *ast.Expr) (funcs.Uints, error) {
 	uniq, err := prep(expr, types.LIST_UINT)
 	if err != nil {
 		return nil, err
@@ -147,7 +147,7 @@ func composeUints(expr *relapse.Expr) (funcs.Uints, error) {
 	return funcs.NewUintsFunc(uniq, values...)
 }
 
-func composeBool(expr *relapse.Expr) (funcs.Bool, error) {
+func composeBool(expr *ast.Expr) (funcs.Bool, error) {
 	uniq, err := prep(expr, types.SINGLE_BOOL)
 	if err != nil {
 		return nil, err
@@ -166,7 +166,7 @@ func composeBool(expr *relapse.Expr) (funcs.Bool, error) {
 	return funcs.NewBoolFunc(uniq, values...)
 }
 
-func composeBools(expr *relapse.Expr) (funcs.Bools, error) {
+func composeBools(expr *ast.Expr) (funcs.Bools, error) {
 	uniq, err := prep(expr, types.LIST_BOOL)
 	if err != nil {
 		return nil, err
@@ -193,7 +193,7 @@ func composeBools(expr *relapse.Expr) (funcs.Bools, error) {
 	return funcs.NewBoolsFunc(uniq, values...)
 }
 
-func composeString(expr *relapse.Expr) (funcs.String, error) {
+func composeString(expr *ast.Expr) (funcs.String, error) {
 	uniq, err := prep(expr, types.SINGLE_STRING)
 	if err != nil {
 		return nil, err
@@ -212,7 +212,7 @@ func composeString(expr *relapse.Expr) (funcs.String, error) {
 	return funcs.NewStringFunc(uniq, values...)
 }
 
-func composeStrings(expr *relapse.Expr) (funcs.Strings, error) {
+func composeStrings(expr *ast.Expr) (funcs.Strings, error) {
 	uniq, err := prep(expr, types.LIST_STRING)
 	if err != nil {
 		return nil, err
@@ -239,7 +239,7 @@ func composeStrings(expr *relapse.Expr) (funcs.Strings, error) {
 	return funcs.NewStringsFunc(uniq, values...)
 }
 
-func composeBytes(expr *relapse.Expr) (funcs.Bytes, error) {
+func composeBytes(expr *ast.Expr) (funcs.Bytes, error) {
 	uniq, err := prep(expr, types.SINGLE_BYTES)
 	if err != nil {
 		return nil, err
@@ -258,7 +258,7 @@ func composeBytes(expr *relapse.Expr) (funcs.Bytes, error) {
 	return funcs.NewBytesFunc(uniq, values...)
 }
 
-func composeListOfBytes(expr *relapse.Expr) (funcs.ListOfBytes, error) {
+func composeListOfBytes(expr *ast.Expr) (funcs.ListOfBytes, error) {
 	uniq, err := prep(expr, types.LIST_BYTES)
 	if err != nil {
 		return nil, err

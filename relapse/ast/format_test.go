@@ -12,10 +12,10 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package relapse_test
+package ast_test
 
 import (
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/parser"
 	"testing"
 )
@@ -26,7 +26,7 @@ func format(t *testing.T, s string) string {
 		t.Errorf("err: %v given %s", err, s)
 		return ""
 	}
-	relapse.Format(g)
+	ast.Format(g)
 	return g.String()
 }
 

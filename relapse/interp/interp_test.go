@@ -17,12 +17,12 @@ package interp_test
 import (
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/parser/debug"
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/interp"
 	"testing"
 )
 
-func test(t *testing.T, g *relapse.Grammar, p parser.Interface, expected bool, desc string) {
+func test(t *testing.T, g *ast.Grammar, p parser.Interface, expected bool, desc string) {
 	if interp.HasLeftRecursion(g) {
 		t.Skipf("interp was not designed to handle left recursion")
 	}

@@ -15,7 +15,7 @@
 package tests
 
 import (
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/combinator"
 	"github.com/katydid/katydid/relapse/protonum"
 	"reflect"
@@ -25,7 +25,7 @@ import (
 type Validator struct {
 	Name        string
 	CodecName   string
-	Grammar     *relapse.Grammar
+	Grammar     *ast.Grammar
 	Parser      NewParser
 	Expected    bool
 	Description string
@@ -81,7 +81,7 @@ func ValidateProtoNum(name string, grammar combinator.G, m interface{}, expected
 	if err != nil {
 		panic(name + ": " + err.Error())
 	}
-	Validate("ProtoNum"+name, combinator.G(relapse.NewRefsLookup(g)), codecs, expected)
+	Validate("ProtoNum"+name, combinator.G(ast.NewRefsLookup(g)), codecs, expected)
 }
 
 func Validate(name string, grammar combinator.G, codecs Codecs, expected bool) {

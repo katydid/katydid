@@ -19,25 +19,25 @@ import (
 	"fmt"
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 	"github.com/katydid/katydid/parser/proto"
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 )
 
 //FieldNamesToNumbers rewrites field names contained in the grammar to their respective field numbers found in the protocol buffer filedescriptorset.
 //This allows for more speedy field comparisons in validation when used in conjunction with the ProtoNumParser.
-func FieldNamesToNumbers(pkgName, msgName string, desc *descriptor.FileDescriptorSet, grammar *relapse.Grammar) (*relapse.Grammar, error) {
+func FieldNamesToNumbers(pkgName, msgName string, desc *descriptor.FileDescriptorSet, grammar *ast.Grammar) (*ast.Grammar, error) {
 	g := grammar.Clone()
 	descMap, err := proto.NewDescriptorMap(pkgName, msgName, desc)
 	if err != nil {
 		return nil, err
 	}
 	root := descMap.GetRoot()
-	refs := relapse.NewRefsLookup(g)
+	refs := ast.NewRefsLookup(g)
 	nameToNumber := &nameToNumber{
 		refs:    make(map[string]*context),
 		descMap: descMap,
 	}
 	nameToNumber.refs["main"] = &context{root, false}
-	newRefs := make(map[string]*relapse.Pattern)
+	newRefs := make(map[string]*ast.Pattern)
 	oldContexts := 0
 	newContexts := 1
 	for oldContexts != newContexts {
@@ -51,7 +51,7 @@ func FieldNamesToNumbers(pkgName, msgName string, desc *descriptor.FileDescripto
 		}
 		newContexts = len(nameToNumber.refs)
 	}
-	return relapse.NewGrammar(newRefs), nil
+	return ast.NewGrammar(newRefs), nil
 }
 
 type nameToNumber struct {
@@ -88,29 +88,29 @@ func (this *ErrDup) Error() string {
 	return fmt.Sprintf("Duplicate Reference Error: Name: %v, Context1: %v, Context2: %v", this.name, this.c1.msg.GetName(), this.c2.msg.GetName())
 }
 
-func (this *nameToNumber) translate(context *context, p *relapse.Pattern) (*relapse.Pattern, error) {
+func (this *nameToNumber) translate(context *context, p *ast.Pattern) (*ast.Pattern, error) {
 	typ := p.GetValue()
 	switch v := typ.(type) {
-	case *relapse.Empty, *relapse.LeafNode, *relapse.ZAny:
+	case *ast.Empty, *ast.LeafNode, *ast.ZAny:
 		return p, nil
-	case *relapse.TreeNode:
+	case *ast.TreeNode:
 		return this.translateName(context, v.GetName(), v.GetPattern())
-	case *relapse.Concat:
+	case *ast.Concat:
 		l, err1 := this.translate(context, v.GetLeftPattern())
 		r, err2 := this.translate(context, v.GetRightPattern())
-		return relapse.NewConcat(l, r), anyErr(err1, err2)
-	case *relapse.Or:
+		return ast.NewConcat(l, r), anyErr(err1, err2)
+	case *ast.Or:
 		l, err1 := this.translate(context, v.GetLeftPattern())
 		r, err2 := this.translate(context, v.GetRightPattern())
-		return relapse.NewOr(l, r), anyErr(err1, err2)
-	case *relapse.And:
+		return ast.NewOr(l, r), anyErr(err1, err2)
+	case *ast.And:
 		l, err1 := this.translate(context, v.GetLeftPattern())
 		r, err2 := this.translate(context, v.GetRightPattern())
-		return relapse.NewAnd(l, r), anyErr(err1, err2)
-	case *relapse.ZeroOrMore:
+		return ast.NewAnd(l, r), anyErr(err1, err2)
+	case *ast.ZeroOrMore:
 		p, err := this.translate(context, v.GetPattern())
-		return relapse.NewZeroOrMore(p), err
-	case *relapse.Reference:
+		return ast.NewZeroOrMore(p), err
+	case *ast.Reference:
 		c, ok := this.refs[v.GetName()]
 		if !ok {
 			this.refs[v.GetName()] = context
@@ -122,19 +122,19 @@ func (this *nameToNumber) translate(context *context, p *relapse.Pattern) (*rela
 			return nil, &ErrDup{v.GetName(), c, context}
 		}
 		return p, nil
-	case *relapse.Not:
+	case *ast.Not:
 		p, err := this.translate(context, v.GetPattern())
-		return relapse.NewNot(p), err
-	case *relapse.Contains:
+		return ast.NewNot(p), err
+	case *ast.Contains:
 		p, err := this.translate(context, v.GetPattern())
-		return relapse.NewContains(p), err
-	case *relapse.Optional:
+		return ast.NewContains(p), err
+	case *ast.Optional:
 		p, err := this.translate(context, v.GetPattern())
-		return relapse.NewOptional(p), err
-	case *relapse.Interleave:
+		return ast.NewOptional(p), err
+	case *ast.Interleave:
 		l, err1 := this.translate(context, v.GetLeftPattern())
 		r, err2 := this.translate(context, v.GetRightPattern())
-		return relapse.NewInterleave(l, r), anyErr(err1, err2)
+		return ast.NewInterleave(l, r), anyErr(err1, err2)
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
@@ -192,9 +192,9 @@ func getField(msg *descriptor.DescriptorProto, name string) *descriptor.FieldDes
 	return nil
 }
 
-func (this *nameToNumber) translateName(current *context, name *relapse.NameExpr, child *relapse.Pattern) (*relapse.Pattern, error) {
+func (this *nameToNumber) translateName(current *context, name *ast.NameExpr, child *ast.Pattern) (*ast.Pattern, error) {
 	switch n := name.GetValue().(type) {
-	case *relapse.Name:
+	case *ast.Name:
 		if current.index {
 			if n.IntValue == nil {
 				return nil, &errExpectedArray{name.String(), current}
@@ -204,7 +204,7 @@ func (this *nameToNumber) translateName(current *context, name *relapse.NameExpr
 			if err != nil {
 				return nil, err
 			}
-			return relapse.NewTreeNode(name, newp), nil
+			return ast.NewTreeNode(name, newp), nil
 		}
 		if n.StringValue == nil {
 			return nil, &errExpectedField{name.String(), current}
@@ -219,25 +219,25 @@ func (this *nameToNumber) translateName(current *context, name *relapse.NameExpr
 		if err != nil {
 			return nil, err
 		}
-		newName := relapse.NewUintName(uint64(f.GetNumber()))
-		return relapse.NewTreeNode(newName, newp), nil
-	case *relapse.AnyName:
+		newName := ast.NewUintName(uint64(f.GetNumber()))
+		return ast.NewTreeNode(newName, newp), nil
+	case *ast.AnyName:
 		if current.index {
 			c := &context{current.msg, false}
 			newp, err := this.translate(c, child)
 			if err != nil {
 				return nil, err
 			}
-			return relapse.NewTreeNode(name, newp), nil
+			return ast.NewTreeNode(name, newp), nil
 		} else {
 			return nil, &errAnyFieldNotSupported{name.String()}
 		}
-	case *relapse.AnyNameExcept:
+	case *ast.AnyNameExcept:
 		return nil, &errAnyNameExceptNotSupported{name.String()}
-	case *relapse.NameChoice:
+	case *ast.NameChoice:
 		l, err1 := this.translateName(current, n.GetLeft(), child)
 		r, err2 := this.translateName(current, n.GetRight(), child)
-		return relapse.NewOr(l, r), anyErr(err1, err2)
+		return ast.NewOr(l, r), anyErr(err1, err2)
 	}
 	panic(fmt.Sprintf("unknown name typ %T", name))
 }

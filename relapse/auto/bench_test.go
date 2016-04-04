@@ -16,7 +16,7 @@ package auto_test
 
 import (
 	"github.com/katydid/katydid/parser"
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/auto"
 	"testing"
 )
@@ -26,7 +26,7 @@ type reset interface {
 	Reset() error
 }
 
-func bench(b *testing.B, grammar *relapse.Grammar, gen func() parser.Interface) {
+func bench(b *testing.B, grammar *ast.Grammar, gen func() parser.Interface) {
 	num := 1000
 	parsers := make([]reset, num)
 	for i := 0; i < num; i++ {

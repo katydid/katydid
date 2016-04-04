@@ -4,7 +4,7 @@ package parser
 
 import (
 	"github.com/gogo/protobuf/proto"
-	. "github.com/katydid/katydid/relapse"
+	. "github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/token"
 	"github.com/katydid/katydid/relapse/types"
 	"strconv"

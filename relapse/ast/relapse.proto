@@ -14,7 +14,7 @@
 
 syntax = "proto2";
 
-package relapse;
+package ast;
 
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 import "github.com/katydid/katydid/relapse/types/types.proto";

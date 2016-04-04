@@ -12,24 +12,24 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package relapse
+package ast
 
 import (
-	"reflect"
-	"testing"
+	"github.com/gogo/protobuf/proto"
 )
 
-func TestClone(t *testing.T) {
-	in := NewGrammar(map[string]*Pattern{
-		"main": NewAnd(NewEmpty(), NewTreeNode(NewStringName("a"), NewLeafNode(&Expr{}))),
-	})
-	out := in.Clone()
-	if !reflect.DeepEqual(in, out) {
-		t.Fatalf("not cloned")
+func (this *Grammar) Clone() *Grammar {
+	return proto.Clone(this).(*Grammar)
+}
+
+func (this RefLookup) Clone() RefLookup {
+	that := make(RefLookup, len(this))
+	for name, _ := range this {
+		that[name] = this[name].Clone()
 	}
-	treeNode := in.GetTopPattern().GetAnd().GetRightPattern().GetTreeNode()
-	treeNode.Pattern = NewZAny()
-	if reflect.DeepEqual(in, out) {
-		t.Fatalf("not cloned")
-	}
+	return that
+}
+
+func (this *Pattern) Clone() *Pattern {
+	return proto.Clone(this).(*Pattern)
 }

@@ -16,7 +16,7 @@ package parser
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/lexer"
 )
 
@@ -30,13 +30,13 @@ func (this *errWrongType) Error() string {
 }
 
 //ParseGrammar parses a relapse grammar and returns an abstract syntax tree.
-func (this *Parser) ParseGrammar(s string) (*relapse.Grammar, error) {
+func (this *Parser) ParseGrammar(s string) (*ast.Grammar, error) {
 	scanner := lexer.NewLexer([]byte(s))
 	g, err := this.Parse(scanner)
 	if err != nil {
 		return nil, err
 	}
-	gram, ok := g.(*relapse.Grammar)
+	gram, ok := g.(*ast.Grammar)
 	if !ok {
 		return nil, &errWrongType{"*relapse.Grammar", g}
 	}
@@ -44,19 +44,19 @@ func (this *Parser) ParseGrammar(s string) (*relapse.Grammar, error) {
 }
 
 //ParseGrammar parses a relapse grammar and returns an abstract syntax tree.
-func ParseGrammar(s string) (*relapse.Grammar, error) {
+func ParseGrammar(s string) (*ast.Grammar, error) {
 	p := NewParser()
 	return p.ParseGrammar(s)
 }
 
 //ParseExpr returns a parsed expression or error, given a string.
-func (this *Parser) ParseExpr(s string) (res *relapse.Expr, err error) {
+func (this *Parser) ParseExpr(s string) (res *ast.Expr, err error) {
 	scanner := lexer.NewLexer([]byte(s))
 	g, err := this.Parse(scanner)
 	if err != nil {
 		return nil, err
 	}
-	gram, ok := g.(*relapse.Grammar)
+	gram, ok := g.(*ast.Grammar)
 	if !ok {
 		return nil, &errWrongType{"*relapse.Grammar", g}
 	}

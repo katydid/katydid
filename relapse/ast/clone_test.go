@@ -1,4 +1,4 @@
-//  Copyright 2016 Walter Schulze
+//  Copyright 2015 Walter Schulze
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -12,22 +12,24 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package relapse
+package ast
 
-func Filter(f func(p *Pattern) bool, ps []*Pattern) []*Pattern {
-	fs := make([]*Pattern, 0, len(ps))
-	for i, p := range ps {
-		if f(p) {
-			fs = append(fs, ps[i])
-		}
-	}
-	return fs
-}
+import (
+	"reflect"
+	"testing"
+)
 
-func Map(f func(p *Pattern) *Pattern, ps []*Pattern) []*Pattern {
-	fs := make([]*Pattern, len(ps))
-	for i, p := range ps {
-		fs[i] = f(p)
+func TestClone(t *testing.T) {
+	in := NewGrammar(map[string]*Pattern{
+		"main": NewAnd(NewEmpty(), NewTreeNode(NewStringName("a"), NewLeafNode(&Expr{}))),
+	})
+	out := in.Clone()
+	if !reflect.DeepEqual(in, out) {
+		t.Fatalf("not cloned")
 	}
-	return fs
+	treeNode := in.GetTopPattern().GetAnd().GetRightPattern().GetTreeNode()
+	treeNode.Pattern = NewZAny()
+	if reflect.DeepEqual(in, out) {
+		t.Fatalf("not cloned")
+	}
 }

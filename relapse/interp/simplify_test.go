@@ -15,7 +15,7 @@
 package interp_test
 
 import (
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/combinator"
 	"github.com/katydid/katydid/relapse/funcs"
 	. "github.com/katydid/katydid/relapse/interp"
@@ -24,31 +24,31 @@ import (
 )
 
 func TestSimplify1(t *testing.T) {
-	c := relapse.NewConcat(relapse.NewNot(relapse.NewZAny()), relapse.NewZAny())
-	refs := relapse.RefLookup{"main": c}
+	c := ast.NewConcat(ast.NewNot(ast.NewZAny()), ast.NewZAny())
+	refs := ast.RefLookup{"main": c}
 	s := Simplify(refs, c)
-	if !s.Equal(relapse.NewNot(relapse.NewZAny())) {
+	if !s.Equal(ast.NewNot(ast.NewZAny())) {
 		t.Fatalf("Expected EmptySet, but got %s", s)
 	}
 }
 
 func TestSimplify2(t *testing.T) {
-	refs := relapse.NewRefsLookup(tests.AndNameTelephonePerson.Grammar())
+	refs := ast.NewRefsLookup(tests.AndNameTelephonePerson.Grammar())
 	s := Simplify(refs, refs["main"])
-	if s.Equal(relapse.NewNot(relapse.NewZAny())) {
+	if s.Equal(ast.NewNot(ast.NewZAny())) {
 		t.Fatalf("Did not expected EmptySet")
 	}
 }
 
-func newT(s string) *relapse.Pattern {
-	return relapse.NewTreeNode(relapse.NewStringName(s), relapse.NewEmpty())
+func newT(s string) *ast.Pattern {
+	return ast.NewTreeNode(ast.NewStringName(s), ast.NewEmpty())
 }
 
 func TestSimplifyOr1(t *testing.T) {
-	input := relapse.NewOr(newT("B"), relapse.NewOr(newT("C"), relapse.NewOr(newT("A"), newT("B"))))
-	refs := relapse.RefLookup{"main": input}
+	input := ast.NewOr(newT("B"), ast.NewOr(newT("C"), ast.NewOr(newT("A"), newT("B"))))
+	refs := ast.RefLookup{"main": input}
 	output := Simplify(refs, input)
-	expected := relapse.NewOr(relapse.NewOr(newT("A"), newT("B")), newT("C"))
+	expected := ast.NewOr(ast.NewOr(newT("A"), newT("B")), newT("C"))
 	t.Logf("%v", output)
 	if !expected.Equal(output) {
 		t.Fatalf("expected %v, but got %v", expected, output)
@@ -56,10 +56,10 @@ func TestSimplifyOr1(t *testing.T) {
 }
 
 func TestSimplifyOr2(t *testing.T) {
-	input := relapse.NewOr(relapse.NewOr(newT("A"), newT("B")), relapse.NewOr(newT("B"), newT("C")))
-	refs := relapse.RefLookup{"main": input}
+	input := ast.NewOr(ast.NewOr(newT("A"), newT("B")), ast.NewOr(newT("B"), newT("C")))
+	refs := ast.RefLookup{"main": input}
 	output := Simplify(refs, input)
-	expected := relapse.NewOr(relapse.NewOr(newT("A"), newT("B")), newT("C"))
+	expected := ast.NewOr(ast.NewOr(newT("A"), newT("B")), newT("C"))
 	t.Logf("%v", output)
 	if !expected.Equal(output) {
 		t.Fatalf("expected %v, but got %v", expected, output)
@@ -67,28 +67,28 @@ func TestSimplifyOr2(t *testing.T) {
 }
 
 func TestSimplifyTree(t *testing.T) {
-	left := relapse.NewTreeNode(relapse.NewStringName("A"),
-		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewContains(
-			relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewZAny()),
+	left := ast.NewTreeNode(ast.NewStringName("A"),
+		ast.NewTreeNode(ast.NewStringName("B"), ast.NewContains(
+			ast.NewTreeNode(ast.NewStringName("C"), ast.NewZAny()),
 		)),
 	)
-	right := relapse.NewTreeNode(relapse.NewStringName("A"),
-		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewContains(
-			relapse.NewTreeNode(relapse.NewStringName("D"), relapse.NewZAny()),
+	right := ast.NewTreeNode(ast.NewStringName("A"),
+		ast.NewTreeNode(ast.NewStringName("B"), ast.NewContains(
+			ast.NewTreeNode(ast.NewStringName("D"), ast.NewZAny()),
 		)),
 	)
-	input := relapse.NewAnd(left, right)
-	expected := relapse.NewTreeNode(relapse.NewStringName("A"),
-		relapse.NewTreeNode(relapse.NewStringName("B"), relapse.NewAnd(
-			relapse.NewContains(
-				relapse.NewTreeNode(relapse.NewStringName("C"), relapse.NewZAny()),
+	input := ast.NewAnd(left, right)
+	expected := ast.NewTreeNode(ast.NewStringName("A"),
+		ast.NewTreeNode(ast.NewStringName("B"), ast.NewAnd(
+			ast.NewContains(
+				ast.NewTreeNode(ast.NewStringName("C"), ast.NewZAny()),
 			),
-			relapse.NewContains(
-				relapse.NewTreeNode(relapse.NewStringName("D"), relapse.NewZAny()),
+			ast.NewContains(
+				ast.NewTreeNode(ast.NewStringName("D"), ast.NewZAny()),
 			),
 		)),
 	)
-	refs := relapse.RefLookup{"main": input}
+	refs := ast.RefLookup{"main": input}
 	output := Simplify(refs, input)
 	t.Logf("%v", output)
 	if !expected.Equal(output) {
@@ -98,8 +98,8 @@ func TestSimplifyTree(t *testing.T) {
 
 func TestSimplifyFalseLeaf(t *testing.T) {
 	input := combinator.Value(funcs.And(funcs.StringEq(funcs.StringVar(), funcs.StringConst("a")), funcs.StringEq(funcs.StringVar(), funcs.StringConst("b"))))
-	expected := relapse.NewNot(relapse.NewZAny())
-	refs := relapse.RefLookup{"main": input}
+	expected := ast.NewNot(ast.NewZAny())
+	refs := ast.RefLookup{"main": input}
 	output := Simplify(refs, input)
 	t.Logf("%v", output)
 	if !expected.Equal(output) {
@@ -108,9 +108,9 @@ func TestSimplifyFalseLeaf(t *testing.T) {
 }
 
 func TestSimplifyFalseTreeNode(t *testing.T) {
-	input := relapse.NewTreeNode(relapse.NewAnyNameExcept(relapse.NewAnyName()), relapse.NewZAny())
-	expected := relapse.NewNot(relapse.NewZAny())
-	refs := relapse.RefLookup{"main": input}
+	input := ast.NewTreeNode(ast.NewAnyNameExcept(ast.NewAnyName()), ast.NewZAny())
+	expected := ast.NewNot(ast.NewZAny())
+	refs := ast.RefLookup{"main": input}
 	output := Simplify(refs, input)
 	t.Logf("%v", output)
 	if !expected.Equal(output) {
@@ -119,9 +119,9 @@ func TestSimplifyFalseTreeNode(t *testing.T) {
 }
 
 func TestSimplifyTreeNodeWithNotZanyChild(t *testing.T) {
-	input := relapse.NewTreeNode(relapse.NewAnyName(), relapse.NewNot(relapse.NewZAny()))
-	expected := relapse.NewNot(relapse.NewZAny())
-	refs := relapse.RefLookup{"main": input}
+	input := ast.NewTreeNode(ast.NewAnyName(), ast.NewNot(ast.NewZAny()))
+	expected := ast.NewNot(ast.NewZAny())
+	refs := ast.RefLookup{"main": input}
 	output := Simplify(refs, input)
 	t.Logf("%v", output)
 	if !expected.Equal(output) {
@@ -130,9 +130,9 @@ func TestSimplifyTreeNodeWithNotZanyChild(t *testing.T) {
 }
 
 func TestSimplifyContainsFalseTreeNode(t *testing.T) {
-	input := relapse.NewContains(relapse.NewTreeNode(relapse.NewAnyNameExcept(relapse.NewAnyName()), relapse.NewZAny()))
-	expected := relapse.NewNot(relapse.NewZAny())
-	refs := relapse.RefLookup{"main": input}
+	input := ast.NewContains(ast.NewTreeNode(ast.NewAnyNameExcept(ast.NewAnyName()), ast.NewZAny()))
+	expected := ast.NewNot(ast.NewZAny())
+	refs := ast.RefLookup{"main": input}
 	output := Simplify(refs, input)
 	t.Logf("%v", output)
 	if !expected.Equal(output) {

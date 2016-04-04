@@ -17,13 +17,13 @@ package compose
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/funcs"
 	"github.com/katydid/katydid/relapse/types"
 )
 
 //Which returns the type that the expression will return.
-func Which(expr *relapse.Expr) (types.Type, error) {
+func Which(expr *ast.Expr) (types.Type, error) {
 	if expr.Terminal != nil {
 		term := expr.GetTerminal()
 		if term.DoubleValue != nil {
@@ -64,7 +64,7 @@ func Which(expr *relapse.Expr) (types.Type, error) {
 
 //WhichFunc returns the unique name of the function, given the types of the parameters.
 //For example, a function named eq could have a unique name of intEq, doubleEq, etc.
-func WhichFunc(fnc *relapse.Function) (string, error) {
+func WhichFunc(fnc *ast.Function) (string, error) {
 	types := make([]types.Type, 0, len(fnc.GetParams()))
 	for _, p := range fnc.GetParams() {
 		typ, err := Which(p)
@@ -88,14 +88,14 @@ func (this *errExpected) Error() string {
 }
 
 type errUnknownType struct {
-	expr *relapse.Expr
+	expr *ast.Expr
 }
 
 func (this *errUnknownType) Error() string {
 	return "expr type is unknown: " + this.expr.String()
 }
 
-func prep(expr *relapse.Expr, expType types.Type) (uniq string, err error) {
+func prep(expr *ast.Expr, expType types.Type) (uniq string, err error) {
 	if expr.Function != nil {
 		fnc := expr.GetFunction()
 		uniq, err = WhichFunc(fnc)
@@ -126,7 +126,7 @@ func prep(expr *relapse.Expr, expType types.Type) (uniq string, err error) {
 	return "", nil
 }
 
-func newValues(params []*relapse.Expr) ([]interface{}, error) {
+func newValues(params []*ast.Expr) ([]interface{}, error) {
 	values := make([]interface{}, 0, len(params))
 	for _, p := range params {
 		v, err := newValue(p)
@@ -140,7 +140,7 @@ func newValues(params []*relapse.Expr) ([]interface{}, error) {
 	return values, nil
 }
 
-func composeVariable(v *relapse.Variable) funcs.Variable {
+func composeVariable(v *ast.Variable) funcs.Variable {
 	switch v.Type {
 	case types.SINGLE_DOUBLE:
 		return funcs.DoubleVar()
@@ -158,7 +158,7 @@ func composeVariable(v *relapse.Variable) funcs.Variable {
 	panic("unreachable")
 }
 
-func newValue(p *relapse.Expr) (interface{}, error) {
+func newValue(p *ast.Expr) (interface{}, error) {
 	if p.Terminal != nil && p.GetTerminal().Variable != nil {
 		return composeVariable(p.GetTerminal().Variable), nil
 	}
