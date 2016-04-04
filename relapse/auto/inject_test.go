@@ -12,12 +12,12 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package convert_test
+package auto_test
 
 import (
 	reflectparser "github.com/katydid/katydid/parser/reflect"
+	"github.com/katydid/katydid/relapse/auto"
 	. "github.com/katydid/katydid/relapse/combinator"
-	"github.com/katydid/katydid/relapse/convert"
 	"github.com/katydid/katydid/relapse/funcs"
 	"github.com/katydid/katydid/relapse/tests"
 	"reflect"
@@ -62,9 +62,9 @@ var injectPerson = G{}
 
 func testInject(t *testing.T, num int64) bool {
 	grammar := injectPerson.Grammar()
-	auto := convert.Compile(grammar)
+	a := auto.Compile(grammar)
 	typ := reflect.TypeOf((*InjectableInt)(nil)).Elem()
-	instances := convert.Implements(auto, typ)
+	instances := auto.Implements(a, typ)
 	if len(instances) == 0 {
 		t.Fatal("Expected some functions that implement the interface")
 	}
@@ -73,7 +73,7 @@ func testInject(t *testing.T, num int64) bool {
 	}
 	parser := reflectparser.NewReflectParser()
 	parser.Init(reflect.ValueOf(tests.RobertPerson))
-	return convert.Interpret(auto, parser)
+	return auto.Interpret(a, parser)
 }
 
 func TestInjectPositive(t *testing.T) {

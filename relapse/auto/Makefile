@@ -13,8 +13,8 @@
 # limitations under the License.
 
 regenerate:
-	go install github.com/katydid/katydid/relapse/convert/convert-gen
-	convert-gen ./
+	go install github.com/katydid/katydid/relapse/auto/auto-gen
+	auto-gen ./
 
 nuke:
-	rm -rf convert.gen_test.go
+	rm -rf auto.gen_test.go

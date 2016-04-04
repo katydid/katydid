@@ -24,7 +24,7 @@ regenerate:
 	(cd tests && make regenerate)
 	(cd interp && make regenerate)
 	(cd mem && make regenerate)
-	(cd convert && make regenerate)
+	(cd auto && make regenerate)
 	(cd lazymem && make regenerate)
 	(cd protonum && make regenerate)
 
@@ -45,5 +45,5 @@ nuke: clean
 	rm -rf ./util
 	(cd funcs && make nuke)
 	(cd interp && make nuke)
-	(cd convert && make nuke)
+	(cd auto && make nuke)
 	(cd lazymem && make nuke)

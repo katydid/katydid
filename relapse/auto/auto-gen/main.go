@@ -34,7 +34,7 @@ func Benchmark{{.Name}}{{capFirst .CodecName}}(b *testing.B) {
 `
 
 func main() {
-	gen := gen.NewPackage("convert_test")
-	gen(testStr, "convert.gen_test.go", tests.ValidatorList(), `"testing"`, `"github.com/katydid/katydid/relapse/tests"`)
-	gen(benchStr, "convert.gen_bench_test.go", tests.BenchValidatorList(), `"testing"`, `"github.com/katydid/katydid/relapse/tests"`)
+	gen := gen.NewPackage("auto_test")
+	gen(testStr, "auto.gen_test.go", tests.ValidatorList(), `"testing"`, `"github.com/katydid/katydid/relapse/tests"`)
+	gen(benchStr, "auto.gen_bench_test.go", tests.BenchValidatorList(), `"testing"`, `"github.com/katydid/katydid/relapse/tests"`)
 }

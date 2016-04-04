@@ -12,12 +12,12 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package convert_test
+package auto_test
 
 import (
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse"
-	"github.com/katydid/katydid/relapse/convert"
+	"github.com/katydid/katydid/relapse/auto"
 	"github.com/katydid/katydid/relapse/interp"
 	"testing"
 )
@@ -26,8 +26,8 @@ func test(t *testing.T, g *relapse.Grammar, p parser.Interface, expected bool, d
 	if interp.HasLeftRecursion(g) {
 		t.Skipf("convert was not designed to handle recursion")
 	}
-	auto := convert.Compile(g)
-	match := convert.Interpret(auto, p)
+	a := auto.Compile(g)
+	match := auto.Interpret(a, p)
 	if match != expected {
 		t.Fatalf("Expected %v on given \n%s\n on \n%s", expected, g.String(), desc)
 	}
