@@ -15,14 +15,13 @@
 package relapse
 
 import (
-	"github.com/katydid/katydid/expr"
 	"reflect"
 	"testing"
 )
 
 func TestClone(t *testing.T) {
 	in := NewGrammar(map[string]*Pattern{
-		"main": NewAnd(NewEmpty(), NewTreeNode(expr.NewStringName("a"), NewLeafNode(&expr.Expr{}))),
+		"main": NewAnd(NewEmpty(), NewTreeNode(NewStringName("a"), NewLeafNode(&Expr{}))),
 	})
 	out := in.Clone()
 	if !reflect.DeepEqual(in, out) {

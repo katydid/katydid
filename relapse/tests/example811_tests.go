@@ -15,8 +15,8 @@
 package tests
 
 import (
-	. "github.com/katydid/katydid/expr/funcs"
 	. "github.com/katydid/katydid/relapse/combinator"
+	. "github.com/katydid/katydid/relapse/funcs"
 )
 
 // Foundations of XML Processing: The Tree Automata Approach - Example 8.1.1

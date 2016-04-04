@@ -15,10 +15,10 @@
 package convert_test
 
 import (
-	"github.com/katydid/katydid/expr/funcs"
 	reflectparser "github.com/katydid/katydid/parser/reflect"
 	. "github.com/katydid/katydid/relapse/combinator"
 	"github.com/katydid/katydid/relapse/convert"
+	"github.com/katydid/katydid/relapse/funcs"
 	"github.com/katydid/katydid/relapse/tests"
 	"reflect"
 	"testing"

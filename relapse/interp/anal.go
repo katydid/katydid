@@ -16,18 +16,17 @@ package interp
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/expr"
 	"github.com/katydid/katydid/relapse"
 )
 
 // Experimental
-func ChildrenOf(g *relapse.Grammar, path []*expr.NameExpr) []*relapse.Pattern {
+func ChildrenOf(g *relapse.Grammar, path []*relapse.NameExpr) []*relapse.Pattern {
 	refs := relapse.NewRefsLookup(g)
 	p := refs["main"]
 	return childrenOf(refs, p, path)
 }
 
-func childrenOf(refs relapse.RefLookup, p *relapse.Pattern, path []*expr.NameExpr) []*relapse.Pattern {
+func childrenOf(refs relapse.RefLookup, p *relapse.Pattern, path []*relapse.NameExpr) []*relapse.Pattern {
 	if len(path) == 0 {
 		return []*relapse.Pattern{p}
 	}
@@ -67,7 +66,7 @@ func childrenOf(refs relapse.RefLookup, p *relapse.Pattern, path []*expr.NameExp
 }
 
 //Experimental
-func CompareVarExpr(a, b *expr.Expr) bool {
+func CompareVarExpr(a, b *relapse.Expr) bool {
 	if !a.HasVar() && !b.HasVar() {
 		return true
 	}
@@ -102,7 +101,7 @@ func CompareVarExpr(a, b *expr.Expr) bool {
 	return false
 }
 
-func compareVarExprs(as, bs []*expr.Expr) bool {
+func compareVarExprs(as, bs []*relapse.Expr) bool {
 	if len(as) != len(bs) {
 		return false
 	}

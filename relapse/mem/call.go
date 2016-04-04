@@ -15,10 +15,10 @@
 package mem
 
 import (
-	"github.com/katydid/katydid/expr/compose"
-	"github.com/katydid/katydid/expr/funcs"
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/compose"
+	"github.com/katydid/katydid/relapse/funcs"
 	"reflect"
 	"strings"
 )
@@ -198,7 +198,7 @@ func appendCallNode(top *callNode, cond funcs.Bool, then, els *relapse.Pattern) 
 			els:  elsnode,
 		}
 	}
-	if funcs.Sprint(funcs.Simplify(funcs.And(top.cond, cond))) == "false" {
+	if funcs.IsFalse(funcs.Simplify(funcs.And(top.cond, cond))) {
 		thennode := appendCallTerm(top.then, els)
 		elsnode := appendCallNode(top.els, cond, then, els)
 		return &callNode{
@@ -207,7 +207,7 @@ func appendCallNode(top *callNode, cond funcs.Bool, then, els *relapse.Pattern) 
 			els:  elsnode,
 		}
 	}
-	if funcs.Sprint(funcs.Simplify(funcs.And(top.cond, funcs.Not(cond)))) == "false" {
+	if funcs.IsFalse(funcs.Simplify(funcs.And(top.cond, funcs.Not(cond)))) {
 		thennode := appendCallNode(top.then, cond, then, els)
 		elsnode := appendCallTerm(top.els, then)
 		return &callNode{

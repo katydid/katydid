@@ -20,11 +20,13 @@ import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 option (gogoproto.description_all) = true;
 option (gogoproto.populate_all) = true;
 
+//BigMsg contains a field and a message field.
 message BigMsg {
 	optional int64 Field = 1;
 	optional SmallMsg Msg = 3;
 }
 
+//SmallMsg only contains some native fields.
 message SmallMsg {
 	optional string ScarBusStop = 1;
 	repeated fixed32 FlightParachute = 12;

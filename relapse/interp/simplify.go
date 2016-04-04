@@ -16,11 +16,10 @@ package interp
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/expr"
-	"github.com/katydid/katydid/expr/compose"
-	"github.com/katydid/katydid/expr/funcs"
-	nameexpr "github.com/katydid/katydid/expr/name"
 	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/compose"
+	"github.com/katydid/katydid/relapse/funcs"
+	nameexpr "github.com/katydid/katydid/relapse/name"
 )
 
 func checkRef(refs relapse.RefLookup, p *relapse.Pattern) *relapse.Pattern {
@@ -68,7 +67,7 @@ func simplify(refs relapse.RefLookup, p *relapse.Pattern, top bool) *relapse.Pat
 			return relapse.NewNot(relapse.NewZAny())
 		}
 		if funcs.IsTrue(b) {
-			name = expr.NewAnyName()
+			name = relapse.NewAnyName()
 		}
 		return cRef(relapse.NewTreeNode(name, child))
 	case *relapse.LeafNode:

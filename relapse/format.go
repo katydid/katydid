@@ -14,10 +14,6 @@
 
 package relapse
 
-import (
-	"github.com/katydid/katydid/expr"
-)
-
 //Work in Progress: Like gofmt, but for relapse
 func Format(g *Grammar) {
 	first := true
@@ -42,14 +38,14 @@ func Format(g *Grammar) {
 		first = false
 	}
 	if g.After == nil {
-		g.After = &expr.Space{}
+		g.After = &Space{}
 	}
 	formatTrim(g.After, true, 0)
 }
 
 func formatPatternDecl(patternDecl *PatternDecl, first bool) {
 	if patternDecl.Before == nil {
-		patternDecl.Before = &expr.Space{}
+		patternDecl.Before = &Space{}
 	}
 	if first {
 		formatTrim(patternDecl.Before, true, 0)
@@ -86,15 +82,15 @@ func formatTreeNode(t *TreeNode, first bool, tabs int) {
 	formatPattern(t.Pattern, true, tabs)
 }
 
-func formatNameExpr(nameExpr *expr.NameExpr, first bool, tabs int) {
+func formatNameExpr(nameExpr *NameExpr, first bool, tabs int) {
 	if nameExpr.Name != nil {
 		formatName(nameExpr.Name, first, tabs)
 	}
 }
 
-func formatName(name *expr.Name, first bool, tabs int) {
+func formatName(name *Name, first bool, tabs int) {
 	if name.Before == nil {
-		name.Before = &expr.Space{}
+		name.Before = &Space{}
 	}
 	formatTrim(name.Before, first, tabs)
 	if first {
@@ -102,7 +98,7 @@ func formatName(name *expr.Name, first bool, tabs int) {
 	}
 }
 
-// func formatNewline(space *expr.Space, tabs int) {
+// func formatNewline(space *Space, tabs int) {
 // 	formatTrim(space, false, tabs)
 // 	space.Space = append([]string{"\n"}, space.Space...)
 // }
@@ -115,7 +111,7 @@ func newTabs(tabs int) string {
 	return string(ss)
 }
 
-func formatTrim(space *expr.Space, first bool, tabs int) {
+func formatTrim(space *Space, first bool, tabs int) {
 	comments := space.GetComments()
 	hadAttachedComment := space.HasAttachedComment()
 	space.Space = make([]string, 0, len(comments)*2)
@@ -140,13 +136,13 @@ func formatTrim(space *expr.Space, first bool, tabs int) {
 	}
 }
 
-func addSpace(space *expr.Space) {
+func addSpace(space *Space) {
 	space.Space = append(space.Space, " ")
 }
 
-func formatKeyword(keyword *expr.Keyword, tabs int) {
+func formatKeyword(keyword *Keyword, tabs int) {
 	if keyword.Before == nil {
-		keyword.Before = &expr.Space{}
+		keyword.Before = &Space{}
 	}
 	formatTrim(keyword.Before, true, tabs)
 	if keyword.GetValue() == "=" {

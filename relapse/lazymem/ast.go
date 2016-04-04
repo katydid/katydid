@@ -16,9 +16,9 @@ package lazymem
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/expr"
-	"github.com/katydid/katydid/expr/compose"
-	nameexpr "github.com/katydid/katydid/expr/name"
+	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/compose"
+	nameexpr "github.com/katydid/katydid/relapse/name"
 )
 
 type Pattern struct {
@@ -158,12 +158,12 @@ func (this *Empty) String() string {
 
 type Node struct {
 	F       compose.Bool
-	Name    *expr.NameExpr
-	Expr    *expr.Expr
+	Name    *relapse.NameExpr
+	Expr    *relapse.Expr
 	Pattern *Pattern
 }
 
-func NewNode(f compose.Bool, n *expr.NameExpr, e *expr.Expr, p *Pattern) *Pattern {
+func NewNode(f compose.Bool, n *relapse.NameExpr, e *relapse.Expr, p *Pattern) *Pattern {
 	return &Pattern{
 		head: &PatternHead{
 			Node: &Node{
@@ -190,7 +190,7 @@ func (this *Node) String() string {
 	return this.Expr.String()
 }
 
-func NewTreeNode(name *expr.NameExpr, p *Pattern) *Pattern {
+func NewTreeNode(name *relapse.NameExpr, p *Pattern) *Pattern {
 	nameFunc := nameexpr.NameToFunc(name)
 	f, err := compose.NewBoolFunc(nameFunc)
 	if err != nil {
@@ -199,7 +199,7 @@ func NewTreeNode(name *expr.NameExpr, p *Pattern) *Pattern {
 	return NewNode(f, name, nil, p)
 }
 
-func NewLeafNode(expr *expr.Expr) *Pattern {
+func NewLeafNode(expr *relapse.Expr) *Pattern {
 	b, err := compose.NewBool(expr)
 	if err != nil {
 		panic(err)

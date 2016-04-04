@@ -17,7 +17,7 @@ syntax = "proto2";
 package relapse;
 
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
-import "github.com/katydid/katydid/expr/expr.proto";
+import "github.com/katydid/katydid/relapse/types/types.proto";
 
 option (gogoproto.goproto_stringer_all) = false;
 option (gogoproto.gostring_all) = true;
@@ -30,14 +30,14 @@ option (gogoproto.goproto_unrecognized_all) = false;
 message Grammar {
 	optional Pattern TopPattern = 1;
 	repeated PatternDecl PatternDecls = 2;
-	optional expr.Space After = 3;
+	optional Space After = 3;
 }
 
 message PatternDecl {
-	optional expr.Keyword Hash = 1;
-	optional expr.Space Before = 2;
+	optional Keyword Hash = 1;
+	optional Space Before = 2;
 	optional string Name = 3 [(gogoproto.nullable) = false];
-	optional expr.Keyword Eq = 4;
+	optional Keyword Eq = 4;
 	optional Pattern Pattern = 5;
 }
 
@@ -59,85 +59,195 @@ message Pattern {
 }
 
 message Empty {
-	optional expr.Keyword Empty = 1;
+	optional Keyword Empty = 1;
 }
 
 message TreeNode {
-	optional expr.NameExpr Name = 1;
-	optional expr.Keyword Colon = 2;
+	optional NameExpr Name = 1;
+	optional Keyword Colon = 2;
 	optional Pattern Pattern = 3;
 }
 
 message Contains {
-	optional expr.Keyword Dot = 1;
+	optional Keyword Dot = 1;
 	optional Pattern Pattern = 2;
 }
 
 message LeafNode {
-	optional expr.Keyword RightArrow = 1;
-	optional expr.Expr Expr = 2;
+	optional Expr Expr = 1;
 }
 
 message Concat {
-	optional expr.Keyword OpenBracket = 2;
+	optional Keyword OpenBracket = 2;
 	optional Pattern LeftPattern = 3;
-	optional expr.Keyword Comma = 4;
+	optional Keyword Comma = 4;
 	optional Pattern RightPattern = 5;
-	optional expr.Keyword ExtraComma = 6;
-	optional expr.Keyword CloseBracket = 7;
+	optional Keyword ExtraComma = 6;
+	optional Keyword CloseBracket = 7;
 }
 
 message Or {
-	optional expr.Keyword OpenParen = 1;
+	optional Keyword OpenParen = 1;
 	optional Pattern LeftPattern = 2;
-	optional expr.Keyword Pipe = 3;
+	optional Keyword Pipe = 3;
 	optional Pattern RightPattern = 4;
-	optional expr.Keyword CloseParen = 5;
+	optional Keyword CloseParen = 5;
 }
 
 message And {
-	optional expr.Keyword OpenParen = 1;
+	optional Keyword OpenParen = 1;
 	optional Pattern LeftPattern = 2;
-	optional expr.Keyword Ampersand = 3;
+	optional Keyword Ampersand = 3;
 	optional Pattern RightPattern = 4;
-	optional expr.Keyword CloseParen = 5;
+	optional Keyword CloseParen = 5;
 }
 
 message ZeroOrMore {
-	optional expr.Keyword OpenParen = 1;
+	optional Keyword OpenParen = 1;
 	optional Pattern Pattern = 2;
-	optional expr.Keyword CloseParen = 3;
-	optional expr.Keyword Star = 4;
+	optional Keyword CloseParen = 3;
+	optional Keyword Star = 4;
 }
 
 message Reference {
-	optional expr.Keyword At = 1;
+	optional Keyword At = 1;
 	optional string Name = 2 [(gogoproto.nullable) = false];
 }
 
 message Not {
-	optional expr.Keyword Exclamation = 1;
-	optional expr.Keyword OpenParen = 2;
+	optional Keyword Exclamation = 1;
+	optional Keyword OpenParen = 2;
 	optional Pattern Pattern = 3;
-	optional expr.Keyword CloseParen = 4;
+	optional Keyword CloseParen = 4;
 }
 
 message ZAny {
-	optional expr.Keyword Star = 1;
+	optional Keyword Star = 1;
 }
 
 message Optional {
-	optional expr.Keyword OpenParen = 1;
+	optional Keyword OpenParen = 1;
 	optional Pattern Pattern = 2;
-	optional expr.Keyword CloseParen = 3;
-	optional expr.Keyword QuestionMark = 4;
+	optional Keyword CloseParen = 3;
+	optional Keyword QuestionMark = 4;
 }
 
 message Interleave {
-	optional expr.Keyword OpenCurly = 2;
+	optional Keyword OpenCurly = 2;
 	optional Pattern LeftPattern = 3;
-	optional expr.Keyword SemiColon = 4;
+	optional Keyword SemiColon = 4;
 	optional Pattern RightPattern = 5;
-	optional expr.Keyword ExtraSemiColon = 6;
-	optional expr.Keyword CloseCurly = 7;
+	optional Keyword ExtraSemiColon = 6;
+	optional Keyword CloseCurly = 7;
 }
+
+//Expr is a union of all possible expression types, terminal, list, function and builtin function.
+message Expr {
+	optional Keyword RightArrow = 1;
+	optional Keyword Comma = 2;
+	optional Terminal Terminal = 3;
+	optional List List = 4;
+	optional Function Function = 5;
+	optional BuiltIn BuiltIn = 6;
+}
+
+//List is an expression that represents a typed list of expressions.
+message List {
+	optional Space Before = 1;
+	optional types.Type Type = 2 [(gogoproto.nullable) = false];
+	optional Keyword OpenCurly = 3;
+	repeated Expr Elems = 4;
+	optional Keyword CloseCurly = 5;
+}
+
+//Function is an expression that represents a function expression, which contains a function name and a list parameters.
+message Function {
+	optional Space Before = 1;
+	optional string Name = 2 [(gogoproto.nullable) = false];
+	optional Keyword OpenParen = 3;
+	repeated Expr Params = 4;
+	optional Keyword CloseParen = 5;
+}
+
+//BuiltIn is an expression that represents a builtin function.  This is represented by a symbol and an expression.
+message BuiltIn {
+	optional Keyword Symbol = 1;
+	optional Expr Expr = 2;
+}
+
+//Terminal is an expression that represents a literal value or variable.
+message Terminal {
+	optional Space Before = 1;
+	optional string Literal = 2 [(gogoproto.nullable) = false];
+
+	optional double DoubleValue = 3;
+	optional int64 IntValue = 5;
+	optional uint64 UintValue = 6;
+
+	optional bool BoolValue = 8;
+	optional string StringValue = 9;
+
+	optional bytes BytesValue = 10;
+
+	optional Variable Variable = 50;
+}
+
+//Variable is a terminal.
+message Variable {
+	optional types.Type Type = 2 [(gogoproto.nullable) = false];
+}
+
+//Keyword represents any possible keyword.
+message Keyword {
+	optional Space Before = 1;
+	optional string Value = 2 [(gogoproto.nullable) = false];
+}
+
+//Space represents a comment or white space.
+message Space {
+	repeated string Space = 1;
+}
+
+//NameExpr is a special type of expression for field names that contains a union of all the possible name expressions.
+message NameExpr {
+	option (gogoproto.onlyone) = true;
+	optional Name Name = 1;
+	optional AnyName AnyName = 2;
+	optional AnyNameExcept AnyNameExcept = 3;
+	optional NameChoice NameChoice = 4; 
+}
+
+//Name is a name expression and represents a union of all possible name type values.
+message Name {
+	optional Space Before = 1;
+
+	optional double DoubleValue = 3;
+	optional int64 IntValue = 5;
+	optional uint64 UintValue = 6;
+	optional bool BoolValue = 8;
+	optional string StringValue = 9;
+	optional bytes BytesValue = 10;
+}
+
+//AnyName is a name expression that represents any name.
+message AnyName {
+	optional Keyword Underscore = 1;
+}
+
+//AnyNameExpr is a name expression that represents any name except the specified name expression.
+message AnyNameExcept {
+	optional Keyword Exclamation = 1;
+	optional Keyword OpenParen = 2;
+	optional NameExpr Except = 3;
+	optional Keyword CloseParen = 4;
+}
+
+//NameChoice is a name expression that represents a choice between two possible name expressions.
+message NameChoice {
+	optional Keyword OpenParen = 1;
+	optional NameExpr Left = 2;
+	optional Keyword Pipe = 3;
+	optional NameExpr Right = 4;
+	optional Keyword CloseParen = 5;
+}
+

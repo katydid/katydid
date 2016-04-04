@@ -48,3 +48,23 @@ func ParseGrammar(s string) (*relapse.Grammar, error) {
 	p := NewParser()
 	return p.ParseGrammar(s)
 }
+
+//ParseExpr returns a parsed expression or error, given a string.
+func (this *Parser) ParseExpr(s string) (res *relapse.Expr, err error) {
+	scanner := lexer.NewLexer([]byte(s))
+	g, err := this.Parse(scanner)
+	if err != nil {
+		return nil, err
+	}
+	gram, ok := g.(*relapse.Grammar)
+	if !ok {
+		return nil, &errWrongType{"*relapse.Grammar", g}
+	}
+	if len(gram.GetPatternDecls()) != 0 {
+		return nil, &errWrongType{"found pattern declarations where none were expected", g}
+	}
+	if gram.GetTopPattern().LeafNode == nil {
+		return nil, &errWrongType{"LeafNode == nil", g}
+	}
+	return gram.GetTopPattern().GetLeafNode().GetExpr(), nil
+}

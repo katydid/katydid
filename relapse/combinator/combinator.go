@@ -16,10 +16,11 @@
 package combinator
 
 import (
-	"github.com/katydid/katydid/expr"
-	"github.com/katydid/katydid/expr/funcs"
-	exprparser "github.com/katydid/katydid/expr/parser"
+	"fmt"
+
 	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/funcs"
+	exprparser "github.com/katydid/katydid/relapse/parser"
 )
 
 //G represents the relapse Grammar.
@@ -46,39 +47,39 @@ func concat(p *relapse.Pattern, ps ...*relapse.Pattern) *relapse.Pattern {
 
 //InPath represents an ordered list of patterns in a field path.
 func InPath(name string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewContains(relapse.NewTreeNode(expr.NewStringName(name), concat(child, children...)))
+	return relapse.NewContains(relapse.NewTreeNode(relapse.NewStringName(name), concat(child, children...)))
 }
 
 //InAnyPath represents an ordered list of patterns in any path.
 func InAnyPath(child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewContains(relapse.NewTreeNode(expr.NewAnyName(), concat(child, children...)))
+	return relapse.NewContains(relapse.NewTreeNode(relapse.NewAnyName(), concat(child, children...)))
 }
 
 //In represents an ordered list of patterns in a field.
 func In(name string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewTreeNode(expr.NewStringName(name), concat(child, children...))
+	return relapse.NewTreeNode(relapse.NewStringName(name), concat(child, children...))
 }
 
 //Elem repesents an ordered list of patterns in an specific array element.
 func Elem(index int, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewTreeNode(expr.NewIntName(int64(index)), concat(child, children...))
+	return relapse.NewTreeNode(relapse.NewIntName(int64(index)), concat(child, children...))
 }
 
 //InAny represents an ordered list of patterns in any field or index.
 func InAny(child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewTreeNode(expr.NewAnyName(), concat(child, children...))
+	return relapse.NewTreeNode(relapse.NewAnyName(), concat(child, children...))
 }
 
 //InAnyExcept represents an ordered list of patterns in any field except the specified one.
 func InAnyExcept(name string, child *relapse.Pattern, children ...*relapse.Pattern) *relapse.Pattern {
-	return relapse.NewTreeNode(expr.NewAnyNameExcept(expr.NewStringName(name)), concat(child, children...))
+	return relapse.NewTreeNode(relapse.NewAnyNameExcept(relapse.NewStringName(name)), concat(child, children...))
 }
 
-func nameChoice(p string, ps ...string) *expr.NameExpr {
+func nameChoice(p string, ps ...string) *relapse.NameExpr {
 	if len(ps) == 0 {
-		return expr.NewStringName(p)
+		return relapse.NewStringName(p)
 	}
-	return expr.NewNameChoice(expr.NewStringName(p), nameChoice(ps[0], ps[1:]...))
+	return relapse.NewNameChoice(relapse.NewStringName(p), nameChoice(ps[0], ps[1:]...))
 }
 
 //InAnyOf represents an ordered list of patterns in any of the specified fields.
@@ -94,7 +95,7 @@ func Value(f funcs.Bool) *relapse.Pattern {
 	exprStr := funcs.Sprint(f)
 	expr, err := exprparser.NewParser().ParseExpr(exprStr)
 	if err != nil {
-		panic(err)
+		panic(fmt.Sprintf("parse error: %v, given input: %s", err, exprStr))
 	}
 	return relapse.NewLeafNode(expr)
 }

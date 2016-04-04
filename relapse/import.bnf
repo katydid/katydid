@@ -1,8 +1,7 @@
 << 
 import (
   . "github.com/katydid/katydid/relapse"
-  "github.com/katydid/katydid/expr"
-  "github.com/katydid/katydid/expr/types"
+  "github.com/katydid/katydid/relapse/types"
   "github.com/gogo/protobuf/proto"
   "github.com/katydid/katydid/relapse/token"
   "strconv"

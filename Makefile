@@ -37,22 +37,19 @@ bench:
 	go test -v -test.run=XXX -test.bench=. ./...
 
 regenerate:
-	(cd expr && make regenerate)
 	(cd parser && make regenerate)
 	(cd relapse && make regenerate)
-	(cd expr/funcs && go test -test.run=GenFuncList 2>../../list_of_functions.txt)
+	(cd relapse/funcs && go test -test.run=GenFuncList 2>../../list_of_functions.txt)
 	find . -name "*.pb.go" | xargs gofmt -l -s -w
 	find . -name "*.gen.go" | xargs gofmt -l -s -w
 	find . -name "*.gen_test.go" | xargs gofmt -l -s -w
 
 clean:
 	go clean ./...
-	(cd expr && make clean)
 	(cd relapse && make clean)
 
 nuke: clean
 	(cd parser && make nuke)
-	(cd expr && make nuke)
 	(cd relapse && make nuke)
 	rm list_of_functions.txt || true
 	go clean -i ./...

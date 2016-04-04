@@ -16,8 +16,8 @@ package tests
 
 import (
 	"github.com/gogo/protobuf/proto"
-	. "github.com/katydid/katydid/expr/funcs"
 	. "github.com/katydid/katydid/relapse/combinator"
+	. "github.com/katydid/katydid/relapse/funcs"
 )
 
 var DavidPerson = &Person{

@@ -14,14 +14,14 @@
 
 echo "//  DO NOT EDIT" > all.bnf
 echo "//  This is generated file, see build.sh" >> all.bnf
-echo "//  Sources: ../expr/license.bnf ../expr/lexer.bnf, import.bnf, relapse.bnf, ../expr/expr.bnf, ../expr/keyword.bnf" >> all.bnf
+echo "//  Sources: license.bnf lexer.bnf, import.bnf, relapse.bnf, expr.bnf, keyword.bnf" >> all.bnf
 echo "" >> all.bnf
-cat ../expr/license.bnf >> all.bnf
-cat ../expr/lexer.bnf >> all.bnf
+cat license.bnf >> all.bnf
+cat lexer.bnf >> all.bnf
 cat import.bnf >> all.bnf
 cat relapse.bnf >> all.bnf
-cat ../expr/expr.bnf >> all.bnf
-cat ../expr/keyword.bnf >> all.bnf
+cat expr.bnf >> all.bnf
+cat keyword.bnf >> all.bnf
 gocc all.bnf
 gofmt -l -s -w ./parser/
 gofmt -l -s -w ./errors/

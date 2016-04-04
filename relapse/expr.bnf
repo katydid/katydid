@@ -1,0 +1,126 @@
+AllExpr
+  : RightArrow Expr    << SetRightArrow($1, $0), nil >>
+  | BuiltIn            << &Expr{BuiltIn: $0.(*BuiltIn)}, nil >>
+  ;
+
+Expr
+  : SpaceTerminal << &Expr{Terminal: $0.(*Terminal)}, nil >>
+  | Function << &Expr{Function: $0.(*Function)}, nil >>
+  | BuiltIn << &Expr{BuiltIn: $0.(*BuiltIn)}, nil >>
+  | List << &Expr{List: $0.(*List)}, nil >>
+  ;
+
+Name
+  : Space Literal << NewSDTName($0.(*Space), $1.(*Terminal)), nil >>
+  | Literal       << NewSDTName(nil, $0.(*Terminal)), nil >>
+  | Space id      << NewSDTName($0.(*Space), &Terminal{StringValue: proto.String(newString($1))}), nil >>
+  | id            << NewSDTName(nil, &Terminal{StringValue: proto.String(newString($0))}), nil >>
+  ;
+
+NameExpr
+  : Underscore   << &NameExpr{AnyName: &AnyName{$0.(*Keyword)}}, nil >>
+  | Name
+  | Exclamation OpenParen NameExpr CloseParen <<
+    &NameExpr{AnyNameExcept: &AnyNameExcept{
+      Exclamation: $0.(*Keyword),
+      OpenParen: $1.(*Keyword),
+      Except: $2.(*NameExpr),
+      CloseParen: $3.(*Keyword),
+    }}, nil
+  >>
+  | StartNameChoice
+  ;
+
+StartNameChoice
+  : OpenParen NameExpr Pipe ContinueNameChoice CloseParen <<
+    &NameExpr{NameChoice: &NameChoice{
+      OpenParen: $0.(*Keyword),
+      Left: $1.(*NameExpr),
+      Pipe: $2.(*Keyword),
+      Right: $3.(*NameExpr),
+      CloseParen: $4.(*Keyword),
+    }}, nil
+  >>
+  ;
+
+ContinueNameChoice
+  : NameExpr
+  | ContinueNameChoice Pipe NameExpr <<
+    &NameExpr{NameChoice: &NameChoice{
+      Left: $0.(*NameExpr),
+      Pipe: $1.(*Keyword),
+      Right: $2.(*NameExpr),
+    }}, nil
+  >>
+  ;
+
+Function
+  : Space id OpenParen Exprs CloseParen << &Function{Before: $0.(*Space), Name: newString($1), OpenParen: $2.(*Keyword), Params: $3.([]*Expr), CloseParen: $4.(*Keyword)}, nil >>
+  | Space id OpenParen CloseParen << &Function{Before: $0.(*Space), Name: newString($1), OpenParen: $2.(*Keyword), CloseParen: $3.(*Keyword)}, nil >>
+  | id OpenParen Exprs CloseParen << &Function{Name: newString($0), OpenParen: $1.(*Keyword), Params: $2.([]*Expr), CloseParen: $3.(*Keyword)}, nil >>
+  | id OpenParen CloseParen << &Function{Name: newString($0), OpenParen: $1.(*Keyword), CloseParen: $2.(*Keyword)}, nil >>
+  ;
+
+BuiltIn
+  : EqualEqual Expr << &BuiltIn{Symbol: $0.(*Keyword), Expr: $1.(*Expr)}, nil >>
+  | ExclamationEqual Expr << &BuiltIn{Symbol: $0.(*Keyword), Expr: $1.(*Expr)}, nil >>
+  | LessThan Expr << &BuiltIn{Symbol: $0.(*Keyword), Expr: $1.(*Expr)}, nil >>
+  | GreaterThan Expr << &BuiltIn{Symbol: $0.(*Keyword), Expr: $1.(*Expr)}, nil >>
+  | GreaterEqual Expr << &BuiltIn{Symbol: $0.(*Keyword), Expr: $1.(*Expr)}, nil >>
+  | LessEqual Expr << &BuiltIn{Symbol: $0.(*Keyword), Expr: $1.(*Expr)}, nil >>
+  | TildeEqual Expr << &BuiltIn{Symbol: $0.(*Keyword), Expr: $1.(*Expr)}, nil >>
+  | StarEqual Expr << &BuiltIn{Symbol: $0.(*Keyword), Expr: $1.(*Expr)}, nil >>
+  | CaretEqual Expr << &BuiltIn{Symbol: $0.(*Keyword), Expr: $1.(*Expr)}, nil >>
+  | DollarEqual Expr << &BuiltIn{Symbol: $0.(*Keyword), Expr: $1.(*Expr)}, nil >>
+  | ColonColon Expr << &BuiltIn{Symbol: $0.(*Keyword), Expr: $1.(*Expr)}, nil >>
+  ;
+
+List
+  : Space ListType OpenCurly Exprs CloseCurly << &List{Before: $0.(*Space), Type: $1.(types.Type), OpenCurly: $2.(*Keyword), Elems: $3.([]*Expr), CloseCurly: $4.(*Keyword)}, nil >>
+  | ListType OpenCurly Exprs CloseCurly << &List{Type: $0.(types.Type), OpenCurly: $1.(*Keyword), Elems: $2.([]*Expr), CloseCurly: $3.(*Keyword)}, nil >>
+  | Space ListType OpenCurly CloseCurly << &List{Before: $0.(*Space), Type: $1.(types.Type), OpenCurly: $2.(*Keyword), CloseCurly: $3.(*Keyword)}, nil >>
+  | ListType OpenCurly CloseCurly << &List{Type: $0.(types.Type), OpenCurly: $1.(*Keyword), CloseCurly: $2.(*Keyword)}, nil >>
+  ;
+
+Exprs
+  : Expr << []*Expr{$0.(*Expr)}, nil >>
+  | Exprs Comma Expr << append($0.([]*Expr), SetExprComma($2, $1)), nil >>
+  ;
+
+ListType
+  : "[]bool" << types.LIST_BOOL, nil >>
+  | "[]int" << types.LIST_INT, nil >>
+  | "[]uint" << types.LIST_UINT, nil >>
+  | "[]double" << types.LIST_DOUBLE, nil >>
+  | "[]string" << types.LIST_STRING, nil >>
+  | "[][]byte" << types.LIST_BYTES, nil >>
+  ;
+
+SpaceTerminal
+  : Terminal << $0, nil >>
+  | Space Terminal << SetTerminalSpace($1, $0), nil >>
+  ;
+
+Literal
+  : Bool << NewBoolTerminal($0), nil >>
+  | int_lit << NewIntTerminal(newString($0)) >>
+  | uint_lit << NewUintTerminal(newString($0)) >>
+  | double_lit << NewDoubleTerminal(newString($0)) >>
+  | string_lit << NewStringTerminal(newString($0)) >>
+  | bytes_lit << NewBytesTerminal(newString($0)) >>
+  ;
+
+Terminal
+  : Literal
+  | bool_var << NewVariableTerminal(types.SINGLE_BOOL) >>
+  | int_var << NewVariableTerminal(types.SINGLE_INT) >>
+  | uint_var << NewVariableTerminal(types.SINGLE_UINT) >>
+  | double_var << NewVariableTerminal(types.SINGLE_DOUBLE) >>
+  | string_var << NewVariableTerminal(types.SINGLE_STRING) >>
+  | bytes_var << NewVariableTerminal(types.SINGLE_BYTES) >>
+  ;
+
+Bool
+  : "true" << true, nil >>
+  | "false" << false, nil >>
+  ;

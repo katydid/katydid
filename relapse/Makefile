@@ -14,10 +14,13 @@
 
 regenerate:
 	./build.sh
+	(cd types && make regenerate)
 	protoc --gogo_out=. -I=.:../../../../:../../../../github.com/gogo/protobuf/protobuf relapse.proto
 	rm ./util/litconv.go
 	rm ./util/rune.go
 	rmdir util
+	(cd funcs && make regenerate)
+	(cd compose && make regenerate)
 	(cd tests && make regenerate)
 	(cd interp && make regenerate)
 	(cd mem && make regenerate)
@@ -40,6 +43,7 @@ nuke: clean
 	rm -rf ./parser/productionstable.go
 	rm -rf ./token/token.go
 	rm -rf ./util
+	(cd funcs && make nuke)
 	(cd interp && make nuke)
 	(cd convert && make nuke)
 	(cd lazymem && make nuke)

@@ -18,7 +18,6 @@ package protonum
 import (
 	"fmt"
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
-	"github.com/katydid/katydid/expr"
 	"github.com/katydid/katydid/parser/proto"
 	"github.com/katydid/katydid/relapse"
 )
@@ -193,9 +192,9 @@ func getField(msg *descriptor.DescriptorProto, name string) *descriptor.FieldDes
 	return nil
 }
 
-func (this *nameToNumber) translateName(current *context, name *expr.NameExpr, child *relapse.Pattern) (*relapse.Pattern, error) {
+func (this *nameToNumber) translateName(current *context, name *relapse.NameExpr, child *relapse.Pattern) (*relapse.Pattern, error) {
 	switch n := name.GetValue().(type) {
-	case *expr.Name:
+	case *relapse.Name:
 		if current.index {
 			if n.IntValue == nil {
 				return nil, &errExpectedArray{name.String(), current}
@@ -220,9 +219,9 @@ func (this *nameToNumber) translateName(current *context, name *expr.NameExpr, c
 		if err != nil {
 			return nil, err
 		}
-		newName := expr.NewUintName(uint64(f.GetNumber()))
+		newName := relapse.NewUintName(uint64(f.GetNumber()))
 		return relapse.NewTreeNode(newName, newp), nil
-	case *expr.AnyName:
+	case *relapse.AnyName:
 		if current.index {
 			c := &context{current.msg, false}
 			newp, err := this.translate(c, child)
@@ -233,9 +232,9 @@ func (this *nameToNumber) translateName(current *context, name *expr.NameExpr, c
 		} else {
 			return nil, &errAnyFieldNotSupported{name.String()}
 		}
-	case *expr.AnyNameExcept:
+	case *relapse.AnyNameExcept:
 		return nil, &errAnyNameExceptNotSupported{name.String()}
-	case *expr.NameChoice:
+	case *relapse.NameChoice:
 		l, err1 := this.translateName(current, n.GetLeft(), child)
 		r, err2 := this.translateName(current, n.GetRight(), child)
 		return relapse.NewOr(l, r), anyErr(err1, err2)

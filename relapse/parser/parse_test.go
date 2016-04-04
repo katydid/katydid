@@ -21,6 +21,7 @@ import (
 
 func TestParse(t *testing.T) {
 	patternDecls := []string{
+		`->hasQuotes("string_lit")`,
 		`a->hasQuotes("string_lit")`,
 		`@ref1
 		#ref1 = a->eq($int, 123)
@@ -137,6 +138,34 @@ func TestParse(t *testing.T) {
 			if s != patternDecl {
 				t.Errorf("String function output = %s\n expected output = %s\n", s, patternDecl)
 			}
+		}
+	}
+}
+
+func TestParseExpr(t *testing.T) {
+	positives := []string{
+		`-> "String"`,
+		"-> false",
+		`== "bla"`,
+		`-> eq($string, "bla")`,
+		`-> 1`,
+		`-> 1.0`,
+		`-> -1.0`,
+	}
+	negatives := []string{
+		"a",
+		`= "bla"`,
+	}
+	for _, in := range positives {
+		_, err := parser.NewParser().ParseExpr(in)
+		if err != nil {
+			t.Errorf("%s results in error: %s", in, err)
+		}
+	}
+	for _, in := range negatives {
+		_, err := parser.NewParser().ParseExpr(in)
+		if err == nil {
+			t.Errorf("%s results in no error", in)
 		}
 	}
 }

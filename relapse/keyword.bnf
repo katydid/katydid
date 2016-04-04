@@ -1,0 +1,314 @@
+Equal
+  : "="  << &Keyword{Value: "="}, nil >>
+  | Space "=" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "=",
+    }, nil
+  >>
+  ;
+
+OpenParen
+  : "(" << &Keyword{Value: "("}, nil >>
+  | Space "(" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "(",
+    }, nil
+  >>
+  ;
+
+CloseParen
+  : ")" << &Keyword{Value: ")"}, nil >>
+  | Space ")" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: ")",
+    }, nil
+  >>
+  ;
+
+OpenCurly
+  : "{" << &Keyword{Value: "{"}, nil >>
+  | Space "{" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "{",
+    }, nil
+  >>
+  ;
+
+CloseCurly
+  : "}" << &Keyword{Value: "}"}, nil >>
+  | Space "}" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "}",
+    }, nil
+  >>
+  ;
+
+Comma
+  : "," << &Keyword{Value: ","}, nil >>
+  | Space "," << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: ",",
+    }, nil
+  >>
+  ;
+
+SemiColon
+  : ";" << &Keyword{Value: ";"}, nil >>
+  | Space ";" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: ";",
+    }, nil
+  >>
+  ;
+
+Hash
+  : "#" << &Keyword{Value: "#"}, nil >>
+  | Space "#" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "#",
+    }, nil
+  >>
+  ;
+
+Ampersand
+  : "&" << &Keyword{Value: "&"}, nil >>
+  | Space "&" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "&",
+    }, nil
+  >>
+  ;
+
+Pipe
+  : "|" << &Keyword{Value: "|"}, nil >>
+  | Space "|" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "|",
+    }, nil
+  >>
+  ;
+
+OpenBracket
+  : "[" << &Keyword{Value: "["}, nil >>
+  | Space "[" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "[",
+    }, nil
+  >>
+  ;
+
+CloseBracket
+  : "]" << &Keyword{Value: "]"}, nil >>
+  | Space "]" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "]",
+    }, nil
+  >>
+  ;
+
+Colon
+  : ":" << &Keyword{Value: ":"}, nil >>
+  | Space ":" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: ":",
+    }, nil
+  >>
+  ;
+
+Exclamation
+  : "!" << &Keyword{Value: "!"}, nil >>
+  | Space "!" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "!",
+    }, nil
+  >>
+  ;
+
+Star
+  : "*" << &Keyword{Value: "*"}, nil >>
+  | Space "*" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "*",
+    }, nil
+  >>
+  ;
+
+Underscore
+  : "_" << &Keyword{Value: "_"}, nil >>
+  | Space "_" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "_",
+    }, nil
+  >>
+  ;
+
+Dot
+  : "." << &Keyword{Value: "."}, nil >>
+  | Space "." << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: ".",
+    }, nil
+  >>
+  ;
+
+At
+  : "@" << &Keyword{Value: "@"}, nil >>
+  | Space "@" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "@",
+    }, nil
+  >>
+  ;
+
+RightArrow
+  : "->" << &Keyword{Value: "->"}, nil >>
+  | Space "->" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "->",
+    }, nil
+  >>
+  ;
+
+EqualEqual
+  : "=="  << &Keyword{Value: "=="}, nil >>
+  | Space "==" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "==",
+    }, nil
+  >>
+  ;
+
+ExclamationEqual
+  : "!="  << &Keyword{Value: "!="}, nil >>
+  | Space "!=" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "!=",
+    }, nil
+  >>
+  ;
+
+LessThan
+  : "<"  << &Keyword{Value: "<"}, nil >>
+  | Space "<" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "<",
+    }, nil
+  >>
+  ;
+
+GreaterThan
+  : ">"  << &Keyword{Value: ">"}, nil >>
+  | Space ">" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: ">",
+    }, nil
+  >>
+  ;
+
+LessEqual
+  : "<="  << &Keyword{Value: "<="}, nil >>
+  | Space "<=" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "<=",
+    }, nil
+  >>
+  ;
+
+GreaterEqual
+  : ">="  << &Keyword{Value: ">="}, nil >>
+  | Space ">=" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: ">=",
+    }, nil
+  >>
+  ;
+
+TildeEqual
+  : "~="  << &Keyword{Value: "~="}, nil >>
+  | Space "~=" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "~=",
+    }, nil
+  >>
+  ;
+
+StarEqual
+  : "*="  << &Keyword{Value: "*="}, nil >>
+  | Space "*=" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "*=",
+    }, nil
+  >>
+  ;
+
+CaretEqual
+  : "^="  << &Keyword{Value: "^="}, nil >>
+  | Space "^=" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "^=",
+    }, nil
+  >>
+  ;
+
+DollarEqual
+  : "$="  << &Keyword{Value: "$="}, nil >>
+  | Space "$=" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "$=",
+    }, nil
+  >>
+  ;
+
+ColonColon
+  : "::"  << &Keyword{Value: "::"}, nil >>
+  | Space "::" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "::",
+    }, nil
+  >>
+  ;
+
+QuestionMark
+  : "?"  << &Keyword{Value: "?"}, nil >>
+  | Space "?" << 
+    &Keyword{
+      Before: $0.(*Space),
+      Value: "?",
+    }, nil
+  >>
+  ;
+
+Space
+  : Space space << AppendSpace($0, newString($1)), nil >>
+  | space << &Space{Space: []string{newString($0)}}, nil >>
+  ;

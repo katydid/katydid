@@ -16,10 +16,10 @@ package interp
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/expr/compose"
-	nameexpr "github.com/katydid/katydid/expr/name"
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/compose"
+	nameexpr "github.com/katydid/katydid/relapse/name"
 	"io"
 	"log"
 )

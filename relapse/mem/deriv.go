@@ -16,11 +16,11 @@ package mem
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/expr/compose"
-	nameexpr "github.com/katydid/katydid/expr/name"
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse"
+	"github.com/katydid/katydid/relapse/compose"
 	"github.com/katydid/katydid/relapse/interp"
+	nameexpr "github.com/katydid/katydid/relapse/name"
 	"io"
 	"log"
 )

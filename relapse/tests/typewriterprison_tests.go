@@ -15,8 +15,8 @@
 package tests
 
 import (
-	. "github.com/katydid/katydid/expr/funcs"
 	. "github.com/katydid/katydid/relapse/combinator"
+	. "github.com/katydid/katydid/relapse/funcs"
 )
 
 var AbcPocketRoses = &PocketRoses{

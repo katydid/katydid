@@ -16,7 +16,6 @@ package protonum
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/expr"
 	"github.com/katydid/katydid/relapse"
 )
 
@@ -53,15 +52,15 @@ func topDown(pattern *relapse.Pattern, f func(*relapse.Pattern)) {
 	}
 }
 
-func topDownName(n *expr.NameExpr, f func(*expr.NameExpr)) {
+func topDownName(n *relapse.NameExpr, f func(*relapse.NameExpr)) {
 	f(n)
 	typ := n.GetValue()
 	switch v := typ.(type) {
-	case *expr.Name, *expr.AnyName:
+	case *relapse.Name, *relapse.AnyName:
 		//do nothing
-	case *expr.AnyNameExcept:
+	case *relapse.AnyNameExcept:
 		topDownName(v.GetExcept(), f)
-	case *expr.NameChoice:
+	case *relapse.NameChoice:
 		topDownName(v.GetLeft(), f)
 		topDownName(v.GetRight(), f)
 	default:
@@ -69,26 +68,26 @@ func topDownName(n *expr.NameExpr, f func(*expr.NameExpr)) {
 	}
 }
 
-func allNames(p *relapse.Pattern, f func(*expr.NameExpr) bool) bool {
+func allNames(p *relapse.Pattern, f func(*relapse.NameExpr) bool) bool {
 	ret := true
 	topDown(p, func(p *relapse.Pattern) {
 		if p.TreeNode == nil {
 			return
 		}
-		topDownName(p.TreeNode.GetName(), func(n *expr.NameExpr) {
+		topDownName(p.TreeNode.GetName(), func(n *relapse.NameExpr) {
 			ret = ret && f(n)
 		})
 	})
 	return ret
 }
 
-func anyNames(p *relapse.Pattern, f func(*expr.NameExpr) bool) bool {
+func anyNames(p *relapse.Pattern, f func(*relapse.NameExpr) bool) bool {
 	ret := false
 	topDown(p, func(p *relapse.Pattern) {
 		if p.TreeNode == nil {
 			return
 		}
-		topDownName(p.TreeNode.GetName(), func(n *expr.NameExpr) {
+		topDownName(p.TreeNode.GetName(), func(n *relapse.NameExpr) {
 			ret = ret || f(n)
 		})
 	})
@@ -96,7 +95,7 @@ func anyNames(p *relapse.Pattern, f func(*expr.NameExpr) bool) bool {
 }
 
 func anyStringNames(p *relapse.Pattern) bool {
-	return anyNames(p, func(n *expr.NameExpr) bool {
+	return anyNames(p, func(n *relapse.NameExpr) bool {
 		if n.GetName() == nil {
 			return false
 		}
@@ -105,7 +104,7 @@ func anyStringNames(p *relapse.Pattern) bool {
 }
 
 func onlyUintNames(p *relapse.Pattern) bool {
-	return allNames(p, func(n *expr.NameExpr) bool {
+	return allNames(p, func(n *relapse.NameExpr) bool {
 		if n.GetName() == nil {
 			return true
 		}
