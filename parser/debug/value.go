@@ -26,10 +26,10 @@ var Input = &Debug{
 		A: int64(2),
 		D: proto.Int32(3),
 		E: []*Debug{
-			&Debug{
+			{
 				B: []string{"b4"},
 			},
-			&Debug{
+			{
 				B: []string{"b5"},
 			},
 		},

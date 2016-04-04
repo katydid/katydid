@@ -13,7 +13,7 @@
 # limitations under the License.
 
 regenerate:
-	./build.sh
+	(cd bnf && ./build.sh)
 	(cd types && make regenerate)
 	protoc --gogo_out=. -I=.:../../../../:../../../../github.com/gogo/protobuf/protobuf relapse.proto
 	rm ./util/litconv.go

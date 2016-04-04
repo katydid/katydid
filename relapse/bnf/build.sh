@@ -22,8 +22,10 @@ cat import.bnf >> all.bnf
 cat relapse.bnf >> all.bnf
 cat expr.bnf >> all.bnf
 cat keyword.bnf >> all.bnf
-gocc all.bnf
-gofmt -l -s -w ./parser/
-gofmt -l -s -w ./errors/
-gofmt -l -s -w ./lexer/
-gofmt -l -s -w ./token/
+echo "running gocc"
+gocc -o .. all.bnf 
+echo "running gofmt"
+gofmt -l -s -w ../parser/
+gofmt -l -s -w ../errors/
+gofmt -l -s -w ../lexer/
+gofmt -l -s -w ../token/
