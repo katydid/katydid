@@ -21,7 +21,6 @@ import (
 	"github.com/katydid/katydid/parser/debug"
 	katydidproto "github.com/katydid/katydid/parser/proto"
 	"github.com/katydid/katydid/parser/proto/prototests"
-	"github.com/katydid/katydid/tests"
 	"math/rand"
 	"strings"
 	"testing"
@@ -84,20 +83,20 @@ func TestNoMergeLatent(t *testing.T) {
 }
 
 func TestNoMergeNestedNoMerge(t *testing.T) {
-	bigm := tests.NewPopulatedTypewriterPrison(r, true)
+	bigm := prototests.NewPopulatedBigMsg(r, true)
 	data, err := proto.Marshal(bigm)
 	if err != nil {
 		panic(err)
 	}
-	err = noMerge(data, bigm.Description(), "tests", "TypewriterPrison")
+	err = noMerge(data, bigm.Description(), "prototests", "BigMsg")
 	if err != nil {
 		t.Fatal(err)
 	}
 }
 
 func TestNoMergeMessageMerge(t *testing.T) {
-	bigm := tests.NewPopulatedTypewriterPrison(r, true)
-	bigm.PocketRoses = tests.NewPopulatedPocketRoses(r, true)
+	bigm := prototests.NewPopulatedBigMsg(r, true)
+	bigm.Msg = prototests.NewPopulatedSmallMsg(r, true)
 	data, err := proto.Marshal(bigm)
 	if err != nil {
 		panic(err)
@@ -105,27 +104,27 @@ func TestNoMergeMessageMerge(t *testing.T) {
 	key := byte(uint32(3)<<3 | uint32(2))
 	fieldkey := byte(uint32(12)<<3 | uint32(5))
 	data = append(data, key, 5, fieldkey, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
-	err = noMerge(data, bigm.Description(), "tests", "TypewriterPrison")
+	err = noMerge(data, bigm.Description(), "prototests", "BigMsg")
 	if err == nil || !strings.Contains(err.Error(), "requires merging") {
 		t.Fatal(err)
 	}
 }
 
 func TestNoMergeNestedMerge(t *testing.T) {
-	bigm := tests.NewPopulatedTypewriterPrison(r, true)
-	m := tests.NewPopulatedPocketRoses(r, true)
+	bigm := prototests.NewPopulatedBigMsg(r, true)
+	m := prototests.NewPopulatedSmallMsg(r, true)
 	if m.FlightParachute == nil {
 		m.FlightParachute = []uint32{1}
 	}
 	m.MapShark = proto.String("a")
 	key := byte(uint32(12)<<3 | uint32(5))
 	m.XXX_unrecognized = append(m.XXX_unrecognized, key, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
-	bigm.PocketRoses = m
+	bigm.Msg = m
 	data, err := proto.Marshal(bigm)
 	if err != nil {
 		panic(err)
 	}
-	err = noMerge(data, bigm.Description(), "tests", "TypewriterPrison")
+	err = noMerge(data, bigm.Description(), "prototests", "BigMsg")
 	if err == nil || !strings.Contains(err.Error(), "FlightParachute requires merging") {
 		t.Fatalf("FlightParachute should require merging")
 	}

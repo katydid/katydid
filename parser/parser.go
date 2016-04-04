@@ -17,7 +17,6 @@ package parser
 import "fmt"
 
 //A type conforming to the parser.Interface interface, abstracts away the implementation details of a parser.
-//This allows the parser to be used by other katydid functions, like relapse validation.
 type Interface interface {
 	Next() error
 	IsLeaf() bool
