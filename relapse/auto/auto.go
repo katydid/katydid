@@ -12,6 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+//Package auto represents the compilation and execution of a visual pushdown automaton from a parsed relapse grammar.
 package auto
 
 import (
@@ -22,6 +23,7 @@ import (
 	"reflect"
 )
 
+//Compile compiles a parsed relapse grammar ast into a visual pushdown automaton.
 func Compile(g *ast.Grammar) *Auto {
 	mem := mem.Compile(g)
 	return &Auto{
@@ -40,6 +42,24 @@ func Compile(g *ast.Grammar) *Auto {
 	}
 }
 
+//Execute executes an automaton with the given parser and returns whether the parser is valid given the automaton's original grammar.
+func Execute(auto *Auto, p parser.Interface) bool {
+	final := deriv(auto, auto.Start, p)
+	return auto.Accept[final]
+}
+
+//Implements returns all funcs in the compiled automaton that implements a specific interface.
+func Implements(auto *Auto, typ reflect.Type) []interface{} {
+	allis := []interface{}{}
+	for _, call := range auto.Calls {
+		is := mem.Implements(call, typ)
+		allis = append(allis, is...)
+	}
+	return allis
+}
+
+//Auto is the structure that represents the automaton.
+//TODO make more private fields.
 type Auto struct {
 	Refs        map[string]*ast.Pattern
 	PatternsMap mem.PatternsIndexedSet
@@ -53,20 +73,6 @@ type Auto struct {
 	StateToNullable map[int]int
 	Nullables       mem.BoolsIndexedSet
 	Accept          map[int]bool
-}
-
-func Implements(auto *Auto, typ reflect.Type) []interface{} {
-	allis := []interface{}{}
-	for _, call := range auto.Calls {
-		is := mem.Implements(call, typ)
-		allis = append(allis, is...)
-	}
-	return allis
-}
-
-func Interpret(auto *Auto, p parser.Interface) bool {
-	final := deriv(auto, auto.Start, p)
-	return auto.Accept[final]
 }
 
 func deriv(auto *Auto, current int, tree parser.Interface) int {

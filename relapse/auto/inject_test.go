@@ -73,7 +73,7 @@ func testInject(t *testing.T, num int64) bool {
 	}
 	parser := reflectparser.NewReflectParser()
 	parser.Init(reflect.ValueOf(tests.RobertPerson))
-	return auto.Interpret(a, parser)
+	return auto.Execute(a, parser)
 }
 
 func TestInjectPositive(t *testing.T) {

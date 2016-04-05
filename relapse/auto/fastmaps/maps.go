@@ -12,6 +12,9 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+
+//Package fastmaps contains objects for fast map lookups given fixed size maps.
+//This package might be useful for further optimization of auto, but could also be deleted if not needed.
 package fastmaps
 
 type IntToInt interface {

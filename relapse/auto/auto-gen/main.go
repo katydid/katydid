@@ -12,6 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+//Command auto-gen generates some of the code in the auto package.
 package main
 
 import (

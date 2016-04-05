@@ -41,5 +41,5 @@ func Compile(g *ast.Grammar) *auto.Auto {
 
 //Execute validates the parser with the given automaton.
 func Execute(a *auto.Auto, p parser.Interface) bool {
-	return auto.Interpret(a, p)
+	return auto.Execute(a, p)
 }
