@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-//The name package has functions for a parsed name expression which include compilation and evaluation.
+//Package name has functions for a parsed name expression which include compilation and evaluation.
 package name
 
 import (

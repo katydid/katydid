@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-//funcs-gen is a command that generates some of the code in the funcs package.
+//Command funcs-gen generates some of the code in the funcs package.
 package main
 
 import (

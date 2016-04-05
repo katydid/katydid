@@ -19,6 +19,7 @@ import (
 	"github.com/katydid/katydid/relapse/ast"
 )
 
+//Experimental!
 //TODO what about derived left recursion
 //TODO what about right recursion when left is nullable
 func HasLeftRecursion(g *ast.Grammar) bool {
@@ -64,6 +65,7 @@ func hasLeftRecursion(visited map[*ast.Pattern]bool, refs ast.RefLookup, p *ast.
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
 
+//Experimental!
 func HasRecursion(g *ast.Grammar) bool {
 	refs := ast.NewRefLookup(g)
 	for name, _ := range refs {

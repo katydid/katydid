@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-//debug-gen is a command that generates some of the code in the debug package.
+//Command debug-gen generates some of the code in the debug package.
 package main
 
 import (

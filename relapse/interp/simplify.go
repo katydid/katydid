@@ -22,15 +22,7 @@ import (
 	nameexpr "github.com/katydid/katydid/relapse/name"
 )
 
-func checkRef(refs ast.RefLookup, p *ast.Pattern) *ast.Pattern {
-	for name, rpat := range refs {
-		if rpat.Equal(p) {
-			return ast.NewReference(name)
-		}
-	}
-	return p
-}
-
+//SimplifyGrammar returns a grammar that has been simplified, transformed to an equivalent, but smaller or equal grammar.
 func SimplifyGrammar(g *ast.Grammar) *ast.Grammar {
 	refs := ast.NewRefLookup(g)
 	p := Simplify(refs, refs["main"])
@@ -38,8 +30,18 @@ func SimplifyGrammar(g *ast.Grammar) *ast.Grammar {
 	return ast.NewGrammar(refs)
 }
 
+//Simplify returns a pattern that has been simplified, transformed to an equivalent, but smaller or equal pattern.
 func Simplify(refs ast.RefLookup, p *ast.Pattern) *ast.Pattern {
 	return simplify(refs, p, true)
+}
+
+func checkRef(refs ast.RefLookup, p *ast.Pattern) *ast.Pattern {
+	for name, rpat := range refs {
+		if rpat.Equal(p) {
+			return ast.NewReference(name)
+		}
+	}
+	return p
 }
 
 func simplify(refs ast.RefLookup, p *ast.Pattern, top bool) *ast.Pattern {

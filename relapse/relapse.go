@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-//Package relapse contains the relapse validation language.
+//Package relapse contains the relapse validation language and the functions necessary for running it.
 //See katydid.github.io for the language documentation.
 package relapse
 

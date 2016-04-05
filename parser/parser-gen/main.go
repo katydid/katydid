@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-//parser-gen is command that generates some of the code in the parser package.
+//Command parser-gen generates some of the code in the parser package.
 package main
 
 import (

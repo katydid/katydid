@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-//The compose package compiles a parsed expression for evaluation.
+//Package compose compiles a parsed expression for evaluation.
 package compose
 
 import (

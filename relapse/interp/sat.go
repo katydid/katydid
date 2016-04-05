@@ -18,8 +18,9 @@ import (
 	"github.com/katydid/katydid/relapse/ast"
 )
 
-// Returns true if there exists a tree that can satisfy the Grammar.
-// This function may return some false positives.
+//Experimental!
+//Returns true if there exists a tree that can satisfy the Grammar.
+//This function may return some false positives.
 func Satisfiable(g *ast.Grammar) bool {
 	refs := ast.NewRefLookup(g)
 	p := refs["main"]
