@@ -22,7 +22,7 @@ import (
 //TODO what about derived left recursion
 //TODO what about right recursion when left is nullable
 func HasLeftRecursion(g *ast.Grammar) bool {
-	refs := ast.NewRefsLookup(g)
+	refs := ast.NewRefLookup(g)
 	visited := make(map[*ast.Pattern]bool)
 	return hasLeftRecursion(visited, refs, refs["main"])
 }
@@ -65,7 +65,7 @@ func hasLeftRecursion(visited map[*ast.Pattern]bool, refs ast.RefLookup, p *ast.
 }
 
 func HasRecursion(g *ast.Grammar) bool {
-	refs := ast.NewRefsLookup(g)
+	refs := ast.NewRefLookup(g)
 	for name, _ := range refs {
 		visited := make(map[*ast.Pattern]bool)
 		if hasRecursion(visited, refs, refs[name]) {

@@ -21,7 +21,7 @@ import (
 )
 
 func ConvertGrammar(g *ast.Grammar) *Pattern {
-	refs := ast.NewRefsLookup(g)
+	refs := ast.NewRefLookup(g)
 	lazyRefs := make(map[string]*Pattern)
 	for name, _ := range refs {
 		lazyRefs[name] = &Pattern{}

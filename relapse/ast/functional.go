@@ -14,6 +14,7 @@
 
 package ast
 
+//Filter returns a filtered list of patterns as specified by the predicate function.
 func Filter(f func(p *Pattern) bool, ps []*Pattern) []*Pattern {
 	fs := make([]*Pattern, 0, len(ps))
 	for i, p := range ps {
@@ -24,6 +25,7 @@ func Filter(f func(p *Pattern) bool, ps []*Pattern) []*Pattern {
 	return fs
 }
 
+//Map applies the provided function to each pattern in the list and returns the modified list.
 func Map(f func(p *Pattern) *Pattern, ps []*Pattern) []*Pattern {
 	fs := make([]*Pattern, len(ps))
 	for i, p := range ps {

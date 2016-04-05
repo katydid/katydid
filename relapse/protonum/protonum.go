@@ -31,7 +31,7 @@ func FieldNamesToNumbers(pkgName, msgName string, desc *descriptor.FileDescripto
 		return nil, err
 	}
 	root := descMap.GetRoot()
-	refs := ast.NewRefsLookup(g)
+	refs := ast.NewRefLookup(g)
 	nameToNumber := &nameToNumber{
 		refs:    make(map[string]*context),
 		descMap: descMap,

@@ -18,10 +18,12 @@ import (
 	"github.com/gogo/protobuf/proto"
 )
 
+//Clone returns a copy of the Grammar struct
 func (this *Grammar) Clone() *Grammar {
 	return proto.Clone(this).(*Grammar)
 }
 
+//Clone returns a copy of the RefLookup map
 func (this RefLookup) Clone() RefLookup {
 	that := make(RefLookup, len(this))
 	for name, _ := range this {
@@ -30,6 +32,7 @@ func (this RefLookup) Clone() RefLookup {
 	return that
 }
 
+//Clone returns a copy of the Pattern struct
 func (this *Pattern) Clone() *Pattern {
 	return proto.Clone(this).(*Pattern)
 }

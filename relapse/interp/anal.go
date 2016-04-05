@@ -21,7 +21,7 @@ import (
 
 // Experimental
 func ChildrenOf(g *ast.Grammar, path []*ast.NameExpr) []*ast.Pattern {
-	refs := ast.NewRefsLookup(g)
+	refs := ast.NewRefLookup(g)
 	p := refs["main"]
 	return childrenOf(refs, p, path)
 }
@@ -115,14 +115,14 @@ func compareVarExprs(as, bs []*ast.Expr) bool {
 
 //Experimental
 func LeafNodesOf(g *ast.Grammar, ps ...*ast.Pattern) []*ast.Pattern {
-	return ofs(ast.NewRefsLookup(g), ps, func(p1 *ast.Pattern) bool {
+	return ofs(ast.NewRefLookup(g), ps, func(p1 *ast.Pattern) bool {
 		return p1.LeafNode != nil
 	})
 }
 
 //Experimental
 func TreeNodesOf(g *ast.Grammar, ps ...*ast.Pattern) []*ast.Pattern {
-	return ofs(ast.NewRefsLookup(g), ps, func(p1 *ast.Pattern) bool {
+	return ofs(ast.NewRefLookup(g), ps, func(p1 *ast.Pattern) bool {
 		return p1.TreeNode != nil
 	})
 }

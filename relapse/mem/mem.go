@@ -27,7 +27,7 @@ func (mem *Mem) Interpret(p parser.Interface) bool {
 }
 
 func New(g *ast.Grammar) *Mem {
-	refs := ast.NewRefsLookup(g)
+	refs := ast.NewRefLookup(g)
 	mem := newMem(refs)
 	return mem
 }

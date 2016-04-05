@@ -115,8 +115,8 @@ func init() {
 	if err := json.Unmarshal([]byte(playgroundJson), &m); err != nil {
 		panic(err)
 	}
-	trueG := combinator.G(ast.NewRefsLookup(playgroundTrueGrammar))
-	falseG := combinator.G(ast.NewRefsLookup(playgroundFalseGrammar))
+	trueG := combinator.G(ast.NewRefLookup(playgroundTrueGrammar))
+	falseG := combinator.G(ast.NewRefLookup(playgroundFalseGrammar))
 	Validate("PlaygroundTrue", trueG, Json(m), true)
 	Validate("PlaygroundFalse", falseG, Json(m), false)
 }

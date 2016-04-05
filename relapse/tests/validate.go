@@ -81,7 +81,7 @@ func ValidateProtoNum(name string, grammar combinator.G, m interface{}, expected
 	if err != nil {
 		panic(name + ": " + err.Error())
 	}
-	Validate("ProtoNum"+name, combinator.G(ast.NewRefsLookup(g)), codecs, expected)
+	Validate("ProtoNum"+name, combinator.G(ast.NewRefLookup(g)), codecs, expected)
 }
 
 func Validate(name string, grammar combinator.G, codecs Codecs, expected bool) {

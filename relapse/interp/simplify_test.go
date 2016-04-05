@@ -33,7 +33,7 @@ func TestSimplify1(t *testing.T) {
 }
 
 func TestSimplify2(t *testing.T) {
-	refs := ast.NewRefsLookup(tests.AndNameTelephonePerson.Grammar())
+	refs := ast.NewRefLookup(tests.AndNameTelephonePerson.Grammar())
 	s := Simplify(refs, refs["main"])
 	if s.Equal(ast.NewNot(ast.NewZAny())) {
 		t.Fatalf("Did not expected EmptySet")

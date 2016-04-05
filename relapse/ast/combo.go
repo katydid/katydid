@@ -14,10 +14,12 @@
 
 package ast
 
+//Grammar turns one Pattern into a Grammar.
 func (this *Pattern) Grammar() *Grammar {
 	return NewGrammar(map[string]*Pattern{"main": this})
 }
 
+//AddRef adds a Reference to a Grammar.
 func (this *Grammar) AddRef(name string, p *Pattern) *Grammar {
 	this.PatternDecls = append(this.PatternDecls, NewPatternDecl(name, p))
 	return this

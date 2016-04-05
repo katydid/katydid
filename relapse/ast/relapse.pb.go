@@ -62,6 +62,7 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
+// Grammar is the ast node representing the whole grammar.
 type Grammar struct {
 	TopPattern   *Pattern       `protobuf:"bytes,1,opt,name=TopPattern" json:"TopPattern,omitempty"`
 	PatternDecls []*PatternDecl `protobuf:"bytes,2,rep,name=PatternDecls" json:"PatternDecls,omitempty"`
@@ -92,6 +93,7 @@ func (m *Grammar) GetAfter() *Space {
 	return nil
 }
 
+// PatternDecl is the ast node for the declaration of a pattern.
 type PatternDecl struct {
 	Hash    *Keyword `protobuf:"bytes,1,opt,name=Hash" json:"Hash,omitempty"`
 	Before  *Space   `protobuf:"bytes,2,opt,name=Before" json:"Before,omitempty"`
@@ -138,6 +140,7 @@ func (m *PatternDecl) GetPattern() *Pattern {
 	return nil
 }
 
+// Pattern is the ast node for the union of all possible patterns.
 type Pattern struct {
 	Empty      *Empty      `protobuf:"bytes,1,opt,name=Empty" json:"Empty,omitempty"`
 	TreeNode   *TreeNode   `protobuf:"bytes,3,opt,name=TreeNode" json:"TreeNode,omitempty"`
@@ -248,6 +251,7 @@ func (m *Pattern) GetInterleave() *Interleave {
 	return nil
 }
 
+// Empty is the ast node for the Empty pattern.
 type Empty struct {
 	Empty *Keyword `protobuf:"bytes,1,opt,name=Empty" json:"Empty,omitempty"`
 }
@@ -262,6 +266,7 @@ func (m *Empty) GetEmpty() *Keyword {
 	return nil
 }
 
+// TreeNode is the ast node for the TreeNode pattern.
 type TreeNode struct {
 	Name    *NameExpr `protobuf:"bytes,1,opt,name=Name" json:"Name,omitempty"`
 	Colon   *Keyword  `protobuf:"bytes,2,opt,name=Colon" json:"Colon,omitempty"`
@@ -292,6 +297,7 @@ func (m *TreeNode) GetPattern() *Pattern {
 	return nil
 }
 
+// Contains is the ast node for the Contains pattern.
 type Contains struct {
 	Dot     *Keyword `protobuf:"bytes,1,opt,name=Dot" json:"Dot,omitempty"`
 	Pattern *Pattern `protobuf:"bytes,2,opt,name=Pattern" json:"Pattern,omitempty"`
@@ -314,6 +320,7 @@ func (m *Contains) GetPattern() *Pattern {
 	return nil
 }
 
+// LeafNode is the ast node for the LeafNode pattern.
 type LeafNode struct {
 	Expr *Expr `protobuf:"bytes,1,opt,name=Expr" json:"Expr,omitempty"`
 }
@@ -328,6 +335,7 @@ func (m *LeafNode) GetExpr() *Expr {
 	return nil
 }
 
+// Concat is the ast node for the Concat pattern.
 type Concat struct {
 	OpenBracket  *Keyword `protobuf:"bytes,2,opt,name=OpenBracket" json:"OpenBracket,omitempty"`
 	LeftPattern  *Pattern `protobuf:"bytes,3,opt,name=LeftPattern" json:"LeftPattern,omitempty"`
@@ -382,6 +390,7 @@ func (m *Concat) GetCloseBracket() *Keyword {
 	return nil
 }
 
+// Or is the ast node for the Or pattern.
 type Or struct {
 	OpenParen    *Keyword `protobuf:"bytes,1,opt,name=OpenParen" json:"OpenParen,omitempty"`
 	LeftPattern  *Pattern `protobuf:"bytes,2,opt,name=LeftPattern" json:"LeftPattern,omitempty"`
@@ -428,6 +437,7 @@ func (m *Or) GetCloseParen() *Keyword {
 	return nil
 }
 
+// And is the ast node for the And pattern.
 type And struct {
 	OpenParen    *Keyword `protobuf:"bytes,1,opt,name=OpenParen" json:"OpenParen,omitempty"`
 	LeftPattern  *Pattern `protobuf:"bytes,2,opt,name=LeftPattern" json:"LeftPattern,omitempty"`
@@ -474,6 +484,7 @@ func (m *And) GetCloseParen() *Keyword {
 	return nil
 }
 
+// ZeroOrMore is the ast node for the ZeroOrMore pattern.
 type ZeroOrMore struct {
 	OpenParen  *Keyword `protobuf:"bytes,1,opt,name=OpenParen" json:"OpenParen,omitempty"`
 	Pattern    *Pattern `protobuf:"bytes,2,opt,name=Pattern" json:"Pattern,omitempty"`
@@ -512,6 +523,7 @@ func (m *ZeroOrMore) GetStar() *Keyword {
 	return nil
 }
 
+// Reference is the ast node for the Reference pattern.
 type Reference struct {
 	At   *Keyword `protobuf:"bytes,1,opt,name=At" json:"At,omitempty"`
 	Name string   `protobuf:"bytes,2,opt,name=Name" json:"Name"`
@@ -534,6 +546,7 @@ func (m *Reference) GetName() string {
 	return ""
 }
 
+// Not is the ast node for the Not pattern.
 type Not struct {
 	Exclamation *Keyword `protobuf:"bytes,1,opt,name=Exclamation" json:"Exclamation,omitempty"`
 	OpenParen   *Keyword `protobuf:"bytes,2,opt,name=OpenParen" json:"OpenParen,omitempty"`
@@ -572,6 +585,7 @@ func (m *Not) GetCloseParen() *Keyword {
 	return nil
 }
 
+// ZAny is the ast node for the ZAny pattern.
 type ZAny struct {
 	Star *Keyword `protobuf:"bytes,1,opt,name=Star" json:"Star,omitempty"`
 }
@@ -586,6 +600,7 @@ func (m *ZAny) GetStar() *Keyword {
 	return nil
 }
 
+// Optional is the ast node for the Optional pattern.
 type Optional struct {
 	OpenParen    *Keyword `protobuf:"bytes,1,opt,name=OpenParen" json:"OpenParen,omitempty"`
 	Pattern      *Pattern `protobuf:"bytes,2,opt,name=Pattern" json:"Pattern,omitempty"`
@@ -624,6 +639,7 @@ func (m *Optional) GetQuestionMark() *Keyword {
 	return nil
 }
 
+// Interleave is the ast node for the Interleave pattern.
 type Interleave struct {
 	OpenCurly      *Keyword `protobuf:"bytes,2,opt,name=OpenCurly" json:"OpenCurly,omitempty"`
 	LeftPattern    *Pattern `protobuf:"bytes,3,opt,name=LeftPattern" json:"LeftPattern,omitempty"`

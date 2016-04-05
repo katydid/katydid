@@ -22,6 +22,7 @@ import (
 	"strings"
 )
 
+//String returns the relapse string representation of the Grammar instance.
 func (this *Grammar) String() string {
 	ss := make([]string, len(this.PatternDecls)+1)
 	for i, p := range this.PatternDecls {
@@ -34,11 +35,13 @@ func (this *Grammar) String() string {
 	return strings.Join(ss, "")
 }
 
+//String returns the relapse string representation of the PatternDecl instance.
 func (this *PatternDecl) String() string {
 	return this.Hash.String() + this.Before.String() + this.Name +
 		this.Eq.String() + this.Pattern.String()
 }
 
+//String returns the relapse string representation of the Pattern instance.
 func (this *Pattern) String() string {
 	v := this.GetValue()
 	return v.(interface {
@@ -46,72 +49,85 @@ func (this *Pattern) String() string {
 	}).String()
 }
 
+//String returns the relapse string representation of the Empty instance.
 func (this *Empty) String() string {
 	return this.Empty.String()
 }
 
+//String returns the relapse string representation of the TreeNode instance.
 func (this *TreeNode) String() string {
 	return this.Name.String() + this.Colon.String() +
 		this.Pattern.String()
 }
 
+//String returns the relapse string representation of the Contains instance.
 func (this *Contains) String() string {
 	return this.Dot.String() + this.Pattern.String()
 }
 
+//String returns the relapse string representation of the LeafNode instance.
 func (this *LeafNode) String() string {
 	return this.Expr.String()
 }
 
+//String returns the relapse string representation of the Concat instance.
 func (this *Concat) String() string {
 	return this.OpenBracket.String() + this.LeftPattern.String() +
 		this.Comma.String() + this.RightPattern.String() +
 		this.ExtraComma.String() + this.CloseBracket.String()
 }
 
+//String returns the relapse string representation of the Or instance.
 func (this *Or) String() string {
 	return this.OpenParen.String() + this.LeftPattern.String() +
 		this.Pipe.String() + this.RightPattern.String() +
 		this.CloseParen.String()
 }
 
+//String returns the relapse string representation of the And instance.
 func (this *And) String() string {
 	return this.OpenParen.String() + this.LeftPattern.String() +
 		this.Ampersand.String() + this.RightPattern.String() +
 		this.CloseParen.String()
 }
 
+//String returns the relapse string representation of the ZeroOrMore instance.
 func (this *ZeroOrMore) String() string {
 	return this.OpenParen.String() + this.Pattern.String() +
 		this.CloseParen.String() + this.Star.String()
 }
 
+//String returns the relapse string representation of the Reference instance.
 func (this *Reference) String() string {
 	return this.At.String() + this.Name
 }
 
+//String returns the relapse string representation of the Not instance.
 func (this *Not) String() string {
 	return this.Exclamation.String() +
 		this.OpenParen.String() + this.Pattern.String() +
 		this.CloseParen.String()
 }
 
+//String returns the relapse string representation of the ZAny instance.
 func (this *ZAny) String() string {
 	return this.Star.String()
 }
 
+//String returns the relapse string representation of the Optional instance.
 func (this *Optional) String() string {
 	return this.OpenParen.String() + this.Pattern.String() +
 		this.CloseParen.String() + this.QuestionMark.String()
 }
 
+//String returns the relapse string representation of the Interleave instance.
 func (this *Interleave) String() string {
 	return this.OpenCurly.String() + this.LeftPattern.String() +
 		this.SemiColon.String() + this.RightPattern.String() +
 		this.ExtraSemiColon.String() + this.CloseCurly.String()
 }
 
-//String returns the parsable expression string.
+//String returns the relapse string representation of the Expr instance.
 func (this *Expr) String() string {
 	space := this.RightArrow.String() + this.Comma.String()
 	if this.Terminal != nil {
@@ -126,7 +142,7 @@ func (this *Expr) String() string {
 	return this.BuiltIn.String()
 }
 
-//String returns the parsable name expression string.
+//String returns the relapse string representation of the NameExpr instance.
 func (this *NameExpr) String() string {
 	v := this.GetValue()
 	return v.(interface {
@@ -146,7 +162,7 @@ func isId(s string) bool {
 	return idRegexp.MatchString(s)
 }
 
-//String returns the parsable name string.
+//String returns the relapse string representation of the Name instance.
 func (this *Name) String() string {
 	if this.DoubleValue != nil {
 		return this.Before.String() + strconv.FormatFloat(this.GetDoubleValue(), 'f', -1, 10)
@@ -172,25 +188,25 @@ func (this *Name) String() string {
 	panic("unreachable")
 }
 
-//String returns the parsable any name string.
+//String returns the relapse string representation of the AnyName instance.
 func (this *AnyName) String() string {
 	return this.Underscore.String()
 }
 
-//String returns the parsable any name except string.
+//String returns the relapse string representation of the AnyNameExcept instance.
 func (this *AnyNameExcept) String() string {
 	return this.Exclamation.String() + this.OpenParen.String() +
 		this.Except.String() + this.CloseParen.String()
 }
 
-//String returns the parsable name choice string.
+//String returns the relapse string representation of the NameChoice instance.
 func (this *NameChoice) String() string {
 	return this.OpenParen.String() + this.Left.String() +
 		this.Pipe.String() + this.Right.String() +
 		this.CloseParen.String()
 }
 
-//String returns the parsable typed list string.
+//String returns the relapse string representation of the List instance.
 func (this *List) String() string {
 	es := make([]string, len(this.GetElems()))
 	for i, v := range this.GetElems() {
@@ -217,7 +233,7 @@ func listTypeToString(typ types.Type) string {
 	panic("unreachable")
 }
 
-//String returns the parsable function string.
+//String returns the relapse string representation of the Function instance.
 func (this *Function) String() string {
 	ps := make([]string, len(this.GetParams()))
 	for i, v := range this.GetParams() {
@@ -226,12 +242,12 @@ func (this *Function) String() string {
 	return this.Before.String() + this.GetName() + this.OpenParen.String() + strings.Join(ps, "") + this.CloseParen.String()
 }
 
-//String returns the parsable builtin string.
+//String returns the relapse string representation of the BuiltIn instance.
 func (this *BuiltIn) String() string {
 	return this.Symbol.String() + this.Expr.String()
 }
 
-//String returns the parsable terminal string.
+//String returns the relapse string representation of the Terminal instance.
 func (this *Terminal) String() string {
 	if this.DoubleValue != nil {
 		return this.Before.String() + strconv.FormatFloat(this.GetDoubleValue(), 'f', -1, 64)
@@ -257,7 +273,7 @@ func (this *Terminal) String() string {
 	panic("unreachable")
 }
 
-//String returns the parsable variable string.
+//String returns the relapse string representation of the Variable instance.
 func (this *Variable) String() string {
 	typ := this.GetType()
 	if types.IsList(typ) {
@@ -280,7 +296,7 @@ func (this *Variable) String() string {
 	panic(fmt.Errorf("unknown type %s", this.GetType()))
 }
 
-//String returns the parsable keyword string.
+//String returns the relapse string representation of the Keyword instance.
 func (this *Keyword) String() string {
 	if this == nil {
 		return ""
@@ -288,7 +304,7 @@ func (this *Keyword) String() string {
 	return this.Before.String() + this.Value
 }
 
-//String returns the parsable space string.
+//String returns the relapse string representation of the Space instance.
 func (this *Space) String() string {
 	if this == nil {
 		return ""

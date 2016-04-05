@@ -30,7 +30,7 @@ func init() {
 
 //This is a naive implementation and it does not handle left recursion
 func Interpret(g *ast.Grammar, parser parser.Interface) bool {
-	refs := ast.NewRefsLookup(g)
+	refs := ast.NewRefLookup(g)
 	finals := deriv(refs, []*ast.Pattern{refs["main"]}, parser)
 	return Nullable(refs, finals[0])
 }

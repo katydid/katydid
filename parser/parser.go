@@ -12,6 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+//Package parser represents the parser.Interface and some errors for implementing parsers.
 package parser
 
 import "fmt"

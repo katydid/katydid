@@ -21,7 +21,7 @@ import (
 )
 
 func Compile(g *ast.Grammar) *Mem {
-	refs := ast.NewRefsLookup(g)
+	refs := ast.NewRefLookup(g)
 	for name, p := range refs {
 		refs[name] = interp.Simplify(refs, p)
 	}

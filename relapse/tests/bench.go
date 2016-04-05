@@ -39,7 +39,7 @@ func BenchValidateProtoNum(name string, grammar combinator.G, m interface{}) {
 	if err != nil {
 		panic(name + ": " + err.Error())
 	}
-	BenchValidate("ProtoNum"+name, combinator.G(ast.NewRefsLookup(g)), []string{"protoNum"}, packageName, messageName)
+	BenchValidate("ProtoNum"+name, combinator.G(ast.NewRefLookup(g)), []string{"protoNum"}, packageName, messageName)
 }
 
 type benchValidatorList []interface{}

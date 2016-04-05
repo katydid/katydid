@@ -32,7 +32,7 @@ func checkRef(refs ast.RefLookup, p *ast.Pattern) *ast.Pattern {
 }
 
 func SimplifyGrammar(g *ast.Grammar) *ast.Grammar {
-	refs := ast.NewRefsLookup(g)
+	refs := ast.NewRefLookup(g)
 	p := Simplify(refs, refs["main"])
 	refs["main"] = p
 	return ast.NewGrammar(refs)

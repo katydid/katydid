@@ -18,6 +18,7 @@ import (
 	"strings"
 )
 
+//Comment represents a relapse comment as a string
 type Comment string
 
 //GetContent returns the content of the comment excluding the // or /* */

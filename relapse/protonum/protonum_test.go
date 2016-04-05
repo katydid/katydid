@@ -21,7 +21,7 @@ import (
 )
 
 func check(t *testing.T, g *ast.Grammar) {
-	refs := ast.NewRefsLookup(g)
+	refs := ast.NewRefLookup(g)
 	for name := range refs {
 		if !onlyUintNames(refs[name]) {
 			t.Fatalf("expected only uint names")

@@ -20,6 +20,8 @@ import (
 	"sort"
 )
 
+//Compare compares two patterns the result will be 0 if p1 == p2, -1 if p1 < p2 and +1 is p1 > p2.
+//What smaller and bigger means may change over time, but this function is still useful for deterministic ordering.
 func Compare(p1, p2 *Pattern) int {
 	d1, err := proto.Marshal(p1)
 	if err != nil {
@@ -32,10 +34,13 @@ func Compare(p1, p2 *Pattern) int {
 	return bytes.Compare(d1, d2)
 }
 
+//Less returns whether one pattern is smaller than another.
+//What smaller means may change over time, but this function is still useful for deterministic ordering.
 func (p1 *Pattern) Less(p2 *Pattern) bool {
 	return Compare(p1, p2) < 0
 }
 
+//Index returns the index of the Pattern p in the list of Patterns ps.  If p is not found -1 is returned.
 func Index(ps []*Pattern, p *Pattern) int {
 	for i, pp := range ps {
 		if Compare(pp, p) == 0 {
@@ -45,10 +50,12 @@ func Index(ps []*Pattern, p *Pattern) int {
 	return -1
 }
 
-func Remove(ps []*Pattern, index int) []*Pattern {
-	return append(append([]*Pattern{}, ps[:index]...), ps[index+1:]...)
+//Remove removes the i'th index from the list of patterns.
+func Remove(ps []*Pattern, i int) []*Pattern {
+	return append(append([]*Pattern{}, ps[:i]...), ps[i+1:]...)
 }
 
+//Equals returns whether two lists of patterns are equal.
 func Equals(this, that []*Pattern) bool {
 	if len(this) != len(that) {
 		return false
@@ -61,10 +68,12 @@ func Equals(this, that []*Pattern) bool {
 	return true
 }
 
+//Has returns whether the Pattern p is contained in the list of Patterns ps.
 func Has(ps []*Pattern, p *Pattern) bool {
 	return Index(ps, p) > -1
 }
 
+//Set returns the list of Patterns as a set, where all duplicates have been removed.
 func Set(ps []*Pattern) []*Pattern {
 	set := make([]*Pattern, 0, len(ps))
 	for i := range ps {
@@ -75,10 +84,12 @@ func Set(ps []*Pattern) []*Pattern {
 	return set
 }
 
+//Sort sorts a list of Patterns.
 func Sort(ps []*Pattern) {
 	sort.Sort(Sortable(ps))
 }
 
+//Sortable attaches the sort.Interface methods to []*Pattern.
 type Sortable []*Pattern
 
 func (s Sortable) Less(i, j int) bool {

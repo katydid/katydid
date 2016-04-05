@@ -98,11 +98,6 @@ func formatName(name *Name, first bool, tabs int) {
 	}
 }
 
-// func formatNewline(space *Space, tabs int) {
-// 	formatTrim(space, false, tabs)
-// 	space.Space = append([]string{"\n"}, space.Space...)
-// }
-
 func newTabs(tabs int) string {
 	ss := make([]rune, tabs)
 	for i := 0; i < tabs; i++ {

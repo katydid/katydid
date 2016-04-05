@@ -27,12 +27,14 @@ option (gogoproto.sizer_all) = true;
 option (gogoproto.equal_all) = true;
 option (gogoproto.goproto_unrecognized_all) = false;
 
+//Grammar is the ast node representing the whole grammar.
 message Grammar {
 	optional Pattern TopPattern = 1;
 	repeated PatternDecl PatternDecls = 2;
 	optional Space After = 3;
 }
 
+//PatternDecl is the ast node for the declaration of a pattern.
 message PatternDecl {
 	optional Keyword Hash = 1;
 	optional Space Before = 2;
@@ -41,6 +43,7 @@ message PatternDecl {
 	optional Pattern Pattern = 5;
 }
 
+//Pattern is the ast node for the union of all possible patterns.
 message Pattern {
 	option (gogoproto.onlyone) = true;
 	optional Empty Empty = 1;
@@ -58,25 +61,30 @@ message Pattern {
 	optional Interleave Interleave = 14;
 }
 
+//Empty is the ast node for the Empty pattern.
 message Empty {
 	optional Keyword Empty = 1;
 }
 
+//TreeNode is the ast node for the TreeNode pattern.
 message TreeNode {
 	optional NameExpr Name = 1;
 	optional Keyword Colon = 2;
 	optional Pattern Pattern = 3;
 }
 
+//Contains is the ast node for the Contains pattern.
 message Contains {
 	optional Keyword Dot = 1;
 	optional Pattern Pattern = 2;
 }
 
+//LeafNode is the ast node for the LeafNode pattern.
 message LeafNode {
 	optional Expr Expr = 1;
 }
 
+//Concat is the ast node for the Concat pattern.
 message Concat {
 	optional Keyword OpenBracket = 2;
 	optional Pattern LeftPattern = 3;
@@ -86,6 +94,7 @@ message Concat {
 	optional Keyword CloseBracket = 7;
 }
 
+//Or is the ast node for the Or pattern.
 message Or {
 	optional Keyword OpenParen = 1;
 	optional Pattern LeftPattern = 2;
@@ -94,6 +103,7 @@ message Or {
 	optional Keyword CloseParen = 5;
 }
 
+//And is the ast node for the And pattern.
 message And {
 	optional Keyword OpenParen = 1;
 	optional Pattern LeftPattern = 2;
@@ -102,6 +112,7 @@ message And {
 	optional Keyword CloseParen = 5;
 }
 
+//ZeroOrMore is the ast node for the ZeroOrMore pattern.
 message ZeroOrMore {
 	optional Keyword OpenParen = 1;
 	optional Pattern Pattern = 2;
@@ -109,11 +120,13 @@ message ZeroOrMore {
 	optional Keyword Star = 4;
 }
 
+//Reference is the ast node for the Reference pattern.
 message Reference {
 	optional Keyword At = 1;
 	optional string Name = 2 [(gogoproto.nullable) = false];
 }
 
+//Not is the ast node for the Not pattern.
 message Not {
 	optional Keyword Exclamation = 1;
 	optional Keyword OpenParen = 2;
@@ -121,10 +134,12 @@ message Not {
 	optional Keyword CloseParen = 4;
 }
 
+//ZAny is the ast node for the ZAny pattern.
 message ZAny {
 	optional Keyword Star = 1;
 }
 
+//Optional is the ast node for the Optional pattern.
 message Optional {
 	optional Keyword OpenParen = 1;
 	optional Pattern Pattern = 2;
@@ -132,6 +147,7 @@ message Optional {
 	optional Keyword QuestionMark = 4;
 }
 
+//Interleave is the ast node for the Interleave pattern.
 message Interleave {
 	optional Keyword OpenCurly = 2;
 	optional Pattern LeftPattern = 3;
