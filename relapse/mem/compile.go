@@ -20,6 +20,7 @@ import (
 	"github.com/katydid/katydid/relapse/interp"
 )
 
+//Compile memoizes the full state space (all possible things that can be memoized) before even executing on a parser.
 func Compile(g *ast.Grammar) *Mem {
 	refs := ast.NewRefLookup(g)
 	for name, p := range refs {
@@ -42,7 +43,7 @@ func Compile(g *ast.Grammar) *Mem {
 	return mem
 }
 
-func Prints(prefix string, state int, patterns []*ast.Pattern) {
+func prints(prefix string, state int, patterns []*ast.Pattern) {
 	fmt.Printf(prefix+":%d:", state)
 	for _, p := range patterns {
 		fmt.Printf("%v, ", p.String())

@@ -18,6 +18,8 @@ import (
 	"github.com/katydid/katydid/relapse/ast"
 )
 
+//IntsIndexedSet represents an indexed list of list of integers.
+//It reverse maps a list of ints into a single int.
 type IntsIndexedSet [][]int
 
 func newIntsIndexedSet() IntsIndexedSet {
@@ -51,6 +53,8 @@ func (this *IntsIndexedSet) add(zi []int) int {
 	return len(*this) - 1
 }
 
+//PatternsIndexedSet represents an indexed list of list of Patterns.
+//It reverse maps a list of Patterns into a single int.
 type PatternsIndexedSet [][]*ast.Pattern
 
 func newPatternsIndexedSet() PatternsIndexedSet {
@@ -75,6 +79,8 @@ func (this *PatternsIndexedSet) add(patterns []*ast.Pattern) int {
 	return len(*this) - 1
 }
 
+//BoolsIndexedSet represents an indexed list of list of booleans.
+//It reverse maps a list of booleans into a single int.
 type BoolsIndexedSet [][]bool
 
 func newBoolsIndexedSet() BoolsIndexedSet {
@@ -113,6 +119,8 @@ type stackElm struct {
 	Zindex int
 }
 
+//BoolsIndexedSet represents an indexed list of stackElm pairs.
+//It reverse maps a list of stackElms into a single int.
 type PairIndexedSet []stackElm
 
 func newPairIndexedSet() PairIndexedSet {

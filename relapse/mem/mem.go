@@ -12,6 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+//Package mem contains functions to interpret and memoize the execution of the grammar.
 package mem
 
 import (
@@ -20,18 +21,24 @@ import (
 	"github.com/katydid/katydid/relapse/interp"
 )
 
-//This is a naive implementation and it does not handle left recursion
-func (mem *Mem) Interpret(p parser.Interface) bool {
-	final := deriv(mem, mem.Start, p)
-	return mem.accept(final)
-}
-
+//New creates a new memoizable grammar.
 func New(g *ast.Grammar) *Mem {
 	refs := ast.NewRefLookup(g)
 	mem := newMem(refs)
 	return mem
 }
 
+//Interpret interprets the grammar given the parser and returns whether the parser is valid given the grammar.
+//The intermediate results are memoized to help with the speed of future executions.
+//
+//NOTE: This is a naive implementation and it does not handle left recursion.
+func (mem *Mem) Interpret(p parser.Interface) bool {
+	final := deriv(mem, mem.Start, p)
+	return mem.accept(final)
+}
+
+//Mem is the structure containing the memoized grammar.
+//TODO make more private fields.
 type Mem struct {
 	Refs        map[string]*ast.Pattern
 	PatternsMap PatternsIndexedSet

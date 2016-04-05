@@ -23,6 +23,8 @@ import (
 	"strings"
 )
 
+//CallNode represents a node in the call tree.
+//The call tree is basically a nested if then else tree, which results in child states and stack elements.
 type CallNode struct {
 	cond       compose.Bool
 	then       *CallNode
@@ -31,6 +33,7 @@ type CallNode struct {
 	stackIndex int
 }
 
+//Implements returns all funcs that implements a given type.
 func Implements(c *CallNode, typ reflect.Type) []interface{} {
 	var is []interface{}
 	fs := getAllConditions(c)
@@ -74,6 +77,7 @@ func getAllConditions(c *CallNode) []compose.Bool {
 	return cs
 }
 
+//Eval evaluates the call tree returning the child state and stack element given the label value of the parser element.
 func (this *CallNode) Eval(label parser.Value) (int, int) {
 	if this.cond == nil {
 		return this.child, this.stackIndex

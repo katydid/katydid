@@ -12,6 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+//Command mem-gen generates some of the code in the mem package.
 package main
 
 import (
