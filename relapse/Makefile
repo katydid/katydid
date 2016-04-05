@@ -25,7 +25,6 @@ regenerate:
 	(cd interp && make regenerate)
 	(cd mem && make regenerate)
 	(cd auto && make regenerate)
-	(cd lazymem && make regenerate)
 	(cd protonum && make regenerate)
 
 clean:
@@ -46,4 +45,3 @@ nuke: clean
 	(cd funcs && make nuke)
 	(cd interp && make nuke)
 	(cd auto && make nuke)
-	(cd lazymem && make nuke)
