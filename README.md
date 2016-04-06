@@ -49,6 +49,10 @@ Katydid version 0.2 is in alpha.
 
 [Relapse Playground](http://katydid.github.io/play)
 
+## GoDoc
+
+[![GoDoc](https://godoc.org/github.com/katydid/katydid?status.svg)](https://godoc.org/github.com/katydid/katydid)
+
 ## Theory
 
 Tree Automata and Visual Pushdown Automata have been found to be very applicable to XML processing.
