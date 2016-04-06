@@ -1,10 +1,11 @@
 ## Katydid
 
 Katydid is a toolkit for trees.
-Currently there are two tools:
+Currently there are three tools:
 
-  * A collection of parsers, and
-  * Relapse: a tree validation language.
+  * A collection of parsers,
+  * Relapse: a tree validation language, and
+  * A collection of encoders.
 
 ### What is a validation language?
 Regular expressions are used as validators for strings.
@@ -24,6 +25,8 @@ Katydid has implemented parsers for multiple types of trees:
 
 Relapse can validate these trees, since they have implemented Parsers.
 
+Encoders can take parsers and encode (or transcode) them into other types of trees.
+
 ### What is a Katydid?
 
 A Katydid is the common name for a [leaf insect](https://avatars1.githubusercontent.com/u/9207606?v=3&s=200).
@@ -41,11 +44,11 @@ Katydid version 0.2 is in alpha.
   * Decidable (excluding User Defined Functions)
   * Expressive
 
-## Tour
+## A Tour of Relapse
 
 [Relapse Tour](http://katydid.github.io/tour)
 
-## Playground
+## A Playground for Relapse
 
 [Relapse Playground](http://katydid.github.io/play)
 
