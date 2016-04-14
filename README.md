@@ -68,7 +68,8 @@ Relapse tries to apply these Automata to different types of trees.
 
 ## Possible Futures
 
-  * Language Agnostic Test set
   * Capturing (like Regular Expression Capturing, but for trees)
+  * Investigate viability of usage as a type system.
+  * Language Agnostic Test set
   * More serialization formats: CapnProto?, Bson, Yaml, Toml ...
   * Remove all dependencies from core Katydid repository and move all other extra functionality into richer feature set repositories that extend the core of Katydid.
