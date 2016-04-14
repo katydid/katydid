@@ -126,7 +126,7 @@ func TestNoMergeNestedMerge(t *testing.T) {
 	}
 	err = noMerge(data, bigm.Description(), "prototests", "BigMsg")
 	if err == nil || !strings.Contains(err.Error(), "FlightParachute requires merging") {
-		t.Fatalf("FlightParachute should require merging")
+		t.Fatalf("FlightParachute should require merging %#v", bigm)
 	}
 }
 

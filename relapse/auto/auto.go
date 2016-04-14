@@ -31,31 +31,25 @@ import (
 func Compile(g *ast.Grammar) *Auto {
 	mem := mem.Compile(g)
 	return &Auto{
-		Refs:        mem.Refs,
-		PatternsMap: mem.PatternsMap,
-		Calls:       mem.Calls,
-		Returns:     mem.Returns,
-		Escapables:  mem.Escapables,
-		Zis:         mem.Zis,
-		Start:       mem.Start,
-
-		StackElms:       mem.StackElms,
-		StateToNullable: mem.StateToNullable,
-		Nullables:       mem.Nullables,
-		Accept:          mem.Accept,
+		calls:           mem.Calls,
+		returns:         mem.Returns,
+		escapables:      mem.Escapables,
+		start:           mem.Start,
+		stateToNullable: mem.StateToNullable,
+		accept:          mem.Accept,
 	}
 }
 
 //Execute executes an automaton with the given parser and returns whether the parser is valid given the automaton's original grammar.
 func Execute(auto *Auto, p parser.Interface) bool {
-	final := deriv(auto, auto.Start, p)
-	return auto.Accept[final]
+	final := deriv(auto, auto.start, p)
+	return auto.accept[final]
 }
 
 //Implements returns all funcs in the compiled automaton that implements a specific interface.
 func Implements(auto *Auto, typ reflect.Type) []interface{} {
 	allis := []interface{}{}
-	for _, call := range auto.Calls {
+	for _, call := range auto.calls {
 		is := mem.Implements(call, typ)
 		allis = append(allis, is...)
 	}
@@ -63,25 +57,18 @@ func Implements(auto *Auto, typ reflect.Type) []interface{} {
 }
 
 //Auto is the structure that represents the automaton.
-//TODO make more private fields.
 type Auto struct {
-	Refs        map[string]*ast.Pattern
-	PatternsMap mem.PatternsIndexedSet
-	Calls       map[int]*mem.CallNode
-	Returns     map[int]map[int]int
-	Escapables  map[int]bool
-	Zis         mem.IntsIndexedSet
-	Start       int
-
-	StackElms       mem.PairIndexedSet
-	StateToNullable map[int]int
-	Nullables       mem.BoolsIndexedSet
-	Accept          map[int]bool
+	calls           map[int]*mem.CallNode
+	returns         map[int]map[int]int
+	escapables      map[int]bool
+	start           int
+	stateToNullable map[int]int
+	accept          map[int]bool
 }
 
 func deriv(auto *Auto, current int, tree parser.Interface) int {
 	for {
-		if !auto.Escapables[current] {
+		if !auto.escapables[current] {
 			return current
 		}
 		if err := tree.Next(); err != nil {
@@ -91,64 +78,15 @@ func deriv(auto *Auto, current int, tree parser.Interface) int {
 				panic(err)
 			}
 		}
-		callTree := auto.Calls[current]
+		callTree := auto.calls[current]
 		childState, stackElm := callTree.Eval(tree)
 		if !tree.IsLeaf() {
 			tree.Down()
 			childState = deriv(auto, childState, tree)
 			tree.Up()
 		}
-		nullIndex := auto.StateToNullable[childState]
-		current = auto.Returns[stackElm][nullIndex]
-	}
-	return current
-}
-
-func checkderiv(auto *Auto, current int, tree parser.Interface) int {
-	for {
-		if esc, ok := auto.Escapables[current]; ok {
-			if !esc {
-				// mem.Prints("!Escapable", current, auto.PatternsMap[current])
-				return current
-			}
-		} else {
-			panic("wtf")
-		}
-		if err := tree.Next(); err != nil {
-			if err == io.EOF {
-				break
-			} else {
-				panic(err)
-			}
-		}
-		callTree, cok := auto.Calls[current]
-		if !cok {
-			panic("wtf")
-		}
-		childState, stackElm := callTree.Eval(tree)
-		//callpair := auto.StackElms[stackElm]
-		// mem.Prints("call", callpair.State, auto.PatternsMap[callpair.State])
-		if tree.IsLeaf() {
-			//do nothing
-		} else {
-			tree.Down()
-			childState = deriv(auto, childState, tree)
-			tree.Up()
-		}
-		nullIndex, nok := auto.StateToNullable[childState]
-		if !nok {
-			panic("wtf")
-		}
-		//retpair := auto.StackElms[stackElm]
-		//mem.Prints("return", retpair.State, auto.PatternsMap[retpair.State])
-		children, rok := auto.Returns[stackElm]
-		if !rok {
-			panic("wtf")
-		}
-		current, rok = children[nullIndex]
-		if !rok {
-			panic("wtf")
-		}
+		nullIndex := auto.stateToNullable[childState]
+		current = auto.returns[stackElm][nullIndex]
 	}
 	return current
 }
