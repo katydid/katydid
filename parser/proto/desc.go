@@ -47,6 +47,9 @@ type descMap struct {
 //NewDescriptorMap returns a map of the FileDescriptorSet starting at the message represented by the package name and message name.
 func NewDescriptorMap(pkgName, msgName string, desc *descriptor.FileDescriptorSet) (DescMap, error) {
 	root := desc.GetMessage(pkgName, msgName)
+	if root == nil {
+		return nil, &errUnknown{pkgName + "." + msgName}
+	}
 	d := &descMap{
 		desc:       desc,
 		root:       root,

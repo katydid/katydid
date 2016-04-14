@@ -51,7 +51,7 @@ func RandomPersonProtoNumParser() parser.Interface {
 
 func RandomSrcTreeProtoNumParser() parser.Interface {
 	m := RandomSrcTree()
-	return NewProtoNumParser("test", "SrcTree", m.(ProtoMessage))
+	return NewProtoNumParser("tests", "SrcTree", m.(ProtoMessage))
 }
 
 func RandomTypewriterPrisonProtoNumParser() parser.Interface {
