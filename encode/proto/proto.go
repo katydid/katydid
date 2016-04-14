@@ -29,13 +29,11 @@ import (
 	"math"
 )
 
-var DefaultBufferSize = 1024
-
 const maxVarintSize = 10
 
 //Encoder encodes a parser.Interface into a byte slice containing marshaled protocol buffer.
 type Encoder interface {
-	Encode(parser.Interface) ([]byte, error)
+	Encode([]byte, parser.Interface) ([]byte, error)
 }
 
 //NewEncoder returns an Encoder that can marshal a parser.Interface into the specified protocol buffer message.
@@ -51,8 +49,7 @@ type encoder struct {
 	msg *msg
 }
 
-func (this *encoder) Encode(p parser.Interface) ([]byte, error) {
-	buf := make([]byte, DefaultBufferSize)
+func (this *encoder) Encode(buf []byte, p parser.Interface) ([]byte, error) {
 	offset := 0
 	var err error
 	buf, offset, err = this.msg.encode(buf, offset, p)
@@ -199,19 +196,21 @@ type msgField struct {
 }
 
 func (this *msgField) encode(buf []byte, offset int, p parser.Interface) ([]byte, int, error) {
-	msgbuf, msglen, err := this.msg.encode(make([]byte, DefaultBufferSize), 0, p)
+	msginitoff := offset + 20
+	msgbuf, msgfinaloff, err := this.msg.encode(buf, msginitoff, p)
 	if err != nil {
 		return nil, 0, err
 	}
+	msglen := msgfinaloff - msginitoff
 	buf, offset = safeCopy(buf, offset, this.key)
 	buf, offset = safeVarint(buf, offset, uint64(msglen))
-	buf, offset = safeCopy(buf, offset, msgbuf[:msglen])
+	buf, offset = safeCopy(buf, offset, msgbuf[msginitoff:msgfinaloff])
 	return buf, offset, nil
 }
 
 func checkSize(buf []byte, offset int, size int) []byte {
 	if offset+size > len(buf) {
-		newbuf := make([]byte, len(buf)*3+size)
+		newbuf := make([]byte, len(buf)*3+size+1)
 		copy(newbuf, buf)
 		buf = newbuf
 	}

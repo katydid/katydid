@@ -34,7 +34,7 @@ func TestSimple(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	buf, err := enc.Encode(p)
+	buf, err := enc.Encode(make([]byte, 1024), p)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -55,7 +55,7 @@ func TestNested(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	buf, err := enc.Encode(p)
+	buf, err := enc.Encode(make([]byte, 1024), p)
 	if err != nil {
 		t.Fatal(err)
 	}
