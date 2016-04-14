@@ -90,6 +90,7 @@ type protoParser struct {
 type state struct {
 	buf           []byte
 	parent        *descriptor.DescriptorProto
+	fieldsMap     map[uint64]*descriptor.FieldDescriptorProto
 	offset        int
 	length        int
 	field         *descriptor.FieldDescriptorProto
@@ -130,10 +131,12 @@ func newProtoParser(srcPackage, srcMessage string, desc *descriptor.FileDescript
 	if err != nil {
 		panic(err)
 	}
+	root := descMap.GetRoot()
 	return &protoParser{
 		descMap: descMap,
 		state: state{
-			parent: descMap.GetRoot(),
+			parent:    root,
+			fieldsMap: descMap.getLookupField(root),
 		},
 		stack:      make([]state, 0, 10),
 		fieldNames: fieldNames,
@@ -197,7 +200,7 @@ func (s *protoParser) Next() error {
 		if err != nil {
 			return err
 		}
-		field, ok := s.descMap.LookupField(s.parent, v)
+		field, ok := s.fieldsMap[v]
 		if !ok {
 			s.length = 0
 			s.isRepeated = false
@@ -224,7 +227,7 @@ func (s *protoParser) Next() error {
 	if err != nil {
 		return err
 	}
-	field, ok := s.descMap.LookupField(s.parent, v)
+	field, ok := s.fieldsMap[v]
 	if !ok || !field.IsRepeated() {
 		s.offset += n
 		wireType := int(v & 0x7)
@@ -485,6 +488,7 @@ func (s *protoParser) Down() {
 		s.stack = append(s.stack, s.state)
 		s.buf = s.buf[s.offset : s.offset+s.length]
 		s.parent = s.descMap.LookupMessage(s.field)
+		s.fieldsMap = s.descMap.getLookupField(s.parent)
 		s.offset = 0
 		s.length = 0
 		s.field = nil
