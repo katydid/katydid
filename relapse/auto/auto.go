@@ -13,6 +13,8 @@
 //  limitations under the License.
 
 //Package auto represents the compilation and execution of a visual pushdown automaton from a parsed relapse grammar.
+//
+//TODO: cleanup
 package auto
 
 import (
