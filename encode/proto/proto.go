@@ -16,9 +16,9 @@
 //This can be used for transcoding or dynamic marshaling.
 //Dynamic marshaling is when the protocol buffer has not been compiled into the source and only the descriptor struct is available.
 //
-//TODO more tests
+//TODO: more tests
 //
-//GROUP not supported
+//TODO: support for packed
 package proto
 
 import (
