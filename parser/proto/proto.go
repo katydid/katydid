@@ -200,13 +200,8 @@ func (s *protoParser) Next() error {
 		if err != nil {
 			return err
 		}
-		field, ok := s.fieldsMap[v]
-		if !ok {
-			s.length = 0
-			s.isRepeated = false
-			return io.EOF
-		}
-		if field.GetNumber() != s.field.GetNumber() {
+		fieldNumber := int32(v >> 3)
+		if fieldNumber != s.field.GetNumber() {
 			s.length = 0
 			s.isRepeated = false
 			return io.EOF
