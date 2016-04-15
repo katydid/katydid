@@ -45,6 +45,9 @@ func newCalls(callsmap map[int]*mem.CallNode) []*mem.CallNode {
 			max = i
 		}
 	}
+	if len(callsmap) != (max + 1) {
+		panic(fmt.Sprintf("callsmap is not sparse, %d != %d", len(callsmap), max+1))
+	}
 	callslice := make([]*mem.CallNode, max+1)
 	for k := range callsmap {
 		callslice[k] = callsmap[k]
@@ -62,6 +65,9 @@ func newBoolSlice(m map[int]bool) []bool {
 		if i > max {
 			max = i
 		}
+	}
+	if len(m) != (max + 1) {
+		panic(fmt.Sprintf("map[int]bool is not sparse, %d != %d", len(m), max+1))
 	}
 	s := make([]bool, max+1)
 	for k := range m {
@@ -81,6 +87,9 @@ func newNullables(m map[int]int) []int {
 			max = i
 		}
 	}
+	if len(m) != (max + 1) {
+		panic(fmt.Sprintf("nullablesmap is not sparse, %d != %d", len(m), max+1))
+	}
 	s := make([]int, max+1)
 	for k := range m {
 		s[k] = m[k]
@@ -94,6 +103,9 @@ func newReturns(m map[int]map[int]int) []intmap {
 		if i > max {
 			max = i
 		}
+	}
+	if len(m) != (max + 1) {
+		panic(fmt.Sprintf("returnsmap is not sparse, %d != %d", len(m), max+1))
 	}
 	returns := make([]intmap, max+1)
 	for k := range m {
