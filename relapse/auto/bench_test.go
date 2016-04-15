@@ -40,4 +40,5 @@ func bench(b *testing.B, grammar *ast.Grammar, gen func() parser.Interface) {
 		}
 		auto.Execute(a, parsers[i%num])
 	}
+	b.ReportAllocs()
 }
