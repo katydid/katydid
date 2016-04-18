@@ -10,3 +10,4 @@ Currently there are three tools in the katydid toolkit:
   * A collection of parsers (protobuf, json, xml, reflected go structures) which are easily extendable, and
   * A collection of encoders (protobuf, json, xml, reflected go structures) which are useful for dynamic transcoding.
 
+![Katydid Logo](https://cdn.rawgit.com/katydid/katydid.github.io/master/logo.png)
