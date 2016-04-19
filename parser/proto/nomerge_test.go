@@ -113,7 +113,7 @@ func TestNoMergeMessageMerge(t *testing.T) {
 func TestNoMergeNestedMerge(t *testing.T) {
 	bigm := prototests.NewPopulatedBigMsg(r, true)
 	m := prototests.NewPopulatedSmallMsg(r, true)
-	if m.FlightParachute == nil {
+	if len(m.FlightParachute) == 0 {
 		m.FlightParachute = []uint32{1}
 	}
 	m.MapShark = proto.String("a")
