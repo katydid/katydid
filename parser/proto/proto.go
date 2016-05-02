@@ -136,7 +136,7 @@ func newProtoParser(srcPackage, srcMessage string, desc *descriptor.FileDescript
 		descMap: descMap,
 		state: state{
 			parent:    root,
-			fieldsMap: descMap.getLookupField(root),
+			fieldsMap: descMap.LookupFields(root),
 		},
 		stack:      make([]state, 0, 10),
 		fieldNames: fieldNames,
@@ -483,7 +483,7 @@ func (s *protoParser) Down() {
 		s.stack = append(s.stack, s.state)
 		s.buf = s.buf[s.offset : s.offset+s.length]
 		s.parent = s.descMap.LookupMessage(s.field)
-		s.fieldsMap = s.descMap.getLookupField(s.parent)
+		s.fieldsMap = s.descMap.LookupFields(s.parent)
 		s.offset = 0
 		s.length = 0
 		s.field = nil

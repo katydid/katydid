@@ -33,9 +33,8 @@ type DescMap interface {
 	GetRoot() *descriptor.DescriptorProto
 	//LookupMessage returns the message descriptor of the field type.
 	LookupMessage(field *descriptor.FieldDescriptorProto) *descriptor.DescriptorProto
-	//LookupField returns the field in the message which has the corresponding key.
-	LookupField(msg *descriptor.DescriptorProto, key uint64) (*descriptor.FieldDescriptorProto, bool)
-	getLookupField(msg *descriptor.DescriptorProto) map[uint64]*descriptor.FieldDescriptorProto
+	//LookupFields returns a map of field key to field descriptor in the message.
+	LookupFields(msg *descriptor.DescriptorProto) map[uint64]*descriptor.FieldDescriptorProto
 }
 
 type descMap struct {
@@ -134,15 +133,6 @@ func (this *descMap) LookupMessage(field *descriptor.FieldDescriptorProto) *desc
 	return this.fieldToMsg[field]
 }
 
-func (this *descMap) LookupField(msg *descriptor.DescriptorProto, key uint64) (*descriptor.FieldDescriptorProto, bool) {
-	fields, ok := this.msgToField[msg]
-	if !ok {
-		return nil, false
-	}
-	f, ok := fields[key]
-	return f, ok
-}
-
-func (this *descMap) getLookupField(msg *descriptor.DescriptorProto) map[uint64]*descriptor.FieldDescriptorProto {
+func (this *descMap) LookupFields(msg *descriptor.DescriptorProto) map[uint64]*descriptor.FieldDescriptorProto {
 	return this.msgToField[msg]
 }

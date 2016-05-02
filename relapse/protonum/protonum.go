@@ -182,12 +182,12 @@ func (this *errUnknownField) Error() string {
 	return fmt.Sprintf("Unknown Field Error: Name: %v, Msg: %v", this.name, this.c.msg.GetName())
 }
 
-func getField(msg *descriptor.DescriptorProto, name string) *descriptor.FieldDescriptorProto {
-	for i, f := range msg.Field {
+func getField(m map[uint64]*descriptor.FieldDescriptorProto, name string) *descriptor.FieldDescriptorProto {
+	for _, f := range m {
 		if f.GetName() != name {
 			continue
 		}
-		return msg.Field[i]
+		return f
 	}
 	return nil
 }
@@ -209,7 +209,7 @@ func (this *nameToNumber) translateName(current *context, name *ast.NameExpr, ch
 		if n.StringValue == nil {
 			return nil, &errExpectedField{name.String(), current}
 		}
-		f := getField(current.msg, n.GetStringValue())
+		f := getField(this.descMap.LookupFields(current.msg), n.GetStringValue())
 		if f == nil {
 			return nil, &errUnknownField{name.String(), current}
 		}
