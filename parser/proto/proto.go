@@ -83,8 +83,10 @@ func length(wireType int, buf []byte) (prefix int, l int, err error) {
 type protoParser struct {
 	descMap DescMap
 	state
-	stack      []state
-	fieldNames bool
+	stack         []state
+	fieldNames    bool
+	initRoot      *descriptor.DescriptorProto
+	initFieldsMap map[uint64]*descriptor.FieldDescriptorProto
 }
 
 type state struct {
@@ -132,14 +134,13 @@ func newProtoParser(srcPackage, srcMessage string, desc *descriptor.FileDescript
 		panic(err)
 	}
 	root := descMap.GetRoot()
+	fieldsMap := descMap.LookupFields(root)
 	return &protoParser{
-		descMap: descMap,
-		state: state{
-			parent:    root,
-			fieldsMap: descMap.LookupFields(root),
-		},
-		stack:      make([]state, 0, 10),
-		fieldNames: fieldNames,
+		descMap:       descMap,
+		stack:         make([]state, 0, 10),
+		fieldNames:    fieldNames,
+		initRoot:      root,
+		initFieldsMap: fieldsMap,
 	}
 }
 
@@ -159,11 +160,12 @@ func (s *protoParser) Field() *descriptor.FieldDescriptorProto {
 }
 
 func (s *protoParser) Init(buf []byte) error {
-	s.buf = buf
-	s.offset = 0
-	s.length = 0
-	s.field = nil
 	s.stack = s.stack[:0]
+	s.state = state{
+		parent:    s.initRoot,
+		fieldsMap: s.initFieldsMap,
+		buf:       buf,
+	}
 	return nil
 }
 
@@ -474,13 +476,12 @@ func (s *protoParser) Up() {
 }
 
 func (s *protoParser) Down() {
+	s.stack = append(s.stack, s.state)
 	if s.isRepeated && !s.inRepeated {
-		s.stack = append(s.stack, s.state)
 		s.inRepeated = true
 		s.indexRepeated = 0
 		s.length = 0
 	} else if s.field.IsMessage() {
-		s.stack = append(s.stack, s.state)
 		s.buf = s.buf[s.offset : s.offset+s.length]
 		s.parent = s.descMap.LookupMessage(s.field)
 		s.fieldsMap = s.descMap.LookupFields(s.parent)
@@ -490,7 +491,6 @@ func (s *protoParser) Down() {
 		s.inRepeated = false
 		s.isRepeated = false
 	} else {
-		s.stack = append(s.stack, s.state)
 		s.isLeaf = true
 		s.inRepeated = false
 		s.isRepeated = false
