@@ -84,14 +84,11 @@ func sprint(i interface{}) string {
 }
 
 func reverse(uniq string) (name string) {
-	for n, us := range funcsMap.nameToUniq {
-		for _, u := range us {
-			if uniq == u {
-				return n
-			}
-		}
+	f, ok := funcsMap.uniqToFunc[uniq]
+	if !ok {
+		return ""
 	}
-	return ""
+	return f.name
 }
 
 type stringer interface {
