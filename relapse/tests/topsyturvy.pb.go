@@ -33,15 +33,20 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the proto package it is being compiled against.
+const _ = proto.GoGoProtoPackageIsVersion1
+
 type TopsyTurvy struct {
 	Top              *Topsy `protobuf:"bytes,1,opt,name=Top" json:"Top,omitempty"`
 	Turf             *Turvy `protobuf:"bytes,2,opt,name=Turf" json:"Turf,omitempty"`
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *TopsyTurvy) Reset()         { *m = TopsyTurvy{} }
-func (m *TopsyTurvy) String() string { return proto.CompactTextString(m) }
-func (*TopsyTurvy) ProtoMessage()    {}
+func (m *TopsyTurvy) Reset()                    { *m = TopsyTurvy{} }
+func (m *TopsyTurvy) String() string            { return proto.CompactTextString(m) }
+func (*TopsyTurvy) ProtoMessage()               {}
+func (*TopsyTurvy) Descriptor() ([]byte, []int) { return fileDescriptorTopsyturvy, []int{0} }
 
 func (m *TopsyTurvy) GetTop() *Topsy {
 	if m != nil {
@@ -63,9 +68,10 @@ type Topsy struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *Topsy) Reset()         { *m = Topsy{} }
-func (m *Topsy) String() string { return proto.CompactTextString(m) }
-func (*Topsy) ProtoMessage()    {}
+func (m *Topsy) Reset()                    { *m = Topsy{} }
+func (m *Topsy) String() string            { return proto.CompactTextString(m) }
+func (*Topsy) ProtoMessage()               {}
+func (*Topsy) Descriptor() ([]byte, []int) { return fileDescriptorTopsyturvy, []int{1} }
 
 func (m *Topsy) GetTop() int64 {
 	if m != nil && m.Top != nil {
@@ -87,9 +93,10 @@ type Turvy struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *Turvy) Reset()         { *m = Turvy{} }
-func (m *Turvy) String() string { return proto.CompactTextString(m) }
-func (*Turvy) ProtoMessage()    {}
+func (m *Turvy) Reset()                    { *m = Turvy{} }
+func (m *Turvy) String() string            { return proto.CompactTextString(m) }
+func (*Turvy) ProtoMessage()               {}
+func (*Turvy) Descriptor() ([]byte, []int) { return fileDescriptorTopsyturvy, []int{2} }
 
 func (m *Turvy) GetTurf() int64 {
 	if m != nil && m.Turf != nil {
@@ -775,6 +782,16 @@ func TopsyturvyDescription() (desc *descriptor.FileDescriptorSet) {
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
 			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
 			Extendee: func(v string) *string { return &v }(".google.protobuf.EnumOptions"),
+		}, {Name: func(v string) *string { return &v }("enum_customname"),
+			Number:   func(v int32) *int32 { return &v }(62023),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(9),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.EnumOptions"),
+		}, {Name: func(v string) *string { return &v }("enumvalue_customname"),
+			Number:   func(v int32) *int32 { return &v }(66001),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(9),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.EnumValueOptions"),
 		}, {Name: func(v string) *string { return &v }("goproto_getters_all"),
 			Number:   func(v int32) *int32 { return &v }(63001),
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
@@ -850,6 +867,11 @@ func TopsyturvyDescription() (desc *descriptor.FileDescriptorSet) {
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
 			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
 			Extendee: func(v string) *string { return &v }(".google.protobuf.FileOptions"),
+		}, {Name: func(v string) *string { return &v }("stable_marshaler_all"),
+			Number:   func(v int32) *int32 { return &v }(63019),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.FileOptions"),
 		}, {Name: func(v string) *string { return &v }("sizer_all"),
 			Number:   func(v int32) *int32 { return &v }(63020),
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
@@ -887,6 +909,16 @@ func TopsyturvyDescription() (desc *descriptor.FileDescriptorSet) {
 			Extendee: func(v string) *string { return &v }(".google.protobuf.FileOptions"),
 		}, {Name: func(v string) *string { return &v }("gogoproto_import"),
 			Number:   func(v int32) *int32 { return &v }(63027),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.FileOptions"),
+		}, {Name: func(v string) *string { return &v }("protosizer_all"),
+			Number:   func(v int32) *int32 { return &v }(63028),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.FileOptions"),
+		}, {Name: func(v string) *string { return &v }("compare_all"),
+			Number:   func(v int32) *int32 { return &v }(63029),
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
 			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
 			Extendee: func(v string) *string { return &v }(".google.protobuf.FileOptions"),
@@ -960,6 +992,11 @@ func TopsyturvyDescription() (desc *descriptor.FileDescriptorSet) {
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
 			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
 			Extendee: func(v string) *string { return &v }(".google.protobuf.MessageOptions"),
+		}, {Name: func(v string) *string { return &v }("stable_marshaler"),
+			Number:   func(v int32) *int32 { return &v }(64019),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.MessageOptions"),
 		}, {Name: func(v string) *string { return &v }("sizer"),
 			Number:   func(v int32) *int32 { return &v }(64020),
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
@@ -982,6 +1019,16 @@ func TopsyturvyDescription() (desc *descriptor.FileDescriptorSet) {
 			Extendee: func(v string) *string { return &v }(".google.protobuf.MessageOptions"),
 		}, {Name: func(v string) *string { return &v }("goproto_unrecognized"),
 			Number:   func(v int32) *int32 { return &v }(64026),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.MessageOptions"),
+		}, {Name: func(v string) *string { return &v }("protosizer"),
+			Number:   func(v int32) *int32 { return &v }(64028),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.MessageOptions"),
+		}, {Name: func(v string) *string { return &v }("compare"),
+			Number:   func(v int32) *int32 { return &v }(64029),
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
 			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
 			Extendee: func(v string) *string { return &v }(".google.protobuf.MessageOptions"),
@@ -1017,6 +1064,16 @@ func TopsyturvyDescription() (desc *descriptor.FileDescriptorSet) {
 			Extendee: func(v string) *string { return &v }(".google.protobuf.FieldOptions"),
 		}, {Name: func(v string) *string { return &v }("casttype"),
 			Number:   func(v int32) *int32 { return &v }(65007),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(9),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.FieldOptions"),
+		}, {Name: func(v string) *string { return &v }("castkey"),
+			Number:   func(v int32) *int32 { return &v }(65008),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(9),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.FieldOptions"),
+		}, {Name: func(v string) *string { return &v }("castvalue"),
+			Number:   func(v int32) *int32 { return &v }(65009),
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
 			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(9),
 			Extendee: func(v string) *string { return &v }(".google.protobuf.FieldOptions"),
@@ -1143,4 +1200,18 @@ func extensionToGoStringTopsyturvy(e map[int32]github_com_gogo_protobuf_proto.Ex
 	}
 	s += strings.Join(ss, ",") + "}"
 	return s
+}
+
+var fileDescriptorTopsyturvy = []byte{
+	// 160 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xe2, 0x12, 0x28, 0xc9, 0x2f, 0x28,
+	0xae, 0x2c, 0x29, 0x2d, 0x2a, 0xab, 0xd4, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x2d, 0x49,
+	0x2d, 0x2e, 0x29, 0x96, 0xd2, 0x4d, 0xcf, 0x2c, 0xc9, 0x28, 0x4d, 0xd2, 0x4b, 0xce, 0xcf, 0xd5,
+	0x4f, 0xcf, 0x4f, 0xcf, 0xd7, 0x07, 0xcb, 0x26, 0x95, 0xa6, 0x81, 0x79, 0x60, 0x0e, 0x98, 0x05,
+	0xd1, 0xa5, 0xe4, 0xcc, 0xc5, 0x15, 0x02, 0x32, 0x29, 0x04, 0x64, 0x92, 0x90, 0x24, 0x17, 0x33,
+	0x90, 0x27, 0xc1, 0xa8, 0xc0, 0xa8, 0xc1, 0x6d, 0xc4, 0xa3, 0x07, 0x36, 0x51, 0x0f, 0x2c, 0x2f,
+	0x24, 0xc5, 0xc5, 0x02, 0x54, 0x93, 0x26, 0xc1, 0x84, 0x2a, 0x07, 0xd2, 0xa6, 0xa4, 0xc4, 0xc5,
+	0x0a, 0x51, 0xc4, 0x8d, 0xd0, 0xcf, 0x2c, 0xc4, 0x83, 0xa4, 0x83, 0x19, 0xac, 0x06, 0x6c, 0x07,
+	0x4c, 0x18, 0xa2, 0x08, 0xaa, 0x03, 0xac, 0xc6, 0x89, 0xe3, 0xc3, 0x43, 0x39, 0xc6, 0x0d, 0x8f,
+	0xe4, 0x18, 0x01, 0x01, 0x00, 0x00, 0xff, 0xff, 0x1c, 0xcf, 0x88, 0xe3, 0xdf, 0x00, 0x00, 0x00,
 }

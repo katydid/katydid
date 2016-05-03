@@ -15,36 +15,19 @@
 package ast
 
 import (
-	"bytes"
-	"github.com/gogo/protobuf/proto"
 	"sort"
 )
-
-//Compare compares two patterns the result will be 0 if p1 == p2, -1 if p1 < p2 and +1 is p1 > p2.
-//What smaller and bigger means may change over time, but this function is still useful for deterministic ordering.
-//TODO this is really slow, make it faster, generate a method or simply write one.
-func Compare(p1, p2 *Pattern) int {
-	d1, err := proto.Marshal(p1)
-	if err != nil {
-		panic(err)
-	}
-	d2, err := proto.Marshal(p2)
-	if err != nil {
-		panic(err)
-	}
-	return bytes.Compare(d1, d2)
-}
 
 //Less returns whether one pattern is smaller than another.
 //What smaller means may change over time, but this function is still useful for deterministic ordering.
 func (p1 *Pattern) Less(p2 *Pattern) bool {
-	return Compare(p1, p2) < 0
+	return p1.Compare(p2) < 0
 }
 
 //Index returns the index of the Pattern p in the list of Patterns ps.  If p is not found -1 is returned.
 func Index(ps []*Pattern, p *Pattern) int {
 	for i, pp := range ps {
-		if Compare(pp, p) == 0 {
+		if pp.Compare(p) == 0 {
 			return i
 		}
 	}

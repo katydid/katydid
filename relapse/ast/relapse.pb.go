@@ -62,6 +62,10 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the proto package it is being compiled against.
+const _ = proto.GoGoProtoPackageIsVersion1
+
 // Grammar is the ast node representing the whole grammar.
 type Grammar struct {
 	TopPattern   *Pattern       `protobuf:"bytes,1,opt,name=TopPattern" json:"TopPattern,omitempty"`
@@ -69,8 +73,9 @@ type Grammar struct {
 	After        *Space         `protobuf:"bytes,3,opt,name=After" json:"After,omitempty"`
 }
 
-func (m *Grammar) Reset()      { *m = Grammar{} }
-func (*Grammar) ProtoMessage() {}
+func (m *Grammar) Reset()                    { *m = Grammar{} }
+func (*Grammar) ProtoMessage()               {}
+func (*Grammar) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{0} }
 
 func (m *Grammar) GetTopPattern() *Pattern {
 	if m != nil {
@@ -102,8 +107,9 @@ type PatternDecl struct {
 	Pattern *Pattern `protobuf:"bytes,5,opt,name=Pattern" json:"Pattern,omitempty"`
 }
 
-func (m *PatternDecl) Reset()      { *m = PatternDecl{} }
-func (*PatternDecl) ProtoMessage() {}
+func (m *PatternDecl) Reset()                    { *m = PatternDecl{} }
+func (*PatternDecl) ProtoMessage()               {}
+func (*PatternDecl) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{1} }
 
 func (m *PatternDecl) GetHash() *Keyword {
 	if m != nil {
@@ -157,8 +163,9 @@ type Pattern struct {
 	Interleave *Interleave `protobuf:"bytes,14,opt,name=Interleave" json:"Interleave,omitempty"`
 }
 
-func (m *Pattern) Reset()      { *m = Pattern{} }
-func (*Pattern) ProtoMessage() {}
+func (m *Pattern) Reset()                    { *m = Pattern{} }
+func (*Pattern) ProtoMessage()               {}
+func (*Pattern) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{2} }
 
 func (m *Pattern) GetEmpty() *Empty {
 	if m != nil {
@@ -256,8 +263,9 @@ type Empty struct {
 	Empty *Keyword `protobuf:"bytes,1,opt,name=Empty" json:"Empty,omitempty"`
 }
 
-func (m *Empty) Reset()      { *m = Empty{} }
-func (*Empty) ProtoMessage() {}
+func (m *Empty) Reset()                    { *m = Empty{} }
+func (*Empty) ProtoMessage()               {}
+func (*Empty) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{3} }
 
 func (m *Empty) GetEmpty() *Keyword {
 	if m != nil {
@@ -273,8 +281,9 @@ type TreeNode struct {
 	Pattern *Pattern  `protobuf:"bytes,3,opt,name=Pattern" json:"Pattern,omitempty"`
 }
 
-func (m *TreeNode) Reset()      { *m = TreeNode{} }
-func (*TreeNode) ProtoMessage() {}
+func (m *TreeNode) Reset()                    { *m = TreeNode{} }
+func (*TreeNode) ProtoMessage()               {}
+func (*TreeNode) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{4} }
 
 func (m *TreeNode) GetName() *NameExpr {
 	if m != nil {
@@ -303,8 +312,9 @@ type Contains struct {
 	Pattern *Pattern `protobuf:"bytes,2,opt,name=Pattern" json:"Pattern,omitempty"`
 }
 
-func (m *Contains) Reset()      { *m = Contains{} }
-func (*Contains) ProtoMessage() {}
+func (m *Contains) Reset()                    { *m = Contains{} }
+func (*Contains) ProtoMessage()               {}
+func (*Contains) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{5} }
 
 func (m *Contains) GetDot() *Keyword {
 	if m != nil {
@@ -325,8 +335,9 @@ type LeafNode struct {
 	Expr *Expr `protobuf:"bytes,1,opt,name=Expr" json:"Expr,omitempty"`
 }
 
-func (m *LeafNode) Reset()      { *m = LeafNode{} }
-func (*LeafNode) ProtoMessage() {}
+func (m *LeafNode) Reset()                    { *m = LeafNode{} }
+func (*LeafNode) ProtoMessage()               {}
+func (*LeafNode) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{6} }
 
 func (m *LeafNode) GetExpr() *Expr {
 	if m != nil {
@@ -345,8 +356,9 @@ type Concat struct {
 	CloseBracket *Keyword `protobuf:"bytes,7,opt,name=CloseBracket" json:"CloseBracket,omitempty"`
 }
 
-func (m *Concat) Reset()      { *m = Concat{} }
-func (*Concat) ProtoMessage() {}
+func (m *Concat) Reset()                    { *m = Concat{} }
+func (*Concat) ProtoMessage()               {}
+func (*Concat) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{7} }
 
 func (m *Concat) GetOpenBracket() *Keyword {
 	if m != nil {
@@ -399,8 +411,9 @@ type Or struct {
 	CloseParen   *Keyword `protobuf:"bytes,5,opt,name=CloseParen" json:"CloseParen,omitempty"`
 }
 
-func (m *Or) Reset()      { *m = Or{} }
-func (*Or) ProtoMessage() {}
+func (m *Or) Reset()                    { *m = Or{} }
+func (*Or) ProtoMessage()               {}
+func (*Or) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{8} }
 
 func (m *Or) GetOpenParen() *Keyword {
 	if m != nil {
@@ -446,8 +459,9 @@ type And struct {
 	CloseParen   *Keyword `protobuf:"bytes,5,opt,name=CloseParen" json:"CloseParen,omitempty"`
 }
 
-func (m *And) Reset()      { *m = And{} }
-func (*And) ProtoMessage() {}
+func (m *And) Reset()                    { *m = And{} }
+func (*And) ProtoMessage()               {}
+func (*And) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{9} }
 
 func (m *And) GetOpenParen() *Keyword {
 	if m != nil {
@@ -492,8 +506,9 @@ type ZeroOrMore struct {
 	Star       *Keyword `protobuf:"bytes,4,opt,name=Star" json:"Star,omitempty"`
 }
 
-func (m *ZeroOrMore) Reset()      { *m = ZeroOrMore{} }
-func (*ZeroOrMore) ProtoMessage() {}
+func (m *ZeroOrMore) Reset()                    { *m = ZeroOrMore{} }
+func (*ZeroOrMore) ProtoMessage()               {}
+func (*ZeroOrMore) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{10} }
 
 func (m *ZeroOrMore) GetOpenParen() *Keyword {
 	if m != nil {
@@ -529,8 +544,9 @@ type Reference struct {
 	Name string   `protobuf:"bytes,2,opt,name=Name" json:"Name"`
 }
 
-func (m *Reference) Reset()      { *m = Reference{} }
-func (*Reference) ProtoMessage() {}
+func (m *Reference) Reset()                    { *m = Reference{} }
+func (*Reference) ProtoMessage()               {}
+func (*Reference) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{11} }
 
 func (m *Reference) GetAt() *Keyword {
 	if m != nil {
@@ -554,8 +570,9 @@ type Not struct {
 	CloseParen  *Keyword `protobuf:"bytes,4,opt,name=CloseParen" json:"CloseParen,omitempty"`
 }
 
-func (m *Not) Reset()      { *m = Not{} }
-func (*Not) ProtoMessage() {}
+func (m *Not) Reset()                    { *m = Not{} }
+func (*Not) ProtoMessage()               {}
+func (*Not) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{12} }
 
 func (m *Not) GetExclamation() *Keyword {
 	if m != nil {
@@ -590,8 +607,9 @@ type ZAny struct {
 	Star *Keyword `protobuf:"bytes,1,opt,name=Star" json:"Star,omitempty"`
 }
 
-func (m *ZAny) Reset()      { *m = ZAny{} }
-func (*ZAny) ProtoMessage() {}
+func (m *ZAny) Reset()                    { *m = ZAny{} }
+func (*ZAny) ProtoMessage()               {}
+func (*ZAny) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{13} }
 
 func (m *ZAny) GetStar() *Keyword {
 	if m != nil {
@@ -608,8 +626,9 @@ type Optional struct {
 	QuestionMark *Keyword `protobuf:"bytes,4,opt,name=QuestionMark" json:"QuestionMark,omitempty"`
 }
 
-func (m *Optional) Reset()      { *m = Optional{} }
-func (*Optional) ProtoMessage() {}
+func (m *Optional) Reset()                    { *m = Optional{} }
+func (*Optional) ProtoMessage()               {}
+func (*Optional) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{14} }
 
 func (m *Optional) GetOpenParen() *Keyword {
 	if m != nil {
@@ -649,8 +668,9 @@ type Interleave struct {
 	CloseCurly     *Keyword `protobuf:"bytes,7,opt,name=CloseCurly" json:"CloseCurly,omitempty"`
 }
 
-func (m *Interleave) Reset()      { *m = Interleave{} }
-func (*Interleave) ProtoMessage() {}
+func (m *Interleave) Reset()                    { *m = Interleave{} }
+func (*Interleave) ProtoMessage()               {}
+func (*Interleave) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{15} }
 
 func (m *Interleave) GetOpenCurly() *Keyword {
 	if m != nil {
@@ -704,8 +724,9 @@ type Expr struct {
 	BuiltIn    *BuiltIn  `protobuf:"bytes,6,opt,name=BuiltIn" json:"BuiltIn,omitempty"`
 }
 
-func (m *Expr) Reset()      { *m = Expr{} }
-func (*Expr) ProtoMessage() {}
+func (m *Expr) Reset()                    { *m = Expr{} }
+func (*Expr) ProtoMessage()               {}
+func (*Expr) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{16} }
 
 func (m *Expr) GetRightArrow() *Keyword {
 	if m != nil {
@@ -758,8 +779,9 @@ type List struct {
 	CloseCurly *Keyword   `protobuf:"bytes,5,opt,name=CloseCurly" json:"CloseCurly,omitempty"`
 }
 
-func (m *List) Reset()      { *m = List{} }
-func (*List) ProtoMessage() {}
+func (m *List) Reset()                    { *m = List{} }
+func (*List) ProtoMessage()               {}
+func (*List) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{17} }
 
 func (m *List) GetBefore() *Space {
 	if m != nil {
@@ -805,8 +827,9 @@ type Function struct {
 	CloseParen *Keyword `protobuf:"bytes,5,opt,name=CloseParen" json:"CloseParen,omitempty"`
 }
 
-func (m *Function) Reset()      { *m = Function{} }
-func (*Function) ProtoMessage() {}
+func (m *Function) Reset()                    { *m = Function{} }
+func (*Function) ProtoMessage()               {}
+func (*Function) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{18} }
 
 func (m *Function) GetBefore() *Space {
 	if m != nil {
@@ -849,8 +872,9 @@ type BuiltIn struct {
 	Expr   *Expr    `protobuf:"bytes,2,opt,name=Expr" json:"Expr,omitempty"`
 }
 
-func (m *BuiltIn) Reset()      { *m = BuiltIn{} }
-func (*BuiltIn) ProtoMessage() {}
+func (m *BuiltIn) Reset()                    { *m = BuiltIn{} }
+func (*BuiltIn) ProtoMessage()               {}
+func (*BuiltIn) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{19} }
 
 func (m *BuiltIn) GetSymbol() *Keyword {
 	if m != nil {
@@ -879,8 +903,9 @@ type Terminal struct {
 	Variable    *Variable `protobuf:"bytes,50,opt,name=Variable" json:"Variable,omitempty"`
 }
 
-func (m *Terminal) Reset()      { *m = Terminal{} }
-func (*Terminal) ProtoMessage() {}
+func (m *Terminal) Reset()                    { *m = Terminal{} }
+func (*Terminal) ProtoMessage()               {}
+func (*Terminal) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{20} }
 
 func (m *Terminal) GetBefore() *Space {
 	if m != nil {
@@ -950,8 +975,9 @@ type Variable struct {
 	Type types.Type `protobuf:"varint,2,opt,name=Type,enum=types.Type" json:"Type"`
 }
 
-func (m *Variable) Reset()      { *m = Variable{} }
-func (*Variable) ProtoMessage() {}
+func (m *Variable) Reset()                    { *m = Variable{} }
+func (*Variable) ProtoMessage()               {}
+func (*Variable) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{21} }
 
 func (m *Variable) GetType() types.Type {
 	if m != nil {
@@ -966,8 +992,9 @@ type Keyword struct {
 	Value  string `protobuf:"bytes,2,opt,name=Value" json:"Value"`
 }
 
-func (m *Keyword) Reset()      { *m = Keyword{} }
-func (*Keyword) ProtoMessage() {}
+func (m *Keyword) Reset()                    { *m = Keyword{} }
+func (*Keyword) ProtoMessage()               {}
+func (*Keyword) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{22} }
 
 func (m *Keyword) GetBefore() *Space {
 	if m != nil {
@@ -988,8 +1015,9 @@ type Space struct {
 	Space []string `protobuf:"bytes,1,rep,name=Space" json:"Space,omitempty"`
 }
 
-func (m *Space) Reset()      { *m = Space{} }
-func (*Space) ProtoMessage() {}
+func (m *Space) Reset()                    { *m = Space{} }
+func (*Space) ProtoMessage()               {}
+func (*Space) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{23} }
 
 func (m *Space) GetSpace() []string {
 	if m != nil {
@@ -1006,8 +1034,9 @@ type NameExpr struct {
 	NameChoice    *NameChoice    `protobuf:"bytes,4,opt,name=NameChoice" json:"NameChoice,omitempty"`
 }
 
-func (m *NameExpr) Reset()      { *m = NameExpr{} }
-func (*NameExpr) ProtoMessage() {}
+func (m *NameExpr) Reset()                    { *m = NameExpr{} }
+func (*NameExpr) ProtoMessage()               {}
+func (*NameExpr) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{24} }
 
 func (m *NameExpr) GetName() *Name {
 	if m != nil {
@@ -1048,8 +1077,9 @@ type Name struct {
 	BytesValue  []byte   `protobuf:"bytes,10,opt,name=BytesValue" json:"BytesValue,omitempty"`
 }
 
-func (m *Name) Reset()      { *m = Name{} }
-func (*Name) ProtoMessage() {}
+func (m *Name) Reset()                    { *m = Name{} }
+func (*Name) ProtoMessage()               {}
+func (*Name) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{25} }
 
 func (m *Name) GetBefore() *Space {
 	if m != nil {
@@ -1105,8 +1135,9 @@ type AnyName struct {
 	Underscore *Keyword `protobuf:"bytes,1,opt,name=Underscore" json:"Underscore,omitempty"`
 }
 
-func (m *AnyName) Reset()      { *m = AnyName{} }
-func (*AnyName) ProtoMessage() {}
+func (m *AnyName) Reset()                    { *m = AnyName{} }
+func (*AnyName) ProtoMessage()               {}
+func (*AnyName) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{26} }
 
 func (m *AnyName) GetUnderscore() *Keyword {
 	if m != nil {
@@ -1123,8 +1154,9 @@ type AnyNameExcept struct {
 	CloseParen  *Keyword  `protobuf:"bytes,4,opt,name=CloseParen" json:"CloseParen,omitempty"`
 }
 
-func (m *AnyNameExcept) Reset()      { *m = AnyNameExcept{} }
-func (*AnyNameExcept) ProtoMessage() {}
+func (m *AnyNameExcept) Reset()                    { *m = AnyNameExcept{} }
+func (*AnyNameExcept) ProtoMessage()               {}
+func (*AnyNameExcept) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{27} }
 
 func (m *AnyNameExcept) GetExclamation() *Keyword {
 	if m != nil {
@@ -1163,8 +1195,9 @@ type NameChoice struct {
 	CloseParen *Keyword  `protobuf:"bytes,5,opt,name=CloseParen" json:"CloseParen,omitempty"`
 }
 
-func (m *NameChoice) Reset()      { *m = NameChoice{} }
-func (*NameChoice) ProtoMessage() {}
+func (m *NameChoice) Reset()                    { *m = NameChoice{} }
+func (*NameChoice) ProtoMessage()               {}
+func (*NameChoice) Descriptor() ([]byte, []int) { return fileDescriptorRelapse, []int{28} }
 
 func (m *NameChoice) GetOpenParen() *Keyword {
 	if m != nil {
@@ -1232,6 +1265,1286 @@ func init() {
 	proto.RegisterType((*AnyNameExcept)(nil), "ast.AnyNameExcept")
 	proto.RegisterType((*NameChoice)(nil), "ast.NameChoice")
 }
+func (this *Grammar) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*Grammar)
+	if !ok {
+		that2, ok := that.(Grammar)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.TopPattern.Compare(that1.TopPattern); c != 0 {
+		return c
+	}
+	if len(this.PatternDecls) != len(that1.PatternDecls) {
+		if len(this.PatternDecls) < len(that1.PatternDecls) {
+			return -1
+		}
+		return 1
+	}
+	for i := range this.PatternDecls {
+		if c := this.PatternDecls[i].Compare(that1.PatternDecls[i]); c != 0 {
+			return c
+		}
+	}
+	if c := this.After.Compare(that1.After); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *PatternDecl) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*PatternDecl)
+	if !ok {
+		that2, ok := that.(PatternDecl)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.Hash.Compare(that1.Hash); c != 0 {
+		return c
+	}
+	if c := this.Before.Compare(that1.Before); c != 0 {
+		return c
+	}
+	if this.Name != that1.Name {
+		if this.Name < that1.Name {
+			return -1
+		}
+		return 1
+	}
+	if c := this.Eq.Compare(that1.Eq); c != 0 {
+		return c
+	}
+	if c := this.Pattern.Compare(that1.Pattern); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *Pattern) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*Pattern)
+	if !ok {
+		that2, ok := that.(Pattern)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.Empty.Compare(that1.Empty); c != 0 {
+		return c
+	}
+	if c := this.TreeNode.Compare(that1.TreeNode); c != 0 {
+		return c
+	}
+	if c := this.LeafNode.Compare(that1.LeafNode); c != 0 {
+		return c
+	}
+	if c := this.Concat.Compare(that1.Concat); c != 0 {
+		return c
+	}
+	if c := this.Or.Compare(that1.Or); c != 0 {
+		return c
+	}
+	if c := this.And.Compare(that1.And); c != 0 {
+		return c
+	}
+	if c := this.ZeroOrMore.Compare(that1.ZeroOrMore); c != 0 {
+		return c
+	}
+	if c := this.Reference.Compare(that1.Reference); c != 0 {
+		return c
+	}
+	if c := this.Not.Compare(that1.Not); c != 0 {
+		return c
+	}
+	if c := this.ZAny.Compare(that1.ZAny); c != 0 {
+		return c
+	}
+	if c := this.Contains.Compare(that1.Contains); c != 0 {
+		return c
+	}
+	if c := this.Optional.Compare(that1.Optional); c != 0 {
+		return c
+	}
+	if c := this.Interleave.Compare(that1.Interleave); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *Empty) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*Empty)
+	if !ok {
+		that2, ok := that.(Empty)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.Empty.Compare(that1.Empty); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *TreeNode) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*TreeNode)
+	if !ok {
+		that2, ok := that.(TreeNode)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.Name.Compare(that1.Name); c != 0 {
+		return c
+	}
+	if c := this.Colon.Compare(that1.Colon); c != 0 {
+		return c
+	}
+	if c := this.Pattern.Compare(that1.Pattern); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *Contains) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*Contains)
+	if !ok {
+		that2, ok := that.(Contains)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.Dot.Compare(that1.Dot); c != 0 {
+		return c
+	}
+	if c := this.Pattern.Compare(that1.Pattern); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *LeafNode) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*LeafNode)
+	if !ok {
+		that2, ok := that.(LeafNode)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.Expr.Compare(that1.Expr); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *Concat) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*Concat)
+	if !ok {
+		that2, ok := that.(Concat)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.OpenBracket.Compare(that1.OpenBracket); c != 0 {
+		return c
+	}
+	if c := this.LeftPattern.Compare(that1.LeftPattern); c != 0 {
+		return c
+	}
+	if c := this.Comma.Compare(that1.Comma); c != 0 {
+		return c
+	}
+	if c := this.RightPattern.Compare(that1.RightPattern); c != 0 {
+		return c
+	}
+	if c := this.ExtraComma.Compare(that1.ExtraComma); c != 0 {
+		return c
+	}
+	if c := this.CloseBracket.Compare(that1.CloseBracket); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *Or) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*Or)
+	if !ok {
+		that2, ok := that.(Or)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.OpenParen.Compare(that1.OpenParen); c != 0 {
+		return c
+	}
+	if c := this.LeftPattern.Compare(that1.LeftPattern); c != 0 {
+		return c
+	}
+	if c := this.Pipe.Compare(that1.Pipe); c != 0 {
+		return c
+	}
+	if c := this.RightPattern.Compare(that1.RightPattern); c != 0 {
+		return c
+	}
+	if c := this.CloseParen.Compare(that1.CloseParen); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *And) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*And)
+	if !ok {
+		that2, ok := that.(And)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.OpenParen.Compare(that1.OpenParen); c != 0 {
+		return c
+	}
+	if c := this.LeftPattern.Compare(that1.LeftPattern); c != 0 {
+		return c
+	}
+	if c := this.Ampersand.Compare(that1.Ampersand); c != 0 {
+		return c
+	}
+	if c := this.RightPattern.Compare(that1.RightPattern); c != 0 {
+		return c
+	}
+	if c := this.CloseParen.Compare(that1.CloseParen); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *ZeroOrMore) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*ZeroOrMore)
+	if !ok {
+		that2, ok := that.(ZeroOrMore)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.OpenParen.Compare(that1.OpenParen); c != 0 {
+		return c
+	}
+	if c := this.Pattern.Compare(that1.Pattern); c != 0 {
+		return c
+	}
+	if c := this.CloseParen.Compare(that1.CloseParen); c != 0 {
+		return c
+	}
+	if c := this.Star.Compare(that1.Star); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *Reference) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*Reference)
+	if !ok {
+		that2, ok := that.(Reference)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.At.Compare(that1.At); c != 0 {
+		return c
+	}
+	if this.Name != that1.Name {
+		if this.Name < that1.Name {
+			return -1
+		}
+		return 1
+	}
+	return 0
+}
+func (this *Not) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*Not)
+	if !ok {
+		that2, ok := that.(Not)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.Exclamation.Compare(that1.Exclamation); c != 0 {
+		return c
+	}
+	if c := this.OpenParen.Compare(that1.OpenParen); c != 0 {
+		return c
+	}
+	if c := this.Pattern.Compare(that1.Pattern); c != 0 {
+		return c
+	}
+	if c := this.CloseParen.Compare(that1.CloseParen); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *ZAny) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*ZAny)
+	if !ok {
+		that2, ok := that.(ZAny)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.Star.Compare(that1.Star); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *Optional) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*Optional)
+	if !ok {
+		that2, ok := that.(Optional)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.OpenParen.Compare(that1.OpenParen); c != 0 {
+		return c
+	}
+	if c := this.Pattern.Compare(that1.Pattern); c != 0 {
+		return c
+	}
+	if c := this.CloseParen.Compare(that1.CloseParen); c != 0 {
+		return c
+	}
+	if c := this.QuestionMark.Compare(that1.QuestionMark); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *Interleave) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*Interleave)
+	if !ok {
+		that2, ok := that.(Interleave)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.OpenCurly.Compare(that1.OpenCurly); c != 0 {
+		return c
+	}
+	if c := this.LeftPattern.Compare(that1.LeftPattern); c != 0 {
+		return c
+	}
+	if c := this.SemiColon.Compare(that1.SemiColon); c != 0 {
+		return c
+	}
+	if c := this.RightPattern.Compare(that1.RightPattern); c != 0 {
+		return c
+	}
+	if c := this.ExtraSemiColon.Compare(that1.ExtraSemiColon); c != 0 {
+		return c
+	}
+	if c := this.CloseCurly.Compare(that1.CloseCurly); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *Expr) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*Expr)
+	if !ok {
+		that2, ok := that.(Expr)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.RightArrow.Compare(that1.RightArrow); c != 0 {
+		return c
+	}
+	if c := this.Comma.Compare(that1.Comma); c != 0 {
+		return c
+	}
+	if c := this.Terminal.Compare(that1.Terminal); c != 0 {
+		return c
+	}
+	if c := this.List.Compare(that1.List); c != 0 {
+		return c
+	}
+	if c := this.Function.Compare(that1.Function); c != 0 {
+		return c
+	}
+	if c := this.BuiltIn.Compare(that1.BuiltIn); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *List) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*List)
+	if !ok {
+		that2, ok := that.(List)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.Before.Compare(that1.Before); c != 0 {
+		return c
+	}
+	if this.Type != that1.Type {
+		if this.Type < that1.Type {
+			return -1
+		}
+		return 1
+	}
+	if c := this.OpenCurly.Compare(that1.OpenCurly); c != 0 {
+		return c
+	}
+	if len(this.Elems) != len(that1.Elems) {
+		if len(this.Elems) < len(that1.Elems) {
+			return -1
+		}
+		return 1
+	}
+	for i := range this.Elems {
+		if c := this.Elems[i].Compare(that1.Elems[i]); c != 0 {
+			return c
+		}
+	}
+	if c := this.CloseCurly.Compare(that1.CloseCurly); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *Function) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*Function)
+	if !ok {
+		that2, ok := that.(Function)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.Before.Compare(that1.Before); c != 0 {
+		return c
+	}
+	if this.Name != that1.Name {
+		if this.Name < that1.Name {
+			return -1
+		}
+		return 1
+	}
+	if c := this.OpenParen.Compare(that1.OpenParen); c != 0 {
+		return c
+	}
+	if len(this.Params) != len(that1.Params) {
+		if len(this.Params) < len(that1.Params) {
+			return -1
+		}
+		return 1
+	}
+	for i := range this.Params {
+		if c := this.Params[i].Compare(that1.Params[i]); c != 0 {
+			return c
+		}
+	}
+	if c := this.CloseParen.Compare(that1.CloseParen); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *BuiltIn) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*BuiltIn)
+	if !ok {
+		that2, ok := that.(BuiltIn)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.Symbol.Compare(that1.Symbol); c != 0 {
+		return c
+	}
+	if c := this.Expr.Compare(that1.Expr); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *Terminal) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*Terminal)
+	if !ok {
+		that2, ok := that.(Terminal)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.Before.Compare(that1.Before); c != 0 {
+		return c
+	}
+	if this.Literal != that1.Literal {
+		if this.Literal < that1.Literal {
+			return -1
+		}
+		return 1
+	}
+	if this.DoubleValue != nil && that1.DoubleValue != nil {
+		if *this.DoubleValue != *that1.DoubleValue {
+			if *this.DoubleValue < *that1.DoubleValue {
+				return -1
+			}
+			return 1
+		}
+	} else if this.DoubleValue != nil {
+		return 1
+	} else if that1.DoubleValue != nil {
+		return -1
+	}
+	if this.IntValue != nil && that1.IntValue != nil {
+		if *this.IntValue != *that1.IntValue {
+			if *this.IntValue < *that1.IntValue {
+				return -1
+			}
+			return 1
+		}
+	} else if this.IntValue != nil {
+		return 1
+	} else if that1.IntValue != nil {
+		return -1
+	}
+	if this.UintValue != nil && that1.UintValue != nil {
+		if *this.UintValue != *that1.UintValue {
+			if *this.UintValue < *that1.UintValue {
+				return -1
+			}
+			return 1
+		}
+	} else if this.UintValue != nil {
+		return 1
+	} else if that1.UintValue != nil {
+		return -1
+	}
+	if this.BoolValue != nil && that1.BoolValue != nil {
+		if *this.BoolValue != *that1.BoolValue {
+			if !*this.BoolValue {
+				return -1
+			}
+			return 1
+		}
+	} else if this.BoolValue != nil {
+		return 1
+	} else if that1.BoolValue != nil {
+		return -1
+	}
+	if this.StringValue != nil && that1.StringValue != nil {
+		if *this.StringValue != *that1.StringValue {
+			if *this.StringValue < *that1.StringValue {
+				return -1
+			}
+			return 1
+		}
+	} else if this.StringValue != nil {
+		return 1
+	} else if that1.StringValue != nil {
+		return -1
+	}
+	if c := bytes.Compare(this.BytesValue, that1.BytesValue); c != 0 {
+		return c
+	}
+	if c := this.Variable.Compare(that1.Variable); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *Variable) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*Variable)
+	if !ok {
+		that2, ok := that.(Variable)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if this.Type != that1.Type {
+		if this.Type < that1.Type {
+			return -1
+		}
+		return 1
+	}
+	return 0
+}
+func (this *Keyword) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*Keyword)
+	if !ok {
+		that2, ok := that.(Keyword)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.Before.Compare(that1.Before); c != 0 {
+		return c
+	}
+	if this.Value != that1.Value {
+		if this.Value < that1.Value {
+			return -1
+		}
+		return 1
+	}
+	return 0
+}
+func (this *Space) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*Space)
+	if !ok {
+		that2, ok := that.(Space)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if len(this.Space) != len(that1.Space) {
+		if len(this.Space) < len(that1.Space) {
+			return -1
+		}
+		return 1
+	}
+	for i := range this.Space {
+		if this.Space[i] != that1.Space[i] {
+			if this.Space[i] < that1.Space[i] {
+				return -1
+			}
+			return 1
+		}
+	}
+	return 0
+}
+func (this *NameExpr) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*NameExpr)
+	if !ok {
+		that2, ok := that.(NameExpr)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.Name.Compare(that1.Name); c != 0 {
+		return c
+	}
+	if c := this.AnyName.Compare(that1.AnyName); c != 0 {
+		return c
+	}
+	if c := this.AnyNameExcept.Compare(that1.AnyNameExcept); c != 0 {
+		return c
+	}
+	if c := this.NameChoice.Compare(that1.NameChoice); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *Name) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*Name)
+	if !ok {
+		that2, ok := that.(Name)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.Before.Compare(that1.Before); c != 0 {
+		return c
+	}
+	if this.DoubleValue != nil && that1.DoubleValue != nil {
+		if *this.DoubleValue != *that1.DoubleValue {
+			if *this.DoubleValue < *that1.DoubleValue {
+				return -1
+			}
+			return 1
+		}
+	} else if this.DoubleValue != nil {
+		return 1
+	} else if that1.DoubleValue != nil {
+		return -1
+	}
+	if this.IntValue != nil && that1.IntValue != nil {
+		if *this.IntValue != *that1.IntValue {
+			if *this.IntValue < *that1.IntValue {
+				return -1
+			}
+			return 1
+		}
+	} else if this.IntValue != nil {
+		return 1
+	} else if that1.IntValue != nil {
+		return -1
+	}
+	if this.UintValue != nil && that1.UintValue != nil {
+		if *this.UintValue != *that1.UintValue {
+			if *this.UintValue < *that1.UintValue {
+				return -1
+			}
+			return 1
+		}
+	} else if this.UintValue != nil {
+		return 1
+	} else if that1.UintValue != nil {
+		return -1
+	}
+	if this.BoolValue != nil && that1.BoolValue != nil {
+		if *this.BoolValue != *that1.BoolValue {
+			if !*this.BoolValue {
+				return -1
+			}
+			return 1
+		}
+	} else if this.BoolValue != nil {
+		return 1
+	} else if that1.BoolValue != nil {
+		return -1
+	}
+	if this.StringValue != nil && that1.StringValue != nil {
+		if *this.StringValue != *that1.StringValue {
+			if *this.StringValue < *that1.StringValue {
+				return -1
+			}
+			return 1
+		}
+	} else if this.StringValue != nil {
+		return 1
+	} else if that1.StringValue != nil {
+		return -1
+	}
+	if c := bytes.Compare(this.BytesValue, that1.BytesValue); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *AnyName) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*AnyName)
+	if !ok {
+		that2, ok := that.(AnyName)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.Underscore.Compare(that1.Underscore); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *AnyNameExcept) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*AnyNameExcept)
+	if !ok {
+		that2, ok := that.(AnyNameExcept)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.Exclamation.Compare(that1.Exclamation); c != 0 {
+		return c
+	}
+	if c := this.OpenParen.Compare(that1.OpenParen); c != 0 {
+		return c
+	}
+	if c := this.Except.Compare(that1.Except); c != 0 {
+		return c
+	}
+	if c := this.CloseParen.Compare(that1.CloseParen); c != 0 {
+		return c
+	}
+	return 0
+}
+func (this *NameChoice) Compare(that interface{}) int {
+	if that == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	}
+
+	that1, ok := that.(*NameChoice)
+	if !ok {
+		that2, ok := that.(NameChoice)
+		if ok {
+			that1 = &that2
+		} else {
+			return 1
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return 0
+		}
+		return 1
+	} else if this == nil {
+		return -1
+	}
+	if c := this.OpenParen.Compare(that1.OpenParen); c != 0 {
+		return c
+	}
+	if c := this.Left.Compare(that1.Left); c != 0 {
+		return c
+	}
+	if c := this.Pipe.Compare(that1.Pipe); c != 0 {
+		return c
+	}
+	if c := this.Right.Compare(that1.Right); c != 0 {
+		return c
+	}
+	if c := this.CloseParen.Compare(that1.CloseParen); c != 0 {
+		return c
+	}
+	return 0
+}
 func (this *Grammar) Equal(that interface{}) bool {
 	if that == nil {
 		if this == nil {
@@ -1242,7 +2555,12 @@ func (this *Grammar) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Grammar)
 	if !ok {
-		return false
+		that2, ok := that.(Grammar)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1278,7 +2596,12 @@ func (this *PatternDecl) Equal(that interface{}) bool {
 
 	that1, ok := that.(*PatternDecl)
 	if !ok {
-		return false
+		that2, ok := that.(PatternDecl)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1315,7 +2638,12 @@ func (this *Pattern) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Pattern)
 	if !ok {
-		return false
+		that2, ok := that.(Pattern)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1376,7 +2704,12 @@ func (this *Empty) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Empty)
 	if !ok {
-		return false
+		that2, ok := that.(Empty)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1401,7 +2734,12 @@ func (this *TreeNode) Equal(that interface{}) bool {
 
 	that1, ok := that.(*TreeNode)
 	if !ok {
-		return false
+		that2, ok := that.(TreeNode)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1432,7 +2770,12 @@ func (this *Contains) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Contains)
 	if !ok {
-		return false
+		that2, ok := that.(Contains)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1460,7 +2803,12 @@ func (this *LeafNode) Equal(that interface{}) bool {
 
 	that1, ok := that.(*LeafNode)
 	if !ok {
-		return false
+		that2, ok := that.(LeafNode)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1485,7 +2833,12 @@ func (this *Concat) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Concat)
 	if !ok {
-		return false
+		that2, ok := that.(Concat)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1525,7 +2878,12 @@ func (this *Or) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Or)
 	if !ok {
-		return false
+		that2, ok := that.(Or)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1562,7 +2920,12 @@ func (this *And) Equal(that interface{}) bool {
 
 	that1, ok := that.(*And)
 	if !ok {
-		return false
+		that2, ok := that.(And)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1599,7 +2962,12 @@ func (this *ZeroOrMore) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ZeroOrMore)
 	if !ok {
-		return false
+		that2, ok := that.(ZeroOrMore)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1633,7 +3001,12 @@ func (this *Reference) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Reference)
 	if !ok {
-		return false
+		that2, ok := that.(Reference)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1661,7 +3034,12 @@ func (this *Not) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Not)
 	if !ok {
-		return false
+		that2, ok := that.(Not)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1695,7 +3073,12 @@ func (this *ZAny) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ZAny)
 	if !ok {
-		return false
+		that2, ok := that.(ZAny)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1720,7 +3103,12 @@ func (this *Optional) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Optional)
 	if !ok {
-		return false
+		that2, ok := that.(Optional)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1754,7 +3142,12 @@ func (this *Interleave) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Interleave)
 	if !ok {
-		return false
+		that2, ok := that.(Interleave)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1794,7 +3187,12 @@ func (this *Expr) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Expr)
 	if !ok {
-		return false
+		that2, ok := that.(Expr)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1834,7 +3232,12 @@ func (this *List) Equal(that interface{}) bool {
 
 	that1, ok := that.(*List)
 	if !ok {
-		return false
+		that2, ok := that.(List)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1876,7 +3279,12 @@ func (this *Function) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Function)
 	if !ok {
-		return false
+		that2, ok := that.(Function)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1918,7 +3326,12 @@ func (this *BuiltIn) Equal(that interface{}) bool {
 
 	that1, ok := that.(*BuiltIn)
 	if !ok {
-		return false
+		that2, ok := that.(BuiltIn)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1946,7 +3359,12 @@ func (this *Terminal) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Terminal)
 	if !ok {
-		return false
+		that2, ok := that.(Terminal)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2025,7 +3443,12 @@ func (this *Variable) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Variable)
 	if !ok {
-		return false
+		that2, ok := that.(Variable)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2050,7 +3473,12 @@ func (this *Keyword) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Keyword)
 	if !ok {
-		return false
+		that2, ok := that.(Keyword)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2078,7 +3506,12 @@ func (this *Space) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Space)
 	if !ok {
-		return false
+		that2, ok := that.(Space)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2108,7 +3541,12 @@ func (this *NameExpr) Equal(that interface{}) bool {
 
 	that1, ok := that.(*NameExpr)
 	if !ok {
-		return false
+		that2, ok := that.(NameExpr)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2142,7 +3580,12 @@ func (this *Name) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Name)
 	if !ok {
-		return false
+		that2, ok := that.(Name)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2215,7 +3658,12 @@ func (this *AnyName) Equal(that interface{}) bool {
 
 	that1, ok := that.(*AnyName)
 	if !ok {
-		return false
+		that2, ok := that.(AnyName)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2240,7 +3688,12 @@ func (this *AnyNameExcept) Equal(that interface{}) bool {
 
 	that1, ok := that.(*AnyNameExcept)
 	if !ok {
-		return false
+		that2, ok := that.(AnyNameExcept)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2274,7 +3727,12 @@ func (this *NameChoice) Equal(that interface{}) bool {
 
 	that1, ok := that.(*NameChoice)
 	if !ok {
-		return false
+		that2, ok := that.(NameChoice)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4127,7 +5585,7 @@ func (m *Terminal) MarshalTo(data []byte) (int, error) {
 	if m.DoubleValue != nil {
 		data[i] = 0x19
 		i++
-		i = encodeFixed64Relapse(data, i, uint64(math.Float64bits(*m.DoubleValue)))
+		i = encodeFixed64Relapse(data, i, uint64(math.Float64bits(float64(*m.DoubleValue))))
 	}
 	if m.IntValue != nil {
 		data[i] = 0x28
@@ -4348,7 +5806,7 @@ func (m *Name) MarshalTo(data []byte) (int, error) {
 	if m.DoubleValue != nil {
 		data[i] = 0x19
 		i++
-		i = encodeFixed64Relapse(data, i, uint64(math.Float64bits(*m.DoubleValue)))
+		i = encodeFixed64Relapse(data, i, uint64(math.Float64bits(float64(*m.DoubleValue))))
 	}
 	if m.IntValue != nil {
 		data[i] = 0x28
@@ -9246,7 +10704,10 @@ func (m *Terminal) Unmarshal(data []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.BytesValue = append([]byte{}, data[iNdEx:postIndex]...)
+			m.BytesValue = append(m.BytesValue[:0], data[iNdEx:postIndex]...)
+			if m.BytesValue == nil {
+				m.BytesValue = []byte{}
+			}
 			iNdEx = postIndex
 		case 50:
 			if wireType != 2 {
@@ -9942,7 +11403,10 @@ func (m *Name) Unmarshal(data []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.BytesValue = append([]byte{}, data[iNdEx:postIndex]...)
+			m.BytesValue = append(m.BytesValue[:0], data[iNdEx:postIndex]...)
+			if m.BytesValue == nil {
+				m.BytesValue = []byte{}
+			}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -10549,3 +12013,85 @@ var (
 	ErrInvalidLengthRelapse = fmt.Errorf("proto: negative length found during unmarshaling")
 	ErrIntOverflowRelapse   = fmt.Errorf("proto: integer overflow")
 )
+
+var fileDescriptorRelapse = []byte{
+	// 1243 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xc4, 0x57, 0x4f, 0x6f, 0xdc, 0x44,
+	0x14, 0xcf, 0xac, 0xbd, 0xff, 0x66, 0x93, 0xb4, 0x38, 0x2a, 0x75, 0x43, 0x49, 0x82, 0x5b, 0xa1,
+	0x22, 0x44, 0x22, 0x55, 0x5c, 0xe8, 0x89, 0xdd, 0x24, 0x40, 0x45, 0x9a, 0x84, 0x26, 0xed, 0xa1,
+	0xb7, 0x89, 0x77, 0x36, 0xb1, 0x62, 0x7b, 0xcc, 0x78, 0x96, 0x66, 0xbf, 0x02, 0xa7, 0x0a, 0xf5,
+	0xc0, 0xb1, 0x27, 0x54, 0x71, 0xe2, 0x1b, 0x70, 0xcd, 0x91, 0x03, 0x48, 0x5c, 0x40, 0x94, 0x7e,
+	0x01, 0x3e, 0x02, 0xf3, 0x66, 0xec, 0xb5, 0xbd, 0x99, 0x6c, 0x44, 0x55, 0xe0, 0xb0, 0xad, 0xfd,
+	0x9b, 0xe7, 0x37, 0xbf, 0xf7, 0x67, 0x7e, 0xf3, 0x82, 0xe7, 0x38, 0x0d, 0x49, 0x92, 0xd2, 0xd5,
+	0x84, 0x33, 0xc1, 0x1c, 0x8b, 0xa4, 0x62, 0xf1, 0x83, 0xc3, 0x40, 0x1c, 0x0d, 0x0f, 0x56, 0x7d,
+	0x16, 0xad, 0x1d, 0xb2, 0x43, 0xb6, 0xa6, 0xd6, 0x0e, 0x86, 0x03, 0xf5, 0xa6, 0x5e, 0xd4, 0x93,
+	0xfe, 0x66, 0xf1, 0xc3, 0x92, 0xf9, 0x31, 0x11, 0xa3, 0x7e, 0xd0, 0x1f, 0xff, 0x9f, 0x79, 0x5f,
+	0x13, 0xa3, 0x84, 0xa6, 0xfa, 0x5f, 0xfd, 0x95, 0x17, 0xe3, 0xe6, 0xa7, 0x9c, 0x44, 0x11, 0xe1,
+	0xce, 0x0a, 0xc6, 0xfb, 0x2c, 0xd9, 0x25, 0x42, 0x50, 0x1e, 0xbb, 0x68, 0x05, 0xdd, 0xea, 0xdc,
+	0x9e, 0x5d, 0x95, 0x4c, 0x56, 0x33, 0xcc, 0x79, 0x17, 0xcf, 0x66, 0x8f, 0x1b, 0xd4, 0x0f, 0x53,
+	0xb7, 0xb6, 0x62, 0x49, 0x9b, 0xcb, 0x65, 0x1b, 0x58, 0x70, 0xae, 0xe1, 0x7a, 0x77, 0x20, 0xdf,
+	0x5c, 0x4b, 0x39, 0xc1, 0xca, 0x60, 0x2f, 0x21, 0x3e, 0xf5, 0xbe, 0x41, 0xb8, 0x53, 0x36, 0x5d,
+	0xc4, 0xf6, 0x67, 0x24, 0x3d, 0xaa, 0x6c, 0xf7, 0x39, 0x1d, 0x3d, 0x66, 0xbc, 0x2f, 0xd7, 0x1a,
+	0x3d, 0x3a, 0x60, 0x9c, 0xca, 0x8d, 0x26, 0xfc, 0x38, 0x0e, 0xb6, 0xb7, 0x49, 0x44, 0xd5, 0x0e,
+	0xed, 0x9e, 0x7d, 0xfa, 0xfb, 0xf2, 0x8c, 0xe3, 0xe2, 0xda, 0xe6, 0x97, 0xae, 0x6d, 0xf0, 0xf4,
+	0x36, 0x6e, 0xe6, 0x71, 0xd5, 0xcf, 0xc6, 0xe5, 0x3d, 0xb5, 0xc6, 0xeb, 0xc0, 0x7d, 0x33, 0x4a,
+	0xc4, 0x28, 0x63, 0xa4, 0xf7, 0x54, 0x88, 0xb3, 0x8c, 0x5b, 0xfb, 0x9c, 0xd2, 0x6d, 0xd6, 0xa7,
+	0x59, 0x64, 0x73, 0x6a, 0x35, 0x07, 0xc1, 0x60, 0x8b, 0x92, 0x81, 0x32, 0xb0, 0x4b, 0x06, 0x39,
+	0xe8, 0xbc, 0x85, 0x1b, 0xeb, 0x2c, 0xf6, 0x89, 0xc8, 0x68, 0x74, 0xd4, 0xb2, 0x86, 0x9c, 0x05,
+	0x5c, 0xdb, 0xe1, 0x6e, 0x43, 0x2d, 0x34, 0xd5, 0xc2, 0x0e, 0x77, 0xae, 0x60, 0xab, 0x1b, 0xf7,
+	0xdd, 0xa6, 0x42, 0x5b, 0x0a, 0x95, 0xef, 0xce, 0x0d, 0x8c, 0x1f, 0x51, 0xce, 0x76, 0xf8, 0x3d,
+	0x48, 0x4f, 0x4b, 0xad, 0x5e, 0x52, 0xab, 0x05, 0xec, 0xbc, 0x83, 0xdb, 0xf7, 0xe9, 0x80, 0x72,
+	0x1a, 0xfb, 0xd4, 0x6d, 0x2b, 0x9b, 0x79, 0x65, 0x33, 0x46, 0xc1, 0xfd, 0x36, 0x13, 0x2e, 0x2e,
+	0xb9, 0x97, 0xef, 0xce, 0x55, 0x6c, 0x3f, 0xea, 0xc6, 0x23, 0xb7, 0xa3, 0xf0, 0xb6, 0x76, 0x2c,
+	0x01, 0x88, 0x50, 0xb2, 0x15, 0x24, 0x88, 0x53, 0x77, 0xb6, 0x14, 0x61, 0x0e, 0x82, 0xc1, 0x4e,
+	0x22, 0x02, 0x16, 0x93, 0xd0, 0x9d, 0x2b, 0x19, 0xe4, 0x20, 0x30, 0xbf, 0x1b, 0xcb, 0x4c, 0x87,
+	0x94, 0x7c, 0x45, 0xdd, 0xf9, 0x12, 0xf3, 0x02, 0xbe, 0x63, 0x9f, 0x3e, 0x5b, 0x46, 0xde, 0xcd,
+	0xac, 0x14, 0x32, 0x6d, 0x95, 0x9a, 0x54, 0x6a, 0xeb, 0xf9, 0x45, 0x55, 0xa4, 0xa1, 0xee, 0x0a,
+	0x54, 0xda, 0x19, 0x80, 0xcd, 0x93, 0x84, 0x83, 0x97, 0x75, 0x16, 0xb2, 0x38, 0xeb, 0xa6, 0x73,
+	0x3b, 0xc4, 0x32, 0x74, 0xc8, 0x46, 0x11, 0xb7, 0xec, 0x10, 0x6b, 0x43, 0xe6, 0x0c, 0x4d, 0xf7,
+	0x52, 0x33, 0x78, 0xb9, 0x51, 0xf4, 0x07, 0xa4, 0x18, 0x58, 0x65, 0x6e, 0x74, 0x8a, 0x01, 0xf0,
+	0x7e, 0x41, 0x79, 0x93, 0xc8, 0x02, 0x76, 0x76, 0x12, 0x1a, 0xf7, 0x38, 0xf1, 0x8f, 0xa9, 0x30,
+	0xf2, 0x96, 0x26, 0x5b, 0x74, 0x20, 0xa6, 0x70, 0xd7, 0x71, 0xcb, 0x13, 0x6e, 0x3c, 0x19, 0x1e,
+	0x9e, 0xbd, 0x1f, 0x1c, 0x1e, 0x89, 0x29, 0xc7, 0x03, 0x84, 0x61, 0xf3, 0x44, 0x70, 0xa2, 0xbd,
+	0x34, 0xcc, 0x5e, 0xd6, 0x43, 0x96, 0xd2, 0x9c, 0x69, 0xd3, 0x50, 0xa7, 0xef, 0x11, 0xf4, 0xb7,
+	0x6c, 0x90, 0x36, 0xc4, 0xb4, 0x4b, 0x64, 0x03, 0x1a, 0x73, 0x38, 0x11, 0x91, 0x21, 0x8f, 0x20,
+	0x1a, 0xbb, 0x41, 0x42, 0x2b, 0xd1, 0x9e, 0x17, 0x90, 0x6d, 0x0e, 0x48, 0xd1, 0xd5, 0x24, 0xea,
+	0x06, 0xb2, 0x3f, 0x20, 0x75, 0xee, 0x5e, 0x0b, 0x5b, 0xe9, 0xa3, 0x1b, 0x25, 0x94, 0xa7, 0x44,
+	0x1e, 0xe4, 0x7f, 0x8f, 0xf2, 0xd7, 0xa8, 0xac, 0x09, 0x17, 0x33, 0x9f, 0xde, 0xab, 0x13, 0x1b,
+	0x5a, 0x46, 0x79, 0xb6, 0xf7, 0x04, 0xe1, 0xa6, 0xb6, 0xf2, 0x3e, 0x2a, 0x49, 0x0f, 0xe8, 0x72,
+	0xd7, 0x7c, 0x5e, 0x72, 0x15, 0xaf, 0x15, 0x2a, 0x0e, 0x71, 0x80, 0x26, 0x41, 0x66, 0x37, 0x4f,
+	0xfc, 0x90, 0x44, 0x04, 0x94, 0xc3, 0xf8, 0x79, 0x25, 0xc6, 0x7f, 0x7e, 0xaa, 0x27, 0x62, 0x34,
+	0xc5, 0xe1, 0x69, 0x21, 0x1c, 0xc7, 0x6a, 0x12, 0xa0, 0x27, 0xa8, 0xd0, 0xbc, 0xff, 0x20, 0xed,
+	0xb2, 0x5b, 0xbe, 0x18, 0xd2, 0x14, 0xf6, 0xbb, 0x47, 0xf8, 0xb1, 0x91, 0xf6, 0x6f, 0xa8, 0xac,
+	0xb2, 0x39, 0xa9, 0xf5, 0x21, 0x0f, 0x47, 0xaf, 0xaa, 0x22, 0xd2, 0xc7, 0x1e, 0x8d, 0x02, 0xad,
+	0xa0, 0xaf, 0xaa, 0x24, 0x37, 0xf1, 0xbc, 0x52, 0x92, 0xc2, 0x93, 0x49, 0x4d, 0xf2, 0x1c, 0x68,
+	0xbe, 0x26, 0x2d, 0xf9, 0x11, 0x69, 0xf5, 0x04, 0x53, 0xb5, 0x69, 0x97, 0x73, 0xf6, 0xd8, 0x98,
+	0xef, 0xb1, 0xfa, 0xd5, 0x8c, 0x0d, 0xd4, 0xda, 0xa7, 0x3c, 0x0a, 0xe0, 0xb6, 0xaa, 0xdc, 0xe8,
+	0x19, 0x08, 0x2a, 0xbd, 0x15, 0xa4, 0x22, 0x0b, 0x58, 0xab, 0x34, 0x00, 0xf0, 0xe5, 0x27, 0xc3,
+	0xd8, 0x57, 0xad, 0x59, 0x2f, 0x7d, 0x99, 0x83, 0x50, 0xe7, 0xde, 0x30, 0x08, 0xc5, 0xdd, 0x6a,
+	0x8c, 0x19, 0xe6, 0x3d, 0x43, 0xda, 0x73, 0x69, 0xc8, 0x41, 0x67, 0x86, 0x9c, 0x65, 0x6c, 0xef,
+	0xcb, 0x59, 0x4d, 0x51, 0x9f, 0x97, 0xc3, 0x82, 0x1e, 0xdc, 0x00, 0xca, 0x26, 0x9e, 0x4a, 0x61,
+	0x4d, 0xcd, 0xe2, 0xca, 0x9b, 0x33, 0xa4, 0x51, 0x2a, 0x03, 0xb0, 0x2a, 0xd7, 0xcc, 0x44, 0x92,
+	0x4d, 0x82, 0xf2, 0x2d, 0x2a, 0x62, 0x9c, 0x4a, 0xd3, 0x70, 0x8a, 0xab, 0xe7, 0xc0, 0xc4, 0xec,
+	0x1a, 0x6e, 0xc8, 0x45, 0x32, 0x8d, 0xda, 0xf9, 0x5a, 0xf7, 0xf1, 0x38, 0xb9, 0xce, 0x75, 0xdc,
+	0xd8, 0x1b, 0x45, 0x07, 0x2c, 0x34, 0x56, 0x3f, 0xbf, 0x65, 0x6b, 0x93, 0xb7, 0xec, 0xcf, 0xa8,
+	0x28, 0xfd, 0xd4, 0xe0, 0xae, 0xe0, 0xe6, 0x56, 0x20, 0x9b, 0x57, 0x76, 0x48, 0x39, 0xbe, 0x05,
+	0xdc, 0xd9, 0x60, 0xc3, 0x83, 0x90, 0x3e, 0x24, 0xe1, 0x50, 0xdf, 0x44, 0xc8, 0xb9, 0x8c, 0x5b,
+	0xf2, 0xd4, 0x69, 0x04, 0x68, 0x5b, 0xce, 0x1b, 0xb8, 0xfd, 0x20, 0xc8, 0x21, 0xe8, 0x03, 0x1b,
+	0xa0, 0x1e, 0x63, 0xa1, 0x86, 0x60, 0x72, 0x6b, 0x81, 0xb3, 0x3d, 0xc1, 0x83, 0xf8, 0x50, 0x83,
+	0x30, 0xaa, 0xb5, 0x65, 0x56, 0x71, 0x6f, 0x24, 0x68, 0xaa, 0x31, 0x98, 0xd0, 0x66, 0xa1, 0xeb,
+	0x1e, 0x12, 0x1e, 0x10, 0xb9, 0xaf, 0x7b, 0xbb, 0xd4, 0x75, 0x39, 0xe8, 0xbd, 0x5f, 0x18, 0x5c,
+	0xd8, 0x3d, 0xde, 0x1d, 0xdc, 0x3c, 0x3b, 0x6a, 0x9f, 0xcd, 0xc0, 0x02, 0xae, 0x6b, 0x0e, 0x65,
+	0x95, 0x7e, 0x13, 0xd7, 0xf5, 0xea, 0x5c, 0xf6, 0x20, 0x3f, 0xb4, 0x6e, 0xb5, 0x55, 0xd3, 0x8c,
+	0x27, 0xae, 0xab, 0x95, 0x71, 0xac, 0x3d, 0x1e, 0xc7, 0xe0, 0x70, 0x48, 0x55, 0x1d, 0x37, 0x4d,
+	0x5e, 0xb5, 0x0c, 0x73, 0xde, 0xc3, 0x73, 0xd9, 0xa3, 0xbc, 0x01, 0x68, 0x22, 0xb2, 0x06, 0x72,
+	0xca, 0x46, 0x7a, 0x05, 0xc6, 0x49, 0x78, 0x5b, 0x3f, 0x62, 0x81, 0x9f, 0x0f, 0xdd, 0x97, 0xc6,
+	0x1b, 0x69, 0x38, 0x1b, 0x27, 0x25, 0x35, 0x45, 0xe7, 0x82, 0x60, 0xff, 0x87, 0xba, 0xca, 0xb2,
+	0xe5, 0xf9, 0x80, 0xe6, 0x7f, 0x10, 0xf7, 0xe5, 0xb4, 0xe0, 0x17, 0x04, 0xab, 0xcd, 0xff, 0x14,
+	0x4d, 0xa4, 0xe7, 0x35, 0x5d, 0x95, 0x8d, 0x4a, 0xb2, 0x27, 0x86, 0xe7, 0x8b, 0xaf, 0xca, 0xef,
+	0x50, 0xb9, 0x14, 0x17, 0x5f, 0x84, 0x72, 0x56, 0x87, 0x3b, 0x27, 0x23, 0x33, 0xb1, 0xdd, 0xb4,
+	0x09, 0xef, 0x3a, 0xae, 0x2b, 0xcd, 0xaf, 0xfc, 0x89, 0x75, 0x0e, 0x51, 0x83, 0x78, 0xf4, 0x56,
+	0x7e, 0x7d, 0xb1, 0x34, 0xf3, 0xd7, 0x8b, 0x25, 0xf4, 0xfc, 0xcf, 0x25, 0x74, 0x2a, 0x7f, 0x3f,
+	0xc9, 0xdf, 0x1f, 0xf2, 0xf7, 0xe4, 0xe5, 0xd2, 0xcc, 0xf3, 0x97, 0x4b, 0xe8, 0xef, 0x00, 0x00,
+	0x00, 0xff, 0xff, 0x30, 0xc9, 0x6a, 0xb4, 0x8e, 0x0f, 0x00, 0x00,
+}

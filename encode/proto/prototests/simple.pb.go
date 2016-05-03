@@ -34,6 +34,10 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the proto package it is being compiled against.
+const _ = proto.GoGoProtoPackageIsVersion1
+
 type Simple struct {
 	Field1           *float64  `protobuf:"fixed64,1,opt,name=Field1" json:"Field1,omitempty"`
 	Field2           *float32  `protobuf:"fixed32,2,opt,name=Field2" json:"Field2,omitempty"`
@@ -68,9 +72,10 @@ type Simple struct {
 	XXX_unrecognized []byte    `json:"-"`
 }
 
-func (m *Simple) Reset()         { *m = Simple{} }
-func (m *Simple) String() string { return proto.CompactTextString(m) }
-func (*Simple) ProtoMessage()    {}
+func (m *Simple) Reset()                    { *m = Simple{} }
+func (m *Simple) String() string            { return proto.CompactTextString(m) }
+func (*Simple) ProtoMessage()               {}
+func (*Simple) Descriptor() ([]byte, []int) { return fileDescriptorSimple, []int{0} }
 
 func (m *Simple) GetField1() float64 {
 	if m != nil && m.Field1 != nil {
@@ -288,9 +293,10 @@ type Nested struct {
 	XXX_unrecognized []byte    `json:"-"`
 }
 
-func (m *Nested) Reset()         { *m = Nested{} }
-func (m *Nested) String() string { return proto.CompactTextString(m) }
-func (*Nested) ProtoMessage()    {}
+func (m *Nested) Reset()                    { *m = Nested{} }
+func (m *Nested) String() string            { return proto.CompactTextString(m) }
+func (*Nested) ProtoMessage()               {}
+func (*Nested) Descriptor() ([]byte, []int) { return fileDescriptorSimple, []int{1} }
 
 func (m *Nested) GetOne() *Simple {
 	if m != nil {
@@ -972,6 +978,16 @@ func SimpleDescription() (desc *descriptor.FileDescriptorSet) {
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
 			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
 			Extendee: func(v string) *string { return &v }(".google.protobuf.EnumOptions"),
+		}, {Name: func(v string) *string { return &v }("enum_customname"),
+			Number:   func(v int32) *int32 { return &v }(62023),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(9),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.EnumOptions"),
+		}, {Name: func(v string) *string { return &v }("enumvalue_customname"),
+			Number:   func(v int32) *int32 { return &v }(66001),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(9),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.EnumValueOptions"),
 		}, {Name: func(v string) *string { return &v }("goproto_getters_all"),
 			Number:   func(v int32) *int32 { return &v }(63001),
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
@@ -1047,6 +1063,11 @@ func SimpleDescription() (desc *descriptor.FileDescriptorSet) {
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
 			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
 			Extendee: func(v string) *string { return &v }(".google.protobuf.FileOptions"),
+		}, {Name: func(v string) *string { return &v }("stable_marshaler_all"),
+			Number:   func(v int32) *int32 { return &v }(63019),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.FileOptions"),
 		}, {Name: func(v string) *string { return &v }("sizer_all"),
 			Number:   func(v int32) *int32 { return &v }(63020),
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
@@ -1084,6 +1105,16 @@ func SimpleDescription() (desc *descriptor.FileDescriptorSet) {
 			Extendee: func(v string) *string { return &v }(".google.protobuf.FileOptions"),
 		}, {Name: func(v string) *string { return &v }("gogoproto_import"),
 			Number:   func(v int32) *int32 { return &v }(63027),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.FileOptions"),
+		}, {Name: func(v string) *string { return &v }("protosizer_all"),
+			Number:   func(v int32) *int32 { return &v }(63028),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.FileOptions"),
+		}, {Name: func(v string) *string { return &v }("compare_all"),
+			Number:   func(v int32) *int32 { return &v }(63029),
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
 			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
 			Extendee: func(v string) *string { return &v }(".google.protobuf.FileOptions"),
@@ -1157,6 +1188,11 @@ func SimpleDescription() (desc *descriptor.FileDescriptorSet) {
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
 			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
 			Extendee: func(v string) *string { return &v }(".google.protobuf.MessageOptions"),
+		}, {Name: func(v string) *string { return &v }("stable_marshaler"),
+			Number:   func(v int32) *int32 { return &v }(64019),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.MessageOptions"),
 		}, {Name: func(v string) *string { return &v }("sizer"),
 			Number:   func(v int32) *int32 { return &v }(64020),
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
@@ -1179,6 +1215,16 @@ func SimpleDescription() (desc *descriptor.FileDescriptorSet) {
 			Extendee: func(v string) *string { return &v }(".google.protobuf.MessageOptions"),
 		}, {Name: func(v string) *string { return &v }("goproto_unrecognized"),
 			Number:   func(v int32) *int32 { return &v }(64026),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.MessageOptions"),
+		}, {Name: func(v string) *string { return &v }("protosizer"),
+			Number:   func(v int32) *int32 { return &v }(64028),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.MessageOptions"),
+		}, {Name: func(v string) *string { return &v }("compare"),
+			Number:   func(v int32) *int32 { return &v }(64029),
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
 			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
 			Extendee: func(v string) *string { return &v }(".google.protobuf.MessageOptions"),
@@ -1214,6 +1260,16 @@ func SimpleDescription() (desc *descriptor.FileDescriptorSet) {
 			Extendee: func(v string) *string { return &v }(".google.protobuf.FieldOptions"),
 		}, {Name: func(v string) *string { return &v }("casttype"),
 			Number:   func(v int32) *int32 { return &v }(65007),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(9),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.FieldOptions"),
+		}, {Name: func(v string) *string { return &v }("castkey"),
+			Number:   func(v int32) *int32 { return &v }(65008),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(9),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.FieldOptions"),
+		}, {Name: func(v string) *string { return &v }("castvalue"),
+			Number:   func(v int32) *int32 { return &v }(65009),
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
 			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(9),
 			Extendee: func(v string) *string { return &v }(".google.protobuf.FieldOptions"),
@@ -1374,7 +1430,12 @@ func (this *Simple) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Simple)
 	if !ok {
-		return false
+		that2, ok := that.(Simple)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1648,7 +1709,12 @@ func (this *Nested) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Nested)
 	if !ok {
-		return false
+		that2, ok := that.(Nested)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1909,7 +1975,7 @@ func NewPopulatedSimple(r randySimple, easy bool) *Simple {
 		}
 	}
 	if r.Intn(10) != 0 {
-		v16 := r.Intn(100)
+		v16 := r.Intn(10)
 		this.Fields1 = make([]float64, v16)
 		for i := 0; i < v16; i++ {
 			this.Fields1[i] = float64(r.Float64())
@@ -1919,7 +1985,7 @@ func NewPopulatedSimple(r randySimple, easy bool) *Simple {
 		}
 	}
 	if r.Intn(10) != 0 {
-		v17 := r.Intn(100)
+		v17 := r.Intn(10)
 		this.Fields2 = make([]float32, v17)
 		for i := 0; i < v17; i++ {
 			this.Fields2[i] = float32(r.Float32())
@@ -1929,7 +1995,7 @@ func NewPopulatedSimple(r randySimple, easy bool) *Simple {
 		}
 	}
 	if r.Intn(10) != 0 {
-		v18 := r.Intn(100)
+		v18 := r.Intn(10)
 		this.Fields3 = make([]int32, v18)
 		for i := 0; i < v18; i++ {
 			this.Fields3[i] = int32(r.Int31())
@@ -1939,7 +2005,7 @@ func NewPopulatedSimple(r randySimple, easy bool) *Simple {
 		}
 	}
 	if r.Intn(10) != 0 {
-		v19 := r.Intn(100)
+		v19 := r.Intn(10)
 		this.Fields4 = make([]int64, v19)
 		for i := 0; i < v19; i++ {
 			this.Fields4[i] = int64(r.Int63())
@@ -1949,21 +2015,21 @@ func NewPopulatedSimple(r randySimple, easy bool) *Simple {
 		}
 	}
 	if r.Intn(10) != 0 {
-		v20 := r.Intn(100)
+		v20 := r.Intn(10)
 		this.Fields5 = make([]uint32, v20)
 		for i := 0; i < v20; i++ {
 			this.Fields5[i] = uint32(r.Uint32())
 		}
 	}
 	if r.Intn(10) != 0 {
-		v21 := r.Intn(100)
+		v21 := r.Intn(10)
 		this.Fields6 = make([]uint64, v21)
 		for i := 0; i < v21; i++ {
 			this.Fields6[i] = uint64(uint64(r.Uint32()))
 		}
 	}
 	if r.Intn(10) != 0 {
-		v22 := r.Intn(100)
+		v22 := r.Intn(10)
 		this.Fields7 = make([]int32, v22)
 		for i := 0; i < v22; i++ {
 			this.Fields7[i] = int32(r.Int31())
@@ -1973,7 +2039,7 @@ func NewPopulatedSimple(r randySimple, easy bool) *Simple {
 		}
 	}
 	if r.Intn(10) != 0 {
-		v23 := r.Intn(100)
+		v23 := r.Intn(10)
 		this.Fields8 = make([]int64, v23)
 		for i := 0; i < v23; i++ {
 			this.Fields8[i] = int64(r.Int63())
@@ -1983,14 +2049,14 @@ func NewPopulatedSimple(r randySimple, easy bool) *Simple {
 		}
 	}
 	if r.Intn(10) != 0 {
-		v24 := r.Intn(100)
+		v24 := r.Intn(10)
 		this.Fields9 = make([]uint32, v24)
 		for i := 0; i < v24; i++ {
 			this.Fields9[i] = uint32(r.Uint32())
 		}
 	}
 	if r.Intn(10) != 0 {
-		v25 := r.Intn(100)
+		v25 := r.Intn(10)
 		this.Fields10 = make([]int32, v25)
 		for i := 0; i < v25; i++ {
 			this.Fields10[i] = int32(r.Int31())
@@ -2000,14 +2066,14 @@ func NewPopulatedSimple(r randySimple, easy bool) *Simple {
 		}
 	}
 	if r.Intn(10) != 0 {
-		v26 := r.Intn(100)
+		v26 := r.Intn(10)
 		this.Fields11 = make([]uint64, v26)
 		for i := 0; i < v26; i++ {
 			this.Fields11[i] = uint64(uint64(r.Uint32()))
 		}
 	}
 	if r.Intn(10) != 0 {
-		v27 := r.Intn(100)
+		v27 := r.Intn(10)
 		this.Fields12 = make([]int64, v27)
 		for i := 0; i < v27; i++ {
 			this.Fields12[i] = int64(r.Int63())
@@ -2017,7 +2083,7 @@ func NewPopulatedSimple(r randySimple, easy bool) *Simple {
 		}
 	}
 	if r.Intn(10) != 0 {
-		v28 := r.Intn(100)
+		v28 := r.Intn(10)
 		this.Fields13 = make([]bool, v28)
 		for i := 0; i < v28; i++ {
 			this.Fields13[i] = bool(bool(r.Intn(2) == 0))
@@ -2031,7 +2097,7 @@ func NewPopulatedSimple(r randySimple, easy bool) *Simple {
 		}
 	}
 	if r.Intn(10) != 0 {
-		v30 := r.Intn(100)
+		v30 := r.Intn(10)
 		this.Fields15 = make([][]byte, v30)
 		for i := 0; i < v30; i++ {
 			v31 := r.Intn(100)
@@ -2053,7 +2119,7 @@ func NewPopulatedNested(r randySimple, easy bool) *Nested {
 		this.One = NewPopulatedSimple(r, easy)
 	}
 	if r.Intn(10) != 0 {
-		v32 := r.Intn(10)
+		v32 := r.Intn(5)
 		this.Many = make([]*Simple, v32)
 		for i := 0; i < v32; i++ {
 			this.Many[i] = NewPopulatedSimple(r, easy)
@@ -2136,4 +2202,31 @@ func encodeVarintPopulateSimple(data []byte, v uint64) []byte {
 	}
 	data = append(data, uint8(v))
 	return data
+}
+
+var fileDescriptorSimple = []byte{
+	// 355 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0x6c, 0xd2, 0xbd, 0x4e, 0xf2, 0x50,
+	0x1c, 0xc7, 0xf1, 0x94, 0x96, 0xb6, 0x1c, 0x0a, 0x2d, 0x27, 0x79, 0x1e, 0xff, 0xa2, 0x42, 0xc5,
+	0xc5, 0xc5, 0x42, 0xdf, 0x78, 0x59, 0x1d, 0x5c, 0x8c, 0x3a, 0x78, 0x05, 0x22, 0x15, 0x49, 0x80,
+	0x12, 0x5b, 0x06, 0x67, 0x6f, 0xc6, 0xd1, 0x5b, 0xd2, 0x2b, 0x70, 0x74, 0xf4, 0x97, 0x42, 0xce,
+	0xe9, 0xe0, 0x70, 0xd2, 0x7e, 0x3f, 0x7d, 0xc9, 0x39, 0xc9, 0x9f, 0x59, 0xd9, 0x62, 0xb5, 0x59,
+	0x26, 0xde, 0xe6, 0x25, 0xcd, 0x53, 0xce, 0x8a, 0x4b, 0x9e, 0x64, 0x79, 0xd6, 0xbe, 0x98, 0x2f,
+	0xf2, 0xe7, 0xed, 0xd4, 0x7b, 0x4c, 0x57, 0xfd, 0x79, 0x3a, 0x4f, 0xfb, 0xc5, 0xb3, 0xe9, 0xf6,
+	0xa9, 0xa8, 0x22, 0x8a, 0xbb, 0xdd, 0xa7, 0xbd, 0x37, 0x8d, 0xe9, 0xf7, 0xc5, 0xbf, 0x78, 0x93,
+	0xe9, 0x57, 0x8b, 0x64, 0x39, 0xf3, 0x49, 0x71, 0x95, 0x73, 0x45, 0x74, 0x40, 0x15, 0x74, 0x45,
+	0x74, 0x48, 0x2a, 0xba, 0x2a, 0x3a, 0x22, 0x0d, 0xad, 0x8a, 0x8e, 0xa9, 0x8a, 0x6e, 0x88, 0x1e,
+	0x92, 0x8e, 0xd6, 0x44, 0x8f, 0xc8, 0x40, 0xb7, 0x44, 0x8f, 0xc9, 0x44, 0x73, 0xd1, 0x13, 0xaa,
+	0xa1, 0x0d, 0x6e, 0x33, 0x63, 0xb7, 0x9f, 0x01, 0x31, 0x80, 0x2d, 0xc1, 0xa7, 0x3a, 0x40, 0x97,
+	0x10, 0x90, 0x05, 0x70, 0x24, 0x84, 0xd4, 0x00, 0x98, 0x12, 0x22, 0x6a, 0x02, 0x6a, 0x12, 0x62,
+	0xb2, 0x01, 0x96, 0x80, 0xcc, 0xa7, 0x7f, 0xae, 0x8a, 0x63, 0x0b, 0x08, 0xe8, 0x3f, 0xa0, 0x22,
+	0x21, 0xa4, 0x03, 0x40, 0x55, 0x42, 0x44, 0x04, 0x50, 0x25, 0xc4, 0x74, 0x08, 0x68, 0x48, 0x18,
+	0x52, 0x1b, 0xa0, 0x49, 0x18, 0xd1, 0x11, 0xa0, 0x25, 0x61, 0x4c, 0xc7, 0x00, 0x2e, 0x61, 0x42,
+	0x27, 0x00, 0x83, 0x3b, 0xcc, 0xdc, 0x6f, 0x6c, 0x40, 0x1d, 0x88, 0x5d, 0x12, 0x9f, 0xba, 0x10,
+	0xbd, 0x24, 0x01, 0xb9, 0x10, 0xa7, 0x24, 0x21, 0x9d, 0x42, 0xcc, 0x92, 0x44, 0xd4, 0x83, 0xd4,
+	0x4a, 0x12, 0xd3, 0x19, 0xc4, 0xea, 0x5d, 0x33, 0xfd, 0x16, 0xd3, 0x93, 0xcc, 0x78, 0x97, 0xa9,
+	0x77, 0xeb, 0xa4, 0x98, 0x80, 0x7a, 0xc0, 0x3d, 0x39, 0x58, 0xde, 0x7e, 0x4a, 0x5c, 0xa6, 0xdd,
+	0x3c, 0xac, 0x5f, 0x31, 0x13, 0xea, 0xdf, 0x6f, 0x5c, 0x3a, 0xdf, 0x9f, 0x1d, 0xe5, 0x07, 0xeb,
+	0xfd, 0xab, 0xa3, 0x7c, 0x60, 0xfd, 0x06, 0x00, 0x00, 0xff, 0xff, 0xe9, 0x48, 0x41, 0x61, 0xae,
+	0x02, 0x00, 0x00,
 }

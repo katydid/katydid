@@ -32,6 +32,10 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the proto package it is being compiled against.
+const _ = proto.GoGoProtoPackageIsVersion1
+
 // BigMsg contains a field and a message field.
 type BigMsg struct {
 	Field            *int64    `protobuf:"varint,1,opt,name=Field" json:"Field,omitempty"`
@@ -39,9 +43,10 @@ type BigMsg struct {
 	XXX_unrecognized []byte    `json:"-"`
 }
 
-func (m *BigMsg) Reset()         { *m = BigMsg{} }
-func (m *BigMsg) String() string { return proto.CompactTextString(m) }
-func (*BigMsg) ProtoMessage()    {}
+func (m *BigMsg) Reset()                    { *m = BigMsg{} }
+func (m *BigMsg) String() string            { return proto.CompactTextString(m) }
+func (*BigMsg) ProtoMessage()               {}
+func (*BigMsg) Descriptor() ([]byte, []int) { return fileDescriptorMsg, []int{0} }
 
 func (m *BigMsg) GetField() int64 {
 	if m != nil && m.Field != nil {
@@ -65,9 +70,10 @@ type SmallMsg struct {
 	XXX_unrecognized []byte   `json:"-"`
 }
 
-func (m *SmallMsg) Reset()         { *m = SmallMsg{} }
-func (m *SmallMsg) String() string { return proto.CompactTextString(m) }
-func (*SmallMsg) ProtoMessage()    {}
+func (m *SmallMsg) Reset()                    { *m = SmallMsg{} }
+func (m *SmallMsg) String() string            { return proto.CompactTextString(m) }
+func (*SmallMsg) ProtoMessage()               {}
+func (*SmallMsg) Descriptor() ([]byte, []int) { return fileDescriptorMsg, []int{1} }
 
 func (m *SmallMsg) GetScarBusStop() string {
 	if m != nil && m.ScarBusStop != nil {
@@ -756,6 +762,16 @@ func MsgDescription() (desc *descriptor.FileDescriptorSet) {
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
 			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
 			Extendee: func(v string) *string { return &v }(".google.protobuf.EnumOptions"),
+		}, {Name: func(v string) *string { return &v }("enum_customname"),
+			Number:   func(v int32) *int32 { return &v }(62023),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(9),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.EnumOptions"),
+		}, {Name: func(v string) *string { return &v }("enumvalue_customname"),
+			Number:   func(v int32) *int32 { return &v }(66001),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(9),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.EnumValueOptions"),
 		}, {Name: func(v string) *string { return &v }("goproto_getters_all"),
 			Number:   func(v int32) *int32 { return &v }(63001),
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
@@ -831,6 +847,11 @@ func MsgDescription() (desc *descriptor.FileDescriptorSet) {
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
 			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
 			Extendee: func(v string) *string { return &v }(".google.protobuf.FileOptions"),
+		}, {Name: func(v string) *string { return &v }("stable_marshaler_all"),
+			Number:   func(v int32) *int32 { return &v }(63019),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.FileOptions"),
 		}, {Name: func(v string) *string { return &v }("sizer_all"),
 			Number:   func(v int32) *int32 { return &v }(63020),
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
@@ -868,6 +889,16 @@ func MsgDescription() (desc *descriptor.FileDescriptorSet) {
 			Extendee: func(v string) *string { return &v }(".google.protobuf.FileOptions"),
 		}, {Name: func(v string) *string { return &v }("gogoproto_import"),
 			Number:   func(v int32) *int32 { return &v }(63027),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.FileOptions"),
+		}, {Name: func(v string) *string { return &v }("protosizer_all"),
+			Number:   func(v int32) *int32 { return &v }(63028),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.FileOptions"),
+		}, {Name: func(v string) *string { return &v }("compare_all"),
+			Number:   func(v int32) *int32 { return &v }(63029),
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
 			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
 			Extendee: func(v string) *string { return &v }(".google.protobuf.FileOptions"),
@@ -941,6 +972,11 @@ func MsgDescription() (desc *descriptor.FileDescriptorSet) {
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
 			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
 			Extendee: func(v string) *string { return &v }(".google.protobuf.MessageOptions"),
+		}, {Name: func(v string) *string { return &v }("stable_marshaler"),
+			Number:   func(v int32) *int32 { return &v }(64019),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.MessageOptions"),
 		}, {Name: func(v string) *string { return &v }("sizer"),
 			Number:   func(v int32) *int32 { return &v }(64020),
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
@@ -963,6 +999,16 @@ func MsgDescription() (desc *descriptor.FileDescriptorSet) {
 			Extendee: func(v string) *string { return &v }(".google.protobuf.MessageOptions"),
 		}, {Name: func(v string) *string { return &v }("goproto_unrecognized"),
 			Number:   func(v int32) *int32 { return &v }(64026),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.MessageOptions"),
+		}, {Name: func(v string) *string { return &v }("protosizer"),
+			Number:   func(v int32) *int32 { return &v }(64028),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.MessageOptions"),
+		}, {Name: func(v string) *string { return &v }("compare"),
+			Number:   func(v int32) *int32 { return &v }(64029),
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
 			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(8),
 			Extendee: func(v string) *string { return &v }(".google.protobuf.MessageOptions"),
@@ -998,6 +1044,16 @@ func MsgDescription() (desc *descriptor.FileDescriptorSet) {
 			Extendee: func(v string) *string { return &v }(".google.protobuf.FieldOptions"),
 		}, {Name: func(v string) *string { return &v }("casttype"),
 			Number:   func(v int32) *int32 { return &v }(65007),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(9),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.FieldOptions"),
+		}, {Name: func(v string) *string { return &v }("castkey"),
+			Number:   func(v int32) *int32 { return &v }(65008),
+			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
+			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(9),
+			Extendee: func(v string) *string { return &v }(".google.protobuf.FieldOptions"),
+		}, {Name: func(v string) *string { return &v }("castvalue"),
+			Number:   func(v int32) *int32 { return &v }(65009),
 			Label:    func(v descriptor.FieldDescriptorProto_Label) *descriptor.FieldDescriptorProto_Label { return &v }(1),
 			Type:     func(v descriptor.FieldDescriptorProto_Type) *descriptor.FieldDescriptorProto_Type { return &v }(9),
 			Extendee: func(v string) *string { return &v }(".google.protobuf.FieldOptions"),
@@ -1128,7 +1184,7 @@ func NewPopulatedSmallMsg(r randyMsg, easy bool) *SmallMsg {
 		this.ScarBusStop = &v2
 	}
 	if r.Intn(10) != 0 {
-		v3 := r.Intn(100)
+		v3 := r.Intn(10)
 		this.FlightParachute = make([]uint32, v3)
 		for i := 0; i < v3; i++ {
 			this.FlightParachute[i] = uint32(r.Uint32())
@@ -1215,4 +1271,21 @@ func encodeVarintPopulateMsg(data []byte, v uint64) []byte {
 	}
 	data = append(data, uint8(v))
 	return data
+}
+
+var fileDescriptorMsg = []byte{
+	// 200 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xe2, 0xe2, 0xcc, 0x2d, 0x4e, 0xd7,
+	0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x02, 0x53, 0x25, 0xa9, 0xc5, 0x25, 0xc5, 0x52, 0xba,
+	0xe9, 0x99, 0x25, 0x19, 0xa5, 0x49, 0x7a, 0xc9, 0xf9, 0xb9, 0xfa, 0xe9, 0xf9, 0xe9, 0xf9, 0xfa,
+	0x60, 0xb9, 0xa4, 0xd2, 0x34, 0x30, 0x0f, 0xcc, 0x01, 0xb3, 0x20, 0x5a, 0x95, 0xac, 0xb8, 0xd8,
+	0x9c, 0x32, 0xd3, 0x7d, 0x8b, 0xd3, 0x85, 0x78, 0xb9, 0x58, 0xdd, 0x32, 0x53, 0x73, 0x52, 0x24,
+	0x18, 0x15, 0x18, 0x35, 0x98, 0x85, 0x14, 0xb9, 0x98, 0x81, 0xa2, 0x12, 0xcc, 0x40, 0x0e, 0xb7,
+	0x91, 0x88, 0x1e, 0xc2, 0x06, 0xbd, 0xe0, 0xdc, 0xc4, 0x9c, 0x1c, 0xa0, 0x9c, 0x92, 0x17, 0x17,
+	0x07, 0x8c, 0x2d, 0x24, 0xcc, 0xc5, 0x1d, 0x9c, 0x9c, 0x58, 0xe4, 0x54, 0x5a, 0x1c, 0x5c, 0x92,
+	0x5f, 0x00, 0x36, 0x83, 0x53, 0x48, 0x9c, 0x8b, 0xdf, 0x2d, 0x27, 0x33, 0x3d, 0xa3, 0x24, 0x20,
+	0xb1, 0x28, 0x31, 0x39, 0xa3, 0xb4, 0x24, 0x55, 0x82, 0x47, 0x81, 0x59, 0x83, 0x5d, 0x48, 0x80,
+	0x8b, 0xc3, 0x37, 0xb1, 0x20, 0x38, 0x23, 0xb1, 0x28, 0x5b, 0x42, 0x08, 0xa4, 0xd4, 0x89, 0xe7,
+	0xc3, 0x43, 0x39, 0xc6, 0x1f, 0x40, 0xbc, 0xe1, 0x91, 0x1c, 0x23, 0x20, 0x00, 0x00, 0xff, 0xff,
+	0x32, 0x19, 0xce, 0x80, 0xdc, 0x00, 0x00, 0x00,
 }
