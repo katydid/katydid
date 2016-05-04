@@ -36,6 +36,18 @@ func BenchmarkCompileSmall(b *testing.B) {
 	benchCompile(b, "*")
 }
 
+func BenchmarkCompileOrMedium(b *testing.B) {
+	benchCompile(b, ".A.B.C: (A:* & B:* & C:* & D:*)")
+}
+
+func BenchmarkCompileOrInterleaveLarge(b *testing.B) {
+	benchCompile(b, ".A.B.C: ((A:* | B:* | C:* | D:*) | {A.B.C:* ; D:* ; C:*})")
+}
+
+func BenchmarkCompileOrLarger(b *testing.B) {
+	benchCompile(b, ".A.B.C: ((A:* | B:* | C:* | D:*) | (A.B.C:* | D:* | C:* | F.D:* | G:* | H:*| I:*))")
+}
+
 func BenchmarkCompileAndMedium(b *testing.B) {
 	benchCompile(b, ".A.B.C: (A:* & B:* & C:* & D:*)")
 }
@@ -52,16 +64,43 @@ func BenchmarkCompileAndLarger(b *testing.B) {
 	benchCompile(b, ".A.B.C: ((A:* & B:* & C:* & D:*) | (A.B.C:* & D:* & C:* & F.D:* & G:* & H:*& I:*))")
 }
 
-func BenchmarkCompileOrMedium(b *testing.B) {
-	benchCompile(b, ".A.B.C: (A:* & B:* & C:* & D:*)")
+var typewriterOrQueryStr = `(.WineMessenger:* | .ShoelaceBeer:* |
+		.PocketRoses: ( 
+			.ScarBusStop == "a" | 
+			.BadgeShopping > 1 |
+			.DaisySled < 5 |
+			.SubmarineSaw == 0 |
+			.SmileLetter :: $bool |
+			.MenuPaperclip._ *= "A" |
+			.BeetlePoker._ $= "b" |
+			.WigPride._ ^= "c"
+		)
+	)`
+
+func BenchmarkCompileOrProtoNum(b *testing.B) {
+	st, err := parser.ParseGrammar(typewriterOrQueryStr)
+	if err != nil {
+		b.Fatal(err)
+	}
+	numst, err := protonum.FieldNamesToNumbers("tests", "TypewriterPrison", tests.TypewriterprisonDescription(), st)
+	if err != nil {
+		b.Fatal(err)
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		Compile(numst)
+	}
 }
 
-func BenchmarkCompileOrInterleaveLarge(b *testing.B) {
-	benchCompile(b, ".A.B.C: ((A:* | B:* | C:* | D:*) | {A.B.C:* ; D:* ; C:*})")
-}
-
-func BenchmarkCompileOrLarger(b *testing.B) {
-	benchCompile(b, ".A.B.C: ((A:* | B:* | C:* | D:*) | (A.B.C:* | D:* | C:* | F.D:* | G:* | H:*| I:*))")
+func BenchmarkCompileOrProtoName(b *testing.B) {
+	st, err := parser.ParseGrammar(typewriterOrQueryStr)
+	if err != nil {
+		b.Fatal(err)
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		Compile(st)
+	}
 }
 
 var typewriterAndQueryStr = `(.WineMessenger:* & .ShoelaceBeer:* & 
@@ -103,21 +142,23 @@ func BenchmarkCompileAndProtoName(b *testing.B) {
 	}
 }
 
-var typewriterOrQueryStr = `(.WineMessenger:* | .ShoelaceBeer:* |
-		.PocketRoses: ( 
-			.ScarBusStop == "a" | 
-			.BadgeShopping > 1 |
-			.DaisySled < 5 |
-			.SubmarineSaw == 0 |
-			.SmileLetter :: $bool |
-			.MenuPaperclip._ *= "A" |
-			.BeetlePoker._ $= "b" |
-			.WigPride._ ^= "c"
-		)
-	)`
+var typewriterInterleaveQueryStr = `{WineMessenger:* ; .ShoelaceBeer:* ; 
+		PocketRoses: {
+			ScarBusStop == "a" ;
+			BadgeShopping > 1 ;
+			DaisySled < 5 ;
+			SubmarineSaw == 0 ;
+			SmileLetter :: $bool ;
+			MenuPaperclip._ *= "A" ;
+			BeetlePoker._ $= "b" ;
+			WigPride._ ^= "c" ;
+			*
+		};
+		*
+	}`
 
-func BenchmarkCompileOrProtoNum(b *testing.B) {
-	st, err := parser.ParseGrammar(typewriterOrQueryStr)
+func BenchmarkCompileInterleaveProtoNum(b *testing.B) {
+	st, err := parser.ParseGrammar(typewriterInterleaveQueryStr)
 	if err != nil {
 		b.Fatal(err)
 	}
@@ -131,8 +172,8 @@ func BenchmarkCompileOrProtoNum(b *testing.B) {
 	}
 }
 
-func BenchmarkCompileOrProtoName(b *testing.B) {
-	st, err := parser.ParseGrammar(typewriterOrQueryStr)
+func BenchmarkCompileInterleaveProtoName(b *testing.B) {
+	st, err := parser.ParseGrammar(typewriterInterleaveQueryStr)
 	if err != nil {
 		b.Fatal(err)
 	}
