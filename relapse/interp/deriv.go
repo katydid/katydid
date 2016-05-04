@@ -31,8 +31,7 @@ func init() {
 //Interpret interprets the grammar given the parser and returns whether the parser is valid given the grammar.
 //Interpret uses derivatives and simplification to recusively derive the resulting grammar.
 //This resulting grammar's nullability then represents the result of the function.
-//
-//NOTE: This is a naive implementation and it does not handle left recursion.
+//This implementation does not handle immediate recursion, see the HasRecursion function.
 func Interpret(g *ast.Grammar, parser parser.Interface) bool {
 	refs := ast.NewRefLookup(g)
 	finals := deriv(refs, []*ast.Pattern{refs["main"]}, parser)

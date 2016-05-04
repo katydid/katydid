@@ -23,7 +23,7 @@ import (
 )
 
 func test(t *testing.T, g *ast.Grammar, p parser.Interface, expected bool, desc string) {
-	if interp.HasLeftRecursion(g) {
+	if interp.HasRecursion(g) {
 		t.Skipf("interp was not designed to handle left recursion")
 	}
 	p = debug.NewLogger(p, debug.NewLineLogger())

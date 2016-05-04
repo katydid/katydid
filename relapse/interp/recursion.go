@@ -19,53 +19,15 @@ import (
 	"github.com/katydid/katydid/relapse/ast"
 )
 
-//Experimental!
-//TODO what about derived left recursion
-//TODO what about right recursion when left is nullable
-func HasLeftRecursion(g *ast.Grammar) bool {
-	refs := ast.NewRefLookup(g)
-	visited := make(map[*ast.Pattern]bool)
-	return hasLeftRecursion(visited, refs, refs["main"])
-}
-
-func hasLeftRecursion(visited map[*ast.Pattern]bool, refs ast.RefLookup, p *ast.Pattern) bool {
-	if _, ok := visited[p]; ok {
-		return true
-	}
-	visited[p] = true
-	typ := p.GetValue()
-	switch v := typ.(type) {
-	case *ast.Empty:
-		return false
-	case *ast.TreeNode:
-		return false
-	case *ast.LeafNode:
-		return false
-	case *ast.Concat:
-		return hasLeftRecursion(visited, refs, v.GetLeftPattern())
-	case *ast.Or:
-		return hasLeftRecursion(visited, refs, v.GetLeftPattern())
-	case *ast.And:
-		return hasLeftRecursion(visited, refs, v.GetLeftPattern())
-	case *ast.ZeroOrMore:
-		return hasLeftRecursion(visited, refs, v.GetPattern())
-	case *ast.Reference:
-		return hasLeftRecursion(visited, refs, refs[v.GetName()])
-	case *ast.Not:
-		return hasLeftRecursion(visited, refs, v.GetPattern())
-	case *ast.ZAny:
-		return false
-	case *ast.Contains:
-		return hasLeftRecursion(visited, refs, v.GetPattern())
-	case *ast.Optional:
-		return false //TODO
-	case *ast.Interleave:
-		return false //TODO
-	}
-	panic(fmt.Sprintf("unknown pattern typ %T", typ))
-}
-
-//Experimental!
+//HasRecursion returns whether the grammar contains any references that does not have a TreeNode pattern in between.
+//For example:
+//
+//  #main = @main
+//  #main = (A:* | @main)
+//
+//Recursion can still be used when a TreeNode pattern is placed between references, for example:
+//
+//  #main = (A:@main | <empty>)
 func HasRecursion(g *ast.Grammar) bool {
 	refs := ast.NewRefLookup(g)
 	for name, _ := range refs {

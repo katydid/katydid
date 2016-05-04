@@ -19,15 +19,13 @@ import (
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/interp"
 	"github.com/katydid/katydid/relapse/mem"
-	//"github.com/katydid/katydid/parser/debug"
 	"testing"
 )
 
 func test(t *testing.T, g *ast.Grammar, p parser.Interface, expected bool, desc string) {
-	if interp.HasLeftRecursion(g) {
+	if interp.HasRecursion(g) {
 		t.Skipf("interp was not designed to handle left recursion")
 	}
-	//parser = debug.NewLogger(parser, debug.NewLineLogger())
 	c := mem.Compile(g)
 	match := c.Interpret(p)
 	if match != expected {
