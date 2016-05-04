@@ -13,6 +13,8 @@
 //  limitations under the License.
 
 //Package combinator provides a user friendly way of constructing a relapse abstract syntax tree.
+//
+//TODO: Review this API of this package, especially the Array methods.
 package combinator
 
 import (

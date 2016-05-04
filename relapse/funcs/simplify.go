@@ -15,7 +15,6 @@
 package funcs
 
 import (
-	"fmt"
 	"reflect"
 )
 
@@ -60,10 +59,6 @@ func Equal(l, r interface{}) bool {
 		if !Equal(le.Field(i).Interface(), re.Field(i).Interface()) {
 			return false
 		}
-	}
-	if sprint(l) != sprint(r) {
-		fmt.Printf("wtf %v == %v\n", Sprint(l), Sprint(r))
-		panic("two non equal functions are equal")
 	}
 	return true
 }
