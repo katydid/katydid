@@ -15,7 +15,6 @@
 package auto
 
 import (
-	"fmt"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/mem"
 )
@@ -24,90 +23,18 @@ import (
 func Compile(g *ast.Grammar) *Auto {
 	m := mem.Compile(g)
 	a := &Auto{
-		calls:           newCalls(m.Calls),
+		calls:           m.Calls,
 		returns:         newReturns(m.Returns),
-		escapables:      newEscapes(m.Escapables),
+		escapables:      m.Escapables,
 		start:           m.Start,
-		stateToNullable: newNullables(m.StateToNullable),
-		accept:          newAccepts(m.Accept),
-	}
-	numStates := len(a.calls)
-	if numStates != len(a.escapables) || numStates != len(a.stateToNullable) || numStates != len(a.accept) {
-		panic(fmt.Sprintf("states: calls(%d) != escapes(%d) != nullables(%d) != accepts(%d)", len(a.calls), len(a.escapables), len(a.stateToNullable), len(a.accept)))
+		stateToNullable: m.StateToNullable,
+		accept:          m.Accept,
 	}
 	return a
 }
 
-func newCalls(callsmap map[int]*mem.CallNode) []*mem.CallNode {
-	max := 0
-	for i := range callsmap {
-		if i > max {
-			max = i
-		}
-	}
-	if len(callsmap) != (max + 1) {
-		panic(fmt.Sprintf("callsmap is not sparse, %d != %d", len(callsmap), max+1))
-	}
-	callslice := make([]*mem.CallNode, max+1)
-	for k := range callsmap {
-		callslice[k] = callsmap[k]
-	}
-	return callslice
-}
-
-func newEscapes(escs map[int]bool) []bool {
-	return newBoolSlice(escs)
-}
-
-func newBoolSlice(m map[int]bool) []bool {
-	max := 0
-	for i := range m {
-		if i > max {
-			max = i
-		}
-	}
-	if len(m) != (max + 1) {
-		panic(fmt.Sprintf("map[int]bool is not sparse, %d != %d", len(m), max+1))
-	}
-	s := make([]bool, max+1)
-	for k := range m {
-		s[k] = m[k]
-	}
-	return s
-}
-
-func newAccepts(accept map[int]bool) []bool {
-	return newBoolSlice(accept)
-}
-
-func newNullables(m map[int]int) []int {
-	max := 0
-	for i := range m {
-		if i > max {
-			max = i
-		}
-	}
-	if len(m) != (max + 1) {
-		panic(fmt.Sprintf("nullablesmap is not sparse, %d != %d", len(m), max+1))
-	}
-	s := make([]int, max+1)
-	for k := range m {
-		s[k] = m[k]
-	}
-	return s
-}
-
-func newReturns(m map[int]map[int]int) []intmap {
-	max := 0
-	for i := range m {
-		if i > max {
-			max = i
-		}
-	}
-	if len(m) != (max + 1) {
-		panic(fmt.Sprintf("returnsmap is not sparse, %d != %d", len(m), max+1))
-	}
-	returns := make([]intmap, max+1)
+func newReturns(m []map[int]int) []intmap {
+	returns := make([]intmap, len(m))
 	for k := range m {
 		returns[k] = newIntMap(m[k])
 	}

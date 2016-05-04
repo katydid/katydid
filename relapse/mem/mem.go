@@ -44,32 +44,32 @@ func (mem *Mem) Interpret(p parser.Interface) bool {
 type Mem struct {
 	Refs        map[string]*ast.Pattern
 	PatternsMap PatternsIndexedSet
-	Calls       map[int]*CallNode
-	Returns     map[int]map[int]int
-	Escapables  map[int]bool
+	Calls       []*CallNode
+	Returns     []map[int]int
+	Escapables  []bool
 	Zis         IntsIndexedSet
 	Start       int
 
 	StackElms       PairIndexedSet
-	StateToNullable map[int]int
+	StateToNullable []int
 	Nullables       BoolsIndexedSet
 
-	Accept map[int]bool
+	Accept []bool
 }
 
 func newMem(refs map[string]*ast.Pattern) *Mem {
 	m := &Mem{
 		Refs:        refs,
 		PatternsMap: newPatternsIndexedSet(),
-		Calls:       make(map[int]*CallNode),
-		Returns:     make(map[int]map[int]int),
-		Escapables:  make(map[int]bool),
+		Calls:       []*CallNode{},
+		Returns:     []map[int]int{},
+		Escapables:  []bool{},
 		Zis:         newIntsIndexedSet(),
 
 		StackElms:       newPairIndexedSet(),
-		StateToNullable: make(map[int]int),
+		StateToNullable: []int{},
 		Nullables:       newBoolsIndexedSet(),
-		Accept:          make(map[int]bool),
+		Accept:          []bool{},
 	}
 	start := m.PatternsMap.add([]*ast.Pattern{refs["main"]})
 	m.Start = start
@@ -77,62 +77,62 @@ func newMem(refs map[string]*ast.Pattern) *Mem {
 }
 
 func (this *Mem) escapable(s int) bool {
-	if e, ok := this.Escapables[s]; ok {
-		return e
+	if len(this.Escapables) <= s {
+		for i := len(this.Escapables); i <= s; i++ {
+			patterns := this.PatternsMap[i]
+			this.Escapables = append(this.Escapables, escapable(patterns))
+		}
 	}
-	patterns := this.PatternsMap[s]
-	e := escapable(patterns)
-	this.Escapables[s] = e
-	return e
+	return this.Escapables[s]
 }
 
 func (this *Mem) accept(s int) bool {
-	if a, ok := this.Accept[s]; ok {
-		return a
+	if len(this.Accept) <= s {
+		for i := len(this.Accept); i <= s; i++ {
+			patterns := this.PatternsMap[i]
+			if len(patterns) != 1 {
+				this.Accept = append(this.Accept, false)
+			} else {
+				this.Accept = append(this.Accept, interp.Nullable(this.Refs, patterns[0]))
+			}
+		}
 	}
-	patterns := this.PatternsMap[s]
-	if len(patterns) != 1 {
-		this.Accept[s] = false
-		return false
-	}
-	accept := interp.Nullable(this.Refs, patterns[0])
-	this.Accept[s] = accept
-	return accept
+	return this.Accept[s]
 }
 
 func (this *Mem) getCallTree(s int) *CallNode {
-	ct, ok := this.Calls[s]
-	if ok {
-		return ct
+	if len(this.Calls) <= s {
+		for i := len(this.Calls); i <= s; i++ {
+			callables := derivCalls(this.Refs, this.PatternsMap[i])
+			callTree := newCallTree(callables)
+			memCallTree := newMemCallTree(s, &this.StackElms, &this.PatternsMap, &this.Zis, callTree)
+			this.Calls = append(this.Calls, memCallTree)
+		}
 	}
-	callables := derivCalls(this.Refs, this.PatternsMap[s])
-	callTree := newCallTree(callables)
-	memCallTree := newMemCallTree(s, &this.StackElms, &this.PatternsMap, &this.Zis, callTree)
-	this.Calls[s] = memCallTree
-	return memCallTree
+	return this.Calls[s]
 }
 
-func (this *Mem) getNullable(state int) int {
-	nullIndex, ok := this.StateToNullable[state]
-	if ok {
-		return nullIndex
+func (this *Mem) getNullable(s int) int {
+	if len(this.StateToNullable) <= s {
+		for i := len(this.StateToNullable); i <= s; i++ {
+			childPatterns := this.PatternsMap[s]
+			nullable := nullables(this.Refs, childPatterns)
+			nullIndex := this.Nullables.add(nullable)
+			this.StateToNullable = append(this.StateToNullable, nullIndex)
+		}
 	}
-	childPatterns := this.PatternsMap[state]
-	nullable := nullables(this.Refs, childPatterns)
-	nullIndex = this.Nullables.add(nullable)
-	this.StateToNullable[state] = nullIndex
-	return nullIndex
+	return this.StateToNullable[s]
 }
 
 func (this *Mem) getReturnn(stackIndex int, nullIndex int) int {
-	children, ok := this.Returns[stackIndex]
-	if ok {
-		ret, ok := children[nullIndex]
-		if ok {
-			return ret
+	if len(this.Returns) <= stackIndex {
+		for i := len(this.Returns); i <= stackIndex; i++ {
+			this.Returns = append(this.Returns, make(map[int]int))
 		}
-	} else {
-		this.Returns[stackIndex] = make(map[int]int)
+	}
+	ret, ok := this.Returns[stackIndex][nullIndex]
+	if ok {
+		return ret
 	}
 	stackElm := this.StackElms[stackIndex]
 	zullable := this.Nullables[nullIndex]
