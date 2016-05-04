@@ -16,6 +16,8 @@ package auto
 
 import (
 	"github.com/katydid/katydid/relapse/parser"
+	"github.com/katydid/katydid/relapse/protonum"
+	"github.com/katydid/katydid/relapse/tests"
 	"testing"
 )
 
@@ -44,4 +46,43 @@ func BenchmarkCompileLarge(b *testing.B) {
 
 func BenchmarkCompileLarger(b *testing.B) {
 	benchCompile(b, ".A.B.C: ((A:* & B:* & C:* & D:*) | {A.B.C:* ; D:* ; C:* ; F.D:* ; G:* ; H:*; I:*})")
+}
+
+var typewriterQueryStr = `(.WineMessenger:* & .ShoelaceBeer:* & 
+		.PocketRoses: ( 
+			.ScarBusStop == "a" & 
+			.BadgeShopping > 1 &
+			.DaisySled < 5 &
+			.SubmarineSaw == 0 &
+			.SmileLetter :: $bool &
+			.MenuPaperclip._ *= "A" &
+			.BeetlePoker._ $= "b" &
+			.WigPride._ ^= "c"
+		)
+	)`
+
+func BenchmarkCompileProtoNum(b *testing.B) {
+	st, err := parser.ParseGrammar(typewriterQueryStr)
+	if err != nil {
+		b.Fatal(err)
+	}
+	numst, err := protonum.FieldNamesToNumbers("tests", "TypewriterPrison", tests.TypewriterprisonDescription(), st)
+	if err != nil {
+		b.Fatal(err)
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		Compile(numst)
+	}
+}
+
+func BenchmarkCompileProto(b *testing.B) {
+	st, err := parser.ParseGrammar(typewriterQueryStr)
+	if err != nil {
+		b.Fatal(err)
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		Compile(st)
+	}
 }

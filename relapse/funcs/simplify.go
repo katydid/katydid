@@ -167,6 +167,39 @@ func Simplify(f Bool) Bool {
 					}
 				}
 			}
+		case *uintEq:
+			if vv2, ok := v2.(*uintEq); ok {
+				if vvv1, ok1 := isVarConst(vv1.V1, vv1.V2); ok1 {
+					if vvv2, ok2 := isVarConst(vv2.V1, vv2.V2); ok2 {
+						if vvv1 != vvv2 {
+							return BoolConst(false)
+						}
+					}
+				}
+			}
+			if vv2, ok := v2.(*uintNe); ok {
+				if vvv1, ok1 := isVarConst(vv1.V1, vv1.V2); ok1 {
+					if vvv2, ok2 := isVarConst(vv2.V1, vv2.V2); ok2 {
+						if vvv1 != vvv2 {
+							return v1
+						} else {
+							return BoolConst(false)
+						}
+					}
+				}
+			}
+		case *uintNe:
+			if vv2, ok := v2.(*uintEq); ok {
+				if vvv1, ok1 := isVarConst(vv1.V1, vv1.V2); ok1 {
+					if vvv2, ok2 := isVarConst(vv2.V1, vv2.V2); ok2 {
+						if vvv1 != vvv2 {
+							return v2
+						} else {
+							return BoolConst(false)
+						}
+					}
+				}
+			}
 		}
 		return And(v1, v2)
 	}
