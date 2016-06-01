@@ -15,6 +15,7 @@
 package mem_test
 
 import (
+	"flag"
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/mem"
@@ -26,8 +27,17 @@ type reset interface {
 	Reset() error
 }
 
+var bN = flag.Int("b.N", 0, "the number of times the benchmark function's target code must run")
+
+func init() {
+	flag.Parse()
+}
+
 func bench(b *testing.B, grammar *ast.Grammar, gen func() parser.Interface) {
 	num := 1000
+	if *bN != 0 {
+		b.N = *bN
+	}
 	parsers := make([]reset, num)
 	c := mem.Compile(grammar)
 	for i := 0; i < num; i++ {
