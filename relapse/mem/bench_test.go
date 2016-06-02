@@ -39,7 +39,7 @@ func bench(b *testing.B, grammar *ast.Grammar, gen func() parser.Interface) {
 		b.N = *bN
 	}
 	parsers := make([]reset, num)
-	c := mem.Compile(grammar)
+	m := mem.Compile(grammar)
 	for i := 0; i < num; i++ {
 		p := gen().(reset)
 		parsers[i] = p
@@ -49,6 +49,6 @@ func bench(b *testing.B, grammar *ast.Grammar, gen func() parser.Interface) {
 		if err := parsers[i%num].Reset(); err != nil {
 			b.Fatal(err)
 		}
-		c.Interpret(parsers[i%num])
+		m.Interpret(parsers[i%num])
 	}
 }

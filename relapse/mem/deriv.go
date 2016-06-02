@@ -63,10 +63,10 @@ func deriv(mem *Mem, current int, tree parser.Interface) int {
 	return current
 }
 
-func nullables(refs map[string]*ast.Pattern, patterns []*ast.Pattern) []bool {
-	nulls := make([]bool, len(patterns))
+func nullables(refs map[string]*ast.Pattern, patterns []*ast.Pattern) bitset {
+	nulls := newBitSet(len(patterns))
 	for i, p := range patterns {
-		nulls[i] = interp.Nullable(refs, p)
+		nulls.set(i, interp.Nullable(refs, p))
 	}
 	return nulls
 }

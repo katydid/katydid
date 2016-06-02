@@ -16,16 +16,11 @@ package mem
 
 import (
 	"github.com/katydid/katydid/relapse/ast"
-	"github.com/katydid/katydid/relapse/interp"
 )
 
 //Compile memoizes the full state space, all possible things that can be memoized.
 func Compile(g *ast.Grammar) *Mem {
-	refs := ast.NewRefLookup(g)
-	for name, p := range refs {
-		refs[name] = interp.Simplify(refs, p)
-	}
-	mem := newMem(refs)
+	mem := New(g)
 	changed := true
 	visited := make(map[int]bool)
 	for changed {
@@ -51,7 +46,7 @@ func compile(mem *Mem, current int) {
 	leafs := getLeafs(callTree)
 	for _, leaf := range leafs {
 		childlen := len(mem.patterns[leaf.child])
-		nullablecombos := mcombos(childlen)
+		nullablecombos := getBitsetCombos(childlen)
 		for _, nullablecombo := range nullablecombos {
 			nullIndex := mem.nullables.add(nullablecombo)
 			mem.getReturnn(leaf.stackIndex, nullIndex)
@@ -66,28 +61,4 @@ func getLeafs(callTree *CallNode) []*CallNode {
 	then := getLeafs(callTree.then)
 	els := getLeafs(callTree.els)
 	return append(then, els...)
-}
-
-var m map[int][][]bool = make(map[int][][]bool)
-
-func mcombos(n int) [][]bool {
-	_, ok := m[n]
-	if !ok {
-		m[n] = combos(n)
-	}
-	return m[n]
-}
-
-func combos(n int) [][]bool {
-	if n == 0 {
-		return [][]bool{[]bool{}}
-	}
-	cs := mcombos(n - 1)
-	res := [][]bool{}
-	for _, c := range cs {
-		f := append([]bool{}, append(c, false)...)
-		t := append([]bool{}, append(c, true)...)
-		res = append(append(res, f), t)
-	}
-	return res
 }

@@ -79,33 +79,24 @@ func (this *patternsSet) add(patterns []*ast.Pattern) int {
 	return len(*this) - 1
 }
 
-//boolsSet represents an indexed list of list of booleans.
-//It reverse maps a list of booleans into a single int.
-type boolsSet [][]bool
+//bitsetSet represents an indexed list of bitsets.
+//It reverse maps a bitset into a single int.
+type bitsetSet []bitset
 
-func newBoolsSet() boolsSet {
-	return boolsSet([][]bool{})
+func newBitsetSet() bitsetSet {
+	return bitsetSet([]bitset{})
 }
 
-func (this boolsSet) index(bs []bool) int {
+func (this bitsetSet) index(bs bitset) int {
 	for i, ibs := range this {
-		if len(bs) == len(ibs) {
-			eq := true
-			for j := range ibs {
-				if ibs[j] != bs[j] {
-					eq = false
-					break
-				}
-			}
-			if eq {
-				return i
-			}
+		if ibs.equal(bs) {
+			return i
 		}
 	}
 	return -1
 }
 
-func (this *boolsSet) add(bs []bool) int {
+func (this *bitsetSet) add(bs bitset) int {
 	index := this.index(bs)
 	if index != -1 {
 		return index

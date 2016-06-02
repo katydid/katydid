@@ -64,11 +64,11 @@ func unzip(patterns []*ast.Pattern, indexes []int) []*ast.Pattern {
 	return res
 }
 
-func unzipb(bools []bool, indexes []int) []bool {
+func unzipb(bools bitset, indexes []int) []bool {
 	res := make([]bool, len(indexes))
 	for i, index := range indexes {
 		if index >= 0 {
-			res[i] = bools[index]
+			res[i] = bools.get(index)
 		} else {
 			res[i] = zignoreb[(index+1)*-1]
 		}
