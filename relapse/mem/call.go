@@ -43,7 +43,7 @@ func Implements(c *CallNode, typ reflect.Type) []interface{} {
 	return is
 }
 
-func newMemCallTree(parent int, stackElms *PairIndexedSet, patterns *PatternsIndexedSet, zis *IntsIndexedSet, node *callNode) *CallNode {
+func newMemCallTree(parent int, stackElms *pairSet, patterns *patternsSet, zis *intsSet, node *callNode) *CallNode {
 	if node.term != nil {
 		ps := node.term
 		zps, zi := zip(ps)

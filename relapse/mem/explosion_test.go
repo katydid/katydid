@@ -48,7 +48,7 @@ func TestExplosionAndSameTree(t *testing.T) {
 )
 `
 	// This one causes a state explosion of over 14000 states.
-	// Since we now field names can't repeat the simplifacation above can be made for JSON and proto like serialization formats, but not for XML.
+	// Since we know field names can't repeat the simplifacation above can be made for record (JSON and proto) like serialization formats, but not for XML.
 	// var input = (
 	// 	.A:.B:.DeepLevel:.DeeperLevel:.DeepestLevel:->contains($string,"el") &
 	// 	(
@@ -79,8 +79,8 @@ func TestExplosionAndSameTree(t *testing.T) {
 		panic(err)
 	}
 	mem := Compile(g)
-	t.Logf("number of states %d", len(mem.PatternsMap))
-	if len(mem.PatternsMap) > 1000 {
+	t.Logf("number of states %d", len(mem.patterns))
+	if len(mem.patterns) > 1000 {
 		t.Fatal("number of states exploded")
 	}
 }

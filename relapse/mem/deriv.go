@@ -22,12 +22,7 @@ import (
 	"github.com/katydid/katydid/relapse/interp"
 	nameexpr "github.com/katydid/katydid/relapse/name"
 	"io"
-	"log"
 )
-
-func init() {
-	log.SetFlags(log.Lshortfile)
-}
 
 func escapable(patterns []*ast.Pattern) bool {
 	for _, pattern := range patterns {
@@ -58,9 +53,7 @@ func deriv(mem *Mem, current int, tree parser.Interface) int {
 		}
 		callTree := mem.getCallTree(current)
 		childState, stackElm := callTree.Eval(tree)
-		if tree.IsLeaf() {
-			//do nothing
-		} else {
+		if !tree.IsLeaf() {
 			tree.Down()
 			childState = deriv(mem, childState, tree)
 			tree.Up()

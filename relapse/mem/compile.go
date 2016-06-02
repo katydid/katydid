@@ -15,12 +15,11 @@
 package mem
 
 import (
-	"fmt"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/interp"
 )
 
-//Compile memoizes the full state space (all possible things that can be memoized) before even executing on a parser.
+//Compile memoizes the full state space, all possible things that can be memoized.
 func Compile(g *ast.Grammar) *Mem {
 	refs := ast.NewRefLookup(g)
 	for name, p := range refs {
@@ -31,7 +30,7 @@ func Compile(g *ast.Grammar) *Mem {
 	visited := make(map[int]bool)
 	for changed {
 		changed = false
-		for state := range mem.PatternsMap {
+		for state := range mem.patterns {
 			if visited[state] {
 				continue
 			}
@@ -43,14 +42,6 @@ func Compile(g *ast.Grammar) *Mem {
 	return mem
 }
 
-func prints(prefix string, state int, patterns []*ast.Pattern) {
-	fmt.Printf(prefix+":%d:", state)
-	for _, p := range patterns {
-		fmt.Printf("%v, ", p.String())
-	}
-	fmt.Printf("\n")
-}
-
 func compile(mem *Mem, current int) {
 	mem.getNullable(current)
 	mem.accept(current)
@@ -59,10 +50,10 @@ func compile(mem *Mem, current int) {
 	callTree := mem.getCallTree(current)
 	leafs := getLeafs(callTree)
 	for _, leaf := range leafs {
-		childlen := len(mem.PatternsMap[leaf.child])
+		childlen := len(mem.patterns[leaf.child])
 		nullablecombos := mcombos(childlen)
 		for _, nullablecombo := range nullablecombos {
-			nullIndex := mem.Nullables.add(nullablecombo)
+			nullIndex := mem.nullables.add(nullablecombo)
 			mem.getReturnn(leaf.stackIndex, nullIndex)
 		}
 	}
