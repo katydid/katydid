@@ -19,27 +19,23 @@ package relapse
 import (
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/ast"
-	"github.com/katydid/katydid/relapse/auto"
-	"github.com/katydid/katydid/relapse/interp"
-	relapseParser "github.com/katydid/katydid/relapse/parser"
+	"github.com/katydid/katydid/relapse/mem"
+	relapseparser "github.com/katydid/katydid/relapse/parser"
 )
 
 //Parse parses the relapse string into an ast (abstract syntax tree)
 func Parse(relapse string) (*ast.Grammar, error) {
-	return relapseParser.ParseGrammar(relapse)
+	return relapseparser.ParseGrammar(relapse)
 }
 
-//Interpret validates the parser with the given grammar.
-func Interpret(g *ast.Grammar, p parser.Interface) bool {
-	return interp.Interpret(g, p)
+//Prepare creates a memoizing object given the grammar.
+//The memoizing object is used to memorize any previous states created from previous validations.
+//This results in a more efficient execution each time the memoizing object is used to validate a parser.
+func Prepare(g *ast.Grammar) *mem.Mem {
+	return mem.New(g)
 }
 
-//Compile compiles the grammar into an efficient automaton.
-func Compile(g *ast.Grammar) *auto.Auto {
-	return auto.Compile(g)
-}
-
-//Execute validates the parser with the given automaton.
-func Execute(a *auto.Auto, p parser.Interface) bool {
-	return auto.Execute(a, p)
+//Validate validates the parser with the given memoizing object, containing the grammar, for efficiency.
+func Validate(m *mem.Mem, p parser.Interface) bool {
+	return m.Interpret(p)
 }
