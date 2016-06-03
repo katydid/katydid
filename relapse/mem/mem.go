@@ -72,6 +72,21 @@ type Mem struct {
 	Accept          []bool
 }
 
+func escapable(patterns []*ast.Pattern) bool {
+	for _, pattern := range patterns {
+		if pattern.ZAny != nil {
+			continue
+		}
+		if pattern.Not != nil {
+			if pattern.GetNot().GetPattern().ZAny != nil {
+				continue
+			}
+		}
+		return true
+	}
+	return false
+}
+
 func (this *Mem) escapable(s int) bool {
 	if len(this.Escapables) <= s {
 		for i := len(this.Escapables); i <= s; i++ {
@@ -108,6 +123,14 @@ func (this *Mem) getCallTree(s int) *CallNode {
 	return this.Calls[s]
 }
 
+func nullables(refs map[string]*ast.Pattern, patterns []*ast.Pattern) bitset {
+	nulls := newBitSet(len(patterns))
+	for i, p := range patterns {
+		nulls.set(i, interp.Nullable(refs, p))
+	}
+	return nulls
+}
+
 func (this *Mem) getNullable(s int) int {
 	if len(this.StateToNullable) <= s {
 		for i := len(this.StateToNullable); i <= s; i++ {
@@ -118,6 +141,13 @@ func (this *Mem) getNullable(s int) int {
 		}
 	}
 	return this.StateToNullable[s]
+}
+
+func simps(refs map[string]*ast.Pattern, patterns []*ast.Pattern) []*ast.Pattern {
+	for i := range patterns {
+		patterns[i] = interp.Simplify(refs, patterns[i])
+	}
+	return patterns
 }
 
 func (this *Mem) getReturnn(stackIndex int, nullIndex int) int {

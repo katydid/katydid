@@ -24,21 +24,6 @@ import (
 	"io"
 )
 
-func escapable(patterns []*ast.Pattern) bool {
-	for _, pattern := range patterns {
-		if pattern.ZAny != nil {
-			continue
-		}
-		if pattern.Not != nil {
-			if pattern.GetNot().GetPattern().ZAny != nil {
-				continue
-			}
-		}
-		return true
-	}
-	return false
-}
-
 func deriv(mem *Mem, current int, tree parser.Interface) int {
 	for {
 		if !mem.escapable(current) {
@@ -61,21 +46,6 @@ func deriv(mem *Mem, current int, tree parser.Interface) int {
 		current = mem.getReturn(stackElm, childState)
 	}
 	return current
-}
-
-func nullables(refs map[string]*ast.Pattern, patterns []*ast.Pattern) bitset {
-	nulls := newBitSet(len(patterns))
-	for i, p := range patterns {
-		nulls.set(i, interp.Nullable(refs, p))
-	}
-	return nulls
-}
-
-func simps(refs map[string]*ast.Pattern, patterns []*ast.Pattern) []*ast.Pattern {
-	for i := range patterns {
-		patterns[i] = interp.Simplify(refs, patterns[i])
-	}
-	return patterns
 }
 
 func derivCalls(refs map[string]*ast.Pattern, patterns []*ast.Pattern) []*callable {
