@@ -39,7 +39,7 @@ func bench(b *testing.B, grammar *ast.Grammar, gen func() parser.Interface) {
 		b.N = *bN
 	}
 	parsers := make([]reset, num)
-	m := mem.Compile(grammar)
+	m := mem.New(grammar)
 	for i := 0; i < num; i++ {
 		p := gen().(reset)
 		parsers[i] = p

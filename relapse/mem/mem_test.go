@@ -26,7 +26,7 @@ func test(t *testing.T, g *ast.Grammar, p parser.Interface, expected bool, desc 
 	if interp.HasRecursion(g) {
 		t.Skipf("interp was not designed to handle left recursion")
 	}
-	m := mem.Compile(g)
+	m := mem.New(g)
 	match := m.Interpret(p)
 	if match != expected {
 		t.Fatalf("Expected %v on given \n%s\n on \n%s", expected, g.String(), desc)
