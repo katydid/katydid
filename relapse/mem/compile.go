@@ -46,9 +46,16 @@ func compile(mem *Mem, current int) {
 	leafs := getLeafs(callTree)
 	for _, leaf := range leafs {
 		childlen := len(mem.patterns[leaf.child])
-		nullablecombos := getBitsetCombos(childlen)
-		for _, nullablecombo := range nullablecombos {
-			nullIndex := mem.nullables.add(nullablecombo)
+		combos := uint64(1)
+		if childlen > 0 {
+			// pow(2, childlen)
+			combos = combos << uint(childlen)
+		}
+		for combo := uint64(0); combo < combos; combo++ {
+			nullIndex := mem.nullables.add(bitset{
+				val: combo,
+				size: childlen,
+			})
 			mem.getReturnn(leaf.stackIndex, nullIndex)
 		}
 	}

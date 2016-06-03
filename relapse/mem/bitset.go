@@ -14,8 +14,6 @@
 
 package mem
 
-import "math"
-
 type bitset struct {
 	val  uint64
 	size int
@@ -68,35 +66,3 @@ func (this bitset) equal(that bitset) bool {
 	return this == that
 }
 
-func getBitsetCombos(n int) []bitset {
-	if n < len(cachedBitSets) {
-		return cachedBitSets[n]
-	}
-	return newBitsetCombos(n)
-}
-
-var cachedBitSets [][]bitset = [][]bitset{
-	0: newBitsetCombos(0),
-	1: newBitsetCombos(1),
-	2: newBitsetCombos(2),
-	3: newBitsetCombos(3),
-	4: newBitsetCombos(4),
-	5: newBitsetCombos(5),
-	6: newBitsetCombos(6),
-	7: newBitsetCombos(7),
-}
-
-func newBitsetCombos(n int) []bitset {
-	if n == 0 {
-		return []bitset{newBitSet(0)}
-	}
-	max := uint64(math.Pow(2, float64(n)))
-	bs := make([]bitset, max)
-	for i := uint64(0); i < uint64(max); i++ {
-		bs[i] = bitset{
-			val:  i,
-			size: n,
-		}
-	}
-	return bs
-}
