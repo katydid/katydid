@@ -30,16 +30,16 @@ func New(g *ast.Grammar) *Mem {
 		refs[name] = interp.Simplify(refs, p)
 	}
 	m := &Mem{
-		refs:       refs,
-		patterns:   newPatternsSet(),
-		Calls:      []*CallNode{},
-		Returns:    []map[int]int{},
-		Escapables: []bool{},
-		zis:        newIntsSet(),
+		refs:      refs,
+		patterns:  newPatternsSet(),
+		zis:       newIntsSet(),
+		stackElms: newPairSet(),
+		nullables: newBitsetSet(),
 
-		stackElms:       newPairSet(),
+		Calls:           []*CallNode{},
+		Returns:         []map[int]int{},
+		Escapables:      []bool{},
 		StateToNullable: []int{},
-		nullables:       newBitsetSet(),
 		Accept:          []bool{},
 	}
 	start := m.patterns.add([]*ast.Pattern{refs["main"]})
@@ -59,16 +59,17 @@ func (mem *Mem) Interpret(p parser.Interface) bool {
 //Mem is the structure containing the memoized grammar.
 //TODO make more private fields.
 type Mem struct {
-	refs            map[string]*ast.Pattern
-	patterns        patternsSet
+	refs      map[string]*ast.Pattern
+	patterns  patternsSet
+	zis       intsSet
+	stackElms pairSet
+	nullables bitsetSet
+
+	Start           int
 	Calls           []*CallNode
 	Returns         []map[int]int
 	Escapables      []bool
-	zis             intsSet
-	Start           int
-	stackElms       pairSet
 	StateToNullable []int
-	nullables       bitsetSet
 	Accept          []bool
 }
 
@@ -87,39 +88,45 @@ func escapable(patterns []*ast.Pattern) bool {
 	return false
 }
 
-func (this *Mem) escapable(s int) bool {
-	if len(this.Escapables) <= s {
-		for i := len(this.Escapables); i <= s; i++ {
-			patterns := this.patterns[i]
-			this.Escapables = append(this.Escapables, escapable(patterns))
-		}
+func (this *Mem) calcEscapables(upto int) {
+	for i := len(this.Escapables); i <= upto; i++ {
+		patterns := this.patterns[i]
+		this.Escapables = append(this.Escapables, escapable(patterns))
 	}
+}
+
+func (this *Mem) escapable(s int) bool {
+	this.calcEscapables(s)
 	return this.Escapables[s]
 }
 
-func (this *Mem) accept(s int) bool {
-	if len(this.Accept) <= s {
-		for i := len(this.Accept); i <= s; i++ {
-			patterns := this.patterns[i]
-			if len(patterns) != 1 {
-				this.Accept = append(this.Accept, false)
-			} else {
-				this.Accept = append(this.Accept, interp.Nullable(this.refs, patterns[0]))
-			}
+func (this *Mem) calcAccepts(upto int) {
+	for i := len(this.Accept); i <= upto; i++ {
+		patterns := this.patterns[i]
+		if len(patterns) != 1 {
+			this.Accept = append(this.Accept, false)
+		} else {
+			this.Accept = append(this.Accept, interp.Nullable(this.refs, patterns[0]))
 		}
 	}
+}
+
+func (this *Mem) accept(s int) bool {
+	this.calcAccepts(s)
 	return this.Accept[s]
 }
 
-func (this *Mem) getCallTree(s int) *CallNode {
-	if len(this.Calls) <= s {
-		for i := len(this.Calls); i <= s; i++ {
-			callables := derivCalls(this.refs, this.patterns[i])
-			callTree := newCallTree(callables)
-			memCallTree := newMemCallTree(s, &this.stackElms, &this.patterns, &this.zis, callTree)
-			this.Calls = append(this.Calls, memCallTree)
-		}
+func (this *Mem) calcCallTrees(upto int) {
+	for i := len(this.Calls); i <= upto; i++ {
+		callables := derivCalls(this.refs, this.patterns[i])
+		callTree := newCallTree(callables)
+		memCallTree := newMemCallTree(i, &this.stackElms, &this.patterns, &this.zis, callTree)
+		this.Calls = append(this.Calls, memCallTree)
 	}
+}
+
+func (this *Mem) getCallTree(s int) *CallNode {
+	this.calcCallTrees(s)
 	return this.Calls[s]
 }
 
@@ -131,15 +138,17 @@ func nullables(refs map[string]*ast.Pattern, patterns []*ast.Pattern) bitset {
 	return nulls
 }
 
-func (this *Mem) getNullable(s int) int {
-	if len(this.StateToNullable) <= s {
-		for i := len(this.StateToNullable); i <= s; i++ {
-			childPatterns := this.patterns[s]
-			nullable := nullables(this.refs, childPatterns)
-			nullIndex := this.nullables.add(nullable)
-			this.StateToNullable = append(this.StateToNullable, nullIndex)
-		}
+func (this *Mem) calcNullables(upto int) {
+	for i := len(this.StateToNullable); i <= upto; i++ {
+		childPatterns := this.patterns[i]
+		nullable := nullables(this.refs, childPatterns)
+		nullIndex := this.nullables.add(nullable)
+		this.StateToNullable = append(this.StateToNullable, nullIndex)
 	}
+}
+
+func (this *Mem) getNullable(s int) int {
+	this.calcNullables(s)
 	return this.StateToNullable[s]
 }
 

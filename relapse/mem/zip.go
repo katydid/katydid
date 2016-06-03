@@ -19,7 +19,7 @@ import (
 )
 
 var (
-	zignore = []*ast.Pattern{
+	zipIgnoreSet = []*ast.Pattern{
 		ast.NewZAny(),
 		ast.NewNot(ast.NewZAny()),
 	}
@@ -30,26 +30,26 @@ var (
 )
 
 func zip(patterns []*ast.Pattern) ([]*ast.Pattern, []int) {
-	zipped := ast.Set(patterns)
-	ast.Sort(zipped)
+	set := ast.Set(patterns)
+	ast.Sort(set)
 
-	if index := ast.Index(zipped, zignore[0]); index != -1 {
-		zipped = ast.Remove(zipped, index)
+	if index := ast.Index(set, zipIgnoreSet[0]); index != -1 {
+		set = ast.Remove(set, index)
 	}
-	if index := ast.Index(zipped, zignore[1]); index != -1 {
-		zipped = ast.Remove(zipped, index)
+	if index := ast.Index(set, zipIgnoreSet[1]); index != -1 {
+		set = ast.Remove(set, index)
 	}
 	indexes := make([]int, len(patterns))
 	for i, pattern := range patterns {
-		index := ast.Index(zipped, pattern)
+		index := ast.Index(set, pattern)
 		if index == -1 {
-			index = ast.Index(zignore, pattern)
+			index = ast.Index(zipIgnoreSet, pattern)
 			index *= -1
 			index -= 1
 		}
 		indexes[i] = index
 	}
-	return zipped, indexes
+	return set, indexes
 }
 
 func unzip(patterns []*ast.Pattern, indexes []int) []*ast.Pattern {
@@ -58,7 +58,7 @@ func unzip(patterns []*ast.Pattern, indexes []int) []*ast.Pattern {
 		if index >= 0 {
 			res[i] = patterns[index]
 		} else {
-			res[i] = zignore[(index+1)*-1]
+			res[i] = zipIgnoreSet[(index+1)*-1]
 		}
 	}
 	return res
