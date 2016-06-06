@@ -32,7 +32,10 @@ func bench(b *testing.B, grammar *ast.Grammar, gen func() parser.Interface) {
 	for i := 0; i < num; i++ {
 		parsers[i] = gen().(reset)
 	}
-	a := auto.Compile(grammar)
+	a, err := auto.Compile(grammar)
+	if err != nil {
+		b.Fatal(err)
+	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		if err := parsers[i%num].Reset(); err != nil {

@@ -62,7 +62,10 @@ var injectPerson = G{}
 
 func testInject(t *testing.T, num int64) bool {
 	grammar := injectPerson.Grammar()
-	a := auto.Compile(grammar)
+	a, err := auto.Compile(grammar)
+	if err != nil {
+		t.Fatal(err)
+	}
 	typ := reflect.TypeOf((*InjectableInt)(nil)).Elem()
 	instances := auto.Implements(a, typ)
 	if len(instances) == 0 {
@@ -73,7 +76,11 @@ func testInject(t *testing.T, num int64) bool {
 	}
 	parser := reflectparser.NewReflectParser()
 	parser.Init(reflect.ValueOf(tests.RobertPerson))
-	return auto.Execute(a, parser)
+	res, err := auto.Execute(a, parser)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return res
 }
 
 func TestInjectPositive(t *testing.T) {

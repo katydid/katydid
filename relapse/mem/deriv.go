@@ -24,62 +24,80 @@ import (
 	"io"
 )
 
-func deriv(mem *Mem, current int, tree parser.Interface) int {
+func deriv(mem *Mem, current int, tree parser.Interface) (int, error) {
 	for {
 		if !mem.escapable(current) {
-			return current
+			return current, nil
 		}
 		if err := tree.Next(); err != nil {
 			if err == io.EOF {
 				break
 			} else {
-				panic(err)
+				return 0, err
 			}
 		}
-		callTree := mem.getCallTree(current)
-		childState, stackElm := callTree.Eval(tree)
+		callTree, err := mem.getCallTree(current)
+		if err != nil {
+			return 0, err
+		}
+		childState, stackElm, err := callTree.Eval(tree)
+		if err != nil {
+			return 0, err
+		}
 		if !tree.IsLeaf() {
 			tree.Down()
-			childState = deriv(mem, childState, tree)
+			childState, err = deriv(mem, childState, tree)
+			if err != nil {
+				return 0, err
+			}
 			tree.Up()
 		}
 		current = mem.getReturn(stackElm, childState)
 	}
-	return current
+	return current, nil
 }
 
-func derivCalls(refs map[string]*ast.Pattern, patterns []*ast.Pattern) []*callable {
+func derivCalls(refs map[string]*ast.Pattern, patterns []*ast.Pattern) ([]*callable, error) {
 	res := []*callable{}
 	for _, pattern := range patterns {
-		cs := derivCall(refs, pattern)
+		cs, err := derivCall(refs, pattern)
+		if err != nil {
+			return nil, err
+		}
 		res = append(res, cs...)
 	}
-	return res
+	return res, nil
 }
 
-func derivCall(refs map[string]*ast.Pattern, p *ast.Pattern) []*callable {
+func derivCall(refs map[string]*ast.Pattern, p *ast.Pattern) ([]*callable, error) {
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *ast.Empty:
-		return []*callable{}
+		return []*callable{}, nil
 	case *ast.ZAny:
-		return []*callable{}
+		return []*callable{}, nil
 	case *ast.TreeNode:
 		b := nameexpr.NameToFunc(v.GetName())
-		return []*callable{&callable{b, v.GetPattern(), ast.NewNot(ast.NewZAny())}}
+		return []*callable{&callable{b, v.GetPattern(), ast.NewNot(ast.NewZAny())}}, nil
 	case *ast.LeafNode:
 		b, err := compose.NewBool(v.GetExpr())
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
-		return []*callable{&callable{b, ast.NewEmpty(), ast.NewNot(ast.NewZAny())}}
+		return []*callable{&callable{b, ast.NewEmpty(), ast.NewNot(ast.NewZAny())}}, nil
 	case *ast.Concat:
-		l := derivCall(refs, v.GetLeftPattern())
-		if !interp.Nullable(refs, v.GetLeftPattern()) {
-			return l
+		l, err := derivCall(refs, v.GetLeftPattern())
+		if err != nil {
+			return nil, err
 		}
-		r := derivCall(refs, v.GetRightPattern())
-		return append(l, r...)
+		if !interp.Nullable(refs, v.GetLeftPattern()) {
+			return l, nil
+		}
+		r, err := derivCall(refs, v.GetRightPattern())
+		if err != nil {
+			return nil, err
+		}
+		return append(l, r...), nil
 	case *ast.Or:
 		return derivCall2(refs, v.GetLeftPattern(), v.GetRightPattern())
 	case *ast.And:
@@ -100,10 +118,16 @@ func derivCall(refs map[string]*ast.Pattern, p *ast.Pattern) []*callable {
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
 
-func derivCall2(refs map[string]*ast.Pattern, left, right *ast.Pattern) []*callable {
-	l := derivCall(refs, left)
-	r := derivCall(refs, right)
-	return append(l, r...)
+func derivCall2(refs map[string]*ast.Pattern, left, right *ast.Pattern) ([]*callable, error) {
+	l, err := derivCall(refs, left)
+	if err != nil {
+		return nil, err
+	}
+	r, err := derivCall(refs, right)
+	if err != nil {
+		return nil, err
+	}
+	return append(l, r...), nil
 }
 
 func derivReturns(refs map[string]*ast.Pattern, originals []*ast.Pattern, nullable []bool) []*ast.Pattern {

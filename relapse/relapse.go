@@ -36,6 +36,6 @@ func Prepare(g *ast.Grammar) *mem.Mem {
 }
 
 //Validate validates the parser with the given memoizing object, containing the grammar, for efficiency.
-func Validate(m *mem.Mem, p parser.Interface) bool {
+func Validate(m *mem.Mem, p parser.Interface) (bool, error) {
 	return m.Interpret(p)
 }

@@ -51,9 +51,12 @@ func New(g *ast.Grammar) *Mem {
 //The intermediate results are memoized to help with the speed of future executions.
 //
 //NOTE: This is a naive implementation and it does not handle left recursion.
-func (mem *Mem) Interpret(p parser.Interface) bool {
-	final := deriv(mem, mem.Start, p)
-	return mem.accept(final)
+func (mem *Mem) Interpret(p parser.Interface) (bool, error) {
+	final, err := deriv(mem, mem.Start, p)
+	if err != nil {
+		return false, err
+	}
+	return mem.accept(final), nil
 }
 
 //Mem is the structure containing the memoized grammar.
@@ -116,18 +119,27 @@ func (this *Mem) accept(s int) bool {
 	return this.Accept[s]
 }
 
-func (this *Mem) calcCallTrees(upto int) {
+func (this *Mem) calcCallTrees(upto int) error {
 	for i := len(this.Calls); i <= upto; i++ {
-		callables := derivCalls(this.refs, this.patterns[i])
+		callables, err := derivCalls(this.refs, this.patterns[i])
+		if err != nil {
+			return err
+		}
 		callTree := newCallTree(callables)
-		memCallTree := newMemCallTree(i, &this.stackElms, &this.patterns, &this.zis, callTree)
+		memCallTree, err := newMemCallTree(i, &this.stackElms, &this.patterns, &this.zis, callTree)
+		if err != nil {
+			return err
+		}
 		this.Calls = append(this.Calls, memCallTree)
 	}
+	return nil
 }
 
-func (this *Mem) getCallTree(s int) *CallNode {
-	this.calcCallTrees(s)
-	return this.Calls[s]
+func (this *Mem) getCallTree(s int) (*CallNode, error) {
+	if err := this.calcCallTrees(s); err != nil {
+		return nil, err
+	}
+	return this.Calls[s], nil
 }
 
 func nullables(refs map[string]*ast.Pattern, patterns []*ast.Pattern) bitset {

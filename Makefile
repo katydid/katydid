@@ -58,6 +58,10 @@ nuke: clean
 gofmt:
 	gofmt -l -s -w .
 
+errcheck:
+	go get github.com/kisielk/errcheck
+	errcheck ./...
+
 drone:
 	sudo apt-get install protobuf-compiler
 	sudo apt-get install graphviz

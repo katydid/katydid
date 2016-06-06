@@ -26,8 +26,14 @@ func test(t *testing.T, g *ast.Grammar, p parser.Interface, expected bool, desc 
 	if interp.HasRecursion(g) {
 		t.Skipf("convert was not designed to handle recursion")
 	}
-	a := auto.Compile(g)
-	match := auto.Execute(a, p)
+	a, err := auto.Compile(g)
+	if err != nil {
+		t.Fatal(err)
+	}
+	match, err := auto.Execute(a, p)
+	if err != nil {
+		t.Fatal(err)
+	}
 	if match != expected {
 		t.Fatalf("Expected %v on given \n%s\n on \n%s", expected, g.String(), desc)
 	}

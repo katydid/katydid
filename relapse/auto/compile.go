@@ -20,8 +20,11 @@ import (
 )
 
 //Compile compiles a parsed relapse grammar ast into a visual pushdown automaton.
-func Compile(g *ast.Grammar) *Auto {
-	m := mem.Compile(g)
+func Compile(g *ast.Grammar) (*Auto, error) {
+	m, err := mem.Compile(g)
+	if err != nil {
+		return nil, err
+	}
 	a := &Auto{
 		calls:           m.Calls,
 		returns:         newReturns(m.Returns),
@@ -30,7 +33,7 @@ func Compile(g *ast.Grammar) *Auto {
 		stateToNullable: m.StateToNullable,
 		accept:          m.Accept,
 	}
-	return a
+	return a, nil
 }
 
 func newReturns(m []map[int]int) []intmap {

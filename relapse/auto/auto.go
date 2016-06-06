@@ -33,9 +33,12 @@ type Auto struct {
 }
 
 //Execute executes an automaton with the given parser and returns whether the parser is valid given the automaton's original grammar.
-func Execute(auto *Auto, p parser.Interface) bool {
-	final := deriv(auto, auto.start, p)
-	return auto.accept[final]
+func Execute(auto *Auto, p parser.Interface) (bool, error) {
+	final, err := deriv(auto, auto.start, p)
+	if err != nil {
+		return false, err
+	}
+	return auto.accept[final], nil
 }
 
 //Implements returns all funcs in the compiled automaton that implements a specific interface.
@@ -48,27 +51,33 @@ func Implements(auto *Auto, typ reflect.Type) []interface{} {
 	return allis
 }
 
-func deriv(auto *Auto, current int, tree parser.Interface) int {
+func deriv(auto *Auto, current int, tree parser.Interface) (int, error) {
 	for {
 		if !auto.escapables[current] {
-			return current
+			return current, nil
 		}
 		if err := tree.Next(); err != nil {
 			if err == io.EOF {
 				break
 			} else {
-				panic(err)
+				return 0, err
 			}
 		}
 		callTree := auto.calls[current]
-		childState, stackElm := callTree.Eval(tree)
+		childState, stackElm, err := callTree.Eval(tree)
+		if err != nil {
+			return 0, err
+		}
 		if !tree.IsLeaf() {
 			tree.Down()
-			childState = deriv(auto, childState, tree)
+			childState, err = deriv(auto, childState, tree)
+			if err != nil {
+				return 0, err
+			}
 			tree.Up()
 		}
 		nullIndex := auto.stateToNullable[childState]
 		current = auto.returns[stackElm].lookup(nullIndex)
 	}
-	return current
+	return current, nil
 }

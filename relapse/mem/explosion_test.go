@@ -76,9 +76,12 @@ func TestExplosionAndSameTree(t *testing.T) {
 	// )
 	g, err := parser.ParseGrammar(input)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
-	mem := Compile(g)
+	mem, err := Compile(g)
+	if err != nil {
+		t.Fatal(err)
+	}
 	t.Logf("number of states %d", len(mem.patterns))
 	if len(mem.patterns) > 1000 {
 		t.Fatal("number of states exploded")

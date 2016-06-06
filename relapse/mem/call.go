@@ -43,24 +43,30 @@ func Implements(c *CallNode, typ reflect.Type) []interface{} {
 	return is
 }
 
-func newMemCallTree(parent int, stackElms *pairSet, patterns *patternsSet, zis *intsSet, node *callNode) *CallNode {
+func newMemCallTree(parent int, stackElms *pairSet, patterns *patternsSet, zis *intsSet, node *callNode) (*CallNode, error) {
 	if node.term != nil {
 		ps := node.term
 		zps, zi := zip(ps)
 		stackIndex := stackElms.add(stackElm{State: parent, Zindex: zis.add(zi)})
-		return &CallNode{child: patterns.add(zps), stackIndex: stackIndex}
+		return &CallNode{child: patterns.add(zps), stackIndex: stackIndex}, nil
 	}
-	then := newMemCallTree(parent, stackElms, patterns, zis, node.then)
-	els := newMemCallTree(parent, stackElms, patterns, zis, node.els)
+	then, err := newMemCallTree(parent, stackElms, patterns, zis, node.then)
+	if err != nil {
+		return nil, err
+	}
+	els, err := newMemCallTree(parent, stackElms, patterns, zis, node.els)
+	if err != nil {
+		return nil, err
+	}
 	f, err := compose.NewBoolFunc(node.cond)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	return &CallNode{
 		cond: f,
 		then: then,
 		els:  els,
-	}
+	}, nil
 }
 
 func getAllConditions(c *CallNode) []compose.Bool {
@@ -78,13 +84,13 @@ func getAllConditions(c *CallNode) []compose.Bool {
 }
 
 //Eval evaluates the call tree returning the child state and stack element given the label value of the parser element.
-func (this *CallNode) Eval(label parser.Value) (int, int) {
+func (this *CallNode) Eval(label parser.Value) (int, int, error) {
 	if this.cond == nil {
-		return this.child, this.stackIndex
+		return this.child, this.stackIndex, nil
 	}
 	cond, err := this.cond.Eval(label)
 	if err != nil {
-		panic(err)
+		return 0, 0, err
 	}
 	if cond {
 		return this.then.Eval(label)
@@ -121,17 +127,17 @@ func (this *callNode) String() string {
 	return "{\n" + sfunc + "\nThen:\n" + sthen + "\nElse:\n" + sels + "}"
 }
 
-func (this *callNode) eval(label parser.Value) []*ast.Pattern {
+func (this *callNode) eval(label parser.Value) ([]*ast.Pattern, error) {
 	if this.term != nil {
-		return this.term
+		return this.term, nil
 	}
 	f, err := compose.NewBoolFunc(this.cond)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	cond, err := f.Eval(label)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	if cond {
 		return this.then.eval(label)
@@ -235,20 +241,20 @@ type callable struct {
 	els  *ast.Pattern
 }
 
-func (this *callable) eval(label parser.Value) *ast.Pattern {
+func (this *callable) eval(label parser.Value) (*ast.Pattern, error) {
 	if this.els == nil {
-		return this.then
+		return this.then, nil
 	}
 	f, err := compose.NewBoolFunc(this.cond)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	cond, err := f.Eval(label)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	if cond {
-		return this.then
+		return this.then, nil
 	}
-	return this.els
+	return this.els, nil
 }

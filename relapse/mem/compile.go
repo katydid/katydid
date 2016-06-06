@@ -19,7 +19,7 @@ import (
 )
 
 //Compile memoizes the full state space, all possible things that can be memoized.
-func Compile(g *ast.Grammar) *Mem {
+func Compile(g *ast.Grammar) (*Mem, error) {
 	mem := New(g)
 	changed := true
 	visited := make(map[int]bool)
@@ -30,19 +30,24 @@ func Compile(g *ast.Grammar) *Mem {
 				continue
 			}
 			visited[state] = true
-			compile(mem, state)
+			if err := compile(mem, state); err != nil {
+				return nil, err
+			}
 			changed = true
 		}
 	}
-	return mem
+	return mem, nil
 }
 
-func compile(mem *Mem, current int) {
+func compile(mem *Mem, current int) error {
 	mem.getNullable(current)
 	mem.accept(current)
 	mem.escapable(current)
 
-	callTree := mem.getCallTree(current)
+	callTree, err := mem.getCallTree(current)
+	if err != nil {
+		return err
+	}
 	leafs := getLeafs(callTree)
 	for _, leaf := range leafs {
 		childlen := len(mem.patterns[leaf.child])
@@ -53,12 +58,13 @@ func compile(mem *Mem, current int) {
 		}
 		for combo := uint64(0); combo < combos; combo++ {
 			nullIndex := mem.nullables.add(bitset{
-				val: combo,
+				val:  combo,
 				size: childlen,
 			})
 			mem.getReturnn(leaf.stackIndex, nullIndex)
 		}
 	}
+	return nil
 }
 
 func getLeafs(callTree *CallNode) []*CallNode {

@@ -75,7 +75,8 @@ func simplify(refs ast.RefLookup, p *ast.Pattern, top bool) *ast.Pattern {
 	case *ast.LeafNode:
 		b, err := compose.NewBool(v.GetExpr())
 		if err != nil {
-			panic(err)
+			//Don't simplify if there is an error to keep this function signature simple.
+			return p
 		}
 		if funcs.IsFalse(b) {
 			return ast.NewNot(ast.NewZAny())

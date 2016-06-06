@@ -32,10 +32,13 @@ func init() {
 //Interpret uses derivatives and simplification to recusively derive the resulting grammar.
 //This resulting grammar's nullability then represents the result of the function.
 //This implementation does not handle immediate recursion, see the HasRecursion function.
-func Interpret(g *ast.Grammar, parser parser.Interface) bool {
+func Interpret(g *ast.Grammar, parser parser.Interface) (bool, error) {
 	refs := ast.NewRefLookup(g)
-	finals := deriv(refs, []*ast.Pattern{refs["main"]}, parser)
-	return Nullable(refs, finals[0])
+	finals, err := deriv(refs, []*ast.Pattern{refs["main"]}, parser)
+	if err != nil {
+		return false, err
+	}
+	return Nullable(refs, finals[0]), nil
 }
 
 func escapable(patterns []*ast.Pattern) bool {
@@ -53,33 +56,39 @@ func escapable(patterns []*ast.Pattern) bool {
 	return false
 }
 
-func deriv(refs map[string]*ast.Pattern, patterns []*ast.Pattern, tree parser.Interface) []*ast.Pattern {
+func deriv(refs map[string]*ast.Pattern, patterns []*ast.Pattern, tree parser.Interface) ([]*ast.Pattern, error) {
 	var resPatterns []*ast.Pattern = patterns
 	for {
 		if !escapable(resPatterns) {
-			return resPatterns
+			return resPatterns, nil
 		}
 		if err := tree.Next(); err != nil {
 			if err == io.EOF {
 				break
 			} else {
-				panic(err)
+				return nil, err
 			}
 		}
-		childPatterns := derivCalls(refs, resPatterns, tree)
+		childPatterns, err := derivCalls(refs, resPatterns, tree)
+		if err != nil {
+			return nil, err
+		}
 		if tree.IsLeaf() {
 			//do nothing
 		} else {
 			tree.Down()
 			zchild, zi := zip(childPatterns)
-			zchild = deriv(refs, zchild, tree)
+			zchild, err = deriv(refs, zchild, tree)
+			if err != nil {
+				return nil, err
+			}
 			childPatterns = unzip(zchild, zi)
 			tree.Up()
 		}
 		resPatterns = derivReturns(refs, resPatterns, childPatterns)
 		resPatterns = simps(refs, resPatterns)
 	}
-	return resPatterns
+	return resPatterns, nil
 }
 
 func simps(refs map[string]*ast.Pattern, patterns []*ast.Pattern) []*ast.Pattern {
@@ -107,61 +116,70 @@ func unzip(patterns []*ast.Pattern, indexes []int) []*ast.Pattern {
 	return res
 }
 
-func derivCalls(refs map[string]*ast.Pattern, patterns []*ast.Pattern, label parser.Value) []*ast.Pattern {
+func derivCalls(refs map[string]*ast.Pattern, patterns []*ast.Pattern, label parser.Value) ([]*ast.Pattern, error) {
 	res := []*ast.Pattern{}
 	for _, pattern := range patterns {
-		ps := derivCall(refs, pattern, label)
+		ps, err := derivCall(refs, pattern, label)
+		if err != nil {
+			return nil, err
+		}
 		ps = simps(refs, ps)
 		res = append(res, ps...)
 	}
-	return res
+	return res, nil
 }
 
-func derivCall(refs map[string]*ast.Pattern, p *ast.Pattern, label parser.Value) []*ast.Pattern {
+func derivCall(refs map[string]*ast.Pattern, p *ast.Pattern, label parser.Value) ([]*ast.Pattern, error) {
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *ast.Empty:
-		return []*ast.Pattern{}
+		return []*ast.Pattern{}, nil
 	case *ast.ZAny:
-		return []*ast.Pattern{}
+		return []*ast.Pattern{}, nil
 	case *ast.TreeNode:
 		b := nameexpr.NameToFunc(v.GetName())
 		f, err := compose.NewBoolFunc(b)
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
 		eval, err := f.Eval(label)
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
 		if eval {
-			return []*ast.Pattern{v.GetPattern()}
+			return []*ast.Pattern{v.GetPattern()}, nil
 		}
-		return []*ast.Pattern{ast.NewNot(ast.NewZAny())}
+		return []*ast.Pattern{ast.NewNot(ast.NewZAny())}, nil
 	case *ast.LeafNode:
 		b, err := compose.NewBool(v.GetExpr())
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
 		f, err := compose.NewBoolFunc(b)
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
 		eval, err := f.Eval(label)
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
 		if eval {
-			return []*ast.Pattern{ast.NewEmpty()}
+			return []*ast.Pattern{ast.NewEmpty()}, nil
 		}
-		return []*ast.Pattern{ast.NewNot(ast.NewZAny())}
+		return []*ast.Pattern{ast.NewNot(ast.NewZAny())}, nil
 	case *ast.Concat:
-		l := derivCall(refs, v.GetLeftPattern(), label)
-		if !Nullable(refs, v.GetLeftPattern()) {
-			return l
+		l, err := derivCall(refs, v.GetLeftPattern(), label)
+		if err != nil {
+			return nil, err
 		}
-		r := derivCall(refs, v.GetRightPattern(), label)
-		return append(l, r...)
+		if !Nullable(refs, v.GetLeftPattern()) {
+			return l, nil
+		}
+		r, err := derivCall(refs, v.GetRightPattern(), label)
+		if err != nil {
+			return nil, err
+		}
+		return append(l, r...), nil
 	case *ast.Or:
 		return derivCall2(refs, v.GetLeftPattern(), v.GetRightPattern(), label)
 	case *ast.And:
@@ -182,10 +200,16 @@ func derivCall(refs map[string]*ast.Pattern, p *ast.Pattern, label parser.Value)
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
 
-func derivCall2(refs map[string]*ast.Pattern, left, right *ast.Pattern, label parser.Value) []*ast.Pattern {
-	l := derivCall(refs, left, label)
-	r := derivCall(refs, right, label)
-	return append(l, r...)
+func derivCall2(refs map[string]*ast.Pattern, left, right *ast.Pattern, label parser.Value) ([]*ast.Pattern, error) {
+	l, err := derivCall(refs, left, label)
+	if err != nil {
+		return nil, err
+	}
+	r, err := derivCall(refs, right, label)
+	if err != nil {
+		return nil, err
+	}
+	return append(l, r...), nil
 }
 
 func derivReturns(refs map[string]*ast.Pattern, originals []*ast.Pattern, evaluated []*ast.Pattern) []*ast.Pattern {
