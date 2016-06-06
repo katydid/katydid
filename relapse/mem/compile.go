@@ -20,7 +20,10 @@ import (
 
 //Compile memoizes the full state space, all possible things that can be memoized.
 func Compile(g *ast.Grammar) (*Mem, error) {
-	mem := New(g)
+	mem, err := New(g)
+	if err != nil {
+		return nil, err
+	}
 	changed := true
 	visited := make(map[int]bool)
 	for changed {

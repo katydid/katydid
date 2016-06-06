@@ -12,29 +12,31 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package mem_test
+package mem
 
 import (
-	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/ast"
-	"github.com/katydid/katydid/relapse/interp"
-	"github.com/katydid/katydid/relapse/mem"
-	"testing"
+	"github.com/katydid/katydid/relapse/compose"
+	"github.com/katydid/katydid/relapse/funcs"
 )
 
-func test(t *testing.T, g *ast.Grammar, p parser.Interface, expected bool, desc string) {
-	if interp.HasRecursion(g) {
-		t.Skipf("interp was not designed to handle left recursion")
+type exprToFunc struct {
+	m   map[*ast.Expr]funcs.Bool
+	err error
+}
+
+func (this *exprToFunc) Visit(node interface{}) interface{} {
+	if this.err != nil {
+		return this
 	}
-	m, err := mem.New(g)
-	if err != nil {
-		t.Fatal(err)
+	leaf, ok := node.(*ast.LeafNode)
+	if ok {
+		f, err := compose.NewBool(leaf.Expr)
+		if err != nil {
+			this.err = err
+			return this
+		}
+		this.m[leaf.Expr] = f
 	}
-	match, err := m.Interpret(p)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if match != expected {
-		t.Fatalf("Expected %v on given \n%s\n on \n%s", expected, g.String(), desc)
-	}
+	return this
 }

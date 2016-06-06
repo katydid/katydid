@@ -45,7 +45,7 @@ func Execute(auto *Auto, p parser.Interface) (bool, error) {
 func Implements(auto *Auto, typ reflect.Type) []interface{} {
 	allis := []interface{}{}
 	for _, call := range auto.calls {
-		is := mem.Implements(call, typ)
+		is := call.Implements(typ)
 		allis = append(allis, is...)
 	}
 	return allis

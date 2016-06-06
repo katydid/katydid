@@ -31,7 +31,7 @@ func Parse(relapse string) (*ast.Grammar, error) {
 //Prepare creates a memoizing object given the grammar.
 //The memoizing object is used to memorize any previous states created from previous validations.
 //This results in a more efficient execution each time the memoizing object is used to validate a parser.
-func Prepare(g *ast.Grammar) *mem.Mem {
+func Prepare(g *ast.Grammar) (*mem.Mem, error) {
 	return mem.New(g)
 }
 

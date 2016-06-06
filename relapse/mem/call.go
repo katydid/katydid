@@ -33,8 +33,17 @@ type CallNode struct {
 	stackIndex int
 }
 
+func Implements(mem *Mem, typ reflect.Type) []interface{} {
+	allis := []interface{}{}
+	for _, f := range mem.funcs {
+		is := compose.FuncImplements(f, typ)
+		allis = append(allis, is...)
+	}
+	return allis
+}
+
 //Implements returns all funcs that implements a given type.
-func Implements(c *CallNode, typ reflect.Type) []interface{} {
+func (c *CallNode) Implements(typ reflect.Type) []interface{} {
 	var is []interface{}
 	fs := getAllConditions(c)
 	for _, f := range fs {

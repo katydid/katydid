@@ -20,17 +20,19 @@ package mem
 import (
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse/funcs"
 	"github.com/katydid/katydid/relapse/interp"
 )
 
 //New creates a new memoizable grammar.
-func New(g *ast.Grammar) *Mem {
+func New(g *ast.Grammar) (*Mem, error) {
 	refs := ast.NewRefLookup(g)
 	for name, p := range refs {
 		refs[name] = interp.Simplify(refs, p)
 	}
 	m := &Mem{
-		refs:      refs,
+		refs: refs,
+
 		patterns:  newPatternsSet(),
 		zis:       newIntsSet(),
 		stackElms: newPairSet(),
@@ -43,8 +45,16 @@ func New(g *ast.Grammar) *Mem {
 		Accept:          []bool{},
 	}
 	start := m.patterns.add([]*ast.Pattern{refs["main"]})
+	e := &exprToFunc{m: make(map[*ast.Expr]funcs.Bool)}
+	for _, p := range refs {
+		p.Walk(e)
+		if e.err != nil {
+			return nil, e.err
+		}
+	}
+	m.funcs = e.m
 	m.Start = start
-	return m
+	return m, nil
 }
 
 //Interpret interprets the grammar given the parser and returns whether the parser is valid given the grammar.
@@ -63,6 +73,7 @@ func (mem *Mem) Interpret(p parser.Interface) (bool, error) {
 //TODO make more private fields.
 type Mem struct {
 	refs      map[string]*ast.Pattern
+	funcs     map[*ast.Expr]funcs.Bool
 	patterns  patternsSet
 	zis       intsSet
 	stackElms pairSet
@@ -121,10 +132,7 @@ func (this *Mem) accept(s int) bool {
 
 func (this *Mem) calcCallTrees(upto int) error {
 	for i := len(this.Calls); i <= upto; i++ {
-		callables, err := derivCalls(this.refs, this.patterns[i])
-		if err != nil {
-			return err
-		}
+		callables := derivCalls(this.refs, this.funcs, this.patterns[i])
 		callTree := newCallTree(callables)
 		memCallTree, err := newMemCallTree(i, &this.stackElms, &this.patterns, &this.zis, callTree)
 		if err != nil {

@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/ast"
-	"github.com/katydid/katydid/relapse/compose"
+	"github.com/katydid/katydid/relapse/funcs"
 	"github.com/katydid/katydid/relapse/interp"
 	nameexpr "github.com/katydid/katydid/relapse/name"
 	"io"
@@ -57,77 +57,62 @@ func deriv(mem *Mem, current int, tree parser.Interface) (int, error) {
 	return current, nil
 }
 
-func derivCalls(refs map[string]*ast.Pattern, patterns []*ast.Pattern) ([]*callable, error) {
+func derivCalls(refs map[string]*ast.Pattern, funcs map[*ast.Expr]funcs.Bool, patterns []*ast.Pattern) []*callable {
 	res := []*callable{}
 	for _, pattern := range patterns {
-		cs, err := derivCall(refs, pattern)
-		if err != nil {
-			return nil, err
-		}
+		cs := derivCall(refs, funcs, pattern)
 		res = append(res, cs...)
 	}
-	return res, nil
+	return res
 }
 
-func derivCall(refs map[string]*ast.Pattern, p *ast.Pattern) ([]*callable, error) {
+func derivCall(refs map[string]*ast.Pattern, funcs map[*ast.Expr]funcs.Bool, p *ast.Pattern) []*callable {
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *ast.Empty:
-		return []*callable{}, nil
+		return []*callable{}
 	case *ast.ZAny:
-		return []*callable{}, nil
+		return []*callable{}
 	case *ast.TreeNode:
 		b := nameexpr.NameToFunc(v.GetName())
-		return []*callable{&callable{b, v.GetPattern(), ast.NewNot(ast.NewZAny())}}, nil
+		return []*callable{&callable{b, v.GetPattern(), ast.NewNot(ast.NewZAny())}}
 	case *ast.LeafNode:
-		b, err := compose.NewBool(v.GetExpr())
-		if err != nil {
-			return nil, err
+		b, ok := funcs[v.GetExpr()]
+		if !ok {
+			panic("wtf")
 		}
-		return []*callable{&callable{b, ast.NewEmpty(), ast.NewNot(ast.NewZAny())}}, nil
+		return []*callable{&callable{b, ast.NewEmpty(), ast.NewNot(ast.NewZAny())}}
 	case *ast.Concat:
-		l, err := derivCall(refs, v.GetLeftPattern())
-		if err != nil {
-			return nil, err
-		}
+		l := derivCall(refs, funcs, v.GetLeftPattern())
 		if !interp.Nullable(refs, v.GetLeftPattern()) {
-			return l, nil
+			return l
 		}
-		r, err := derivCall(refs, v.GetRightPattern())
-		if err != nil {
-			return nil, err
-		}
-		return append(l, r...), nil
+		r := derivCall(refs, funcs, v.GetRightPattern())
+		return append(l, r...)
 	case *ast.Or:
-		return derivCall2(refs, v.GetLeftPattern(), v.GetRightPattern())
+		return derivCall2(refs, funcs, v.GetLeftPattern(), v.GetRightPattern())
 	case *ast.And:
-		return derivCall2(refs, v.GetLeftPattern(), v.GetRightPattern())
+		return derivCall2(refs, funcs, v.GetLeftPattern(), v.GetRightPattern())
 	case *ast.Interleave:
-		return derivCall2(refs, v.GetLeftPattern(), v.GetRightPattern())
+		return derivCall2(refs, funcs, v.GetLeftPattern(), v.GetRightPattern())
 	case *ast.ZeroOrMore:
-		return derivCall(refs, v.GetPattern())
+		return derivCall(refs, funcs, v.GetPattern())
 	case *ast.Reference:
-		return derivCall(refs, refs[v.GetName()])
+		return derivCall(refs, funcs, refs[v.GetName()])
 	case *ast.Not:
-		return derivCall(refs, v.GetPattern())
+		return derivCall(refs, funcs, v.GetPattern())
 	case *ast.Contains:
-		return derivCall(refs, ast.NewConcat(ast.NewZAny(), ast.NewConcat(v.GetPattern(), ast.NewZAny())))
+		return derivCall(refs, funcs, ast.NewConcat(ast.NewZAny(), ast.NewConcat(v.GetPattern(), ast.NewZAny())))
 	case *ast.Optional:
-		return derivCall(refs, ast.NewOr(v.GetPattern(), ast.NewEmpty()))
+		return derivCall(refs, funcs, ast.NewOr(v.GetPattern(), ast.NewEmpty()))
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
 
-func derivCall2(refs map[string]*ast.Pattern, left, right *ast.Pattern) ([]*callable, error) {
-	l, err := derivCall(refs, left)
-	if err != nil {
-		return nil, err
-	}
-	r, err := derivCall(refs, right)
-	if err != nil {
-		return nil, err
-	}
-	return append(l, r...), nil
+func derivCall2(refs map[string]*ast.Pattern, funcs map[*ast.Expr]funcs.Bool, left, right *ast.Pattern) []*callable {
+	l := derivCall(refs, funcs, left)
+	r := derivCall(refs, funcs, right)
+	return append(l, r...)
 }
 
 func derivReturns(refs map[string]*ast.Pattern, originals []*ast.Pattern, nullable []bool) []*ast.Pattern {
