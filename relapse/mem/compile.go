@@ -15,8 +15,11 @@
 package mem
 
 import (
+	"errors"
 	"github.com/katydid/katydid/relapse/ast"
 )
+
+var ErrTooManyStates = errors.New("a state explosion has occured")
 
 //Compile memoizes the full state space, all possible things that can be memoized.
 func Compile(g *ast.Grammar) (*Mem, error) {
@@ -54,6 +57,9 @@ func compile(mem *Mem, current int) error {
 	leafs := getLeafs(callTree)
 	for _, leaf := range leafs {
 		childlen := len(mem.patterns[leaf.child])
+		if childlen > 64 {
+			return ErrTooManyStates
+		}
 		max := newBitSet(childlen)
 		for i := 0; i < childlen; i++ {
 			max.set(i, true)
