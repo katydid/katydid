@@ -15,7 +15,9 @@
 package mem
 
 import (
+	"math/rand"
 	"testing"
+	"time"
 )
 
 func check(t *testing.T, this, that []bool) {
@@ -83,6 +85,20 @@ func TestBitSet100(t *testing.T) {
 	if !bs.get(99) {
 		t.Fatalf("expected true")
 	}
+	bs.set(64, true)
+	if bs.get(63) {
+		t.Fatalf("expected false")
+	}
+	if !bs.get(64) {
+		t.Fatalf("expected true")
+	}
+	bs.set(63, true)
+	if bs.get(62) {
+		t.Fatalf("expected false")
+	}
+	if !bs.get(63) {
+		t.Fatalf("expected true")
+	}
 }
 
 func TestBitSet1000(t *testing.T) {
@@ -104,6 +120,38 @@ func TestBitSet1000(t *testing.T) {
 	}
 	if !bs.get(999) {
 		t.Fatalf("expected true")
+	}
+}
+
+func TestBitSetRandom(t *testing.T) {
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	ints := make([]int, r.Intn(20)+10)
+	bools := make([]bool, len(ints))
+	for runs := 0; runs < 10; runs++ {
+		size := r.Intn(1000) + 100
+		bs := newBitSet(size)
+		set := make(map[int]struct{}, len(ints))
+		for i := range ints {
+			index := r.Intn(size)
+			_, ok := set[index]
+			for ok {
+				index = r.Intn(size)
+				_, ok = set[index]
+			}
+			set[index] = struct{}{}
+			ints[i] = index
+			bools[i] = r.Intn(2) == 1
+			bs.set(ints[i], bools[i])
+		}
+		for i := range ints {
+			if bools[i] != bs.get(ints[i]) {
+				t.Errorf("size := %d", size)
+				t.Errorf("ints := %#v", ints)
+				t.Errorf("bools := %#v", bools)
+				t.Errorf("index := %d", ints[i])
+				t.Fatalf("expected %v, but got %v", bools[i], bs.get(ints[i]))
+			}
+		}
 	}
 }
 

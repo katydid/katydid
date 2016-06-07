@@ -19,6 +19,7 @@ import (
 	"github.com/katydid/katydid/relapse/ast"
 )
 
+//TODO document
 var ErrTooManyStates = errors.New("a state explosion has occured")
 
 //Compile memoizes the full state space, all possible things that can be memoized.

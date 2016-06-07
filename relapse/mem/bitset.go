@@ -34,7 +34,7 @@ func (bs bitset) get(i int) bool {
 		panic("range check error")
 	}
 	b := bs.val0
-	if i > 64 {
+	if i >= 64 {
 		index := (i / 64) - 1
 		b = bs.vals[index]
 		i = i % 64
