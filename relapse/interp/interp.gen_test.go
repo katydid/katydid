@@ -893,6 +893,36 @@ func TestFinalCPocketRosesReflect(t *testing.T) {
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 
+func TestGoBigOr10Json(t *testing.T) {
+	v := tests.Validators["GoBigOr10"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestGoBigOr5Json(t *testing.T) {
+	v := tests.Validators["GoBigOr5"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestGoBigOr6Json(t *testing.T) {
+	v := tests.Validators["GoBigOr6"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestGoBigOr7Json(t *testing.T) {
+	v := tests.Validators["GoBigOr7"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestGoBigOr8Json(t *testing.T) {
+	v := tests.Validators["GoBigOr8"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
+func TestGoBigOr9Json(t *testing.T) {
+	v := tests.Validators["GoBigOr9"]["json"]
+	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+}
+
 func TestHiddenLeftRecursionDavidJson(t *testing.T) {
 	v := tests.Validators["HiddenLeftRecursionDavid"]["json"]
 	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)

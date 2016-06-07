@@ -31,8 +31,8 @@ func check(t *testing.T, this, that []bool) {
 }
 
 func TestBitSet1(t *testing.T) {
-	bs := newBitSet(0)
-	bs.append(true)
+	bs := newBitSet(1)
+	bs.set(0, true)
 	check(t, bs.list(), []bool{true})
 	if !bs.get(0) {
 		t.Fatalf("expected true")
@@ -45,12 +45,12 @@ func TestBitSet1(t *testing.T) {
 }
 
 func TestBitSet10(t *testing.T) {
-	bs := newBitSet(5)
-	bs.append(true)
-	bs.append(false)
-	bs.append(true)
-	bs.append(false)
-	bs.append(true)
+	bs := newBitSet(10)
+	bs.set(5, true)
+	bs.set(6, false)
+	bs.set(7, true)
+	bs.set(8, false)
+	bs.set(9, true)
 	check(t, bs.list(), []bool{false, false, false, false, false, true, false, true, false, true})
 	if !bs.get(5) {
 		t.Fatalf("expected true")
@@ -59,5 +59,82 @@ func TestBitSet10(t *testing.T) {
 	check(t, bs.list(), []bool{false, false, false, true, false, true, false, true, false, true})
 	if !bs.get(3) {
 		t.Fatalf("expected true")
+	}
+}
+
+func TestBitSet100(t *testing.T) {
+	bs := newBitSet(100)
+	bs.set(5, true)
+	bs.set(6, false)
+	bs.set(7, true)
+	bs.set(8, false)
+	bs.set(9, true)
+	if !bs.get(5) {
+		t.Fatalf("expected true")
+	}
+	bs.set(3, true)
+	if !bs.get(3) {
+		t.Fatalf("expected true")
+	}
+	bs.set(99, true)
+	if bs.get(98) {
+		t.Fatalf("expected false")
+	}
+	if !bs.get(99) {
+		t.Fatalf("expected true")
+	}
+}
+
+func TestBitSet1000(t *testing.T) {
+	bs := newBitSet(1000)
+	bs.set(3, true)
+	if !bs.get(3) {
+		t.Fatalf("expected true")
+	}
+	bs.set(99, true)
+	if bs.get(98) {
+		t.Fatalf("expected false")
+	}
+	if !bs.get(99) {
+		t.Fatalf("expected true")
+	}
+	bs.set(999, true)
+	if bs.get(998) {
+		t.Fatalf("expected false")
+	}
+	if !bs.get(999) {
+		t.Fatalf("expected true")
+	}
+}
+
+func TestBitSetInc10(t *testing.T) {
+	size := 10
+	max := newBitSet(size)
+	for i := 0; i < size; i++ {
+		max.set(i, true)
+	}
+	current := newBitSet(size)
+	for {
+		current = current.inc()
+		if current.equal(max) {
+			break
+		}
+	}
+}
+
+func TestBitSetInc65(t *testing.T) {
+	size := 65
+	max := newBitSet(size)
+	max.set(size-1, true)
+	max.set(0, true)
+	current := newBitSet(size)
+	for i := 0; i < 64; i++ {
+		current.set(i, true)
+	}
+	for {
+		current = current.inc()
+		if current.equal(max) {
+			break
+		}
 	}
 }

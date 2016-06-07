@@ -14,20 +14,68 @@
 
 package mem
 
+import "math"
+
 type bitset struct {
-	val  uint64
+	val0 uint64
+	vals []uint64
 	size int
 }
 
 func newBitSet(size int) bitset {
-	return bitset{val: 0, size: size}
+	if size < 64 {
+		return bitset{size: size}
+	}
+	return bitset{size: size, vals: make([]uint64, (size / 64))}
 }
 
 func (bs bitset) get(i int) bool {
 	if i < 0 || i >= bs.size {
 		panic("range check error")
 	}
-	return ((bs.val >> uint(i)) & 0x1) == 1
+	b := bs.val0
+	if i > 64 {
+		index := (i / 64) - 1
+		b = bs.vals[index]
+		i = i % 64
+	}
+	return ((b >> uint(i)) & 0x1) == 1
+}
+
+func (bs bitset) inc() bitset {
+	if bs.size < 64 {
+		return bitset{
+			val0: bs.val0 + 1,
+			size: bs.size,
+		}
+	}
+	if bs.val0 < math.MaxUint64 {
+		return bitset{
+			val0: bs.val0 + 1,
+			vals: bs.vals,
+			size: bs.size,
+		}
+	}
+	maxi := bs.size / 64
+	newvals := make([]uint64, maxi)
+	inced := false
+	for i := 0; i < maxi; i++ {
+		if !inced {
+			if bs.vals[i] < math.MaxUint64 {
+				newvals[i] = bs.vals[i] + 1
+				inced = true
+			}
+		} else {
+			newvals[i] = bs.vals[i]
+		}
+	}
+	if !inced {
+		panic("maximum reached")
+	}
+	return bitset{
+		vals: newvals,
+		size: bs.size,
+	}
 }
 
 func (bs bitset) list() []bool {
@@ -42,27 +90,32 @@ func (bs *bitset) set(i int, b bool) {
 	if i < 0 || i >= bs.size {
 		panic("range check error")
 	}
-	if (((bs.val >> uint(i)) & 0x1) == 1) == b {
+	if i < 64 {
+		if (((bs.val0 >> uint(i)) & 0x1) == 1) == b {
+			return
+		}
+		bs.val0 ^= 1 << uint(i)
 		return
 	}
-	bs.val ^= 1 << uint(i)
-}
-
-func (bs *bitset) append(b bool) {
-	if b {
-		bs.val ^= 1 << uint(bs.size)
+	index := (i / 64) - 1
+	i = i % 64
+	if (((bs.vals[index] >> uint(i)) & 0x1) == 1) == b {
+		return
 	}
-	bs.size++
-}
-
-func (bs bitset) copy() bitset {
-	return bitset{
-		val:  bs.val,
-		size: bs.size,
-	}
+	bs.vals[index] ^= 1 << uint(i)
 }
 
 func (this bitset) equal(that bitset) bool {
-	return this == that
+	if this.size != that.size {
+		return false
+	}
+	if this.val0 != that.val0 {
+		return false
+	}
+	for i, v := range this.vals {
+		if v != that.vals[i] {
+			return false
+		}
+	}
+	return true
 }
-

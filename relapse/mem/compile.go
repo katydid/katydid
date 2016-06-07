@@ -54,17 +54,18 @@ func compile(mem *Mem, current int) error {
 	leafs := getLeafs(callTree)
 	for _, leaf := range leafs {
 		childlen := len(mem.patterns[leaf.child])
-		combos := uint64(1)
-		if childlen > 0 {
-			// pow(2, childlen)
-			combos = combos << uint(childlen)
+		max := newBitSet(childlen)
+		for i := 0; i < childlen; i++ {
+			max.set(i, true)
 		}
-		for combo := uint64(0); combo < combos; combo++ {
-			nullIndex := mem.nullables.add(bitset{
-				val:  combo,
-				size: childlen,
-			})
+		current := newBitSet(childlen)
+		for {
+			nullIndex := mem.nullables.add(current)
 			mem.getReturnn(leaf.stackIndex, nullIndex)
+			if current.equal(max) {
+				break
+			}
+			current = current.inc()
 		}
 	}
 	return nil

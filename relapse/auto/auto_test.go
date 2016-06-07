@@ -15,16 +15,21 @@
 package auto_test
 
 import (
+	"strings"
+	"testing"
+
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/auto"
 	"github.com/katydid/katydid/relapse/interp"
-	"testing"
 )
 
-func test(t *testing.T, g *ast.Grammar, p parser.Interface, expected bool, desc string) {
+func test(t *testing.T, name string, g *ast.Grammar, p parser.Interface, expected bool, desc string) {
 	if interp.HasRecursion(g) {
 		t.Skipf("convert was not designed to handle recursion")
+	}
+	if strings.HasPrefix(name, "GoBigOr") {
+		t.Skipf("too big to fail: the number of Ors creates a state space explosion")
 	}
 	a, err := auto.Compile(g)
 	if err != nil {

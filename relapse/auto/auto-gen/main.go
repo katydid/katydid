@@ -23,7 +23,7 @@ import (
 const testStr = `
 func Test{{.Name}}{{capFirst .CodecName}}(t *testing.T) {
 	v := tests.Validators["{{.Name}}"]["{{.CodecName}}"]
-	test(t, v.Grammar, v.Parser(), v.Expected, v.Description)
+	test(t, "{{.Name}}", v.Grammar, v.Parser(), v.Expected, v.Description)
 }
 `
 
