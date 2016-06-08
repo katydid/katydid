@@ -76,7 +76,7 @@ func testInject(t *testing.T, num int64) bool {
 	}
 	parser := reflectparser.NewReflectParser()
 	parser.Init(reflect.ValueOf(tests.RobertPerson))
-	res, err := m.Interpret(parser)
+	res, err := m.Validate(parser)
 	if err != nil {
 		t.Fatal(err)
 	}

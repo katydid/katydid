@@ -19,7 +19,6 @@ import (
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/mem"
 	"io"
-	"reflect"
 )
 
 //Auto is the structure that represents the automaton.
@@ -32,23 +31,13 @@ type Auto struct {
 	accept          []bool
 }
 
-//Execute executes an automaton with the given parser and returns whether the parser is valid given the automaton's original grammar.
-func Execute(auto *Auto, p parser.Interface) (bool, error) {
+//Validate executes an automaton with the given parser and returns whether the parser is valid given the automaton's original grammar.
+func (auto *Auto) Validate(p parser.Interface) (bool, error) {
 	final, err := deriv(auto, auto.start, p)
 	if err != nil {
 		return false, err
 	}
 	return auto.accept[final], nil
-}
-
-//Implements returns all funcs in the compiled automaton that implements a specific interface.
-func Implements(auto *Auto, typ reflect.Type) []interface{} {
-	allis := []interface{}{}
-	for _, call := range auto.calls {
-		is := call.Implements(typ)
-		allis = append(allis, is...)
-	}
-	return allis
 }
 
 func deriv(auto *Auto, current int, tree parser.Interface) (int, error) {

@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package mem
+package auto
 
 import (
 	"github.com/katydid/katydid/relapse/parser"
@@ -78,12 +78,12 @@ func TestExplosionAndSameTree(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	mem, err := Compile(g)
+	a, err := Compile(g)
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Logf("number of states %d", len(mem.patterns))
-	if len(mem.patterns) > 1000 {
+	t.Logf("number of states %d", len(a.accept))
+	if len(a.accept) > 1000 {
 		t.Fatal("number of states exploded")
 	}
 }

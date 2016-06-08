@@ -52,6 +52,6 @@ func bench(b *testing.B, grammar *ast.Grammar, gen func() parser.Interface) {
 		if err := parsers[i%num].Reset(); err != nil {
 			b.Fatal(err)
 		}
-		m.Interpret(parsers[i%num])
+		m.Validate(parsers[i%num])
 	}
 }

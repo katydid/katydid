@@ -43,15 +43,6 @@ func Implements(mem *Mem, typ reflect.Type) []interface{} {
 	return allis
 }
 
-func (c *CallNode) Implements(typ reflect.Type) []interface{} {
-	var is []interface{}
-	fs := getAllConditions(c)
-	for _, f := range fs {
-		is = append(is, compose.FuncImplements(f, typ)...)
-	}
-	return is
-}
-
 func newMemCallTree(parent int, stackElms *pairSet, patterns *patternsSet, zis *intsSet, node *callNode) (*CallNode, error) {
 	if node.term != nil {
 		ps := node.term

@@ -56,11 +56,11 @@ func New(g *ast.Grammar) (*Mem, error) {
 	return m, nil
 }
 
-//Interpret interprets the grammar given the parser and returns whether the parser is valid given the grammar.
+//Validate interprets the grammar given the parser and returns whether the parser is valid given the grammar.
 //The intermediate results are memoized to help with the speed of future executions.
 //
 //NOTE: This is a naive implementation and it does not handle left recursion.
-func (mem *Mem) Interpret(p parser.Interface) (bool, error) {
+func (mem *Mem) Validate(p parser.Interface) (bool, error) {
 	final, err := deriv(mem, mem.Start, p)
 	if err != nil {
 		return false, err

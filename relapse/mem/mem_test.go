@@ -30,7 +30,7 @@ func test(t *testing.T, g *ast.Grammar, p parser.Interface, expected bool, desc 
 	if err != nil {
 		t.Fatal(err)
 	}
-	match, err := m.Interpret(p)
+	match, err := m.Validate(p)
 	if err != nil {
 		t.Fatal(err)
 	}
