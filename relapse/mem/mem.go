@@ -31,7 +31,8 @@ func New(g *ast.Grammar) (*Mem, error) {
 		refs[name] = interp.Simplify(refs, p)
 	}
 	m := &Mem{
-		refs: refs,
+		refs:       refs,
+		simplifier: interp.NewSimplifier(refs),
 
 		patterns:  newPatternsSet(),
 		zis:       newIntsSet(),
@@ -72,8 +73,10 @@ func (mem *Mem) Interpret(p parser.Interface) (bool, error) {
 //Mem is the structure containing the memoized grammar.
 //TODO make more private fields.
 type Mem struct {
-	refs      map[string]*ast.Pattern
-	funcs     map[*ast.Expr]funcs.Bool
+	refs       map[string]*ast.Pattern
+	funcs      map[*ast.Expr]funcs.Bool
+	simplifier interp.Simplifier
+
 	patterns  patternsSet
 	zis       intsSet
 	stackElms pairSet
@@ -172,9 +175,9 @@ func (this *Mem) getNullable(s int) int {
 	return this.StateToNullable[s]
 }
 
-func simps(refs map[string]*ast.Pattern, patterns []*ast.Pattern) []*ast.Pattern {
+func (this *Mem) simps(patterns []*ast.Pattern) []*ast.Pattern {
 	for i := range patterns {
-		patterns[i] = interp.Simplify(refs, patterns[i])
+		patterns[i] = this.simplifier.Simplify(patterns[i])
 	}
 	return patterns
 }
@@ -196,7 +199,7 @@ func (this *Mem) getReturnn(stackIndex int, nullIndex int) int {
 	current := stackElm.State
 	currentPatterns := this.patterns[current]
 	currentPatterns = derivReturns(this.refs, currentPatterns, nullable)
-	simplePatterns := simps(this.refs, currentPatterns)
+	simplePatterns := this.simps(currentPatterns)
 	res := this.patterns.add(simplePatterns)
 	this.Returns[stackIndex][nullIndex] = res
 	return res

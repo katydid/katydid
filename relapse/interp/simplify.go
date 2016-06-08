@@ -32,7 +32,32 @@ func SimplifyGrammar(g *ast.Grammar) *ast.Grammar {
 
 //Simplify returns a pattern that has been simplified, transformed to an equivalent, but smaller or equal pattern.
 func Simplify(refs ast.RefLookup, p *ast.Pattern) *ast.Pattern {
-	return simplify(refs, p, true)
+	return NewSimplifier(refs).Simplify(p)
+}
+
+type Simplifier interface {
+	Simplify(p *ast.Pattern) *ast.Pattern
+}
+
+type simplifier struct {
+	refs  ast.RefLookup
+	cache map[*ast.Pattern]struct{}
+}
+
+func NewSimplifier(refs ast.RefLookup) Simplifier {
+	return &simplifier{
+		refs:  refs,
+		cache: make(map[*ast.Pattern]struct{}),
+	}
+}
+
+func (this *simplifier) Simplify(p *ast.Pattern) *ast.Pattern {
+	if _, ok := this.cache[p]; ok {
+		return p
+	}
+	s := this.simplify(p, true)
+	this.cache[s] = struct{}{}
+	return s
 }
 
 func checkRef(refs ast.RefLookup, p *ast.Pattern) *ast.Pattern {
@@ -44,29 +69,39 @@ func checkRef(refs ast.RefLookup, p *ast.Pattern) *ast.Pattern {
 	return p
 }
 
-func simplify(refs ast.RefLookup, p *ast.Pattern, top bool) *ast.Pattern {
+var emptyset = ast.NewNot(ast.NewZAny())
+
+func (this *simplifier) simplify(p *ast.Pattern, top bool) *ast.Pattern {
 	cRef := func(cp *ast.Pattern) *ast.Pattern {
 		if top {
 			return cp
 		}
-		return checkRef(refs, cp)
+		return checkRef(this.refs, cp)
+	}
+	cachesimp := func(sp *ast.Pattern) *ast.Pattern {
+		if _, ok := this.cache[sp]; ok {
+			return sp
+		}
+		s := this.simplify(sp, false)
+		this.cache[s] = struct{}{}
+		return s
 	}
 	simp := func(sp *ast.Pattern) *ast.Pattern {
-		return simplify(refs, sp, false)
+		return this.simplify(sp, false)
 	}
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *ast.Empty:
 		return p
 	case *ast.TreeNode:
-		child := simp(v.GetPattern())
+		child := cachesimp(v.GetPattern())
 		if isNotZany(child) {
-			return ast.NewNot(ast.NewZAny())
+			return emptyset
 		}
 		name := v.GetName()
 		b := nameexpr.NameToFunc(v.GetName())
 		if funcs.IsFalse(b) {
-			return ast.NewNot(ast.NewZAny())
+			return emptyset
 		}
 		if funcs.IsTrue(b) {
 			name = ast.NewAnyName()
@@ -79,7 +114,7 @@ func simplify(refs ast.RefLookup, p *ast.Pattern, top bool) *ast.Pattern {
 			return p
 		}
 		if funcs.IsFalse(b) {
-			return ast.NewNot(ast.NewZAny())
+			return emptyset
 		}
 		return p
 	case *ast.Concat:
@@ -88,12 +123,12 @@ func simplify(refs ast.RefLookup, p *ast.Pattern, top bool) *ast.Pattern {
 			simp(v.GetRightPattern()),
 		))
 	case *ast.Or:
-		return cRef(simplifyOr(refs,
+		return cRef(simplifyOr(this.refs,
 			simp(v.GetLeftPattern()),
 			simp(v.GetRightPattern()),
 		))
 	case *ast.And:
-		return cRef(simplifyAnd(refs,
+		return cRef(simplifyAnd(this.refs,
 			simp(v.GetLeftPattern()),
 			simp(v.GetRightPattern()),
 		))
@@ -110,9 +145,9 @@ func simplify(refs ast.RefLookup, p *ast.Pattern, top bool) *ast.Pattern {
 	case *ast.Optional:
 		return simplifyOptional(simp(v.GetPattern()))
 	case *ast.Interleave:
-		return cRef(simplifyInterleave(refs,
-			simp(v.GetLeftPattern()),
-			simp(v.GetRightPattern()),
+		return cRef(simplifyInterleave(this.refs,
+			cachesimp(v.GetLeftPattern()),
+			cachesimp(v.GetRightPattern()),
 		))
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
@@ -132,7 +167,7 @@ func isZany(p *ast.Pattern) bool {
 
 func simplifyConcat(p1, p2 *ast.Pattern) *ast.Pattern {
 	if isNotZany(p1) || isNotZany(p2) {
-		return ast.NewNot(ast.NewZAny())
+		return emptyset
 	}
 	if p1.Concat != nil {
 		return simplifyConcat(
@@ -221,7 +256,7 @@ func simplifyChildren(children []*ast.Pattern, op func(left, right *ast.Pattern)
 
 func simplifyAnd(refs ast.RefLookup, p1, p2 *ast.Pattern) *ast.Pattern {
 	if isNotZany(p1) || isNotZany(p2) {
-		return ast.NewNot(ast.NewZAny())
+		return emptyset
 	}
 	if isZany(p1) {
 		return p2
@@ -233,14 +268,14 @@ func simplifyAnd(refs ast.RefLookup, p1, p2 *ast.Pattern) *ast.Pattern {
 		if Nullable(refs, p2) {
 			return ast.NewEmpty()
 		} else {
-			return ast.NewNot(ast.NewZAny())
+			return emptyset
 		}
 	}
 	if isEmpty(p2) {
 		if Nullable(refs, p1) {
 			return ast.NewEmpty()
 		} else {
-			return ast.NewNot(ast.NewZAny())
+			return emptyset
 		}
 	}
 	left := getAnds(p1)
@@ -291,7 +326,7 @@ func getInterleaves(p *ast.Pattern) []*ast.Pattern {
 
 func simplifyInterleave(refs ast.RefLookup, p1, p2 *ast.Pattern) *ast.Pattern {
 	if isNotZany(p1) || isNotZany(p2) {
-		return ast.NewNot(ast.NewZAny())
+		return emptyset
 	}
 	if isEmpty(p1) {
 		return p2
