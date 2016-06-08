@@ -26,10 +26,8 @@ import (
 
 //New creates a new memoizable grammar.
 func New(g *ast.Grammar) (*Mem, error) {
+	g = interp.SimplifyGrammar(g)
 	refs := ast.NewRefLookup(g)
-	for name, p := range refs {
-		refs[name] = interp.Simplify(refs, p)
-	}
 	m := &Mem{
 		refs:       refs,
 		simplifier: interp.NewSimplifier(refs),

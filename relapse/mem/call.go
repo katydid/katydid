@@ -33,6 +33,7 @@ type CallNode struct {
 	stackIndex int
 }
 
+//Implements returns all leaf funcs that implements a given type.
 func Implements(mem *Mem, typ reflect.Type) []interface{} {
 	allis := []interface{}{}
 	for _, f := range mem.funcs {
@@ -42,7 +43,6 @@ func Implements(mem *Mem, typ reflect.Type) []interface{} {
 	return allis
 }
 
-//Implements returns all funcs that implements a given type.
 func (c *CallNode) Implements(typ reflect.Type) []interface{} {
 	var is []interface{}
 	fs := getAllConditions(c)
@@ -163,9 +163,9 @@ func newCallTree(callables []*callable) *callNode {
 	top := newCallNode(callables[0])
 	for _, callable := range callables[1:] {
 		if callable.cond == nil {
-			top = appendCallTerm(top, callable.then)
+			top.appendTerm(callable.then)
 		} else {
-			top = appendCallNode(top, callable.cond, callable.then, callable.els)
+			top.appendNode(callable.cond, callable.then, callable.els)
 		}
 	}
 	return top
@@ -173,9 +173,7 @@ func newCallTree(callables []*callable) *callNode {
 
 func newCallNode(call *callable) *callNode {
 	c := &callNode{}
-	if call.els == nil {
-		c.term = []*ast.Pattern{call.then}
-	} else if call.then.Equal(call.els) {
+	if call.els == nil || call.then.Equal(call.els) {
 		c.term = []*ast.Pattern{call.then}
 	} else {
 		c.cond = call.cond
@@ -185,63 +183,45 @@ func newCallNode(call *callable) *callNode {
 	return c
 }
 
-func appendCallTerm(top *callNode, term *ast.Pattern) *callNode {
+func (top *callNode) appendTerm(term *ast.Pattern) {
 	if top.term != nil {
-		return &callNode{term: append([]*ast.Pattern{}, append(top.term, term)...)}
+		top.term = append(top.term, term)
+		return
 	}
-	then := appendCallTerm(top.then, term)
-	els := appendCallTerm(top.els, term)
-	return &callNode{
-		cond: top.cond,
-		then: then,
-		els:  els,
-	}
+	top.then.appendTerm(term)
+	top.els.appendTerm(term)
+	return
 }
 
-func appendCallNode(top *callNode, cond funcs.Bool, then, els *ast.Pattern) *callNode {
+func (top *callNode) appendNode(cond funcs.Bool, then, els *ast.Pattern) {
 	if top.term != nil {
-		thens := append([]*ast.Pattern{}, append(top.term, then)...)
-		elss := append([]*ast.Pattern{}, append(top.term, els)...)
-		return &callNode{
-			cond: cond,
-			then: &callNode{term: thens},
-			els:  &callNode{term: elss},
-		}
+		top.cond = cond
+		thenterms := make([]*ast.Pattern, len(top.term)+1)
+		copy(thenterms, top.term)
+		thenterms[len(thenterms)-1] = then
+		top.then = &callNode{term: thenterms}
+		top.els = &callNode{term: append(top.term, els)}
+		top.term = nil
+		return
 	}
 	if funcs.Equal(top.cond, cond) {
-		thennode := appendCallTerm(top.then, then)
-		elsnode := appendCallTerm(top.els, els)
-		return &callNode{
-			cond: top.cond,
-			then: thennode,
-			els:  elsnode,
-		}
+		top.then.appendTerm(then)
+		top.els.appendTerm(els)
+		return
 	}
 	if funcs.IsFalse(funcs.Simplify(funcs.And(top.cond, cond))) {
-		thennode := appendCallTerm(top.then, els)
-		elsnode := appendCallNode(top.els, cond, then, els)
-		return &callNode{
-			cond: top.cond,
-			then: thennode,
-			els:  elsnode,
-		}
+		top.then.appendTerm(els)
+		top.els.appendNode(cond, then, els)
+		return
 	}
 	if funcs.IsFalse(funcs.Simplify(funcs.And(top.cond, funcs.Not(cond)))) {
-		thennode := appendCallNode(top.then, cond, then, els)
-		elsnode := appendCallTerm(top.els, then)
-		return &callNode{
-			cond: top.cond,
-			then: thennode,
-			els:  elsnode,
-		}
+		top.then.appendNode(cond, then, els)
+		top.els.appendTerm(then)
+		return
 	}
-	thennode := appendCallNode(top.then, cond, then, els)
-	elsnode := appendCallNode(top.els, cond, then, els)
-	return &callNode{
-		cond: top.cond,
-		then: thennode,
-		els:  elsnode,
-	}
+	top.then.appendNode(cond, then, els)
+	top.els.appendNode(cond, then, els)
+	return
 }
 
 type callable struct {
