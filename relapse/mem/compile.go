@@ -16,18 +16,13 @@ package mem
 
 import (
 	"errors"
-	"github.com/katydid/katydid/relapse/ast"
 )
 
 //TODO document
 var ErrTooManyStates = errors.New("a state explosion has occured")
 
 //Compile memoizes the full state space, all possible things that can be memoized.
-func Compile(g *ast.Grammar) (*Mem, error) {
-	mem, err := New(g)
-	if err != nil {
-		return nil, err
-	}
+func (mem *Mem) Compile() error {
 	changed := true
 	visited := make(map[int]bool)
 	for changed {
@@ -38,12 +33,12 @@ func Compile(g *ast.Grammar) (*Mem, error) {
 			}
 			visited[state] = true
 			if err := compile(mem, state); err != nil {
-				return nil, err
+				return err
 			}
 			changed = true
 		}
 	}
-	return mem, nil
+	return nil
 }
 
 func compile(mem *Mem, current int) error {

@@ -23,14 +23,14 @@ import (
 const testStr = `
 func Test{{.Name}}{{capFirst .CodecName}}(t *testing.T) {
 	v := tests.Validators["{{.Name}}"]["{{.CodecName}}"]
-	test(t, "{{.Name}}", v.Grammar, v.Parser(), v.Expected, v.Description)
+	test(t, "{{.Name}}", v.Grammar, v.Parser(), v.Expected, v.Description, v.Record())
 }
 `
 
 const benchStr = `
 func Benchmark{{.Name}}{{capFirst .CodecName}}(b *testing.B) {
 	v := tests.BenchValidators["{{.Name}}"]["{{.CodecName}}"]
-	bench(b, v.Grammar, tests.Random{{.MessageName}}{{capFirst .CodecName}}Parser)
+	bench(b, v.Grammar, tests.Random{{.MessageName}}{{capFirst .CodecName}}Parser, v.Record())
 }
 `
 

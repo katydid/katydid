@@ -26,13 +26,19 @@ type reset interface {
 	Reset() error
 }
 
-func bench(b *testing.B, grammar *ast.Grammar, gen func() parser.Interface) {
+func bench(b *testing.B, grammar *ast.Grammar, gen func() parser.Interface, record bool) {
 	num := 1000
 	parsers := make([]reset, num)
 	for i := 0; i < num; i++ {
 		parsers[i] = gen().(reset)
 	}
-	a, err := auto.Compile(grammar)
+	var a *auto.Auto
+	var err error
+	if record {
+		a, err = auto.CompileRecord(grammar)
+	} else {
+		a, err = auto.Compile(grammar)
+	}
 	if err != nil {
 		b.Fatal(err)
 	}

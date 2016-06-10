@@ -21,8 +21,26 @@ import (
 
 //Compile compiles a parsed relapse grammar ast into a visual pushdown automaton.
 func Compile(g *ast.Grammar) (*Auto, error) {
-	m, err := mem.Compile(g)
+	return compile(g, false)
+}
+
+//CompileRecord compiles a parsed relapse grammar and optimizes it for the case where the input structures are records.
+func CompileRecord(g *ast.Grammar) (*Auto, error) {
+	return compile(g, true)
+}
+
+func compile(g *ast.Grammar, record bool) (*Auto, error) {
+	var m *mem.Mem
+	var err error
+	if record {
+		m, err = mem.NewRecord(g)
+	} else {
+		m, err = mem.New(g)
+	}
 	if err != nil {
+		return nil, err
+	}
+	if err := m.Compile(); err != nil {
 		return nil, err
 	}
 	a := &Auto{

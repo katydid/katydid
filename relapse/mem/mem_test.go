@@ -22,11 +22,17 @@ import (
 	"testing"
 )
 
-func test(t *testing.T, g *ast.Grammar, p parser.Interface, expected bool, desc string) {
+func test(t *testing.T, g *ast.Grammar, p parser.Interface, expected bool, desc string, record bool) {
 	if interp.HasRecursion(g) {
 		t.Skipf("interp was not designed to handle left recursion")
 	}
-	m, err := mem.New(g)
+	var m *mem.Mem
+	var err error
+	if record {
+		m, err = mem.NewRecord(g)
+	} else {
+		m, err = mem.New(g)
+	}
 	if err != nil {
 		t.Fatal(err)
 	}

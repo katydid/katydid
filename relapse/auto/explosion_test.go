@@ -15,69 +15,45 @@
 package auto
 
 import (
+	"github.com/katydid/katydid/relapse/interp"
 	"github.com/katydid/katydid/relapse/parser"
 	"testing"
 )
 
 func TestExplosionAndSameTree(t *testing.T) {
-	var input = `.A:.B:
-(
-	.DeepLevel:.DeeperLevel:.DeepestLevel:->contains($string,"el") &
-	(
-		.Rs:._:->eq("~a",$string) &
+	var input = `(
+		.A:.B:.DeepLevel:.DeeperLevel:.DeepestLevel:->contains($string,"el") &
 		(
-			.NumI32:->contains($int,[]int{28,1,52}) &
+			.A:.B:.Rs:._:->eq("~a",$string) &
 			(
-				.NumI64:>= 1 &
+				.A:.B:.NumI32:->contains($int,[]int{28,1,52}) &
 				(
-					.NumU32:<= uint(4) &
+					.A:.B:.NumI64:>= 1 &
 					(
-						.NumU64:== uint(4) &
+						.A:.B:.NumU32:<= uint(4) &
 						(
-							.YesNo:== true &
+							.A:.B:.NumU64:== uint(4) &
 							(
-								.BS:== []byte{0x3, 0x2, 0x1, 0x0} &
-								.Uuid: == []byte{0x3, 0x2, 0x1, 0x0}
+								.A:.B:.YesNo:== true &
+								(
+									.A:.B:.BS:== []byte{0x3, 0x2, 0x1, 0x0} &
+									.A:.B:.Uuid: == []byte{0x3, 0x2, 0x1, 0x0}
+								)
 							)
 						)
 					)
 				)
 			)
 		)
-	)
-)
-`
-	// This one causes a state explosion of over 14000 states.
-	// Since we know field names can't repeat the simplifacation above can be made for record (JSON and proto) like serialization formats, but not for XML.
-	// var input = (
-	// 	.A:.B:.DeepLevel:.DeeperLevel:.DeepestLevel:->contains($string,"el") &
-	// 	(
-	// 		.A:.B:.Rs:._:->eq("~a",$string) &
-	// 		(
-	// 			.A:.B:.NumI32:->contains($int,[]int{28,1,52}) &
-	// 			(
-	// 				.A:.B:.NumI64:>= 1 &
-	// 				(
-	// 					.A:.B:.NumU32:<= uint(4) &
-	// 					(
-	// 						.A:.B:.NumU64:== uint(4) &
-	// 						(
-	// 							.A:.B:.YesNo:== true &
-	// 							(
-	// 								.A:.B:.BS:== []byte{0x3, 0x2, 0x1, 0x0} &
-	// 								.A:.B:.Uuid: == []byte{0x3, 0x2, 0x1, 0x0}
-	// 							)
-	// 						)
-	// 					)
-	// 				)
-	// 			)
-	// 		)
-	// 	)
-	// )
+	)`
 	g, err := parser.ParseGrammar(input)
 	if err != nil {
 		t.Fatal(err)
 	}
+	// This one causes a state explosion of over 14000 states.
+	// Since we know field names can't repeat the simplification can be made for record (JSON and proto) like serialization formats, but not for XML.
+	g = interp.NewSimplifier(g).OptimizeForRecord().Grammar()
+	t.Logf("%v", g)
 	a, err := Compile(g)
 	if err != nil {
 		t.Fatal(err)

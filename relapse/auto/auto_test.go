@@ -24,14 +24,20 @@ import (
 	"github.com/katydid/katydid/relapse/interp"
 )
 
-func test(t *testing.T, name string, g *ast.Grammar, p parser.Interface, expected bool, desc string) {
+func test(t *testing.T, name string, g *ast.Grammar, p parser.Interface, expected bool, desc string, record bool) {
 	if interp.HasRecursion(g) {
 		t.Skipf("convert was not designed to handle recursion")
 	}
 	if strings.HasPrefix(name, "GoBigOr") {
 		t.Skipf("too big to fail: the number of Ors creates a state space explosion")
 	}
-	a, err := auto.Compile(g)
+	var a *auto.Auto
+	var err error
+	if record {
+		a, err = auto.CompileRecord(g)
+	} else {
+		a, err = auto.Compile(g)
+	}
 	if err != nil {
 		t.Fatal(err)
 	}

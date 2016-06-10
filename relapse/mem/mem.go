@@ -26,11 +26,26 @@ import (
 
 //New creates a new memoizable grammar.
 func New(g *ast.Grammar) (*Mem, error) {
-	g = interp.SimplifyGrammar(g)
+	return new(g, false)
+}
+
+//New creates a new memoizable grammar which is optimized for records.
+//A record can be json, protobuf, reflected go structures or any structure that have unique field names for each structure.
+//XML would be an example of a structure for which this simplification is NOT appropriate.
+func NewRecord(g *ast.Grammar) (*Mem, error) {
+	return new(g, true)
+}
+
+func new(g *ast.Grammar, record bool) (*Mem, error) {
+	simp := interp.NewSimplifier(g)
+	if record {
+		simp = simp.OptimizeForRecord()
+	}
+	g = simp.Grammar()
 	refs := ast.NewRefLookup(g)
 	m := &Mem{
 		refs:       refs,
-		simplifier: interp.NewSimplifier(refs),
+		simplifier: simp,
 
 		patterns:  newPatternsSet(),
 		zis:       newIntsSet(),

@@ -56,7 +56,7 @@ func escapable(patterns []*ast.Pattern) bool {
 	return false
 }
 
-func deriv(refs map[string]*ast.Pattern, patterns []*ast.Pattern, tree parser.Interface) ([]*ast.Pattern, error) {
+func deriv(refs ast.RefLookup, patterns []*ast.Pattern, tree parser.Interface) ([]*ast.Pattern, error) {
 	var resPatterns []*ast.Pattern = patterns
 	for {
 		if !escapable(resPatterns) {
@@ -91,9 +91,9 @@ func deriv(refs map[string]*ast.Pattern, patterns []*ast.Pattern, tree parser.In
 	return resPatterns, nil
 }
 
-func simps(refs map[string]*ast.Pattern, patterns []*ast.Pattern) []*ast.Pattern {
+func simps(refs ast.RefLookup, patterns []*ast.Pattern) []*ast.Pattern {
 	for i := range patterns {
-		patterns[i] = Simplify(refs, patterns[i])
+		patterns[i] = NewSimplifier(ast.NewGrammar(refs)).Simplify(patterns[i])
 	}
 	return patterns
 }
@@ -116,7 +116,7 @@ func unzip(patterns []*ast.Pattern, indexes []int) []*ast.Pattern {
 	return res
 }
 
-func derivCalls(refs map[string]*ast.Pattern, patterns []*ast.Pattern, label parser.Value) ([]*ast.Pattern, error) {
+func derivCalls(refs ast.RefLookup, patterns []*ast.Pattern, label parser.Value) ([]*ast.Pattern, error) {
 	res := []*ast.Pattern{}
 	for _, pattern := range patterns {
 		ps, err := derivCall(refs, pattern, label)
@@ -129,7 +129,7 @@ func derivCalls(refs map[string]*ast.Pattern, patterns []*ast.Pattern, label par
 	return res, nil
 }
 
-func derivCall(refs map[string]*ast.Pattern, p *ast.Pattern, label parser.Value) ([]*ast.Pattern, error) {
+func derivCall(refs ast.RefLookup, p *ast.Pattern, label parser.Value) ([]*ast.Pattern, error) {
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *ast.Empty:
@@ -200,7 +200,7 @@ func derivCall(refs map[string]*ast.Pattern, p *ast.Pattern, label parser.Value)
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
 
-func derivCall2(refs map[string]*ast.Pattern, left, right *ast.Pattern, label parser.Value) ([]*ast.Pattern, error) {
+func derivCall2(refs ast.RefLookup, left, right *ast.Pattern, label parser.Value) ([]*ast.Pattern, error) {
 	l, err := derivCall(refs, left, label)
 	if err != nil {
 		return nil, err
@@ -212,7 +212,7 @@ func derivCall2(refs map[string]*ast.Pattern, left, right *ast.Pattern, label pa
 	return append(l, r...), nil
 }
 
-func derivReturns(refs map[string]*ast.Pattern, originals []*ast.Pattern, evaluated []*ast.Pattern) []*ast.Pattern {
+func derivReturns(refs ast.RefLookup, originals []*ast.Pattern, evaluated []*ast.Pattern) []*ast.Pattern {
 	res := make([]*ast.Pattern, len(originals))
 	rest := evaluated
 	for i, original := range originals {
@@ -221,7 +221,7 @@ func derivReturns(refs map[string]*ast.Pattern, originals []*ast.Pattern, evalua
 	return res
 }
 
-func derivReturn(refs map[string]*ast.Pattern, p *ast.Pattern, patterns []*ast.Pattern) (*ast.Pattern, []*ast.Pattern) {
+func derivReturn(refs ast.RefLookup, p *ast.Pattern, patterns []*ast.Pattern) (*ast.Pattern, []*ast.Pattern) {
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *ast.Empty:

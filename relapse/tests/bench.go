@@ -20,6 +20,7 @@ import (
 	"github.com/katydid/katydid/relapse/protonum"
 	"reflect"
 	"sort"
+	"strings"
 )
 
 type BenchValidator struct {
@@ -28,6 +29,10 @@ type BenchValidator struct {
 	Grammar     *ast.Grammar
 	PackageName string
 	MessageName string
+}
+
+func (this *BenchValidator) Record() bool {
+	return !strings.Contains(this.CodecName, "xml")
 }
 
 var BenchValidators = make(map[string]map[string]BenchValidator)

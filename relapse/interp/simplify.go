@@ -22,31 +22,28 @@ import (
 	nameexpr "github.com/katydid/katydid/relapse/name"
 )
 
-//SimplifyGrammar returns a grammar that has been simplified, transformed to an equivalent, but smaller or equal grammar.
-func SimplifyGrammar(g *ast.Grammar) *ast.Grammar {
-	refs := ast.NewRefLookup(g)
-	p := Simplify(refs, refs["main"])
-	refs["main"] = p
-	return ast.NewGrammar(refs)
-}
-
-//Simplify returns a pattern that has been simplified, transformed to an equivalent, but smaller or equal pattern.
-func Simplify(refs ast.RefLookup, p *ast.Pattern) *ast.Pattern {
-	return NewSimplifier(refs).Simplify(p)
-}
-
+//Simplifier simplifies the patterns of a given grammar.
 type Simplifier interface {
+	//Simplify returns a pattern that has been simplified, transformed to an equivalent, but smaller or equal pattern.
 	Simplify(p *ast.Pattern) *ast.Pattern
+	//Grammar returns a grammar that has been simplified, transformed to an equivalent, but smaller or equal grammar.
+	Grammar() *ast.Grammar
+	//OptimizeForRecord optimizes the simplifier to also takes into account the fact the structure being validated is a record.
+	//A record can be json, protobuf, reflected go structures or any structure that have unique field names for each structure.
+	//XML would be an example of a structure for which this simplification is NOT appropriate.
+	OptimizeForRecord() Simplifier
 }
 
 type simplifier struct {
-	refs  ast.RefLookup
-	cache map[*ast.Pattern]struct{}
+	refs   ast.RefLookup
+	cache  map[*ast.Pattern]struct{}
+	record bool
 }
 
-func NewSimplifier(refs ast.RefLookup) Simplifier {
+//NewSimplifier returns a new Simplifier that is used to simplify a grammar and its patterns.
+func NewSimplifier(g *ast.Grammar) Simplifier {
 	return &simplifier{
-		refs:  refs,
+		refs:  ast.NewRefLookup(g),
 		cache: make(map[*ast.Pattern]struct{}),
 	}
 }
@@ -58,6 +55,18 @@ func (this *simplifier) Simplify(p *ast.Pattern) *ast.Pattern {
 	s := this.simplify(p, true)
 	this.cache[s] = struct{}{}
 	return s
+}
+
+func (this *simplifier) Grammar() *ast.Grammar {
+	for name, p := range this.refs {
+		this.refs[name] = this.Simplify(p)
+	}
+	return ast.NewGrammar(this.refs)
+}
+
+func (this *simplifier) OptimizeForRecord() Simplifier {
+	this.record = true
+	return this
 }
 
 func checkRef(refs ast.RefLookup, p *ast.Pattern) *ast.Pattern {
@@ -126,11 +135,13 @@ func (this *simplifier) simplify(p *ast.Pattern, top bool) *ast.Pattern {
 		return cRef(simplifyOr(this.refs,
 			simp(v.GetLeftPattern()),
 			simp(v.GetRightPattern()),
+			this.record,
 		))
 	case *ast.And:
 		return cRef(simplifyAnd(this.refs,
 			simp(v.GetLeftPattern()),
 			simp(v.GetRightPattern()),
+			this.record,
 		))
 	case *ast.ZeroOrMore:
 		return cRef(simplifyZeroOrMore(simp(v.GetPattern())))
@@ -196,7 +207,7 @@ func getOrs(p *ast.Pattern) []*ast.Pattern {
 	return []*ast.Pattern{p}
 }
 
-func simplifyOr(refs ast.RefLookup, p1, p2 *ast.Pattern) *ast.Pattern {
+func simplifyOr(refs ast.RefLookup, p1, p2 *ast.Pattern, record bool) *ast.Pattern {
 	if isNotZany(p1) {
 		return p2
 	}
@@ -217,8 +228,8 @@ func simplifyOr(refs ast.RefLookup, p1, p2 *ast.Pattern) *ast.Pattern {
 	list := append(left, right...)
 	list = ast.Set(list)
 	list = simplifyChildren(list, func(left, right *ast.Pattern) *ast.Pattern {
-		return simplifyOr(refs, left, right)
-	})
+		return simplifyOr(refs, left, right, record)
+	}, record)
 	ast.Sort(list)
 	var p *ast.Pattern = list[0]
 	for i := range list {
@@ -237,9 +248,21 @@ func getAnds(p *ast.Pattern) []*ast.Pattern {
 	return []*ast.Pattern{p}
 }
 
-func simplifyChildren(children []*ast.Pattern, op func(left, right *ast.Pattern) *ast.Pattern) []*ast.Pattern {
+func simplifyChildren(children []*ast.Pattern, op func(left, right *ast.Pattern) *ast.Pattern, record bool) []*ast.Pattern {
 	if len(children) == 0 || len(children) == 1 {
 		return children
+	}
+
+	if record {
+		c0 := children[0].GetContains().GetPattern().GetTreeNode()
+		c1 := children[1].GetContains().GetPattern().GetTreeNode()
+		if c0 != nil && c1 != nil {
+			if c0.GetName().Equal(c1.GetName()) {
+				newchild := ast.NewContains(ast.NewTreeNode(c0.GetName(), op(c0.GetPattern(), c1.GetPattern())))
+				children[1] = newchild
+				return simplifyChildren(children[1:], op, record)
+			}
+		}
 	}
 
 	t0 := children[0].TreeNode
@@ -248,13 +271,14 @@ func simplifyChildren(children []*ast.Pattern, op func(left, right *ast.Pattern)
 		if t0.GetName().Equal(t1.GetName()) {
 			newchild := ast.NewTreeNode(t0.GetName(), op(t0.GetPattern(), t1.GetPattern()))
 			children[1] = newchild
-			return simplifyChildren(children[1:], op)
+			return simplifyChildren(children[1:], op, record)
 		}
 	}
-	return append([]*ast.Pattern{children[0]}, simplifyChildren(children[1:], op)...)
+
+	return append([]*ast.Pattern{children[0]}, simplifyChildren(children[1:], op, record)...)
 }
 
-func simplifyAnd(refs ast.RefLookup, p1, p2 *ast.Pattern) *ast.Pattern {
+func simplifyAnd(refs ast.RefLookup, p1, p2 *ast.Pattern, record bool) *ast.Pattern {
 	if isNotZany(p1) || isNotZany(p2) {
 		return emptyset
 	}
@@ -283,8 +307,8 @@ func simplifyAnd(refs ast.RefLookup, p1, p2 *ast.Pattern) *ast.Pattern {
 	list := append(left, right...)
 	list = ast.Set(list)
 	list = simplifyChildren(list, func(left, right *ast.Pattern) *ast.Pattern {
-		return simplifyAnd(refs, left, right)
-	})
+		return simplifyAnd(refs, left, right, record)
+	}, record)
 	ast.Sort(list)
 	var p *ast.Pattern = list[0]
 	for i := range list {

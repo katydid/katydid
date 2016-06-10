@@ -33,13 +33,19 @@ func init() {
 	flag.Parse()
 }
 
-func bench(b *testing.B, grammar *ast.Grammar, gen func() parser.Interface) {
+func bench(b *testing.B, grammar *ast.Grammar, gen func() parser.Interface, record bool) {
 	num := 1000
 	if *bN != 0 {
 		b.N = *bN
 	}
 	parsers := make([]reset, num)
-	m, err := mem.New(grammar)
+	var m *mem.Mem
+	var err error
+	if record {
+		m, err = mem.NewRecord(grammar)
+	} else {
+		m, err = mem.New(grammar)
+	}
 	if err != nil {
 		b.Fatal(err)
 	}

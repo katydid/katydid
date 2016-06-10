@@ -25,16 +25,14 @@ import (
 
 func TestSimplify1(t *testing.T) {
 	c := ast.NewConcat(ast.NewNot(ast.NewZAny()), ast.NewZAny())
-	refs := ast.RefLookup{"main": c}
-	s := Simplify(refs, c)
+	s := NewSimplifier(c.Grammar()).Simplify(c)
 	if !s.Equal(ast.NewNot(ast.NewZAny())) {
 		t.Fatalf("Expected EmptySet, but got %s", s)
 	}
 }
 
 func TestSimplify2(t *testing.T) {
-	refs := ast.NewRefLookup(tests.AndNameTelephonePerson.Grammar())
-	s := Simplify(refs, refs["main"])
+	s := NewSimplifier(tests.AndNameTelephonePerson.Grammar()).Simplify(tests.AndNameTelephonePerson["main"])
 	if s.Equal(ast.NewNot(ast.NewZAny())) {
 		t.Fatalf("Did not expected EmptySet")
 	}
@@ -46,8 +44,7 @@ func newT(s string) *ast.Pattern {
 
 func TestSimplifyOr1(t *testing.T) {
 	input := ast.NewOr(newT("B"), ast.NewOr(newT("C"), ast.NewOr(newT("A"), newT("B"))))
-	refs := ast.RefLookup{"main": input}
-	output := Simplify(refs, input)
+	output := NewSimplifier(input.Grammar()).Simplify(input)
 	expected := ast.NewOr(ast.NewOr(newT("A"), newT("B")), newT("C"))
 	t.Logf("%v", output)
 	if !expected.Equal(output) {
@@ -57,8 +54,7 @@ func TestSimplifyOr1(t *testing.T) {
 
 func TestSimplifyOr2(t *testing.T) {
 	input := ast.NewOr(ast.NewOr(newT("A"), newT("B")), ast.NewOr(newT("B"), newT("C")))
-	refs := ast.RefLookup{"main": input}
-	output := Simplify(refs, input)
+	output := NewSimplifier(input.Grammar()).Simplify(input)
 	expected := ast.NewOr(ast.NewOr(newT("A"), newT("B")), newT("C"))
 	t.Logf("%v", output)
 	if !expected.Equal(output) {
@@ -88,8 +84,7 @@ func TestSimplifyTree(t *testing.T) {
 			),
 		)),
 	)
-	refs := ast.RefLookup{"main": input}
-	output := Simplify(refs, input)
+	output := NewSimplifier(input.Grammar()).Simplify(input)
 	t.Logf("%v", output)
 	if !expected.Equal(output) {
 		t.Fatalf("expected %v, but got %v", expected, output)
@@ -99,8 +94,7 @@ func TestSimplifyTree(t *testing.T) {
 func TestSimplifyFalseLeaf(t *testing.T) {
 	input := combinator.Value(funcs.And(funcs.StringEq(funcs.StringVar(), funcs.StringConst("a")), funcs.StringEq(funcs.StringVar(), funcs.StringConst("b"))))
 	expected := ast.NewNot(ast.NewZAny())
-	refs := ast.RefLookup{"main": input}
-	output := Simplify(refs, input)
+	output := NewSimplifier(input.Grammar()).Simplify(input)
 	t.Logf("%v", output)
 	if !expected.Equal(output) {
 		t.Fatalf("expected %v, but got %v", expected, output)
@@ -110,8 +104,7 @@ func TestSimplifyFalseLeaf(t *testing.T) {
 func TestSimplifyFalseTreeNode(t *testing.T) {
 	input := ast.NewTreeNode(ast.NewAnyNameExcept(ast.NewAnyName()), ast.NewZAny())
 	expected := ast.NewNot(ast.NewZAny())
-	refs := ast.RefLookup{"main": input}
-	output := Simplify(refs, input)
+	output := NewSimplifier(input.Grammar()).Simplify(input)
 	t.Logf("%v", output)
 	if !expected.Equal(output) {
 		t.Fatalf("expected %v, but got %v", expected, output)
@@ -121,8 +114,7 @@ func TestSimplifyFalseTreeNode(t *testing.T) {
 func TestSimplifyTreeNodeWithNotZanyChild(t *testing.T) {
 	input := ast.NewTreeNode(ast.NewAnyName(), ast.NewNot(ast.NewZAny()))
 	expected := ast.NewNot(ast.NewZAny())
-	refs := ast.RefLookup{"main": input}
-	output := Simplify(refs, input)
+	output := NewSimplifier(input.Grammar()).Simplify(input)
 	t.Logf("%v", output)
 	if !expected.Equal(output) {
 		t.Fatalf("expected %v, but got %v", expected, output)
@@ -132,8 +124,7 @@ func TestSimplifyTreeNodeWithNotZanyChild(t *testing.T) {
 func TestSimplifyContainsFalseTreeNode(t *testing.T) {
 	input := ast.NewContains(ast.NewTreeNode(ast.NewAnyNameExcept(ast.NewAnyName()), ast.NewZAny()))
 	expected := ast.NewNot(ast.NewZAny())
-	refs := ast.RefLookup{"main": input}
-	output := Simplify(refs, input)
+	output := NewSimplifier(input.Grammar()).Simplify(input)
 	t.Logf("%v", output)
 	if !expected.Equal(output) {
 		t.Fatalf("expected %v, but got %v", expected, output)

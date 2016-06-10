@@ -20,6 +20,7 @@ import (
 	"github.com/katydid/katydid/relapse/protonum"
 	"reflect"
 	"sort"
+	"strings"
 )
 
 type Validator struct {
@@ -29,6 +30,10 @@ type Validator struct {
 	Parser      NewParser
 	Expected    bool
 	Description string
+}
+
+func (this *Validator) Record() bool {
+	return !strings.Contains(this.CodecName, "xml")
 }
 
 var Validators = make(map[string]map[string]Validator)
