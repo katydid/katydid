@@ -223,6 +223,13 @@ func simplifyOr(refs ast.RefLookup, p1, p2 *ast.Pattern, record bool) *ast.Patte
 	if isEmpty(p2) && Nullable(refs, p1) {
 		return p1
 	}
+	if p1.GetLeafNode() != nil && p2.GetLeafNode() != nil {
+		expr1, err1 := compose.ConvertBuiltInIntoFunction(p1.GetLeafNode().GetExpr())
+		expr2, err2 := compose.ConvertBuiltInIntoFunction(p2.GetLeafNode().GetExpr())
+		if err1 == nil && err2 == nil {
+			return ast.NewLeafNode(ast.NewFunction("or", expr1, expr2))
+		}
+	}
 	left := getOrs(p1)
 	right := getOrs(p2)
 	list := append(left, right...)
@@ -300,6 +307,13 @@ func simplifyAnd(refs ast.RefLookup, p1, p2 *ast.Pattern, record bool) *ast.Patt
 			return ast.NewEmpty()
 		} else {
 			return emptyset
+		}
+	}
+	if p1.GetLeafNode() != nil && p2.GetLeafNode() != nil {
+		expr1, err1 := compose.ConvertBuiltInIntoFunction(p1.GetLeafNode().GetExpr())
+		expr2, err2 := compose.ConvertBuiltInIntoFunction(p2.GetLeafNode().GetExpr())
+		if err1 == nil && err2 == nil {
+			return ast.NewLeafNode(ast.NewFunction("and", expr1, expr2))
 		}
 	}
 	left := getAnds(p1)

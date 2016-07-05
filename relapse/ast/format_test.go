@@ -15,67 +15,187 @@
 package ast_test
 
 import (
-	"github.com/katydid/katydid/relapse/ast"
-	"github.com/katydid/katydid/relapse/parser"
+	"strings"
 	"testing"
+
+	"github.com/katydid/katydid/relapse/parser"
 )
 
-func format(t *testing.T, s string) string {
-	g, err := parser.ParseGrammar(s)
+func format(t *testing.T, input string, expected string) {
+	g, err := parser.ParseGrammar(input)
 	if err != nil {
-		t.Errorf("err: %v given %s", err, s)
-		return ""
+		t.Errorf("parse error: %v given input: <%s>", err, input)
+		return
 	}
-	ast.Format(g)
-	return g.String()
+	g.Format()
+	output := g.String()
+	if expected != output {
+		expectedStr := strings.Replace(strings.Replace(expected, " ", "_", -1), "\t", "<tab>", -1)
+		outputStr := strings.Replace(strings.Replace(output, " ", "_", -1), "\t", "<tab>", -1)
+		t.Errorf("format failure: expected \n<%s>, but got \n<%s>", expectedStr, outputStr)
+	}
+	input = expected
+	g2, err := parser.ParseGrammar(input)
+	if err != nil {
+		t.Errorf("parse error2: %v given input: <%s>", err, input)
+		return
+	}
+	g2.Format()
+	output = g.String()
+	if expected != output {
+		expectedStr := strings.Replace(strings.Replace(expected, " ", "_", -1), "\t", "<tab>", -1)
+		outputStr := strings.Replace(strings.Replace(output, " ", "_", -1), "\t", "<tab>", -1)
+		t.Errorf("format failure2: expected \n<%s>, but got \n<%s>", expectedStr, outputStr)
+	}
 }
 
-func testFormat(t *testing.T, in string, expected string) {
-	got := format(t, in)
-	if expected != got {
-		t.Errorf("expected \n<<%s>>\n, but got \n<<%s>>\n", expected, got)
-	} else {
-		if len(got) > 0 {
-			got2 := format(t, got)
-			if expected != got2 {
-				t.Errorf("expected2 \n<<%s>>\n, but got \n<<%s>>\n", expected, got2)
-			}
-		}
-	}
-}
-
-func DisabledTestFormat(t *testing.T) {
-	testFormat(t, " @main =  *", "*")
-	testFormat(t,
+func TestFormatGrammar(t *testing.T) {
+	format(t, " #main =  *", "#main = *")
+	format(t,
 		`//attachedcomment
-  *`,
+	  *`,
 		`//attachedcomment
 *`)
-	testFormat(t,
+	format(t,
 		`//unattachedcomment
 
-	*`,
+		*`,
 		`//unattachedcomment
-
 *`)
 	//2 pattern declarations
-	testFormat(t,
-		`@main = *
-		@other = a->any()`,
-		`*
-@other = a->any()`)
+	format(t,
+		`#main = *
+			#other = a->any()`,
+		`#main = *
+#other = a->any()`)
+	//2 pattern declarations without a new line
+	format(t,
+		`#main = *	#other = a->any()`,
+		`#main = * #other = a->any()`)
 	//3 pattern declarations
-	testFormat(t,
+	format(t,
 		`*
-		@other = a->any()
+			#other = a->any()
 
-		@more = (*)*`,
+			#more = (*)*`,
 		`*
-@other = a->any()
-@more = (*)*`)
+#other = a->any()
+#more = (*)*`)
 	//treenode
-	testFormat(t,
-		`@main = 
-			"a":*`,
-		`a: *`)
+	format(t,
+		`#main =   "a":*`,
+		`#main = a:*`)
+}
+
+func formatSpace(t *testing.T, input string, expected string) {
+	format(t, "*"+input, "*"+expected)
+}
+
+func TestFormatSpace(t *testing.T) {
+	formatSpace(t, "//linecomment\n", "//linecomment\n")
+	formatSpace(t, "/*blockcomment*/", "/*blockcomment*/")
+	formatSpace(t, " \t\t\t //linecomment \t \n", "//linecomment\n")
+	formatSpace(t, "//linecomment\n\n\n", "//linecomment\n")
+	formatSpace(t, "//linecomment\n", "//linecomment\n")
+	formatSpace(t, "/*blockcomment*/\n\n", "/*blockcomment*/")
+	formatSpace(t, "\t\t/*blockcomment*/  ", "/*blockcomment*/")
+	formatSpace(t,
+		`//linecomment
+
+/*blockcomment*/
+
+//linecomment2
+`, `//linecomment
+
+/*blockcomment*/
+
+//linecomment2
+`)
+	formatSpace(t,
+		`  //linecomment
+
+
+
+	/*blockcomment*/  
+
+
+
+  //linecomment2  
+`, `//linecomment
+
+/*blockcomment*/
+
+//linecomment2
+`)
+	formatSpace(t,
+		`/*blockcomment
+*/`, `/*blockcomment
+*/`)
+	formatSpace(t,
+		`/*blockcomment
+
+*/`, `/*blockcomment
+
+*/`)
+	formatSpace(t,
+		`	/*blockcomment
+		more text
+*/	
+		`, `/*blockcomment
+		more text
+*/`)
+	formatSpace(t,
+		`	/*blockcomment
+		more text
+*/	
+
+		/*blockcomment2*/
+
+
+
+
+
+	/*  
+		block3
+		block2
+		block1
+	*/
+		`, `/*blockcomment
+		more text
+*/
+
+/*blockcomment2*/
+
+/*  
+		block3
+		block2
+		block1
+	*/`)
+	formatSpace(t,
+		`	/*blockcomment
+		more text
+*/	
+
+		//linecomment
+
+
+
+
+
+	/*  
+		block3
+		block2
+		block1
+	*/
+		`, `/*blockcomment
+		more text
+*/
+
+//linecomment
+
+/*  
+		block3
+		block2
+		block1
+	*/`)
 }

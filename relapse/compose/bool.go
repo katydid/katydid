@@ -56,7 +56,7 @@ var (
 
 //NewBool constructs a boolean function from a parsed expression.
 func NewBool(expr *ast.Expr) (funcs.Bool, error) {
-	expr2, err := rewriteBuiltIn(expr)
+	expr2, err := ConvertBuiltInIntoFunction(expr)
 	if err != nil {
 		return nil, err
 	}

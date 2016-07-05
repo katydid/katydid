@@ -117,13 +117,6 @@ func NewContains(pattern *Pattern) *Pattern {
 
 //NewLeafNode returns a new LeafNode pattern.
 func NewLeafNode(e *Expr) *Pattern {
-	if e.BuiltIn != nil {
-		return &Pattern{
-			LeafNode: &LeafNode{
-				Expr: e,
-			},
-		}
-	}
 	return &Pattern{
 		LeafNode: &LeafNode{
 			Expr: e,
@@ -134,7 +127,7 @@ func NewLeafNode(e *Expr) *Pattern {
 //NewConcat returns a new Concat pattern.
 //If the number of patterns provided is:
 //
-//0, nil is returned; 
+//0, nil is returned;
 //
 //1, the input pattern is returned;
 //
@@ -176,7 +169,7 @@ func newConcat(patterns []*Pattern) *Pattern {
 //NewOr returns a new Or pattern.
 //If the number of patterns provided is:
 //
-//0, nil is returned; 
+//0, nil is returned;
 //
 //1, the input pattern is returned;
 //
@@ -218,7 +211,7 @@ func newOr(patterns []*Pattern) *Pattern {
 //NewAnd returns a new And pattern.
 //If the number of patterns provided is:
 //
-//0, nil is returned; 
+//0, nil is returned;
 //
 //1, the input pattern is returned;
 //
@@ -320,7 +313,7 @@ func NewOptional(pattern *Pattern) *Pattern {
 //NewInterleave returns a new Interleave pattern.
 //If the number of patterns provided is:
 //
-//0, nil is returned; 
+//0, nil is returned;
 //
 //1, the input pattern is returned;
 //
@@ -359,9 +352,50 @@ func newInterleave(patterns []*Pattern) *Pattern {
 	}
 }
 
+//NewFunction returns a function expression given a name and a list of parameters.
+//  ->name(param1, param2, ...)
+//This function should be the top level function and not a nested function.
+//If the parameters don't have populated Comma fields, this function will add them.
+//If a parameter has a populared RightArrow field, the contents of the RightArrow field is thrown away.
+func NewFunction(name string, params ...*Expr) *Expr {
+	for i, p := range params {
+		if p.RightArrow != nil {
+			p.RightArrow = nil
+		}
+		if i == 0 {
+			continue
+		}
+		if p.Comma == nil {
+			p.Comma = newComma()
+		}
+	}
+	return &Expr{
+		RightArrow: newRightArrow(),
+		Function: &Function{
+			Name:       name,
+			OpenParen:  newOpenParen(),
+			Params:     params,
+			CloseParen: newCloseParen(),
+		},
+	}
+}
+
 //NewNestedFunction returns a function expression given a name and a list of parameters.
-//  name(params)
+//  name(param1, param2, ...)
+//If the parameters don't have populated Comma fields, this function will add them.
+//If a parameter has a populared RightArrow field, the contents of the RightArrow field is thrown away.
 func NewNestedFunction(name string, params ...*Expr) *Expr {
+	for i, p := range params {
+		if p.RightArrow != nil {
+			p.RightArrow = nil
+		}
+		if i == 0 {
+			continue
+		}
+		if p.Comma == nil {
+			p.Comma = newComma()
+		}
+	}
 	return &Expr{Function: &Function{
 		Name:       name,
 		OpenParen:  newOpenParen(),
@@ -616,7 +650,7 @@ func NewAnyNameExcept(name *NameExpr) *NameExpr {
 //NewNameChoice returns a name expression which represents of choice of the list of given name expressions.
 //If the number of names provided is:
 //
-//0, nil is returned; 
+//0, nil is returned;
 //
 //1, the input name is returned;
 //

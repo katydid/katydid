@@ -14,6 +14,36 @@
 
 package ast
 
+//BuiltInFunctionName returns the full function name for the given builtin symbol.
+//The function returns an empty string when the symbol is not a known builtin symbol.
+func BuiltInFunctionName(symbol string) string {
+	switch symbol {
+	case "==":
+		return "eq"
+	case "!=":
+		return "ne"
+	case "<":
+		return "lt"
+	case ">":
+		return "gt"
+	case "<=":
+		return "le"
+	case ">=":
+		return "ge"
+	case "~=":
+		return "regex"
+	case "*=":
+		return "contains"
+	case "^=":
+		return "hasPrefix"
+	case "$=":
+		return "hasSuffix"
+	case "::":
+		return "type"
+	}
+	return ""
+}
+
 //NewEqual returns an builtin equal expression.
 //  == e
 func NewEqual(e *Expr) *Expr {

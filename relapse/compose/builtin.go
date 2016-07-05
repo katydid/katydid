@@ -19,35 +19,8 @@ import (
 	"github.com/katydid/katydid/relapse/types"
 )
 
-func symbolToFunc(symbol string) string {
-	switch symbol {
-	case "==":
-		return "eq"
-	case "!=":
-		return "ne"
-	case "<":
-		return "lt"
-	case ">":
-		return "gt"
-	case "<=":
-		return "le"
-	case ">=":
-		return "ge"
-	case "~=":
-		return "regex"
-	case "*=":
-		return "contains"
-	case "^=":
-		return "hasPrefix"
-	case "$=":
-		return "hasSuffix"
-	case "::":
-		return "type"
-	}
-	panic("unknown builtin symbol `" + symbol + "`")
-}
-
-func rewriteBuiltIn(e *ast.Expr) (*ast.Expr, error) {
+//ConvertBuiltInIntoFunction converts a BuiltIn Expr into a Function Expr.
+func ConvertBuiltInIntoFunction(e *ast.Expr) (*ast.Expr, error) {
 	if e.BuiltIn == nil {
 		return e, nil
 	}
@@ -61,7 +34,7 @@ func rewriteBuiltIn(e *ast.Expr) (*ast.Expr, error) {
 		typ = types.ListToSingle(typ)
 	}
 	left := ast.NewVar(typ)
-	funcName := symbolToFunc(s)
+	funcName := ast.BuiltInFunctionName(s)
 	e2 := ast.NewNestedFunction(funcName, left, right)
 	if funcName == "regex" {
 		e2 = ast.NewNestedFunction(funcName, right, ast.NewVar(types.SINGLE_STRING))

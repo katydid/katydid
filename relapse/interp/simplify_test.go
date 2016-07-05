@@ -130,3 +130,22 @@ func TestSimplifyContainsFalseTreeNode(t *testing.T) {
 		t.Fatalf("expected %v, but got %v", expected, output)
 	}
 }
+
+func TestSimplifyRecordLeaf(t *testing.T) {
+	input := ast.NewAnd(
+		ast.NewContains(ast.NewTreeNode(ast.NewStringName("A"), combinator.Value(funcs.Contains(funcs.StringVar(), funcs.StringConst("a"))))),
+		ast.NewContains(ast.NewTreeNode(ast.NewStringName("A"), combinator.Value(funcs.Contains(funcs.StringVar(), funcs.StringConst("b"))))),
+	)
+	t.Logf("input: %v", input)
+	expected := ast.NewContains(ast.NewTreeNode(ast.NewStringName("A"), combinator.Value(funcs.And(
+		funcs.Contains(funcs.StringVar(), funcs.StringConst("a")),
+		funcs.Contains(funcs.StringVar(), funcs.StringConst("b")),
+	))))
+	output := NewSimplifier(input.Grammar()).OptimizeForRecord().Simplify(input)
+	expected.Format()
+	output.Format()
+	t.Logf("%v", output)
+	if !expected.Equal(output) {
+		t.Fatalf("expected %v, but got %v", expected, output)
+	}
+}

@@ -1,4 +1,4 @@
-//  Copyright 2015 Walter Schulze
+//  Copyright 2016 Walter Schulze
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -14,133 +14,270 @@
 
 package ast
 
-//Work in Progress: Like gofmt, but for relapse
-func Format(g *Grammar) {
-	first := true
-	if g.TopPattern == nil {
-		for i := range g.PatternDecls {
-			if g.PatternDecls[i].Name == "main" {
-				if !g.PatternDecls[i].Before.HasComment() &&
-					!g.PatternDecls[i].Hash.Before.HasComment() &&
-					!g.PatternDecls[i].Eq.Before.HasComment() {
-					g.TopPattern = g.PatternDecls[i].Pattern
-					g.PatternDecls = append(g.PatternDecls[:i], g.PatternDecls[i+1:]...)
-					break
+import (
+	"strings"
+)
+
+//Format formats the spacing in the Grammar.
+func (this *Grammar) Format() {
+	if this.TopPattern != nil {
+		this.TopPattern.format(false)
+	}
+	for i, p := range this.PatternDecls {
+		p.format(i != 0 || this.TopPattern != nil)
+	}
+	this.After.format(false)
+}
+
+func (this *PatternDecl) format(space bool) {
+	this.Hash.format(space)
+	this.Before.format(false)
+	this.Eq.format(true)
+	this.Pattern.format(true)
+}
+
+//Format formats the spacing in the Pattern.
+func (this *Pattern) Format() {
+	this.format(false)
+}
+
+func (this *Pattern) format(space bool) {
+	v := this.GetValue()
+	v.(interface {
+		format(bool)
+	}).format(space)
+}
+
+func (this *Empty) format(space bool) {
+	this.Empty.format(space)
+}
+
+func (this *TreeNode) format(space bool) {
+	this.Name.format(space)
+	if this.Colon != nil {
+		this.Colon.format(false)
+	}
+	this.Pattern.format(this.Colon == nil)
+}
+
+func (this *Contains) format(space bool) {
+	this.Dot.format(space)
+	this.Pattern.format(false)
+}
+
+func (this *LeafNode) format(space bool) {
+	this.Expr.format(space)
+}
+
+func (this *Concat) format(space bool) {
+	this.OpenBracket.format(space)
+	this.LeftPattern.format(false)
+	this.Comma.format(false)
+	this.RightPattern.format(true)
+	if this.ExtraComma != nil {
+		this.ExtraComma.format(false)
+	}
+	this.CloseBracket.format(this.ExtraComma == nil)
+}
+
+func (this *Or) format(space bool) {
+	this.OpenParen.format(space)
+	this.LeftPattern.format(false)
+	this.Pipe.format(true)
+	this.RightPattern.format(true)
+	this.CloseParen.format(false)
+}
+
+func (this *And) format(space bool) {
+	this.OpenParen.format(space)
+	this.LeftPattern.format(false)
+	this.Ampersand.format(true)
+	this.RightPattern.format(true)
+	this.CloseParen.format(false)
+}
+
+func (this *ZeroOrMore) format(space bool) {
+	this.OpenParen.format(space)
+	this.Pattern.format(false)
+	this.CloseParen.format(false)
+	this.Star.format(false)
+}
+
+func (this *Reference) format(space bool) {
+	this.At.format(space)
+}
+
+func (this *Not) format(space bool) {
+	this.Exclamation.format(space)
+	this.OpenParen.format(false)
+	this.Pattern.format(false)
+	this.CloseParen.format(false)
+}
+
+func (this *ZAny) format(space bool) {
+	this.Star.format(space)
+}
+
+func (this *Optional) format(space bool) {
+	this.OpenParen.format(space)
+	this.Pattern.format(false)
+	this.CloseParen.format(false)
+	this.QuestionMark.format(false)
+}
+
+func (this *Interleave) format(space bool) {
+	this.OpenCurly.format(space)
+	this.LeftPattern.format(false)
+	this.SemiColon.format(false)
+	this.RightPattern.format(true)
+	if this.ExtraSemiColon != nil {
+		this.ExtraSemiColon.format(false)
+	}
+	this.CloseCurly.format(this.ExtraSemiColon == nil)
+}
+
+func (this *Expr) format(space bool) {
+	if this.RightArrow != nil {
+		this.RightArrow.format(space)
+		space = false
+	} else if this.Comma != nil {
+		this.Comma.format(space)
+		space = false
+	}
+	if this.Terminal != nil {
+		this.Terminal.format(space)
+	} else if this.List != nil {
+		this.List.format(space)
+	} else if this.Function != nil {
+		this.Function.format(space)
+	} else if this.BuiltIn != nil {
+		this.BuiltIn.format(space)
+	}
+}
+
+func (this *NameExpr) format(space bool) {
+	v := this.GetValue()
+	v.(interface {
+		format(bool)
+	}).format(space)
+}
+
+func (this *Name) format(space bool) {
+	this.Before.format(space)
+}
+
+func (this *AnyName) format(space bool) {
+	this.Underscore.format(space)
+}
+
+func (this *AnyNameExcept) format(space bool) {
+	this.Exclamation.format(space)
+	this.OpenParen.format(false)
+	this.Except.format(false)
+	this.CloseParen.format(false)
+}
+
+func (this *NameChoice) format(space bool) {
+	this.OpenParen.format(space)
+	this.Left.format(false)
+	this.Pipe.format(false)
+	this.Right.format(false)
+	this.CloseParen.format(false)
+}
+
+func (this *List) format(space bool) {
+	this.Before.format(space)
+	this.OpenCurly.format(false)
+	for i := range this.Elems {
+		this.Elems[i].format(i != 0)
+	}
+	this.CloseCurly.format(false)
+}
+
+func (this *Function) format(space bool) {
+	this.Before.format(space)
+	this.OpenParen.format(false)
+	for i := range this.Params {
+		this.Params[i].format(i != 0)
+	}
+	this.CloseParen.format(false)
+}
+
+func (this *BuiltIn) format(space bool) {
+	this.Symbol.format(space)
+	this.Expr.format(true)
+}
+
+func (this *Terminal) format(space bool) {
+	this.Before.format(space)
+}
+
+func (this *Keyword) format(space bool) {
+	this.Before.format(space)
+}
+
+func (this *Space) Format() {
+	this.format(false)
+}
+
+func (this *Space) format(space bool) {
+	if this == nil {
+		return
+	}
+	newSpace := formatSpace(this.Space)
+	if space {
+		if len(this.Space) > 0 && strings.Contains(this.Space[len(this.Space)-1], "\n") {
+			newSpace = append(newSpace, "\n")
+		} else {
+			newSpace = append(newSpace, " ")
+		}
+	}
+	this.Space = newSpace
+}
+
+type state int
+
+var startState = state(0)
+var lineCommentState = state(1)
+var blockCommentState = state(2)
+
+func formatSpace(spaces []string) []string {
+	newlines := 0
+	current := startState
+	formatted := []string{}
+	for _, space := range spaces {
+		for _, c := range space {
+			if c == '\n' {
+				newlines++
+			}
+		}
+		if isComment(space) {
+			comment := strings.TrimSpace(space)
+			if isLineComment(space) {
+				comment = comment + "\n"
+			}
+			switch current {
+			case startState:
+				formatted = append(formatted, comment)
+			case lineCommentState:
+				if newlines >= 2 {
+					formatted = append(formatted, "\n")
 				}
+				formatted = append(formatted, comment)
+			case blockCommentState:
+				if newlines >= 2 {
+					formatted = append(formatted, "\n\n")
+				}
+				formatted = append(formatted, comment)
+			}
+			if isLineComment(space) {
+				current = lineCommentState
+				newlines = 1
+			} else {
+				current = blockCommentState
+				newlines = 0
 			}
 		}
 	}
-	if g.TopPattern != nil {
-		formatPattern(g.TopPattern, true, 0)
-	}
-	for i := range g.PatternDecls {
-		formatPatternDecl(g.PatternDecls[i], first)
-		first = false
-	}
-	if g.After == nil {
-		g.After = &Space{}
-	}
-	formatTrim(g.After, true, 0)
-}
-
-func formatPatternDecl(patternDecl *PatternDecl, first bool) {
-	if patternDecl.Before == nil {
-		patternDecl.Before = &Space{}
-	}
-	if first {
-		formatTrim(patternDecl.Before, true, 0)
-	} else {
-		formatTrim(patternDecl.Before, false, 0)
-	}
-	formatKeyword(patternDecl.Eq, 0)
-	formatPattern(patternDecl.Pattern, true, 0)
-}
-
-func formatPattern(pattern *Pattern, first bool, tabs int) {
-	if pattern.Empty != nil {
-		formatEmpty(pattern.Empty, first, tabs)
-	}
-	if pattern.TreeNode != nil {
-		formatTreeNode(pattern.TreeNode, true, tabs)
-	}
-	if pattern.ZAny != nil {
-		if !pattern.ZAny.Star.Before.HasComment() {
-			pattern.ZAny.Star.Before = nil
-		}
-	}
-}
-
-func formatEmpty(e *Empty, first bool, tabs int) {
-	formatKeyword(e.Empty, tabs)
-}
-
-func formatTreeNode(t *TreeNode, first bool, tabs int) {
-	formatNameExpr(t.Name, first, tabs)
-	if t.Colon != nil {
-		formatKeyword(t.Colon, tabs)
-	}
-	formatPattern(t.Pattern, true, tabs)
-}
-
-func formatNameExpr(nameExpr *NameExpr, first bool, tabs int) {
-	if nameExpr.Name != nil {
-		formatName(nameExpr.Name, first, tabs)
-	}
-}
-
-func formatName(name *Name, first bool, tabs int) {
-	if name.Before == nil {
-		name.Before = &Space{}
-	}
-	formatTrim(name.Before, first, tabs)
-	if first {
-		addSpace(name.Before)
-	}
-}
-
-func newTabs(tabs int) string {
-	ss := make([]rune, tabs)
-	for i := 0; i < tabs; i++ {
-		ss[i] = '\t'
-	}
-	return string(ss)
-}
-
-func formatTrim(space *Space, first bool, tabs int) {
-	comments := space.GetComments()
-	hadAttachedComment := space.HasAttachedComment()
-	space.Space = make([]string, 0, len(comments)*2)
-	firstComment := true
-	for i := range comments {
-		if firstComment {
-			space.Space = append(space.Space, string(comments[i]))
-		} else {
-			space.Space = append(space.Space, newTabs(tabs)+string(comments[i]))
-		}
-		firstComment = false
-	}
-	if len(comments) > 0 && !hadAttachedComment {
-		space.Space = append(space.Space, "\n")
-	}
-	if tabs == 0 {
-		if !first {
-			space.Space = append(space.Space, "\n")
-		}
-	} else {
-		space.Space = append(space.Space, newTabs(tabs))
-	}
-}
-
-func addSpace(space *Space) {
-	space.Space = append(space.Space, " ")
-}
-
-func formatKeyword(keyword *Keyword, tabs int) {
-	if keyword.Before == nil {
-		keyword.Before = &Space{}
-	}
-	formatTrim(keyword.Before, true, tabs)
-	if keyword.GetValue() == "=" {
-		addSpace(keyword.Before)
-	}
+	return formatted
 }
