@@ -26,7 +26,7 @@ func (this *Grammar) Clone() *Grammar {
 //Clone returns a copy of the RefLookup map
 func (this RefLookup) Clone() RefLookup {
 	that := make(RefLookup, len(this))
-	for name, _ := range this {
+	for name := range this {
 		that[name] = this[name].Clone()
 	}
 	return that
@@ -35,4 +35,9 @@ func (this RefLookup) Clone() RefLookup {
 //Clone returns a copy of the Pattern struct
 func (this *Pattern) Clone() *Pattern {
 	return proto.Clone(this).(*Pattern)
+}
+
+//Clone returns a copy of the Expr struct
+func (this *Expr) Clone() *Expr {
+	return proto.Clone(this).(*Expr)
 }

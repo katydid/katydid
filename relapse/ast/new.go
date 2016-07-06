@@ -40,7 +40,7 @@ func NewGrammar(m map[string]*Pattern) *Grammar {
 	ps := make([]*PatternDecl, 0, len(m))
 	first := true
 	g := &Grammar{}
-	for name, _ := range m {
+	for name := range m {
 		if name == "main" {
 			g.TopPattern = m[name]
 		} else {
@@ -359,13 +359,10 @@ func newInterleave(patterns []*Pattern) *Pattern {
 //If a parameter has a populared RightArrow field, the contents of the RightArrow field is thrown away.
 func NewFunction(name string, params ...*Expr) *Expr {
 	for i, p := range params {
-		if p.RightArrow != nil {
-			p.RightArrow = nil
-		}
+		p.RightArrow = nil
 		if i == 0 {
-			continue
-		}
-		if p.Comma == nil {
+			p.Comma = nil
+		} else if p.Comma == nil {
 			p.Comma = newComma()
 		}
 	}
@@ -386,13 +383,10 @@ func NewFunction(name string, params ...*Expr) *Expr {
 //If a parameter has a populared RightArrow field, the contents of the RightArrow field is thrown away.
 func NewNestedFunction(name string, params ...*Expr) *Expr {
 	for i, p := range params {
-		if p.RightArrow != nil {
-			p.RightArrow = nil
-		}
+		p.RightArrow = nil
 		if i == 0 {
-			continue
-		}
-		if p.Comma == nil {
+			p.Comma = nil
+		} else if p.Comma == nil {
 			p.Comma = newComma()
 		}
 	}

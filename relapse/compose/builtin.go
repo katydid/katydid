@@ -25,7 +25,7 @@ func ConvertBuiltInIntoFunction(e *ast.Expr) (*ast.Expr, error) {
 		return e, nil
 	}
 	s := e.GetBuiltIn().GetSymbol().GetValue()
-	right := e.GetBuiltIn().GetExpr()
+	right := e.GetBuiltIn().GetExpr().Clone()
 	typ, err := Which(right)
 	if err != nil {
 		return nil, err
