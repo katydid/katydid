@@ -15,6 +15,7 @@
 package tests
 
 import (
+	"github.com/gogo/protobuf/proto"
 	. "github.com/katydid/katydid/relapse/combinator"
 	. "github.com/katydid/katydid/relapse/funcs"
 )
@@ -24,17 +25,21 @@ var AbcPocketRoses = &PocketRoses{
 }
 
 var AStringArray = G{"main": In("MenuPaperclip", Elem(0, Value(StringEq(StringVar(), StringConst("a")))), Any())}
+
 var FinalCStringArray = G{"main": In("MenuPaperclip", Any(), Elem(2, Value(StringEq(StringVar(), StringConst("c")))))}
+
 var AbcStringArray = G{"main": In("MenuPaperclip",
 	Elem(0, Value(StringEq(StringVar(), StringConst("a")))),
 	Elem(1, Value(StringEq(StringVar(), StringConst("b")))),
 	Elem(2, Value(StringEq(StringVar(), StringConst("c")))),
 )}
+
 var NextAStringArray = G{"main": In("MenuPaperclip",
 	Elem(1, Value(StringEq(StringVar(), StringConst("a")))),
 	Elem(0, Value(StringEq(StringVar(), StringConst("b")))),
 	Elem(2, Value(StringEq(StringVar(), StringConst("c")))),
 )}
+
 var DStringArray = G{"main": In("MenuPaperclip", Elem(0, Value(StringEq(StringVar(), StringConst("d")))), Any())}
 
 func init() {
@@ -43,4 +48,53 @@ func init() {
 	ValidateProtoNumEtc("AbcPocketRoses", AbcStringArray, AbcPocketRoses, true)
 	ValidateProtoNumEtc("NextAPocketRoses", NextAStringArray, AbcPocketRoses, false)
 	ValidateProtoNumEtc("DPocketRoses", DStringArray, AbcPocketRoses, false)
+}
+
+var LatentSimplificationTypewriterPrisonTrue = &TypewriterPrison{
+	PocketRoses: &PocketRoses{
+		MenuPaperclip: []string{"b"},
+		BeetlePoker:   []string{"d"},
+		BadgeShopping: proto.Int64(1),
+		DaisySled:     proto.Int64(1),
+	},
+}
+
+var LatentSimplificationTypewriterPrisonFalse = &TypewriterPrison{
+	PocketRoses: &PocketRoses{
+		MenuPaperclip: []string{"d"},
+		BeetlePoker:   []string{"d"},
+		BadgeShopping: proto.Int64(1),
+		DaisySled:     proto.Int64(1),
+	},
+}
+
+var LatentSimplificationOfExprs = G{"main": AllOf(
+	AllOf(
+		AnyOf(
+			AnyOf(
+				InPath("PocketRoses", InPath("MenuPaperclip", InAnyPath(Value(Contains(StringVar(), StringConst("a")))))),
+				InPath("PocketRoses", InPath("BeetlePoker", InAnyPath(Value(Contains(StringVar(), StringConst("a")))))),
+			),
+			AnyOf(
+				InPath("PocketRoses", InPath("MenuPaperclip", InAnyPath(Value(Contains(StringVar(), StringConst("b")))))),
+				InPath("PocketRoses", InPath("BeetlePoker", InAnyPath(Value(Contains(StringVar(), StringConst("b")))))),
+			),
+		),
+		AnyOf(
+			InPath("PocketRoses", InPath("MenuPaperclip", InAnyPath(Value(Contains(StringVar(), StringConst("c")))))),
+			InPath("PocketRoses", InPath("BeetlePoker", InAnyPath(Value(Contains(StringVar(), StringConst("c")))))),
+		),
+	),
+	AllOf(
+		InPath("PocketRoses", InPath("BadgeShopping", Value(IntLE(IntVar(), IntConst(2))))),
+		AllOf(
+			InPath("PocketRoses", InPath("BadgeShopping", Value(IntGE(IntVar(), IntConst(0))))),
+			InPath("PocketRoses", InPath("DaisySled", Value(IntGE(IntVar(), IntConst(1))))),
+		),
+	),
+)}
+
+func init() {
+	ValidateProtoNumEtc("LatentSimplification", LatentSimplificationOfExprs, LatentSimplificationTypewriterPrisonTrue, true)
+	ValidateProtoNumEtc("LatentSimplification", LatentSimplificationOfExprs, LatentSimplificationTypewriterPrisonFalse, false)
 }

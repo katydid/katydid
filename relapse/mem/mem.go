@@ -20,6 +20,7 @@ package mem
 import (
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse/compose"
 	"github.com/katydid/katydid/relapse/funcs"
 	"github.com/katydid/katydid/relapse/interp"
 )
@@ -83,12 +84,20 @@ func (mem *Mem) Validate(p parser.Interface) (bool, error) {
 	return mem.accept(final), nil
 }
 
+func (mem *Mem) SetContext(context *funcs.Context) {
+	mem.context = context
+	for _, f := range mem.funcs {
+		compose.SetContext(f, mem.context)
+	}
+}
+
 //Mem is the structure containing the memoized grammar.
 //TODO make more private fields.
 type Mem struct {
 	refs       map[string]*ast.Pattern
 	funcs      map[*ast.Expr]funcs.Bool
 	simplifier interp.Simplifier
+	context    *funcs.Context
 
 	patterns  patternsSet
 	zis       intsSet
@@ -146,9 +155,22 @@ func (this *Mem) accept(s int) bool {
 	return this.Accept[s]
 }
 
+func (this *Mem) getFunc(expr *ast.Expr) funcs.Bool {
+	if f, ok := this.funcs[expr]; ok {
+		return f
+	}
+	f, err := compose.NewBool(expr)
+	if err != nil {
+		panic(err)
+	}
+	compose.SetContext(f, this.context)
+	this.funcs[expr] = f
+	return f
+}
+
 func (this *Mem) calcCallTrees(upto int) error {
 	for i := len(this.Calls); i <= upto; i++ {
-		callables := derivCalls(this.refs, this.funcs, this.patterns[i])
+		callables := derivCalls(this.refs, this.getFunc, this.patterns[i])
 		callTree := newCallTree(callables)
 		memCallTree, err := newMemCallTree(i, &this.stackElms, &this.patterns, &this.zis, callTree)
 		if err != nil {

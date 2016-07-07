@@ -19,7 +19,6 @@ import (
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/compose"
 	"github.com/katydid/katydid/relapse/funcs"
-	"reflect"
 	"strings"
 )
 
@@ -31,16 +30,6 @@ type CallNode struct {
 	els        *CallNode
 	child      int
 	stackIndex int
-}
-
-//Implements returns all leaf funcs that implements a given type.
-func Implements(mem *Mem, typ reflect.Type) []interface{} {
-	allis := []interface{}{}
-	for _, f := range mem.funcs {
-		is := compose.FuncImplements(f, typ)
-		allis = append(allis, is...)
-	}
-	return allis
 }
 
 func newMemCallTree(parent int, stackElms *pairSet, patterns *patternsSet, zis *intsSet, node *callNode) (*CallNode, error) {

@@ -47,11 +47,12 @@ func (this *errInit) Error() string {
 }
 
 var (
-	varTyp    = reflect.TypeOf((*funcs.Variable)(nil)).Elem()
-	setterTyp = reflect.TypeOf((*funcs.Setter)(nil)).Elem()
-	constTyp  = reflect.TypeOf((*funcs.Const)(nil)).Elem()
-	initTyp   = reflect.TypeOf((*funcs.Init)(nil)).Elem()
-	listOfTyp = reflect.TypeOf((*funcs.ListOf)(nil)).Elem()
+	varTyp        = reflect.TypeOf((*funcs.Variable)(nil)).Elem()
+	setterTyp     = reflect.TypeOf((*funcs.Setter)(nil)).Elem()
+	constTyp      = reflect.TypeOf((*funcs.Const)(nil)).Elem()
+	initTyp       = reflect.TypeOf((*funcs.Init)(nil)).Elem()
+	listOfTyp     = reflect.TypeOf((*funcs.ListOf)(nil)).Elem()
+	setContextTyp = reflect.TypeOf((*funcs.SetContext)(nil)).Elem()
 )
 
 //NewBool constructs a boolean function from a parsed expression.
@@ -61,6 +62,13 @@ func NewBool(expr *ast.Expr) (funcs.Bool, error) {
 		return nil, err
 	}
 	return composeBool(expr2)
+}
+
+func SetContext(f funcs.Bool, context *funcs.Context) {
+	setContextImpls := FuncImplements(f, setContextTyp)
+	for _, i := range setContextImpls {
+		i.(funcs.SetContext).SetContext(context)
+	}
 }
 
 //NewBoolFunc returns the same function that it was given, but that has been trimmed and which is ready for variable values and evaluation.

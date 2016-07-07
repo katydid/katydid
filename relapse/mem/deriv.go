@@ -57,16 +57,16 @@ func deriv(mem *Mem, current int, tree parser.Interface) (int, error) {
 	return current, nil
 }
 
-func derivCalls(refs map[string]*ast.Pattern, funcs map[*ast.Expr]funcs.Bool, patterns []*ast.Pattern) []*callable {
+func derivCalls(refs map[string]*ast.Pattern, getFunc func(*ast.Expr) funcs.Bool, patterns []*ast.Pattern) []*callable {
 	res := []*callable{}
 	for _, pattern := range patterns {
-		cs := derivCall(refs, funcs, pattern)
+		cs := derivCall(refs, getFunc, pattern)
 		res = append(res, cs...)
 	}
 	return res
 }
 
-func derivCall(refs map[string]*ast.Pattern, funcs map[*ast.Expr]funcs.Bool, p *ast.Pattern) []*callable {
+func derivCall(refs map[string]*ast.Pattern, getFunc func(*ast.Expr) funcs.Bool, p *ast.Pattern) []*callable {
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *ast.Empty:
@@ -77,41 +77,38 @@ func derivCall(refs map[string]*ast.Pattern, funcs map[*ast.Expr]funcs.Bool, p *
 		b := nameexpr.NameToFunc(v.GetName())
 		return []*callable{&callable{b, v.GetPattern(), ast.NewNot(ast.NewZAny())}}
 	case *ast.LeafNode:
-		b, ok := funcs[v.GetExpr()]
-		if !ok {
-			panic("wtf")
-		}
+		b := getFunc(v.GetExpr())
 		return []*callable{&callable{b, ast.NewEmpty(), ast.NewNot(ast.NewZAny())}}
 	case *ast.Concat:
-		l := derivCall(refs, funcs, v.GetLeftPattern())
+		l := derivCall(refs, getFunc, v.GetLeftPattern())
 		if !interp.Nullable(refs, v.GetLeftPattern()) {
 			return l
 		}
-		r := derivCall(refs, funcs, v.GetRightPattern())
+		r := derivCall(refs, getFunc, v.GetRightPattern())
 		return append(l, r...)
 	case *ast.Or:
-		return derivCall2(refs, funcs, v.GetLeftPattern(), v.GetRightPattern())
+		return derivCall2(refs, getFunc, v.GetLeftPattern(), v.GetRightPattern())
 	case *ast.And:
-		return derivCall2(refs, funcs, v.GetLeftPattern(), v.GetRightPattern())
+		return derivCall2(refs, getFunc, v.GetLeftPattern(), v.GetRightPattern())
 	case *ast.Interleave:
-		return derivCall2(refs, funcs, v.GetLeftPattern(), v.GetRightPattern())
+		return derivCall2(refs, getFunc, v.GetLeftPattern(), v.GetRightPattern())
 	case *ast.ZeroOrMore:
-		return derivCall(refs, funcs, v.GetPattern())
+		return derivCall(refs, getFunc, v.GetPattern())
 	case *ast.Reference:
-		return derivCall(refs, funcs, refs[v.GetName()])
+		return derivCall(refs, getFunc, refs[v.GetName()])
 	case *ast.Not:
-		return derivCall(refs, funcs, v.GetPattern())
+		return derivCall(refs, getFunc, v.GetPattern())
 	case *ast.Contains:
-		return derivCall(refs, funcs, ast.NewConcat(ast.NewZAny(), ast.NewConcat(v.GetPattern(), ast.NewZAny())))
+		return derivCall(refs, getFunc, ast.NewConcat(ast.NewZAny(), ast.NewConcat(v.GetPattern(), ast.NewZAny())))
 	case *ast.Optional:
-		return derivCall(refs, funcs, ast.NewOr(v.GetPattern(), ast.NewEmpty()))
+		return derivCall(refs, getFunc, ast.NewOr(v.GetPattern(), ast.NewEmpty()))
 	}
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
 
-func derivCall2(refs map[string]*ast.Pattern, funcs map[*ast.Expr]funcs.Bool, left, right *ast.Pattern) []*callable {
-	l := derivCall(refs, funcs, left)
-	r := derivCall(refs, funcs, right)
+func derivCall2(refs map[string]*ast.Pattern, getFunc func(*ast.Expr) funcs.Bool, left, right *ast.Pattern) []*callable {
+	l := derivCall(refs, getFunc, left)
+	r := derivCall(refs, getFunc, right)
 	return append(l, r...)
 }
 

@@ -998,6 +998,21 @@ func TestKnotKnotElbowReflect(t *testing.T) {
 	test(t, "KnotKnotElbow", v.Grammar, v.Parser(), v.Expected, v.Description, v.Record())
 }
 
+func TestLatentSimplificationJson(t *testing.T) {
+	v := tests.Validators["LatentSimplification"]["json"]
+	test(t, "LatentSimplification", v.Grammar, v.Parser(), v.Expected, v.Description, v.Record())
+}
+
+func TestLatentSimplificationProtoName(t *testing.T) {
+	v := tests.Validators["LatentSimplification"]["protoName"]
+	test(t, "LatentSimplification", v.Grammar, v.Parser(), v.Expected, v.Description, v.Record())
+}
+
+func TestLatentSimplificationReflect(t *testing.T) {
+	v := tests.Validators["LatentSimplification"]["reflect"]
+	test(t, "LatentSimplification", v.Grammar, v.Parser(), v.Expected, v.Description, v.Record())
+}
+
 func TestLeftRecursionDavidJson(t *testing.T) {
 	v := tests.Validators["LeftRecursionDavid"]["json"]
 	test(t, "LeftRecursionDavid", v.Grammar, v.Parser(), v.Expected, v.Description, v.Record())
@@ -1946,6 +1961,11 @@ func TestProtoNumInSetPersonDavidProtoNum(t *testing.T) {
 func TestProtoNumInSetPersonRobertProtoNum(t *testing.T) {
 	v := tests.Validators["ProtoNumInSetPersonRobert"]["protoNum"]
 	test(t, "ProtoNumInSetPersonRobert", v.Grammar, v.Parser(), v.Expected, v.Description, v.Record())
+}
+
+func TestProtoNumLatentSimplificationProtoNum(t *testing.T) {
+	v := tests.Validators["ProtoNumLatentSimplification"]["protoNum"]
+	test(t, "ProtoNumLatentSimplification", v.Grammar, v.Parser(), v.Expected, v.Description, v.Record())
 }
 
 func TestProtoNumLeftRecursionDavidProtoNum(t *testing.T) {

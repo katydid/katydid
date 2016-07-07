@@ -25,19 +25,19 @@ import (
 )
 
 func NewInjectable() *injectableInt {
-	return &injectableInt{V: funcs.IntConst(0)}
+	return &injectableInt{}
 }
 
 type injectableInt struct {
-	V funcs.ConstInt
+	context *funcs.Context
 }
 
 func (this *injectableInt) Eval() (int64, error) {
-	return this.V.Eval()
+	return this.context.Value.(int64), nil
 }
 
-func (this *injectableInt) SetValue(v int64) {
-	this.V = funcs.IntConst(v)
+func (this *injectableInt) SetContext(context *funcs.Context) {
+	this.context = context
 }
 
 func (this *injectableInt) IsVariable() {
@@ -54,26 +54,9 @@ func init() {
 	}
 }
 
-type InjectableInt interface {
-	SetValue(v int64)
-}
-
 var injectPerson = G{}
 
-func testInject(t *testing.T, num int64) bool {
-	grammar := injectPerson.Grammar()
-	m, err := mem.New(grammar)
-	if err != nil {
-		t.Fatal(err)
-	}
-	typ := reflect.TypeOf((*InjectableInt)(nil)).Elem()
-	instances := mem.Implements(m, typ)
-	if len(instances) == 0 {
-		t.Fatal("Expected some functions that implement the interface")
-	}
-	for _, instance := range instances {
-		instance.(InjectableInt).SetValue(num)
-	}
+func testInject(t *testing.T, m *mem.Mem) bool {
 	parser := reflectparser.NewReflectParser()
 	parser.Init(reflect.ValueOf(tests.RobertPerson))
 	res, err := m.Validate(parser)
@@ -83,14 +66,20 @@ func testInject(t *testing.T, num int64) bool {
 	return res
 }
 
-func TestInjectPositive(t *testing.T) {
-	if !testInject(t, 456) {
+func TestInject(t *testing.T) {
+	grammar := injectPerson.Grammar()
+	m, err := mem.New(grammar)
+	if err != nil {
+		t.Fatal(err)
+	}
+	c := &funcs.Context{Value: int64(0)}
+	m.SetContext(c)
+	c.Value = int64(456)
+	if !testInject(t, m) {
 		t.Fatalf("expected match")
 	}
-}
-
-func TestInjectNegative(t *testing.T) {
-	if testInject(t, 123) {
+	c.Value = int64(123)
+	if testInject(t, m) {
 		t.Fatalf("expected non match")
 	}
 }
