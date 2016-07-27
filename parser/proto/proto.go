@@ -41,7 +41,7 @@ func newErrVarint(buf []byte) error {
 }
 
 func (this *errVarint) Error() string {
-	return fmt.Sprintf("error decoding varint from %#v", this.buf)
+	return fmt.Sprintf("parser/proto: error decoding varint from %#v", this.buf)
 }
 
 var errBufferOverlow = fmt.Errorf("buffer overflow")

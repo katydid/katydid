@@ -102,7 +102,7 @@ func newErrUnknownFunction(name string, ins []types.Type) error {
 }
 
 func (this *errUnknownFunction) Error() string {
-	return "unknown function: " + this.f + "(" + strings.Join(this.ins, ", ") + ")"
+	return "relapse/funcs: unknown function: " + this.f + "(" + strings.Join(this.ins, ", ") + ")"
 }
 
 var funcsMap = newFunksMap()

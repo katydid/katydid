@@ -43,7 +43,7 @@ type errInit struct {
 }
 
 func (this *errInit) Error() string {
-	return fmt.Sprintf("%#v err: %s", this.i, this.err)
+	return fmt.Sprintf("relapse/compose: %#v err: %s", this.i, this.err)
 }
 
 var (

@@ -25,7 +25,7 @@ type ErrRangeCheck struct {
 }
 
 func (this ErrRangeCheck) Error() string {
-	return fmt.Sprintf("range check error: trying to access index %d in list of length %d", this.Index, this.Len)
+	return fmt.Sprintf("relapse/funcs: range check error: trying to access index %d in list of length %d", this.Index, this.Len)
 }
 
 //NewRangeCheckErr returns a range check error
@@ -40,7 +40,7 @@ type ErrRange struct {
 }
 
 func (this ErrRange) Error() string {
-	return fmt.Sprintf("range error: first %d > last %d", this.First, this.Last)
+	return fmt.Sprintf("relapse/funcs: range error: first %d > last %d", this.First, this.Last)
 }
 
 //NewRangeErr returns a range error

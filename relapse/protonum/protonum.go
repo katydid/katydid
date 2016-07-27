@@ -85,7 +85,7 @@ type ErrDup struct {
 }
 
 func (this *ErrDup) Error() string {
-	return fmt.Sprintf("Duplicate Reference Error: Name: %v, Context1: %v, Context2: %v", this.name, this.c1.msg.GetName(), this.c2.msg.GetName())
+	return fmt.Sprintf("relapse/protonum: Duplicate Reference Error: Name: %v, Context1: %v, Context2: %v", this.name, this.c1.msg.GetName(), this.c2.msg.GetName())
 }
 
 func (this *nameToNumber) translate(context *context, p *ast.Pattern) (*ast.Pattern, error) {
@@ -145,7 +145,7 @@ type errExpectedArray struct {
 }
 
 func (this *errExpectedArray) Error() string {
-	return fmt.Sprintf("Expected Array Error: Name: %v, Msg: %v", this.name, this.c.msg.GetName())
+	return fmt.Sprintf("relapse/protonum: Expected Array Error: Name: %v, Msg: %v", this.name, this.c.msg.GetName())
 }
 
 type errExpectedField struct {
@@ -154,7 +154,7 @@ type errExpectedField struct {
 }
 
 func (this *errExpectedField) Error() string {
-	return fmt.Sprintf("Expected Field Error: Name: %v, Msg: %v", this.name, this.c.msg.GetName())
+	return fmt.Sprintf("relapse/protonum: Expected Field Error: Name: %v, Msg: %v", this.name, this.c.msg.GetName())
 }
 
 type errAnyFieldNotSupported struct {
@@ -162,7 +162,7 @@ type errAnyFieldNotSupported struct {
 }
 
 func (this *errAnyFieldNotSupported) Error() string {
-	return fmt.Sprintf("Any Field Not Supported: Name: %v", this.name)
+	return fmt.Sprintf("relapse/protonum: Any Field Not Supported: Name: %v", this.name)
 }
 
 type errAnyNameExceptNotSupported struct {
@@ -170,7 +170,7 @@ type errAnyNameExceptNotSupported struct {
 }
 
 func (this *errAnyNameExceptNotSupported) Error() string {
-	return fmt.Sprintf("AnyNameExcept Not Supported Error: Name: %v", this.name)
+	return fmt.Sprintf("relapse/protonum: AnyNameExcept Not Supported Error: Name: %v", this.name)
 }
 
 type errUnknownField struct {
@@ -179,7 +179,7 @@ type errUnknownField struct {
 }
 
 func (this *errUnknownField) Error() string {
-	return fmt.Sprintf("Unknown Field Error: Name: %v, Msg: %v", this.name, this.c.msg.GetName())
+	return fmt.Sprintf("relapse/protonum: Unknown Field Error: Name: %v, Msg: %v", this.name, this.c.msg.GetName())
 }
 
 func getField(m map[uint64]*descriptor.FieldDescriptorProto, name string) *descriptor.FieldDescriptorProto {

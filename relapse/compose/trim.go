@@ -26,7 +26,7 @@ type errNotConst struct {
 }
 
 func (this *errNotConst) Error() string {
-	return fmt.Sprintf("%s has constant %s which has a variable parameter", reflect.ValueOf(this.f).Elem().Type().Name(), this.field.Elem().Type())
+	return fmt.Sprintf("relapse/compose: %s has constant %s which has a variable parameter", reflect.ValueOf(this.f).Elem().Type().Name(), this.field.Elem().Type())
 }
 
 //TrimBool returns a simplified version of the function work that can be done at compile time has been completed.

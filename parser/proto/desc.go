@@ -24,7 +24,7 @@ type errUnknown struct {
 }
 
 func (this *errUnknown) Error() string {
-	return "Could not find " + this.msg
+	return "parser/proto: Could not find " + this.msg
 }
 
 //DescMap is a map of the descriptor.FileDescriptorSet

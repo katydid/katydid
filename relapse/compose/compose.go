@@ -84,7 +84,7 @@ type errExpected struct {
 }
 
 func (this *errExpected) Error() string {
-	return fmt.Sprintf("expr %v is not type %v", this.expr, this.typ)
+	return fmt.Sprintf("relapse/compose: expr %v is not type %v", this.expr, this.typ)
 }
 
 type errUnknownType struct {
@@ -92,7 +92,7 @@ type errUnknownType struct {
 }
 
 func (this *errUnknownType) Error() string {
-	return "expr type is unknown: " + this.expr.String()
+	return "relapse/compose: expr type is unknown: " + this.expr.String()
 }
 
 func prep(expr *ast.Expr, expType types.Type) (uniq string, err error) {

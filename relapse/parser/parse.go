@@ -26,7 +26,7 @@ type errWrongType struct {
 }
 
 func (this *errWrongType) Error() string {
-	return fmt.Sprintf("expected %s, but got %#v", this.typ, this.res)
+	return fmt.Sprintf("relapse/parser: expected %s, but got %#v", this.typ, this.res)
 }
 
 //ParseGrammar parses a relapse grammar and returns an abstract syntax tree.
