@@ -22,7 +22,23 @@ dep:
 
 checklicense:
 	go get github.com/katydid/checklicense
-	checklicense . person.proto srctree.proto puddingmilkshake.proto taxonomy.proto treeregister.proto typewriterprison.proto list_of_functions.txt proto/tokens/test.proto parser/debug/debug.proto bnf doc.go .svg .txt COPIED_FROM_GO
+	checklicense . \
+	person.proto \
+	srctree.proto \
+	puddingmilkshake.proto \
+	taxonomy.proto \
+	treeregister.proto \
+	typewriterprison.proto \
+	proto/tokens/test.proto \
+	parser/debug/debug.proto \
+	bnf \
+	doc.go \
+	.svg \
+	.txt \
+	COPIED_FROM_GO \
+	.travis.yml \
+	install-protobuf.sh \
+	install-godeps.sh
 
 test:
 	go test ./...
