@@ -9,7 +9,7 @@ before_install:
 script:
   - PATH=/home/travis/bin:$PATH make all
   - echo $TRAVIS_GO_VERSION
-  - git status --porcelain | read || (git status; git diff; exit 1); fi
+  - ! git status --porcelain | read || (git status; git diff; exit 1)
 
 language: go
 
