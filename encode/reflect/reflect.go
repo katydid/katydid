@@ -97,7 +97,6 @@ func encodeStruct(p parser.Interface, v reflect.Value) error {
 		}
 		p.Up()
 	}
-	panic("unreachable")
 }
 
 func newList(p parser.Interface, typ reflect.Type) (reflect.Value, error) {
@@ -155,7 +154,6 @@ func newList(p parser.Interface, typ reflect.Type) (reflect.Value, error) {
 		}
 		p.Up()
 	}
-	panic("unreachable")
 }
 
 func newValue(p parser.Interface, typ reflect.Type) (reflect.Value, error) {

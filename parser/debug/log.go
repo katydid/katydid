@@ -59,7 +59,6 @@ func (l *line) Printf(format string, v ...interface{}) {
 		l.l.Printf(name+":"+strconv.Itoa(line)+": "+format, v...)
 		return
 	}
-	panic("unreachable")
 }
 
 //NewDelayLogger returns a logger that sleeps after every log.

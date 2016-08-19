@@ -14,7 +14,7 @@
 
 .PHONY: nuke dep regenerate gofmt build test
 
-all: nuke dep regenerate build test checklicense
+all: nuke dep regenerate build test vet checklicense
 
 dep:
 	go install github.com/gogo/protobuf/protoc-gen-gogo
@@ -35,6 +35,11 @@ install:
 
 bench:
 	go test -v -test.run=XXX -test.bench=. ./...
+
+vet:
+	go vet ./encode/...
+	go vet ./gen/...
+	go vet ./relapse/...
 
 regenerate:
 	(cd parser && make regenerate)

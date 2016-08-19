@@ -122,15 +122,15 @@ AllGrammar
   ;
 
 Grammar
-  : Pattern                     << &Grammar{$0.(*Pattern), nil, nil}, nil >>  
-  | Pattern PatternDecls        << &Grammar{$0.(*Pattern), $1.([]*PatternDecl), nil}, nil >>
-  | PatternDecls                << &Grammar{nil, $0.([]*PatternDecl), nil}, nil >>
+  : Pattern                     << &Grammar{TopPattern: $0.(*Pattern)}, nil >>  
+  | Pattern PatternDecls        << &Grammar{TopPattern: $0.(*Pattern), PatternDecls: $1.([]*PatternDecl)}, nil >>
+  | PatternDecls                << &Grammar{PatternDecls:$0.([]*PatternDecl)}, nil >>
   ;
 
 GrammarWithEndingSpace
-  : Pattern Space               << &Grammar{$0.(*Pattern), nil, $1.(*Space)}, nil >>
-  | Pattern PatternDecls Space  << &Grammar{$0.(*Pattern), $1.([]*PatternDecl), $2.(*Space)}, nil >>
-  | PatternDecls Space          << &Grammar{nil, $0.([]*PatternDecl), $1.(*Space)}, nil >>
+  : Pattern Space               << &Grammar{TopPattern: $0.(*Pattern), After: $1.(*Space)}, nil >>
+  | Pattern PatternDecls Space  << &Grammar{TopPattern: $0.(*Pattern), PatternDecls: $1.([]*PatternDecl), After: $2.(*Space)}, nil >>
+  | PatternDecls Space          << &Grammar{PatternDecls: $0.([]*PatternDecl), After: $1.(*Space)}, nil >>
   ;
 
 PatternDecls
@@ -202,7 +202,7 @@ TreeNode
   ;
 
 Pattern
-  : Empty << &Pattern{Empty: &Empty{$0.(*Keyword)}}, nil >>
+  : Empty << &Pattern{Empty: &Empty{Empty: $0.(*Keyword)}}, nil >>
   | Star   << &Pattern{ZAny: &ZAny{Star: $0.(*Keyword)}}, nil >>
   | TreeNode
   | DepthPattern
@@ -371,7 +371,7 @@ Name
   ;
 
 NameExpr
-  : Underscore   << &NameExpr{AnyName: &AnyName{$0.(*Keyword)}}, nil >>
+  : Underscore   << &NameExpr{AnyName: &AnyName{Underscore: $0.(*Keyword)}}, nil >>
   | Name
   | Exclamation OpenParen NameExpr CloseParen <<
     &NameExpr{AnyNameExcept: &AnyNameExcept{

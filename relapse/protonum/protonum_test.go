@@ -189,7 +189,7 @@ func TestUnreachable(t *testing.T) {
 	g := p.Grammar()
 	gkey, err := FieldNamesToNumbers("debug", "Debug", debug.DebugDescription(), g)
 	if err == nil {
-		t.Fatal("Expected: Unknown Field Error: Name: NotC, Msg: Debug, but got %v", gkey)
+		t.Fatalf("Expected: Unknown Field Error: Name: NotC, Msg: Debug, but got %v", gkey)
 	}
 }
 
@@ -226,7 +226,7 @@ func TestKnot(t *testing.T) {
 	p := ast.NewTreeNode(ast.NewAnyName(), ast.NewTreeNode(ast.NewAnyName(), ast.NewTreeNode(ast.NewStringName("Elbow"), ast.NewZAny())))
 	gkey, err := FieldNamesToNumbers("protonum", "Knot", ProtonumDescription(), p.Grammar())
 	if err == nil {
-		t.Fatal("Expected: Any Field Not Supported: Name: _, but got %v", gkey)
+		t.Fatalf("Expected: Any Field Not Supported: Name: _, but got %v", gkey)
 	}
 }
 
@@ -234,7 +234,7 @@ func TestRecursiveKnotTurn(t *testing.T) {
 	p := ast.NewOr(ast.NewTreeNode(ast.NewAnyName(), ast.NewReference("main")), ast.NewTreeNode(ast.NewStringName("Turn"), ast.NewZAny()))
 	gkey, err := FieldNamesToNumbers("protonum", "Knot", ProtonumDescription(), p.Grammar())
 	if err == nil {
-		t.Fatal("Expected: Any Field Not Supported: Name: _, but got %v", gkey)
+		t.Fatalf("Expected: Any Field Not Supported: Name: _, but got %v", gkey)
 	}
 }
 
@@ -242,7 +242,7 @@ func TestRecursiveKnotElbow(t *testing.T) {
 	p := ast.NewOr(ast.NewTreeNode(ast.NewAnyName(), ast.NewReference("main")), ast.NewTreeNode(ast.NewStringName("Elbow"), ast.NewZAny()))
 	gkey, err := FieldNamesToNumbers("protonum", "Knot", ProtonumDescription(), p.Grammar())
 	if err == nil {
-		t.Fatal("Expected: Any Field Not Supported: Name: _, but got %v", gkey)
+		t.Fatalf("Expected: Any Field Not Supported: Name: _, but got %v", gkey)
 	}
 }
 

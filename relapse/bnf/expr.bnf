@@ -18,7 +18,7 @@ Name
   ;
 
 NameExpr
-  : Underscore   << &NameExpr{AnyName: &AnyName{$0.(*Keyword)}}, nil >>
+  : Underscore   << &NameExpr{AnyName: &AnyName{Underscore: $0.(*Keyword)}}, nil >>
   | Name
   | Exclamation OpenParen NameExpr CloseParen <<
     &NameExpr{AnyNameExcept: &AnyNameExcept{

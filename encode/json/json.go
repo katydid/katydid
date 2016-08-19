@@ -92,5 +92,4 @@ func encode(p parser.Interface) (interface{}, error) {
 		p.Up()
 		fields[name] = value
 	}
-	panic("unreachable")
 }

@@ -70,63 +70,63 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Grammar : Pattern	<< &Grammar{X[0].(*Pattern), nil, nil}, nil >>`,
+		String: `Grammar : Pattern	<< &Grammar{TopPattern: X[0].(*Pattern)}, nil >>`,
 		Id:         "Grammar",
 		NTType:     2,
 		Index:      3,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &Grammar{X[0].(*Pattern), nil, nil}, nil
+			return &Grammar{TopPattern: X[0].(*Pattern)}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `Grammar : Pattern PatternDecls	<< &Grammar{X[0].(*Pattern), X[1].([]*PatternDecl), nil}, nil >>`,
+		String: `Grammar : Pattern PatternDecls	<< &Grammar{TopPattern: X[0].(*Pattern), PatternDecls: X[1].([]*PatternDecl)}, nil >>`,
 		Id:         "Grammar",
 		NTType:     2,
 		Index:      4,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &Grammar{X[0].(*Pattern), X[1].([]*PatternDecl), nil}, nil
+			return &Grammar{TopPattern: X[0].(*Pattern), PatternDecls: X[1].([]*PatternDecl)}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `Grammar : PatternDecls	<< &Grammar{nil, X[0].([]*PatternDecl), nil}, nil >>`,
+		String: `Grammar : PatternDecls	<< &Grammar{PatternDecls:X[0].([]*PatternDecl)}, nil >>`,
 		Id:         "Grammar",
 		NTType:     2,
 		Index:      5,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &Grammar{nil, X[0].([]*PatternDecl), nil}, nil
+			return &Grammar{PatternDecls: X[0].([]*PatternDecl)}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `GrammarWithEndingSpace : Pattern Space	<< &Grammar{X[0].(*Pattern), nil, X[1].(*Space)}, nil >>`,
+		String: `GrammarWithEndingSpace : Pattern Space	<< &Grammar{TopPattern: X[0].(*Pattern), After: X[1].(*Space)}, nil >>`,
 		Id:         "GrammarWithEndingSpace",
 		NTType:     3,
 		Index:      6,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &Grammar{X[0].(*Pattern), nil, X[1].(*Space)}, nil
+			return &Grammar{TopPattern: X[0].(*Pattern), After: X[1].(*Space)}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `GrammarWithEndingSpace : Pattern PatternDecls Space	<< &Grammar{X[0].(*Pattern), X[1].([]*PatternDecl), X[2].(*Space)}, nil >>`,
+		String: `GrammarWithEndingSpace : Pattern PatternDecls Space	<< &Grammar{TopPattern: X[0].(*Pattern), PatternDecls: X[1].([]*PatternDecl), After: X[2].(*Space)}, nil >>`,
 		Id:         "GrammarWithEndingSpace",
 		NTType:     3,
 		Index:      7,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &Grammar{X[0].(*Pattern), X[1].([]*PatternDecl), X[2].(*Space)}, nil
+			return &Grammar{TopPattern: X[0].(*Pattern), PatternDecls: X[1].([]*PatternDecl), After: X[2].(*Space)}, nil
 		},
 	},
 	ProdTabEntry{
-		String: `GrammarWithEndingSpace : PatternDecls Space	<< &Grammar{nil, X[0].([]*PatternDecl), X[1].(*Space)}, nil >>`,
+		String: `GrammarWithEndingSpace : PatternDecls Space	<< &Grammar{PatternDecls: X[0].([]*PatternDecl), After: X[1].(*Space)}, nil >>`,
 		Id:         "GrammarWithEndingSpace",
 		NTType:     3,
 		Index:      8,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &Grammar{nil, X[0].([]*PatternDecl), X[1].(*Space)}, nil
+			return &Grammar{PatternDecls: X[0].([]*PatternDecl), After: X[1].(*Space)}, nil
 		},
 	},
 	ProdTabEntry{
@@ -302,13 +302,13 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Pattern : Empty	<< &Pattern{Empty: &Empty{X[0].(*Keyword)}}, nil >>`,
+		String: `Pattern : Empty	<< &Pattern{Empty: &Empty{Empty: X[0].(*Keyword)}}, nil >>`,
 		Id:         "Pattern",
 		NTType:     9,
 		Index:      21,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &Pattern{Empty: &Empty{X[0].(*Keyword)}}, nil
+			return &Pattern{Empty: &Empty{Empty: X[0].(*Keyword)}}, nil
 		},
 	},
 	ProdTabEntry{
@@ -786,13 +786,13 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `NameExpr : Underscore	<< &NameExpr{AnyName: &AnyName{X[0].(*Keyword)}}, nil >>`,
+		String: `NameExpr : Underscore	<< &NameExpr{AnyName: &AnyName{Underscore: X[0].(*Keyword)}}, nil >>`,
 		Id:         "NameExpr",
 		NTType:     21,
 		Index:      55,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return &NameExpr{AnyName: &AnyName{X[0].(*Keyword)}}, nil
+			return &NameExpr{AnyName: &AnyName{Underscore: X[0].(*Keyword)}}, nil
 		},
 	},
 	ProdTabEntry{
