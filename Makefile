@@ -66,14 +66,3 @@ gofmt:
 errcheck:
 	go get github.com/kisielk/errcheck
 	errcheck ./...
-
-drone:
-	sudo apt-get install protobuf-compiler
-	sudo apt-get install graphviz
-	mkdir -p $(GOPATH)/src/github.com/gogo
-	mkdir -p $(GOPATH)/src/github.com/goccmack
-	(cd $(GOPATH)/src/github.com/goccmack && git clone https://github.com/goccmack/gocc )
-	(cd $(GOPATH)/src/github.com/goccmack/gocc && go install ./... )
-	(cd $(GOPATH)/src/github.com/gogo && git clone https://github.com/gogo/protobuf )
-	(cd $(GOPATH)/src/github.com/gogo/protobuf && make install)
-	(cd $(GOPATH)/src/github.com/katydid/katydid/ && make)
