@@ -1122,7 +1122,7 @@ func NewPopulatedSimple(r randySimple, easy bool) *Simple {
 		this.Field13 = &v13
 	}
 	if r.Intn(10) != 0 {
-		v14 := randStringSimple(r)
+		v14 := string(randStringSimple(r))
 		this.Field14 = &v14
 	}
 	if r.Intn(10) != 0 {
@@ -1251,7 +1251,7 @@ func NewPopulatedSimple(r randySimple, easy bool) *Simple {
 		v29 := r.Intn(10)
 		this.Fields14 = make([]string, v29)
 		for i := 0; i < v29; i++ {
-			this.Fields14[i] = randStringSimple(r)
+			this.Fields14[i] = string(randStringSimple(r))
 		}
 	}
 	if r.Intn(10) != 0 {
@@ -1315,7 +1315,7 @@ func randStringSimple(r randySimple) string {
 	}
 	return string(tmps)
 }
-func randUnrecognizedSimple(r randySimple, maxFieldNumber int) (data []byte) {
+func randUnrecognizedSimple(r randySimple, maxFieldNumber int) (dAtA []byte) {
 	l := r.Intn(5)
 	for i := 0; i < l; i++ {
 		wire := r.Intn(4)
@@ -1323,43 +1323,43 @@ func randUnrecognizedSimple(r randySimple, maxFieldNumber int) (data []byte) {
 			wire = 5
 		}
 		fieldNumber := maxFieldNumber + r.Intn(100)
-		data = randFieldSimple(data, r, fieldNumber, wire)
+		dAtA = randFieldSimple(dAtA, r, fieldNumber, wire)
 	}
-	return data
+	return dAtA
 }
-func randFieldSimple(data []byte, r randySimple, fieldNumber int, wire int) []byte {
+func randFieldSimple(dAtA []byte, r randySimple, fieldNumber int, wire int) []byte {
 	key := uint32(fieldNumber)<<3 | uint32(wire)
 	switch wire {
 	case 0:
-		data = encodeVarintPopulateSimple(data, uint64(key))
+		dAtA = encodeVarintPopulateSimple(dAtA, uint64(key))
 		v34 := r.Int63()
 		if r.Intn(2) == 0 {
 			v34 *= -1
 		}
-		data = encodeVarintPopulateSimple(data, uint64(v34))
+		dAtA = encodeVarintPopulateSimple(dAtA, uint64(v34))
 	case 1:
-		data = encodeVarintPopulateSimple(data, uint64(key))
-		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+		dAtA = encodeVarintPopulateSimple(dAtA, uint64(key))
+		dAtA = append(dAtA, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
 	case 2:
-		data = encodeVarintPopulateSimple(data, uint64(key))
+		dAtA = encodeVarintPopulateSimple(dAtA, uint64(key))
 		ll := r.Intn(100)
-		data = encodeVarintPopulateSimple(data, uint64(ll))
+		dAtA = encodeVarintPopulateSimple(dAtA, uint64(ll))
 		for j := 0; j < ll; j++ {
-			data = append(data, byte(r.Intn(256)))
+			dAtA = append(dAtA, byte(r.Intn(256)))
 		}
 	default:
-		data = encodeVarintPopulateSimple(data, uint64(key))
-		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+		dAtA = encodeVarintPopulateSimple(dAtA, uint64(key))
+		dAtA = append(dAtA, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
 	}
-	return data
+	return dAtA
 }
-func encodeVarintPopulateSimple(data []byte, v uint64) []byte {
+func encodeVarintPopulateSimple(dAtA []byte, v uint64) []byte {
 	for v >= 1<<7 {
-		data = append(data, uint8(uint64(v)&0x7f|0x80))
+		dAtA = append(dAtA, uint8(uint64(v)&0x7f|0x80))
 		v >>= 7
 	}
-	data = append(data, uint8(v))
-	return data
+	dAtA = append(dAtA, uint8(v))
+	return dAtA
 }
 
 func init() { proto.RegisterFile("simple.proto", fileDescriptorSimple) }

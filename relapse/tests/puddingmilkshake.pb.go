@@ -2071,7 +2071,7 @@ func NewPopulatedSaladWorry(r randyPuddingmilkshake, easy bool) *SaladWorry {
 		v4 := r.Intn(10)
 		this.MagazineFrame = make([]string, v4)
 		for i := 0; i < v4; i++ {
-			this.MagazineFrame[i] = randStringPuddingmilkshake(r)
+			this.MagazineFrame[i] = string(randStringPuddingmilkshake(r))
 		}
 	}
 	if r.Intn(10) != 0 {
@@ -2086,7 +2086,7 @@ func NewPopulatedSaladWorry(r randyPuddingmilkshake, easy bool) *SaladWorry {
 		this.NeonLightEnd = &v6
 	}
 	if r.Intn(10) != 0 {
-		v7 := randStringPuddingmilkshake(r)
+		v7 := string(randStringPuddingmilkshake(r))
 		this.LeafTrellis = &v7
 	}
 	if r.Intn(10) != 0 {
@@ -2105,7 +2105,7 @@ func NewPopulatedSaladWorry(r randyPuddingmilkshake, easy bool) *SaladWorry {
 		this.SpyCarpenter = NewPopulatedSpyCarpenter(r, easy)
 	}
 	if r.Intn(10) != 0 {
-		v11 := randStringPuddingmilkshake(r)
+		v11 := string(randStringPuddingmilkshake(r))
 		this.PrizeRemoteControl = &v11
 	}
 	if r.Intn(10) != 0 {
@@ -2184,7 +2184,7 @@ func NewPopulatedTravelBallRoom(r randyPuddingmilkshake, easy bool) *TravelBallR
 		v20 := r.Intn(10)
 		this.ReasonCoat = make([]string, v20)
 		for i := 0; i < v20; i++ {
-			this.ReasonCoat[i] = randStringPuddingmilkshake(r)
+			this.ReasonCoat[i] = string(randStringPuddingmilkshake(r))
 		}
 	}
 	if !easy && r.Intn(10) != 0 {
@@ -2236,21 +2236,21 @@ func NewPopulatedSpyCarpenter(r randyPuddingmilkshake, easy bool) *SpyCarpenter 
 		v25 := r.Intn(10)
 		this.BridgePepper = make([]string, v25)
 		for i := 0; i < v25; i++ {
-			this.BridgePepper[i] = randStringPuddingmilkshake(r)
+			this.BridgePepper[i] = string(randStringPuddingmilkshake(r))
 		}
 	}
 	if r.Intn(10) != 0 {
 		v26 := r.Intn(10)
 		this.FountainTarget = make([]string, v26)
 		for i := 0; i < v26; i++ {
-			this.FountainTarget[i] = randStringPuddingmilkshake(r)
+			this.FountainTarget[i] = string(randStringPuddingmilkshake(r))
 		}
 	}
 	if r.Intn(10) != 0 {
 		v27 := r.Intn(10)
 		this.SoleFin = make([]string, v27)
 		for i := 0; i < v27; i++ {
-			this.SoleFin[i] = randStringPuddingmilkshake(r)
+			this.SoleFin[i] = string(randStringPuddingmilkshake(r))
 		}
 	}
 	if r.Intn(10) != 0 {
@@ -2311,7 +2311,7 @@ func NewPopulatedStarTusk(r randyPuddingmilkshake, easy bool) *StarTusk {
 		v35 := r.Intn(10)
 		this.CloakPlayground = make([]string, v35)
 		for i := 0; i < v35; i++ {
-			this.CloakPlayground[i] = randStringPuddingmilkshake(r)
+			this.CloakPlayground[i] = string(randStringPuddingmilkshake(r))
 		}
 	}
 	if !easy && r.Intn(10) != 0 {
@@ -2333,7 +2333,7 @@ func NewPopulatedMigraneLemonade(r randyPuddingmilkshake, easy bool) *MigraneLem
 		v37 := r.Intn(10)
 		this.FactParrot = make([]string, v37)
 		for i := 0; i < v37; i++ {
-			this.FactParrot[i] = randStringPuddingmilkshake(r)
+			this.FactParrot[i] = string(randStringPuddingmilkshake(r))
 		}
 	}
 	if !easy && r.Intn(10) != 0 {
@@ -2368,28 +2368,28 @@ func NewPopulatedMudRiddle(r randyPuddingmilkshake, easy bool) *MudRiddle {
 		v40 := r.Intn(10)
 		this.CreationBirthday = make([]string, v40)
 		for i := 0; i < v40; i++ {
-			this.CreationBirthday[i] = randStringPuddingmilkshake(r)
+			this.CreationBirthday[i] = string(randStringPuddingmilkshake(r))
 		}
 	}
 	if r.Intn(10) != 0 {
 		v41 := r.Intn(10)
 		this.HardwareFood = make([]string, v41)
 		for i := 0; i < v41; i++ {
-			this.HardwareFood[i] = randStringPuddingmilkshake(r)
+			this.HardwareFood[i] = string(randStringPuddingmilkshake(r))
 		}
 	}
 	if r.Intn(10) != 0 {
 		v42 := r.Intn(10)
 		this.TurkeyValley = make([]string, v42)
 		for i := 0; i < v42; i++ {
-			this.TurkeyValley[i] = randStringPuddingmilkshake(r)
+			this.TurkeyValley[i] = string(randStringPuddingmilkshake(r))
 		}
 	}
 	if r.Intn(10) != 0 {
 		v43 := r.Intn(10)
 		this.TramPuppet = make([]string, v43)
 		for i := 0; i < v43; i++ {
-			this.TramPuppet[i] = randStringPuddingmilkshake(r)
+			this.TramPuppet[i] = string(randStringPuddingmilkshake(r))
 		}
 	}
 	if r.Intn(10) != 0 {
@@ -2403,7 +2403,7 @@ func NewPopulatedMudRiddle(r randyPuddingmilkshake, easy bool) *MudRiddle {
 		v45 := r.Intn(10)
 		this.HospitalVideo = make([]string, v45)
 		for i := 0; i < v45; i++ {
-			this.HospitalVideo[i] = randStringPuddingmilkshake(r)
+			this.HospitalVideo[i] = string(randStringPuddingmilkshake(r))
 		}
 	}
 	if !easy && r.Intn(10) != 0 {
@@ -2501,7 +2501,7 @@ func NewPopulatedBingleDaisy(r randyPuddingmilkshake, easy bool) *BingleDaisy {
 		v56 := r.Intn(10)
 		this.MachineCurtain = make([]string, v56)
 		for i := 0; i < v56; i++ {
-			this.MachineCurtain[i] = randStringPuddingmilkshake(r)
+			this.MachineCurtain[i] = string(randStringPuddingmilkshake(r))
 		}
 	}
 	if !easy && r.Intn(10) != 0 {
@@ -2536,7 +2536,7 @@ func randStringPuddingmilkshake(r randyPuddingmilkshake) string {
 	}
 	return string(tmps)
 }
-func randUnrecognizedPuddingmilkshake(r randyPuddingmilkshake, maxFieldNumber int) (data []byte) {
+func randUnrecognizedPuddingmilkshake(r randyPuddingmilkshake, maxFieldNumber int) (dAtA []byte) {
 	l := r.Intn(5)
 	for i := 0; i < l; i++ {
 		wire := r.Intn(4)
@@ -2544,43 +2544,43 @@ func randUnrecognizedPuddingmilkshake(r randyPuddingmilkshake, maxFieldNumber in
 			wire = 5
 		}
 		fieldNumber := maxFieldNumber + r.Intn(100)
-		data = randFieldPuddingmilkshake(data, r, fieldNumber, wire)
+		dAtA = randFieldPuddingmilkshake(dAtA, r, fieldNumber, wire)
 	}
-	return data
+	return dAtA
 }
-func randFieldPuddingmilkshake(data []byte, r randyPuddingmilkshake, fieldNumber int, wire int) []byte {
+func randFieldPuddingmilkshake(dAtA []byte, r randyPuddingmilkshake, fieldNumber int, wire int) []byte {
 	key := uint32(fieldNumber)<<3 | uint32(wire)
 	switch wire {
 	case 0:
-		data = encodeVarintPopulatePuddingmilkshake(data, uint64(key))
+		dAtA = encodeVarintPopulatePuddingmilkshake(dAtA, uint64(key))
 		v58 := r.Int63()
 		if r.Intn(2) == 0 {
 			v58 *= -1
 		}
-		data = encodeVarintPopulatePuddingmilkshake(data, uint64(v58))
+		dAtA = encodeVarintPopulatePuddingmilkshake(dAtA, uint64(v58))
 	case 1:
-		data = encodeVarintPopulatePuddingmilkshake(data, uint64(key))
-		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+		dAtA = encodeVarintPopulatePuddingmilkshake(dAtA, uint64(key))
+		dAtA = append(dAtA, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
 	case 2:
-		data = encodeVarintPopulatePuddingmilkshake(data, uint64(key))
+		dAtA = encodeVarintPopulatePuddingmilkshake(dAtA, uint64(key))
 		ll := r.Intn(100)
-		data = encodeVarintPopulatePuddingmilkshake(data, uint64(ll))
+		dAtA = encodeVarintPopulatePuddingmilkshake(dAtA, uint64(ll))
 		for j := 0; j < ll; j++ {
-			data = append(data, byte(r.Intn(256)))
+			dAtA = append(dAtA, byte(r.Intn(256)))
 		}
 	default:
-		data = encodeVarintPopulatePuddingmilkshake(data, uint64(key))
-		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+		dAtA = encodeVarintPopulatePuddingmilkshake(dAtA, uint64(key))
+		dAtA = append(dAtA, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
 	}
-	return data
+	return dAtA
 }
-func encodeVarintPopulatePuddingmilkshake(data []byte, v uint64) []byte {
+func encodeVarintPopulatePuddingmilkshake(dAtA []byte, v uint64) []byte {
 	for v >= 1<<7 {
-		data = append(data, uint8(uint64(v)&0x7f|0x80))
+		dAtA = append(dAtA, uint8(uint64(v)&0x7f|0x80))
 		v >>= 7
 	}
-	data = append(data, uint8(v))
-	return data
+	dAtA = append(dAtA, uint8(v))
+	return dAtA
 }
 
 func init() { proto.RegisterFile("puddingmilkshake.proto", fileDescriptorPuddingmilkshake) }

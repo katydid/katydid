@@ -962,15 +962,15 @@ func NewPopulatedTaxonomyDatabase(r randyTaxonomy, easy bool) *TaxonomyDatabase 
 func NewPopulatedEntry(r randyTaxonomy, easy bool) *Entry {
 	this := &Entry{}
 	if r.Intn(10) != 0 {
-		v2 := randStringTaxonomy(r)
+		v2 := string(randStringTaxonomy(r))
 		this.TaxonomyId = &v2
 	}
 	if r.Intn(10) != 0 {
-		v3 := randStringTaxonomy(r)
+		v3 := string(randStringTaxonomy(r))
 		this.InheritedBlastName = &v3
 	}
 	if r.Intn(10) != 0 {
-		v4 := randStringTaxonomy(r)
+		v4 := string(randStringTaxonomy(r))
 		this.Rank = &v4
 	}
 	if r.Intn(10) != 0 {
@@ -980,11 +980,11 @@ func NewPopulatedEntry(r randyTaxonomy, easy bool) *Entry {
 		v5 := r.Intn(10)
 		this.OtherNames = make([]string, v5)
 		for i := 0; i < v5; i++ {
-			this.OtherNames[i] = randStringTaxonomy(r)
+			this.OtherNames[i] = string(randStringTaxonomy(r))
 		}
 	}
 	if r.Intn(10) != 0 {
-		v6 := randStringTaxonomy(r)
+		v6 := string(randStringTaxonomy(r))
 		this.Synonym = &v6
 	}
 	if r.Intn(10) != 0 {
@@ -1027,7 +1027,7 @@ func NewPopulatedEntry(r randyTaxonomy, easy bool) *Entry {
 func NewPopulatedRecords(r randyTaxonomy, easy bool) *Records {
 	this := &Records{}
 	if r.Intn(10) != 0 {
-		v11 := randStringTaxonomy(r)
+		v11 := string(randStringTaxonomy(r))
 		this.DatabaseName = &v11
 	}
 	if r.Intn(10) != 0 {
@@ -1049,11 +1049,11 @@ func NewPopulatedReference(r randyTaxonomy, easy bool) *Reference {
 		this.Name = NewPopulatedLink(r, easy)
 	}
 	if r.Intn(10) != 0 {
-		v13 := randStringTaxonomy(r)
+		v13 := string(randStringTaxonomy(r))
 		this.Accession = &v13
 	}
 	if r.Intn(10) != 0 {
-		v14 := randStringTaxonomy(r)
+		v14 := string(randStringTaxonomy(r))
 		this.GI = &v14
 	}
 	if r.Intn(10) != 0 {
@@ -1072,11 +1072,11 @@ func NewPopulatedReference(r randyTaxonomy, easy bool) *Reference {
 func NewPopulatedLink(r randyTaxonomy, easy bool) *Link {
 	this := &Link{}
 	if r.Intn(10) != 0 {
-		v16 := randStringTaxonomy(r)
+		v16 := string(randStringTaxonomy(r))
 		this.Name = &v16
 	}
 	if r.Intn(10) != 0 {
-		v17 := randStringTaxonomy(r)
+		v17 := string(randStringTaxonomy(r))
 		this.Link = &v17
 	}
 	if !easy && r.Intn(10) != 0 {
@@ -1095,7 +1095,7 @@ func NewPopulatedGeneticCode(r randyTaxonomy, easy bool) *GeneticCode {
 		this.TranslationTable = &v18
 	}
 	if r.Intn(10) != 0 {
-		v19 := randStringTaxonomy(r)
+		v19 := string(randStringTaxonomy(r))
 		this.Type = &v19
 	}
 	if !easy && r.Intn(10) != 0 {
@@ -1107,11 +1107,11 @@ func NewPopulatedGeneticCode(r randyTaxonomy, easy bool) *GeneticCode {
 func NewPopulatedCommentAndReference(r randyTaxonomy, easy bool) *CommentAndReference {
 	this := &CommentAndReference{}
 	if r.Intn(10) != 0 {
-		v20 := randStringTaxonomy(r)
+		v20 := string(randStringTaxonomy(r))
 		this.Heading = &v20
 	}
 	if r.Intn(10) != 0 {
-		v21 := randStringTaxonomy(r)
+		v21 := string(randStringTaxonomy(r))
 		this.Content = &v21
 	}
 	if r.Intn(10) != 0 {
@@ -1186,7 +1186,7 @@ func randStringTaxonomy(r randyTaxonomy) string {
 	}
 	return string(tmps)
 }
-func randUnrecognizedTaxonomy(r randyTaxonomy, maxFieldNumber int) (data []byte) {
+func randUnrecognizedTaxonomy(r randyTaxonomy, maxFieldNumber int) (dAtA []byte) {
 	l := r.Intn(5)
 	for i := 0; i < l; i++ {
 		wire := r.Intn(4)
@@ -1194,43 +1194,43 @@ func randUnrecognizedTaxonomy(r randyTaxonomy, maxFieldNumber int) (data []byte)
 			wire = 5
 		}
 		fieldNumber := maxFieldNumber + r.Intn(100)
-		data = randFieldTaxonomy(data, r, fieldNumber, wire)
+		dAtA = randFieldTaxonomy(dAtA, r, fieldNumber, wire)
 	}
-	return data
+	return dAtA
 }
-func randFieldTaxonomy(data []byte, r randyTaxonomy, fieldNumber int, wire int) []byte {
+func randFieldTaxonomy(dAtA []byte, r randyTaxonomy, fieldNumber int, wire int) []byte {
 	key := uint32(fieldNumber)<<3 | uint32(wire)
 	switch wire {
 	case 0:
-		data = encodeVarintPopulateTaxonomy(data, uint64(key))
+		dAtA = encodeVarintPopulateTaxonomy(dAtA, uint64(key))
 		v26 := r.Int63()
 		if r.Intn(2) == 0 {
 			v26 *= -1
 		}
-		data = encodeVarintPopulateTaxonomy(data, uint64(v26))
+		dAtA = encodeVarintPopulateTaxonomy(dAtA, uint64(v26))
 	case 1:
-		data = encodeVarintPopulateTaxonomy(data, uint64(key))
-		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+		dAtA = encodeVarintPopulateTaxonomy(dAtA, uint64(key))
+		dAtA = append(dAtA, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
 	case 2:
-		data = encodeVarintPopulateTaxonomy(data, uint64(key))
+		dAtA = encodeVarintPopulateTaxonomy(dAtA, uint64(key))
 		ll := r.Intn(100)
-		data = encodeVarintPopulateTaxonomy(data, uint64(ll))
+		dAtA = encodeVarintPopulateTaxonomy(dAtA, uint64(ll))
 		for j := 0; j < ll; j++ {
-			data = append(data, byte(r.Intn(256)))
+			dAtA = append(dAtA, byte(r.Intn(256)))
 		}
 	default:
-		data = encodeVarintPopulateTaxonomy(data, uint64(key))
-		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+		dAtA = encodeVarintPopulateTaxonomy(dAtA, uint64(key))
+		dAtA = append(dAtA, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
 	}
-	return data
+	return dAtA
 }
-func encodeVarintPopulateTaxonomy(data []byte, v uint64) []byte {
+func encodeVarintPopulateTaxonomy(dAtA []byte, v uint64) []byte {
 	for v >= 1<<7 {
-		data = append(data, uint8(uint64(v)&0x7f|0x80))
+		dAtA = append(dAtA, uint8(uint64(v)&0x7f|0x80))
 		v >>= 7
 	}
-	data = append(data, uint8(v))
-	return data
+	dAtA = append(dAtA, uint8(v))
+	return dAtA
 }
 
 func init() { proto.RegisterFile("taxonomy.proto", fileDescriptorTaxonomy) }

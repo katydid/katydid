@@ -1611,35 +1611,35 @@ func NewPopulatedTree(r randyTreeregister, easy bool) *Tree {
 func NewPopulatedGeneralInformation(r randyTreeregister, easy bool) *GeneralInformation {
 	this := &GeneralInformation{}
 	if r.Intn(10) != 0 {
-		v2 := randStringTreeregister(r)
+		v2 := string(randStringTreeregister(r))
 		this.TypeOfTree = &v2
 	}
 	if r.Intn(10) != 0 {
-		v3 := randStringTreeregister(r)
+		v3 := string(randStringTreeregister(r))
 		this.Ownership = &v3
 	}
 	if r.Intn(10) != 0 {
-		v4 := randStringTreeregister(r)
+		v4 := string(randStringTreeregister(r))
 		this.CountryState = &v4
 	}
 	if r.Intn(10) != 0 {
-		v5 := randStringTreeregister(r)
+		v5 := string(randStringTreeregister(r))
 		this.PostCodeZipCode = &v5
 	}
 	if r.Intn(10) != 0 {
-		v6 := randStringTreeregister(r)
+		v6 := string(randStringTreeregister(r))
 		this.Location = &v6
 	}
 	if r.Intn(10) != 0 {
-		v7 := randStringTreeregister(r)
+		v7 := string(randStringTreeregister(r))
 		this.FullAddress = &v7
 	}
 	if r.Intn(10) != 0 {
-		v8 := randStringTreeregister(r)
+		v8 := string(randStringTreeregister(r))
 		this.Country = &v8
 	}
 	if r.Intn(10) != 0 {
-		v9 := randStringTreeregister(r)
+		v9 := string(randStringTreeregister(r))
 		this.GridReference = &v9
 	}
 	if !easy && r.Intn(10) != 0 {
@@ -1651,19 +1651,19 @@ func NewPopulatedGeneralInformation(r randyTreeregister, easy bool) *GeneralInfo
 func NewPopulatedOtherInformation(r randyTreeregister, easy bool) *OtherInformation {
 	this := &OtherInformation{}
 	if r.Intn(10) != 0 {
-		v10 := randStringTreeregister(r)
+		v10 := string(randStringTreeregister(r))
 		this.PlantingDate = &v10
 	}
 	if r.Intn(10) != 0 {
-		v11 := randStringTreeregister(r)
+		v11 := string(randStringTreeregister(r))
 		this.SeedCollectionNo = &v11
 	}
 	if r.Intn(10) != 0 {
-		v12 := randStringTreeregister(r)
+		v12 := string(randStringTreeregister(r))
 		this.PlantedBy = &v12
 	}
 	if r.Intn(10) != 0 {
-		v13 := randStringTreeregister(r)
+		v13 := string(randStringTreeregister(r))
 		this.SeedCollector = &v13
 	}
 	if !easy && r.Intn(10) != 0 {
@@ -1807,11 +1807,11 @@ func NewPopulatedCondition(r randyTreeregister, easy bool) *Condition {
 func NewPopulatedAdditionalInformation(r randyTreeregister, easy bool) *AdditionalInformation {
 	this := &AdditionalInformation{}
 	if r.Intn(10) != 0 {
-		v33 := randStringTreeregister(r)
+		v33 := string(randStringTreeregister(r))
 		this.Comments = &v33
 	}
 	if r.Intn(10) != 0 {
-		v34 := randStringTreeregister(r)
+		v34 := string(randStringTreeregister(r))
 		this.Other = &v34
 	}
 	if r.Intn(10) != 0 {
@@ -1830,7 +1830,7 @@ func NewPopulatedAdditionalInformation(r randyTreeregister, easy bool) *Addition
 func NewPopulatedPhoto(r randyTreeregister, easy bool) *Photo {
 	this := &Photo{}
 	if r.Intn(10) != 0 {
-		v36 := randStringTreeregister(r)
+		v36 := string(randStringTreeregister(r))
 		this.Filename = &v36
 	}
 	if r.Intn(10) != 0 {
@@ -1849,19 +1849,19 @@ func NewPopulatedPhoto(r randyTreeregister, easy bool) *Photo {
 func NewPopulatedSender(r randyTreeregister, easy bool) *Sender {
 	this := &Sender{}
 	if r.Intn(10) != 0 {
-		v38 := randStringTreeregister(r)
+		v38 := string(randStringTreeregister(r))
 		this.Name = &v38
 	}
 	if r.Intn(10) != 0 {
-		v39 := randStringTreeregister(r)
+		v39 := string(randStringTreeregister(r))
 		this.Address = &v39
 	}
 	if r.Intn(10) != 0 {
-		v40 := randStringTreeregister(r)
+		v40 := string(randStringTreeregister(r))
 		this.Email = &v40
 	}
 	if r.Intn(10) != 0 {
-		v41 := randStringTreeregister(r)
+		v41 := string(randStringTreeregister(r))
 		this.Telephone = &v41
 	}
 	if !easy && r.Intn(10) != 0 {
@@ -1896,7 +1896,7 @@ func randStringTreeregister(r randyTreeregister) string {
 	}
 	return string(tmps)
 }
-func randUnrecognizedTreeregister(r randyTreeregister, maxFieldNumber int) (data []byte) {
+func randUnrecognizedTreeregister(r randyTreeregister, maxFieldNumber int) (dAtA []byte) {
 	l := r.Intn(5)
 	for i := 0; i < l; i++ {
 		wire := r.Intn(4)
@@ -1904,43 +1904,43 @@ func randUnrecognizedTreeregister(r randyTreeregister, maxFieldNumber int) (data
 			wire = 5
 		}
 		fieldNumber := maxFieldNumber + r.Intn(100)
-		data = randFieldTreeregister(data, r, fieldNumber, wire)
+		dAtA = randFieldTreeregister(dAtA, r, fieldNumber, wire)
 	}
-	return data
+	return dAtA
 }
-func randFieldTreeregister(data []byte, r randyTreeregister, fieldNumber int, wire int) []byte {
+func randFieldTreeregister(dAtA []byte, r randyTreeregister, fieldNumber int, wire int) []byte {
 	key := uint32(fieldNumber)<<3 | uint32(wire)
 	switch wire {
 	case 0:
-		data = encodeVarintPopulateTreeregister(data, uint64(key))
+		dAtA = encodeVarintPopulateTreeregister(dAtA, uint64(key))
 		v43 := r.Int63()
 		if r.Intn(2) == 0 {
 			v43 *= -1
 		}
-		data = encodeVarintPopulateTreeregister(data, uint64(v43))
+		dAtA = encodeVarintPopulateTreeregister(dAtA, uint64(v43))
 	case 1:
-		data = encodeVarintPopulateTreeregister(data, uint64(key))
-		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+		dAtA = encodeVarintPopulateTreeregister(dAtA, uint64(key))
+		dAtA = append(dAtA, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
 	case 2:
-		data = encodeVarintPopulateTreeregister(data, uint64(key))
+		dAtA = encodeVarintPopulateTreeregister(dAtA, uint64(key))
 		ll := r.Intn(100)
-		data = encodeVarintPopulateTreeregister(data, uint64(ll))
+		dAtA = encodeVarintPopulateTreeregister(dAtA, uint64(ll))
 		for j := 0; j < ll; j++ {
-			data = append(data, byte(r.Intn(256)))
+			dAtA = append(dAtA, byte(r.Intn(256)))
 		}
 	default:
-		data = encodeVarintPopulateTreeregister(data, uint64(key))
-		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+		dAtA = encodeVarintPopulateTreeregister(dAtA, uint64(key))
+		dAtA = append(dAtA, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
 	}
-	return data
+	return dAtA
 }
-func encodeVarintPopulateTreeregister(data []byte, v uint64) []byte {
+func encodeVarintPopulateTreeregister(dAtA []byte, v uint64) []byte {
 	for v >= 1<<7 {
-		data = append(data, uint8(uint64(v)&0x7f|0x80))
+		dAtA = append(dAtA, uint8(uint64(v)&0x7f|0x80))
 		v >>= 7
 	}
-	data = append(data, uint8(v))
-	return data
+	dAtA = append(dAtA, uint8(v))
+	return dAtA
 }
 
 func init() { proto.RegisterFile("treeregister.proto", fileDescriptorTreeregister) }

@@ -991,7 +991,7 @@ func NewPopulatedTypewriterPrison(r randyTypewriterprison, easy bool) *Typewrite
 func NewPopulatedPocketRoses(r randyTypewriterprison, easy bool) *PocketRoses {
 	this := &PocketRoses{}
 	if r.Intn(10) != 0 {
-		v3 := randStringTypewriterprison(r)
+		v3 := string(randStringTypewriterprison(r))
 		this.ScarBusStop = &v3
 	}
 	if r.Intn(10) != 0 {
@@ -1031,21 +1031,21 @@ func NewPopulatedPocketRoses(r randyTypewriterprison, easy bool) *PocketRoses {
 		v10 := r.Intn(10)
 		this.MenuPaperclip = make([]string, v10)
 		for i := 0; i < v10; i++ {
-			this.MenuPaperclip[i] = randStringTypewriterprison(r)
+			this.MenuPaperclip[i] = string(randStringTypewriterprison(r))
 		}
 	}
 	if r.Intn(10) != 0 {
 		v11 := r.Intn(10)
 		this.BeetlePoker = make([]string, v11)
 		for i := 0; i < v11; i++ {
-			this.BeetlePoker[i] = randStringTypewriterprison(r)
+			this.BeetlePoker[i] = string(randStringTypewriterprison(r))
 		}
 	}
 	if r.Intn(10) != 0 {
 		v12 := r.Intn(10)
 		this.WigPride = make([]string, v12)
 		for i := 0; i < v12; i++ {
-			this.WigPride[i] = randStringTypewriterprison(r)
+			this.WigPride[i] = string(randStringTypewriterprison(r))
 		}
 	}
 	if r.Intn(10) != 0 {
@@ -1107,7 +1107,7 @@ func NewPopulatedPocketRoses(r randyTypewriterprison, easy bool) *PocketRoses {
 		}
 	}
 	if r.Intn(10) != 0 {
-		v23 := randStringTypewriterprison(r)
+		v23 := string(randStringTypewriterprison(r))
 		this.MapShark = &v23
 	}
 	if r.Intn(10) != 0 {
@@ -1146,7 +1146,7 @@ func randStringTypewriterprison(r randyTypewriterprison) string {
 	}
 	return string(tmps)
 }
-func randUnrecognizedTypewriterprison(r randyTypewriterprison, maxFieldNumber int) (data []byte) {
+func randUnrecognizedTypewriterprison(r randyTypewriterprison, maxFieldNumber int) (dAtA []byte) {
 	l := r.Intn(5)
 	for i := 0; i < l; i++ {
 		wire := r.Intn(4)
@@ -1154,43 +1154,43 @@ func randUnrecognizedTypewriterprison(r randyTypewriterprison, maxFieldNumber in
 			wire = 5
 		}
 		fieldNumber := maxFieldNumber + r.Intn(100)
-		data = randFieldTypewriterprison(data, r, fieldNumber, wire)
+		dAtA = randFieldTypewriterprison(dAtA, r, fieldNumber, wire)
 	}
-	return data
+	return dAtA
 }
-func randFieldTypewriterprison(data []byte, r randyTypewriterprison, fieldNumber int, wire int) []byte {
+func randFieldTypewriterprison(dAtA []byte, r randyTypewriterprison, fieldNumber int, wire int) []byte {
 	key := uint32(fieldNumber)<<3 | uint32(wire)
 	switch wire {
 	case 0:
-		data = encodeVarintPopulateTypewriterprison(data, uint64(key))
+		dAtA = encodeVarintPopulateTypewriterprison(dAtA, uint64(key))
 		v26 := r.Int63()
 		if r.Intn(2) == 0 {
 			v26 *= -1
 		}
-		data = encodeVarintPopulateTypewriterprison(data, uint64(v26))
+		dAtA = encodeVarintPopulateTypewriterprison(dAtA, uint64(v26))
 	case 1:
-		data = encodeVarintPopulateTypewriterprison(data, uint64(key))
-		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+		dAtA = encodeVarintPopulateTypewriterprison(dAtA, uint64(key))
+		dAtA = append(dAtA, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
 	case 2:
-		data = encodeVarintPopulateTypewriterprison(data, uint64(key))
+		dAtA = encodeVarintPopulateTypewriterprison(dAtA, uint64(key))
 		ll := r.Intn(100)
-		data = encodeVarintPopulateTypewriterprison(data, uint64(ll))
+		dAtA = encodeVarintPopulateTypewriterprison(dAtA, uint64(ll))
 		for j := 0; j < ll; j++ {
-			data = append(data, byte(r.Intn(256)))
+			dAtA = append(dAtA, byte(r.Intn(256)))
 		}
 	default:
-		data = encodeVarintPopulateTypewriterprison(data, uint64(key))
-		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+		dAtA = encodeVarintPopulateTypewriterprison(dAtA, uint64(key))
+		dAtA = append(dAtA, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
 	}
-	return data
+	return dAtA
 }
-func encodeVarintPopulateTypewriterprison(data []byte, v uint64) []byte {
+func encodeVarintPopulateTypewriterprison(dAtA []byte, v uint64) []byte {
 	for v >= 1<<7 {
-		data = append(data, uint8(uint64(v)&0x7f|0x80))
+		dAtA = append(dAtA, uint8(uint64(v)&0x7f|0x80))
 		v >>= 7
 	}
-	data = append(data, uint8(v))
-	return data
+	dAtA = append(dAtA, uint8(v))
+	return dAtA
 }
 
 func init() { proto.RegisterFile("typewriterprison.proto", fileDescriptorTypewriterprison) }

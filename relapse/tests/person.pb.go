@@ -409,7 +409,7 @@ func extensionToGoStringPerson(m github_com_gogo_protobuf_proto.Message) string 
 func NewPopulatedPerson(r randyPerson, easy bool) *Person {
 	this := &Person{}
 	if r.Intn(10) != 0 {
-		v1 := randStringPerson(r)
+		v1 := string(randStringPerson(r))
 		this.Name = &v1
 	}
 	if r.Intn(10) != 0 {
@@ -420,7 +420,7 @@ func NewPopulatedPerson(r randyPerson, easy bool) *Person {
 		}
 	}
 	if r.Intn(10) != 0 {
-		v3 := randStringPerson(r)
+		v3 := string(randStringPerson(r))
 		this.Telephone = &v3
 	}
 	if !easy && r.Intn(10) != 0 {
@@ -439,7 +439,7 @@ func NewPopulatedAddress(r randyPerson, easy bool) *Address {
 		this.Number = &v4
 	}
 	if r.Intn(10) != 0 {
-		v5 := randStringPerson(r)
+		v5 := string(randStringPerson(r))
 		this.Street = &v5
 	}
 	if !easy && r.Intn(10) != 0 {
@@ -474,7 +474,7 @@ func randStringPerson(r randyPerson) string {
 	}
 	return string(tmps)
 }
-func randUnrecognizedPerson(r randyPerson, maxFieldNumber int) (data []byte) {
+func randUnrecognizedPerson(r randyPerson, maxFieldNumber int) (dAtA []byte) {
 	l := r.Intn(5)
 	for i := 0; i < l; i++ {
 		wire := r.Intn(4)
@@ -482,43 +482,43 @@ func randUnrecognizedPerson(r randyPerson, maxFieldNumber int) (data []byte) {
 			wire = 5
 		}
 		fieldNumber := maxFieldNumber + r.Intn(100)
-		data = randFieldPerson(data, r, fieldNumber, wire)
+		dAtA = randFieldPerson(dAtA, r, fieldNumber, wire)
 	}
-	return data
+	return dAtA
 }
-func randFieldPerson(data []byte, r randyPerson, fieldNumber int, wire int) []byte {
+func randFieldPerson(dAtA []byte, r randyPerson, fieldNumber int, wire int) []byte {
 	key := uint32(fieldNumber)<<3 | uint32(wire)
 	switch wire {
 	case 0:
-		data = encodeVarintPopulatePerson(data, uint64(key))
+		dAtA = encodeVarintPopulatePerson(dAtA, uint64(key))
 		v7 := r.Int63()
 		if r.Intn(2) == 0 {
 			v7 *= -1
 		}
-		data = encodeVarintPopulatePerson(data, uint64(v7))
+		dAtA = encodeVarintPopulatePerson(dAtA, uint64(v7))
 	case 1:
-		data = encodeVarintPopulatePerson(data, uint64(key))
-		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+		dAtA = encodeVarintPopulatePerson(dAtA, uint64(key))
+		dAtA = append(dAtA, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
 	case 2:
-		data = encodeVarintPopulatePerson(data, uint64(key))
+		dAtA = encodeVarintPopulatePerson(dAtA, uint64(key))
 		ll := r.Intn(100)
-		data = encodeVarintPopulatePerson(data, uint64(ll))
+		dAtA = encodeVarintPopulatePerson(dAtA, uint64(ll))
 		for j := 0; j < ll; j++ {
-			data = append(data, byte(r.Intn(256)))
+			dAtA = append(dAtA, byte(r.Intn(256)))
 		}
 	default:
-		data = encodeVarintPopulatePerson(data, uint64(key))
-		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+		dAtA = encodeVarintPopulatePerson(dAtA, uint64(key))
+		dAtA = append(dAtA, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
 	}
-	return data
+	return dAtA
 }
-func encodeVarintPopulatePerson(data []byte, v uint64) []byte {
+func encodeVarintPopulatePerson(dAtA []byte, v uint64) []byte {
 	for v >= 1<<7 {
-		data = append(data, uint8(uint64(v)&0x7f|0x80))
+		dAtA = append(dAtA, uint8(uint64(v)&0x7f|0x80))
 		v >>= 7
 	}
-	data = append(data, uint8(v))
-	return data
+	dAtA = append(dAtA, uint8(v))
+	return dAtA
 }
 
 func init() { proto.RegisterFile("person.proto", fileDescriptorPerson) }

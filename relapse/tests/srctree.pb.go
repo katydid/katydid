@@ -351,7 +351,7 @@ func extensionToGoStringSrctree(m github_com_gogo_protobuf_proto.Message) string
 func NewPopulatedSrcTree(r randySrctree, easy bool) *SrcTree {
 	this := &SrcTree{}
 	if r.Intn(10) != 0 {
-		v1 := randStringSrctree(r)
+		v1 := string(randStringSrctree(r))
 		this.PackageName = &v1
 	}
 	if r.Intn(10) == 0 {
@@ -393,7 +393,7 @@ func randStringSrctree(r randySrctree) string {
 	}
 	return string(tmps)
 }
-func randUnrecognizedSrctree(r randySrctree, maxFieldNumber int) (data []byte) {
+func randUnrecognizedSrctree(r randySrctree, maxFieldNumber int) (dAtA []byte) {
 	l := r.Intn(5)
 	for i := 0; i < l; i++ {
 		wire := r.Intn(4)
@@ -401,43 +401,43 @@ func randUnrecognizedSrctree(r randySrctree, maxFieldNumber int) (data []byte) {
 			wire = 5
 		}
 		fieldNumber := maxFieldNumber + r.Intn(100)
-		data = randFieldSrctree(data, r, fieldNumber, wire)
+		dAtA = randFieldSrctree(dAtA, r, fieldNumber, wire)
 	}
-	return data
+	return dAtA
 }
-func randFieldSrctree(data []byte, r randySrctree, fieldNumber int, wire int) []byte {
+func randFieldSrctree(dAtA []byte, r randySrctree, fieldNumber int, wire int) []byte {
 	key := uint32(fieldNumber)<<3 | uint32(wire)
 	switch wire {
 	case 0:
-		data = encodeVarintPopulateSrctree(data, uint64(key))
+		dAtA = encodeVarintPopulateSrctree(dAtA, uint64(key))
 		v4 := r.Int63()
 		if r.Intn(2) == 0 {
 			v4 *= -1
 		}
-		data = encodeVarintPopulateSrctree(data, uint64(v4))
+		dAtA = encodeVarintPopulateSrctree(dAtA, uint64(v4))
 	case 1:
-		data = encodeVarintPopulateSrctree(data, uint64(key))
-		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+		dAtA = encodeVarintPopulateSrctree(dAtA, uint64(key))
+		dAtA = append(dAtA, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
 	case 2:
-		data = encodeVarintPopulateSrctree(data, uint64(key))
+		dAtA = encodeVarintPopulateSrctree(dAtA, uint64(key))
 		ll := r.Intn(100)
-		data = encodeVarintPopulateSrctree(data, uint64(ll))
+		dAtA = encodeVarintPopulateSrctree(dAtA, uint64(ll))
 		for j := 0; j < ll; j++ {
-			data = append(data, byte(r.Intn(256)))
+			dAtA = append(dAtA, byte(r.Intn(256)))
 		}
 	default:
-		data = encodeVarintPopulateSrctree(data, uint64(key))
-		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
+		dAtA = encodeVarintPopulateSrctree(dAtA, uint64(key))
+		dAtA = append(dAtA, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
 	}
-	return data
+	return dAtA
 }
-func encodeVarintPopulateSrctree(data []byte, v uint64) []byte {
+func encodeVarintPopulateSrctree(dAtA []byte, v uint64) []byte {
 	for v >= 1<<7 {
-		data = append(data, uint8(uint64(v)&0x7f|0x80))
+		dAtA = append(dAtA, uint8(uint64(v)&0x7f|0x80))
 		v >>= 7
 	}
-	data = append(data, uint8(v))
-	return data
+	dAtA = append(dAtA, uint8(v))
+	return dAtA
 }
 
 func init() { proto.RegisterFile("srctree.proto", fileDescriptorSrctree) }
