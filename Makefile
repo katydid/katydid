@@ -18,7 +18,7 @@ all: nuke dep regenerate build test vet checklicense
 
 dep:
 	go install github.com/gogo/protobuf/protoc-gen-gogo
-	go install -v github.com/goccmack/gocc/...
+	go install -v github.com/goccmack/gocc
 
 checklicense:
 	go get github.com/katydid/checklicense

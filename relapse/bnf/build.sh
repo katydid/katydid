@@ -23,7 +23,7 @@ cat relapse.bnf >> all.bnf
 cat expr.bnf >> all.bnf
 cat keyword.bnf >> all.bnf
 echo "running gocc"
-gocc -o .. all.bnf 
+gocc -zip -o .. all.bnf 
 echo "running gofmt"
 gofmt -l -s -w ../parser/
 gofmt -l -s -w ../errors/
