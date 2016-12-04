@@ -26,13 +26,15 @@ import (
 )
 
 type xmlParser struct {
-	buf       []byte
-	dec       *Decoder
-	tok       Token
-	attrs     []Attr
-	attrIndex int
-	attrValue bool
-	attrFirst bool
+	buf        []byte
+	dec        *Decoder
+	tok        Token
+	attrs      []Attr
+	attrIndex  int
+	attrValue  bool
+	attrFirst  bool
+	attrPrefix string
+	elemPrefix string
 }
 
 //XMLParser is an xml parser.
@@ -43,8 +45,29 @@ type XMLParser interface {
 }
 
 //NewXMLParser returns a new xml parser.
-func NewXMLParser() XMLParser {
-	return &xmlParser{}
+func NewXMLParser(options ...Option) XMLParser {
+	x := &xmlParser{}
+	for _, option := range options {
+		option(x)
+	}
+	return x
+}
+
+//Option is used set options when creating a new XMLParser
+type Option func(x *xmlParser)
+
+//WithAttrPrefix specifies the prefix which will be added to attributes returned by the parser.
+func WithAttrPrefix(a string) func(x *xmlParser) {
+	return func(x *xmlParser) {
+		x.attrPrefix = a
+	}
+}
+
+//WithElemPrefix specifies the prefix which will be added to elements returned by the parser.
+func WithElemPrefix(e string) func(x *xmlParser) {
+	return func(x *xmlParser) {
+		x.elemPrefix = e
+	}
 }
 
 var procInstPattern = regexp.MustCompile(`<\?.*\?>`)
@@ -168,11 +191,11 @@ func (p *xmlParser) String() (string, error) {
 		if p.attrValue {
 			return p.attrs[p.attrIndex].Value, nil
 		} else {
-			return "@" + p.attrs[p.attrIndex].Name.Local, nil
+			return p.attrPrefix + p.attrs[p.attrIndex].Name.Local, nil
 		}
 	}
 	if s, ok := p.tok.(StartElement); ok {
-		return s.Name.Local, nil
+		return p.elemPrefix + s.Name.Local, nil
 	}
 	if c, ok := p.tok.(CharData); ok {
 		return string(c), nil

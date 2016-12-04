@@ -21,12 +21,7 @@ import (
 	"github.com/katydid/katydid/relapse/compose"
 	nameexpr "github.com/katydid/katydid/relapse/name"
 	"io"
-	"log"
 )
-
-func init() {
-	log.SetFlags(log.Lshortfile)
-}
 
 //Interpret interprets the grammar given the parser and returns whether the parser is valid given the grammar.
 //Interpret uses derivatives and simplification to recusively derive the resulting grammar.
