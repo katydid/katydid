@@ -5,6 +5,7 @@ package parser
 import (
 	"bytes"
 	"fmt"
+
 	parseError "github.com/katydid/katydid/relapse/errors"
 	"github.com/katydid/katydid/relapse/token"
 )

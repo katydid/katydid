@@ -4,6 +4,7 @@ package lexer
 
 import (
 	"fmt"
+
 	"github.com/katydid/katydid/relapse/token"
 )
 

@@ -5,6 +5,7 @@ package errors
 import (
 	"bytes"
 	"fmt"
+
 	"github.com/katydid/katydid/relapse/token"
 )
 

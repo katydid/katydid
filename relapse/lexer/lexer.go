@@ -3,13 +3,12 @@
 package lexer
 
 import (
-
 	// "fmt"
-	// "github.com/katydid/katydid/relapse/util"
-
-	"github.com/katydid/katydid/relapse/token"
 	"io/ioutil"
 	"unicode/utf8"
+
+	// "github.com/katydid/katydid/relapse/util"
+	"github.com/katydid/katydid/relapse/token"
 )
 
 const (
