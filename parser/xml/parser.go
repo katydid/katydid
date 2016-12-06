@@ -35,6 +35,7 @@ type xmlParser struct {
 	attrFirst  bool
 	attrPrefix string
 	elemPrefix string
+	textPrefix string
 }
 
 //XMLParser is an xml parser.
@@ -67,6 +68,13 @@ func WithAttrPrefix(a string) func(x *xmlParser) {
 func WithElemPrefix(e string) func(x *xmlParser) {
 	return func(x *xmlParser) {
 		x.elemPrefix = e
+	}
+}
+
+//WithTextPrefix specifies the prefix which will be added to text returned by the parser.
+func WithTextPrefix(e string) func(x *xmlParser) {
+	return func(x *xmlParser) {
+		x.textPrefix = e
 	}
 }
 
@@ -189,7 +197,7 @@ func (p *xmlParser) Bool() (bool, error) {
 func (p *xmlParser) String() (string, error) {
 	if p.tok == nil && p.attrIndex < len(p.attrs) {
 		if p.attrValue {
-			return p.attrs[p.attrIndex].Value, nil
+			return p.textPrefix + p.attrs[p.attrIndex].Value, nil
 		} else {
 			return p.attrPrefix + p.attrs[p.attrIndex].Name.Local, nil
 		}
@@ -198,7 +206,7 @@ func (p *xmlParser) String() (string, error) {
 		return p.elemPrefix + s.Name.Local, nil
 	}
 	if c, ok := p.tok.(CharData); ok {
-		return string(c), nil
+		return p.textPrefix + string(c), nil
 	}
 	return "", parser.ErrNotString
 }

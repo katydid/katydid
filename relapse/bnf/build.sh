@@ -22,9 +22,9 @@ cat import.bnf >> all.bnf
 cat relapse.bnf >> all.bnf
 cat expr.bnf >> all.bnf
 cat keyword.bnf >> all.bnf
-echo "running gocc"
+echo "running gocc -zip -o .. all.bnf"
 gocc -zip -o .. all.bnf 
-echo "running gofmt"
+echo "running gofmt on gocc generated code"
 gofmt -l -s -w ../parser/
 gofmt -l -s -w ../errors/
 gofmt -l -s -w ../lexer/
