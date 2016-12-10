@@ -18,6 +18,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/parser"
 )
 
@@ -85,6 +86,10 @@ func TestFormatGrammar(t *testing.T) {
 	format(t,
 		`#main =   "a":*`,
 		`#main = a:*`)
+	format(t,
+		ast.NewGrammar(map[string]*ast.Pattern{"main": ast.NewReference("ref1"), "ref1": ast.NewReference("main")}).String(),
+		`@ref1
+#ref1=@main`)
 }
 
 func formatSpace(t *testing.T, input string, expected string) {
