@@ -679,7 +679,7 @@ func init() {
 		false,
 	)
 
-	//!(B:<empty>) can be <empty> and * can be B:<empty> which means B:<empty> can be accepted
+	//!(B:<empty>) can be <empty> and * can be B:<empty> which means B:<empty> can be accepted by [*, !(B:<empty>)]
 	basicAnyNotB := G{"main": ast.NewTreeNode(ast.NewStringName("A"), ast.NewConcat(
 		ast.NewZAny(),
 		ast.NewNot(ast.NewTreeNode(ast.NewStringName("B"), ast.NewEmpty())),
