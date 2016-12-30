@@ -240,12 +240,13 @@ func (b *Buffer) WriteByte(c byte) error {
 // if it becomes too large, WriteRune will panic with ErrTooLarge.
 func (b *Buffer) WriteRune(r rune) (n int, err error) {
 	if r < utf8.RuneSelf {
-		b.WriteByte(byte(r))
+		if err := b.WriteByte(byte(r)); err != nil {
+			return 0, err
+		}
 		return 1, nil
 	}
 	n = utf8.EncodeRune(b.runeBytes[0:], r)
-	b.Write(b.runeBytes[0:n])
-	return n, nil
+	return b.Write(b.runeBytes[0:n])
 }
 
 // Read reads the next len(p) bytes from the buffer or until the buffer

@@ -562,7 +562,9 @@ func (d *Decoder) rawToken() (Token, error) {
 			if b, ok = d.mustgetc(); !ok {
 				return nil, d.err
 			}
-			d.buf.WriteByte(b)
+			if err := d.buf.WriteByte(b); err != nil {
+				return nil, err
+			}
 			if b0 == '?' && b == '>' {
 				break
 			}
@@ -619,7 +621,9 @@ func (d *Decoder) rawToken() (Token, error) {
 				if b, ok = d.mustgetc(); !ok {
 					return nil, d.err
 				}
-				d.buf.WriteByte(b)
+				if err := d.buf.WriteByte(b); err != nil {
+					return nil, err
+				}
 				if b0 == '-' && b1 == '-' && b == '>' {
 					break
 				}
@@ -652,7 +656,9 @@ func (d *Decoder) rawToken() (Token, error) {
 		// We don't care, but accumulate for caller. Quoted angle
 		// brackets do not count for nesting.
 		d.buf.Reset()
-		d.buf.WriteByte(b)
+		if err := d.buf.WriteByte(b); err != nil {
+			return nil, err
+		}
 		inquote := uint8(0)
 		depth := 0
 		for {
@@ -663,7 +669,9 @@ func (d *Decoder) rawToken() (Token, error) {
 				break
 			}
 		HandleB:
-			d.buf.WriteByte(b)
+			if err := d.buf.WriteByte(b); err != nil {
+				return nil, err
+			}
 			switch {
 			case b == inquote:
 				inquote = 0
@@ -686,7 +694,9 @@ func (d *Decoder) rawToken() (Token, error) {
 					}
 					if b != s[i] {
 						for j := 0; j < i; j++ {
-							d.buf.WriteByte(s[j])
+							if err := d.buf.WriteByte(s[j]); err != nil {
+								return nil, err
+							}
 						}
 						depth++
 						goto HandleB
@@ -820,7 +830,10 @@ func (d *Decoder) attrval() []byte {
 		// http://www.w3.org/TR/REC-html40/intro/sgmltut.html#h-3.2.2
 		if 'a' <= b && b <= 'z' || 'A' <= b && b <= 'Z' ||
 			'0' <= b && b <= '9' || b == '_' || b == ':' || b == '-' {
-			d.buf.WriteByte(b)
+			if err := d.buf.WriteByte(b); err != nil {
+				d.err = err
+				return nil
+			}
 		} else {
 			d.ungetc(b)
 			break
@@ -862,7 +875,10 @@ func (d *Decoder) getc() (b byte, ok bool) {
 			return 0, false
 		}
 		if d.saved != nil {
-			d.saved.WriteByte(b)
+			if err := d.saved.WriteByte(b); err != nil {
+				d.err = err
+				return 0, false
+			}
 		}
 	}
 	if b == '\n' {
@@ -970,7 +986,10 @@ Input:
 			// Parsers are required to recognize lt, gt, amp, apos, and quot
 			// even if they have not been declared.
 			before := d.buf.Len()
-			d.buf.WriteByte('&')
+			if err := d.buf.WriteByte('&'); err != nil {
+				d.err = err
+				return nil
+			}
 			var ok bool
 			var text string
 			var haveText bool
@@ -978,14 +997,20 @@ Input:
 				return nil
 			}
 			if b == '#' {
-				d.buf.WriteByte(b)
+				if err := d.buf.WriteByte(b); err != nil {
+					d.err = err
+					return nil
+				}
 				if b, ok = d.mustgetc(); !ok {
 					return nil
 				}
 				base := 10
 				if b == 'x' {
 					base = 16
-					d.buf.WriteByte(b)
+					if err := d.buf.WriteByte(b); err != nil {
+						d.err = err
+						return nil
+					}
 					if b, ok = d.mustgetc(); !ok {
 						return nil
 					}
@@ -994,7 +1019,10 @@ Input:
 				for '0' <= b && b <= '9' ||
 					base == 16 && 'a' <= b && b <= 'f' ||
 					base == 16 && 'A' <= b && b <= 'F' {
-					d.buf.WriteByte(b)
+					if err := d.buf.WriteByte(b); err != nil {
+						d.err = err
+						return nil
+					}
 					if b, ok = d.mustgetc(); !ok {
 						return nil
 					}
@@ -1003,7 +1031,10 @@ Input:
 					d.ungetc(b)
 				} else {
 					s := string(d.buf.Bytes()[start:])
-					d.buf.WriteByte(';')
+					if err := d.buf.WriteByte(';'); err != nil {
+						d.err = err
+						return nil
+					}
 					n, err := strconv.ParseUint(s, base, 64)
 					if err == nil && n <= unicode.MaxRune {
 						text = string(n)
@@ -1025,7 +1056,10 @@ Input:
 					d.ungetc(b)
 				} else {
 					name := d.buf.Bytes()[before+1:]
-					d.buf.WriteByte(';')
+					if err := d.buf.WriteByte(';'); err != nil {
+						d.err = err
+						return nil
+					}
 					if isName(name) {
 						s := string(name)
 						if r, ok := entity[s]; ok {
@@ -1040,7 +1074,10 @@ Input:
 
 			if haveText {
 				d.buf.Truncate(before)
-				d.buf.Write([]byte(text))
+				if _, err := d.buf.Write([]byte(text)); err != nil {
+					d.err = err
+					return nil
+				}
 				b0, b1 = 0, 0
 				continue Input
 			}
@@ -1058,11 +1095,17 @@ Input:
 
 		// We must rewrite unescaped \r and \r\n into \n.
 		if b == '\r' {
-			d.buf.WriteByte('\n')
+			if err := d.buf.WriteByte('\n'); err != nil {
+				d.err = err
+				return nil
+			}
 		} else if b1 == '\r' && b == '\n' {
 			// Skip \r\n--we already wrote \n.
 		} else {
-			d.buf.WriteByte(b)
+			if err := d.buf.WriteByte(b); err != nil {
+				d.err = err
+				return nil
+			}
 		}
 
 		b0, b1 = b1, b
@@ -1147,7 +1190,10 @@ func (d *Decoder) readName() (ok bool) {
 		d.ungetc(b)
 		return false
 	}
-	d.buf.WriteByte(b)
+	if err := d.buf.WriteByte(b); err != nil {
+		d.err = err
+		return false
+	}
 
 	for {
 		if b, ok = d.mustgetc(); !ok {
@@ -1157,7 +1203,10 @@ func (d *Decoder) readName() (ok bool) {
 			d.ungetc(b)
 			break
 		}
-		d.buf.WriteByte(b)
+		if err := d.buf.WriteByte(b); err != nil {
+			d.err = err
+			return false
+		}
 	}
 	return true
 }
@@ -1823,120 +1872,6 @@ var htmlAutoClose = []string{
 	"isindex",
 	"base",
 	"meta",
-}
-
-var (
-	esc_quot = []byte("&#34;") // shorter than "&quot;"
-	esc_apos = []byte("&#39;") // shorter than "&apos;"
-	esc_amp  = []byte("&amp;")
-	esc_lt   = []byte("&lt;")
-	esc_gt   = []byte("&gt;")
-	esc_tab  = []byte("&#x9;")
-	esc_nl   = []byte("&#xA;")
-	esc_cr   = []byte("&#xD;")
-	esc_fffd = []byte("\uFFFD") // Unicode replacement character
-)
-
-// EscapeText writes to w the properly escaped XML equivalent
-// of the plain text data s.
-func EscapeText(w io.Writer, s []byte) error {
-	return escapeText(w, s, true)
-}
-
-// escapeText writes to w the properly escaped XML equivalent
-// of the plain text data s. If escapeNewline is true, newline
-// characters will be escaped.
-func escapeText(w io.Writer, s []byte, escapeNewline bool) error {
-	var esc []byte
-	last := 0
-	for i := 0; i < len(s); {
-		r, width := utf8.DecodeRune(s[i:])
-		i += width
-		switch r {
-		case '"':
-			esc = esc_quot
-		case '\'':
-			esc = esc_apos
-		case '&':
-			esc = esc_amp
-		case '<':
-			esc = esc_lt
-		case '>':
-			esc = esc_gt
-		case '\t':
-			esc = esc_tab
-		case '\n':
-			if !escapeNewline {
-				continue
-			}
-			esc = esc_nl
-		case '\r':
-			esc = esc_cr
-		default:
-			if !isInCharacterRange(r) || (r == 0xFFFD && width == 1) {
-				esc = esc_fffd
-				break
-			}
-			continue
-		}
-		if _, err := w.Write(s[last : i-width]); err != nil {
-			return err
-		}
-		if _, err := w.Write(esc); err != nil {
-			return err
-		}
-		last = i
-	}
-	if _, err := w.Write(s[last:]); err != nil {
-		return err
-	}
-	return nil
-}
-
-// EscapeString writes to p the properly escaped XML equivalent
-// of the plain text data s.
-func (p *printer) EscapeString(s string) {
-	var esc []byte
-	last := 0
-	for i := 0; i < len(s); {
-		r, width := utf8.DecodeRuneInString(s[i:])
-		i += width
-		switch r {
-		case '"':
-			esc = esc_quot
-		case '\'':
-			esc = esc_apos
-		case '&':
-			esc = esc_amp
-		case '<':
-			esc = esc_lt
-		case '>':
-			esc = esc_gt
-		case '\t':
-			esc = esc_tab
-		case '\n':
-			esc = esc_nl
-		case '\r':
-			esc = esc_cr
-		default:
-			if !isInCharacterRange(r) || (r == 0xFFFD && width == 1) {
-				esc = esc_fffd
-				break
-			}
-			continue
-		}
-		p.WriteString(s[last : i-width])
-		p.Write(esc)
-		last = i
-	}
-	p.WriteString(s[last:])
-}
-
-// Escape is like EscapeText but omits the error return value.
-// It is provided for backwards compatibility with Go 1.0.
-// Code targeting Go 1.1 or later should use EscapeText.
-func Escape(w io.Writer, s []byte) {
-	EscapeText(w, s)
 }
 
 // procInst parses the `param="..."` or `param='...'`
