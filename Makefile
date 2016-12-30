@@ -14,7 +14,7 @@
 
 .PHONY: nuke dep regenerate gofmt build test
 
-all: nuke dep regenerate gofmt build test vet checklicense
+all: nuke dep regenerate gofmt build test vet
 
 dep:
 	go install github.com/gogo/protobuf/protoc-gen-gogo
@@ -79,6 +79,15 @@ nuke: clean
 gofmt:
 	gofmt -l -s -w .
 
+travis:
+	make all
+	make errcheck
+	make checklicense
+	make diff
+
 errcheck:
 	go get github.com/kisielk/errcheck
 	errcheck ./...
+
+diff:
+	git diff --exit-code .
