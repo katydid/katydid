@@ -28,6 +28,8 @@ type ifExprs struct {
 	ret  []*ast.Pattern
 }
 
+//newIfExprs combines several if expressions into one nested if expression with a list of return values.
+//While combining these if expressions, duplicate and impossible (always false) conditions are removed for efficiency.
 func newIfExprs(ifs []*ifExpr) *ifExprs {
 	if len(ifs) == 0 {
 		return &ifExprs{
@@ -70,44 +72,49 @@ func (this *ifExprs) eval(label parser.Value) ([]*ast.Pattern, error) {
 	return this.els.eval(label)
 }
 
-func (top *ifExprs) addReturn(ret *ast.Pattern) {
-	if top.ret != nil {
-		top.ret = append(top.ret, ret)
+//addReturn finds the leafs and appends a return to each.
+func (this *ifExprs) addReturn(ret *ast.Pattern) {
+	if this.ret != nil {
+		this.ret = append(this.ret, ret)
 		return
 	}
-	top.then.addReturn(ret)
-	top.els.addReturn(ret)
+	this.then.addReturn(ret)
+	this.els.addReturn(ret)
 	return
 }
 
-func (top *ifExprs) addIfExpr(cond funcs.Bool, then, els *ast.Pattern) {
-	if top.ret != nil {
-		top.cond = cond
-		thenterms := make([]*ast.Pattern, len(top.ret)+1)
-		copy(thenterms, top.ret)
+func (this *ifExprs) addIfExpr(cond funcs.Bool, then, els *ast.Pattern) {
+	// efficienctly append the then and else return to two copies of the current returns.
+	if this.ret != nil {
+		this.cond = cond
+		thenterms := make([]*ast.Pattern, len(this.ret)+1)
+		copy(thenterms, this.ret)
 		thenterms[len(thenterms)-1] = then
-		top.then = &ifExprs{ret: thenterms}
-		top.els = &ifExprs{ret: append(top.ret, els)}
-		top.ret = nil
+		this.then = &ifExprs{ret: thenterms}
+		this.els = &ifExprs{ret: append(this.ret, els)}
+		this.ret = nil
 		return
 	}
-	if funcs.Equal(top.cond, cond) {
-		top.then.addReturn(then)
-		top.els.addReturn(els)
+	// remove duplicate condition
+	if funcs.Equal(this.cond, cond) {
+		this.then.addReturn(then)
+		this.els.addReturn(els)
 		return
 	}
-	if funcs.IsFalse(funcs.Simplify(funcs.And(top.cond, cond))) {
-		top.then.addReturn(els)
-		top.els.addIfExpr(cond, then, els)
+	// remove impossible (always false) then condition
+	if funcs.IsFalse(funcs.Simplify(funcs.And(this.cond, cond))) {
+		this.then.addReturn(els)
+		this.els.addIfExpr(cond, then, els)
 		return
 	}
-	if funcs.IsFalse(funcs.Simplify(funcs.And(top.cond, funcs.Not(cond)))) {
-		top.then.addIfExpr(cond, then, els)
-		top.els.addReturn(then)
+	// remove impossible (always false) else condition
+	if funcs.IsFalse(funcs.Simplify(funcs.And(this.cond, funcs.Not(cond)))) {
+		this.then.addIfExpr(cond, then, els)
+		this.els.addReturn(then)
 		return
 	}
-	top.then.addIfExpr(cond, then, els)
-	top.els.addIfExpr(cond, then, els)
+	this.then.addIfExpr(cond, then, els)
+	this.els.addIfExpr(cond, then, els)
 	return
 }
 
