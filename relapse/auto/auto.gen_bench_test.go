@@ -4,10 +4,9 @@
 package auto_test
 
 import (
-"testing"
-"github.com/katydid/katydid/relapse/tests"
+	"github.com/katydid/katydid/relapse/tests"
+	"testing"
 )
-
 
 func BenchmarkProtoNumAndNameTelephoneProtoNum(b *testing.B) {
 	v := tests.BenchValidators["ProtoNumAndNameTelephone"]["protoNum"]

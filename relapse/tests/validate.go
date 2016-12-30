@@ -61,7 +61,7 @@ func (this validatorList) Swap(i, j int) {
 func ValidatorList() []interface{} {
 	vs := make(validatorList, 0, len(Validators)*3)
 	for name, cs := range Validators {
-		for cname, _ := range cs {
+		for cname := range cs {
 			vs = append(vs, Validators[name][cname])
 		}
 	}

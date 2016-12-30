@@ -92,5 +92,5 @@ type D struct {
 }
 
 func TestCopyD(t *testing.T) {
-	testCopy(t, &D{Name: "d", List: []*A{&A{Name: "a", Value: 1}, &A{}, nil}})
+	testCopy(t, &D{Name: "d", List: []*A{{Name: "a", Value: 1}, {}, nil}})
 }

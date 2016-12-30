@@ -30,7 +30,7 @@ import (
 //  #main = (A:@main | <empty>)
 func HasRecursion(g *ast.Grammar) bool {
 	refs := ast.NewRefLookup(g)
-	for name, _ := range refs {
+	for name := range refs {
 		visited := make(map[*ast.Pattern]bool)
 		if hasRecursion(visited, refs, refs[name]) {
 			return true

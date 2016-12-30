@@ -32,7 +32,7 @@ var KnotKnotElbow = &Knot{
 
 var BightTurn = &Knot{
 	Bight: []*BightKnot{
-		&BightKnot{
+		{
 			Turn: proto.Bool(true),
 		},
 	},

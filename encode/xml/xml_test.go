@@ -79,5 +79,5 @@ type D struct {
 }
 
 func TestTranscodeD(t *testing.T) {
-	testTranscode(t, &D{Name: "d", List: []*A{&A{Name: "a", Value: 1}, &A{}, nil}})
+	testTranscode(t, &D{Name: "d", List: []*A{{Name: "a", Value: 1}, {}, nil}})
 }

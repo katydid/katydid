@@ -75,10 +75,10 @@ func derivCall(refs map[string]*ast.Pattern, getFunc func(*ast.Expr) funcs.Bool,
 		return []*callable{}
 	case *ast.TreeNode:
 		b := nameexpr.NameToFunc(v.GetName())
-		return []*callable{&callable{b, v.GetPattern(), ast.NewNot(ast.NewZAny())}}
+		return []*callable{{b, v.GetPattern(), ast.NewNot(ast.NewZAny())}}
 	case *ast.LeafNode:
 		b := getFunc(v.GetExpr())
-		return []*callable{&callable{b, ast.NewEmpty(), ast.NewNot(ast.NewZAny())}}
+		return []*callable{{b, ast.NewEmpty(), ast.NewNot(ast.NewZAny())}}
 	case *ast.Concat:
 		l := derivCall(refs, getFunc, v.GetLeftPattern())
 		if !interp.Nullable(refs, v.GetLeftPattern()) {

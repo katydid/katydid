@@ -70,7 +70,7 @@ func (this benchValidatorList) Swap(i, j int) {
 func BenchValidatorList() []interface{} {
 	vs := make(benchValidatorList, 0, len(BenchValidators)*3)
 	for name, cs := range BenchValidators {
-		for cname, _ := range cs {
+		for cname := range cs {
 			vs = append(vs, BenchValidators[name][cname])
 		}
 	}
