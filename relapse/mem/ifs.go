@@ -28,9 +28,9 @@ type ifExprs struct {
 	ret  []*ast.Pattern
 }
 
-//newIfExprs combines several if expressions into one nested if expression with a list of return values.
+//compileIfExprs combines several if expressions into one nested if expression with a list of return values.
 //While combining these if expressions, duplicate and impossible (always false) conditions are removed for efficiency.
-func newIfExprs(ifs []*ifExpr) *ifExprs {
+func compileIfExprs(ifs []*ifExpr) *ifExprs {
 	if len(ifs) == 0 {
 		return &ifExprs{
 			ret: []*ast.Pattern{},

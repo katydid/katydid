@@ -24,10 +24,10 @@ import (
 	"io"
 )
 
-func deriv(mem *Mem, current int, tree parser.Interface) (int, error) {
+func deriv(mem *Mem, patterns int, tree parser.Interface) (int, error) {
 	for {
-		if !mem.escapable(current) {
-			return current, nil
+		if !mem.escapable(patterns) {
+			return patterns, nil
 		}
 		if err := tree.Next(); err != nil {
 			if err == io.EOF {
@@ -36,25 +36,25 @@ func deriv(mem *Mem, current int, tree parser.Interface) (int, error) {
 				return 0, err
 			}
 		}
-		callTree, err := mem.getCallTree(current)
+		callTree, err := mem.getCallTree(patterns)
 		if err != nil {
 			return 0, err
 		}
-		childState, stackElm, err := callTree.Eval(tree)
+		childPatterns, stackElm, err := callTree.Eval(tree)
 		if err != nil {
 			return 0, err
 		}
 		if !tree.IsLeaf() {
 			tree.Down()
-			childState, err = deriv(mem, childState, tree)
+			childPatterns, err = deriv(mem, childPatterns, tree)
 			if err != nil {
 				return 0, err
 			}
 			tree.Up()
 		}
-		current = mem.getReturn(stackElm, childState)
+		patterns = mem.getReturn(stackElm, childPatterns)
 	}
-	return current, nil
+	return patterns, nil
 }
 
 func derivCalls(refs map[string]*ast.Pattern, getFunc func(*ast.Expr) funcs.Bool, patterns []*ast.Pattern) []*ifExpr {

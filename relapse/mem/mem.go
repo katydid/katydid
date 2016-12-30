@@ -170,9 +170,9 @@ func (this *Mem) getFunc(expr *ast.Expr) funcs.Bool {
 
 func (this *Mem) calcCallTrees(upto int) error {
 	for i := len(this.Calls); i <= upto; i++ {
-		callables := derivCalls(this.refs, this.getFunc, this.patterns[i])
-		callTree := newIfExprs(callables)
-		memCallTree, err := newMemCallTree(i, &this.stackElms, &this.patterns, &this.zis, callTree)
+		listOfIfExpr := derivCalls(this.refs, this.getFunc, this.patterns[i])
+		compiledIfExprs := compileIfExprs(listOfIfExpr)
+		memCallTree, err := newMemCallTree(i, &this.stackElms, &this.patterns, &this.zis, compiledIfExprs)
 		if err != nil {
 			return err
 		}
@@ -181,11 +181,11 @@ func (this *Mem) calcCallTrees(upto int) error {
 	return nil
 }
 
-func (this *Mem) getCallTree(s int) (*CallNode, error) {
-	if err := this.calcCallTrees(s); err != nil {
+func (this *Mem) getCallTree(patterns int) (*CallNode, error) {
+	if err := this.calcCallTrees(patterns); err != nil {
 		return nil, err
 	}
-	return this.Calls[s], nil
+	return this.Calls[patterns], nil
 }
 
 func nullables(refs map[string]*ast.Pattern, patterns []*ast.Pattern) bitset {
@@ -229,9 +229,9 @@ func (this *Mem) getReturnn(stackIndex int, nullIndex int) int {
 	}
 	stackElm := this.stackElms[stackIndex]
 	zullable := this.nullables[nullIndex]
-	zindex := stackElm.Zindex
-	nullable := unzipb(zullable, this.zis[zindex])
-	current := stackElm.State
+	zipIndex := stackElm.zipIndex
+	nullable := unzipb(zullable, this.zis[zipIndex])
+	current := stackElm.patterns
 	currentPatterns := this.patterns[current]
 	currentPatterns = derivReturns(this.refs, currentPatterns, nullable)
 	simplePatterns := this.simps(currentPatterns)

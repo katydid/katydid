@@ -33,7 +33,7 @@ func newMemCallTree(parent int, stackElms *pairSet, patterns *patternsSet, zis *
 	if node.ret != nil {
 		ps := node.ret
 		zps, zi := zip(ps)
-		stackIndex := stackElms.add(stackElm{State: parent, Zindex: zis.add(zi)})
+		stackIndex := stackElms.add(stackElm{patterns: parent, zipIndex: zis.add(zi)})
 		return &CallNode{child: patterns.add(zps), stackIndex: stackIndex}, nil
 	}
 	then, err := newMemCallTree(parent, stackElms, patterns, zis, node.then)
