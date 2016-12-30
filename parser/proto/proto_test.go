@@ -29,7 +29,9 @@ func TestDebug(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	p.Init(data)
+	if err := p.Init(data); err != nil {
+		t.Fatal(err)
+	}
 	parser := debug.NewLogger(p, debug.NewLineLogger())
 	m := debug.Walk(parser)
 	if !m.Equal(debug.Output) {
@@ -44,7 +46,9 @@ func TestRandomDebug(t *testing.T) {
 		panic(err)
 	}
 	for i := 0; i < 10; i++ {
-		p.Init(data)
+		if err := p.Init(data); err != nil {
+			t.Fatal(err)
+		}
 		//l := debug.NewLogger(p, debug.NewLineLogger())
 		debug.RandomWalk(p, debug.NewRand(), 10, 3)
 		//t.Logf("original %v vs random %v", debug.Output, m)
@@ -63,9 +67,11 @@ func TestSkipRepeated1(t *testing.T) {
 	p := NewProtoNameParser("debug", "Debug", debug.DebugDescription())
 	data, err := proto.Marshal(debug.Input)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
-	p.Init(data)
+	if err := p.Init(data); err != nil {
+		t.Fatal(err)
+	}
 	parser := debug.NewLogger(p, debug.NewLineLogger())
 	next(t, parser)
 	next(t, parser)
@@ -88,15 +94,23 @@ func TestSkipRepeated2(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	p.Init(data)
+	if err := p.Init(data); err != nil {
+		t.Fatal(err)
+	}
 	parser := debug.NewLogger(p, debug.NewLineLogger())
 	next(t, parser)
-	parser.String()
+	if _, err := parser.String(); err != nil {
+		t.Fatal(err)
+	}
 	next(t, parser)
-	parser.String()
+	if _, err := parser.String(); err != nil {
+		t.Fatal(err)
+	}
 	parser.Down()
 	next(t, parser)
-	parser.String()
+	if _, err := parser.String(); err != nil {
+		t.Fatal(err)
+	}
 	parser.Up()
 	next(t, parser)
 }
@@ -107,7 +121,9 @@ func TestExtensionsSmallContainer(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	p.Init(data)
+	if err := p.Init(data); err != nil {
+		t.Fatal(err)
+	}
 	nodes := debug.Walk(p)
 	if !nodes.Equal(prototests.AContainerOutput) {
 		t.Fatalf("expected %v, but got %v", prototests.AContainerOutput, nodes)
@@ -120,7 +136,9 @@ func TestExtensionsBigContainer(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	p.Init(data)
+	if err := p.Init(data); err != nil {
+		t.Fatal(err)
+	}
 	nodes := debug.Walk(p)
 	if !nodes.Equal(prototests.ABigContainerOutput) {
 		t.Fatalf("expected %v, but got %v", prototests.ABigContainerOutput, nodes)

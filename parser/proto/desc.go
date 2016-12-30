@@ -120,7 +120,9 @@ func (this *descMap) visit(pkgName string, msg *descriptor.DescriptorProto) erro
 		}
 	}
 	for i := range msg.GetNestedType() {
-		this.visit(pkgName, msg.GetNestedType()[i])
+		if err := this.visit(pkgName, msg.GetNestedType()[i]); err != nil {
+			return err
+		}
 	}
 	return nil
 }
