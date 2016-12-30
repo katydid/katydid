@@ -28,7 +28,9 @@ func benchCompile(b *testing.B, str string) {
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		Compile(st)
+		if _, err := Compile(st); err != nil {
+			b.Fatal(err)
+		}
 	}
 }
 
@@ -88,7 +90,9 @@ func BenchmarkCompileOrProtoNum(b *testing.B) {
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		Compile(numst)
+		if _, err := Compile(numst); err != nil {
+			b.Fatal(err)
+		}
 	}
 }
 
@@ -99,7 +103,9 @@ func BenchmarkCompileOrProtoName(b *testing.B) {
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		Compile(st)
+		if _, err := Compile(st); err != nil {
+			b.Fatal(err)
+		}
 	}
 }
 
@@ -127,7 +133,9 @@ func BenchmarkCompileAndProtoNum(b *testing.B) {
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		Compile(numst)
+		if _, err := Compile(numst); err != nil {
+			b.Fatal(err)
+		}
 	}
 }
 
@@ -138,7 +146,9 @@ func BenchmarkCompileAndProtoName(b *testing.B) {
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		Compile(st)
+		if _, err := Compile(st); err != nil {
+			b.Fatal(err)
+		}
 	}
 }
 
@@ -168,7 +178,9 @@ func BenchmarkCompileInterleaveProtoNum(b *testing.B) {
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		Compile(numst)
+		if _, err := Compile(numst); err != nil {
+			b.Fatal(err)
+		}
 	}
 }
 
@@ -179,6 +191,8 @@ func BenchmarkCompileInterleaveProtoName(b *testing.B) {
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		Compile(st)
+		if _, err := Compile(st); err != nil {
+			b.Fatal(err)
+		}
 	}
 }
