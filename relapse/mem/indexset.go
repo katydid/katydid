@@ -106,8 +106,8 @@ func (this *bitsetSet) add(bs bitset) int {
 }
 
 type stackElm struct {
-	patterns int
-	zipIndex int
+	parentPatterns int
+	childrenZipper int
 }
 
 //pairSet represents an indexed list of stackElm pairs.
@@ -120,8 +120,7 @@ func newPairSet() pairSet {
 
 func (this pairSet) index(se stackElm) int {
 	for i, ise := range this {
-		if ise.patterns == se.patterns &&
-			ise.zipIndex == se.zipIndex {
+		if ise == se {
 			return i
 		}
 	}

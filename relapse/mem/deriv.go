@@ -16,12 +16,13 @@ package mem
 
 import (
 	"fmt"
+	"io"
+
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/funcs"
 	"github.com/katydid/katydid/relapse/interp"
 	nameexpr "github.com/katydid/katydid/relapse/name"
-	"io"
 )
 
 func deriv(mem *Mem, patterns int, tree parser.Interface) (int, error) {
@@ -52,7 +53,8 @@ func deriv(mem *Mem, patterns int, tree parser.Interface) (int, error) {
 			}
 			tree.Up()
 		}
-		patterns = mem.getReturn(stackElm, childPatterns)
+		nullIndex := mem.getNullable(childPatterns)
+		patterns = mem.getReturn(stackElm, nullIndex)
 	}
 	return patterns, nil
 }

@@ -134,9 +134,9 @@ func (this *Mem) calcEscapables(upto int) {
 	}
 }
 
-func (this *Mem) escapable(s int) bool {
-	this.calcEscapables(s)
-	return this.Escapables[s]
+func (this *Mem) escapable(patterns int) bool {
+	this.calcEscapables(patterns)
+	return this.Escapables[patterns]
 }
 
 func (this *Mem) calcAccepts(upto int) {
@@ -150,9 +150,9 @@ func (this *Mem) calcAccepts(upto int) {
 	}
 }
 
-func (this *Mem) accept(s int) bool {
-	this.calcAccepts(s)
-	return this.Accept[s]
+func (this *Mem) accept(patterns int) bool {
+	this.calcAccepts(patterns)
+	return this.Accept[patterns]
 }
 
 func (this *Mem) getFunc(expr *ast.Expr) funcs.Bool {
@@ -210,14 +210,14 @@ func (this *Mem) getNullable(s int) int {
 	return this.StateToNullable[s]
 }
 
-func (this *Mem) simps(patterns []*ast.Pattern) []*ast.Pattern {
+func (this *Mem) simplifyAll(patterns []*ast.Pattern) []*ast.Pattern {
 	for i := range patterns {
 		patterns[i] = this.simplifier.Simplify(patterns[i])
 	}
 	return patterns
 }
 
-func (this *Mem) getReturnn(stackIndex int, nullIndex int) int {
+func (this *Mem) getReturn(stackIndex int, nullIndex int) int {
 	if len(this.Returns) <= stackIndex {
 		for i := len(this.Returns); i <= stackIndex; i++ {
 			this.Returns = append(this.Returns, make(map[int]int))
@@ -229,18 +229,11 @@ func (this *Mem) getReturnn(stackIndex int, nullIndex int) int {
 	}
 	stackElm := this.stackElms[stackIndex]
 	zullable := this.nullables[nullIndex]
-	zipIndex := stackElm.zipIndex
-	nullable := unzipb(zullable, this.zis[zipIndex])
-	current := stackElm.patterns
-	currentPatterns := this.patterns[current]
+	nullable := unzipb(zullable, this.zis[stackElm.childrenZipper])
+	currentPatterns := this.patterns[stackElm.parentPatterns]
 	currentPatterns = derivReturns(this.refs, currentPatterns, nullable)
-	simplePatterns := this.simps(currentPatterns)
+	simplePatterns := this.simplifyAll(currentPatterns)
 	res := this.patterns.add(simplePatterns)
 	this.Returns[stackIndex][nullIndex] = res
 	return res
-}
-
-func (this *Mem) getReturn(stackIndex int, child int) int {
-	nullIndex := this.getNullable(child)
-	return this.getReturnn(stackIndex, nullIndex)
 }

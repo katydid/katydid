@@ -41,33 +41,36 @@ func (mem *Mem) Compile() error {
 	return nil
 }
 
-func compile(mem *Mem, current int) error {
-	mem.getNullable(current)
-	mem.accept(current)
-	mem.escapable(current)
+func compile(mem *Mem, patterns int) error {
+	mem.getNullable(patterns)
+	mem.accept(patterns)
+	mem.escapable(patterns)
 
-	callTree, err := mem.getCallTree(current)
+	callTree, err := mem.getCallTree(patterns)
 	if err != nil {
 		return err
 	}
-	leafs := getLeafs(callTree)
-	for _, leaf := range leafs {
-		childlen := len(mem.patterns[leaf.child])
-		if childlen > 64 {
+	allPossibleCalls := getLeafs(callTree)
+	for _, call := range allPossibleCalls {
+
+		numOfChildPatterns := len(mem.patterns[call.child])
+		if numOfChildPatterns > 64 {
 			return ErrTooManyStates
 		}
-		max := newBitSet(childlen)
-		for i := 0; i < childlen; i++ {
-			max.set(i, true)
+
+		maxPossibleNullables := newBitSet(numOfChildPatterns)
+		for i := 0; i < numOfChildPatterns; i++ {
+			maxPossibleNullables.set(i, true)
 		}
-		current := newBitSet(childlen)
+
+		possibleNullables := newBitSet(numOfChildPatterns)
 		for {
-			nullIndex := mem.nullables.add(current)
-			mem.getReturnn(leaf.stackIndex, nullIndex)
-			if current.equal(max) {
+			nullIndex := mem.nullables.add(possibleNullables)
+			mem.getReturn(call.stackIndex, nullIndex)
+			if possibleNullables.equal(maxPossibleNullables) {
 				break
 			}
-			current = current.inc()
+			possibleNullables = possibleNullables.inc()
 		}
 	}
 	return nil
