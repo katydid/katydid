@@ -15,12 +15,7 @@
 regenerate:
 	go install github.com/katydid/katydid/relapse/funcs/funcs-gen
 	funcs-gen ./
+	find . -name "*.gen.go" | xargs gofmt -l -s -w
 
 nuke:
-	rm -rf funcs/compare.gen.go
-	rm -rf funcs/newfunc.gen.go
-	rm -rf funcs/const.gen.go
-	rm -rf funcs/elem.gen.go
-	rm -rf funcs/length.gen.go
-	rm -rf funcs/list.gen.go
-	rm -rf funcs/print.gen.go
+	find . -name "*.gen.go" | xargs rm

@@ -15,6 +15,8 @@
 package ast
 
 import (
+	"sort"
+
 	"github.com/gogo/protobuf/proto"
 	"github.com/katydid/katydid/relapse/types"
 )
@@ -37,27 +39,33 @@ func NewRefLookup(g *Grammar) RefLookup {
 
 //NewGrammar converts a refenence lookup map into a Grammar.
 func NewGrammar(m map[string]*Pattern) *Grammar {
+	names := make([]string, 0, len(m))
+	for name := range m {
+		if name != "main" {
+			names = append(names, name)
+		}
+	}
+	sort.Strings(names)
+	g := &Grammar{}
 	ps := make([]*PatternDecl, 0, len(m))
 	first := true
-	g := &Grammar{}
-	for name := range m {
-		if name == "main" {
-			g.TopPattern = m[name]
+	if mainp, ok := m["main"]; ok {
+		first = false
+		g.TopPattern = mainp
+	}
+	for _, name := range names {
+		hash := newHash()
+		hash.Before = &Space{Space: []string{"\n"}}
+		if first {
+			hash.Before = nil
 			first = false
-		} else {
-			hash := newHash()
-			hash.Before = &Space{Space: []string{"\n"}}
-			if first {
-				hash.Before = nil
-				first = false
-			}
-			ps = append(ps, &PatternDecl{
-				Hash:    hash,
-				Name:    name,
-				Eq:      newEqual(),
-				Pattern: m[name],
-			})
 		}
+		ps = append(ps, &PatternDecl{
+			Hash:    hash,
+			Name:    name,
+			Eq:      newEqual(),
+			Pattern: m[name],
+		})
 	}
 	g.PatternDecls = ps
 	return g

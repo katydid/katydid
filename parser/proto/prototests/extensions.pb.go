@@ -149,6 +149,7 @@ var E_FieldA = &proto.ExtensionDesc{
 	Field:         100,
 	Name:          "prototests.FieldA",
 	Tag:           "fixed64,100,opt,name=FieldA",
+	Filename:      "extensions.proto",
 }
 
 var E_FieldB = &proto.ExtensionDesc{
@@ -157,6 +158,7 @@ var E_FieldB = &proto.ExtensionDesc{
 	Field:         101,
 	Name:          "prototests.FieldB",
 	Tag:           "bytes,101,opt,name=FieldB",
+	Filename:      "extensions.proto",
 }
 
 var E_FieldC = &proto.ExtensionDesc{
@@ -165,6 +167,7 @@ var E_FieldC = &proto.ExtensionDesc{
 	Field:         102,
 	Name:          "prototests.FieldC",
 	Tag:           "bytes,102,opt,name=FieldC",
+	Filename:      "extensions.proto",
 }
 
 func init() {

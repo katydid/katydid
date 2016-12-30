@@ -58,20 +58,6 @@ func newMemCallTree(parent int, stackElms *pairSet, patterns *patternsSet, zis *
 	}, nil
 }
 
-func getAllConditions(c *CallNode) []compose.Bool {
-	if c.cond == nil {
-		return []compose.Bool{}
-	}
-	cs := []compose.Bool{c.cond}
-	if c.then != nil {
-		cs = append(cs, getAllConditions(c.then)...)
-	}
-	if c.els != nil {
-		cs = append(cs, getAllConditions(c.then)...)
-	}
-	return cs
-}
-
 //Eval evaluates the call tree returning the child state and stack element given the label value of the parser element.
 func (this *CallNode) Eval(label parser.Value) (int, int, error) {
 	if this.cond == nil {
