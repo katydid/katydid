@@ -57,8 +57,8 @@ func deriv(mem *Mem, current int, tree parser.Interface) (int, error) {
 	return current, nil
 }
 
-func derivCalls(refs map[string]*ast.Pattern, getFunc func(*ast.Expr) funcs.Bool, patterns []*ast.Pattern) []*callable {
-	res := []*callable{}
+func derivCalls(refs map[string]*ast.Pattern, getFunc func(*ast.Expr) funcs.Bool, patterns []*ast.Pattern) []*ifExpr {
+	res := []*ifExpr{}
 	for _, pattern := range patterns {
 		cs := derivCall(refs, getFunc, pattern)
 		res = append(res, cs...)
@@ -66,19 +66,19 @@ func derivCalls(refs map[string]*ast.Pattern, getFunc func(*ast.Expr) funcs.Bool
 	return res
 }
 
-func derivCall(refs map[string]*ast.Pattern, getFunc func(*ast.Expr) funcs.Bool, p *ast.Pattern) []*callable {
+func derivCall(refs map[string]*ast.Pattern, getFunc func(*ast.Expr) funcs.Bool, p *ast.Pattern) []*ifExpr {
 	typ := p.GetValue()
 	switch v := typ.(type) {
 	case *ast.Empty:
-		return []*callable{}
+		return []*ifExpr{}
 	case *ast.ZAny:
-		return []*callable{}
+		return []*ifExpr{}
 	case *ast.TreeNode:
 		b := nameexpr.NameToFunc(v.GetName())
-		return []*callable{{b, v.GetPattern(), ast.NewNot(ast.NewZAny())}}
+		return []*ifExpr{{b, v.GetPattern(), ast.NewNot(ast.NewZAny())}}
 	case *ast.LeafNode:
 		b := getFunc(v.GetExpr())
-		return []*callable{{b, ast.NewEmpty(), ast.NewNot(ast.NewZAny())}}
+		return []*ifExpr{{b, ast.NewEmpty(), ast.NewNot(ast.NewZAny())}}
 	case *ast.Concat:
 		l := derivCall(refs, getFunc, v.GetLeftPattern())
 		if !interp.Nullable(refs, v.GetLeftPattern()) {
@@ -106,7 +106,7 @@ func derivCall(refs map[string]*ast.Pattern, getFunc func(*ast.Expr) funcs.Bool,
 	panic(fmt.Sprintf("unknown pattern typ %T", typ))
 }
 
-func derivCall2(refs map[string]*ast.Pattern, getFunc func(*ast.Expr) funcs.Bool, left, right *ast.Pattern) []*callable {
+func derivCall2(refs map[string]*ast.Pattern, getFunc func(*ast.Expr) funcs.Bool, left, right *ast.Pattern) []*ifExpr {
 	l := derivCall(refs, getFunc, left)
 	r := derivCall(refs, getFunc, right)
 	return append(l, r...)

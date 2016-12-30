@@ -171,7 +171,7 @@ func (this *Mem) getFunc(expr *ast.Expr) funcs.Bool {
 func (this *Mem) calcCallTrees(upto int) error {
 	for i := len(this.Calls); i <= upto; i++ {
 		callables := derivCalls(this.refs, this.getFunc, this.patterns[i])
-		callTree := newCallTree(callables)
+		callTree := newIfExprs(callables)
 		memCallTree, err := newMemCallTree(i, &this.stackElms, &this.patterns, &this.zis, callTree)
 		if err != nil {
 			return err
