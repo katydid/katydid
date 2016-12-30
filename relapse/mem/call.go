@@ -29,18 +29,27 @@ type CallNode struct {
 	stackIndex int
 }
 
-func newMemCallTree(parent int, stackElms *pairSet, patterns *patternsSet, zis *intsSet, node *ifExprs) (*CallNode, error) {
+func (this *Mem) newCallTree(parentPatterns int, node *ifExprs) (*CallNode, error) {
 	if node.ret != nil {
 		ps := node.ret
-		zps, zi := zip(ps)
-		stackIndex := stackElms.add(stackElm{parentPatterns: parent, childrenZipper: zis.add(zi)})
-		return &CallNode{child: patterns.add(zps), stackIndex: stackIndex}, nil
+		zippedPatterns, zipper := zip(ps)
+		zipperIndex := this.zis.add(zipper)
+		stackElement := stackElm{
+			parentPatterns: parentPatterns,
+			childrenZipper: zipperIndex,
+		}
+		stackIndex := this.stackElms.add(stackElement)
+		zippedPatternIndex := this.patterns.add(zippedPatterns)
+		return &CallNode{
+			child:      zippedPatternIndex,
+			stackIndex: stackIndex,
+		}, nil
 	}
-	then, err := newMemCallTree(parent, stackElms, patterns, zis, node.then)
+	then, err := this.newCallTree(parentPatterns, node.then)
 	if err != nil {
 		return nil, err
 	}
-	els, err := newMemCallTree(parent, stackElms, patterns, zis, node.els)
+	els, err := this.newCallTree(parentPatterns, node.els)
 	if err != nil {
 		return nil, err
 	}

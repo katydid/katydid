@@ -172,7 +172,7 @@ func (this *Mem) calcCallTrees(upto int) error {
 	for i := len(this.Calls); i <= upto; i++ {
 		listOfIfExpr := derivCalls(this.refs, this.getFunc, this.patterns[i])
 		compiledIfExprs := compileIfExprs(listOfIfExpr)
-		memCallTree, err := newMemCallTree(i, &this.stackElms, &this.patterns, &this.zis, compiledIfExprs)
+		memCallTree, err := this.newCallTree(i, compiledIfExprs)
 		if err != nil {
 			return err
 		}
@@ -223,8 +223,7 @@ func (this *Mem) getReturn(stackIndex int, nullIndex int) int {
 			this.Returns = append(this.Returns, make(map[int]int))
 		}
 	}
-	ret, ok := this.Returns[stackIndex][nullIndex]
-	if ok {
+	if ret, ok := this.Returns[stackIndex][nullIndex]; ok {
 		return ret
 	}
 	stackElm := this.stackElms[stackIndex]
