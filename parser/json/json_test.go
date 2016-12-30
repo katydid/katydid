@@ -27,7 +27,9 @@ func TestDebug(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	p.Init(data)
+	if err := p.Init(data); err != nil {
+		t.Fatal(err)
+	}
 	m := debug.Walk(p)
 	if !m.Equal(debug.Output) {
 		t.Fatalf("expected %s but got %s", debug.Output, m)
@@ -41,7 +43,9 @@ func TestRandomDebug(t *testing.T) {
 		t.Fatal(err)
 	}
 	for i := 0; i < 10; i++ {
-		p.Init(data)
+		if err := p.Init(data); err != nil {
+			t.Fatal(err)
+		}
 		//l := debug.NewLogger(p, debug.NewLineLogger())
 		debug.RandomWalk(p, debug.NewRand(), 10, 3)
 		//t.Logf("original %v vs random %v", debug.Output, m)
@@ -58,7 +62,9 @@ func TestEscapedChar(t *testing.T) {
 	}
 	t.Logf("%s", string(data))
 	parser := sjson.NewJsonParser()
-	parser.Init(data)
+	if err := parser.Init(data); err != nil {
+		t.Fatal(err)
+	}
 	m := debug.Walk(parser)
 	name := m[0].Label
 	if name != `a\"` {
@@ -71,7 +77,9 @@ func TestMultiLineArray(t *testing.T) {
 		"A":[1]
 	}`
 	parser := sjson.NewJsonParser()
-	parser.Init([]byte(s))
+	if err := parser.Init([]byte(s)); err != nil {
+		t.Fatal(err)
+	}
 	jout := debug.Walk(parser)
 	t.Logf("%v", jout)
 }
@@ -79,10 +87,16 @@ func TestMultiLineArray(t *testing.T) {
 func TestIntWithExponent(t *testing.T) {
 	s := `{"A":1e+08}`
 	parser := sjson.NewJsonParser()
-	parser.Init([]byte(s))
-	parser.Next()
+	if err := parser.Init([]byte(s)); err != nil {
+		t.Fatal(err)
+	}
+	if err := parser.Next(); err != nil {
+		t.Fatal(err)
+	}
 	parser.Down()
-	parser.Next()
+	if err := parser.Next(); err != nil {
+		t.Fatal(err)
+	}
 	if !parser.IsLeaf() {
 		t.Fatal("incorrect walk, please adjust the path above")
 	}

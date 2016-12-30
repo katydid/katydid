@@ -95,7 +95,7 @@ func skipSpace(buf []byte) int {
 }
 
 func (s *jsonParser) expected(expected string) error {
-	panic(fmt.Errorf("katydid/json/parser: expected '%s' at offset %d, but got '%c'", expected, s.offset, s.buf[s.offset]))
+	return fmt.Errorf("katydid/json/parser: expected '%s' at offset %d, but got '%c'", expected, s.offset, s.buf[s.offset])
 }
 
 func (s *jsonParser) scanOpenObject() error {
@@ -211,7 +211,7 @@ func (s *jsonParser) scanArray() error {
 		}
 	}
 	if count != 0 {
-		s.expected("]")
+		return s.expected("]")
 	}
 	s.startValueOffset = s.offset
 	s.endValueOffset = s.offset + index + 1
@@ -236,7 +236,7 @@ func (s *jsonParser) scanObject() error {
 		}
 	}
 	if count != 0 {
-		s.expected("}")
+		return s.expected("}")
 	}
 	s.startValueOffset = s.offset
 	s.endValueOffset = s.offset + index + 1
