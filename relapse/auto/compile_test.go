@@ -16,8 +16,6 @@ package auto
 
 import (
 	"github.com/katydid/katydid/relapse/parser"
-	"github.com/katydid/katydid/relapse/protonum"
-	"github.com/katydid/katydid/relapse/tests"
 	"testing"
 )
 
@@ -79,23 +77,6 @@ var typewriterOrQueryStr = `(.WineMessenger:* | .ShoelaceBeer:* |
 		)
 	)`
 
-func BenchmarkCompileOrProtoNum(b *testing.B) {
-	st, err := parser.ParseGrammar(typewriterOrQueryStr)
-	if err != nil {
-		b.Fatal(err)
-	}
-	numst, err := protonum.FieldNamesToNumbers("tests", "TypewriterPrison", tests.TypewriterprisonDescription(), st)
-	if err != nil {
-		b.Fatal(err)
-	}
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		if _, err := Compile(numst); err != nil {
-			b.Fatal(err)
-		}
-	}
-}
-
 func BenchmarkCompileOrProtoName(b *testing.B) {
 	st, err := parser.ParseGrammar(typewriterOrQueryStr)
 	if err != nil {
@@ -121,23 +102,6 @@ var typewriterAndQueryStr = `(.WineMessenger:* & .ShoelaceBeer:* &
 			.WigPride._ ^= "c"
 		)
 	)`
-
-func BenchmarkCompileAndProtoNum(b *testing.B) {
-	st, err := parser.ParseGrammar(typewriterAndQueryStr)
-	if err != nil {
-		b.Fatal(err)
-	}
-	numst, err := protonum.FieldNamesToNumbers("tests", "TypewriterPrison", tests.TypewriterprisonDescription(), st)
-	if err != nil {
-		b.Fatal(err)
-	}
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		if _, err := Compile(numst); err != nil {
-			b.Fatal(err)
-		}
-	}
-}
 
 func BenchmarkCompileAndProtoName(b *testing.B) {
 	st, err := parser.ParseGrammar(typewriterAndQueryStr)
@@ -166,23 +130,6 @@ var typewriterInterleaveQueryStr = `{WineMessenger:* ; .ShoelaceBeer:* ;
 		};
 		*
 	}`
-
-func BenchmarkCompileInterleaveProtoNum(b *testing.B) {
-	st, err := parser.ParseGrammar(typewriterInterleaveQueryStr)
-	if err != nil {
-		b.Fatal(err)
-	}
-	numst, err := protonum.FieldNamesToNumbers("tests", "TypewriterPrison", tests.TypewriterprisonDescription(), st)
-	if err != nil {
-		b.Fatal(err)
-	}
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		if _, err := Compile(numst); err != nil {
-			b.Fatal(err)
-		}
-	}
-}
 
 func BenchmarkCompileInterleaveProtoName(b *testing.B) {
 	st, err := parser.ParseGrammar(typewriterInterleaveQueryStr)

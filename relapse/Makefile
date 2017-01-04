@@ -21,10 +21,6 @@ regenerate:
 	rmdir util
 	(cd funcs && make regenerate)
 	(cd compose && make regenerate)
-	(cd tests && make regenerate)
-	(cd interp && make regenerate)
-	(cd mem && make regenerate)
-	(cd auto && make regenerate)
 	(cd protonum && make regenerate)
 
 clean:
@@ -43,5 +39,3 @@ nuke: clean
 	rm -rf ./token/token.go
 	rm -rf ./util
 	(cd funcs && make nuke)
-	(cd interp && make nuke)
-	(cd auto && make nuke)
