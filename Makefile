@@ -62,9 +62,7 @@ regenerate:
 	(cd relapse && make regenerate)
 	(cd relapse/funcs && go test -test.run=GenFuncList 2>../../list_of_functions.txt)
 	(cd encode && make regenerate)
-	find . -name "*.pb.go" | xargs gofmt -l -s -w
-	find . -name "*.gen.go" | xargs gofmt -l -s -w
-	find . -name "*.gen_test.go" | xargs gofmt -l -s -w
+	make gofmt
 
 clean:
 	go clean ./...
