@@ -213,6 +213,9 @@ func (this *Terminal) format(space bool) {
 }
 
 func (this *Keyword) format(space bool) {
+	if this == nil {
+		return
+	}
 	this.Before.format(space)
 }
 
