@@ -15,13 +15,13 @@
 package mem_test
 
 import (
+	"reflect"
+	"testing"
+
 	reflectparser "github.com/katydid/katydid/parser/reflect"
 	. "github.com/katydid/katydid/relapse/combinator"
 	"github.com/katydid/katydid/relapse/funcs"
 	"github.com/katydid/katydid/relapse/mem"
-	"github.com/katydid/katydid/relapse/tests"
-	"reflect"
-	"testing"
 )
 
 func NewInjectable() *injectableInt {
@@ -47,18 +47,20 @@ func (this *injectableInt) IsVariable() {
 func init() {
 	funcs.Register("inject", new(injectableInt))
 
-	injectPerson = G{
-		"main": InPath("Addresses", InAny(
-			InPath("Number", Value(funcs.IntEq(funcs.IntVar(), NewInjectable()))),
-		)),
+	injectNumber = G{
+		"main": InPath("Num", Value(funcs.IntEq(funcs.IntVar(), NewInjectable()))),
 	}
 }
 
-var injectPerson = G{}
+var injectNumber = G{}
+
+type Number struct {
+	Num int64
+}
 
 func testInject(t *testing.T, m *mem.Mem) bool {
 	parser := reflectparser.NewReflectParser()
-	parser.Init(reflect.ValueOf(tests.RobertPerson))
+	parser.Init(reflect.ValueOf(&Number{Num: 456}))
 	res, err := m.Validate(parser)
 	if err != nil {
 		t.Fatal(err)
@@ -67,7 +69,7 @@ func testInject(t *testing.T, m *mem.Mem) bool {
 }
 
 func TestInject(t *testing.T) {
-	grammar := injectPerson.Grammar()
+	grammar := injectNumber.Grammar()
 	m, err := mem.New(grammar)
 	if err != nil {
 		t.Fatal(err)

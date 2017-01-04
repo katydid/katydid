@@ -19,8 +19,24 @@ import (
 	"github.com/katydid/katydid/parser/debug"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/interp"
+	"github.com/katydid/katydid/relapse/testsuite"
 	"testing"
 )
+
+func TestSuite(t *testing.T) {
+	if !testsuite.TestSuiteExists() {
+		t.Skip("testsuite not avaliable")
+	}
+	tests, err := testsuite.ReadTestSuite()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, testCase := range tests {
+		t.Run(testCase.Name, func(t *testing.T) {
+			test(t, testCase.Grammar, testCase.Parser, testCase.Expected, "")
+		})
+	}
+}
 
 func test(t *testing.T, g *ast.Grammar, p parser.Interface, expected bool, desc string) {
 	if interp.HasRecursion(g) {

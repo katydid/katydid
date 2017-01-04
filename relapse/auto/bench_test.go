@@ -15,23 +15,30 @@
 package auto_test
 
 import (
-	"github.com/katydid/katydid/parser"
+	"testing"
+
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/auto"
-	"testing"
+	"github.com/katydid/katydid/relapse/testsuite"
 )
 
-type reset interface {
-	parser.Interface
-	Reset() error
+func BenchmarkSuite(b *testing.B) {
+	if !testsuite.BenchSuiteExists() {
+		b.Skip("benchsuite not available")
+	}
+	benches, err := testsuite.ReadBenchmarkSuite()
+	if err != nil {
+		b.Fatal(err)
+	}
+	for _, benchCase := range benches {
+		b.Run(benchCase.Name, func(b *testing.B) {
+			bench(b, benchCase.Grammar, benchCase.Parsers, benchCase.Record)
+		})
+	}
 }
 
-func bench(b *testing.B, grammar *ast.Grammar, gen func() parser.Interface, record bool) {
-	num := 1000
-	parsers := make([]reset, num)
-	for i := 0; i < num; i++ {
-		parsers[i] = gen().(reset)
-	}
+func bench(b *testing.B, grammar *ast.Grammar, parsers []testsuite.ResetParser, record bool) {
+	num := len(parsers)
 	var a *auto.Auto
 	var err error
 	if record {

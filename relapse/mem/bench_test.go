@@ -16,16 +16,12 @@ package mem_test
 
 import (
 	"flag"
-	"github.com/katydid/katydid/parser"
+	"testing"
+
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/mem"
-	"testing"
+	"github.com/katydid/katydid/relapse/testsuite"
 )
-
-type reset interface {
-	parser.Interface
-	Reset() error
-}
 
 var bN = flag.Int("b.N", 0, "the number of times the benchmark function's target code must run")
 
@@ -33,12 +29,26 @@ func init() {
 	flag.Parse()
 }
 
-func bench(b *testing.B, grammar *ast.Grammar, gen func() parser.Interface, record bool) {
-	num := 1000
+func BenchmarkSuite(b *testing.B) {
+	if !testsuite.BenchSuiteExists() {
+		b.Skip("benchsuite not available")
+	}
+	benches, err := testsuite.ReadBenchmarkSuite()
+	if err != nil {
+		b.Fatal(err)
+	}
+	for _, benchCase := range benches {
+		b.Run(benchCase.Name, func(b *testing.B) {
+			bench(b, benchCase.Grammar, benchCase.Parsers, benchCase.Record)
+		})
+	}
+}
+
+func bench(b *testing.B, grammar *ast.Grammar, parsers []testsuite.ResetParser, record bool) {
+	num := len(parsers)
 	if *bN != 0 {
 		b.N = *bN
 	}
-	parsers := make([]reset, num)
 	var m *mem.Mem
 	var err error
 	if record {
@@ -48,10 +58,6 @@ func bench(b *testing.B, grammar *ast.Grammar, gen func() parser.Interface, reco
 	}
 	if err != nil {
 		b.Fatal(err)
-	}
-	for i := 0; i < num; i++ {
-		p := gen().(reset)
-		parsers[i] = p
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {

@@ -12,31 +12,52 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package mem_test
+package auto_test
 
 import (
+	"strings"
+	"testing"
+
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse/auto"
 	"github.com/katydid/katydid/relapse/interp"
-	"github.com/katydid/katydid/relapse/mem"
-	"testing"
+	"github.com/katydid/katydid/relapse/testsuite"
 )
 
-func test(t *testing.T, g *ast.Grammar, p parser.Interface, expected bool, desc string, record bool) {
-	if interp.HasRecursion(g) {
-		t.Skipf("interp was not designed to handle left recursion")
+func TestSuite(t *testing.T) {
+	if !testsuite.TestSuiteExists() {
+		t.Skip("testsuite not avaliable")
 	}
-	var m *mem.Mem
+	tests, err := testsuite.ReadTestSuite()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, testCase := range tests {
+		t.Run(testCase.Name, func(t *testing.T) {
+			test(t, testCase.Name, testCase.Grammar, testCase.Parser, testCase.Expected, "", testCase.Record)
+		})
+	}
+}
+
+func test(t *testing.T, name string, g *ast.Grammar, p parser.Interface, expected bool, desc string, record bool) {
+	if interp.HasRecursion(g) {
+		t.Skipf("convert was not designed to handle recursion")
+	}
+	if strings.HasPrefix(name, "GoBigOr") {
+		t.Skipf("too big to fail: the number of Ors creates a state space explosion")
+	}
+	var a *auto.Auto
 	var err error
 	if record {
-		m, err = mem.NewRecord(g)
+		a, err = auto.CompileRecord(g)
 	} else {
-		m, err = mem.New(g)
+		a, err = auto.Compile(g)
 	}
 	if err != nil {
 		t.Fatal(err)
 	}
-	match, err := m.Validate(p)
+	match, err := a.Validate(p)
 	if err != nil {
 		t.Fatal(err)
 	}

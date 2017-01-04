@@ -15,30 +15,32 @@
 package interp_test
 
 import (
-	"github.com/katydid/katydid/parser"
-	"github.com/katydid/katydid/relapse/ast"
-	"github.com/katydid/katydid/relapse/interp"
 	"testing"
+
+	"github.com/katydid/katydid/relapse/interp"
+	"github.com/katydid/katydid/relapse/testsuite"
 )
 
-type reset interface {
-	parser.Interface
-	Reset() error
-}
-
-func bench(b *testing.B, grammar *ast.Grammar, gen func() parser.Interface) {
-	num := 1000
-	parsers := make([]reset, num)
-	for i := 0; i < num; i++ {
-		parsers[i] = gen().(reset)
+func BenchmarkSuite(b *testing.B) {
+	if !testsuite.BenchSuiteExists() {
+		b.Skip("benchsuite not available")
 	}
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		if err := parsers[i%num].Reset(); err != nil {
-			b.Fatal(err)
-		}
-		if _, err := interp.Interpret(grammar, parsers[i%num]); err != nil {
-			b.Fatal(err)
-		}
+	benches, err := testsuite.ReadBenchmarkSuite()
+	if err != nil {
+		b.Fatal(err)
+	}
+	for _, benchCase := range benches {
+		b.Run(benchCase.Name, func(b *testing.B) {
+			num := len(benchCase.Parsers)
+			b.ResetTimer()
+			for i := 0; i < b.N; i++ {
+				if err := benchCase.Parsers[i%num].Reset(); err != nil {
+					b.Fatal(err)
+				}
+				if _, err := interp.Interpret(benchCase.Grammar, benchCase.Parsers[i%num]); err != nil {
+					b.Fatal(err)
+				}
+			}
+		})
 	}
 }

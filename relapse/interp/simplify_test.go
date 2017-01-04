@@ -19,7 +19,6 @@ import (
 	"github.com/katydid/katydid/relapse/combinator"
 	"github.com/katydid/katydid/relapse/funcs"
 	. "github.com/katydid/katydid/relapse/interp"
-	"github.com/katydid/katydid/relapse/tests"
 	"testing"
 )
 
@@ -31,8 +30,29 @@ func TestSimplify1(t *testing.T) {
 	}
 }
 
+var andNameTelephonePerson = combinator.G{
+	"main": combinator.InOrder(
+		combinator.AllOf(
+			combinator.InOrder(
+				combinator.Any(),
+				combinator.In("Name", combinator.Value(
+					funcs.StringEq(funcs.StringVar(), funcs.StringConst("David"))),
+				),
+				combinator.Any(),
+			),
+			combinator.InOrder(
+				combinator.Any(),
+				combinator.In("Telephone", combinator.Value(
+					funcs.StringEq(funcs.StringVar(), funcs.StringConst("0123456789"))),
+				),
+				combinator.Any(),
+			),
+		),
+	),
+}
+
 func TestSimplify2(t *testing.T) {
-	s := NewSimplifier(tests.AndNameTelephonePerson.Grammar()).Simplify(tests.AndNameTelephonePerson["main"])
+	s := NewSimplifier(andNameTelephonePerson.Grammar()).Simplify(andNameTelephonePerson["main"])
 	if s.Equal(ast.NewNot(ast.NewZAny())) {
 		t.Fatalf("Did not expected EmptySet")
 	}
