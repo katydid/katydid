@@ -356,7 +356,7 @@ func (s *protoParser) Bool() (bool, error) {
 
 func (s *protoParser) String() (string, error) {
 	if !s.isLeaf {
-		if s.fieldNames {
+		if s.fieldNames && !s.inRepeated {
 			return s.field.GetName(), nil
 		}
 		return "", parser.ErrNotString

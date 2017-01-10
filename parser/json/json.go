@@ -514,6 +514,9 @@ func (s *jsonParser) String() (string, error) {
 		}
 		return res, nil
 	}
+	if s.inArray {
+		return "", parser.ErrNotString
+	}
 	return s.name, nil
 }
 

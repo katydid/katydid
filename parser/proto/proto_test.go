@@ -108,11 +108,36 @@ func TestSkipRepeated2(t *testing.T) {
 	}
 	parser.Down()
 	next(t, parser)
-	if _, err := parser.String(); err != nil {
+	if _, err := parser.Int(); err != nil {
 		t.Fatal(err)
 	}
 	parser.Up()
 	next(t, parser)
+}
+
+func TestIndexIsNotAString(t *testing.T) {
+	p := NewProtoNameParser("debug", "Debug", debug.DebugDescription())
+	data, err := proto.Marshal(debug.Input)
+	if err != nil {
+		panic(err)
+	}
+	if err := p.Init(data); err != nil {
+		t.Fatal(err)
+	}
+	parser := debug.NewLogger(p, debug.NewLineLogger())
+	next(t, parser)
+	if _, err := parser.String(); err != nil {
+		t.Fatal(err)
+	}
+	next(t, parser)
+	if _, err := parser.String(); err != nil {
+		t.Fatal(err)
+	}
+	parser.Down()
+	next(t, parser)
+	if _, err := parser.String(); err == nil {
+		t.Fatal("expected error, since an index is not a string")
+	}
 }
 
 func TestExtensionsSmallContainer(t *testing.T) {
