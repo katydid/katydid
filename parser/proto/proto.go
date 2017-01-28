@@ -17,7 +17,7 @@
 //Merging of fields and splitting of arrays are not supported by this parser for optimization reasons.
 //Use the NoLatentAppendingOrMerging function to check whether the marshaled buffer conforms to the limitations.
 //
-//TODO: defaults, proto3 and packed
+//TODO: defaults, maps and proto3 zero values
 package proto
 
 import (

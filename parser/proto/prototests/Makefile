@@ -15,3 +15,4 @@
 regenerate:
 	(protoc --gogo_out=. -I=.:../../../../../../:../../../../../../github.com/gogo/protobuf/protobuf extensions.proto)
 	(protoc --gogo_out=. -I=.:../../../../../../:../../../../../../github.com/gogo/protobuf/protobuf msg.proto)
+	(protoc --gogo_out=. -I=.:../../../../../../:../../../../../../github.com/gogo/protobuf/protobuf proto3.proto)

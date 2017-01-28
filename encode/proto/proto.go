@@ -18,7 +18,7 @@
 //
 //TODO: more tests
 //
-//TODO: support for packed
+//TODO: support for packed, proto3, maps, etc.
 package proto
 
 import (
