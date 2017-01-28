@@ -15,12 +15,13 @@
 package proto
 
 import (
+	"io"
+	"testing"
+
 	"github.com/gogo/protobuf/proto"
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/parser/debug"
 	"github.com/katydid/katydid/parser/proto/prototests"
-	"io"
-	"testing"
 )
 
 func TestDebug(t *testing.T) {

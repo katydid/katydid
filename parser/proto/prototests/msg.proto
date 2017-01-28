@@ -33,3 +33,10 @@ message SmallMsg {
 	repeated fixed32 FlightParachute = 12;
 	optional string MapShark = 18;
 }
+
+//Packed contains some repeated packed fields.
+message Packed {
+	repeated int64 Ints = 4 [packed=true];
+	repeated double Floats = 5 [packed=true];
+	repeated uint32 Uints = 6 [packed=true];
+}

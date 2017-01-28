@@ -87,6 +87,24 @@ func (this *descMap) findExts(pkgName string, msgName string) []*descriptor.Fiel
 	return exts
 }
 
+func couldBePacked(field *descriptor.FieldDescriptorProto) bool {
+	return field.IsRepeated() && field.IsScalar()
+}
+
+func keysOf(field *descriptor.FieldDescriptorProto) []uint64 {
+	wireType := field.WireType()
+	fieldNumber := field.GetNumber()
+	normalKey := uint64(uint32(fieldNumber)<<3 | uint32(wireType))
+	keys := []uint64{normalKey}
+
+	if couldBePacked(field) {
+		wireType = 2
+		packedKey := uint64(uint32(fieldNumber)<<3 | uint32(wireType))
+		keys = append(keys, packedKey)
+	}
+	return keys
+}
+
 func (this *descMap) visit(pkgName string, msg *descriptor.DescriptorProto) error {
 	if _, ok := this.msgToField[msg]; ok {
 		return nil
@@ -100,7 +118,10 @@ func (this *descMap) visit(pkgName string, msg *descriptor.DescriptorProto) erro
 		if _, ok := this.msgToField[msg]; !ok {
 			this.msgToField[msg] = make(map[uint64]*descriptor.FieldDescriptorProto)
 		}
-		this.msgToField[msg][f.GetKeyUint64()] = fields[i]
+		keys := keysOf(f)
+		for _, k := range keys {
+			this.msgToField[msg][k] = fields[i]
+		}
 		if f.GetType() == descriptor.FieldDescriptorProto_TYPE_MESSAGE {
 			newPkgName, newMsgName := this.desc.FindMessage(pkgName, msg.GetName(), f.GetName())
 			if len(newMsgName) == 0 {

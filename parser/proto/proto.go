@@ -101,6 +101,8 @@ type state struct {
 	isRepeated    bool
 	inRepeated    bool
 	indexRepeated int
+	isPacked      bool
+	inPacked      bool
 }
 
 //ProtoParser represents a protocol buffer parser.
@@ -219,13 +221,27 @@ func (s *protoParser) Next() error {
 		s.indexRepeated++
 		return nil
 	}
+	if s.inPacked {
+		n, l, err := length(s.field.WireType(), s.buf[s.offset:])
+		if err != nil {
+			return err
+		}
+		s.offset += n
+		s.length = l
+		s.indexRepeated++
+		return nil
+	}
 
 	v, n, err := uvarint(s.buf[s.offset:])
 	if err != nil {
 		return err
 	}
 	field, ok := s.fieldsMap[v]
-	if !ok || !field.IsRepeated() {
+	if ok {
+		wireType := int(v & 0x7)
+		s.isPacked = field.IsRepeated() && field.IsScalar() && wireType == 2
+	}
+	if !ok || !field.IsRepeated() || s.isPacked {
 		s.offset += n
 		wireType := int(v & 0x7)
 		n, l, err := length(wireType, s.buf[s.offset:])
@@ -236,7 +252,7 @@ func (s *protoParser) Next() error {
 		s.length = l
 	}
 	if ok {
-		if field.IsRepeated() {
+		if field.IsRepeated() && !s.isPacked {
 			s.isRepeated = true
 			s.length = 0
 		}
@@ -288,6 +304,9 @@ func (s *protoParser) Double() (float64, error) {
 func (s *protoParser) Int() (int64, error) {
 	if !s.isLeaf {
 		if s.inRepeated {
+			return int64(s.indexRepeated - 1), nil
+		}
+		if s.inPacked {
 			return int64(s.indexRepeated - 1), nil
 		}
 		return 0, parser.ErrNotInt
@@ -490,9 +509,19 @@ func (s *protoParser) Down() {
 		s.field = nil
 		s.inRepeated = false
 		s.isRepeated = false
+		s.isPacked = false
+		s.inPacked = false
+	} else if s.isPacked && !s.inPacked {
+		s.buf = s.buf[s.offset : s.offset+s.length]
+		s.offset = 0
+		s.inPacked = true
+		s.indexRepeated = 0
+		s.length = 0
 	} else {
 		s.isLeaf = true
 		s.inRepeated = false
 		s.isRepeated = false
+		s.isPacked = false
+		s.inPacked = false
 	}
 }
