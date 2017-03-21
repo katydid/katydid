@@ -15,8 +15,9 @@
 package parser_test
 
 import (
-	"github.com/katydid/katydid/relapse/parser"
 	"testing"
+
+	"github.com/katydid/katydid/relapse/parser"
 )
 
 func TestParse(t *testing.T) {
@@ -126,6 +127,8 @@ func TestParse(t *testing.T) {
 			a:* ; 
 			b:*;
 		}`,
+		`.A.1 == "a"`,
+		`.1.B == "b"`,
 	}
 	p := parser.NewParser()
 	for i, patternDecl := range patternDecls {
@@ -149,8 +152,8 @@ func TestParseExpr(t *testing.T) {
 		`== "bla"`,
 		`-> eq($string, "bla")`,
 		`-> 1`,
-		`-> 1.0`,
-		`-> -1.0`,
+		`-> double(1.0)`,
+		`-> double(-1.0)`,
 	}
 	negatives := []string{
 		"a",

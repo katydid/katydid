@@ -13,8 +13,8 @@ Expr
 Name
   : Space Literal << NewSDTName($0.(*Space), $1.(*Terminal)), nil >>
   | Literal       << NewSDTName(nil, $0.(*Terminal)), nil >>
-  | Space id      << NewSDTName($0.(*Space), &Terminal{StringValue: proto.String(newString($1))}), nil >>
-  | id            << NewSDTName(nil, &Terminal{StringValue: proto.String(newString($0))}), nil >>
+  | Space id          << NewSDTName($0.(*Space), &Terminal{StringValue: proto.String(newString($1))}), nil >>
+  | id                << NewSDTName(nil, &Terminal{StringValue: proto.String(newString($0))}), nil >>
   ;
 
 NameExpr
@@ -104,10 +104,10 @@ SpaceTerminal
 Literal
   : Bool << NewBoolTerminal($0), nil >>
   | int_lit << NewIntTerminal(newString($0)) >>
-  | uint_lit << NewUintTerminal(newString($0)) >>
-  | double_lit << NewDoubleTerminal(newString($0)) >>
+  | uint_cast_lit << NewUintTerminal(newString($0)) >>
+  | double_cast_lit << NewDoubleTerminal(newString($0)) >>
   | string_lit << NewStringTerminal(newString($0)) >>
-  | bytes_lit << NewBytesTerminal(newString($0)) >>
+  | bytes_cast_lit << NewBytesTerminal(newString($0)) >>
   ;
 
 Terminal

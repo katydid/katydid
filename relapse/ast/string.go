@@ -16,10 +16,11 @@ package ast
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/relapse/types"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/katydid/katydid/relapse/types"
 )
 
 //String returns the relapse string representation of the Grammar instance.
@@ -165,7 +166,7 @@ func isId(s string) bool {
 //String returns the relapse string representation of the Name instance.
 func (this *Name) String() string {
 	if this.DoubleValue != nil {
-		return this.Before.String() + strconv.FormatFloat(this.GetDoubleValue(), 'f', -1, 10)
+		return this.Before.String() + strconv.FormatFloat(this.GetDoubleValue(), 'f', -1, 64)
 	}
 	if this.IntValue != nil {
 		return this.Before.String() + strconv.FormatInt(this.GetIntValue(), 10)

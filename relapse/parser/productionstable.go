@@ -1196,7 +1196,7 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Literal : uint_lit	<< NewUintTerminal(newString(X[0])) >>`,
+		String: `Literal : uint_cast_lit	<< NewUintTerminal(newString(X[0])) >>`,
 		Id:         "Literal",
 		NTType:     30,
 		Index:      93,
@@ -1206,7 +1206,7 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Literal : double_lit	<< NewDoubleTerminal(newString(X[0])) >>`,
+		String: `Literal : double_cast_lit	<< NewDoubleTerminal(newString(X[0])) >>`,
 		Id:         "Literal",
 		NTType:     30,
 		Index:      94,
@@ -1226,7 +1226,7 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Literal : bytes_lit	<< NewBytesTerminal(newString(X[0])) >>`,
+		String: `Literal : bytes_cast_lit	<< NewBytesTerminal(newString(X[0])) >>`,
 		Id:         "Literal",
 		NTType:     30,
 		Index:      96,
