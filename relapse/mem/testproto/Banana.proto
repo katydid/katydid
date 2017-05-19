@@ -1,7 +1,7 @@
 syntax = "proto2";
 package testproto;
 
-import "proto/src/github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "src/github.com/gogo/protobuf/gogoproto/gogo.proto";
 
 option (gogoproto.gostring_all) = true;
 option (gogoproto.verbose_equal_all) = true;
