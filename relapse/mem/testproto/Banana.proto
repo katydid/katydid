@@ -1,0 +1,76 @@
+syntax = "proto2";
+package testproto;
+
+import "proto/src/github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+option (gogoproto.gostring_all) = true;
+option (gogoproto.verbose_equal_all) = true;
+option (gogoproto.equal_all) = true;
+option (gogoproto.populate_all) = true;
+option (gogoproto.stringer_all) = true;
+option (gogoproto.goproto_enum_prefix_all) = false;
+option (gogoproto.goproto_stringer_all) = false;
+option (gogoproto.testgen_all) = true;
+option (gogoproto.unsafe_unmarshaler_all) = true;
+option (gogoproto.unsafe_marshaler_all) = true;
+option (gogoproto.sizer_all) = true;
+
+message BananaTuple {
+    option (gogoproto.description) = true;
+    optional int64 BananaTime = 1 [(gogoproto.nullable) = false];
+    optional string Pulpy = 2 [(gogoproto.nullable) = false];
+    optional bool IsPulpySet = 3 [(gogoproto.nullable) = false];
+    optional string Yummy = 4 [(gogoproto.nullable) = false];
+    optional bool IsYummySet = 5 [(gogoproto.nullable) = false];
+    optional string Chewy = 6 [(gogoproto.nullable) = false];
+    optional bool IsChewySet = 7 [(gogoproto.nullable) = false];
+    optional string Squishy = 8 [(gogoproto.nullable) = false];
+    optional bool IsSquishySet = 9 [(gogoproto.nullable) = false];
+    optional string Brown = 10 [(gogoproto.nullable) = false];
+    optional bool IsBrownSet = 11 [(gogoproto.nullable) = false];
+    optional uint32 Rotten = 12 [(gogoproto.nullable) = false];
+    optional bool IsRottenSet = 13 [(gogoproto.nullable) = false];
+    optional uint32 Peel = 14 [(gogoproto.nullable) = false];
+    optional bool IsPeelSet = 15 [(gogoproto.nullable) = false];
+    optional PeelType PeelType = 16 [(gogoproto.nullable) = false];
+    optional bool IsPeelTypeSet = 17 [(gogoproto.nullable) = false];
+    optional BananaSource BananaSource = 18 [(gogoproto.nullable) = false];
+    optional bool Slippery = 19 [(gogoproto.nullable) = false];
+}
+
+enum BananaSource {
+    BananaSource_q = 0;
+    BananaSource_w = 1;
+    BananaSource_e = 2;
+    BananaSource_r = 3;
+    BananaSource_t = 4;
+    BananaSource_y = 5;
+    BananaSource_u = 6;
+    BananaSource_i = 7;
+    BananaSource_o = 8;
+    BananaSource_p = 9;
+    BananaSource_a = 10;
+    BananaSource_s = 11;
+    BananaSource_d = 12;
+    BananaSource_f = 13;
+    BananaSource_g = 14;
+    BananaSource_h = 15;
+    BananaSource_j = 16;
+    BananaSource_k = 17;
+    BananaSource_l = 18;
+    BananaSource_z = 19;
+    BananaSource_x = 20;
+    BananaSource_c = 21;
+    BananaSource_v = 22;
+    BananaSource_b = 23;
+    BananaSource_n = 24;
+    BananaSourceMaximum = 25;
+}
+
+enum PeelType {
+    PeelFirm = 0;
+    PeelGreen = 1;
+    PeelYellow = 2;
+    PeelDarkened = 3;
+    PeelDecomposing = 4;
+}
