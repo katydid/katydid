@@ -18,20 +18,18 @@ import (
 	"reflect"
 )
 
-//IsFalse returns whether a function can be simplified to a false constant.
+//IsFalse returns whether a function is a false constant.
 func IsFalse(fn Bool) bool {
-	f := Simplify(fn)
-	v, ok := f.(*constBool)
+	v, ok := fn.(*constBool)
 	if !ok {
 		return false
 	}
 	return v.v == false
 }
 
-//IsTrue returns whether a function can be simplified to a true constant.
+//IsTrue returns whether a function is a true constant.
 func IsTrue(fn Bool) bool {
-	f := Simplify(fn)
-	v, ok := f.(*constBool)
+	v, ok := fn.(*constBool)
 	if !ok {
 		return false
 	}

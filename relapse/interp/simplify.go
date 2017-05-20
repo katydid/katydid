@@ -16,6 +16,7 @@ package interp
 
 import (
 	"fmt"
+
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/compose"
 	"github.com/katydid/katydid/relapse/funcs"
@@ -109,6 +110,7 @@ func (this *simplifier) simplify(p *ast.Pattern, top bool) *ast.Pattern {
 		}
 		name := v.GetName()
 		b := nameexpr.NameToFunc(v.GetName())
+		b = funcs.Simplify(b)
 		if funcs.IsFalse(b) {
 			return emptyset
 		}
@@ -122,6 +124,7 @@ func (this *simplifier) simplify(p *ast.Pattern, top bool) *ast.Pattern {
 			//Don't simplify if there is an error to keep this function signature simple.
 			return p
 		}
+		b = funcs.Simplify(b)
 		if funcs.IsFalse(b) {
 			return emptyset
 		}
