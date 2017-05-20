@@ -8,6 +8,9 @@ type inSetInt struct {
 }
 
 func (this *inSetInt) Init() error {
+	if this.set != nil {
+		return nil
+	}
 	l, err := this.List.Eval()
 	if err != nil {
 		return err
@@ -32,7 +35,7 @@ func init() {
 	Register("contains", new(inSetInt))
 }
 
-//ContainsInt returns a function that checks when the element if contained in the list.
+//ContainsInt returns a function that checks whether the element is contained in the list.
 func ContainsInt(element Int, list ConstInts) Bool {
 	return &inSetInt{element, list, nil}
 }
@@ -44,6 +47,9 @@ type inSetUint struct {
 }
 
 func (this *inSetUint) Init() error {
+	if this.set != nil {
+		return nil
+	}
 	l, err := this.List.Eval()
 	if err != nil {
 		return err
@@ -68,7 +74,7 @@ func init() {
 	Register("contains", new(inSetUint))
 }
 
-//ContainsUint returns a function that checks when the element if contained in the list.
+//ContainsUint returns a function that checks whether the element is contained in the list.
 func ContainsUint(element Uint, list ConstUints) Bool {
 	return &inSetUint{element, list, nil}
 }
@@ -80,6 +86,9 @@ type inSetString struct {
 }
 
 func (this *inSetString) Init() error {
+	if this.set != nil {
+		return nil
+	}
 	l, err := this.List.Eval()
 	if err != nil {
 		return err
@@ -104,7 +113,7 @@ func init() {
 	Register("contains", new(inSetString))
 }
 
-//ContainsString returns a function that checks when the element if contained in the list.
+//ContainsString returns a function that checks whether the element is contained in the list.
 func ContainsString(element String, list ConstStrings) Bool {
 	return &inSetString{element, list, nil}
 }

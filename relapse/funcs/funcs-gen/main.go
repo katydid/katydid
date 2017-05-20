@@ -16,8 +16,9 @@
 package main
 
 import (
-	"github.com/katydid/katydid/gen"
 	"strings"
+
+	"github.com/katydid/katydid/gen"
 )
 
 const compareStr = `
@@ -142,13 +143,14 @@ func (this *listOf{{.FuncType}}) String() string {
 	for i := range this.List {
 		ss[i] = sprint(this.List[i])
 	}
-	return "[]{{.GoType}}{" + strings.Join(ss, ",") + "}"
+	return "[]{{.Type}}{" + strings.Join(ss, ",") + "}"
 }
 
 func (this *listOf{{.FuncType}}) IsListOf() {}
 `
 
 type list struct {
+	Type     string
 	CType    string
 	FuncType string
 	GoType   string
@@ -391,6 +393,9 @@ type inSet{{.Name}} struct {
 }
 
 func (this *inSet{{.Name}}) Init() error {
+	if this.set != nil {
+		return nil
+	}
 	l, err := this.List.Eval()
 	if err != nil {
 		return err
@@ -415,7 +420,7 @@ func init() {
 	Register("contains", new(inSet{{.Name}}))
 }
 
-//Contains{{.Name}} returns a function that checks when the element if contained in the list.
+//Contains{{.Name}} returns a function that checks whether the element is contained in the list.
 func Contains{{.Name}}(element {{.Name}}, list {{.ConstListType}}) Bool {
 	return &inSet{{.Name}}{element, list, nil}
 }
@@ -488,12 +493,12 @@ func main() {
 		&conster{"ListOfBytes", "[][]byte", "%#v", "[]byte"},
 	}, `"fmt"`, `"strings"`, `"reflect"`)
 	gen(listStr, "list.gen.go", []interface{}{
-		&list{"Doubles", "Double", "float64"},
-		&list{"Ints", "Int", "int64"},
-		&list{"Uints", "Uint", "uint64"},
-		&list{"Bools", "Bool", "bool"},
-		&list{"Strings", "String", "string"},
-		&list{"ListOfBytes", "Bytes", "[]byte"},
+		&list{"double", "Doubles", "Double", "float64"},
+		&list{"int", "Ints", "Int", "int64"},
+		&list{"uint", "Uints", "Uint", "uint64"},
+		&list{"bool", "Bools", "Bool", "bool"},
+		&list{"string", "Strings", "String", "string"},
+		&list{"[]byte", "ListOfBytes", "Bytes", "[]byte"},
 	}, `"strings"`)
 	gen(printStr, "print.gen.go", []interface{}{
 		&printer{"Double", "float64"},

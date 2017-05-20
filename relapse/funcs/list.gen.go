@@ -31,7 +31,7 @@ func (this *listOfDouble) String() string {
 	for i := range this.List {
 		ss[i] = sprint(this.List[i])
 	}
-	return "[]float64{" + strings.Join(ss, ",") + "}"
+	return "[]double{" + strings.Join(ss, ",") + "}"
 }
 
 func (this *listOfDouble) IsListOf() {}
@@ -62,7 +62,7 @@ func (this *listOfInt) String() string {
 	for i := range this.List {
 		ss[i] = sprint(this.List[i])
 	}
-	return "[]int64{" + strings.Join(ss, ",") + "}"
+	return "[]int{" + strings.Join(ss, ",") + "}"
 }
 
 func (this *listOfInt) IsListOf() {}
@@ -93,7 +93,7 @@ func (this *listOfUint) String() string {
 	for i := range this.List {
 		ss[i] = sprint(this.List[i])
 	}
-	return "[]uint64{" + strings.Join(ss, ",") + "}"
+	return "[]uint{" + strings.Join(ss, ",") + "}"
 }
 
 func (this *listOfUint) IsListOf() {}
