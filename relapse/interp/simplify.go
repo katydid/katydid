@@ -17,11 +17,11 @@ package interp
 import (
 	"fmt"
 
-	"github.com/katydid/katydid/relapse/parser"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/compose"
 	"github.com/katydid/katydid/relapse/funcs"
 	nameexpr "github.com/katydid/katydid/relapse/name"
+	"github.com/katydid/katydid/relapse/parser"
 )
 
 //Simplifier simplifies the patterns of a given grammar.
