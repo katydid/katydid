@@ -65,7 +65,8 @@ func Equal(l, r interface{}) bool {
 
 //Simplify simplifies a function logically by eliminating impossible ands, ors with constant true values, double nots, etc.
 func Simplify(f Bool) Bool {
-	if ff, ok := f.(*and); ok {
+	switch ff := f.(type) {
+	case *and:
 		v1 := Simplify(ff.V1)
 		v2 := Simplify(ff.V2)
 		if l, ok := v1.(*constBool); ok {
@@ -197,8 +198,7 @@ func Simplify(f Bool) Bool {
 			}
 		}
 		return And(v1, v2)
-	}
-	if ff, ok := f.(*or); ok {
+	case *or:
 		v1 := Simplify(ff.V1)
 		v2 := Simplify(ff.V2)
 		if l, ok := v1.(*constBool); ok {
@@ -229,8 +229,7 @@ func Simplify(f Bool) Bool {
 			}
 		}
 		return Or(v1, v2)
-	}
-	if ff, ok := f.(*not); ok {
+	case *not:
 		v1 := Simplify(ff.V1)
 		if vv, ok := v1.(*not); ok {
 			return vv.V1
