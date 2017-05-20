@@ -68,3 +68,9 @@ func (this *Parser) ParseExpr(s string) (res *ast.Expr, err error) {
 	}
 	return gram.GetTopPattern().GetLeafNode().GetExpr(), nil
 }
+
+//ParseExpr returns a parsed expression or error, given a string.
+func ParseExpr(s string) (*ast.Expr, error) {
+	p := NewParser()
+	return p.ParseExpr(s)
+}

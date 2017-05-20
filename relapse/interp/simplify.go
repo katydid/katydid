@@ -17,6 +17,7 @@ package interp
 import (
 	"fmt"
 
+	"github.com/katydid/katydid/relapse/parser"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/compose"
 	"github.com/katydid/katydid/relapse/funcs"
@@ -128,7 +129,12 @@ func (this *simplifier) simplify(p *ast.Pattern, top bool) *ast.Pattern {
 		if funcs.IsFalse(b) {
 			return emptyset
 		}
-		return p
+		e, err := parser.ParseExpr(funcs.Sprint(b))
+		if err != nil {
+			//Don't simplify if there is an error to keep this function signature simple.
+			return p
+		}
+		return ast.NewLeafNode(e)
 	case *ast.Concat:
 		return cRef(simplifyConcat(
 			simp(v.GetLeftPattern()),
