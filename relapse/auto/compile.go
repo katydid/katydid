@@ -26,15 +26,15 @@ var ErrTooManyStates = errors.New("a state explosion has occured")
 
 //Compile compiles a parsed relapse grammar ast into a visual pushdown automaton.
 func Compile(g *ast.Grammar) (*Auto, error) {
-	return compileGrammar(g, false)
+	return compileAuto(g, false)
 }
 
 //CompileRecord compiles a parsed relapse grammar and optimizes it for the case where the input structures are records.
 func CompileRecord(g *ast.Grammar) (*Auto, error) {
-	return compileGrammar(g, true)
+	return compileAuto(g, true)
 }
 
-func compileGrammar(g *ast.Grammar, record bool) (*Auto, error) {
+func compileAuto(g *ast.Grammar, record bool) (*Auto, error) {
 	c, err := newCompiler(g, record)
 	if err != nil {
 		return nil, err

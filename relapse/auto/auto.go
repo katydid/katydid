@@ -13,6 +13,9 @@
 //  limitations under the License.
 
 //Package auto compiles a parsed relapse grammar into a visual pushdown automaton and executes it.
+//Compilation into a VPA may result in an exponential explosion, since fully converting a grammar to VPA is O(2^n^2).
+//Rather use the mem package.  It gives comparable speed and has no exponential behaviour.
+//This package is just here to provide a benchmark against the mem package.
 package auto
 
 import (
@@ -53,7 +56,7 @@ func deriv(auto *Auto, current int, tree parser.Interface) (int, error) {
 			}
 		}
 		callTree := auto.calls[current]
-		childState, stackElm, err := callTree.Eval(tree)
+		childState, stackElm, err := callTree.eval(tree)
 		if err != nil {
 			return 0, err
 		}

@@ -41,7 +41,7 @@ func compileDeriv(c *compiler, patterns int, tree parser.Interface) (int, error)
 		if err != nil {
 			return 0, err
 		}
-		childPatterns, stackElm, err := callTree.Eval(tree)
+		childPatterns, stackElm, err := callTree.eval(tree)
 		if err != nil {
 			return 0, err
 		}

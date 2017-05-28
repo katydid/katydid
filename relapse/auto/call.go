@@ -66,7 +66,7 @@ func (this *compiler) newCallTree(parentPatterns int, node *ifExprs) (*callNode,
 }
 
 //Eval evaluates the call tree returning the child state and stack element given the label value of the parser element.
-func (this *callNode) Eval(label parser.Value) (int, int, error) {
+func (this *callNode) eval(label parser.Value) (int, int, error) {
 	if this.cond == nil {
 		return this.child, this.stackIndex, nil
 	}
@@ -75,7 +75,7 @@ func (this *callNode) Eval(label parser.Value) (int, int, error) {
 		return 0, 0, err
 	}
 	if cond {
-		return this.then.Eval(label)
+		return this.then.eval(label)
 	}
-	return this.els.Eval(label)
+	return this.els.eval(label)
 }

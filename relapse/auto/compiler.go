@@ -12,9 +12,6 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-//Package mem contains functions to interpret and memoize the execution of the grammar.
-//
-//TODO: cleanup
 package auto
 
 import (
