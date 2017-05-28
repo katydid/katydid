@@ -33,7 +33,7 @@ type CallNode struct {
 func (this *Mem) newCallTree(parentPatterns int, node *ifExprs) (*CallNode, error) {
 	if node.ret != nil {
 		ps := node.ret
-		zippedPatterns, zipper := zip(ps)
+		zippedPatterns, zipper := sets.Zip(ps)
 		zipperIndex := this.zis.Add(zipper)
 		stackElement := sets.Pair{
 			First:  parentPatterns,

@@ -230,7 +230,7 @@ func (this *Mem) getReturn(stackIndex int, nullIndex int) int {
 	stackElm := this.stackElms[stackIndex]
 	zullable := this.nullables[nullIndex]
 	childrenZipper := stackElm.Second
-	nullable := unzipb(zullable, this.zis[childrenZipper])
+	nullable := sets.UnzipBits(zullable, this.zis[childrenZipper])
 	parentPatterns := stackElm.First
 	currentPatterns := this.patterns[parentPatterns]
 	currentPatterns = derivReturns(this.refs, currentPatterns, nullable)
