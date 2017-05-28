@@ -16,14 +16,14 @@
 package auto
 
 import (
-	"github.com/katydid/katydid/parser"
-	"github.com/katydid/katydid/relapse/mem"
 	"io"
+
+	"github.com/katydid/katydid/parser"
 )
 
 //Auto is the structure that represents the automaton.
 type Auto struct {
-	calls           []*mem.CallNode
+	calls           []*callNode
 	returns         []intmap
 	escapables      []bool
 	start           int
