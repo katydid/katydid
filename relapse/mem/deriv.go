@@ -41,7 +41,7 @@ func deriv(mem *Mem, patterns int, tree parser.Interface) (int, error) {
 		if err != nil {
 			return 0, err
 		}
-		childPatterns, stackElm, err := callTree.Eval(tree)
+		childPatterns, stackElm, err := mem.eval(callTree, tree)
 		if err != nil {
 			return 0, err
 		}

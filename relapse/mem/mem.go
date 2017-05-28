@@ -54,7 +54,7 @@ func new(g *ast.Grammar, record bool) (*Mem, error) {
 		stackElms: sets.NewPairs(),
 		nullables: sets.NewBitsSet(),
 
-		calls:           []*CallNode{},
+		calls:           []*ifExprs{},
 		returns:         []map[int]int{},
 		escapables:      []bool{},
 		stateToNullable: []int{},
@@ -105,7 +105,7 @@ type Mem struct {
 	nullables sets.BitsSet
 
 	start           int
-	calls           []*CallNode
+	calls           []*ifExprs
 	returns         []map[int]int
 	escapables      []bool
 	stateToNullable []int
@@ -171,17 +171,13 @@ func (this *Mem) getFunc(expr *ast.Expr) funcs.Bool {
 func (this *Mem) calcCallTrees(upto int) error {
 	for i := len(this.calls); i <= upto; i++ {
 		listOfIfExpr := derivCalls(this.refs, this.getFunc, this.patterns[i])
-		compiledIfExprs := compileIfExprs(listOfIfExpr)
-		memCallTree, err := this.newCallTree(i, compiledIfExprs)
-		if err != nil {
-			return err
-		}
-		this.calls = append(this.calls, memCallTree)
+		ifs := newIfExprs(i, listOfIfExpr)
+		this.calls = append(this.calls, ifs)
 	}
 	return nil
 }
 
-func (this *Mem) getCallTree(patterns int) (*CallNode, error) {
+func (this *Mem) getCallTree(patterns int) (*ifExprs, error) {
 	if err := this.calcCallTrees(patterns); err != nil {
 		return nil, err
 	}
