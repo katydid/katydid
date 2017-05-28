@@ -61,33 +61,3 @@ func newReturns(m []map[int]int) []intmap {
 	}
 	return returns
 }
-
-//intmap is a little bit faster than a map, since lots of cases have a very small key space,
-//but it still covers the case where we have a sparse key space.
-type intmap struct {
-	slice []int
-	m     map[int]int
-}
-
-func newIntMap(m map[int]int) intmap {
-	max := 10
-	i := intmap{
-		slice: make([]int, max),
-		m:     make(map[int]int),
-	}
-	for k, v := range m {
-		if k < max {
-			i.slice[k] = v
-		} else {
-			i.m[k] = v
-		}
-	}
-	return i
-}
-
-func (this intmap) lookup(i int) int {
-	if i < len(this.slice) {
-		return this.slice[i]
-	}
-	return this.m[i]
-}
