@@ -16,6 +16,8 @@ package mem
 
 import (
 	"errors"
+
+	"github.com/katydid/katydid/relapse/sets"
 )
 
 //TODO document
@@ -58,19 +60,19 @@ func compile(mem *Mem, patterns int) error {
 			return ErrTooManyStates
 		}
 
-		maxPossibleNullables := newBitSet(numOfChildPatterns)
+		maxPossibleNullables := sets.NewBits(numOfChildPatterns)
 		for i := 0; i < numOfChildPatterns; i++ {
-			maxPossibleNullables.set(i, true)
+			maxPossibleNullables.Set(i, true)
 		}
 
-		possibleNullables := newBitSet(numOfChildPatterns)
+		possibleNullables := sets.NewBits(numOfChildPatterns)
 		for {
-			nullIndex := mem.nullables.add(possibleNullables)
+			nullIndex := mem.nullables.Add(possibleNullables)
 			mem.getReturn(call.stackIndex, nullIndex)
-			if possibleNullables.equal(maxPossibleNullables) {
+			if possibleNullables.Equal(maxPossibleNullables) {
 				break
 			}
-			possibleNullables = possibleNullables.inc()
+			possibleNullables = possibleNullables.Inc()
 		}
 	}
 	return nil

@@ -23,6 +23,7 @@ import (
 	"github.com/katydid/katydid/relapse/compose"
 	"github.com/katydid/katydid/relapse/funcs"
 	"github.com/katydid/katydid/relapse/interp"
+	"github.com/katydid/katydid/relapse/sets"
 )
 
 //New creates a new memoizable grammar.
@@ -48,10 +49,10 @@ func new(g *ast.Grammar, record bool) (*Mem, error) {
 		refs:       refs,
 		simplifier: simp,
 
-		patterns:  newPatternsSet(),
-		zis:       newIntsSet(),
-		stackElms: newPairSet(),
-		nullables: newBitsetSet(),
+		patterns:  sets.NewPatterns(),
+		zis:       sets.NewInts(),
+		stackElms: sets.NewPairs(),
+		nullables: sets.NewBitsSet(),
 
 		Calls:           []*CallNode{},
 		Returns:         []map[int]int{},
@@ -59,7 +60,7 @@ func new(g *ast.Grammar, record bool) (*Mem, error) {
 		StateToNullable: []int{},
 		Accept:          []bool{},
 	}
-	start := m.patterns.add([]*ast.Pattern{refs["main"]})
+	start := m.patterns.Add([]*ast.Pattern{refs["main"]})
 	e := &exprToFunc{m: make(map[*ast.Expr]funcs.Bool)}
 	for _, p := range refs {
 		p.Walk(e)
@@ -99,10 +100,10 @@ type Mem struct {
 	simplifier interp.Simplifier
 	context    *funcs.Context
 
-	patterns  patternsSet
-	zis       intsSet
-	stackElms pairSet
-	nullables bitsetSet
+	patterns  sets.Patterns
+	zis       sets.Ints
+	stackElms sets.Pairs
+	nullables sets.BitsSet
 
 	Start           int
 	Calls           []*CallNode
@@ -188,10 +189,10 @@ func (this *Mem) getCallTree(patterns int) (*CallNode, error) {
 	return this.Calls[patterns], nil
 }
 
-func nullables(refs map[string]*ast.Pattern, patterns []*ast.Pattern) bitset {
-	nulls := newBitSet(len(patterns))
+func nullables(refs map[string]*ast.Pattern, patterns []*ast.Pattern) sets.Bits {
+	nulls := sets.NewBits(len(patterns))
 	for i, p := range patterns {
-		nulls.set(i, interp.Nullable(refs, p))
+		nulls.Set(i, interp.Nullable(refs, p))
 	}
 	return nulls
 }
@@ -200,7 +201,7 @@ func (this *Mem) calcNullables(upto int) {
 	for i := len(this.StateToNullable); i <= upto; i++ {
 		childPatterns := this.patterns[i]
 		nullable := nullables(this.refs, childPatterns)
-		nullIndex := this.nullables.add(nullable)
+		nullIndex := this.nullables.Add(nullable)
 		this.StateToNullable = append(this.StateToNullable, nullIndex)
 	}
 }
@@ -228,11 +229,13 @@ func (this *Mem) getReturn(stackIndex int, nullIndex int) int {
 	}
 	stackElm := this.stackElms[stackIndex]
 	zullable := this.nullables[nullIndex]
-	nullable := unzipb(zullable, this.zis[stackElm.childrenZipper])
-	currentPatterns := this.patterns[stackElm.parentPatterns]
+	childrenZipper := stackElm.Second
+	nullable := unzipb(zullable, this.zis[childrenZipper])
+	parentPatterns := stackElm.First
+	currentPatterns := this.patterns[parentPatterns]
 	currentPatterns = derivReturns(this.refs, currentPatterns, nullable)
 	simplePatterns := this.simplifyAll(currentPatterns)
-	res := this.patterns.add(simplePatterns)
+	res := this.patterns.Add(simplePatterns)
 	this.Returns[stackIndex][nullIndex] = res
 	return res
 }

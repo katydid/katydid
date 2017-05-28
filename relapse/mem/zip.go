@@ -16,6 +16,7 @@ package mem
 
 import (
 	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse/sets"
 )
 
 var (
@@ -64,11 +65,11 @@ func unzip(patterns []*ast.Pattern, indexes []int) []*ast.Pattern {
 	return res
 }
 
-func unzipb(bools bitset, indexes []int) []bool {
+func unzipb(bools sets.Bits, indexes []int) []bool {
 	res := make([]bool, len(indexes))
 	for i, index := range indexes {
 		if index >= 0 {
-			res[i] = bools.get(index)
+			res[i] = bools.Get(index)
 		} else {
 			res[i] = zignoreb[(index+1)*-1]
 		}

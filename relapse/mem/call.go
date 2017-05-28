@@ -17,6 +17,7 @@ package mem
 import (
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/compose"
+	"github.com/katydid/katydid/relapse/sets"
 )
 
 //CallNode represents a node in the call tree.
@@ -33,13 +34,13 @@ func (this *Mem) newCallTree(parentPatterns int, node *ifExprs) (*CallNode, erro
 	if node.ret != nil {
 		ps := node.ret
 		zippedPatterns, zipper := zip(ps)
-		zipperIndex := this.zis.add(zipper)
-		stackElement := stackElm{
-			parentPatterns: parentPatterns,
-			childrenZipper: zipperIndex,
+		zipperIndex := this.zis.Add(zipper)
+		stackElement := sets.Pair{
+			First:  parentPatterns,
+			Second: zipperIndex,
 		}
-		stackIndex := this.stackElms.add(stackElement)
-		zippedPatternIndex := this.patterns.add(zippedPatterns)
+		stackIndex := this.stackElms.Add(stackElement)
+		zippedPatternIndex := this.patterns.Add(zippedPatterns)
 		return &CallNode{
 			child:      zippedPatternIndex,
 			stackIndex: stackIndex,
