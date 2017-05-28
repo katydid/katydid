@@ -54,11 +54,11 @@ func new(g *ast.Grammar, record bool) (*Mem, error) {
 		stackElms: sets.NewPairs(),
 		nullables: sets.NewBitsSet(),
 
-		Calls:           []*CallNode{},
-		Returns:         []map[int]int{},
-		Escapables:      []bool{},
-		StateToNullable: []int{},
-		Accept:          []bool{},
+		calls:           []*CallNode{},
+		returns:         []map[int]int{},
+		escapables:      []bool{},
+		stateToNullable: []int{},
+		accept:          []bool{},
 	}
 	start := m.patterns.Add([]*ast.Pattern{refs["main"]})
 	e := &exprToFunc{m: make(map[*ast.Expr]funcs.Bool)}
@@ -69,7 +69,7 @@ func new(g *ast.Grammar, record bool) (*Mem, error) {
 		}
 	}
 	m.funcs = e.m
-	m.Start = start
+	m.start = start
 	return m, nil
 }
 
@@ -78,11 +78,11 @@ func new(g *ast.Grammar, record bool) (*Mem, error) {
 //
 //NOTE: This is a naive implementation and it does not handle left recursion.
 func (mem *Mem) Validate(p parser.Interface) (bool, error) {
-	final, err := deriv(mem, mem.Start, p)
+	final, err := deriv(mem, mem.start, p)
 	if err != nil {
 		return false, err
 	}
-	return mem.accept(final), nil
+	return mem.getAccept(final), nil
 }
 
 func (mem *Mem) SetContext(context *funcs.Context) {
@@ -93,7 +93,6 @@ func (mem *Mem) SetContext(context *funcs.Context) {
 }
 
 //Mem is the structure containing the memoized grammar.
-//TODO make more private fields.
 type Mem struct {
 	refs       map[string]*ast.Pattern
 	funcs      map[*ast.Expr]funcs.Bool
@@ -105,12 +104,12 @@ type Mem struct {
 	stackElms sets.Pairs
 	nullables sets.BitsSet
 
-	Start           int
-	Calls           []*CallNode
-	Returns         []map[int]int
-	Escapables      []bool
-	StateToNullable []int
-	Accept          []bool
+	start           int
+	calls           []*CallNode
+	returns         []map[int]int
+	escapables      []bool
+	stateToNullable []int
+	accept          []bool
 }
 
 func escapable(patterns []*ast.Pattern) bool {
@@ -129,31 +128,31 @@ func escapable(patterns []*ast.Pattern) bool {
 }
 
 func (this *Mem) calcEscapables(upto int) {
-	for i := len(this.Escapables); i <= upto; i++ {
+	for i := len(this.escapables); i <= upto; i++ {
 		patterns := this.patterns[i]
-		this.Escapables = append(this.Escapables, escapable(patterns))
+		this.escapables = append(this.escapables, escapable(patterns))
 	}
 }
 
 func (this *Mem) escapable(patterns int) bool {
 	this.calcEscapables(patterns)
-	return this.Escapables[patterns]
+	return this.escapables[patterns]
 }
 
 func (this *Mem) calcAccepts(upto int) {
-	for i := len(this.Accept); i <= upto; i++ {
+	for i := len(this.accept); i <= upto; i++ {
 		patterns := this.patterns[i]
 		if len(patterns) != 1 {
-			this.Accept = append(this.Accept, false)
+			this.accept = append(this.accept, false)
 		} else {
-			this.Accept = append(this.Accept, interp.Nullable(this.refs, patterns[0]))
+			this.accept = append(this.accept, interp.Nullable(this.refs, patterns[0]))
 		}
 	}
 }
 
-func (this *Mem) accept(patterns int) bool {
+func (this *Mem) getAccept(patterns int) bool {
 	this.calcAccepts(patterns)
-	return this.Accept[patterns]
+	return this.accept[patterns]
 }
 
 func (this *Mem) getFunc(expr *ast.Expr) funcs.Bool {
@@ -170,14 +169,14 @@ func (this *Mem) getFunc(expr *ast.Expr) funcs.Bool {
 }
 
 func (this *Mem) calcCallTrees(upto int) error {
-	for i := len(this.Calls); i <= upto; i++ {
+	for i := len(this.calls); i <= upto; i++ {
 		listOfIfExpr := derivCalls(this.refs, this.getFunc, this.patterns[i])
 		compiledIfExprs := compileIfExprs(listOfIfExpr)
 		memCallTree, err := this.newCallTree(i, compiledIfExprs)
 		if err != nil {
 			return err
 		}
-		this.Calls = append(this.Calls, memCallTree)
+		this.calls = append(this.calls, memCallTree)
 	}
 	return nil
 }
@@ -186,7 +185,7 @@ func (this *Mem) getCallTree(patterns int) (*CallNode, error) {
 	if err := this.calcCallTrees(patterns); err != nil {
 		return nil, err
 	}
-	return this.Calls[patterns], nil
+	return this.calls[patterns], nil
 }
 
 func nullables(refs map[string]*ast.Pattern, patterns []*ast.Pattern) sets.Bits {
@@ -198,17 +197,17 @@ func nullables(refs map[string]*ast.Pattern, patterns []*ast.Pattern) sets.Bits 
 }
 
 func (this *Mem) calcNullables(upto int) {
-	for i := len(this.StateToNullable); i <= upto; i++ {
+	for i := len(this.stateToNullable); i <= upto; i++ {
 		childPatterns := this.patterns[i]
 		nullable := nullables(this.refs, childPatterns)
 		nullIndex := this.nullables.Add(nullable)
-		this.StateToNullable = append(this.StateToNullable, nullIndex)
+		this.stateToNullable = append(this.stateToNullable, nullIndex)
 	}
 }
 
 func (this *Mem) getNullable(s int) int {
 	this.calcNullables(s)
-	return this.StateToNullable[s]
+	return this.stateToNullable[s]
 }
 
 func (this *Mem) simplifyAll(patterns []*ast.Pattern) []*ast.Pattern {
@@ -219,12 +218,12 @@ func (this *Mem) simplifyAll(patterns []*ast.Pattern) []*ast.Pattern {
 }
 
 func (this *Mem) getReturn(stackIndex int, nullIndex int) int {
-	if len(this.Returns) <= stackIndex {
-		for i := len(this.Returns); i <= stackIndex; i++ {
-			this.Returns = append(this.Returns, make(map[int]int))
+	if len(this.returns) <= stackIndex {
+		for i := len(this.returns); i <= stackIndex; i++ {
+			this.returns = append(this.returns, make(map[int]int))
 		}
 	}
-	if ret, ok := this.Returns[stackIndex][nullIndex]; ok {
+	if ret, ok := this.returns[stackIndex][nullIndex]; ok {
 		return ret
 	}
 	stackElm := this.stackElms[stackIndex]
@@ -236,6 +235,6 @@ func (this *Mem) getReturn(stackIndex int, nullIndex int) int {
 	currentPatterns = derivReturns(this.refs, currentPatterns, nullable)
 	simplePatterns := this.simplifyAll(currentPatterns)
 	res := this.patterns.Add(simplePatterns)
-	this.Returns[stackIndex][nullIndex] = res
+	this.returns[stackIndex][nullIndex] = res
 	return res
 }
