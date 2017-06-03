@@ -12,32 +12,31 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package mem
+package auto
 
 import (
-	"strings"
-
+	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse/compose"
 	"github.com/katydid/katydid/relapse/funcs"
 )
 
-func addtab(s string) string {
-	ss := strings.Split(s, "\n")
-	for i := range ss {
-		ss[i] = "\t" + ss[i]
-	}
-	return strings.Join(ss, "\n")
+type exprToFunc struct {
+	m   map[*ast.Expr]funcs.Bool
+	err error
 }
 
-func (this *ifExprs) String() string {
-	if this.ret != nil {
-		ss := make([]string, len(this.ret))
-		for i := range this.ret {
-			ss[i] = this.ret[i].String()
-		}
-		return strings.Join(ss, ", ")
+func (this *exprToFunc) Visit(node interface{}) interface{} {
+	if this.err != nil {
+		return this
 	}
-	sthen := addtab(this.then.String())
-	sels := addtab(this.els.String())
-	sfunc := funcs.Sprint(this.cond)
-	return "{\n" + sfunc + "\nThen:\n" + sthen + "\nElse:\n" + sels + "}"
+	leaf, ok := node.(*ast.LeafNode)
+	if ok {
+		f, err := compose.NewBool(leaf.Expr)
+		if err != nil {
+			this.err = err
+			return this
+		}
+		this.m[leaf.Expr] = f
+	}
+	return this
 }

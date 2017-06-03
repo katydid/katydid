@@ -12,24 +12,24 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package mem
+package sets
 
 import "math"
 
-type bitset struct {
+type Bits struct {
 	val0 uint64
 	vals []uint64
 	size int
 }
 
-func newBitSet(size int) bitset {
+func NewBits(size int) Bits {
 	if size < 64 {
-		return bitset{size: size}
+		return Bits{size: size}
 	}
-	return bitset{size: size, vals: make([]uint64, (size / 64))}
+	return Bits{size: size, vals: make([]uint64, (size / 64))}
 }
 
-func (bs bitset) get(i int) bool {
+func (bs Bits) Get(i int) bool {
 	if i < 0 || i >= bs.size {
 		panic("range check error")
 	}
@@ -42,15 +42,15 @@ func (bs bitset) get(i int) bool {
 	return ((b >> uint(i)) & 0x1) == 1
 }
 
-func (bs bitset) inc() bitset {
+func (bs Bits) Inc() Bits {
 	if bs.size < 64 {
-		return bitset{
+		return Bits{
 			val0: bs.val0 + 1,
 			size: bs.size,
 		}
 	}
 	if bs.val0 < math.MaxUint64 {
-		return bitset{
+		return Bits{
 			val0: bs.val0 + 1,
 			vals: bs.vals,
 			size: bs.size,
@@ -72,21 +72,21 @@ func (bs bitset) inc() bitset {
 	if !inced {
 		panic("maximum reached")
 	}
-	return bitset{
+	return Bits{
 		vals: newvals,
 		size: bs.size,
 	}
 }
 
-func (bs bitset) list() []bool {
+func (bs Bits) list() []bool {
 	list := make([]bool, bs.size)
 	for i := 0; i < bs.size; i++ {
-		list[i] = bs.get(i)
+		list[i] = bs.Get(i)
 	}
 	return list
 }
 
-func (bs *bitset) set(i int, b bool) {
+func (bs *Bits) Set(i int, b bool) {
 	if i < 0 || i >= bs.size {
 		panic("range check error")
 	}
@@ -105,7 +105,7 @@ func (bs *bitset) set(i int, b bool) {
 	bs.vals[index] ^= 1 << uint(i)
 }
 
-func (this bitset) equal(that bitset) bool {
+func (this Bits) Equal(that Bits) bool {
 	if this.size != that.size {
 		return false
 	}

@@ -12,35 +12,36 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package mem
+package auto
 
 import (
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/compose"
+	"github.com/katydid/katydid/relapse/sets"
 )
 
-//CallNode represents a node in the call tree.
+//callNode represents a node in the call tree.
 //The call tree is basically a nested if then else tree, which results in child states and stack elements.
-type CallNode struct {
+type callNode struct {
 	cond       compose.Bool
-	then       *CallNode
-	els        *CallNode
+	then       *callNode
+	els        *callNode
 	child      int
 	stackIndex int
 }
 
-func (this *Mem) newCallTree(parentPatterns int, node *ifExprs) (*CallNode, error) {
+func (this *compiler) newCallTree(parentPatterns int, node *ifExprs) (*callNode, error) {
 	if node.ret != nil {
 		ps := node.ret
-		zippedPatterns, zipper := zip(ps)
-		zipperIndex := this.zis.add(zipper)
-		stackElement := stackElm{
-			parentPatterns: parentPatterns,
-			childrenZipper: zipperIndex,
+		zippedPatterns, zipper := sets.Zip(ps)
+		zipperIndex := this.zis.Add(zipper)
+		stackElement := sets.Pair{
+			First:  parentPatterns,
+			Second: zipperIndex,
 		}
-		stackIndex := this.stackElms.add(stackElement)
-		zippedPatternIndex := this.patterns.add(zippedPatterns)
-		return &CallNode{
+		stackIndex := this.stackElms.Add(stackElement)
+		zippedPatternIndex := this.patterns.Add(zippedPatterns)
+		return &callNode{
 			child:      zippedPatternIndex,
 			stackIndex: stackIndex,
 		}, nil
@@ -57,15 +58,15 @@ func (this *Mem) newCallTree(parentPatterns int, node *ifExprs) (*CallNode, erro
 	if err != nil {
 		return nil, err
 	}
-	return &CallNode{
+	return &callNode{
 		cond: f,
 		then: then,
 		els:  els,
 	}, nil
 }
 
-//Eval evaluates the call tree returning the child state and stack element given the label value of the parser element.
-func (this *CallNode) Eval(label parser.Value) (int, int, error) {
+//eval evaluates the call tree returning the child state and stack element given the label value of the parser element.
+func (this *callNode) eval(label parser.Value) (int, int, error) {
 	if this.cond == nil {
 		return this.child, this.stackIndex, nil
 	}
@@ -74,7 +75,7 @@ func (this *CallNode) Eval(label parser.Value) (int, int, error) {
 		return 0, 0, err
 	}
 	if cond {
-		return this.then.Eval(label)
+		return this.then.eval(label)
 	}
-	return this.els.Eval(label)
+	return this.els.eval(label)
 }

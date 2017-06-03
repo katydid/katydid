@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package mem
+package sets
 
 import (
 	"github.com/katydid/katydid/relapse/ast"
@@ -29,7 +29,7 @@ var (
 	}
 )
 
-func zip(patterns []*ast.Pattern) ([]*ast.Pattern, []int) {
+func Zip(patterns []*ast.Pattern) ([]*ast.Pattern, []int) {
 	set := ast.Set(patterns)
 	ast.Sort(set)
 
@@ -52,23 +52,11 @@ func zip(patterns []*ast.Pattern) ([]*ast.Pattern, []int) {
 	return set, indexes
 }
 
-func unzip(patterns []*ast.Pattern, indexes []int) []*ast.Pattern {
-	res := make([]*ast.Pattern, len(indexes))
-	for i, index := range indexes {
-		if index >= 0 {
-			res[i] = patterns[index]
-		} else {
-			res[i] = zipIgnoreSet[(index+1)*-1]
-		}
-	}
-	return res
-}
-
-func unzipb(bools bitset, indexes []int) []bool {
+func UnzipBits(bools Bits, indexes []int) []bool {
 	res := make([]bool, len(indexes))
 	for i, index := range indexes {
 		if index >= 0 {
-			res[i] = bools.get(index)
+			res[i] = bools.Get(index)
 		} else {
 			res[i] = zignoreb[(index+1)*-1]
 		}

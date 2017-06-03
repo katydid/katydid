@@ -12,13 +12,9 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-//Package mem contains functions to interpret and memoize the execution of the grammar.
-//
-//TODO: cleanup
-package mem
+package auto
 
 import (
-	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/compose"
 	"github.com/katydid/katydid/relapse/funcs"
@@ -26,26 +22,14 @@ import (
 	"github.com/katydid/katydid/relapse/sets"
 )
 
-//New creates a new memoizable grammar.
-func New(g *ast.Grammar) (*Mem, error) {
-	return new(g, false)
-}
-
-//New creates a new memoizable grammar which is optimized for records.
-//A record can be json, protobuf, reflected go structures or any structure that have unique field names for each structure.
-//XML would be an example of a structure for which this simplification is NOT appropriate.
-func NewRecord(g *ast.Grammar) (*Mem, error) {
-	return new(g, true)
-}
-
-func new(g *ast.Grammar, record bool) (*Mem, error) {
+func newCompiler(g *ast.Grammar, record bool) (*compiler, error) {
 	simp := interp.NewSimplifier(g)
 	if record {
 		simp = simp.OptimizeForRecord()
 	}
 	g = simp.Grammar()
 	refs := ast.NewRefLookup(g)
-	m := &Mem{
+	m := &compiler{
 		refs:       refs,
 		simplifier: simp,
 
@@ -54,7 +38,7 @@ func new(g *ast.Grammar, record bool) (*Mem, error) {
 		stackElms: sets.NewPairs(),
 		nullables: sets.NewBitsSet(),
 
-		calls:           []*ifExprs{},
+		calls:           []*callNode{},
 		returns:         []map[int]int{},
 		escapables:      []bool{},
 		stateToNullable: []int{},
@@ -73,27 +57,14 @@ func new(g *ast.Grammar, record bool) (*Mem, error) {
 	return m, nil
 }
 
-//Validate interprets the grammar given the parser and returns whether the parser is valid given the grammar.
-//The intermediate results are memoized to help with the speed of future executions.
-//
-//NOTE: This is a naive implementation and it does not handle left recursion.
-func (mem *Mem) Validate(p parser.Interface) (bool, error) {
-	final, err := deriv(mem, mem.start, p)
-	if err != nil {
-		return false, err
-	}
-	return mem.getAccept(final), nil
-}
-
-func (mem *Mem) SetContext(context *funcs.Context) {
+func (mem *compiler) setContext(context *funcs.Context) {
 	mem.context = context
 	for _, f := range mem.funcs {
 		compose.SetContext(f, mem.context)
 	}
 }
 
-//Mem is the structure containing the memoized grammar.
-type Mem struct {
+type compiler struct {
 	refs       map[string]*ast.Pattern
 	funcs      map[*ast.Expr]funcs.Bool
 	simplifier interp.Simplifier
@@ -105,7 +76,7 @@ type Mem struct {
 	nullables sets.BitsSet
 
 	start           int
-	calls           []*ifExprs
+	calls           []*callNode
 	returns         []map[int]int
 	escapables      []bool
 	stateToNullable []int
@@ -127,19 +98,19 @@ func escapable(patterns []*ast.Pattern) bool {
 	return false
 }
 
-func (this *Mem) calcEscapables(upto int) {
+func (this *compiler) calcEscapables(upto int) {
 	for i := len(this.escapables); i <= upto; i++ {
 		patterns := this.patterns[i]
 		this.escapables = append(this.escapables, escapable(patterns))
 	}
 }
 
-func (this *Mem) escapable(patterns int) bool {
+func (this *compiler) escapable(patterns int) bool {
 	this.calcEscapables(patterns)
 	return this.escapables[patterns]
 }
 
-func (this *Mem) calcAccepts(upto int) {
+func (this *compiler) calcAccepts(upto int) {
 	for i := len(this.accept); i <= upto; i++ {
 		patterns := this.patterns[i]
 		if len(patterns) != 1 {
@@ -150,12 +121,12 @@ func (this *Mem) calcAccepts(upto int) {
 	}
 }
 
-func (this *Mem) getAccept(patterns int) bool {
+func (this *compiler) getAccept(patterns int) bool {
 	this.calcAccepts(patterns)
 	return this.accept[patterns]
 }
 
-func (this *Mem) getFunc(expr *ast.Expr) funcs.Bool {
+func (this *compiler) getFunc(expr *ast.Expr) funcs.Bool {
 	if f, ok := this.funcs[expr]; ok {
 		return f
 	}
@@ -168,16 +139,20 @@ func (this *Mem) getFunc(expr *ast.Expr) funcs.Bool {
 	return f
 }
 
-func (this *Mem) calcCallTrees(upto int) error {
+func (this *compiler) calcCallTrees(upto int) error {
 	for i := len(this.calls); i <= upto; i++ {
 		listOfIfExpr := derivCalls(this.refs, this.getFunc, this.patterns[i])
-		ifs := newIfExprs(i, listOfIfExpr)
-		this.calls = append(this.calls, ifs)
+		compiledIfExprs := compileIfExprs(listOfIfExpr)
+		memCallTree, err := this.newCallTree(i, compiledIfExprs)
+		if err != nil {
+			return err
+		}
+		this.calls = append(this.calls, memCallTree)
 	}
 	return nil
 }
 
-func (this *Mem) getCallTree(patterns int) (*ifExprs, error) {
+func (this *compiler) getCallTree(patterns int) (*callNode, error) {
 	if err := this.calcCallTrees(patterns); err != nil {
 		return nil, err
 	}
@@ -192,7 +167,7 @@ func nullables(refs map[string]*ast.Pattern, patterns []*ast.Pattern) sets.Bits 
 	return nulls
 }
 
-func (this *Mem) calcNullables(upto int) {
+func (this *compiler) calcNullables(upto int) {
 	for i := len(this.stateToNullable); i <= upto; i++ {
 		childPatterns := this.patterns[i]
 		nullable := nullables(this.refs, childPatterns)
@@ -201,19 +176,19 @@ func (this *Mem) calcNullables(upto int) {
 	}
 }
 
-func (this *Mem) getNullable(s int) int {
+func (this *compiler) getNullable(s int) int {
 	this.calcNullables(s)
 	return this.stateToNullable[s]
 }
 
-func (this *Mem) simplifyAll(patterns []*ast.Pattern) []*ast.Pattern {
+func (this *compiler) simplifyAll(patterns []*ast.Pattern) []*ast.Pattern {
 	for i := range patterns {
 		patterns[i] = this.simplifier.Simplify(patterns[i])
 	}
 	return patterns
 }
 
-func (this *Mem) getReturn(stackIndex int, nullIndex int) int {
+func (this *compiler) getReturn(stackIndex int, nullIndex int) int {
 	if len(this.returns) <= stackIndex {
 		for i := len(this.returns); i <= stackIndex; i++ {
 			this.returns = append(this.returns, make(map[int]int))

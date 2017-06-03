@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package mem
+package auto
 
 import (
 	"fmt"
@@ -25,9 +25,9 @@ import (
 	nameexpr "github.com/katydid/katydid/relapse/name"
 )
 
-func deriv(mem *Mem, patterns int, tree parser.Interface) (int, error) {
+func compileDeriv(c *compiler, patterns int, tree parser.Interface) (int, error) {
 	for {
-		if !mem.escapable(patterns) {
+		if !c.escapable(patterns) {
 			return patterns, nil
 		}
 		if err := tree.Next(); err != nil {
@@ -37,24 +37,24 @@ func deriv(mem *Mem, patterns int, tree parser.Interface) (int, error) {
 				return 0, err
 			}
 		}
-		callTree, err := mem.getCallTree(patterns)
+		callTree, err := c.getCallTree(patterns)
 		if err != nil {
 			return 0, err
 		}
-		childPatterns, stackElm, err := mem.eval(callTree, tree)
+		childPatterns, stackElm, err := callTree.eval(tree)
 		if err != nil {
 			return 0, err
 		}
 		if !tree.IsLeaf() {
 			tree.Down()
-			childPatterns, err = deriv(mem, childPatterns, tree)
+			childPatterns, err = compileDeriv(c, childPatterns, tree)
 			if err != nil {
 				return 0, err
 			}
 			tree.Up()
 		}
-		nullIndex := mem.getNullable(childPatterns)
-		patterns = mem.getReturn(stackElm, nullIndex)
+		nullIndex := c.getNullable(childPatterns)
+		patterns = c.getReturn(stackElm, nullIndex)
 	}
 	return patterns, nil
 }

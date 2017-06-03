@@ -12,21 +12,21 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package mem
+package sets
 
 import (
 	"github.com/katydid/katydid/relapse/ast"
 )
 
-//intsSet represents an indexed list of list of integers.
+//Ints represents an indexed list of list of integers.
 //It reverse maps a list of ints into a single int.
-type intsSet [][]int
+type Ints [][]int
 
-func newIntsSet() intsSet {
-	return intsSet([][]int{})
+func NewInts() Ints {
+	return Ints([][]int{})
 }
 
-func (this intsSet) index(is []int) int {
+func (this Ints) Index(is []int) int {
 	for i, iis := range this {
 		if len(is) == len(iis) {
 			eq := true
@@ -44,8 +44,8 @@ func (this intsSet) index(is []int) int {
 	return -1
 }
 
-func (this *intsSet) add(is []int) int {
-	index := this.index(is)
+func (this *Ints) Add(is []int) int {
+	index := this.Index(is)
 	if index != -1 {
 		return index
 	}
@@ -53,15 +53,15 @@ func (this *intsSet) add(is []int) int {
 	return len(*this) - 1
 }
 
-//patternsSet represents an indexed list of list of Patterns.
+//Patterns represents an indexed list of list of Patterns.
 //It reverse maps a list of Patterns into a single int.
-type patternsSet [][]*ast.Pattern
+type Patterns [][]*ast.Pattern
 
-func newPatternsSet() patternsSet {
-	return patternsSet([][]*ast.Pattern{})
+func NewPatterns() Patterns {
+	return Patterns([][]*ast.Pattern{})
 }
 
-func (this patternsSet) index(patterns []*ast.Pattern) int {
+func (this Patterns) Index(patterns []*ast.Pattern) int {
 	for i, ps := range this {
 		if ast.Equals(ps, patterns) {
 			return i
@@ -70,8 +70,8 @@ func (this patternsSet) index(patterns []*ast.Pattern) int {
 	return -1
 }
 
-func (this *patternsSet) add(patterns []*ast.Pattern) int {
-	index := this.index(patterns)
+func (this *Patterns) Add(patterns []*ast.Pattern) int {
+	index := this.Index(patterns)
 	if index != -1 {
 		return index
 	}
@@ -79,25 +79,25 @@ func (this *patternsSet) add(patterns []*ast.Pattern) int {
 	return len(*this) - 1
 }
 
-//bitsetSet represents an indexed list of bitsets.
-//It reverse maps a bitset into a single int.
-type bitsetSet []bitset
+//BitsSet represents an indexed list of Bits.
+//It reverse maps a Bits into a single int.
+type BitsSet []Bits
 
-func newBitsetSet() bitsetSet {
-	return bitsetSet([]bitset{})
+func NewBitsSet() BitsSet {
+	return BitsSet([]Bits{})
 }
 
-func (this bitsetSet) index(bs bitset) int {
+func (this BitsSet) Index(bs Bits) int {
 	for i, ibs := range this {
-		if ibs.equal(bs) {
+		if ibs.Equal(bs) {
 			return i
 		}
 	}
 	return -1
 }
 
-func (this *bitsetSet) add(bs bitset) int {
-	index := this.index(bs)
+func (this *BitsSet) Add(bs Bits) int {
+	index := this.Index(bs)
 	if index != -1 {
 		return index
 	}
@@ -105,20 +105,20 @@ func (this *bitsetSet) add(bs bitset) int {
 	return len(*this) - 1
 }
 
-type stackElm struct {
-	parentPatterns int
-	childrenZipper int
+type Pair struct {
+	First  int
+	Second int
 }
 
-//pairSet represents an indexed list of stackElm pairs.
-//It reverse maps a list of stackElms into a single int.
-type pairSet []stackElm
+//Pairs represents an indexed list of Pair pairs.
+//It reverse maps a list of Pairs into a single int.
+type Pairs []Pair
 
-func newPairSet() pairSet {
-	return pairSet([]stackElm{})
+func NewPairs() Pairs {
+	return Pairs([]Pair{})
 }
 
-func (this pairSet) index(se stackElm) int {
+func (this Pairs) Index(se Pair) int {
 	for i, ise := range this {
 		if ise == se {
 			return i
@@ -127,8 +127,8 @@ func (this pairSet) index(se stackElm) int {
 	return -1
 }
 
-func (this *pairSet) add(se stackElm) int {
-	index := this.index(se)
+func (this *Pairs) Add(se Pair) int {
+	index := this.Index(se)
 	if index != -1 {
 		return index
 	}

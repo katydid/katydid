@@ -1,4 +1,4 @@
-//  Copyright 2016 Walter Schulze
+//  Copyright 2017 Walter Schulze
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -15,123 +15,146 @@
 package mem
 
 import (
+	"fmt"
+	"strings"
+
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/compose"
 	"github.com/katydid/katydid/relapse/funcs"
+	"github.com/katydid/katydid/relapse/sets"
 )
 
 type ifExprs struct {
-	cond     funcs.Bool
-	composed compose.Bool
-	then     *ifExprs
-	els      *ifExprs
-	ret      []*ast.Pattern
+	parentPatterns int
+	ifs            []*ifExpr
+	node           *ifNode
 }
 
-//compileIfExprs combines several if expressions into one nested if expression with a list of return values.
-//While combining these if expressions, duplicate and impossible (always false) conditions are removed for efficiency.
-func compileIfExprs(ifs []*ifExpr) *ifExprs {
-	if len(ifs) == 0 {
-		return &ifExprs{
-			ret: []*ast.Pattern{},
-		}
-	}
-	root := &ifExprs{}
-	if ifs[0].els == nil || ifs[0].then.Equal(ifs[0].els) {
-		root.ret = []*ast.Pattern{ifs[0].then}
-	} else {
-		root.cond = ifs[0].cond
-		root.then = &ifExprs{ret: []*ast.Pattern{ifs[0].then}}
-		root.els = &ifExprs{ret: []*ast.Pattern{ifs[0].els}}
-	}
-	for _, ifexpr := range ifs[1:] {
-		if ifexpr.cond == nil {
-			root.addReturn(ifexpr.then)
-		} else {
-			root.addIfExpr(ifexpr.cond, ifexpr.then, ifexpr.els)
-		}
-	}
-	return root
+func newIfExprs(parentPatterns int, ifs []*ifExpr) *ifExprs {
+	return &ifExprs{parentPatterns, ifs, nil}
 }
 
-func (this *ifExprs) eval(label parser.Value) ([]*ast.Pattern, error) {
-	if this.ret != nil {
-		return this.ret, nil
+type ifNode struct {
+	prev               funcs.Bool
+	f                  funcs.Bool
+	ifs                []*ifExpr
+	cond               compose.Bool
+	thn                *ifNode
+	els                *ifNode
+	ps                 []*ast.Pattern
+	ret                bool
+	zippedPatternIndex int
+	stackIndex         int
+}
+
+func (this *ifNode) String() string {
+	if this == nil {
+		return "...\n"
 	}
-	if this.composed == nil {
-		composed, err := compose.NewBoolFunc(this.cond)
+	if this.ret {
+		ss := make([]string, len(this.ps))
+		for i := range this.ps {
+			ss[i] = this.ps[i].String()
+		}
+		return fmt.Sprintf("%s\n", strings.Join(ss, ","))
+	}
+	if this.f == nil {
+		return "...\n"
+	}
+	return "if (" + funcs.Sprint(this.f) + ") then {\n" + this.thn.String() + "} else {\n" + this.els.String() + "}"
+}
+
+func (this *Mem) calcNode(node *ifNode, parentPatterns int, label parser.Value) (int, int, error) {
+	if len(node.ifs) == 0 {
+		if !node.ret {
+			node.zippedPatternIndex, node.stackIndex = this.zipStackAndPatterns(parentPatterns, node.ps)
+			node.ret = true
+		}
+		return node.zippedPatternIndex, node.stackIndex, nil
+	}
+	if node.f == nil {
+		node.f = node.ifs[0].cond
+		node.f = funcs.Simplify(node.f)
+		if funcs.Equal(node.prev, node.f) {
+			node.f = funcs.BoolConst(true)
+		}
+		if funcs.IsFalse(funcs.Simplify(funcs.And(node.prev, node.f))) {
+			node.f = funcs.BoolConst(false)
+		}
+		if funcs.IsFalse(funcs.Simplify(funcs.And(node.prev, funcs.Not(node.f)))) {
+			node.f = funcs.BoolConst(true)
+		}
+		if funcs.IsTrue(node.f) {
+			node.ps = append(node.ps, node.ifs[0].thn)
+			node.ifs = node.ifs[1:]
+			node.f = nil
+			return this.calcNode(node, parentPatterns, label)
+		}
+		if funcs.IsFalse(node.f) {
+			node.ps = append(node.ps, node.ifs[0].els)
+			node.ifs = node.ifs[1:]
+			node.f = nil
+			return this.calcNode(node, parentPatterns, label)
+		}
+		c, err := compose.NewBoolFunc(node.f)
 		if err != nil {
-			return nil, err
+			return 0, 0, err
 		}
-		this.composed = composed
+		node.cond = c
 	}
-	cond, err := this.composed.Eval(label)
+	cond, err := node.cond.Eval(label)
 	if err != nil {
-		return nil, err
+		return 0, 0, err
 	}
 	if cond {
-		return this.then.eval(label)
+		if node.thn == nil {
+			node.thn = &ifNode{}
+			node.thn.ps = make([]*ast.Pattern, 0, len(node.ps)+1)
+			node.thn.ps = append(node.thn.ps, node.ps...)
+			node.thn.ps = append(node.thn.ps, node.ifs[0].thn)
+			node.thn.prev = funcs.Simplify(funcs.And(node.prev, node.f))
+			node.thn.ifs = node.ifs[1:]
+		}
+		return this.calcNode(node.thn, parentPatterns, label)
 	}
-	return this.els.eval(label)
+	if node.els == nil {
+		node.els = &ifNode{}
+		node.els.ps = make([]*ast.Pattern, 0, len(node.ps)+1)
+		node.els.ps = append(node.els.ps, node.ps...)
+		node.els.ps = append(node.els.ps, node.ifs[0].els)
+		node.els.prev = funcs.Simplify(funcs.And(node.prev, funcs.Not(node.f)))
+		node.els.ifs = node.ifs[1:]
+	}
+	return this.calcNode(node.els, parentPatterns, label)
 }
 
-//addReturn finds the leafs and appends a return to each.
-func (this *ifExprs) addReturn(ret *ast.Pattern) {
-	if this.ret != nil {
-		this.ret = append(this.ret, ret)
-		return
+func (this *Mem) zipStackAndPatterns(parentPatterns int, ps []*ast.Pattern) (int, int) {
+	zippedPatterns, zipper := sets.Zip(ps)
+	zipperIndex := this.zis.Add(zipper)
+	stackElement := sets.Pair{
+		First:  parentPatterns,
+		Second: zipperIndex,
 	}
-	this.then.addReturn(ret)
-	this.els.addReturn(ret)
-	return
+	stackIndex := this.stackElms.Add(stackElement)
+	zippedPatternIndex := this.patterns.Add(zippedPatterns)
+	return zippedPatternIndex, stackIndex
 }
 
-func (this *ifExprs) addIfExpr(cond funcs.Bool, then, els *ast.Pattern) {
-	// efficienctly append the then and else return to two copies of the current returns.
-	if this.ret != nil {
-		this.cond = cond
-		thenterms := make([]*ast.Pattern, len(this.ret)+1)
-		copy(thenterms, this.ret)
-		thenterms[len(thenterms)-1] = then
-		this.then = &ifExprs{ret: thenterms}
-		this.els = &ifExprs{ret: append(this.ret, els)}
-		this.ret = nil
-		return
+func (this *Mem) eval(ifs *ifExprs, label parser.Value) (int, int, error) {
+	if ifs.node == nil {
+		ifs.node = &ifNode{prev: funcs.BoolConst(true), ifs: ifs.ifs}
 	}
-	// remove duplicate condition
-	if funcs.Equal(this.cond, cond) {
-		this.then.addReturn(then)
-		this.els.addReturn(els)
-		return
-	}
-	// remove impossible (always false) then condition
-	if funcs.IsFalse(funcs.Simplify(funcs.And(this.cond, cond))) {
-		this.then.addReturn(els)
-		this.els.addIfExpr(cond, then, els)
-		return
-	}
-	// remove impossible (always false) else condition
-	if funcs.IsFalse(funcs.Simplify(funcs.And(this.cond, funcs.Not(cond)))) {
-		this.then.addIfExpr(cond, then, els)
-		this.els.addReturn(then)
-		return
-	}
-	this.then.addIfExpr(cond, then, els)
-	this.els.addIfExpr(cond, then, els)
-	return
+	return this.calcNode(ifs.node, ifs.parentPatterns, label)
 }
 
 type ifExpr struct {
 	cond funcs.Bool
-	then *ast.Pattern
+	thn  *ast.Pattern
 	els  *ast.Pattern
 }
 
 func (this *ifExpr) eval(label parser.Value) (*ast.Pattern, error) {
-	if this.els == nil {
-		return this.then, nil
-	}
 	f, err := compose.NewBoolFunc(this.cond)
 	if err != nil {
 		return nil, err
@@ -141,7 +164,7 @@ func (this *ifExpr) eval(label parser.Value) (*ast.Pattern, error) {
 		return nil, err
 	}
 	if cond {
-		return this.then, nil
+		return this.thn, nil
 	}
 	return this.els, nil
 }
