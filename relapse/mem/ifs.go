@@ -15,6 +15,9 @@
 package mem
 
 import (
+	"fmt"
+	"strings"
+
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/compose"
@@ -33,6 +36,9 @@ func newIfExprs(parentPatterns int, ifs []*ifExpr) *ifExprs {
 }
 
 type ifNode struct {
+	prev               funcs.Bool
+	f                  funcs.Bool
+	ifs                []*ifExpr
 	cond               compose.Bool
 	thn                *ifNode
 	els                *ifNode
@@ -42,20 +48,60 @@ type ifNode struct {
 	stackIndex         int
 }
 
-func (this *Mem) calc(node *ifNode, ifs []*ifExpr, parentPatterns int, label parser.Value) (int, int, error) {
-	if len(ifs) == 0 {
+func (this *ifNode) String() string {
+	if this == nil {
+		return "...\n"
+	}
+	if this.ret {
+		ss := make([]string, len(this.ps))
+		for i := range this.ps {
+			ss[i] = this.ps[i].String()
+		}
+		return fmt.Sprintf("%s\n", strings.Join(ss, ","))
+	}
+	if this.f == nil {
+		return "...\n"
+	}
+	return "if (" + funcs.Sprint(this.f) + ") then {\n" + this.thn.String() + "} else {\n" + this.els.String() + "}"
+}
+
+func (this *Mem) calcNode(node *ifNode, parentPatterns int, label parser.Value) (int, int, error) {
+	if len(node.ifs) == 0 {
 		if !node.ret {
 			node.zippedPatternIndex, node.stackIndex = this.zipStackAndPatterns(parentPatterns, node.ps)
 			node.ret = true
 		}
 		return node.zippedPatternIndex, node.stackIndex, nil
 	}
-	if node.cond == nil {
-		f, err := compose.NewBoolFunc(ifs[0].cond)
+	if node.f == nil {
+		node.f = node.ifs[0].cond
+		node.f = funcs.Simplify(node.f)
+		if funcs.Equal(node.prev, node.f) {
+			node.f = funcs.BoolConst(true)
+		}
+		if funcs.IsFalse(funcs.Simplify(funcs.And(node.prev, node.f))) {
+			node.f = funcs.BoolConst(false)
+		}
+		if funcs.IsFalse(funcs.Simplify(funcs.And(node.prev, funcs.Not(node.f)))) {
+			node.f = funcs.BoolConst(true)
+		}
+		if funcs.IsTrue(node.f) {
+			node.ps = append(node.ps, node.ifs[0].thn)
+			node.ifs = node.ifs[1:]
+			node.f = nil
+			return this.calcNode(node, parentPatterns, label)
+		}
+		if funcs.IsFalse(node.f) {
+			node.ps = append(node.ps, node.ifs[0].els)
+			node.ifs = node.ifs[1:]
+			node.f = nil
+			return this.calcNode(node, parentPatterns, label)
+		}
+		c, err := compose.NewBoolFunc(node.f)
 		if err != nil {
 			return 0, 0, err
 		}
-		node.cond = f
+		node.cond = c
 	}
 	cond, err := node.cond.Eval(label)
 	if err != nil {
@@ -64,19 +110,23 @@ func (this *Mem) calc(node *ifNode, ifs []*ifExpr, parentPatterns int, label par
 	if cond {
 		if node.thn == nil {
 			node.thn = &ifNode{}
-			node.thn.ps = make([]*ast.Pattern, len(node.ps)+1)
-			copy(node.thn.ps, node.ps)
-			node.thn.ps[len(node.thn.ps)-1] = ifs[0].thn
+			node.thn.ps = make([]*ast.Pattern, 0, len(node.ps)+1)
+			node.thn.ps = append(node.thn.ps, node.ps...)
+			node.thn.ps = append(node.thn.ps, node.ifs[0].thn)
+			node.thn.prev = funcs.Simplify(funcs.And(node.prev, node.f))
+			node.thn.ifs = node.ifs[1:]
 		}
-		return this.calc(node.thn, ifs[1:], parentPatterns, label)
+		return this.calcNode(node.thn, parentPatterns, label)
 	}
 	if node.els == nil {
 		node.els = &ifNode{}
-		node.els.ps = make([]*ast.Pattern, len(node.ps)+1)
-		copy(node.els.ps, node.ps)
-		node.els.ps[len(node.els.ps)-1] = ifs[0].els
+		node.els.ps = make([]*ast.Pattern, 0, len(node.ps)+1)
+		node.els.ps = append(node.els.ps, node.ps...)
+		node.els.ps = append(node.els.ps, node.ifs[0].els)
+		node.els.prev = funcs.Simplify(funcs.And(node.prev, funcs.Not(node.f)))
+		node.els.ifs = node.ifs[1:]
 	}
-	return this.calc(node.els, ifs[1:], parentPatterns, label)
+	return this.calcNode(node.els, parentPatterns, label)
 }
 
 func (this *Mem) zipStackAndPatterns(parentPatterns int, ps []*ast.Pattern) (int, int) {
@@ -93,9 +143,9 @@ func (this *Mem) zipStackAndPatterns(parentPatterns int, ps []*ast.Pattern) (int
 
 func (this *Mem) eval(ifs *ifExprs, label parser.Value) (int, int, error) {
 	if ifs.node == nil {
-		ifs.node = &ifNode{}
+		ifs.node = &ifNode{prev: funcs.BoolConst(true), ifs: ifs.ifs}
 	}
-	return this.calc(ifs.node, ifs.ifs, ifs.parentPatterns, label)
+	return this.calcNode(ifs.node, ifs.parentPatterns, label)
 }
 
 type ifExpr struct {
