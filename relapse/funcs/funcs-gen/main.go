@@ -213,7 +213,7 @@ func Len{{.}}(e {{.}}) Int {
 
 const elemStr = `
 type elem{{.ListType}} struct {
-	List {{.ListType}}
+	List  {{.ListType}}
 	Index Int
 }
 
@@ -231,7 +231,7 @@ func (this *elem{{.ListType}}) Eval() ({{.ReturnType}}, error) {
 		return {{.Default}}, NewRangeCheckErr(index, len(list))
 	}
 	if index < 0 {
-		index = index % len(list)	
+		index = index % len(list)
 	}
 	if len(list) <= index {
 		return {{.Default}}, NewRangeCheckErr(index, len(list))
@@ -246,7 +246,7 @@ func init() {
 //Elem{{.ListType}} returns a function that returns the n'th element of the list.
 func Elem{{.ListType}}(list {{.ListType}}, n Int) {{.ThrowType}} {
 	return &elem{{.ListType}}{
-		List: list,
+		List:  list,
 		Index: n,
 	}
 }
@@ -261,9 +261,9 @@ type elemer struct {
 
 const rangeStr = `
 type range{{.ListType}} struct {
-	List {{.ListType}}
+	List  {{.ListType}}
 	First Int
-	Last Int
+	Last  Int
 }
 
 func (this *range{{.ListType}}) Eval() ({{.ReturnType}}, error) {
@@ -280,7 +280,7 @@ func (this *range{{.ListType}}) Eval() ({{.ReturnType}}, error) {
 		return nil, NewRangeCheckErr(first, len(list))
 	}
 	if first < 0 {
-		first = first % len(list)	
+		first = first % len(list)
 	}
 	if first > len(list) {
 		return nil, NewRangeCheckErr(first, len(list))
@@ -291,7 +291,7 @@ func (this *range{{.ListType}}) Eval() ({{.ReturnType}}, error) {
 	}
 	last := int(last64)
 	if last < 0 {
-		last = last % len(list)	
+		last = last % len(list)
 	}
 	if last > len(list) {
 		return nil, NewRangeCheckErr(last, len(list))
@@ -309,9 +309,9 @@ func init() {
 //Range{{.ListType}} returns a function that returns a range of elements from a list.
 func Range{{.ListType}}(list {{.ListType}}, from, to Int) {{.ListType}} {
 	return &range{{.ListType}}{
-		List: list,
+		List:  list,
 		First: from,
-		Last: to,
+		Last:  to,
 	}
 }
 `
@@ -351,7 +351,6 @@ func (this *var{{.Name}}) String() string {
 func {{.Name}}Var() *var{{.Name}} {
 	return &var{{.Name}}{}
 }
-
 `
 
 type varer struct {
@@ -389,7 +388,7 @@ const inSetStr = `
 type inSet{{.Name}} struct {
 	Elem {{.Name}}
 	List {{.ConstListType}}
-	set map[{{.Type}}]struct{}
+	set  map[{{.Type}}]struct{}
 }
 
 func (this *inSet{{.Name}}) Init() error {

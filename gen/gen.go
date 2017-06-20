@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
+	"sort"
 	"text/template"
 )
 
@@ -77,9 +77,15 @@ func (this *gen) gen(tmp string, filename string, objects []interface{}, imports
 	write(``)
 	write(`package ` + this.name + "\n")
 	if len(imports) > 0 {
+		sort.Strings(imports)
 		write("\nimport (\n")
-		write(strings.Join(imports, "\n"))
-		write("\n)\n\n")
+		for i, imp := range imports {
+			write("\t" + imp)
+			if i < (len(imports) - 1) {
+				write("\n")
+			}
+		}
+		write("\n)\n")
 	}
 	t := template.Must(template.New("a").Funcs(funcMap).Parse(tmp))
 	for _, o := range objects {

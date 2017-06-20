@@ -16,8 +16,9 @@
 package main
 
 import (
-	"github.com/katydid/katydid/gen"
 	"strings"
+
+	"github.com/katydid/katydid/gen"
 )
 
 type valuer struct {
@@ -32,7 +33,7 @@ func (v *valuer) Name() string {
 
 const valueStr = `
 //ErrNot{{.CName}} is an error that represents a type error.
-var	ErrNot{{.CName}} = fmt.Errorf("value is not a {{.Name}}")
+var ErrNot{{.CName}} = fmt.Errorf("value is not a {{.Name}}")
 `
 
 func main() {

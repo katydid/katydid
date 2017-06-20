@@ -16,8 +16,9 @@
 package main
 
 import (
-	"github.com/katydid/katydid/gen"
 	"strings"
+
+	"github.com/katydid/katydid/gen"
 )
 
 type valuer struct {
@@ -48,7 +49,6 @@ func New{{.CName}}Value(v {{.GoType}}) parser.Value {
 func (v *{{.Name}}Value) {{.CName}}() ({{.GoType}}, error) {
 	return v.v, nil
 }
-
 `
 
 func main() {
