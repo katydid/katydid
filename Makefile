@@ -19,6 +19,7 @@ all: nuke dep regenerate build test vet
 dep:
 	go install github.com/gogo/protobuf/protoc-gen-gogo
 	go install -v github.com/goccmack/gocc
+	go install -v github.com/awalterschulze/goderive
 
 checklicense:
 	go get github.com/katydid/checklicense
@@ -62,6 +63,7 @@ regenerate:
 	(cd relapse && make regenerate)
 	(cd relapse/funcs && go test -test.run=GenFuncList 2>../../list_of_functions.txt)
 	(cd encode && make regenerate)
+	goderive ./...
 
 clean:
 	go clean ./...
