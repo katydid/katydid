@@ -18,6 +18,18 @@ import (
 	"sort"
 )
 
+func (this *Pattern) Compare(that *Pattern) int {
+	return deriveComparePattern(this, that)
+}
+
+func (this *Pattern) Equal(that *Pattern) bool {
+	return deriveEqualPattern(this, that)
+}
+
+func (this *NameExpr) Equal(that *NameExpr) bool {
+	return deriveEqualNameExpr(this, that)
+}
+
 //Less returns whether one pattern is smaller than another.
 //What smaller means may change over time, but this function is still useful for deterministic ordering.
 func (p1 *Pattern) Less(p2 *Pattern) bool {

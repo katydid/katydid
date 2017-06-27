@@ -14,13 +14,14 @@
 
 package ast
 
-import (
-	"github.com/gogo/protobuf/proto"
-)
-
 //Clone returns a copy of the Grammar struct
 func (this *Grammar) Clone() *Grammar {
-	return proto.Clone(this).(*Grammar)
+	if this == nil {
+		return nil
+	}
+	that := &Grammar{}
+	deriveCopyToGrammar(this, that)
+	return that
 }
 
 //Clone returns a copy of the RefLookup map
@@ -34,10 +35,20 @@ func (this RefLookup) Clone() RefLookup {
 
 //Clone returns a copy of the Pattern struct
 func (this *Pattern) Clone() *Pattern {
-	return proto.Clone(this).(*Pattern)
+	if this == nil {
+		return nil
+	}
+	that := &Pattern{}
+	deriveCopyToPattern(this, that)
+	return that
 }
 
 //Clone returns a copy of the Expr struct
 func (this *Expr) Clone() *Expr {
-	return proto.Clone(this).(*Expr)
+	if this == nil {
+		return nil
+	}
+	that := &Expr{}
+	deriveCopyToExpr(this, that)
+	return that
 }
