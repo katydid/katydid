@@ -15,19 +15,48 @@
 package proto
 
 import (
-	"github.com/gogo/protobuf/proto"
-	"github.com/katydid/katydid/encode/proto/prototests"
-	reflectparser "github.com/katydid/katydid/parser/reflect"
 	"math/rand"
 	"reflect"
 	"testing"
 	"time"
+
+	"github.com/gogo/protobuf/proto"
+	"github.com/katydid/katydid/encode/proto/prototests"
+	reflectparser "github.com/katydid/katydid/parser/reflect"
 )
+
+func makeEmptyNil(v reflect.Value) {
+	if v.Kind() == reflect.Ptr && v.Elem().Kind() == reflect.Struct {
+		s := v.Elem()
+		n := s.NumField()
+		for i := 0; i < n; i++ {
+			f := s.Field(i)
+			switch f.Kind() {
+			case reflect.Slice:
+				l := f.Len()
+				if l == 0 {
+					f.Set(reflect.Zero(f.Type()))
+				} else if f.Type().Elem().Kind() == reflect.Ptr {
+					for j := 0; j < l; j++ {
+						makeEmptyNil(f.Index(j))
+					}
+				}
+			case reflect.Struct:
+				a := f.Addr()
+				makeEmptyNil(a)
+				f.Set(a.Elem())
+			case reflect.Ptr:
+				makeEmptyNil(f)
+			}
+		}
+	}
+}
 
 var r = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 func TestSimple(t *testing.T) {
 	msg := prototests.NewPopulatedSimple(r, true)
+	makeEmptyNil(reflect.ValueOf(msg))
 	p := reflectparser.NewReflectParser()
 	p.Init(reflect.ValueOf(msg))
 	enc, err := NewEncoder(msg.Description(), "prototests", "Simple")
@@ -49,6 +78,7 @@ func TestSimple(t *testing.T) {
 
 func TestNested(t *testing.T) {
 	msg := prototests.NewPopulatedNested(r, true)
+	makeEmptyNil(reflect.ValueOf(msg))
 	p := reflectparser.NewReflectParser()
 	p.Init(reflect.ValueOf(msg))
 	enc, err := NewEncoder(msg.Description(), "prototests", "Nested")
