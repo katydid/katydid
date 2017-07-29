@@ -18,43 +18,43 @@ func deriveComparePattern(this, that *Pattern) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToEmpty(this.Empty, that.Empty); c != 0 {
+	if c := deriveCompare(this.Empty, that.Empty); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToTreeNode(this.TreeNode, that.TreeNode); c != 0 {
+	if c := deriveCompare_(this.TreeNode, that.TreeNode); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToLeafNode(this.LeafNode, that.LeafNode); c != 0 {
+	if c := deriveCompare_1(this.LeafNode, that.LeafNode); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToConcat(this.Concat, that.Concat); c != 0 {
+	if c := deriveCompare_2(this.Concat, that.Concat); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToOr(this.Or, that.Or); c != 0 {
+	if c := deriveCompare_3(this.Or, that.Or); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToAnd(this.And, that.And); c != 0 {
+	if c := deriveCompare_4(this.And, that.And); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToZeroOrMore(this.ZeroOrMore, that.ZeroOrMore); c != 0 {
+	if c := deriveCompare_5(this.ZeroOrMore, that.ZeroOrMore); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToReference(this.Reference, that.Reference); c != 0 {
+	if c := deriveCompare_6(this.Reference, that.Reference); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToNot(this.Not, that.Not); c != 0 {
+	if c := deriveCompare_7(this.Not, that.Not); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToZAny(this.ZAny, that.ZAny); c != 0 {
+	if c := deriveCompare_8(this.ZAny, that.ZAny); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToContains(this.Contains, that.Contains); c != 0 {
+	if c := deriveCompare_9(this.Contains, that.Contains); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToOptional(this.Optional, that.Optional); c != 0 {
+	if c := deriveCompare_10(this.Optional, that.Optional); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToInterleave(this.Interleave, that.Interleave); c != 0 {
+	if c := deriveCompare_11(this.Interleave, that.Interleave); c != 0 {
 		return c
 	}
 	return 0
@@ -83,13 +83,13 @@ func deriveCopyToGrammar(this, that *Grammar) {
 		} else {
 			that.PatternDecls = make([]*PatternDecl, len(this.PatternDecls))
 		}
-		deriveCopyToSliceOfPtrToPatternDecl(this.PatternDecls, that.PatternDecls)
+		deriveCopyTo(this.PatternDecls, that.PatternDecls)
 	}
 	if this.After == nil {
 		that.After = nil
 	} else {
 		that.After = new(Space)
-		deriveCopyToPtrToSpace(this.After, that.After)
+		deriveCopyTo_(this.After, that.After)
 	}
 }
 
@@ -98,79 +98,79 @@ func deriveCopyToPattern(this, that *Pattern) {
 		that.Empty = nil
 	} else {
 		that.Empty = new(Empty)
-		deriveCopyToPtrToEmpty(this.Empty, that.Empty)
+		deriveCopyTo_1(this.Empty, that.Empty)
 	}
 	if this.TreeNode == nil {
 		that.TreeNode = nil
 	} else {
 		that.TreeNode = new(TreeNode)
-		deriveCopyToPtrToTreeNode(this.TreeNode, that.TreeNode)
+		deriveCopyTo_2(this.TreeNode, that.TreeNode)
 	}
 	if this.LeafNode == nil {
 		that.LeafNode = nil
 	} else {
 		that.LeafNode = new(LeafNode)
-		deriveCopyToPtrToLeafNode(this.LeafNode, that.LeafNode)
+		deriveCopyTo_3(this.LeafNode, that.LeafNode)
 	}
 	if this.Concat == nil {
 		that.Concat = nil
 	} else {
 		that.Concat = new(Concat)
-		deriveCopyToPtrToConcat(this.Concat, that.Concat)
+		deriveCopyTo_4(this.Concat, that.Concat)
 	}
 	if this.Or == nil {
 		that.Or = nil
 	} else {
 		that.Or = new(Or)
-		deriveCopyToPtrToOr(this.Or, that.Or)
+		deriveCopyTo_5(this.Or, that.Or)
 	}
 	if this.And == nil {
 		that.And = nil
 	} else {
 		that.And = new(And)
-		deriveCopyToPtrToAnd(this.And, that.And)
+		deriveCopyTo_6(this.And, that.And)
 	}
 	if this.ZeroOrMore == nil {
 		that.ZeroOrMore = nil
 	} else {
 		that.ZeroOrMore = new(ZeroOrMore)
-		deriveCopyToPtrToZeroOrMore(this.ZeroOrMore, that.ZeroOrMore)
+		deriveCopyTo_7(this.ZeroOrMore, that.ZeroOrMore)
 	}
 	if this.Reference == nil {
 		that.Reference = nil
 	} else {
 		that.Reference = new(Reference)
-		deriveCopyToPtrToReference(this.Reference, that.Reference)
+		deriveCopyTo_8(this.Reference, that.Reference)
 	}
 	if this.Not == nil {
 		that.Not = nil
 	} else {
 		that.Not = new(Not)
-		deriveCopyToPtrToNot(this.Not, that.Not)
+		deriveCopyTo_9(this.Not, that.Not)
 	}
 	if this.ZAny == nil {
 		that.ZAny = nil
 	} else {
 		that.ZAny = new(ZAny)
-		deriveCopyToPtrToZAny(this.ZAny, that.ZAny)
+		deriveCopyTo_10(this.ZAny, that.ZAny)
 	}
 	if this.Contains == nil {
 		that.Contains = nil
 	} else {
 		that.Contains = new(Contains)
-		deriveCopyToPtrToContains(this.Contains, that.Contains)
+		deriveCopyTo_11(this.Contains, that.Contains)
 	}
 	if this.Optional == nil {
 		that.Optional = nil
 	} else {
 		that.Optional = new(Optional)
-		deriveCopyToPtrToOptional(this.Optional, that.Optional)
+		deriveCopyTo_12(this.Optional, that.Optional)
 	}
 	if this.Interleave == nil {
 		that.Interleave = nil
 	} else {
 		that.Interleave = new(Interleave)
-		deriveCopyToPtrToInterleave(this.Interleave, that.Interleave)
+		deriveCopyTo_13(this.Interleave, that.Interleave)
 	}
 }
 
@@ -179,68 +179,68 @@ func deriveCopyToExpr(this, that *Expr) {
 		that.RightArrow = nil
 	} else {
 		that.RightArrow = new(Keyword)
-		deriveCopyToPtrToKeyword(this.RightArrow, that.RightArrow)
+		deriveCopyTo_14(this.RightArrow, that.RightArrow)
 	}
 	if this.Comma == nil {
 		that.Comma = nil
 	} else {
 		that.Comma = new(Keyword)
-		deriveCopyToPtrToKeyword(this.Comma, that.Comma)
+		deriveCopyTo_14(this.Comma, that.Comma)
 	}
 	if this.Terminal == nil {
 		that.Terminal = nil
 	} else {
 		that.Terminal = new(Terminal)
-		deriveCopyToPtrToTerminal(this.Terminal, that.Terminal)
+		deriveCopyTo_15(this.Terminal, that.Terminal)
 	}
 	if this.List == nil {
 		that.List = nil
 	} else {
 		that.List = new(List)
-		deriveCopyToPtrToList(this.List, that.List)
+		deriveCopyTo_16(this.List, that.List)
 	}
 	if this.Function == nil {
 		that.Function = nil
 	} else {
 		that.Function = new(Function)
-		deriveCopyToPtrToFunction(this.Function, that.Function)
+		deriveCopyTo_17(this.Function, that.Function)
 	}
 	if this.BuiltIn == nil {
 		that.BuiltIn = nil
 	} else {
 		that.BuiltIn = new(BuiltIn)
-		deriveCopyToPtrToBuiltIn(this.BuiltIn, that.BuiltIn)
+		deriveCopyTo_18(this.BuiltIn, that.BuiltIn)
 	}
 }
 
 func deriveEqualPattern(this, that *Pattern) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToEmpty(this.Empty, that.Empty) &&
-			deriveEqualPtrToTreeNode(this.TreeNode, that.TreeNode) &&
-			deriveEqualPtrToLeafNode(this.LeafNode, that.LeafNode) &&
-			deriveEqualPtrToConcat(this.Concat, that.Concat) &&
-			deriveEqualPtrToOr(this.Or, that.Or) &&
-			deriveEqualPtrToAnd(this.And, that.And) &&
-			deriveEqualPtrToZeroOrMore(this.ZeroOrMore, that.ZeroOrMore) &&
-			deriveEqualPtrToReference(this.Reference, that.Reference) &&
-			deriveEqualPtrToNot(this.Not, that.Not) &&
-			deriveEqualPtrToZAny(this.ZAny, that.ZAny) &&
-			deriveEqualPtrToContains(this.Contains, that.Contains) &&
-			deriveEqualPtrToOptional(this.Optional, that.Optional) &&
-			deriveEqualPtrToInterleave(this.Interleave, that.Interleave)
+			deriveEqual(this.Empty, that.Empty) &&
+			deriveEqual_(this.TreeNode, that.TreeNode) &&
+			deriveEqual_1(this.LeafNode, that.LeafNode) &&
+			deriveEqual_2(this.Concat, that.Concat) &&
+			deriveEqual_3(this.Or, that.Or) &&
+			deriveEqual_4(this.And, that.And) &&
+			deriveEqual_5(this.ZeroOrMore, that.ZeroOrMore) &&
+			deriveEqual_6(this.Reference, that.Reference) &&
+			deriveEqual_7(this.Not, that.Not) &&
+			deriveEqual_8(this.ZAny, that.ZAny) &&
+			deriveEqual_9(this.Contains, that.Contains) &&
+			deriveEqual_10(this.Optional, that.Optional) &&
+			deriveEqual_11(this.Interleave, that.Interleave)
 }
 
 func deriveEqualNameExpr(this, that *NameExpr) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToName(this.Name, that.Name) &&
-			deriveEqualPtrToAnyName(this.AnyName, that.AnyName) &&
-			deriveEqualPtrToAnyNameExcept(this.AnyNameExcept, that.AnyNameExcept) &&
-			deriveEqualPtrToNameChoice(this.NameChoice, that.NameChoice)
+			deriveEqual_12(this.Name, that.Name) &&
+			deriveEqual_13(this.AnyName, that.AnyName) &&
+			deriveEqual_14(this.AnyNameExcept, that.AnyNameExcept) &&
+			deriveEqual_15(this.NameChoice, that.NameChoice)
 }
 
-func deriveComparePtrToEmpty(this, that *Empty) int {
+func deriveCompare(this, that *Empty) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -250,13 +250,13 @@ func deriveComparePtrToEmpty(this, that *Empty) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToKeyword(this.Empty, that.Empty); c != 0 {
+	if c := deriveCompare_12(this.Empty, that.Empty); c != 0 {
 		return c
 	}
 	return 0
 }
 
-func deriveComparePtrToTreeNode(this, that *TreeNode) int {
+func deriveCompare_(this, that *TreeNode) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -266,10 +266,10 @@ func deriveComparePtrToTreeNode(this, that *TreeNode) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToNameExpr(this.Name, that.Name); c != 0 {
+	if c := deriveCompare_13(this.Name, that.Name); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.Colon, that.Colon); c != 0 {
+	if c := deriveCompare_12(this.Colon, that.Colon); c != 0 {
 		return c
 	}
 	if c := this.Pattern.Compare(that.Pattern); c != 0 {
@@ -278,7 +278,7 @@ func deriveComparePtrToTreeNode(this, that *TreeNode) int {
 	return 0
 }
 
-func deriveComparePtrToLeafNode(this, that *LeafNode) int {
+func deriveCompare_1(this, that *LeafNode) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -288,13 +288,13 @@ func deriveComparePtrToLeafNode(this, that *LeafNode) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToExpr(this.Expr, that.Expr); c != 0 {
+	if c := deriveCompare_14(this.Expr, that.Expr); c != 0 {
 		return c
 	}
 	return 0
 }
 
-func deriveComparePtrToConcat(this, that *Concat) int {
+func deriveCompare_2(this, that *Concat) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -304,28 +304,28 @@ func deriveComparePtrToConcat(this, that *Concat) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToKeyword(this.OpenBracket, that.OpenBracket); c != 0 {
+	if c := deriveCompare_12(this.OpenBracket, that.OpenBracket); c != 0 {
 		return c
 	}
 	if c := this.LeftPattern.Compare(that.LeftPattern); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.Comma, that.Comma); c != 0 {
+	if c := deriveCompare_12(this.Comma, that.Comma); c != 0 {
 		return c
 	}
 	if c := this.RightPattern.Compare(that.RightPattern); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.ExtraComma, that.ExtraComma); c != 0 {
+	if c := deriveCompare_12(this.ExtraComma, that.ExtraComma); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.CloseBracket, that.CloseBracket); c != 0 {
+	if c := deriveCompare_12(this.CloseBracket, that.CloseBracket); c != 0 {
 		return c
 	}
 	return 0
 }
 
-func deriveComparePtrToOr(this, that *Or) int {
+func deriveCompare_3(this, that *Or) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -335,25 +335,25 @@ func deriveComparePtrToOr(this, that *Or) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToKeyword(this.OpenParen, that.OpenParen); c != 0 {
+	if c := deriveCompare_12(this.OpenParen, that.OpenParen); c != 0 {
 		return c
 	}
 	if c := this.LeftPattern.Compare(that.LeftPattern); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.Pipe, that.Pipe); c != 0 {
+	if c := deriveCompare_12(this.Pipe, that.Pipe); c != 0 {
 		return c
 	}
 	if c := this.RightPattern.Compare(that.RightPattern); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.CloseParen, that.CloseParen); c != 0 {
+	if c := deriveCompare_12(this.CloseParen, that.CloseParen); c != 0 {
 		return c
 	}
 	return 0
 }
 
-func deriveComparePtrToAnd(this, that *And) int {
+func deriveCompare_4(this, that *And) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -363,25 +363,25 @@ func deriveComparePtrToAnd(this, that *And) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToKeyword(this.OpenParen, that.OpenParen); c != 0 {
+	if c := deriveCompare_12(this.OpenParen, that.OpenParen); c != 0 {
 		return c
 	}
 	if c := this.LeftPattern.Compare(that.LeftPattern); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.Ampersand, that.Ampersand); c != 0 {
+	if c := deriveCompare_12(this.Ampersand, that.Ampersand); c != 0 {
 		return c
 	}
 	if c := this.RightPattern.Compare(that.RightPattern); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.CloseParen, that.CloseParen); c != 0 {
+	if c := deriveCompare_12(this.CloseParen, that.CloseParen); c != 0 {
 		return c
 	}
 	return 0
 }
 
-func deriveComparePtrToZeroOrMore(this, that *ZeroOrMore) int {
+func deriveCompare_5(this, that *ZeroOrMore) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -391,22 +391,22 @@ func deriveComparePtrToZeroOrMore(this, that *ZeroOrMore) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToKeyword(this.OpenParen, that.OpenParen); c != 0 {
+	if c := deriveCompare_12(this.OpenParen, that.OpenParen); c != 0 {
 		return c
 	}
 	if c := this.Pattern.Compare(that.Pattern); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.CloseParen, that.CloseParen); c != 0 {
+	if c := deriveCompare_12(this.CloseParen, that.CloseParen); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.Star, that.Star); c != 0 {
+	if c := deriveCompare_12(this.Star, that.Star); c != 0 {
 		return c
 	}
 	return 0
 }
 
-func deriveComparePtrToReference(this, that *Reference) int {
+func deriveCompare_6(this, that *Reference) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -416,7 +416,7 @@ func deriveComparePtrToReference(this, that *Reference) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToKeyword(this.At, that.At); c != 0 {
+	if c := deriveCompare_12(this.At, that.At); c != 0 {
 		return c
 	}
 	if c := strings.Compare(this.Name, that.Name); c != 0 {
@@ -425,7 +425,7 @@ func deriveComparePtrToReference(this, that *Reference) int {
 	return 0
 }
 
-func deriveComparePtrToNot(this, that *Not) int {
+func deriveCompare_7(this, that *Not) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -435,22 +435,22 @@ func deriveComparePtrToNot(this, that *Not) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToKeyword(this.Exclamation, that.Exclamation); c != 0 {
+	if c := deriveCompare_12(this.Exclamation, that.Exclamation); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.OpenParen, that.OpenParen); c != 0 {
+	if c := deriveCompare_12(this.OpenParen, that.OpenParen); c != 0 {
 		return c
 	}
 	if c := this.Pattern.Compare(that.Pattern); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.CloseParen, that.CloseParen); c != 0 {
+	if c := deriveCompare_12(this.CloseParen, that.CloseParen); c != 0 {
 		return c
 	}
 	return 0
 }
 
-func deriveComparePtrToZAny(this, that *ZAny) int {
+func deriveCompare_8(this, that *ZAny) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -460,13 +460,13 @@ func deriveComparePtrToZAny(this, that *ZAny) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToKeyword(this.Star, that.Star); c != 0 {
+	if c := deriveCompare_12(this.Star, that.Star); c != 0 {
 		return c
 	}
 	return 0
 }
 
-func deriveComparePtrToContains(this, that *Contains) int {
+func deriveCompare_9(this, that *Contains) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -476,7 +476,7 @@ func deriveComparePtrToContains(this, that *Contains) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToKeyword(this.Dot, that.Dot); c != 0 {
+	if c := deriveCompare_12(this.Dot, that.Dot); c != 0 {
 		return c
 	}
 	if c := this.Pattern.Compare(that.Pattern); c != 0 {
@@ -485,7 +485,7 @@ func deriveComparePtrToContains(this, that *Contains) int {
 	return 0
 }
 
-func deriveComparePtrToOptional(this, that *Optional) int {
+func deriveCompare_10(this, that *Optional) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -495,22 +495,22 @@ func deriveComparePtrToOptional(this, that *Optional) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToKeyword(this.OpenParen, that.OpenParen); c != 0 {
+	if c := deriveCompare_12(this.OpenParen, that.OpenParen); c != 0 {
 		return c
 	}
 	if c := this.Pattern.Compare(that.Pattern); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.CloseParen, that.CloseParen); c != 0 {
+	if c := deriveCompare_12(this.CloseParen, that.CloseParen); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.QuestionMark, that.QuestionMark); c != 0 {
+	if c := deriveCompare_12(this.QuestionMark, that.QuestionMark); c != 0 {
 		return c
 	}
 	return 0
 }
 
-func deriveComparePtrToInterleave(this, that *Interleave) int {
+func deriveCompare_11(this, that *Interleave) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -520,39 +520,39 @@ func deriveComparePtrToInterleave(this, that *Interleave) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToKeyword(this.OpenCurly, that.OpenCurly); c != 0 {
+	if c := deriveCompare_12(this.OpenCurly, that.OpenCurly); c != 0 {
 		return c
 	}
 	if c := this.LeftPattern.Compare(that.LeftPattern); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.SemiColon, that.SemiColon); c != 0 {
+	if c := deriveCompare_12(this.SemiColon, that.SemiColon); c != 0 {
 		return c
 	}
 	if c := this.RightPattern.Compare(that.RightPattern); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.ExtraSemiColon, that.ExtraSemiColon); c != 0 {
+	if c := deriveCompare_12(this.ExtraSemiColon, that.ExtraSemiColon); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.CloseCurly, that.CloseCurly); c != 0 {
+	if c := deriveCompare_12(this.CloseCurly, that.CloseCurly); c != 0 {
 		return c
 	}
 	return 0
 }
 
-func deriveCopyToSliceOfPtrToPatternDecl(this, that []*PatternDecl) {
+func deriveCopyTo(this, that []*PatternDecl) {
 	for this_i, this_value := range this {
 		if this_value == nil {
 			that[this_i] = nil
 		} else {
 			that[this_i] = new(PatternDecl)
-			deriveCopyToPtrToPatternDecl(this_value, that[this_i])
+			deriveCopyTo_19(this_value, that[this_i])
 		}
 	}
 }
 
-func deriveCopyToPtrToSpace(this, that *Space) {
+func deriveCopyTo_(this, that *Space) {
 	if this.Space == nil {
 		that.Space = nil
 	} else {
@@ -573,27 +573,27 @@ func deriveCopyToPtrToSpace(this, that *Space) {
 	}
 }
 
-func deriveCopyToPtrToEmpty(this, that *Empty) {
+func deriveCopyTo_1(this, that *Empty) {
 	if this.Empty == nil {
 		that.Empty = nil
 	} else {
 		that.Empty = new(Keyword)
-		deriveCopyToPtrToKeyword(this.Empty, that.Empty)
+		deriveCopyTo_14(this.Empty, that.Empty)
 	}
 }
 
-func deriveCopyToPtrToTreeNode(this, that *TreeNode) {
+func deriveCopyTo_2(this, that *TreeNode) {
 	if this.Name == nil {
 		that.Name = nil
 	} else {
 		that.Name = new(NameExpr)
-		deriveCopyToPtrToNameExpr(this.Name, that.Name)
+		deriveCopyTo_20(this.Name, that.Name)
 	}
 	if this.Colon == nil {
 		that.Colon = nil
 	} else {
 		that.Colon = new(Keyword)
-		deriveCopyToPtrToKeyword(this.Colon, that.Colon)
+		deriveCopyTo_14(this.Colon, that.Colon)
 	}
 	if this.Pattern == nil {
 		that.Pattern = nil
@@ -603,7 +603,7 @@ func deriveCopyToPtrToTreeNode(this, that *TreeNode) {
 	}
 }
 
-func deriveCopyToPtrToLeafNode(this, that *LeafNode) {
+func deriveCopyTo_3(this, that *LeafNode) {
 	if this.Expr == nil {
 		that.Expr = nil
 	} else {
@@ -612,12 +612,12 @@ func deriveCopyToPtrToLeafNode(this, that *LeafNode) {
 	}
 }
 
-func deriveCopyToPtrToConcat(this, that *Concat) {
+func deriveCopyTo_4(this, that *Concat) {
 	if this.OpenBracket == nil {
 		that.OpenBracket = nil
 	} else {
 		that.OpenBracket = new(Keyword)
-		deriveCopyToPtrToKeyword(this.OpenBracket, that.OpenBracket)
+		deriveCopyTo_14(this.OpenBracket, that.OpenBracket)
 	}
 	if this.LeftPattern == nil {
 		that.LeftPattern = nil
@@ -629,7 +629,7 @@ func deriveCopyToPtrToConcat(this, that *Concat) {
 		that.Comma = nil
 	} else {
 		that.Comma = new(Keyword)
-		deriveCopyToPtrToKeyword(this.Comma, that.Comma)
+		deriveCopyTo_14(this.Comma, that.Comma)
 	}
 	if this.RightPattern == nil {
 		that.RightPattern = nil
@@ -641,22 +641,22 @@ func deriveCopyToPtrToConcat(this, that *Concat) {
 		that.ExtraComma = nil
 	} else {
 		that.ExtraComma = new(Keyword)
-		deriveCopyToPtrToKeyword(this.ExtraComma, that.ExtraComma)
+		deriveCopyTo_14(this.ExtraComma, that.ExtraComma)
 	}
 	if this.CloseBracket == nil {
 		that.CloseBracket = nil
 	} else {
 		that.CloseBracket = new(Keyword)
-		deriveCopyToPtrToKeyword(this.CloseBracket, that.CloseBracket)
+		deriveCopyTo_14(this.CloseBracket, that.CloseBracket)
 	}
 }
 
-func deriveCopyToPtrToOr(this, that *Or) {
+func deriveCopyTo_5(this, that *Or) {
 	if this.OpenParen == nil {
 		that.OpenParen = nil
 	} else {
 		that.OpenParen = new(Keyword)
-		deriveCopyToPtrToKeyword(this.OpenParen, that.OpenParen)
+		deriveCopyTo_14(this.OpenParen, that.OpenParen)
 	}
 	if this.LeftPattern == nil {
 		that.LeftPattern = nil
@@ -668,7 +668,7 @@ func deriveCopyToPtrToOr(this, that *Or) {
 		that.Pipe = nil
 	} else {
 		that.Pipe = new(Keyword)
-		deriveCopyToPtrToKeyword(this.Pipe, that.Pipe)
+		deriveCopyTo_14(this.Pipe, that.Pipe)
 	}
 	if this.RightPattern == nil {
 		that.RightPattern = nil
@@ -680,16 +680,16 @@ func deriveCopyToPtrToOr(this, that *Or) {
 		that.CloseParen = nil
 	} else {
 		that.CloseParen = new(Keyword)
-		deriveCopyToPtrToKeyword(this.CloseParen, that.CloseParen)
+		deriveCopyTo_14(this.CloseParen, that.CloseParen)
 	}
 }
 
-func deriveCopyToPtrToAnd(this, that *And) {
+func deriveCopyTo_6(this, that *And) {
 	if this.OpenParen == nil {
 		that.OpenParen = nil
 	} else {
 		that.OpenParen = new(Keyword)
-		deriveCopyToPtrToKeyword(this.OpenParen, that.OpenParen)
+		deriveCopyTo_14(this.OpenParen, that.OpenParen)
 	}
 	if this.LeftPattern == nil {
 		that.LeftPattern = nil
@@ -701,7 +701,7 @@ func deriveCopyToPtrToAnd(this, that *And) {
 		that.Ampersand = nil
 	} else {
 		that.Ampersand = new(Keyword)
-		deriveCopyToPtrToKeyword(this.Ampersand, that.Ampersand)
+		deriveCopyTo_14(this.Ampersand, that.Ampersand)
 	}
 	if this.RightPattern == nil {
 		that.RightPattern = nil
@@ -713,16 +713,16 @@ func deriveCopyToPtrToAnd(this, that *And) {
 		that.CloseParen = nil
 	} else {
 		that.CloseParen = new(Keyword)
-		deriveCopyToPtrToKeyword(this.CloseParen, that.CloseParen)
+		deriveCopyTo_14(this.CloseParen, that.CloseParen)
 	}
 }
 
-func deriveCopyToPtrToZeroOrMore(this, that *ZeroOrMore) {
+func deriveCopyTo_7(this, that *ZeroOrMore) {
 	if this.OpenParen == nil {
 		that.OpenParen = nil
 	} else {
 		that.OpenParen = new(Keyword)
-		deriveCopyToPtrToKeyword(this.OpenParen, that.OpenParen)
+		deriveCopyTo_14(this.OpenParen, that.OpenParen)
 	}
 	if this.Pattern == nil {
 		that.Pattern = nil
@@ -734,38 +734,38 @@ func deriveCopyToPtrToZeroOrMore(this, that *ZeroOrMore) {
 		that.CloseParen = nil
 	} else {
 		that.CloseParen = new(Keyword)
-		deriveCopyToPtrToKeyword(this.CloseParen, that.CloseParen)
+		deriveCopyTo_14(this.CloseParen, that.CloseParen)
 	}
 	if this.Star == nil {
 		that.Star = nil
 	} else {
 		that.Star = new(Keyword)
-		deriveCopyToPtrToKeyword(this.Star, that.Star)
+		deriveCopyTo_14(this.Star, that.Star)
 	}
 }
 
-func deriveCopyToPtrToReference(this, that *Reference) {
+func deriveCopyTo_8(this, that *Reference) {
 	if this.At == nil {
 		that.At = nil
 	} else {
 		that.At = new(Keyword)
-		deriveCopyToPtrToKeyword(this.At, that.At)
+		deriveCopyTo_14(this.At, that.At)
 	}
 	that.Name = this.Name
 }
 
-func deriveCopyToPtrToNot(this, that *Not) {
+func deriveCopyTo_9(this, that *Not) {
 	if this.Exclamation == nil {
 		that.Exclamation = nil
 	} else {
 		that.Exclamation = new(Keyword)
-		deriveCopyToPtrToKeyword(this.Exclamation, that.Exclamation)
+		deriveCopyTo_14(this.Exclamation, that.Exclamation)
 	}
 	if this.OpenParen == nil {
 		that.OpenParen = nil
 	} else {
 		that.OpenParen = new(Keyword)
-		deriveCopyToPtrToKeyword(this.OpenParen, that.OpenParen)
+		deriveCopyTo_14(this.OpenParen, that.OpenParen)
 	}
 	if this.Pattern == nil {
 		that.Pattern = nil
@@ -777,25 +777,25 @@ func deriveCopyToPtrToNot(this, that *Not) {
 		that.CloseParen = nil
 	} else {
 		that.CloseParen = new(Keyword)
-		deriveCopyToPtrToKeyword(this.CloseParen, that.CloseParen)
+		deriveCopyTo_14(this.CloseParen, that.CloseParen)
 	}
 }
 
-func deriveCopyToPtrToZAny(this, that *ZAny) {
+func deriveCopyTo_10(this, that *ZAny) {
 	if this.Star == nil {
 		that.Star = nil
 	} else {
 		that.Star = new(Keyword)
-		deriveCopyToPtrToKeyword(this.Star, that.Star)
+		deriveCopyTo_14(this.Star, that.Star)
 	}
 }
 
-func deriveCopyToPtrToContains(this, that *Contains) {
+func deriveCopyTo_11(this, that *Contains) {
 	if this.Dot == nil {
 		that.Dot = nil
 	} else {
 		that.Dot = new(Keyword)
-		deriveCopyToPtrToKeyword(this.Dot, that.Dot)
+		deriveCopyTo_14(this.Dot, that.Dot)
 	}
 	if this.Pattern == nil {
 		that.Pattern = nil
@@ -805,12 +805,12 @@ func deriveCopyToPtrToContains(this, that *Contains) {
 	}
 }
 
-func deriveCopyToPtrToOptional(this, that *Optional) {
+func deriveCopyTo_12(this, that *Optional) {
 	if this.OpenParen == nil {
 		that.OpenParen = nil
 	} else {
 		that.OpenParen = new(Keyword)
-		deriveCopyToPtrToKeyword(this.OpenParen, that.OpenParen)
+		deriveCopyTo_14(this.OpenParen, that.OpenParen)
 	}
 	if this.Pattern == nil {
 		that.Pattern = nil
@@ -822,22 +822,22 @@ func deriveCopyToPtrToOptional(this, that *Optional) {
 		that.CloseParen = nil
 	} else {
 		that.CloseParen = new(Keyword)
-		deriveCopyToPtrToKeyword(this.CloseParen, that.CloseParen)
+		deriveCopyTo_14(this.CloseParen, that.CloseParen)
 	}
 	if this.QuestionMark == nil {
 		that.QuestionMark = nil
 	} else {
 		that.QuestionMark = new(Keyword)
-		deriveCopyToPtrToKeyword(this.QuestionMark, that.QuestionMark)
+		deriveCopyTo_14(this.QuestionMark, that.QuestionMark)
 	}
 }
 
-func deriveCopyToPtrToInterleave(this, that *Interleave) {
+func deriveCopyTo_13(this, that *Interleave) {
 	if this.OpenCurly == nil {
 		that.OpenCurly = nil
 	} else {
 		that.OpenCurly = new(Keyword)
-		deriveCopyToPtrToKeyword(this.OpenCurly, that.OpenCurly)
+		deriveCopyTo_14(this.OpenCurly, that.OpenCurly)
 	}
 	if this.LeftPattern == nil {
 		that.LeftPattern = nil
@@ -849,7 +849,7 @@ func deriveCopyToPtrToInterleave(this, that *Interleave) {
 		that.SemiColon = nil
 	} else {
 		that.SemiColon = new(Keyword)
-		deriveCopyToPtrToKeyword(this.SemiColon, that.SemiColon)
+		deriveCopyTo_14(this.SemiColon, that.SemiColon)
 	}
 	if this.RightPattern == nil {
 		that.RightPattern = nil
@@ -861,32 +861,32 @@ func deriveCopyToPtrToInterleave(this, that *Interleave) {
 		that.ExtraSemiColon = nil
 	} else {
 		that.ExtraSemiColon = new(Keyword)
-		deriveCopyToPtrToKeyword(this.ExtraSemiColon, that.ExtraSemiColon)
+		deriveCopyTo_14(this.ExtraSemiColon, that.ExtraSemiColon)
 	}
 	if this.CloseCurly == nil {
 		that.CloseCurly = nil
 	} else {
 		that.CloseCurly = new(Keyword)
-		deriveCopyToPtrToKeyword(this.CloseCurly, that.CloseCurly)
+		deriveCopyTo_14(this.CloseCurly, that.CloseCurly)
 	}
 }
 
-func deriveCopyToPtrToKeyword(this, that *Keyword) {
+func deriveCopyTo_14(this, that *Keyword) {
 	if this.Before == nil {
 		that.Before = nil
 	} else {
 		that.Before = new(Space)
-		deriveCopyToPtrToSpace(this.Before, that.Before)
+		deriveCopyTo_(this.Before, that.Before)
 	}
 	that.Value = this.Value
 }
 
-func deriveCopyToPtrToTerminal(this, that *Terminal) {
+func deriveCopyTo_15(this, that *Terminal) {
 	if this.Before == nil {
 		that.Before = nil
 	} else {
 		that.Before = new(Space)
-		deriveCopyToPtrToSpace(this.Before, that.Before)
+		deriveCopyTo_(this.Before, that.Before)
 	}
 	that.Literal = this.Literal
 	if this.DoubleValue == nil {
@@ -945,19 +945,19 @@ func deriveCopyToPtrToTerminal(this, that *Terminal) {
 	}
 }
 
-func deriveCopyToPtrToList(this, that *List) {
+func deriveCopyTo_16(this, that *List) {
 	if this.Before == nil {
 		that.Before = nil
 	} else {
 		that.Before = new(Space)
-		deriveCopyToPtrToSpace(this.Before, that.Before)
+		deriveCopyTo_(this.Before, that.Before)
 	}
 	that.Type = this.Type
 	if this.OpenCurly == nil {
 		that.OpenCurly = nil
 	} else {
 		that.OpenCurly = new(Keyword)
-		deriveCopyToPtrToKeyword(this.OpenCurly, that.OpenCurly)
+		deriveCopyTo_14(this.OpenCurly, that.OpenCurly)
 	}
 	if this.Elems == nil {
 		that.Elems = nil
@@ -975,29 +975,29 @@ func deriveCopyToPtrToList(this, that *List) {
 		} else {
 			that.Elems = make([]*Expr, len(this.Elems))
 		}
-		deriveCopyToSliceOfPtrToExpr(this.Elems, that.Elems)
+		deriveCopyTo_21(this.Elems, that.Elems)
 	}
 	if this.CloseCurly == nil {
 		that.CloseCurly = nil
 	} else {
 		that.CloseCurly = new(Keyword)
-		deriveCopyToPtrToKeyword(this.CloseCurly, that.CloseCurly)
+		deriveCopyTo_14(this.CloseCurly, that.CloseCurly)
 	}
 }
 
-func deriveCopyToPtrToFunction(this, that *Function) {
+func deriveCopyTo_17(this, that *Function) {
 	if this.Before == nil {
 		that.Before = nil
 	} else {
 		that.Before = new(Space)
-		deriveCopyToPtrToSpace(this.Before, that.Before)
+		deriveCopyTo_(this.Before, that.Before)
 	}
 	that.Name = this.Name
 	if this.OpenParen == nil {
 		that.OpenParen = nil
 	} else {
 		that.OpenParen = new(Keyword)
-		deriveCopyToPtrToKeyword(this.OpenParen, that.OpenParen)
+		deriveCopyTo_14(this.OpenParen, that.OpenParen)
 	}
 	if this.Params == nil {
 		that.Params = nil
@@ -1015,22 +1015,22 @@ func deriveCopyToPtrToFunction(this, that *Function) {
 		} else {
 			that.Params = make([]*Expr, len(this.Params))
 		}
-		deriveCopyToSliceOfPtrToExpr(this.Params, that.Params)
+		deriveCopyTo_21(this.Params, that.Params)
 	}
 	if this.CloseParen == nil {
 		that.CloseParen = nil
 	} else {
 		that.CloseParen = new(Keyword)
-		deriveCopyToPtrToKeyword(this.CloseParen, that.CloseParen)
+		deriveCopyTo_14(this.CloseParen, that.CloseParen)
 	}
 }
 
-func deriveCopyToPtrToBuiltIn(this, that *BuiltIn) {
+func deriveCopyTo_18(this, that *BuiltIn) {
 	if this.Symbol == nil {
 		that.Symbol = nil
 	} else {
 		that.Symbol = new(Keyword)
-		deriveCopyToPtrToKeyword(this.Symbol, that.Symbol)
+		deriveCopyTo_14(this.Symbol, that.Symbol)
 	}
 	if this.Expr == nil {
 		that.Expr = nil
@@ -1040,119 +1040,119 @@ func deriveCopyToPtrToBuiltIn(this, that *BuiltIn) {
 	}
 }
 
-func deriveEqualPtrToEmpty(this, that *Empty) bool {
+func deriveEqual(this, that *Empty) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToKeyword(this.Empty, that.Empty)
+			deriveEqual_16(this.Empty, that.Empty)
 }
 
-func deriveEqualPtrToTreeNode(this, that *TreeNode) bool {
+func deriveEqual_(this, that *TreeNode) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
 			this.Name.Equal(that.Name) &&
-			deriveEqualPtrToKeyword(this.Colon, that.Colon) &&
+			deriveEqual_16(this.Colon, that.Colon) &&
 			this.Pattern.Equal(that.Pattern)
 }
 
-func deriveEqualPtrToLeafNode(this, that *LeafNode) bool {
+func deriveEqual_1(this, that *LeafNode) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToExpr(this.Expr, that.Expr)
+			deriveEqual_17(this.Expr, that.Expr)
 }
 
-func deriveEqualPtrToConcat(this, that *Concat) bool {
+func deriveEqual_2(this, that *Concat) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToKeyword(this.OpenBracket, that.OpenBracket) &&
+			deriveEqual_16(this.OpenBracket, that.OpenBracket) &&
 			this.LeftPattern.Equal(that.LeftPattern) &&
-			deriveEqualPtrToKeyword(this.Comma, that.Comma) &&
+			deriveEqual_16(this.Comma, that.Comma) &&
 			this.RightPattern.Equal(that.RightPattern) &&
-			deriveEqualPtrToKeyword(this.ExtraComma, that.ExtraComma) &&
-			deriveEqualPtrToKeyword(this.CloseBracket, that.CloseBracket)
+			deriveEqual_16(this.ExtraComma, that.ExtraComma) &&
+			deriveEqual_16(this.CloseBracket, that.CloseBracket)
 }
 
-func deriveEqualPtrToOr(this, that *Or) bool {
+func deriveEqual_3(this, that *Or) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToKeyword(this.OpenParen, that.OpenParen) &&
+			deriveEqual_16(this.OpenParen, that.OpenParen) &&
 			this.LeftPattern.Equal(that.LeftPattern) &&
-			deriveEqualPtrToKeyword(this.Pipe, that.Pipe) &&
+			deriveEqual_16(this.Pipe, that.Pipe) &&
 			this.RightPattern.Equal(that.RightPattern) &&
-			deriveEqualPtrToKeyword(this.CloseParen, that.CloseParen)
+			deriveEqual_16(this.CloseParen, that.CloseParen)
 }
 
-func deriveEqualPtrToAnd(this, that *And) bool {
+func deriveEqual_4(this, that *And) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToKeyword(this.OpenParen, that.OpenParen) &&
+			deriveEqual_16(this.OpenParen, that.OpenParen) &&
 			this.LeftPattern.Equal(that.LeftPattern) &&
-			deriveEqualPtrToKeyword(this.Ampersand, that.Ampersand) &&
+			deriveEqual_16(this.Ampersand, that.Ampersand) &&
 			this.RightPattern.Equal(that.RightPattern) &&
-			deriveEqualPtrToKeyword(this.CloseParen, that.CloseParen)
+			deriveEqual_16(this.CloseParen, that.CloseParen)
 }
 
-func deriveEqualPtrToZeroOrMore(this, that *ZeroOrMore) bool {
+func deriveEqual_5(this, that *ZeroOrMore) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToKeyword(this.OpenParen, that.OpenParen) &&
+			deriveEqual_16(this.OpenParen, that.OpenParen) &&
 			this.Pattern.Equal(that.Pattern) &&
-			deriveEqualPtrToKeyword(this.CloseParen, that.CloseParen) &&
-			deriveEqualPtrToKeyword(this.Star, that.Star)
+			deriveEqual_16(this.CloseParen, that.CloseParen) &&
+			deriveEqual_16(this.Star, that.Star)
 }
 
-func deriveEqualPtrToReference(this, that *Reference) bool {
+func deriveEqual_6(this, that *Reference) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToKeyword(this.At, that.At) &&
+			deriveEqual_16(this.At, that.At) &&
 			this.Name == that.Name
 }
 
-func deriveEqualPtrToNot(this, that *Not) bool {
+func deriveEqual_7(this, that *Not) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToKeyword(this.Exclamation, that.Exclamation) &&
-			deriveEqualPtrToKeyword(this.OpenParen, that.OpenParen) &&
+			deriveEqual_16(this.Exclamation, that.Exclamation) &&
+			deriveEqual_16(this.OpenParen, that.OpenParen) &&
 			this.Pattern.Equal(that.Pattern) &&
-			deriveEqualPtrToKeyword(this.CloseParen, that.CloseParen)
+			deriveEqual_16(this.CloseParen, that.CloseParen)
 }
 
-func deriveEqualPtrToZAny(this, that *ZAny) bool {
+func deriveEqual_8(this, that *ZAny) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToKeyword(this.Star, that.Star)
+			deriveEqual_16(this.Star, that.Star)
 }
 
-func deriveEqualPtrToContains(this, that *Contains) bool {
+func deriveEqual_9(this, that *Contains) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToKeyword(this.Dot, that.Dot) &&
+			deriveEqual_16(this.Dot, that.Dot) &&
 			this.Pattern.Equal(that.Pattern)
 }
 
-func deriveEqualPtrToOptional(this, that *Optional) bool {
+func deriveEqual_10(this, that *Optional) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToKeyword(this.OpenParen, that.OpenParen) &&
+			deriveEqual_16(this.OpenParen, that.OpenParen) &&
 			this.Pattern.Equal(that.Pattern) &&
-			deriveEqualPtrToKeyword(this.CloseParen, that.CloseParen) &&
-			deriveEqualPtrToKeyword(this.QuestionMark, that.QuestionMark)
+			deriveEqual_16(this.CloseParen, that.CloseParen) &&
+			deriveEqual_16(this.QuestionMark, that.QuestionMark)
 }
 
-func deriveEqualPtrToInterleave(this, that *Interleave) bool {
+func deriveEqual_11(this, that *Interleave) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToKeyword(this.OpenCurly, that.OpenCurly) &&
+			deriveEqual_16(this.OpenCurly, that.OpenCurly) &&
 			this.LeftPattern.Equal(that.LeftPattern) &&
-			deriveEqualPtrToKeyword(this.SemiColon, that.SemiColon) &&
+			deriveEqual_16(this.SemiColon, that.SemiColon) &&
 			this.RightPattern.Equal(that.RightPattern) &&
-			deriveEqualPtrToKeyword(this.ExtraSemiColon, that.ExtraSemiColon) &&
-			deriveEqualPtrToKeyword(this.CloseCurly, that.CloseCurly)
+			deriveEqual_16(this.ExtraSemiColon, that.ExtraSemiColon) &&
+			deriveEqual_16(this.CloseCurly, that.CloseCurly)
 }
 
-func deriveEqualPtrToName(this, that *Name) bool {
+func deriveEqual_12(this, that *Name) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToSpace(this.Before, that.Before) &&
+			deriveEqual_18(this.Before, that.Before) &&
 			((this.DoubleValue == nil && that.DoubleValue == nil) || (this.DoubleValue != nil && that.DoubleValue != nil && *(this.DoubleValue) == *(that.DoubleValue))) &&
 			((this.IntValue == nil && that.IntValue == nil) || (this.IntValue != nil && that.IntValue != nil && *(this.IntValue) == *(that.IntValue))) &&
 			((this.UintValue == nil && that.UintValue == nil) || (this.UintValue != nil && that.UintValue != nil && *(this.UintValue) == *(that.UintValue))) &&
@@ -1161,32 +1161,32 @@ func deriveEqualPtrToName(this, that *Name) bool {
 			bytes.Equal(this.BytesValue, that.BytesValue)
 }
 
-func deriveEqualPtrToAnyName(this, that *AnyName) bool {
+func deriveEqual_13(this, that *AnyName) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToKeyword(this.Underscore, that.Underscore)
+			deriveEqual_16(this.Underscore, that.Underscore)
 }
 
-func deriveEqualPtrToAnyNameExcept(this, that *AnyNameExcept) bool {
+func deriveEqual_14(this, that *AnyNameExcept) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToKeyword(this.Exclamation, that.Exclamation) &&
-			deriveEqualPtrToKeyword(this.OpenParen, that.OpenParen) &&
+			deriveEqual_16(this.Exclamation, that.Exclamation) &&
+			deriveEqual_16(this.OpenParen, that.OpenParen) &&
 			this.Except.Equal(that.Except) &&
-			deriveEqualPtrToKeyword(this.CloseParen, that.CloseParen)
+			deriveEqual_16(this.CloseParen, that.CloseParen)
 }
 
-func deriveEqualPtrToNameChoice(this, that *NameChoice) bool {
+func deriveEqual_15(this, that *NameChoice) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToKeyword(this.OpenParen, that.OpenParen) &&
+			deriveEqual_16(this.OpenParen, that.OpenParen) &&
 			this.Left.Equal(that.Left) &&
-			deriveEqualPtrToKeyword(this.Pipe, that.Pipe) &&
+			deriveEqual_16(this.Pipe, that.Pipe) &&
 			this.Right.Equal(that.Right) &&
-			deriveEqualPtrToKeyword(this.CloseParen, that.CloseParen)
+			deriveEqual_16(this.CloseParen, that.CloseParen)
 }
 
-func deriveComparePtrToKeyword(this, that *Keyword) int {
+func deriveCompare_12(this, that *Keyword) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -1196,7 +1196,7 @@ func deriveComparePtrToKeyword(this, that *Keyword) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToSpace(this.Before, that.Before); c != 0 {
+	if c := deriveCompare_15(this.Before, that.Before); c != 0 {
 		return c
 	}
 	if c := strings.Compare(this.Value, that.Value); c != 0 {
@@ -1205,7 +1205,7 @@ func deriveComparePtrToKeyword(this, that *Keyword) int {
 	return 0
 }
 
-func deriveComparePtrToNameExpr(this, that *NameExpr) int {
+func deriveCompare_13(this, that *NameExpr) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -1215,22 +1215,22 @@ func deriveComparePtrToNameExpr(this, that *NameExpr) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToName(this.Name, that.Name); c != 0 {
+	if c := deriveCompare_16(this.Name, that.Name); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToAnyName(this.AnyName, that.AnyName); c != 0 {
+	if c := deriveCompare_17(this.AnyName, that.AnyName); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToAnyNameExcept(this.AnyNameExcept, that.AnyNameExcept); c != 0 {
+	if c := deriveCompare_18(this.AnyNameExcept, that.AnyNameExcept); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToNameChoice(this.NameChoice, that.NameChoice); c != 0 {
+	if c := deriveCompare_19(this.NameChoice, that.NameChoice); c != 0 {
 		return c
 	}
 	return 0
 }
 
-func deriveComparePtrToExpr(this, that *Expr) int {
+func deriveCompare_14(this, that *Expr) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -1240,46 +1240,46 @@ func deriveComparePtrToExpr(this, that *Expr) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToKeyword(this.RightArrow, that.RightArrow); c != 0 {
+	if c := deriveCompare_12(this.RightArrow, that.RightArrow); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.Comma, that.Comma); c != 0 {
+	if c := deriveCompare_12(this.Comma, that.Comma); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToTerminal(this.Terminal, that.Terminal); c != 0 {
+	if c := deriveCompare_20(this.Terminal, that.Terminal); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToList(this.List, that.List); c != 0 {
+	if c := deriveCompare_21(this.List, that.List); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToFunction(this.Function, that.Function); c != 0 {
+	if c := deriveCompare_22(this.Function, that.Function); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToBuiltIn(this.BuiltIn, that.BuiltIn); c != 0 {
+	if c := deriveCompare_23(this.BuiltIn, that.BuiltIn); c != 0 {
 		return c
 	}
 	return 0
 }
 
-func deriveCopyToPtrToPatternDecl(this, that *PatternDecl) {
+func deriveCopyTo_19(this, that *PatternDecl) {
 	if this.Hash == nil {
 		that.Hash = nil
 	} else {
 		that.Hash = new(Keyword)
-		deriveCopyToPtrToKeyword(this.Hash, that.Hash)
+		deriveCopyTo_14(this.Hash, that.Hash)
 	}
 	if this.Before == nil {
 		that.Before = nil
 	} else {
 		that.Before = new(Space)
-		deriveCopyToPtrToSpace(this.Before, that.Before)
+		deriveCopyTo_(this.Before, that.Before)
 	}
 	that.Name = this.Name
 	if this.Eq == nil {
 		that.Eq = nil
 	} else {
 		that.Eq = new(Keyword)
-		deriveCopyToPtrToKeyword(this.Eq, that.Eq)
+		deriveCopyTo_14(this.Eq, that.Eq)
 	}
 	if this.Pattern == nil {
 		that.Pattern = nil
@@ -1289,34 +1289,34 @@ func deriveCopyToPtrToPatternDecl(this, that *PatternDecl) {
 	}
 }
 
-func deriveCopyToPtrToNameExpr(this, that *NameExpr) {
+func deriveCopyTo_20(this, that *NameExpr) {
 	if this.Name == nil {
 		that.Name = nil
 	} else {
 		that.Name = new(Name)
-		deriveCopyToPtrToName(this.Name, that.Name)
+		deriveCopyTo_22(this.Name, that.Name)
 	}
 	if this.AnyName == nil {
 		that.AnyName = nil
 	} else {
 		that.AnyName = new(AnyName)
-		deriveCopyToPtrToAnyName(this.AnyName, that.AnyName)
+		deriveCopyTo_23(this.AnyName, that.AnyName)
 	}
 	if this.AnyNameExcept == nil {
 		that.AnyNameExcept = nil
 	} else {
 		that.AnyNameExcept = new(AnyNameExcept)
-		deriveCopyToPtrToAnyNameExcept(this.AnyNameExcept, that.AnyNameExcept)
+		deriveCopyTo_24(this.AnyNameExcept, that.AnyNameExcept)
 	}
 	if this.NameChoice == nil {
 		that.NameChoice = nil
 	} else {
 		that.NameChoice = new(NameChoice)
-		deriveCopyToPtrToNameChoice(this.NameChoice, that.NameChoice)
+		deriveCopyTo_25(this.NameChoice, that.NameChoice)
 	}
 }
 
-func deriveCopyToSliceOfPtrToExpr(this, that []*Expr) {
+func deriveCopyTo_21(this, that []*Expr) {
 	for this_i, this_value := range this {
 		if this_value == nil {
 			that[this_i] = nil
@@ -1327,31 +1327,31 @@ func deriveCopyToSliceOfPtrToExpr(this, that []*Expr) {
 	}
 }
 
-func deriveEqualPtrToKeyword(this, that *Keyword) bool {
+func deriveEqual_16(this, that *Keyword) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToSpace(this.Before, that.Before) &&
+			deriveEqual_18(this.Before, that.Before) &&
 			this.Value == that.Value
 }
 
-func deriveEqualPtrToExpr(this, that *Expr) bool {
+func deriveEqual_17(this, that *Expr) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToKeyword(this.RightArrow, that.RightArrow) &&
-			deriveEqualPtrToKeyword(this.Comma, that.Comma) &&
-			deriveEqualPtrToTerminal(this.Terminal, that.Terminal) &&
-			deriveEqualPtrToList(this.List, that.List) &&
-			deriveEqualPtrToFunction(this.Function, that.Function) &&
-			deriveEqualPtrToBuiltIn(this.BuiltIn, that.BuiltIn)
+			deriveEqual_16(this.RightArrow, that.RightArrow) &&
+			deriveEqual_16(this.Comma, that.Comma) &&
+			deriveEqual_19(this.Terminal, that.Terminal) &&
+			deriveEqual_20(this.List, that.List) &&
+			deriveEqual_21(this.Function, that.Function) &&
+			deriveEqual_22(this.BuiltIn, that.BuiltIn)
 }
 
-func deriveEqualPtrToSpace(this, that *Space) bool {
+func deriveEqual_18(this, that *Space) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualSliceOfstring(this.Space, that.Space)
+			deriveEqual_23(this.Space, that.Space)
 }
 
-func deriveComparePtrToSpace(this, that *Space) int {
+func deriveCompare_15(this, that *Space) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -1361,13 +1361,13 @@ func deriveComparePtrToSpace(this, that *Space) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveCompareSliceOfstring(this.Space, that.Space); c != 0 {
+	if c := deriveCompare_24(this.Space, that.Space); c != 0 {
 		return c
 	}
 	return 0
 }
 
-func deriveComparePtrToName(this, that *Name) int {
+func deriveCompare_16(this, that *Name) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -1377,22 +1377,22 @@ func deriveComparePtrToName(this, that *Name) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToSpace(this.Before, that.Before); c != 0 {
+	if c := deriveCompare_15(this.Before, that.Before); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrTofloat64(this.DoubleValue, that.DoubleValue); c != 0 {
+	if c := deriveCompare_25(this.DoubleValue, that.DoubleValue); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToint64(this.IntValue, that.IntValue); c != 0 {
+	if c := deriveCompare_26(this.IntValue, that.IntValue); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrTouint64(this.UintValue, that.UintValue); c != 0 {
+	if c := deriveCompare_27(this.UintValue, that.UintValue); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrTobool(this.BoolValue, that.BoolValue); c != 0 {
+	if c := deriveCompare_28(this.BoolValue, that.BoolValue); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrTostring(this.StringValue, that.StringValue); c != 0 {
+	if c := deriveCompare_29(this.StringValue, that.StringValue); c != 0 {
 		return c
 	}
 	if c := bytes.Compare(this.BytesValue, that.BytesValue); c != 0 {
@@ -1401,7 +1401,7 @@ func deriveComparePtrToName(this, that *Name) int {
 	return 0
 }
 
-func deriveComparePtrToAnyName(this, that *AnyName) int {
+func deriveCompare_17(this, that *AnyName) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -1411,13 +1411,13 @@ func deriveComparePtrToAnyName(this, that *AnyName) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToKeyword(this.Underscore, that.Underscore); c != 0 {
+	if c := deriveCompare_12(this.Underscore, that.Underscore); c != 0 {
 		return c
 	}
 	return 0
 }
 
-func deriveComparePtrToAnyNameExcept(this, that *AnyNameExcept) int {
+func deriveCompare_18(this, that *AnyNameExcept) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -1427,22 +1427,22 @@ func deriveComparePtrToAnyNameExcept(this, that *AnyNameExcept) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToKeyword(this.Exclamation, that.Exclamation); c != 0 {
+	if c := deriveCompare_12(this.Exclamation, that.Exclamation); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.OpenParen, that.OpenParen); c != 0 {
+	if c := deriveCompare_12(this.OpenParen, that.OpenParen); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToNameExpr(this.Except, that.Except); c != 0 {
+	if c := deriveCompare_13(this.Except, that.Except); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.CloseParen, that.CloseParen); c != 0 {
+	if c := deriveCompare_12(this.CloseParen, that.CloseParen); c != 0 {
 		return c
 	}
 	return 0
 }
 
-func deriveComparePtrToNameChoice(this, that *NameChoice) int {
+func deriveCompare_19(this, that *NameChoice) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -1452,25 +1452,25 @@ func deriveComparePtrToNameChoice(this, that *NameChoice) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToKeyword(this.OpenParen, that.OpenParen); c != 0 {
+	if c := deriveCompare_12(this.OpenParen, that.OpenParen); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToNameExpr(this.Left, that.Left); c != 0 {
+	if c := deriveCompare_13(this.Left, that.Left); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.Pipe, that.Pipe); c != 0 {
+	if c := deriveCompare_12(this.Pipe, that.Pipe); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToNameExpr(this.Right, that.Right); c != 0 {
+	if c := deriveCompare_13(this.Right, that.Right); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.CloseParen, that.CloseParen); c != 0 {
+	if c := deriveCompare_12(this.CloseParen, that.CloseParen); c != 0 {
 		return c
 	}
 	return 0
 }
 
-func deriveComparePtrToTerminal(this, that *Terminal) int {
+func deriveCompare_20(this, that *Terminal) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -1480,37 +1480,37 @@ func deriveComparePtrToTerminal(this, that *Terminal) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToSpace(this.Before, that.Before); c != 0 {
+	if c := deriveCompare_15(this.Before, that.Before); c != 0 {
 		return c
 	}
 	if c := strings.Compare(this.Literal, that.Literal); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrTofloat64(this.DoubleValue, that.DoubleValue); c != 0 {
+	if c := deriveCompare_25(this.DoubleValue, that.DoubleValue); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToint64(this.IntValue, that.IntValue); c != 0 {
+	if c := deriveCompare_26(this.IntValue, that.IntValue); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrTouint64(this.UintValue, that.UintValue); c != 0 {
+	if c := deriveCompare_27(this.UintValue, that.UintValue); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrTobool(this.BoolValue, that.BoolValue); c != 0 {
+	if c := deriveCompare_28(this.BoolValue, that.BoolValue); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrTostring(this.StringValue, that.StringValue); c != 0 {
+	if c := deriveCompare_29(this.StringValue, that.StringValue); c != 0 {
 		return c
 	}
 	if c := bytes.Compare(this.BytesValue, that.BytesValue); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToVariable(this.Variable, that.Variable); c != 0 {
+	if c := deriveCompare_30(this.Variable, that.Variable); c != 0 {
 		return c
 	}
 	return 0
 }
 
-func deriveComparePtrToList(this, that *List) int {
+func deriveCompare_21(this, that *List) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -1520,25 +1520,25 @@ func deriveComparePtrToList(this, that *List) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToSpace(this.Before, that.Before); c != 0 {
+	if c := deriveCompare_15(this.Before, that.Before); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrTotypes_Type(&this.Type, &that.Type); c != 0 {
+	if c := deriveCompare_T(this.Type, that.Type); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.OpenCurly, that.OpenCurly); c != 0 {
+	if c := deriveCompare_12(this.OpenCurly, that.OpenCurly); c != 0 {
 		return c
 	}
-	if c := deriveCompareSliceOfPtrToExpr(this.Elems, that.Elems); c != 0 {
+	if c := deriveCompare_31(this.Elems, that.Elems); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.CloseCurly, that.CloseCurly); c != 0 {
+	if c := deriveCompare_12(this.CloseCurly, that.CloseCurly); c != 0 {
 		return c
 	}
 	return 0
 }
 
-func deriveComparePtrToFunction(this, that *Function) int {
+func deriveCompare_22(this, that *Function) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -1548,25 +1548,25 @@ func deriveComparePtrToFunction(this, that *Function) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToSpace(this.Before, that.Before); c != 0 {
+	if c := deriveCompare_15(this.Before, that.Before); c != 0 {
 		return c
 	}
 	if c := strings.Compare(this.Name, that.Name); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.OpenParen, that.OpenParen); c != 0 {
+	if c := deriveCompare_12(this.OpenParen, that.OpenParen); c != 0 {
 		return c
 	}
-	if c := deriveCompareSliceOfPtrToExpr(this.Params, that.Params); c != 0 {
+	if c := deriveCompare_31(this.Params, that.Params); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToKeyword(this.CloseParen, that.CloseParen); c != 0 {
+	if c := deriveCompare_12(this.CloseParen, that.CloseParen); c != 0 {
 		return c
 	}
 	return 0
 }
 
-func deriveComparePtrToBuiltIn(this, that *BuiltIn) int {
+func deriveCompare_23(this, that *BuiltIn) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -1576,21 +1576,21 @@ func deriveComparePtrToBuiltIn(this, that *BuiltIn) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrToKeyword(this.Symbol, that.Symbol); c != 0 {
+	if c := deriveCompare_12(this.Symbol, that.Symbol); c != 0 {
 		return c
 	}
-	if c := deriveComparePtrToExpr(this.Expr, that.Expr); c != 0 {
+	if c := deriveCompare_14(this.Expr, that.Expr); c != 0 {
 		return c
 	}
 	return 0
 }
 
-func deriveCopyToPtrToName(this, that *Name) {
+func deriveCopyTo_22(this, that *Name) {
 	if this.Before == nil {
 		that.Before = nil
 	} else {
 		that.Before = new(Space)
-		deriveCopyToPtrToSpace(this.Before, that.Before)
+		deriveCopyTo_(this.Before, that.Before)
 	}
 	if this.DoubleValue == nil {
 		that.DoubleValue = nil
@@ -1642,79 +1642,79 @@ func deriveCopyToPtrToName(this, that *Name) {
 	}
 }
 
-func deriveCopyToPtrToAnyName(this, that *AnyName) {
+func deriveCopyTo_23(this, that *AnyName) {
 	if this.Underscore == nil {
 		that.Underscore = nil
 	} else {
 		that.Underscore = new(Keyword)
-		deriveCopyToPtrToKeyword(this.Underscore, that.Underscore)
+		deriveCopyTo_14(this.Underscore, that.Underscore)
 	}
 }
 
-func deriveCopyToPtrToAnyNameExcept(this, that *AnyNameExcept) {
+func deriveCopyTo_24(this, that *AnyNameExcept) {
 	if this.Exclamation == nil {
 		that.Exclamation = nil
 	} else {
 		that.Exclamation = new(Keyword)
-		deriveCopyToPtrToKeyword(this.Exclamation, that.Exclamation)
+		deriveCopyTo_14(this.Exclamation, that.Exclamation)
 	}
 	if this.OpenParen == nil {
 		that.OpenParen = nil
 	} else {
 		that.OpenParen = new(Keyword)
-		deriveCopyToPtrToKeyword(this.OpenParen, that.OpenParen)
+		deriveCopyTo_14(this.OpenParen, that.OpenParen)
 	}
 	if this.Except == nil {
 		that.Except = nil
 	} else {
 		that.Except = new(NameExpr)
-		deriveCopyToPtrToNameExpr(this.Except, that.Except)
+		deriveCopyTo_20(this.Except, that.Except)
 	}
 	if this.CloseParen == nil {
 		that.CloseParen = nil
 	} else {
 		that.CloseParen = new(Keyword)
-		deriveCopyToPtrToKeyword(this.CloseParen, that.CloseParen)
+		deriveCopyTo_14(this.CloseParen, that.CloseParen)
 	}
 }
 
-func deriveCopyToPtrToNameChoice(this, that *NameChoice) {
+func deriveCopyTo_25(this, that *NameChoice) {
 	if this.OpenParen == nil {
 		that.OpenParen = nil
 	} else {
 		that.OpenParen = new(Keyword)
-		deriveCopyToPtrToKeyword(this.OpenParen, that.OpenParen)
+		deriveCopyTo_14(this.OpenParen, that.OpenParen)
 	}
 	if this.Left == nil {
 		that.Left = nil
 	} else {
 		that.Left = new(NameExpr)
-		deriveCopyToPtrToNameExpr(this.Left, that.Left)
+		deriveCopyTo_20(this.Left, that.Left)
 	}
 	if this.Pipe == nil {
 		that.Pipe = nil
 	} else {
 		that.Pipe = new(Keyword)
-		deriveCopyToPtrToKeyword(this.Pipe, that.Pipe)
+		deriveCopyTo_14(this.Pipe, that.Pipe)
 	}
 	if this.Right == nil {
 		that.Right = nil
 	} else {
 		that.Right = new(NameExpr)
-		deriveCopyToPtrToNameExpr(this.Right, that.Right)
+		deriveCopyTo_20(this.Right, that.Right)
 	}
 	if this.CloseParen == nil {
 		that.CloseParen = nil
 	} else {
 		that.CloseParen = new(Keyword)
-		deriveCopyToPtrToKeyword(this.CloseParen, that.CloseParen)
+		deriveCopyTo_14(this.CloseParen, that.CloseParen)
 	}
 }
 
-func deriveEqualPtrToTerminal(this, that *Terminal) bool {
+func deriveEqual_19(this, that *Terminal) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToSpace(this.Before, that.Before) &&
+			deriveEqual_18(this.Before, that.Before) &&
 			this.Literal == that.Literal &&
 			((this.DoubleValue == nil && that.DoubleValue == nil) || (this.DoubleValue != nil && that.DoubleValue != nil && *(this.DoubleValue) == *(that.DoubleValue))) &&
 			((this.IntValue == nil && that.IntValue == nil) || (this.IntValue != nil && that.IntValue != nil && *(this.IntValue) == *(that.IntValue))) &&
@@ -1722,37 +1722,37 @@ func deriveEqualPtrToTerminal(this, that *Terminal) bool {
 			((this.BoolValue == nil && that.BoolValue == nil) || (this.BoolValue != nil && that.BoolValue != nil && *(this.BoolValue) == *(that.BoolValue))) &&
 			((this.StringValue == nil && that.StringValue == nil) || (this.StringValue != nil && that.StringValue != nil && *(this.StringValue) == *(that.StringValue))) &&
 			bytes.Equal(this.BytesValue, that.BytesValue) &&
-			deriveEqualPtrToVariable(this.Variable, that.Variable)
+			deriveEqual_24(this.Variable, that.Variable)
 }
 
-func deriveEqualPtrToList(this, that *List) bool {
+func deriveEqual_20(this, that *List) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToSpace(this.Before, that.Before) &&
+			deriveEqual_18(this.Before, that.Before) &&
 			this.Type == that.Type &&
-			deriveEqualPtrToKeyword(this.OpenCurly, that.OpenCurly) &&
-			deriveEqualSliceOfPtrToExpr(this.Elems, that.Elems) &&
-			deriveEqualPtrToKeyword(this.CloseCurly, that.CloseCurly)
+			deriveEqual_16(this.OpenCurly, that.OpenCurly) &&
+			deriveEqual_25(this.Elems, that.Elems) &&
+			deriveEqual_16(this.CloseCurly, that.CloseCurly)
 }
 
-func deriveEqualPtrToFunction(this, that *Function) bool {
+func deriveEqual_21(this, that *Function) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToSpace(this.Before, that.Before) &&
+			deriveEqual_18(this.Before, that.Before) &&
 			this.Name == that.Name &&
-			deriveEqualPtrToKeyword(this.OpenParen, that.OpenParen) &&
-			deriveEqualSliceOfPtrToExpr(this.Params, that.Params) &&
-			deriveEqualPtrToKeyword(this.CloseParen, that.CloseParen)
+			deriveEqual_16(this.OpenParen, that.OpenParen) &&
+			deriveEqual_25(this.Params, that.Params) &&
+			deriveEqual_16(this.CloseParen, that.CloseParen)
 }
 
-func deriveEqualPtrToBuiltIn(this, that *BuiltIn) bool {
+func deriveEqual_22(this, that *BuiltIn) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqualPtrToKeyword(this.Symbol, that.Symbol) &&
-			deriveEqualPtrToExpr(this.Expr, that.Expr)
+			deriveEqual_16(this.Symbol, that.Symbol) &&
+			deriveEqual_17(this.Expr, that.Expr)
 }
 
-func deriveEqualSliceOfstring(this, that []string) bool {
+func deriveEqual_23(this, that []string) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
 	}
@@ -1767,7 +1767,7 @@ func deriveEqualSliceOfstring(this, that []string) bool {
 	return true
 }
 
-func deriveCompareSliceOfstring(this, that []string) int {
+func deriveCompare_24(this, that []string) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -1791,7 +1791,7 @@ func deriveCompareSliceOfstring(this, that []string) int {
 	return 0
 }
 
-func deriveComparePtrTofloat64(this, that *float64) int {
+func deriveCompare_25(this, that *float64) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -1801,10 +1801,10 @@ func deriveComparePtrTofloat64(this, that *float64) int {
 	if that == nil {
 		return 1
 	}
-	return deriveComparefloat64(*this, *that)
+	return deriveCompare_f(*this, *that)
 }
 
-func deriveComparePtrToint64(this, that *int64) int {
+func deriveCompare_26(this, that *int64) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -1814,10 +1814,10 @@ func deriveComparePtrToint64(this, that *int64) int {
 	if that == nil {
 		return 1
 	}
-	return deriveCompareint64(*this, *that)
+	return deriveCompare_i(*this, *that)
 }
 
-func deriveComparePtrTouint64(this, that *uint64) int {
+func deriveCompare_27(this, that *uint64) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -1827,10 +1827,10 @@ func deriveComparePtrTouint64(this, that *uint64) int {
 	if that == nil {
 		return 1
 	}
-	return deriveCompareuint64(*this, *that)
+	return deriveCompare_u(*this, *that)
 }
 
-func deriveComparePtrTobool(this, that *bool) int {
+func deriveCompare_28(this, that *bool) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -1840,10 +1840,10 @@ func deriveComparePtrTobool(this, that *bool) int {
 	if that == nil {
 		return 1
 	}
-	return deriveComparebool(*this, *that)
+	return deriveCompare_b(*this, *that)
 }
 
-func deriveComparePtrTostring(this, that *string) int {
+func deriveCompare_29(this, that *string) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -1853,10 +1853,10 @@ func deriveComparePtrTostring(this, that *string) int {
 	if that == nil {
 		return 1
 	}
-	return deriveComparestring(*this, *that)
+	return deriveCompare_s(*this, *that)
 }
 
-func deriveComparePtrToVariable(this, that *Variable) int {
+func deriveCompare_30(this, that *Variable) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -1866,26 +1866,24 @@ func deriveComparePtrToVariable(this, that *Variable) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveComparePtrTotypes_Type(&this.Type, &that.Type); c != 0 {
+	if c := deriveCompare_T(this.Type, that.Type); c != 0 {
 		return c
 	}
 	return 0
 }
 
-func deriveComparePtrTotypes_Type(this, that *types.Type) int {
-	if this == nil {
-		if that == nil {
-			return 0
+func deriveCompare_T(this, that types.Type) int {
+	if this != that {
+		if this < that {
+			return -1
+		} else {
+			return 1
 		}
-		return -1
 	}
-	if that == nil {
-		return 1
-	}
-	return deriveComparetypes_Type(*this, *that)
+	return 0
 }
 
-func deriveCompareSliceOfPtrToExpr(this, that []*Expr) int {
+func deriveCompare_31(this, that []*Expr) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -1902,20 +1900,20 @@ func deriveCompareSliceOfPtrToExpr(this, that []*Expr) int {
 		return 1
 	}
 	for i := 0; i < len(this); i++ {
-		if c := deriveComparePtrToExpr(this[i], that[i]); c != 0 {
+		if c := deriveCompare_14(this[i], that[i]); c != 0 {
 			return c
 		}
 	}
 	return 0
 }
 
-func deriveEqualPtrToVariable(this, that *Variable) bool {
+func deriveEqual_24(this, that *Variable) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
 			this.Type == that.Type
 }
 
-func deriveEqualSliceOfPtrToExpr(this, that []*Expr) bool {
+func deriveEqual_25(this, that []*Expr) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
 	}
@@ -1923,14 +1921,14 @@ func deriveEqualSliceOfPtrToExpr(this, that []*Expr) bool {
 		return false
 	}
 	for i := 0; i < len(this); i++ {
-		if !(deriveEqualPtrToExpr(this[i], that[i])) {
+		if !(deriveEqual_17(this[i], that[i])) {
 			return false
 		}
 	}
 	return true
 }
 
-func deriveComparefloat64(this, that float64) int {
+func deriveCompare_f(this, that float64) int {
 	if this != that {
 		if this < that {
 			return -1
@@ -1941,7 +1939,7 @@ func deriveComparefloat64(this, that float64) int {
 	return 0
 }
 
-func deriveCompareint64(this, that int64) int {
+func deriveCompare_i(this, that int64) int {
 	if this != that {
 		if this < that {
 			return -1
@@ -1952,7 +1950,7 @@ func deriveCompareint64(this, that int64) int {
 	return 0
 }
 
-func deriveCompareuint64(this, that uint64) int {
+func deriveCompare_u(this, that uint64) int {
 	if this != that {
 		if this < that {
 			return -1
@@ -1963,7 +1961,7 @@ func deriveCompareuint64(this, that uint64) int {
 	return 0
 }
 
-func deriveComparebool(this, that bool) int {
+func deriveCompare_b(this, that bool) int {
 	if this == that {
 		return 0
 	}
@@ -1973,17 +1971,6 @@ func deriveComparebool(this, that bool) int {
 	return 1
 }
 
-func deriveComparestring(this, that string) int {
+func deriveCompare_s(this, that string) int {
 	return strings.Compare(this, that)
-}
-
-func deriveComparetypes_Type(this, that types.Type) int {
-	if this != that {
-		if this < that {
-			return -1
-		} else {
-			return 1
-		}
-	}
-	return 0
 }

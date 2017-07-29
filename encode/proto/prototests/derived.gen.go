@@ -24,21 +24,21 @@ func deriveEqualSimple(this, that *Simple) bool {
 			((this.Field13 == nil && that.Field13 == nil) || (this.Field13 != nil && that.Field13 != nil && *(this.Field13) == *(that.Field13))) &&
 			((this.Field14 == nil && that.Field14 == nil) || (this.Field14 != nil && that.Field14 != nil && *(this.Field14) == *(that.Field14))) &&
 			bytes.Equal(this.Field15, that.Field15) &&
-			deriveEqualSliceOffloat64(this.Fields1, that.Fields1) &&
-			deriveEqualSliceOffloat32(this.Fields2, that.Fields2) &&
-			deriveEqualSliceOfint32(this.Fields3, that.Fields3) &&
-			deriveEqualSliceOfint64(this.Fields4, that.Fields4) &&
-			deriveEqualSliceOfuint32(this.Fields5, that.Fields5) &&
-			deriveEqualSliceOfuint64(this.Fields6, that.Fields6) &&
-			deriveEqualSliceOfint32(this.Fields7, that.Fields7) &&
-			deriveEqualSliceOfint64(this.Fields8, that.Fields8) &&
-			deriveEqualSliceOfuint32(this.Fields9, that.Fields9) &&
-			deriveEqualSliceOfint32(this.Fields10, that.Fields10) &&
-			deriveEqualSliceOfuint64(this.Fields11, that.Fields11) &&
-			deriveEqualSliceOfint64(this.Fields12, that.Fields12) &&
-			deriveEqualSliceOfbool(this.Fields13, that.Fields13) &&
-			deriveEqualSliceOfstring(this.Fields14, that.Fields14) &&
-			deriveEqualSliceOfSliceOfbyte(this.Fields15, that.Fields15) &&
+			deriveEqual(this.Fields1, that.Fields1) &&
+			deriveEqual_(this.Fields2, that.Fields2) &&
+			deriveEqual_1(this.Fields3, that.Fields3) &&
+			deriveEqual_2(this.Fields4, that.Fields4) &&
+			deriveEqual_3(this.Fields5, that.Fields5) &&
+			deriveEqual_4(this.Fields6, that.Fields6) &&
+			deriveEqual_1(this.Fields7, that.Fields7) &&
+			deriveEqual_2(this.Fields8, that.Fields8) &&
+			deriveEqual_3(this.Fields9, that.Fields9) &&
+			deriveEqual_1(this.Fields10, that.Fields10) &&
+			deriveEqual_4(this.Fields11, that.Fields11) &&
+			deriveEqual_2(this.Fields12, that.Fields12) &&
+			deriveEqual_5(this.Fields13, that.Fields13) &&
+			deriveEqual_6(this.Fields14, that.Fields14) &&
+			deriveEqual_7(this.Fields15, that.Fields15) &&
 			bytes.Equal(this.XXX_unrecognized, that.XXX_unrecognized)
 }
 
@@ -46,11 +46,11 @@ func deriveEqualNested(this, that *Nested) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
 			this.One.Equal(that.One) &&
-			deriveEqualSliceOfPtrToSimple(this.Many, that.Many) &&
+			deriveEqual_8(this.Many, that.Many) &&
 			bytes.Equal(this.XXX_unrecognized, that.XXX_unrecognized)
 }
 
-func deriveEqualSliceOffloat64(this, that []float64) bool {
+func deriveEqual(this, that []float64) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
 	}
@@ -65,7 +65,7 @@ func deriveEqualSliceOffloat64(this, that []float64) bool {
 	return true
 }
 
-func deriveEqualSliceOffloat32(this, that []float32) bool {
+func deriveEqual_(this, that []float32) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
 	}
@@ -80,7 +80,7 @@ func deriveEqualSliceOffloat32(this, that []float32) bool {
 	return true
 }
 
-func deriveEqualSliceOfint32(this, that []int32) bool {
+func deriveEqual_1(this, that []int32) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
 	}
@@ -95,7 +95,7 @@ func deriveEqualSliceOfint32(this, that []int32) bool {
 	return true
 }
 
-func deriveEqualSliceOfint64(this, that []int64) bool {
+func deriveEqual_2(this, that []int64) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
 	}
@@ -110,7 +110,7 @@ func deriveEqualSliceOfint64(this, that []int64) bool {
 	return true
 }
 
-func deriveEqualSliceOfuint32(this, that []uint32) bool {
+func deriveEqual_3(this, that []uint32) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
 	}
@@ -125,7 +125,7 @@ func deriveEqualSliceOfuint32(this, that []uint32) bool {
 	return true
 }
 
-func deriveEqualSliceOfuint64(this, that []uint64) bool {
+func deriveEqual_4(this, that []uint64) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
 	}
@@ -140,7 +140,7 @@ func deriveEqualSliceOfuint64(this, that []uint64) bool {
 	return true
 }
 
-func deriveEqualSliceOfbool(this, that []bool) bool {
+func deriveEqual_5(this, that []bool) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
 	}
@@ -155,7 +155,7 @@ func deriveEqualSliceOfbool(this, that []bool) bool {
 	return true
 }
 
-func deriveEqualSliceOfstring(this, that []string) bool {
+func deriveEqual_6(this, that []string) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
 	}
@@ -170,7 +170,7 @@ func deriveEqualSliceOfstring(this, that []string) bool {
 	return true
 }
 
-func deriveEqualSliceOfSliceOfbyte(this, that [][]byte) bool {
+func deriveEqual_7(this, that [][]byte) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
 	}
@@ -185,7 +185,7 @@ func deriveEqualSliceOfSliceOfbyte(this, that [][]byte) bool {
 	return true
 }
 
-func deriveEqualSliceOfPtrToSimple(this, that []*Simple) bool {
+func deriveEqual_8(this, that []*Simple) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
 	}
