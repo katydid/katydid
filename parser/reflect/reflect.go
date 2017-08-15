@@ -16,9 +16,10 @@
 package reflect
 
 import (
-	"github.com/katydid/katydid/parser"
 	"io"
 	"reflect"
+
+	"github.com/katydid/katydid/parser"
 )
 
 type state struct {
@@ -74,6 +75,7 @@ type ReflectParser interface {
 	parser.Interface
 	//Init initialises the parser with a value of reflected go structure.
 	Init(value reflect.Value) ReflectParser
+	Reset() error
 }
 
 //NewReflectParser returns a new reflect parser.
@@ -84,6 +86,12 @@ func NewReflectParser() ReflectParser {
 func (s *reflectParser) Init(value reflect.Value) ReflectParser {
 	s.state = newState(value)
 	return s
+}
+
+func (s *reflectParser) Reset() error {
+	s.stack = s.stack[:0]
+	s.state = newState(s.state.value)
+	return nil
 }
 
 func (s *reflectParser) Next() error {
