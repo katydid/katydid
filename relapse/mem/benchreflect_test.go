@@ -36,11 +36,22 @@ func BenchmarkGoPlaygroundStructLevelValidationSuccess(b *testing.B) {
 		String: "good value",
 	}
 	s := ".String:*"
+	p := parser.NewReflectParser().Init(reflect.ValueOf(tst))
 	g, err := relapse.Parse(s)
 	if err != nil {
 		b.Fatal(err)
 	}
-	p := parser.NewReflectParser().Init(reflect.ValueOf(tst))
+	m, err := relapse.Prepare(g)
+	if err != nil {
+		b.Fatal(err)
+	}
+	valid, err := relapse.Validate(m, p)
+	if err != nil {
+		b.Fatal(err)
+	}
+	if !valid {
+		b.Fatalf("expected valid")
+	}
 	bench(b, g, []testsuite.ResetParser{p}, true)
 }
 
@@ -73,11 +84,22 @@ func BenchmarkGoPlaygroundStructSimpleSuccess(b *testing.B) {
 		(StringValue->and(ge(length($string), 5), le(length($string), 10)))? ;
 		(IntValue->and(ge($int, 5), le($int, 10)))?
 	}`
+	p := parser.NewReflectParser().Init(reflect.ValueOf(validFoo))
 	g, err := relapse.Parse(s)
 	if err != nil {
 		b.Fatal(err)
 	}
-	p := parser.NewReflectParser().Init(reflect.ValueOf(validFoo))
+	m, err := relapse.Prepare(g)
+	if err != nil {
+		b.Fatal(err)
+	}
+	valid, err := relapse.Validate(m, p)
+	if err != nil {
+		b.Fatal(err)
+	}
+	if !valid {
+		b.Fatalf("expected valid")
+	}
 	bench(b, g, []testsuite.ResetParser{p}, true)
 }
 
@@ -95,30 +117,10 @@ type TestString struct {
 	OmitEmpty string `validate:"omitempty,min=1,max=10"`
 	Sub       *SubTest
 	SubIgnore *SubTest `validate:"-"`
-	Anonymous struct {
-		A string `validate:"required"`
-	}
-	Iface I
 }
 
 type SubTest struct {
 	Test string `validate:"required"`
-}
-
-type TestInterface struct {
-	Iface I
-}
-
-type I interface {
-	Foo() string
-}
-
-type Impl struct {
-	F string `validate:"len=3"`
-}
-
-func (i *Impl) Foo() string {
-	return i.F
 }
 
 // 1504 ns/op
@@ -180,6 +182,7 @@ func BenchmarkGoPlaygroundStructComplexSuccess(b *testing.B) {
 		},
 	}
 	s := `#main = {
+		BlankTag->eq(length($string), 0) ;
 		Required->gt(length($string), 0) ;
 		(Len->eq(length($string), 10))? ;
 		(Min->ge(length($string), 1))? ;
@@ -192,12 +195,26 @@ func BenchmarkGoPlaygroundStructComplexSuccess(b *testing.B) {
 		(OmitEmpty->or(eq(length($string), 0), and(ge(length($string), 1), le(length($string), 10))))? ;
 		(Sub: @subtest)? ;
 		(SubIgnore: *)? ;
-	}`
+	}
+
+	#subtest = Test->gt(length($string), 0)
+	`
+	p := parser.NewReflectParser().Init(reflect.ValueOf(tSuccess))
 	g, err := relapse.Parse(s)
 	if err != nil {
 		b.Fatal(err)
 	}
-	p := parser.NewReflectParser().Init(reflect.ValueOf(tSuccess))
+	m, err := relapse.Prepare(g)
+	if err != nil {
+		b.Fatal(err)
+	}
+	valid, err := relapse.Validate(m, p)
+	if err != nil {
+		b.Fatal(err)
+	}
+	if !valid {
+		b.Fatalf("expected valid")
+	}
 	bench(b, g, []testsuite.ResetParser{p}, true)
 }
 
@@ -252,16 +269,9 @@ func BenchmarkGoPlaygroundStructComplexFailure(b *testing.B) {
 		Sub: &SubTest{
 			Test: "",
 		},
-		Anonymous: struct {
-			A string `validate:"required"`
-		}{
-			A: "",
-		},
-		Iface: &Impl{
-			F: "12",
-		},
 	}
 	s := `#main = {
+		BlankTag->eq(length($string), 0) ;
 		Required->gt(length($string), 0) ;
 		(Len->eq(length($string), 10))? ;
 		(Min->ge(length($string), 1))? ;
@@ -274,11 +284,136 @@ func BenchmarkGoPlaygroundStructComplexFailure(b *testing.B) {
 		(OmitEmpty->or(eq(length($string), 0), and(ge(length($string), 1), le(length($string), 10))))? ;
 		(Sub: @subtest)? ;
 		(SubIgnore: *)? ;
-	}`
+	}
+
+	#subtest = Test->gt(length($string), 0)
+	`
+	p := parser.NewReflectParser().Init(reflect.ValueOf(tFail))
 	g, err := relapse.Parse(s)
 	if err != nil {
 		b.Fatal(err)
 	}
+	m, err := relapse.Prepare(g)
+	if err != nil {
+		b.Fatal(err)
+	}
+	valid, err := relapse.Validate(m, p)
+	if err != nil {
+		b.Fatal(err)
+	}
+	if valid {
+		b.Fatalf("expected invalid")
+	}
+	bench(b, g, []testsuite.ResetParser{p}, true)
+}
+
+// 132 ns/op
+func BenchmarkGoPlaygroundStructComplexSuccess2(b *testing.B) {
+	tSuccess := &TestString{
+		Required:  "Required",
+		Len:       "length==10",
+		Min:       "min=1",
+		Max:       "1234567890",
+		MinMax:    "12345",
+		Lt:        "012345678",
+		Lte:       "0123456789",
+		Gt:        "01234567890",
+		Gte:       "0123456789",
+		OmitEmpty: "",
+		Sub: &SubTest{
+			Test: "1",
+		},
+		SubIgnore: &SubTest{
+			Test: "",
+		},
+	}
+	s := `#main = [
+		BlankTag->eq(length($string), 0) ,
+		Required->gt(length($string), 0) ,
+		Len->eq(length($string), 10) ,
+		Min->ge(length($string), 1) ,
+		Max->le(length($string), 10) ,
+		MinMax->and(ge(length($string), 1), le(length($string), 10)) ,
+		Lt->lt(length($string), 10) ,
+		Lte->le(length($string), 10) ,
+		Gt->gt(length($string), 10) ,
+		Gte->ge(length($string), 10) ,
+		OmitEmpty->or(eq(length($string), 0), and(ge(length($string), 1), le(length($string), 10))) ,
+		Sub: @subtest ,
+		SubIgnore: *
+	]
+
+	#subtest = Test->gt(length($string), 0)
+	`
+	p := parser.NewReflectParser().Init(reflect.ValueOf(tSuccess))
+	g, err := relapse.Parse(s)
+	if err != nil {
+		b.Fatal(err)
+	}
+	m, err := relapse.Prepare(g)
+	if err != nil {
+		b.Fatal(err)
+	}
+	valid, err := relapse.Validate(m, p)
+	if err != nil {
+		b.Fatal(err)
+	}
+	if !valid {
+		b.Fatalf("expected valid")
+	}
+	bench(b, g, []testsuite.ResetParser{p}, true)
+}
+
+// 129 ns/op
+func BenchmarkGoPlaygroundStructComplexFailure2(b *testing.B) {
+	tFail := &TestString{
+		Required:  "",
+		Len:       "",
+		Min:       "",
+		Max:       "12345678901",
+		MinMax:    "",
+		Lt:        "0123456789",
+		Lte:       "01234567890",
+		Gt:        "1",
+		Gte:       "1",
+		OmitEmpty: "12345678901",
+		Sub: &SubTest{
+			Test: "",
+		},
+	}
+	s := `#main = [
+		BlankTag->eq(length($string), 0) ,
+		Required->gt(length($string), 0) ,
+		Len->eq(length($string), 10) ,
+		Min->ge(length($string), 1) ,
+		Max->le(length($string), 10) ,
+		MinMax->and(ge(length($string), 1), le(length($string), 10)) ,
+		Lt->lt(length($string), 10) ,
+		Lte->le(length($string), 10) ,
+		Gt->gt(length($string), 10) ,
+		Gte->ge(length($string), 10) ,
+		OmitEmpty->or(eq(length($string), 0), and(ge(length($string), 1), le(length($string), 10))) ,
+		Sub: @subtest ,
+		SubIgnore: *
+	]
+
+	#subtest = Test->gt(length($string), 0)
+	`
 	p := parser.NewReflectParser().Init(reflect.ValueOf(tFail))
+	g, err := relapse.Parse(s)
+	if err != nil {
+		b.Fatal(err)
+	}
+	m, err := relapse.Prepare(g)
+	if err != nil {
+		b.Fatal(err)
+	}
+	valid, err := relapse.Validate(m, p)
+	if err != nil {
+		b.Fatal(err)
+	}
+	if valid {
+		b.Fatalf("expected invalid")
+	}
 	bench(b, g, []testsuite.ResetParser{p}, true)
 }

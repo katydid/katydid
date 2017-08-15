@@ -138,7 +138,7 @@ func (s *reflectParser) Int() (int64, error) {
 	if s.isLeaf {
 		value := s.getValue()
 		switch value.Kind() {
-		case reflect.Int64, reflect.Int32:
+		case reflect.Int64, reflect.Int32, reflect.Int:
 			return value.Int(), nil
 		}
 	}
