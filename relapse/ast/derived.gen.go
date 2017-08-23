@@ -4,9 +4,131 @@ package ast
 
 import (
 	"bytes"
+	"fmt"
 	types "github.com/katydid/katydid/relapse/types"
 	"strings"
 )
+
+func deriveGoStringGrammar(this *Grammar) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.Grammar {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.Grammar{}\n")
+		if this.TopPattern != nil {
+			fmt.Fprintf(buf, "this.TopPattern = %s\n", deriveGoStringPattern(this.TopPattern))
+		}
+		if this.PatternDecls != nil {
+			fmt.Fprintf(buf, "this.PatternDecls = %s\n", deriveGoString(this.PatternDecls))
+		}
+		if this.After != nil {
+			fmt.Fprintf(buf, "this.After = %s\n", deriveGoString_(this.After))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoStringRefLookup(this RefLookup) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() ast.RefLookup {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := make(ast.RefLookup)\n")
+		for k, v := range this {
+			fmt.Fprintf(buf, "this[%#v] = %s\n", k, deriveGoStringPattern(v))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoStringPattern(this *Pattern) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.Pattern {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.Pattern{}\n")
+		if this.Empty != nil {
+			fmt.Fprintf(buf, "this.Empty = %s\n", deriveGoString_1(this.Empty))
+		}
+		if this.TreeNode != nil {
+			fmt.Fprintf(buf, "this.TreeNode = %s\n", deriveGoString_2(this.TreeNode))
+		}
+		if this.LeafNode != nil {
+			fmt.Fprintf(buf, "this.LeafNode = %s\n", deriveGoString_3(this.LeafNode))
+		}
+		if this.Concat != nil {
+			fmt.Fprintf(buf, "this.Concat = %s\n", deriveGoString_4(this.Concat))
+		}
+		if this.Or != nil {
+			fmt.Fprintf(buf, "this.Or = %s\n", deriveGoString_5(this.Or))
+		}
+		if this.And != nil {
+			fmt.Fprintf(buf, "this.And = %s\n", deriveGoString_6(this.And))
+		}
+		if this.ZeroOrMore != nil {
+			fmt.Fprintf(buf, "this.ZeroOrMore = %s\n", deriveGoString_7(this.ZeroOrMore))
+		}
+		if this.Reference != nil {
+			fmt.Fprintf(buf, "this.Reference = %s\n", deriveGoString_8(this.Reference))
+		}
+		if this.Not != nil {
+			fmt.Fprintf(buf, "this.Not = %s\n", deriveGoString_9(this.Not))
+		}
+		if this.ZAny != nil {
+			fmt.Fprintf(buf, "this.ZAny = %s\n", deriveGoString_10(this.ZAny))
+		}
+		if this.Contains != nil {
+			fmt.Fprintf(buf, "this.Contains = %s\n", deriveGoString_11(this.Contains))
+		}
+		if this.Optional != nil {
+			fmt.Fprintf(buf, "this.Optional = %s\n", deriveGoString_12(this.Optional))
+		}
+		if this.Interleave != nil {
+			fmt.Fprintf(buf, "this.Interleave = %s\n", deriveGoString_13(this.Interleave))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoStringExpr(this *Expr) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.Expr {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.Expr{}\n")
+		if this.RightArrow != nil {
+			fmt.Fprintf(buf, "this.RightArrow = %s\n", deriveGoString_14(this.RightArrow))
+		}
+		if this.Comma != nil {
+			fmt.Fprintf(buf, "this.Comma = %s\n", deriveGoString_14(this.Comma))
+		}
+		if this.Terminal != nil {
+			fmt.Fprintf(buf, "this.Terminal = %s\n", deriveGoString_15(this.Terminal))
+		}
+		if this.List != nil {
+			fmt.Fprintf(buf, "this.List = %s\n", deriveGoString_16(this.List))
+		}
+		if this.Function != nil {
+			fmt.Fprintf(buf, "this.Function = %s\n", deriveGoString_17(this.Function))
+		}
+		if this.BuiltIn != nil {
+			fmt.Fprintf(buf, "this.BuiltIn = %s\n", deriveGoString_18(this.BuiltIn))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
 
 func deriveComparePattern(this, that *Pattern) int {
 	if this == nil {
@@ -238,6 +360,463 @@ func deriveEqualNameExpr(this, that *NameExpr) bool {
 			deriveEqual_13(this.AnyName, that.AnyName) &&
 			deriveEqual_14(this.AnyNameExcept, that.AnyNameExcept) &&
 			deriveEqual_15(this.NameChoice, that.NameChoice)
+}
+
+func deriveGoString(this []*PatternDecl) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() []*ast.PatternDecl {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := make([]*ast.PatternDecl, %d)\n", len(this))
+		for i := range this {
+			fmt.Fprintf(buf, "this[%d] = %s\n", i, deriveGoString_19(this[i]))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_(this *Space) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.Space {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.Space{}\n")
+		if this.Space != nil {
+			fmt.Fprintf(buf, "this.Space = %#v\n", this.Space)
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_1(this *Empty) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.Empty {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.Empty{}\n")
+		if this.Empty != nil {
+			fmt.Fprintf(buf, "this.Empty = %s\n", deriveGoString_14(this.Empty))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_2(this *TreeNode) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.TreeNode {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.TreeNode{}\n")
+		if this.Name != nil {
+			fmt.Fprintf(buf, "this.Name = %s\n", deriveGoString_20(this.Name))
+		}
+		if this.Colon != nil {
+			fmt.Fprintf(buf, "this.Colon = %s\n", deriveGoString_14(this.Colon))
+		}
+		if this.Pattern != nil {
+			fmt.Fprintf(buf, "this.Pattern = %s\n", deriveGoStringPattern(this.Pattern))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_3(this *LeafNode) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.LeafNode {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.LeafNode{}\n")
+		if this.Expr != nil {
+			fmt.Fprintf(buf, "this.Expr = %s\n", deriveGoStringExpr(this.Expr))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_4(this *Concat) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.Concat {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.Concat{}\n")
+		if this.OpenBracket != nil {
+			fmt.Fprintf(buf, "this.OpenBracket = %s\n", deriveGoString_14(this.OpenBracket))
+		}
+		if this.LeftPattern != nil {
+			fmt.Fprintf(buf, "this.LeftPattern = %s\n", deriveGoStringPattern(this.LeftPattern))
+		}
+		if this.Comma != nil {
+			fmt.Fprintf(buf, "this.Comma = %s\n", deriveGoString_14(this.Comma))
+		}
+		if this.RightPattern != nil {
+			fmt.Fprintf(buf, "this.RightPattern = %s\n", deriveGoStringPattern(this.RightPattern))
+		}
+		if this.ExtraComma != nil {
+			fmt.Fprintf(buf, "this.ExtraComma = %s\n", deriveGoString_14(this.ExtraComma))
+		}
+		if this.CloseBracket != nil {
+			fmt.Fprintf(buf, "this.CloseBracket = %s\n", deriveGoString_14(this.CloseBracket))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_5(this *Or) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.Or {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.Or{}\n")
+		if this.OpenParen != nil {
+			fmt.Fprintf(buf, "this.OpenParen = %s\n", deriveGoString_14(this.OpenParen))
+		}
+		if this.LeftPattern != nil {
+			fmt.Fprintf(buf, "this.LeftPattern = %s\n", deriveGoStringPattern(this.LeftPattern))
+		}
+		if this.Pipe != nil {
+			fmt.Fprintf(buf, "this.Pipe = %s\n", deriveGoString_14(this.Pipe))
+		}
+		if this.RightPattern != nil {
+			fmt.Fprintf(buf, "this.RightPattern = %s\n", deriveGoStringPattern(this.RightPattern))
+		}
+		if this.CloseParen != nil {
+			fmt.Fprintf(buf, "this.CloseParen = %s\n", deriveGoString_14(this.CloseParen))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_6(this *And) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.And {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.And{}\n")
+		if this.OpenParen != nil {
+			fmt.Fprintf(buf, "this.OpenParen = %s\n", deriveGoString_14(this.OpenParen))
+		}
+		if this.LeftPattern != nil {
+			fmt.Fprintf(buf, "this.LeftPattern = %s\n", deriveGoStringPattern(this.LeftPattern))
+		}
+		if this.Ampersand != nil {
+			fmt.Fprintf(buf, "this.Ampersand = %s\n", deriveGoString_14(this.Ampersand))
+		}
+		if this.RightPattern != nil {
+			fmt.Fprintf(buf, "this.RightPattern = %s\n", deriveGoStringPattern(this.RightPattern))
+		}
+		if this.CloseParen != nil {
+			fmt.Fprintf(buf, "this.CloseParen = %s\n", deriveGoString_14(this.CloseParen))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_7(this *ZeroOrMore) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.ZeroOrMore {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.ZeroOrMore{}\n")
+		if this.OpenParen != nil {
+			fmt.Fprintf(buf, "this.OpenParen = %s\n", deriveGoString_14(this.OpenParen))
+		}
+		if this.Pattern != nil {
+			fmt.Fprintf(buf, "this.Pattern = %s\n", deriveGoStringPattern(this.Pattern))
+		}
+		if this.CloseParen != nil {
+			fmt.Fprintf(buf, "this.CloseParen = %s\n", deriveGoString_14(this.CloseParen))
+		}
+		if this.Star != nil {
+			fmt.Fprintf(buf, "this.Star = %s\n", deriveGoString_14(this.Star))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_8(this *Reference) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.Reference {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.Reference{}\n")
+		if this.At != nil {
+			fmt.Fprintf(buf, "this.At = %s\n", deriveGoString_14(this.At))
+		}
+		fmt.Fprintf(buf, "this.Name = %#v\n", this.Name)
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_9(this *Not) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.Not {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.Not{}\n")
+		if this.Exclamation != nil {
+			fmt.Fprintf(buf, "this.Exclamation = %s\n", deriveGoString_14(this.Exclamation))
+		}
+		if this.OpenParen != nil {
+			fmt.Fprintf(buf, "this.OpenParen = %s\n", deriveGoString_14(this.OpenParen))
+		}
+		if this.Pattern != nil {
+			fmt.Fprintf(buf, "this.Pattern = %s\n", deriveGoStringPattern(this.Pattern))
+		}
+		if this.CloseParen != nil {
+			fmt.Fprintf(buf, "this.CloseParen = %s\n", deriveGoString_14(this.CloseParen))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_10(this *ZAny) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.ZAny {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.ZAny{}\n")
+		if this.Star != nil {
+			fmt.Fprintf(buf, "this.Star = %s\n", deriveGoString_14(this.Star))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_11(this *Contains) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.Contains {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.Contains{}\n")
+		if this.Dot != nil {
+			fmt.Fprintf(buf, "this.Dot = %s\n", deriveGoString_14(this.Dot))
+		}
+		if this.Pattern != nil {
+			fmt.Fprintf(buf, "this.Pattern = %s\n", deriveGoStringPattern(this.Pattern))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_12(this *Optional) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.Optional {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.Optional{}\n")
+		if this.OpenParen != nil {
+			fmt.Fprintf(buf, "this.OpenParen = %s\n", deriveGoString_14(this.OpenParen))
+		}
+		if this.Pattern != nil {
+			fmt.Fprintf(buf, "this.Pattern = %s\n", deriveGoStringPattern(this.Pattern))
+		}
+		if this.CloseParen != nil {
+			fmt.Fprintf(buf, "this.CloseParen = %s\n", deriveGoString_14(this.CloseParen))
+		}
+		if this.QuestionMark != nil {
+			fmt.Fprintf(buf, "this.QuestionMark = %s\n", deriveGoString_14(this.QuestionMark))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_13(this *Interleave) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.Interleave {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.Interleave{}\n")
+		if this.OpenCurly != nil {
+			fmt.Fprintf(buf, "this.OpenCurly = %s\n", deriveGoString_14(this.OpenCurly))
+		}
+		if this.LeftPattern != nil {
+			fmt.Fprintf(buf, "this.LeftPattern = %s\n", deriveGoStringPattern(this.LeftPattern))
+		}
+		if this.SemiColon != nil {
+			fmt.Fprintf(buf, "this.SemiColon = %s\n", deriveGoString_14(this.SemiColon))
+		}
+		if this.RightPattern != nil {
+			fmt.Fprintf(buf, "this.RightPattern = %s\n", deriveGoStringPattern(this.RightPattern))
+		}
+		if this.ExtraSemiColon != nil {
+			fmt.Fprintf(buf, "this.ExtraSemiColon = %s\n", deriveGoString_14(this.ExtraSemiColon))
+		}
+		if this.CloseCurly != nil {
+			fmt.Fprintf(buf, "this.CloseCurly = %s\n", deriveGoString_14(this.CloseCurly))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_14(this *Keyword) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.Keyword {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.Keyword{}\n")
+		if this.Before != nil {
+			fmt.Fprintf(buf, "this.Before = %s\n", deriveGoString_(this.Before))
+		}
+		fmt.Fprintf(buf, "this.Value = %#v\n", this.Value)
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_15(this *Terminal) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.Terminal {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.Terminal{}\n")
+		if this.Before != nil {
+			fmt.Fprintf(buf, "this.Before = %s\n", deriveGoString_(this.Before))
+		}
+		fmt.Fprintf(buf, "this.Literal = %#v\n", this.Literal)
+		if this.DoubleValue != nil {
+			fmt.Fprintf(buf, "this.DoubleValue = func (v float64) *float64 { return &v }(%#v)\n", *this.DoubleValue)
+		}
+		if this.IntValue != nil {
+			fmt.Fprintf(buf, "this.IntValue = func (v int64) *int64 { return &v }(%#v)\n", *this.IntValue)
+		}
+		if this.UintValue != nil {
+			fmt.Fprintf(buf, "this.UintValue = func (v uint64) *uint64 { return &v }(%#v)\n", *this.UintValue)
+		}
+		if this.BoolValue != nil {
+			fmt.Fprintf(buf, "this.BoolValue = func (v bool) *bool { return &v }(%#v)\n", *this.BoolValue)
+		}
+		if this.StringValue != nil {
+			fmt.Fprintf(buf, "this.StringValue = func (v string) *string { return &v }(%#v)\n", *this.StringValue)
+		}
+		if this.BytesValue != nil {
+			fmt.Fprintf(buf, "this.BytesValue = %#v\n", this.BytesValue)
+		}
+		if this.Variable != nil {
+			fmt.Fprintf(buf, "this.Variable = %s\n", deriveGoString_21(this.Variable))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_16(this *List) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.List {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.List{}\n")
+		if this.Before != nil {
+			fmt.Fprintf(buf, "this.Before = %s\n", deriveGoString_(this.Before))
+		}
+		fmt.Fprintf(buf, "this.Type = %#v\n", this.Type)
+		if this.OpenCurly != nil {
+			fmt.Fprintf(buf, "this.OpenCurly = %s\n", deriveGoString_14(this.OpenCurly))
+		}
+		if this.Elems != nil {
+			fmt.Fprintf(buf, "this.Elems = %s\n", deriveGoString_22(this.Elems))
+		}
+		if this.CloseCurly != nil {
+			fmt.Fprintf(buf, "this.CloseCurly = %s\n", deriveGoString_14(this.CloseCurly))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_17(this *Function) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.Function {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.Function{}\n")
+		if this.Before != nil {
+			fmt.Fprintf(buf, "this.Before = %s\n", deriveGoString_(this.Before))
+		}
+		fmt.Fprintf(buf, "this.Name = %#v\n", this.Name)
+		if this.OpenParen != nil {
+			fmt.Fprintf(buf, "this.OpenParen = %s\n", deriveGoString_14(this.OpenParen))
+		}
+		if this.Params != nil {
+			fmt.Fprintf(buf, "this.Params = %s\n", deriveGoString_22(this.Params))
+		}
+		if this.CloseParen != nil {
+			fmt.Fprintf(buf, "this.CloseParen = %s\n", deriveGoString_14(this.CloseParen))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_18(this *BuiltIn) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.BuiltIn {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.BuiltIn{}\n")
+		if this.Symbol != nil {
+			fmt.Fprintf(buf, "this.Symbol = %s\n", deriveGoString_14(this.Symbol))
+		}
+		if this.Expr != nil {
+			fmt.Fprintf(buf, "this.Expr = %s\n", deriveGoStringExpr(this.Expr))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
 }
 
 func deriveCompare(this, that *Empty) int {
@@ -1186,6 +1765,87 @@ func deriveEqual_15(this, that *NameChoice) bool {
 			deriveEqual_16(this.CloseParen, that.CloseParen)
 }
 
+func deriveGoString_19(this *PatternDecl) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.PatternDecl {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.PatternDecl{}\n")
+		if this.Hash != nil {
+			fmt.Fprintf(buf, "this.Hash = %s\n", deriveGoString_14(this.Hash))
+		}
+		if this.Before != nil {
+			fmt.Fprintf(buf, "this.Before = %s\n", deriveGoString_(this.Before))
+		}
+		fmt.Fprintf(buf, "this.Name = %#v\n", this.Name)
+		if this.Eq != nil {
+			fmt.Fprintf(buf, "this.Eq = %s\n", deriveGoString_14(this.Eq))
+		}
+		if this.Pattern != nil {
+			fmt.Fprintf(buf, "this.Pattern = %s\n", deriveGoStringPattern(this.Pattern))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_20(this *NameExpr) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.NameExpr {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.NameExpr{}\n")
+		if this.Name != nil {
+			fmt.Fprintf(buf, "this.Name = %s\n", deriveGoString_23(this.Name))
+		}
+		if this.AnyName != nil {
+			fmt.Fprintf(buf, "this.AnyName = %s\n", deriveGoString_24(this.AnyName))
+		}
+		if this.AnyNameExcept != nil {
+			fmt.Fprintf(buf, "this.AnyNameExcept = %s\n", deriveGoString_25(this.AnyNameExcept))
+		}
+		if this.NameChoice != nil {
+			fmt.Fprintf(buf, "this.NameChoice = %s\n", deriveGoString_26(this.NameChoice))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_21(this *Variable) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.Variable {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.Variable{}\n")
+		fmt.Fprintf(buf, "this.Type = %#v\n", this.Type)
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_22(this []*Expr) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() []*ast.Expr {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := make([]*ast.Expr, %d)\n", len(this))
+		for i := range this {
+			fmt.Fprintf(buf, "this[%d] = %s\n", i, deriveGoStringExpr(this[i]))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
 func deriveCompare_12(this, that *Keyword) int {
 	if this == nil {
 		if that == nil {
@@ -1349,6 +2009,109 @@ func deriveEqual_18(this, that *Space) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
 			deriveEqual_23(this.Space, that.Space)
+}
+
+func deriveGoString_23(this *Name) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.Name {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.Name{}\n")
+		if this.Before != nil {
+			fmt.Fprintf(buf, "this.Before = %s\n", deriveGoString_(this.Before))
+		}
+		if this.DoubleValue != nil {
+			fmt.Fprintf(buf, "this.DoubleValue = func (v float64) *float64 { return &v }(%#v)\n", *this.DoubleValue)
+		}
+		if this.IntValue != nil {
+			fmt.Fprintf(buf, "this.IntValue = func (v int64) *int64 { return &v }(%#v)\n", *this.IntValue)
+		}
+		if this.UintValue != nil {
+			fmt.Fprintf(buf, "this.UintValue = func (v uint64) *uint64 { return &v }(%#v)\n", *this.UintValue)
+		}
+		if this.BoolValue != nil {
+			fmt.Fprintf(buf, "this.BoolValue = func (v bool) *bool { return &v }(%#v)\n", *this.BoolValue)
+		}
+		if this.StringValue != nil {
+			fmt.Fprintf(buf, "this.StringValue = func (v string) *string { return &v }(%#v)\n", *this.StringValue)
+		}
+		if this.BytesValue != nil {
+			fmt.Fprintf(buf, "this.BytesValue = %#v\n", this.BytesValue)
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_24(this *AnyName) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.AnyName {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.AnyName{}\n")
+		if this.Underscore != nil {
+			fmt.Fprintf(buf, "this.Underscore = %s\n", deriveGoString_14(this.Underscore))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_25(this *AnyNameExcept) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.AnyNameExcept {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.AnyNameExcept{}\n")
+		if this.Exclamation != nil {
+			fmt.Fprintf(buf, "this.Exclamation = %s\n", deriveGoString_14(this.Exclamation))
+		}
+		if this.OpenParen != nil {
+			fmt.Fprintf(buf, "this.OpenParen = %s\n", deriveGoString_14(this.OpenParen))
+		}
+		if this.Except != nil {
+			fmt.Fprintf(buf, "this.Except = %s\n", deriveGoString_20(this.Except))
+		}
+		if this.CloseParen != nil {
+			fmt.Fprintf(buf, "this.CloseParen = %s\n", deriveGoString_14(this.CloseParen))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
+}
+
+func deriveGoString_26(this *NameChoice) string {
+	buf := bytes.NewBuffer(nil)
+	fmt.Fprintf(buf, "func() *ast.NameChoice {\n")
+	if this == nil {
+		fmt.Fprintf(buf, "return nil\n")
+	} else {
+		fmt.Fprintf(buf, "this := &ast.NameChoice{}\n")
+		if this.OpenParen != nil {
+			fmt.Fprintf(buf, "this.OpenParen = %s\n", deriveGoString_14(this.OpenParen))
+		}
+		if this.Left != nil {
+			fmt.Fprintf(buf, "this.Left = %s\n", deriveGoString_20(this.Left))
+		}
+		if this.Pipe != nil {
+			fmt.Fprintf(buf, "this.Pipe = %s\n", deriveGoString_14(this.Pipe))
+		}
+		if this.Right != nil {
+			fmt.Fprintf(buf, "this.Right = %s\n", deriveGoString_20(this.Right))
+		}
+		if this.CloseParen != nil {
+			fmt.Fprintf(buf, "this.CloseParen = %s\n", deriveGoString_14(this.CloseParen))
+		}
+		fmt.Fprintf(buf, "return this\n")
+	}
+	fmt.Fprintf(buf, "}()\n")
+	return buf.String()
 }
 
 func deriveCompare_15(this, that *Space) int {
