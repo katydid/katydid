@@ -130,6 +130,162 @@ func deriveGoStringExpr(this *Expr) string {
 	return buf.String()
 }
 
+// deriveDeepCopyGrammar recursively copies the contents of src into dst.
+func deriveDeepCopyGrammar(dst, src *Grammar) {
+	if src.TopPattern == nil {
+		dst.TopPattern = nil
+	} else {
+		dst.TopPattern = new(Pattern)
+		deriveDeepCopyPattern(dst.TopPattern, src.TopPattern)
+	}
+	if src.PatternDecls == nil {
+		dst.PatternDecls = nil
+	} else {
+		if dst.PatternDecls != nil {
+			if len(src.PatternDecls) > len(dst.PatternDecls) {
+				if cap(dst.PatternDecls) >= len(src.PatternDecls) {
+					dst.PatternDecls = (dst.PatternDecls)[:len(src.PatternDecls)]
+				} else {
+					dst.PatternDecls = make([]*PatternDecl, len(src.PatternDecls))
+				}
+			} else if len(src.PatternDecls) < len(dst.PatternDecls) {
+				dst.PatternDecls = (dst.PatternDecls)[:len(src.PatternDecls)]
+			}
+		} else {
+			dst.PatternDecls = make([]*PatternDecl, len(src.PatternDecls))
+		}
+		deriveDeepCopy(dst.PatternDecls, src.PatternDecls)
+	}
+	if src.After == nil {
+		dst.After = nil
+	} else {
+		dst.After = new(Space)
+		deriveDeepCopy_(dst.After, src.After)
+	}
+}
+
+// deriveDeepCopyPattern recursively copies the contents of src into dst.
+func deriveDeepCopyPattern(dst, src *Pattern) {
+	if src.Empty == nil {
+		dst.Empty = nil
+	} else {
+		dst.Empty = new(Empty)
+		deriveDeepCopy_1(dst.Empty, src.Empty)
+	}
+	if src.TreeNode == nil {
+		dst.TreeNode = nil
+	} else {
+		dst.TreeNode = new(TreeNode)
+		deriveDeepCopy_2(dst.TreeNode, src.TreeNode)
+	}
+	if src.LeafNode == nil {
+		dst.LeafNode = nil
+	} else {
+		dst.LeafNode = new(LeafNode)
+		deriveDeepCopy_3(dst.LeafNode, src.LeafNode)
+	}
+	if src.Concat == nil {
+		dst.Concat = nil
+	} else {
+		dst.Concat = new(Concat)
+		deriveDeepCopy_4(dst.Concat, src.Concat)
+	}
+	if src.Or == nil {
+		dst.Or = nil
+	} else {
+		dst.Or = new(Or)
+		deriveDeepCopy_5(dst.Or, src.Or)
+	}
+	if src.And == nil {
+		dst.And = nil
+	} else {
+		dst.And = new(And)
+		deriveDeepCopy_6(dst.And, src.And)
+	}
+	if src.ZeroOrMore == nil {
+		dst.ZeroOrMore = nil
+	} else {
+		dst.ZeroOrMore = new(ZeroOrMore)
+		deriveDeepCopy_7(dst.ZeroOrMore, src.ZeroOrMore)
+	}
+	if src.Reference == nil {
+		dst.Reference = nil
+	} else {
+		dst.Reference = new(Reference)
+		deriveDeepCopy_8(dst.Reference, src.Reference)
+	}
+	if src.Not == nil {
+		dst.Not = nil
+	} else {
+		dst.Not = new(Not)
+		deriveDeepCopy_9(dst.Not, src.Not)
+	}
+	if src.ZAny == nil {
+		dst.ZAny = nil
+	} else {
+		dst.ZAny = new(ZAny)
+		deriveDeepCopy_10(dst.ZAny, src.ZAny)
+	}
+	if src.Contains == nil {
+		dst.Contains = nil
+	} else {
+		dst.Contains = new(Contains)
+		deriveDeepCopy_11(dst.Contains, src.Contains)
+	}
+	if src.Optional == nil {
+		dst.Optional = nil
+	} else {
+		dst.Optional = new(Optional)
+		deriveDeepCopy_12(dst.Optional, src.Optional)
+	}
+	if src.Interleave == nil {
+		dst.Interleave = nil
+	} else {
+		dst.Interleave = new(Interleave)
+		deriveDeepCopy_13(dst.Interleave, src.Interleave)
+	}
+}
+
+// deriveDeepCopyExpr recursively copies the contents of src into dst.
+func deriveDeepCopyExpr(dst, src *Expr) {
+	if src.RightArrow == nil {
+		dst.RightArrow = nil
+	} else {
+		dst.RightArrow = new(Keyword)
+		deriveDeepCopy_14(dst.RightArrow, src.RightArrow)
+	}
+	if src.Comma == nil {
+		dst.Comma = nil
+	} else {
+		dst.Comma = new(Keyword)
+		deriveDeepCopy_14(dst.Comma, src.Comma)
+	}
+	if src.Terminal == nil {
+		dst.Terminal = nil
+	} else {
+		dst.Terminal = new(Terminal)
+		deriveDeepCopy_15(dst.Terminal, src.Terminal)
+	}
+	if src.List == nil {
+		dst.List = nil
+	} else {
+		dst.List = new(List)
+		deriveDeepCopy_16(dst.List, src.List)
+	}
+	if src.Function == nil {
+		dst.Function = nil
+	} else {
+		dst.Function = new(Function)
+		deriveDeepCopy_17(dst.Function, src.Function)
+	}
+	if src.BuiltIn == nil {
+		dst.BuiltIn = nil
+	} else {
+		dst.BuiltIn = new(BuiltIn)
+		deriveDeepCopy_18(dst.BuiltIn, src.BuiltIn)
+	}
+}
+
 func deriveComparePattern(this, that *Pattern) int {
 	if this == nil {
 		if that == nil {
@@ -180,159 +336,6 @@ func deriveComparePattern(this, that *Pattern) int {
 		return c
 	}
 	return 0
-}
-
-func deriveCopyToGrammar(this, that *Grammar) {
-	if this.TopPattern == nil {
-		that.TopPattern = nil
-	} else {
-		that.TopPattern = new(Pattern)
-		deriveCopyToPattern(this.TopPattern, that.TopPattern)
-	}
-	if this.PatternDecls == nil {
-		that.PatternDecls = nil
-	} else {
-		if that.PatternDecls != nil {
-			if len(this.PatternDecls) > len(that.PatternDecls) {
-				if cap(that.PatternDecls) >= len(this.PatternDecls) {
-					that.PatternDecls = (that.PatternDecls)[:len(this.PatternDecls)]
-				} else {
-					that.PatternDecls = make([]*PatternDecl, len(this.PatternDecls))
-				}
-			} else if len(this.PatternDecls) < len(that.PatternDecls) {
-				that.PatternDecls = (that.PatternDecls)[:len(this.PatternDecls)]
-			}
-		} else {
-			that.PatternDecls = make([]*PatternDecl, len(this.PatternDecls))
-		}
-		deriveCopyTo(this.PatternDecls, that.PatternDecls)
-	}
-	if this.After == nil {
-		that.After = nil
-	} else {
-		that.After = new(Space)
-		deriveCopyTo_(this.After, that.After)
-	}
-}
-
-func deriveCopyToPattern(this, that *Pattern) {
-	if this.Empty == nil {
-		that.Empty = nil
-	} else {
-		that.Empty = new(Empty)
-		deriveCopyTo_1(this.Empty, that.Empty)
-	}
-	if this.TreeNode == nil {
-		that.TreeNode = nil
-	} else {
-		that.TreeNode = new(TreeNode)
-		deriveCopyTo_2(this.TreeNode, that.TreeNode)
-	}
-	if this.LeafNode == nil {
-		that.LeafNode = nil
-	} else {
-		that.LeafNode = new(LeafNode)
-		deriveCopyTo_3(this.LeafNode, that.LeafNode)
-	}
-	if this.Concat == nil {
-		that.Concat = nil
-	} else {
-		that.Concat = new(Concat)
-		deriveCopyTo_4(this.Concat, that.Concat)
-	}
-	if this.Or == nil {
-		that.Or = nil
-	} else {
-		that.Or = new(Or)
-		deriveCopyTo_5(this.Or, that.Or)
-	}
-	if this.And == nil {
-		that.And = nil
-	} else {
-		that.And = new(And)
-		deriveCopyTo_6(this.And, that.And)
-	}
-	if this.ZeroOrMore == nil {
-		that.ZeroOrMore = nil
-	} else {
-		that.ZeroOrMore = new(ZeroOrMore)
-		deriveCopyTo_7(this.ZeroOrMore, that.ZeroOrMore)
-	}
-	if this.Reference == nil {
-		that.Reference = nil
-	} else {
-		that.Reference = new(Reference)
-		deriveCopyTo_8(this.Reference, that.Reference)
-	}
-	if this.Not == nil {
-		that.Not = nil
-	} else {
-		that.Not = new(Not)
-		deriveCopyTo_9(this.Not, that.Not)
-	}
-	if this.ZAny == nil {
-		that.ZAny = nil
-	} else {
-		that.ZAny = new(ZAny)
-		deriveCopyTo_10(this.ZAny, that.ZAny)
-	}
-	if this.Contains == nil {
-		that.Contains = nil
-	} else {
-		that.Contains = new(Contains)
-		deriveCopyTo_11(this.Contains, that.Contains)
-	}
-	if this.Optional == nil {
-		that.Optional = nil
-	} else {
-		that.Optional = new(Optional)
-		deriveCopyTo_12(this.Optional, that.Optional)
-	}
-	if this.Interleave == nil {
-		that.Interleave = nil
-	} else {
-		that.Interleave = new(Interleave)
-		deriveCopyTo_13(this.Interleave, that.Interleave)
-	}
-}
-
-func deriveCopyToExpr(this, that *Expr) {
-	if this.RightArrow == nil {
-		that.RightArrow = nil
-	} else {
-		that.RightArrow = new(Keyword)
-		deriveCopyTo_14(this.RightArrow, that.RightArrow)
-	}
-	if this.Comma == nil {
-		that.Comma = nil
-	} else {
-		that.Comma = new(Keyword)
-		deriveCopyTo_14(this.Comma, that.Comma)
-	}
-	if this.Terminal == nil {
-		that.Terminal = nil
-	} else {
-		that.Terminal = new(Terminal)
-		deriveCopyTo_15(this.Terminal, that.Terminal)
-	}
-	if this.List == nil {
-		that.List = nil
-	} else {
-		that.List = new(List)
-		deriveCopyTo_16(this.List, that.List)
-	}
-	if this.Function == nil {
-		that.Function = nil
-	} else {
-		that.Function = new(Function)
-		deriveCopyTo_17(this.Function, that.Function)
-	}
-	if this.BuiltIn == nil {
-		that.BuiltIn = nil
-	} else {
-		that.BuiltIn = new(BuiltIn)
-		deriveCopyTo_18(this.BuiltIn, that.BuiltIn)
-	}
 }
 
 func deriveEqualPattern(this, that *Pattern) bool {
@@ -819,6 +822,525 @@ func deriveGoString_18(this *BuiltIn) string {
 	return buf.String()
 }
 
+// deriveDeepCopy recursively copies the contents of src into dst.
+func deriveDeepCopy(dst, src []*PatternDecl) {
+	for src_i, src_value := range src {
+		if src_value == nil {
+			dst[src_i] = nil
+		} else {
+			dst[src_i] = new(PatternDecl)
+			deriveDeepCopy_19(dst[src_i], src_value)
+		}
+	}
+}
+
+// deriveDeepCopy_ recursively copies the contents of src into dst.
+func deriveDeepCopy_(dst, src *Space) {
+	if src.Space == nil {
+		dst.Space = nil
+	} else {
+		if dst.Space != nil {
+			if len(src.Space) > len(dst.Space) {
+				if cap(dst.Space) >= len(src.Space) {
+					dst.Space = (dst.Space)[:len(src.Space)]
+				} else {
+					dst.Space = make([]string, len(src.Space))
+				}
+			} else if len(src.Space) < len(dst.Space) {
+				dst.Space = (dst.Space)[:len(src.Space)]
+			}
+		} else {
+			dst.Space = make([]string, len(src.Space))
+		}
+		copy(dst.Space, src.Space)
+	}
+}
+
+// deriveDeepCopy_1 recursively copies the contents of src into dst.
+func deriveDeepCopy_1(dst, src *Empty) {
+	if src.Empty == nil {
+		dst.Empty = nil
+	} else {
+		dst.Empty = new(Keyword)
+		deriveDeepCopy_14(dst.Empty, src.Empty)
+	}
+}
+
+// deriveDeepCopy_2 recursively copies the contents of src into dst.
+func deriveDeepCopy_2(dst, src *TreeNode) {
+	if src.Name == nil {
+		dst.Name = nil
+	} else {
+		dst.Name = new(NameExpr)
+		deriveDeepCopy_20(dst.Name, src.Name)
+	}
+	if src.Colon == nil {
+		dst.Colon = nil
+	} else {
+		dst.Colon = new(Keyword)
+		deriveDeepCopy_14(dst.Colon, src.Colon)
+	}
+	if src.Pattern == nil {
+		dst.Pattern = nil
+	} else {
+		dst.Pattern = new(Pattern)
+		deriveDeepCopyPattern(dst.Pattern, src.Pattern)
+	}
+}
+
+// deriveDeepCopy_3 recursively copies the contents of src into dst.
+func deriveDeepCopy_3(dst, src *LeafNode) {
+	if src.Expr == nil {
+		dst.Expr = nil
+	} else {
+		dst.Expr = new(Expr)
+		deriveDeepCopyExpr(dst.Expr, src.Expr)
+	}
+}
+
+// deriveDeepCopy_4 recursively copies the contents of src into dst.
+func deriveDeepCopy_4(dst, src *Concat) {
+	if src.OpenBracket == nil {
+		dst.OpenBracket = nil
+	} else {
+		dst.OpenBracket = new(Keyword)
+		deriveDeepCopy_14(dst.OpenBracket, src.OpenBracket)
+	}
+	if src.LeftPattern == nil {
+		dst.LeftPattern = nil
+	} else {
+		dst.LeftPattern = new(Pattern)
+		deriveDeepCopyPattern(dst.LeftPattern, src.LeftPattern)
+	}
+	if src.Comma == nil {
+		dst.Comma = nil
+	} else {
+		dst.Comma = new(Keyword)
+		deriveDeepCopy_14(dst.Comma, src.Comma)
+	}
+	if src.RightPattern == nil {
+		dst.RightPattern = nil
+	} else {
+		dst.RightPattern = new(Pattern)
+		deriveDeepCopyPattern(dst.RightPattern, src.RightPattern)
+	}
+	if src.ExtraComma == nil {
+		dst.ExtraComma = nil
+	} else {
+		dst.ExtraComma = new(Keyword)
+		deriveDeepCopy_14(dst.ExtraComma, src.ExtraComma)
+	}
+	if src.CloseBracket == nil {
+		dst.CloseBracket = nil
+	} else {
+		dst.CloseBracket = new(Keyword)
+		deriveDeepCopy_14(dst.CloseBracket, src.CloseBracket)
+	}
+}
+
+// deriveDeepCopy_5 recursively copies the contents of src into dst.
+func deriveDeepCopy_5(dst, src *Or) {
+	if src.OpenParen == nil {
+		dst.OpenParen = nil
+	} else {
+		dst.OpenParen = new(Keyword)
+		deriveDeepCopy_14(dst.OpenParen, src.OpenParen)
+	}
+	if src.LeftPattern == nil {
+		dst.LeftPattern = nil
+	} else {
+		dst.LeftPattern = new(Pattern)
+		deriveDeepCopyPattern(dst.LeftPattern, src.LeftPattern)
+	}
+	if src.Pipe == nil {
+		dst.Pipe = nil
+	} else {
+		dst.Pipe = new(Keyword)
+		deriveDeepCopy_14(dst.Pipe, src.Pipe)
+	}
+	if src.RightPattern == nil {
+		dst.RightPattern = nil
+	} else {
+		dst.RightPattern = new(Pattern)
+		deriveDeepCopyPattern(dst.RightPattern, src.RightPattern)
+	}
+	if src.CloseParen == nil {
+		dst.CloseParen = nil
+	} else {
+		dst.CloseParen = new(Keyword)
+		deriveDeepCopy_14(dst.CloseParen, src.CloseParen)
+	}
+}
+
+// deriveDeepCopy_6 recursively copies the contents of src into dst.
+func deriveDeepCopy_6(dst, src *And) {
+	if src.OpenParen == nil {
+		dst.OpenParen = nil
+	} else {
+		dst.OpenParen = new(Keyword)
+		deriveDeepCopy_14(dst.OpenParen, src.OpenParen)
+	}
+	if src.LeftPattern == nil {
+		dst.LeftPattern = nil
+	} else {
+		dst.LeftPattern = new(Pattern)
+		deriveDeepCopyPattern(dst.LeftPattern, src.LeftPattern)
+	}
+	if src.Ampersand == nil {
+		dst.Ampersand = nil
+	} else {
+		dst.Ampersand = new(Keyword)
+		deriveDeepCopy_14(dst.Ampersand, src.Ampersand)
+	}
+	if src.RightPattern == nil {
+		dst.RightPattern = nil
+	} else {
+		dst.RightPattern = new(Pattern)
+		deriveDeepCopyPattern(dst.RightPattern, src.RightPattern)
+	}
+	if src.CloseParen == nil {
+		dst.CloseParen = nil
+	} else {
+		dst.CloseParen = new(Keyword)
+		deriveDeepCopy_14(dst.CloseParen, src.CloseParen)
+	}
+}
+
+// deriveDeepCopy_7 recursively copies the contents of src into dst.
+func deriveDeepCopy_7(dst, src *ZeroOrMore) {
+	if src.OpenParen == nil {
+		dst.OpenParen = nil
+	} else {
+		dst.OpenParen = new(Keyword)
+		deriveDeepCopy_14(dst.OpenParen, src.OpenParen)
+	}
+	if src.Pattern == nil {
+		dst.Pattern = nil
+	} else {
+		dst.Pattern = new(Pattern)
+		deriveDeepCopyPattern(dst.Pattern, src.Pattern)
+	}
+	if src.CloseParen == nil {
+		dst.CloseParen = nil
+	} else {
+		dst.CloseParen = new(Keyword)
+		deriveDeepCopy_14(dst.CloseParen, src.CloseParen)
+	}
+	if src.Star == nil {
+		dst.Star = nil
+	} else {
+		dst.Star = new(Keyword)
+		deriveDeepCopy_14(dst.Star, src.Star)
+	}
+}
+
+// deriveDeepCopy_8 recursively copies the contents of src into dst.
+func deriveDeepCopy_8(dst, src *Reference) {
+	if src.At == nil {
+		dst.At = nil
+	} else {
+		dst.At = new(Keyword)
+		deriveDeepCopy_14(dst.At, src.At)
+	}
+	dst.Name = src.Name
+}
+
+// deriveDeepCopy_9 recursively copies the contents of src into dst.
+func deriveDeepCopy_9(dst, src *Not) {
+	if src.Exclamation == nil {
+		dst.Exclamation = nil
+	} else {
+		dst.Exclamation = new(Keyword)
+		deriveDeepCopy_14(dst.Exclamation, src.Exclamation)
+	}
+	if src.OpenParen == nil {
+		dst.OpenParen = nil
+	} else {
+		dst.OpenParen = new(Keyword)
+		deriveDeepCopy_14(dst.OpenParen, src.OpenParen)
+	}
+	if src.Pattern == nil {
+		dst.Pattern = nil
+	} else {
+		dst.Pattern = new(Pattern)
+		deriveDeepCopyPattern(dst.Pattern, src.Pattern)
+	}
+	if src.CloseParen == nil {
+		dst.CloseParen = nil
+	} else {
+		dst.CloseParen = new(Keyword)
+		deriveDeepCopy_14(dst.CloseParen, src.CloseParen)
+	}
+}
+
+// deriveDeepCopy_10 recursively copies the contents of src into dst.
+func deriveDeepCopy_10(dst, src *ZAny) {
+	if src.Star == nil {
+		dst.Star = nil
+	} else {
+		dst.Star = new(Keyword)
+		deriveDeepCopy_14(dst.Star, src.Star)
+	}
+}
+
+// deriveDeepCopy_11 recursively copies the contents of src into dst.
+func deriveDeepCopy_11(dst, src *Contains) {
+	if src.Dot == nil {
+		dst.Dot = nil
+	} else {
+		dst.Dot = new(Keyword)
+		deriveDeepCopy_14(dst.Dot, src.Dot)
+	}
+	if src.Pattern == nil {
+		dst.Pattern = nil
+	} else {
+		dst.Pattern = new(Pattern)
+		deriveDeepCopyPattern(dst.Pattern, src.Pattern)
+	}
+}
+
+// deriveDeepCopy_12 recursively copies the contents of src into dst.
+func deriveDeepCopy_12(dst, src *Optional) {
+	if src.OpenParen == nil {
+		dst.OpenParen = nil
+	} else {
+		dst.OpenParen = new(Keyword)
+		deriveDeepCopy_14(dst.OpenParen, src.OpenParen)
+	}
+	if src.Pattern == nil {
+		dst.Pattern = nil
+	} else {
+		dst.Pattern = new(Pattern)
+		deriveDeepCopyPattern(dst.Pattern, src.Pattern)
+	}
+	if src.CloseParen == nil {
+		dst.CloseParen = nil
+	} else {
+		dst.CloseParen = new(Keyword)
+		deriveDeepCopy_14(dst.CloseParen, src.CloseParen)
+	}
+	if src.QuestionMark == nil {
+		dst.QuestionMark = nil
+	} else {
+		dst.QuestionMark = new(Keyword)
+		deriveDeepCopy_14(dst.QuestionMark, src.QuestionMark)
+	}
+}
+
+// deriveDeepCopy_13 recursively copies the contents of src into dst.
+func deriveDeepCopy_13(dst, src *Interleave) {
+	if src.OpenCurly == nil {
+		dst.OpenCurly = nil
+	} else {
+		dst.OpenCurly = new(Keyword)
+		deriveDeepCopy_14(dst.OpenCurly, src.OpenCurly)
+	}
+	if src.LeftPattern == nil {
+		dst.LeftPattern = nil
+	} else {
+		dst.LeftPattern = new(Pattern)
+		deriveDeepCopyPattern(dst.LeftPattern, src.LeftPattern)
+	}
+	if src.SemiColon == nil {
+		dst.SemiColon = nil
+	} else {
+		dst.SemiColon = new(Keyword)
+		deriveDeepCopy_14(dst.SemiColon, src.SemiColon)
+	}
+	if src.RightPattern == nil {
+		dst.RightPattern = nil
+	} else {
+		dst.RightPattern = new(Pattern)
+		deriveDeepCopyPattern(dst.RightPattern, src.RightPattern)
+	}
+	if src.ExtraSemiColon == nil {
+		dst.ExtraSemiColon = nil
+	} else {
+		dst.ExtraSemiColon = new(Keyword)
+		deriveDeepCopy_14(dst.ExtraSemiColon, src.ExtraSemiColon)
+	}
+	if src.CloseCurly == nil {
+		dst.CloseCurly = nil
+	} else {
+		dst.CloseCurly = new(Keyword)
+		deriveDeepCopy_14(dst.CloseCurly, src.CloseCurly)
+	}
+}
+
+// deriveDeepCopy_14 recursively copies the contents of src into dst.
+func deriveDeepCopy_14(dst, src *Keyword) {
+	if src.Before == nil {
+		dst.Before = nil
+	} else {
+		dst.Before = new(Space)
+		deriveDeepCopy_(dst.Before, src.Before)
+	}
+	dst.Value = src.Value
+}
+
+// deriveDeepCopy_15 recursively copies the contents of src into dst.
+func deriveDeepCopy_15(dst, src *Terminal) {
+	if src.Before == nil {
+		dst.Before = nil
+	} else {
+		dst.Before = new(Space)
+		deriveDeepCopy_(dst.Before, src.Before)
+	}
+	dst.Literal = src.Literal
+	if src.DoubleValue == nil {
+		dst.DoubleValue = nil
+	} else {
+		dst.DoubleValue = new(float64)
+		*dst.DoubleValue = *src.DoubleValue
+	}
+	if src.IntValue == nil {
+		dst.IntValue = nil
+	} else {
+		dst.IntValue = new(int64)
+		*dst.IntValue = *src.IntValue
+	}
+	if src.UintValue == nil {
+		dst.UintValue = nil
+	} else {
+		dst.UintValue = new(uint64)
+		*dst.UintValue = *src.UintValue
+	}
+	if src.BoolValue == nil {
+		dst.BoolValue = nil
+	} else {
+		dst.BoolValue = new(bool)
+		*dst.BoolValue = *src.BoolValue
+	}
+	if src.StringValue == nil {
+		dst.StringValue = nil
+	} else {
+		dst.StringValue = new(string)
+		*dst.StringValue = *src.StringValue
+	}
+	if src.BytesValue == nil {
+		dst.BytesValue = nil
+	} else {
+		if dst.BytesValue != nil {
+			if len(src.BytesValue) > len(dst.BytesValue) {
+				if cap(dst.BytesValue) >= len(src.BytesValue) {
+					dst.BytesValue = (dst.BytesValue)[:len(src.BytesValue)]
+				} else {
+					dst.BytesValue = make([]byte, len(src.BytesValue))
+				}
+			} else if len(src.BytesValue) < len(dst.BytesValue) {
+				dst.BytesValue = (dst.BytesValue)[:len(src.BytesValue)]
+			}
+		} else {
+			dst.BytesValue = make([]byte, len(src.BytesValue))
+		}
+		copy(dst.BytesValue, src.BytesValue)
+	}
+	if src.Variable == nil {
+		dst.Variable = nil
+	} else {
+		dst.Variable = new(Variable)
+		*dst.Variable = *src.Variable
+	}
+}
+
+// deriveDeepCopy_16 recursively copies the contents of src into dst.
+func deriveDeepCopy_16(dst, src *List) {
+	if src.Before == nil {
+		dst.Before = nil
+	} else {
+		dst.Before = new(Space)
+		deriveDeepCopy_(dst.Before, src.Before)
+	}
+	dst.Type = src.Type
+	if src.OpenCurly == nil {
+		dst.OpenCurly = nil
+	} else {
+		dst.OpenCurly = new(Keyword)
+		deriveDeepCopy_14(dst.OpenCurly, src.OpenCurly)
+	}
+	if src.Elems == nil {
+		dst.Elems = nil
+	} else {
+		if dst.Elems != nil {
+			if len(src.Elems) > len(dst.Elems) {
+				if cap(dst.Elems) >= len(src.Elems) {
+					dst.Elems = (dst.Elems)[:len(src.Elems)]
+				} else {
+					dst.Elems = make([]*Expr, len(src.Elems))
+				}
+			} else if len(src.Elems) < len(dst.Elems) {
+				dst.Elems = (dst.Elems)[:len(src.Elems)]
+			}
+		} else {
+			dst.Elems = make([]*Expr, len(src.Elems))
+		}
+		deriveDeepCopy_21(dst.Elems, src.Elems)
+	}
+	if src.CloseCurly == nil {
+		dst.CloseCurly = nil
+	} else {
+		dst.CloseCurly = new(Keyword)
+		deriveDeepCopy_14(dst.CloseCurly, src.CloseCurly)
+	}
+}
+
+// deriveDeepCopy_17 recursively copies the contents of src into dst.
+func deriveDeepCopy_17(dst, src *Function) {
+	if src.Before == nil {
+		dst.Before = nil
+	} else {
+		dst.Before = new(Space)
+		deriveDeepCopy_(dst.Before, src.Before)
+	}
+	dst.Name = src.Name
+	if src.OpenParen == nil {
+		dst.OpenParen = nil
+	} else {
+		dst.OpenParen = new(Keyword)
+		deriveDeepCopy_14(dst.OpenParen, src.OpenParen)
+	}
+	if src.Params == nil {
+		dst.Params = nil
+	} else {
+		if dst.Params != nil {
+			if len(src.Params) > len(dst.Params) {
+				if cap(dst.Params) >= len(src.Params) {
+					dst.Params = (dst.Params)[:len(src.Params)]
+				} else {
+					dst.Params = make([]*Expr, len(src.Params))
+				}
+			} else if len(src.Params) < len(dst.Params) {
+				dst.Params = (dst.Params)[:len(src.Params)]
+			}
+		} else {
+			dst.Params = make([]*Expr, len(src.Params))
+		}
+		deriveDeepCopy_21(dst.Params, src.Params)
+	}
+	if src.CloseParen == nil {
+		dst.CloseParen = nil
+	} else {
+		dst.CloseParen = new(Keyword)
+		deriveDeepCopy_14(dst.CloseParen, src.CloseParen)
+	}
+}
+
+// deriveDeepCopy_18 recursively copies the contents of src into dst.
+func deriveDeepCopy_18(dst, src *BuiltIn) {
+	if src.Symbol == nil {
+		dst.Symbol = nil
+	} else {
+		dst.Symbol = new(Keyword)
+		deriveDeepCopy_14(dst.Symbol, src.Symbol)
+	}
+	if src.Expr == nil {
+		dst.Expr = nil
+	} else {
+		dst.Expr = new(Expr)
+		deriveDeepCopyExpr(dst.Expr, src.Expr)
+	}
+}
+
 func deriveCompare(this, that *Empty) int {
 	if this == nil {
 		if that == nil {
@@ -1120,505 +1642,6 @@ func deriveCompare_11(this, that *Interleave) int {
 	return 0
 }
 
-func deriveCopyTo(this, that []*PatternDecl) {
-	for this_i, this_value := range this {
-		if this_value == nil {
-			that[this_i] = nil
-		} else {
-			that[this_i] = new(PatternDecl)
-			deriveCopyTo_19(this_value, that[this_i])
-		}
-	}
-}
-
-func deriveCopyTo_(this, that *Space) {
-	if this.Space == nil {
-		that.Space = nil
-	} else {
-		if that.Space != nil {
-			if len(this.Space) > len(that.Space) {
-				if cap(that.Space) >= len(this.Space) {
-					that.Space = (that.Space)[:len(this.Space)]
-				} else {
-					that.Space = make([]string, len(this.Space))
-				}
-			} else if len(this.Space) < len(that.Space) {
-				that.Space = (that.Space)[:len(this.Space)]
-			}
-		} else {
-			that.Space = make([]string, len(this.Space))
-		}
-		copy(that.Space, this.Space)
-	}
-}
-
-func deriveCopyTo_1(this, that *Empty) {
-	if this.Empty == nil {
-		that.Empty = nil
-	} else {
-		that.Empty = new(Keyword)
-		deriveCopyTo_14(this.Empty, that.Empty)
-	}
-}
-
-func deriveCopyTo_2(this, that *TreeNode) {
-	if this.Name == nil {
-		that.Name = nil
-	} else {
-		that.Name = new(NameExpr)
-		deriveCopyTo_20(this.Name, that.Name)
-	}
-	if this.Colon == nil {
-		that.Colon = nil
-	} else {
-		that.Colon = new(Keyword)
-		deriveCopyTo_14(this.Colon, that.Colon)
-	}
-	if this.Pattern == nil {
-		that.Pattern = nil
-	} else {
-		that.Pattern = new(Pattern)
-		deriveCopyToPattern(this.Pattern, that.Pattern)
-	}
-}
-
-func deriveCopyTo_3(this, that *LeafNode) {
-	if this.Expr == nil {
-		that.Expr = nil
-	} else {
-		that.Expr = new(Expr)
-		deriveCopyToExpr(this.Expr, that.Expr)
-	}
-}
-
-func deriveCopyTo_4(this, that *Concat) {
-	if this.OpenBracket == nil {
-		that.OpenBracket = nil
-	} else {
-		that.OpenBracket = new(Keyword)
-		deriveCopyTo_14(this.OpenBracket, that.OpenBracket)
-	}
-	if this.LeftPattern == nil {
-		that.LeftPattern = nil
-	} else {
-		that.LeftPattern = new(Pattern)
-		deriveCopyToPattern(this.LeftPattern, that.LeftPattern)
-	}
-	if this.Comma == nil {
-		that.Comma = nil
-	} else {
-		that.Comma = new(Keyword)
-		deriveCopyTo_14(this.Comma, that.Comma)
-	}
-	if this.RightPattern == nil {
-		that.RightPattern = nil
-	} else {
-		that.RightPattern = new(Pattern)
-		deriveCopyToPattern(this.RightPattern, that.RightPattern)
-	}
-	if this.ExtraComma == nil {
-		that.ExtraComma = nil
-	} else {
-		that.ExtraComma = new(Keyword)
-		deriveCopyTo_14(this.ExtraComma, that.ExtraComma)
-	}
-	if this.CloseBracket == nil {
-		that.CloseBracket = nil
-	} else {
-		that.CloseBracket = new(Keyword)
-		deriveCopyTo_14(this.CloseBracket, that.CloseBracket)
-	}
-}
-
-func deriveCopyTo_5(this, that *Or) {
-	if this.OpenParen == nil {
-		that.OpenParen = nil
-	} else {
-		that.OpenParen = new(Keyword)
-		deriveCopyTo_14(this.OpenParen, that.OpenParen)
-	}
-	if this.LeftPattern == nil {
-		that.LeftPattern = nil
-	} else {
-		that.LeftPattern = new(Pattern)
-		deriveCopyToPattern(this.LeftPattern, that.LeftPattern)
-	}
-	if this.Pipe == nil {
-		that.Pipe = nil
-	} else {
-		that.Pipe = new(Keyword)
-		deriveCopyTo_14(this.Pipe, that.Pipe)
-	}
-	if this.RightPattern == nil {
-		that.RightPattern = nil
-	} else {
-		that.RightPattern = new(Pattern)
-		deriveCopyToPattern(this.RightPattern, that.RightPattern)
-	}
-	if this.CloseParen == nil {
-		that.CloseParen = nil
-	} else {
-		that.CloseParen = new(Keyword)
-		deriveCopyTo_14(this.CloseParen, that.CloseParen)
-	}
-}
-
-func deriveCopyTo_6(this, that *And) {
-	if this.OpenParen == nil {
-		that.OpenParen = nil
-	} else {
-		that.OpenParen = new(Keyword)
-		deriveCopyTo_14(this.OpenParen, that.OpenParen)
-	}
-	if this.LeftPattern == nil {
-		that.LeftPattern = nil
-	} else {
-		that.LeftPattern = new(Pattern)
-		deriveCopyToPattern(this.LeftPattern, that.LeftPattern)
-	}
-	if this.Ampersand == nil {
-		that.Ampersand = nil
-	} else {
-		that.Ampersand = new(Keyword)
-		deriveCopyTo_14(this.Ampersand, that.Ampersand)
-	}
-	if this.RightPattern == nil {
-		that.RightPattern = nil
-	} else {
-		that.RightPattern = new(Pattern)
-		deriveCopyToPattern(this.RightPattern, that.RightPattern)
-	}
-	if this.CloseParen == nil {
-		that.CloseParen = nil
-	} else {
-		that.CloseParen = new(Keyword)
-		deriveCopyTo_14(this.CloseParen, that.CloseParen)
-	}
-}
-
-func deriveCopyTo_7(this, that *ZeroOrMore) {
-	if this.OpenParen == nil {
-		that.OpenParen = nil
-	} else {
-		that.OpenParen = new(Keyword)
-		deriveCopyTo_14(this.OpenParen, that.OpenParen)
-	}
-	if this.Pattern == nil {
-		that.Pattern = nil
-	} else {
-		that.Pattern = new(Pattern)
-		deriveCopyToPattern(this.Pattern, that.Pattern)
-	}
-	if this.CloseParen == nil {
-		that.CloseParen = nil
-	} else {
-		that.CloseParen = new(Keyword)
-		deriveCopyTo_14(this.CloseParen, that.CloseParen)
-	}
-	if this.Star == nil {
-		that.Star = nil
-	} else {
-		that.Star = new(Keyword)
-		deriveCopyTo_14(this.Star, that.Star)
-	}
-}
-
-func deriveCopyTo_8(this, that *Reference) {
-	if this.At == nil {
-		that.At = nil
-	} else {
-		that.At = new(Keyword)
-		deriveCopyTo_14(this.At, that.At)
-	}
-	that.Name = this.Name
-}
-
-func deriveCopyTo_9(this, that *Not) {
-	if this.Exclamation == nil {
-		that.Exclamation = nil
-	} else {
-		that.Exclamation = new(Keyword)
-		deriveCopyTo_14(this.Exclamation, that.Exclamation)
-	}
-	if this.OpenParen == nil {
-		that.OpenParen = nil
-	} else {
-		that.OpenParen = new(Keyword)
-		deriveCopyTo_14(this.OpenParen, that.OpenParen)
-	}
-	if this.Pattern == nil {
-		that.Pattern = nil
-	} else {
-		that.Pattern = new(Pattern)
-		deriveCopyToPattern(this.Pattern, that.Pattern)
-	}
-	if this.CloseParen == nil {
-		that.CloseParen = nil
-	} else {
-		that.CloseParen = new(Keyword)
-		deriveCopyTo_14(this.CloseParen, that.CloseParen)
-	}
-}
-
-func deriveCopyTo_10(this, that *ZAny) {
-	if this.Star == nil {
-		that.Star = nil
-	} else {
-		that.Star = new(Keyword)
-		deriveCopyTo_14(this.Star, that.Star)
-	}
-}
-
-func deriveCopyTo_11(this, that *Contains) {
-	if this.Dot == nil {
-		that.Dot = nil
-	} else {
-		that.Dot = new(Keyword)
-		deriveCopyTo_14(this.Dot, that.Dot)
-	}
-	if this.Pattern == nil {
-		that.Pattern = nil
-	} else {
-		that.Pattern = new(Pattern)
-		deriveCopyToPattern(this.Pattern, that.Pattern)
-	}
-}
-
-func deriveCopyTo_12(this, that *Optional) {
-	if this.OpenParen == nil {
-		that.OpenParen = nil
-	} else {
-		that.OpenParen = new(Keyword)
-		deriveCopyTo_14(this.OpenParen, that.OpenParen)
-	}
-	if this.Pattern == nil {
-		that.Pattern = nil
-	} else {
-		that.Pattern = new(Pattern)
-		deriveCopyToPattern(this.Pattern, that.Pattern)
-	}
-	if this.CloseParen == nil {
-		that.CloseParen = nil
-	} else {
-		that.CloseParen = new(Keyword)
-		deriveCopyTo_14(this.CloseParen, that.CloseParen)
-	}
-	if this.QuestionMark == nil {
-		that.QuestionMark = nil
-	} else {
-		that.QuestionMark = new(Keyword)
-		deriveCopyTo_14(this.QuestionMark, that.QuestionMark)
-	}
-}
-
-func deriveCopyTo_13(this, that *Interleave) {
-	if this.OpenCurly == nil {
-		that.OpenCurly = nil
-	} else {
-		that.OpenCurly = new(Keyword)
-		deriveCopyTo_14(this.OpenCurly, that.OpenCurly)
-	}
-	if this.LeftPattern == nil {
-		that.LeftPattern = nil
-	} else {
-		that.LeftPattern = new(Pattern)
-		deriveCopyToPattern(this.LeftPattern, that.LeftPattern)
-	}
-	if this.SemiColon == nil {
-		that.SemiColon = nil
-	} else {
-		that.SemiColon = new(Keyword)
-		deriveCopyTo_14(this.SemiColon, that.SemiColon)
-	}
-	if this.RightPattern == nil {
-		that.RightPattern = nil
-	} else {
-		that.RightPattern = new(Pattern)
-		deriveCopyToPattern(this.RightPattern, that.RightPattern)
-	}
-	if this.ExtraSemiColon == nil {
-		that.ExtraSemiColon = nil
-	} else {
-		that.ExtraSemiColon = new(Keyword)
-		deriveCopyTo_14(this.ExtraSemiColon, that.ExtraSemiColon)
-	}
-	if this.CloseCurly == nil {
-		that.CloseCurly = nil
-	} else {
-		that.CloseCurly = new(Keyword)
-		deriveCopyTo_14(this.CloseCurly, that.CloseCurly)
-	}
-}
-
-func deriveCopyTo_14(this, that *Keyword) {
-	if this.Before == nil {
-		that.Before = nil
-	} else {
-		that.Before = new(Space)
-		deriveCopyTo_(this.Before, that.Before)
-	}
-	that.Value = this.Value
-}
-
-func deriveCopyTo_15(this, that *Terminal) {
-	if this.Before == nil {
-		that.Before = nil
-	} else {
-		that.Before = new(Space)
-		deriveCopyTo_(this.Before, that.Before)
-	}
-	that.Literal = this.Literal
-	if this.DoubleValue == nil {
-		that.DoubleValue = nil
-	} else {
-		that.DoubleValue = new(float64)
-		*that.DoubleValue = *this.DoubleValue
-	}
-	if this.IntValue == nil {
-		that.IntValue = nil
-	} else {
-		that.IntValue = new(int64)
-		*that.IntValue = *this.IntValue
-	}
-	if this.UintValue == nil {
-		that.UintValue = nil
-	} else {
-		that.UintValue = new(uint64)
-		*that.UintValue = *this.UintValue
-	}
-	if this.BoolValue == nil {
-		that.BoolValue = nil
-	} else {
-		that.BoolValue = new(bool)
-		*that.BoolValue = *this.BoolValue
-	}
-	if this.StringValue == nil {
-		that.StringValue = nil
-	} else {
-		that.StringValue = new(string)
-		*that.StringValue = *this.StringValue
-	}
-	if this.BytesValue == nil {
-		that.BytesValue = nil
-	} else {
-		if that.BytesValue != nil {
-			if len(this.BytesValue) > len(that.BytesValue) {
-				if cap(that.BytesValue) >= len(this.BytesValue) {
-					that.BytesValue = (that.BytesValue)[:len(this.BytesValue)]
-				} else {
-					that.BytesValue = make([]byte, len(this.BytesValue))
-				}
-			} else if len(this.BytesValue) < len(that.BytesValue) {
-				that.BytesValue = (that.BytesValue)[:len(this.BytesValue)]
-			}
-		} else {
-			that.BytesValue = make([]byte, len(this.BytesValue))
-		}
-		copy(that.BytesValue, this.BytesValue)
-	}
-	if this.Variable == nil {
-		that.Variable = nil
-	} else {
-		that.Variable = new(Variable)
-		*that.Variable = *this.Variable
-	}
-}
-
-func deriveCopyTo_16(this, that *List) {
-	if this.Before == nil {
-		that.Before = nil
-	} else {
-		that.Before = new(Space)
-		deriveCopyTo_(this.Before, that.Before)
-	}
-	that.Type = this.Type
-	if this.OpenCurly == nil {
-		that.OpenCurly = nil
-	} else {
-		that.OpenCurly = new(Keyword)
-		deriveCopyTo_14(this.OpenCurly, that.OpenCurly)
-	}
-	if this.Elems == nil {
-		that.Elems = nil
-	} else {
-		if that.Elems != nil {
-			if len(this.Elems) > len(that.Elems) {
-				if cap(that.Elems) >= len(this.Elems) {
-					that.Elems = (that.Elems)[:len(this.Elems)]
-				} else {
-					that.Elems = make([]*Expr, len(this.Elems))
-				}
-			} else if len(this.Elems) < len(that.Elems) {
-				that.Elems = (that.Elems)[:len(this.Elems)]
-			}
-		} else {
-			that.Elems = make([]*Expr, len(this.Elems))
-		}
-		deriveCopyTo_21(this.Elems, that.Elems)
-	}
-	if this.CloseCurly == nil {
-		that.CloseCurly = nil
-	} else {
-		that.CloseCurly = new(Keyword)
-		deriveCopyTo_14(this.CloseCurly, that.CloseCurly)
-	}
-}
-
-func deriveCopyTo_17(this, that *Function) {
-	if this.Before == nil {
-		that.Before = nil
-	} else {
-		that.Before = new(Space)
-		deriveCopyTo_(this.Before, that.Before)
-	}
-	that.Name = this.Name
-	if this.OpenParen == nil {
-		that.OpenParen = nil
-	} else {
-		that.OpenParen = new(Keyword)
-		deriveCopyTo_14(this.OpenParen, that.OpenParen)
-	}
-	if this.Params == nil {
-		that.Params = nil
-	} else {
-		if that.Params != nil {
-			if len(this.Params) > len(that.Params) {
-				if cap(that.Params) >= len(this.Params) {
-					that.Params = (that.Params)[:len(this.Params)]
-				} else {
-					that.Params = make([]*Expr, len(this.Params))
-				}
-			} else if len(this.Params) < len(that.Params) {
-				that.Params = (that.Params)[:len(this.Params)]
-			}
-		} else {
-			that.Params = make([]*Expr, len(this.Params))
-		}
-		deriveCopyTo_21(this.Params, that.Params)
-	}
-	if this.CloseParen == nil {
-		that.CloseParen = nil
-	} else {
-		that.CloseParen = new(Keyword)
-		deriveCopyTo_14(this.CloseParen, that.CloseParen)
-	}
-}
-
-func deriveCopyTo_18(this, that *BuiltIn) {
-	if this.Symbol == nil {
-		that.Symbol = nil
-	} else {
-		that.Symbol = new(Keyword)
-		deriveCopyTo_14(this.Symbol, that.Symbol)
-	}
-	if this.Expr == nil {
-		that.Expr = nil
-	} else {
-		that.Expr = new(Expr)
-		deriveCopyToExpr(this.Expr, that.Expr)
-	}
-}
-
 func deriveEqual(this, that *Empty) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -1846,6 +1869,75 @@ func deriveGoString_22(this []*Expr) string {
 	return buf.String()
 }
 
+// deriveDeepCopy_19 recursively copies the contents of src into dst.
+func deriveDeepCopy_19(dst, src *PatternDecl) {
+	if src.Hash == nil {
+		dst.Hash = nil
+	} else {
+		dst.Hash = new(Keyword)
+		deriveDeepCopy_14(dst.Hash, src.Hash)
+	}
+	if src.Before == nil {
+		dst.Before = nil
+	} else {
+		dst.Before = new(Space)
+		deriveDeepCopy_(dst.Before, src.Before)
+	}
+	dst.Name = src.Name
+	if src.Eq == nil {
+		dst.Eq = nil
+	} else {
+		dst.Eq = new(Keyword)
+		deriveDeepCopy_14(dst.Eq, src.Eq)
+	}
+	if src.Pattern == nil {
+		dst.Pattern = nil
+	} else {
+		dst.Pattern = new(Pattern)
+		deriveDeepCopyPattern(dst.Pattern, src.Pattern)
+	}
+}
+
+// deriveDeepCopy_20 recursively copies the contents of src into dst.
+func deriveDeepCopy_20(dst, src *NameExpr) {
+	if src.Name == nil {
+		dst.Name = nil
+	} else {
+		dst.Name = new(Name)
+		deriveDeepCopy_22(dst.Name, src.Name)
+	}
+	if src.AnyName == nil {
+		dst.AnyName = nil
+	} else {
+		dst.AnyName = new(AnyName)
+		deriveDeepCopy_23(dst.AnyName, src.AnyName)
+	}
+	if src.AnyNameExcept == nil {
+		dst.AnyNameExcept = nil
+	} else {
+		dst.AnyNameExcept = new(AnyNameExcept)
+		deriveDeepCopy_24(dst.AnyNameExcept, src.AnyNameExcept)
+	}
+	if src.NameChoice == nil {
+		dst.NameChoice = nil
+	} else {
+		dst.NameChoice = new(NameChoice)
+		deriveDeepCopy_25(dst.NameChoice, src.NameChoice)
+	}
+}
+
+// deriveDeepCopy_21 recursively copies the contents of src into dst.
+func deriveDeepCopy_21(dst, src []*Expr) {
+	for src_i, src_value := range src {
+		if src_value == nil {
+			dst[src_i] = nil
+		} else {
+			dst[src_i] = new(Expr)
+			deriveDeepCopyExpr(dst[src_i], src_value)
+		}
+	}
+}
+
 func deriveCompare_12(this, that *Keyword) int {
 	if this == nil {
 		if that == nil {
@@ -1919,72 +2011,6 @@ func deriveCompare_14(this, that *Expr) int {
 		return c
 	}
 	return 0
-}
-
-func deriveCopyTo_19(this, that *PatternDecl) {
-	if this.Hash == nil {
-		that.Hash = nil
-	} else {
-		that.Hash = new(Keyword)
-		deriveCopyTo_14(this.Hash, that.Hash)
-	}
-	if this.Before == nil {
-		that.Before = nil
-	} else {
-		that.Before = new(Space)
-		deriveCopyTo_(this.Before, that.Before)
-	}
-	that.Name = this.Name
-	if this.Eq == nil {
-		that.Eq = nil
-	} else {
-		that.Eq = new(Keyword)
-		deriveCopyTo_14(this.Eq, that.Eq)
-	}
-	if this.Pattern == nil {
-		that.Pattern = nil
-	} else {
-		that.Pattern = new(Pattern)
-		deriveCopyToPattern(this.Pattern, that.Pattern)
-	}
-}
-
-func deriveCopyTo_20(this, that *NameExpr) {
-	if this.Name == nil {
-		that.Name = nil
-	} else {
-		that.Name = new(Name)
-		deriveCopyTo_22(this.Name, that.Name)
-	}
-	if this.AnyName == nil {
-		that.AnyName = nil
-	} else {
-		that.AnyName = new(AnyName)
-		deriveCopyTo_23(this.AnyName, that.AnyName)
-	}
-	if this.AnyNameExcept == nil {
-		that.AnyNameExcept = nil
-	} else {
-		that.AnyNameExcept = new(AnyNameExcept)
-		deriveCopyTo_24(this.AnyNameExcept, that.AnyNameExcept)
-	}
-	if this.NameChoice == nil {
-		that.NameChoice = nil
-	} else {
-		that.NameChoice = new(NameChoice)
-		deriveCopyTo_25(this.NameChoice, that.NameChoice)
-	}
-}
-
-func deriveCopyTo_21(this, that []*Expr) {
-	for this_i, this_value := range this {
-		if this_value == nil {
-			that[this_i] = nil
-		} else {
-			that[this_i] = new(Expr)
-			deriveCopyToExpr(this_value, that[this_i])
-		}
-	}
 }
 
 func deriveEqual_16(this, that *Keyword) bool {
@@ -2112,6 +2138,136 @@ func deriveGoString_26(this *NameChoice) string {
 	}
 	fmt.Fprintf(buf, "}()\n")
 	return buf.String()
+}
+
+// deriveDeepCopy_22 recursively copies the contents of src into dst.
+func deriveDeepCopy_22(dst, src *Name) {
+	if src.Before == nil {
+		dst.Before = nil
+	} else {
+		dst.Before = new(Space)
+		deriveDeepCopy_(dst.Before, src.Before)
+	}
+	if src.DoubleValue == nil {
+		dst.DoubleValue = nil
+	} else {
+		dst.DoubleValue = new(float64)
+		*dst.DoubleValue = *src.DoubleValue
+	}
+	if src.IntValue == nil {
+		dst.IntValue = nil
+	} else {
+		dst.IntValue = new(int64)
+		*dst.IntValue = *src.IntValue
+	}
+	if src.UintValue == nil {
+		dst.UintValue = nil
+	} else {
+		dst.UintValue = new(uint64)
+		*dst.UintValue = *src.UintValue
+	}
+	if src.BoolValue == nil {
+		dst.BoolValue = nil
+	} else {
+		dst.BoolValue = new(bool)
+		*dst.BoolValue = *src.BoolValue
+	}
+	if src.StringValue == nil {
+		dst.StringValue = nil
+	} else {
+		dst.StringValue = new(string)
+		*dst.StringValue = *src.StringValue
+	}
+	if src.BytesValue == nil {
+		dst.BytesValue = nil
+	} else {
+		if dst.BytesValue != nil {
+			if len(src.BytesValue) > len(dst.BytesValue) {
+				if cap(dst.BytesValue) >= len(src.BytesValue) {
+					dst.BytesValue = (dst.BytesValue)[:len(src.BytesValue)]
+				} else {
+					dst.BytesValue = make([]byte, len(src.BytesValue))
+				}
+			} else if len(src.BytesValue) < len(dst.BytesValue) {
+				dst.BytesValue = (dst.BytesValue)[:len(src.BytesValue)]
+			}
+		} else {
+			dst.BytesValue = make([]byte, len(src.BytesValue))
+		}
+		copy(dst.BytesValue, src.BytesValue)
+	}
+}
+
+// deriveDeepCopy_23 recursively copies the contents of src into dst.
+func deriveDeepCopy_23(dst, src *AnyName) {
+	if src.Underscore == nil {
+		dst.Underscore = nil
+	} else {
+		dst.Underscore = new(Keyword)
+		deriveDeepCopy_14(dst.Underscore, src.Underscore)
+	}
+}
+
+// deriveDeepCopy_24 recursively copies the contents of src into dst.
+func deriveDeepCopy_24(dst, src *AnyNameExcept) {
+	if src.Exclamation == nil {
+		dst.Exclamation = nil
+	} else {
+		dst.Exclamation = new(Keyword)
+		deriveDeepCopy_14(dst.Exclamation, src.Exclamation)
+	}
+	if src.OpenParen == nil {
+		dst.OpenParen = nil
+	} else {
+		dst.OpenParen = new(Keyword)
+		deriveDeepCopy_14(dst.OpenParen, src.OpenParen)
+	}
+	if src.Except == nil {
+		dst.Except = nil
+	} else {
+		dst.Except = new(NameExpr)
+		deriveDeepCopy_20(dst.Except, src.Except)
+	}
+	if src.CloseParen == nil {
+		dst.CloseParen = nil
+	} else {
+		dst.CloseParen = new(Keyword)
+		deriveDeepCopy_14(dst.CloseParen, src.CloseParen)
+	}
+}
+
+// deriveDeepCopy_25 recursively copies the contents of src into dst.
+func deriveDeepCopy_25(dst, src *NameChoice) {
+	if src.OpenParen == nil {
+		dst.OpenParen = nil
+	} else {
+		dst.OpenParen = new(Keyword)
+		deriveDeepCopy_14(dst.OpenParen, src.OpenParen)
+	}
+	if src.Left == nil {
+		dst.Left = nil
+	} else {
+		dst.Left = new(NameExpr)
+		deriveDeepCopy_20(dst.Left, src.Left)
+	}
+	if src.Pipe == nil {
+		dst.Pipe = nil
+	} else {
+		dst.Pipe = new(Keyword)
+		deriveDeepCopy_14(dst.Pipe, src.Pipe)
+	}
+	if src.Right == nil {
+		dst.Right = nil
+	} else {
+		dst.Right = new(NameExpr)
+		deriveDeepCopy_20(dst.Right, src.Right)
+	}
+	if src.CloseParen == nil {
+		dst.CloseParen = nil
+	} else {
+		dst.CloseParen = new(Keyword)
+		deriveDeepCopy_14(dst.CloseParen, src.CloseParen)
+	}
 }
 
 func deriveCompare_15(this, that *Space) int {
@@ -2346,132 +2502,6 @@ func deriveCompare_23(this, that *BuiltIn) int {
 		return c
 	}
 	return 0
-}
-
-func deriveCopyTo_22(this, that *Name) {
-	if this.Before == nil {
-		that.Before = nil
-	} else {
-		that.Before = new(Space)
-		deriveCopyTo_(this.Before, that.Before)
-	}
-	if this.DoubleValue == nil {
-		that.DoubleValue = nil
-	} else {
-		that.DoubleValue = new(float64)
-		*that.DoubleValue = *this.DoubleValue
-	}
-	if this.IntValue == nil {
-		that.IntValue = nil
-	} else {
-		that.IntValue = new(int64)
-		*that.IntValue = *this.IntValue
-	}
-	if this.UintValue == nil {
-		that.UintValue = nil
-	} else {
-		that.UintValue = new(uint64)
-		*that.UintValue = *this.UintValue
-	}
-	if this.BoolValue == nil {
-		that.BoolValue = nil
-	} else {
-		that.BoolValue = new(bool)
-		*that.BoolValue = *this.BoolValue
-	}
-	if this.StringValue == nil {
-		that.StringValue = nil
-	} else {
-		that.StringValue = new(string)
-		*that.StringValue = *this.StringValue
-	}
-	if this.BytesValue == nil {
-		that.BytesValue = nil
-	} else {
-		if that.BytesValue != nil {
-			if len(this.BytesValue) > len(that.BytesValue) {
-				if cap(that.BytesValue) >= len(this.BytesValue) {
-					that.BytesValue = (that.BytesValue)[:len(this.BytesValue)]
-				} else {
-					that.BytesValue = make([]byte, len(this.BytesValue))
-				}
-			} else if len(this.BytesValue) < len(that.BytesValue) {
-				that.BytesValue = (that.BytesValue)[:len(this.BytesValue)]
-			}
-		} else {
-			that.BytesValue = make([]byte, len(this.BytesValue))
-		}
-		copy(that.BytesValue, this.BytesValue)
-	}
-}
-
-func deriveCopyTo_23(this, that *AnyName) {
-	if this.Underscore == nil {
-		that.Underscore = nil
-	} else {
-		that.Underscore = new(Keyword)
-		deriveCopyTo_14(this.Underscore, that.Underscore)
-	}
-}
-
-func deriveCopyTo_24(this, that *AnyNameExcept) {
-	if this.Exclamation == nil {
-		that.Exclamation = nil
-	} else {
-		that.Exclamation = new(Keyword)
-		deriveCopyTo_14(this.Exclamation, that.Exclamation)
-	}
-	if this.OpenParen == nil {
-		that.OpenParen = nil
-	} else {
-		that.OpenParen = new(Keyword)
-		deriveCopyTo_14(this.OpenParen, that.OpenParen)
-	}
-	if this.Except == nil {
-		that.Except = nil
-	} else {
-		that.Except = new(NameExpr)
-		deriveCopyTo_20(this.Except, that.Except)
-	}
-	if this.CloseParen == nil {
-		that.CloseParen = nil
-	} else {
-		that.CloseParen = new(Keyword)
-		deriveCopyTo_14(this.CloseParen, that.CloseParen)
-	}
-}
-
-func deriveCopyTo_25(this, that *NameChoice) {
-	if this.OpenParen == nil {
-		that.OpenParen = nil
-	} else {
-		that.OpenParen = new(Keyword)
-		deriveCopyTo_14(this.OpenParen, that.OpenParen)
-	}
-	if this.Left == nil {
-		that.Left = nil
-	} else {
-		that.Left = new(NameExpr)
-		deriveCopyTo_20(this.Left, that.Left)
-	}
-	if this.Pipe == nil {
-		that.Pipe = nil
-	} else {
-		that.Pipe = new(Keyword)
-		deriveCopyTo_14(this.Pipe, that.Pipe)
-	}
-	if this.Right == nil {
-		that.Right = nil
-	} else {
-		that.Right = new(NameExpr)
-		deriveCopyTo_20(this.Right, that.Right)
-	}
-	if this.CloseParen == nil {
-		that.CloseParen = nil
-	} else {
-		that.CloseParen = new(Keyword)
-		deriveCopyTo_14(this.CloseParen, that.CloseParen)
-	}
 }
 
 func deriveEqual_19(this, that *Terminal) bool {

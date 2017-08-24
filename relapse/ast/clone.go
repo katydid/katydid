@@ -20,7 +20,7 @@ func (this *Grammar) Clone() *Grammar {
 		return nil
 	}
 	that := &Grammar{}
-	deriveCopyToGrammar(this, that)
+	deriveDeepCopyGrammar(that, this)
 	return that
 }
 
@@ -39,7 +39,7 @@ func (this *Pattern) Clone() *Pattern {
 		return nil
 	}
 	that := &Pattern{}
-	deriveCopyToPattern(this, that)
+	deriveDeepCopyPattern(that, this)
 	return that
 }
 
@@ -49,6 +49,6 @@ func (this *Expr) Clone() *Expr {
 		return nil
 	}
 	that := &Expr{}
-	deriveCopyToExpr(this, that)
+	deriveDeepCopyExpr(that, this)
 	return that
 }
