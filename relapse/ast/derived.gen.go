@@ -9,6 +9,7 @@ import (
 	"strings"
 )
 
+// deriveGoStringGrammar returns a recursive representation of this as a valid go string.
 func deriveGoStringGrammar(this *Grammar) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.Grammar {\n")
@@ -31,6 +32,7 @@ func deriveGoStringGrammar(this *Grammar) string {
 	return buf.String()
 }
 
+// deriveGoStringRefLookup returns a recursive representation of this as a valid go string.
 func deriveGoStringRefLookup(this RefLookup) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() ast.RefLookup {\n")
@@ -47,6 +49,7 @@ func deriveGoStringRefLookup(this RefLookup) string {
 	return buf.String()
 }
 
+// deriveGoStringPattern returns a recursive representation of this as a valid go string.
 func deriveGoStringPattern(this *Pattern) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.Pattern {\n")
@@ -99,6 +102,7 @@ func deriveGoStringPattern(this *Pattern) string {
 	return buf.String()
 }
 
+// deriveGoStringExpr returns a recursive representation of this as a valid go string.
 func deriveGoStringExpr(this *Expr) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.Expr {\n")
@@ -286,6 +290,10 @@ func deriveDeepCopyExpr(dst, src *Expr) {
 	}
 }
 
+// deriveComparePattern returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveComparePattern(this, that *Pattern) int {
 	if this == nil {
 		if that == nil {
@@ -338,6 +346,7 @@ func deriveComparePattern(this, that *Pattern) int {
 	return 0
 }
 
+// deriveEqualPattern returns whether this and that are equal.
 func deriveEqualPattern(this, that *Pattern) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -356,6 +365,7 @@ func deriveEqualPattern(this, that *Pattern) bool {
 			deriveEqual_11(this.Interleave, that.Interleave)
 }
 
+// deriveEqualNameExpr returns whether this and that are equal.
 func deriveEqualNameExpr(this, that *NameExpr) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -365,6 +375,7 @@ func deriveEqualNameExpr(this, that *NameExpr) bool {
 			deriveEqual_15(this.NameChoice, that.NameChoice)
 }
 
+// deriveGoString returns a recursive representation of this as a valid go string.
 func deriveGoString(this []*PatternDecl) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() []*ast.PatternDecl {\n")
@@ -381,6 +392,7 @@ func deriveGoString(this []*PatternDecl) string {
 	return buf.String()
 }
 
+// deriveGoString_ returns a recursive representation of this as a valid go string.
 func deriveGoString_(this *Space) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.Space {\n")
@@ -397,6 +409,7 @@ func deriveGoString_(this *Space) string {
 	return buf.String()
 }
 
+// deriveGoString_1 returns a recursive representation of this as a valid go string.
 func deriveGoString_1(this *Empty) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.Empty {\n")
@@ -413,6 +426,7 @@ func deriveGoString_1(this *Empty) string {
 	return buf.String()
 }
 
+// deriveGoString_2 returns a recursive representation of this as a valid go string.
 func deriveGoString_2(this *TreeNode) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.TreeNode {\n")
@@ -435,6 +449,7 @@ func deriveGoString_2(this *TreeNode) string {
 	return buf.String()
 }
 
+// deriveGoString_3 returns a recursive representation of this as a valid go string.
 func deriveGoString_3(this *LeafNode) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.LeafNode {\n")
@@ -451,6 +466,7 @@ func deriveGoString_3(this *LeafNode) string {
 	return buf.String()
 }
 
+// deriveGoString_4 returns a recursive representation of this as a valid go string.
 func deriveGoString_4(this *Concat) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.Concat {\n")
@@ -482,6 +498,7 @@ func deriveGoString_4(this *Concat) string {
 	return buf.String()
 }
 
+// deriveGoString_5 returns a recursive representation of this as a valid go string.
 func deriveGoString_5(this *Or) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.Or {\n")
@@ -510,6 +527,7 @@ func deriveGoString_5(this *Or) string {
 	return buf.String()
 }
 
+// deriveGoString_6 returns a recursive representation of this as a valid go string.
 func deriveGoString_6(this *And) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.And {\n")
@@ -538,6 +556,7 @@ func deriveGoString_6(this *And) string {
 	return buf.String()
 }
 
+// deriveGoString_7 returns a recursive representation of this as a valid go string.
 func deriveGoString_7(this *ZeroOrMore) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.ZeroOrMore {\n")
@@ -563,6 +582,7 @@ func deriveGoString_7(this *ZeroOrMore) string {
 	return buf.String()
 }
 
+// deriveGoString_8 returns a recursive representation of this as a valid go string.
 func deriveGoString_8(this *Reference) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.Reference {\n")
@@ -580,6 +600,7 @@ func deriveGoString_8(this *Reference) string {
 	return buf.String()
 }
 
+// deriveGoString_9 returns a recursive representation of this as a valid go string.
 func deriveGoString_9(this *Not) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.Not {\n")
@@ -605,6 +626,7 @@ func deriveGoString_9(this *Not) string {
 	return buf.String()
 }
 
+// deriveGoString_10 returns a recursive representation of this as a valid go string.
 func deriveGoString_10(this *ZAny) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.ZAny {\n")
@@ -621,6 +643,7 @@ func deriveGoString_10(this *ZAny) string {
 	return buf.String()
 }
 
+// deriveGoString_11 returns a recursive representation of this as a valid go string.
 func deriveGoString_11(this *Contains) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.Contains {\n")
@@ -640,6 +663,7 @@ func deriveGoString_11(this *Contains) string {
 	return buf.String()
 }
 
+// deriveGoString_12 returns a recursive representation of this as a valid go string.
 func deriveGoString_12(this *Optional) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.Optional {\n")
@@ -665,6 +689,7 @@ func deriveGoString_12(this *Optional) string {
 	return buf.String()
 }
 
+// deriveGoString_13 returns a recursive representation of this as a valid go string.
 func deriveGoString_13(this *Interleave) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.Interleave {\n")
@@ -696,6 +721,7 @@ func deriveGoString_13(this *Interleave) string {
 	return buf.String()
 }
 
+// deriveGoString_14 returns a recursive representation of this as a valid go string.
 func deriveGoString_14(this *Keyword) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.Keyword {\n")
@@ -713,6 +739,7 @@ func deriveGoString_14(this *Keyword) string {
 	return buf.String()
 }
 
+// deriveGoString_15 returns a recursive representation of this as a valid go string.
 func deriveGoString_15(this *Terminal) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.Terminal {\n")
@@ -751,6 +778,7 @@ func deriveGoString_15(this *Terminal) string {
 	return buf.String()
 }
 
+// deriveGoString_16 returns a recursive representation of this as a valid go string.
 func deriveGoString_16(this *List) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.List {\n")
@@ -777,6 +805,7 @@ func deriveGoString_16(this *List) string {
 	return buf.String()
 }
 
+// deriveGoString_17 returns a recursive representation of this as a valid go string.
 func deriveGoString_17(this *Function) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.Function {\n")
@@ -803,6 +832,7 @@ func deriveGoString_17(this *Function) string {
 	return buf.String()
 }
 
+// deriveGoString_18 returns a recursive representation of this as a valid go string.
 func deriveGoString_18(this *BuiltIn) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.BuiltIn {\n")
@@ -1341,6 +1371,10 @@ func deriveDeepCopy_18(dst, src *BuiltIn) {
 	}
 }
 
+// deriveCompare returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare(this, that *Empty) int {
 	if this == nil {
 		if that == nil {
@@ -1357,6 +1391,10 @@ func deriveCompare(this, that *Empty) int {
 	return 0
 }
 
+// deriveCompare_ returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_(this, that *TreeNode) int {
 	if this == nil {
 		if that == nil {
@@ -1379,6 +1417,10 @@ func deriveCompare_(this, that *TreeNode) int {
 	return 0
 }
 
+// deriveCompare_1 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_1(this, that *LeafNode) int {
 	if this == nil {
 		if that == nil {
@@ -1395,6 +1437,10 @@ func deriveCompare_1(this, that *LeafNode) int {
 	return 0
 }
 
+// deriveCompare_2 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_2(this, that *Concat) int {
 	if this == nil {
 		if that == nil {
@@ -1426,6 +1472,10 @@ func deriveCompare_2(this, that *Concat) int {
 	return 0
 }
 
+// deriveCompare_3 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_3(this, that *Or) int {
 	if this == nil {
 		if that == nil {
@@ -1454,6 +1504,10 @@ func deriveCompare_3(this, that *Or) int {
 	return 0
 }
 
+// deriveCompare_4 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_4(this, that *And) int {
 	if this == nil {
 		if that == nil {
@@ -1482,6 +1536,10 @@ func deriveCompare_4(this, that *And) int {
 	return 0
 }
 
+// deriveCompare_5 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_5(this, that *ZeroOrMore) int {
 	if this == nil {
 		if that == nil {
@@ -1507,6 +1565,10 @@ func deriveCompare_5(this, that *ZeroOrMore) int {
 	return 0
 }
 
+// deriveCompare_6 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_6(this, that *Reference) int {
 	if this == nil {
 		if that == nil {
@@ -1526,6 +1588,10 @@ func deriveCompare_6(this, that *Reference) int {
 	return 0
 }
 
+// deriveCompare_7 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_7(this, that *Not) int {
 	if this == nil {
 		if that == nil {
@@ -1551,6 +1617,10 @@ func deriveCompare_7(this, that *Not) int {
 	return 0
 }
 
+// deriveCompare_8 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_8(this, that *ZAny) int {
 	if this == nil {
 		if that == nil {
@@ -1567,6 +1637,10 @@ func deriveCompare_8(this, that *ZAny) int {
 	return 0
 }
 
+// deriveCompare_9 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_9(this, that *Contains) int {
 	if this == nil {
 		if that == nil {
@@ -1586,6 +1660,10 @@ func deriveCompare_9(this, that *Contains) int {
 	return 0
 }
 
+// deriveCompare_10 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_10(this, that *Optional) int {
 	if this == nil {
 		if that == nil {
@@ -1611,6 +1689,10 @@ func deriveCompare_10(this, that *Optional) int {
 	return 0
 }
 
+// deriveCompare_11 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_11(this, that *Interleave) int {
 	if this == nil {
 		if that == nil {
@@ -1642,12 +1724,14 @@ func deriveCompare_11(this, that *Interleave) int {
 	return 0
 }
 
+// deriveEqual returns whether this and that are equal.
 func deriveEqual(this, that *Empty) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
 			deriveEqual_16(this.Empty, that.Empty)
 }
 
+// deriveEqual_ returns whether this and that are equal.
 func deriveEqual_(this, that *TreeNode) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -1656,12 +1740,14 @@ func deriveEqual_(this, that *TreeNode) bool {
 			this.Pattern.Equal(that.Pattern)
 }
 
+// deriveEqual_1 returns whether this and that are equal.
 func deriveEqual_1(this, that *LeafNode) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
 			deriveEqual_17(this.Expr, that.Expr)
 }
 
+// deriveEqual_2 returns whether this and that are equal.
 func deriveEqual_2(this, that *Concat) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -1673,6 +1759,7 @@ func deriveEqual_2(this, that *Concat) bool {
 			deriveEqual_16(this.CloseBracket, that.CloseBracket)
 }
 
+// deriveEqual_3 returns whether this and that are equal.
 func deriveEqual_3(this, that *Or) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -1683,6 +1770,7 @@ func deriveEqual_3(this, that *Or) bool {
 			deriveEqual_16(this.CloseParen, that.CloseParen)
 }
 
+// deriveEqual_4 returns whether this and that are equal.
 func deriveEqual_4(this, that *And) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -1693,6 +1781,7 @@ func deriveEqual_4(this, that *And) bool {
 			deriveEqual_16(this.CloseParen, that.CloseParen)
 }
 
+// deriveEqual_5 returns whether this and that are equal.
 func deriveEqual_5(this, that *ZeroOrMore) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -1702,6 +1791,7 @@ func deriveEqual_5(this, that *ZeroOrMore) bool {
 			deriveEqual_16(this.Star, that.Star)
 }
 
+// deriveEqual_6 returns whether this and that are equal.
 func deriveEqual_6(this, that *Reference) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -1709,6 +1799,7 @@ func deriveEqual_6(this, that *Reference) bool {
 			this.Name == that.Name
 }
 
+// deriveEqual_7 returns whether this and that are equal.
 func deriveEqual_7(this, that *Not) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -1718,12 +1809,14 @@ func deriveEqual_7(this, that *Not) bool {
 			deriveEqual_16(this.CloseParen, that.CloseParen)
 }
 
+// deriveEqual_8 returns whether this and that are equal.
 func deriveEqual_8(this, that *ZAny) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
 			deriveEqual_16(this.Star, that.Star)
 }
 
+// deriveEqual_9 returns whether this and that are equal.
 func deriveEqual_9(this, that *Contains) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -1731,6 +1824,7 @@ func deriveEqual_9(this, that *Contains) bool {
 			this.Pattern.Equal(that.Pattern)
 }
 
+// deriveEqual_10 returns whether this and that are equal.
 func deriveEqual_10(this, that *Optional) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -1740,6 +1834,7 @@ func deriveEqual_10(this, that *Optional) bool {
 			deriveEqual_16(this.QuestionMark, that.QuestionMark)
 }
 
+// deriveEqual_11 returns whether this and that are equal.
 func deriveEqual_11(this, that *Interleave) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -1751,6 +1846,7 @@ func deriveEqual_11(this, that *Interleave) bool {
 			deriveEqual_16(this.CloseCurly, that.CloseCurly)
 }
 
+// deriveEqual_12 returns whether this and that are equal.
 func deriveEqual_12(this, that *Name) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -1763,12 +1859,14 @@ func deriveEqual_12(this, that *Name) bool {
 			bytes.Equal(this.BytesValue, that.BytesValue)
 }
 
+// deriveEqual_13 returns whether this and that are equal.
 func deriveEqual_13(this, that *AnyName) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
 			deriveEqual_16(this.Underscore, that.Underscore)
 }
 
+// deriveEqual_14 returns whether this and that are equal.
 func deriveEqual_14(this, that *AnyNameExcept) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -1778,6 +1876,7 @@ func deriveEqual_14(this, that *AnyNameExcept) bool {
 			deriveEqual_16(this.CloseParen, that.CloseParen)
 }
 
+// deriveEqual_15 returns whether this and that are equal.
 func deriveEqual_15(this, that *NameChoice) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -1788,6 +1887,7 @@ func deriveEqual_15(this, that *NameChoice) bool {
 			deriveEqual_16(this.CloseParen, that.CloseParen)
 }
 
+// deriveGoString_19 returns a recursive representation of this as a valid go string.
 func deriveGoString_19(this *PatternDecl) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.PatternDecl {\n")
@@ -1814,6 +1914,7 @@ func deriveGoString_19(this *PatternDecl) string {
 	return buf.String()
 }
 
+// deriveGoString_20 returns a recursive representation of this as a valid go string.
 func deriveGoString_20(this *NameExpr) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.NameExpr {\n")
@@ -1839,6 +1940,7 @@ func deriveGoString_20(this *NameExpr) string {
 	return buf.String()
 }
 
+// deriveGoString_21 returns a recursive representation of this as a valid go string.
 func deriveGoString_21(this *Variable) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.Variable {\n")
@@ -1853,6 +1955,7 @@ func deriveGoString_21(this *Variable) string {
 	return buf.String()
 }
 
+// deriveGoString_22 returns a recursive representation of this as a valid go string.
 func deriveGoString_22(this []*Expr) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() []*ast.Expr {\n")
@@ -1938,6 +2041,10 @@ func deriveDeepCopy_21(dst, src []*Expr) {
 	}
 }
 
+// deriveCompare_12 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_12(this, that *Keyword) int {
 	if this == nil {
 		if that == nil {
@@ -1957,6 +2064,10 @@ func deriveCompare_12(this, that *Keyword) int {
 	return 0
 }
 
+// deriveCompare_13 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_13(this, that *NameExpr) int {
 	if this == nil {
 		if that == nil {
@@ -1982,6 +2093,10 @@ func deriveCompare_13(this, that *NameExpr) int {
 	return 0
 }
 
+// deriveCompare_14 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_14(this, that *Expr) int {
 	if this == nil {
 		if that == nil {
@@ -2013,6 +2128,7 @@ func deriveCompare_14(this, that *Expr) int {
 	return 0
 }
 
+// deriveEqual_16 returns whether this and that are equal.
 func deriveEqual_16(this, that *Keyword) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -2020,6 +2136,7 @@ func deriveEqual_16(this, that *Keyword) bool {
 			this.Value == that.Value
 }
 
+// deriveEqual_17 returns whether this and that are equal.
 func deriveEqual_17(this, that *Expr) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -2031,12 +2148,14 @@ func deriveEqual_17(this, that *Expr) bool {
 			deriveEqual_22(this.BuiltIn, that.BuiltIn)
 }
 
+// deriveEqual_18 returns whether this and that are equal.
 func deriveEqual_18(this, that *Space) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
 			deriveEqual_23(this.Space, that.Space)
 }
 
+// deriveGoString_23 returns a recursive representation of this as a valid go string.
 func deriveGoString_23(this *Name) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.Name {\n")
@@ -2071,6 +2190,7 @@ func deriveGoString_23(this *Name) string {
 	return buf.String()
 }
 
+// deriveGoString_24 returns a recursive representation of this as a valid go string.
 func deriveGoString_24(this *AnyName) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.AnyName {\n")
@@ -2087,6 +2207,7 @@ func deriveGoString_24(this *AnyName) string {
 	return buf.String()
 }
 
+// deriveGoString_25 returns a recursive representation of this as a valid go string.
 func deriveGoString_25(this *AnyNameExcept) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.AnyNameExcept {\n")
@@ -2112,6 +2233,7 @@ func deriveGoString_25(this *AnyNameExcept) string {
 	return buf.String()
 }
 
+// deriveGoString_26 returns a recursive representation of this as a valid go string.
 func deriveGoString_26(this *NameChoice) string {
 	buf := bytes.NewBuffer(nil)
 	fmt.Fprintf(buf, "func() *ast.NameChoice {\n")
@@ -2270,6 +2392,10 @@ func deriveDeepCopy_25(dst, src *NameChoice) {
 	}
 }
 
+// deriveCompare_15 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_15(this, that *Space) int {
 	if this == nil {
 		if that == nil {
@@ -2286,6 +2412,10 @@ func deriveCompare_15(this, that *Space) int {
 	return 0
 }
 
+// deriveCompare_16 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_16(this, that *Name) int {
 	if this == nil {
 		if that == nil {
@@ -2320,6 +2450,10 @@ func deriveCompare_16(this, that *Name) int {
 	return 0
 }
 
+// deriveCompare_17 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_17(this, that *AnyName) int {
 	if this == nil {
 		if that == nil {
@@ -2336,6 +2470,10 @@ func deriveCompare_17(this, that *AnyName) int {
 	return 0
 }
 
+// deriveCompare_18 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_18(this, that *AnyNameExcept) int {
 	if this == nil {
 		if that == nil {
@@ -2361,6 +2499,10 @@ func deriveCompare_18(this, that *AnyNameExcept) int {
 	return 0
 }
 
+// deriveCompare_19 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_19(this, that *NameChoice) int {
 	if this == nil {
 		if that == nil {
@@ -2389,6 +2531,10 @@ func deriveCompare_19(this, that *NameChoice) int {
 	return 0
 }
 
+// deriveCompare_20 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_20(this, that *Terminal) int {
 	if this == nil {
 		if that == nil {
@@ -2429,6 +2575,10 @@ func deriveCompare_20(this, that *Terminal) int {
 	return 0
 }
 
+// deriveCompare_21 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_21(this, that *List) int {
 	if this == nil {
 		if that == nil {
@@ -2457,6 +2607,10 @@ func deriveCompare_21(this, that *List) int {
 	return 0
 }
 
+// deriveCompare_22 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_22(this, that *Function) int {
 	if this == nil {
 		if that == nil {
@@ -2485,6 +2639,10 @@ func deriveCompare_22(this, that *Function) int {
 	return 0
 }
 
+// deriveCompare_23 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_23(this, that *BuiltIn) int {
 	if this == nil {
 		if that == nil {
@@ -2504,6 +2662,7 @@ func deriveCompare_23(this, that *BuiltIn) int {
 	return 0
 }
 
+// deriveEqual_19 returns whether this and that are equal.
 func deriveEqual_19(this, that *Terminal) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -2518,6 +2677,7 @@ func deriveEqual_19(this, that *Terminal) bool {
 			deriveEqual_24(this.Variable, that.Variable)
 }
 
+// deriveEqual_20 returns whether this and that are equal.
 func deriveEqual_20(this, that *List) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -2528,6 +2688,7 @@ func deriveEqual_20(this, that *List) bool {
 			deriveEqual_16(this.CloseCurly, that.CloseCurly)
 }
 
+// deriveEqual_21 returns whether this and that are equal.
 func deriveEqual_21(this, that *Function) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -2538,6 +2699,7 @@ func deriveEqual_21(this, that *Function) bool {
 			deriveEqual_16(this.CloseParen, that.CloseParen)
 }
 
+// deriveEqual_22 returns whether this and that are equal.
 func deriveEqual_22(this, that *BuiltIn) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -2545,6 +2707,7 @@ func deriveEqual_22(this, that *BuiltIn) bool {
 			deriveEqual_17(this.Expr, that.Expr)
 }
 
+// deriveEqual_23 returns whether this and that are equal.
 func deriveEqual_23(this, that []string) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
@@ -2560,6 +2723,10 @@ func deriveEqual_23(this, that []string) bool {
 	return true
 }
 
+// deriveCompare_24 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_24(this, that []string) int {
 	if this == nil {
 		if that == nil {
@@ -2584,6 +2751,10 @@ func deriveCompare_24(this, that []string) int {
 	return 0
 }
 
+// deriveCompare_25 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_25(this, that *float64) int {
 	if this == nil {
 		if that == nil {
@@ -2597,6 +2768,10 @@ func deriveCompare_25(this, that *float64) int {
 	return deriveCompare_f(*this, *that)
 }
 
+// deriveCompare_26 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_26(this, that *int64) int {
 	if this == nil {
 		if that == nil {
@@ -2610,6 +2785,10 @@ func deriveCompare_26(this, that *int64) int {
 	return deriveCompare_i(*this, *that)
 }
 
+// deriveCompare_27 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_27(this, that *uint64) int {
 	if this == nil {
 		if that == nil {
@@ -2623,6 +2802,10 @@ func deriveCompare_27(this, that *uint64) int {
 	return deriveCompare_u(*this, *that)
 }
 
+// deriveCompare_28 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_28(this, that *bool) int {
 	if this == nil {
 		if that == nil {
@@ -2636,6 +2819,10 @@ func deriveCompare_28(this, that *bool) int {
 	return deriveCompare_b(*this, *that)
 }
 
+// deriveCompare_29 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_29(this, that *string) int {
 	if this == nil {
 		if that == nil {
@@ -2649,6 +2836,10 @@ func deriveCompare_29(this, that *string) int {
 	return deriveCompare_s(*this, *that)
 }
 
+// deriveCompare_30 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_30(this, that *Variable) int {
 	if this == nil {
 		if that == nil {
@@ -2665,6 +2856,10 @@ func deriveCompare_30(this, that *Variable) int {
 	return 0
 }
 
+// deriveCompare_T returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_T(this, that types.Type) int {
 	if this != that {
 		if this < that {
@@ -2676,6 +2871,10 @@ func deriveCompare_T(this, that types.Type) int {
 	return 0
 }
 
+// deriveCompare_31 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_31(this, that []*Expr) int {
 	if this == nil {
 		if that == nil {
@@ -2700,12 +2899,14 @@ func deriveCompare_31(this, that []*Expr) int {
 	return 0
 }
 
+// deriveEqual_24 returns whether this and that are equal.
 func deriveEqual_24(this, that *Variable) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
 			this.Type == that.Type
 }
 
+// deriveEqual_25 returns whether this and that are equal.
 func deriveEqual_25(this, that []*Expr) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
@@ -2721,6 +2922,10 @@ func deriveEqual_25(this, that []*Expr) bool {
 	return true
 }
 
+// deriveCompare_f returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_f(this, that float64) int {
 	if this != that {
 		if this < that {
@@ -2732,6 +2937,10 @@ func deriveCompare_f(this, that float64) int {
 	return 0
 }
 
+// deriveCompare_i returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_i(this, that int64) int {
 	if this != that {
 		if this < that {
@@ -2743,6 +2952,10 @@ func deriveCompare_i(this, that int64) int {
 	return 0
 }
 
+// deriveCompare_u returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_u(this, that uint64) int {
 	if this != that {
 		if this < that {
@@ -2754,6 +2967,10 @@ func deriveCompare_u(this, that uint64) int {
 	return 0
 }
 
+// deriveCompare_b returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_b(this, that bool) int {
 	if this == that {
 		return 0
@@ -2764,6 +2981,10 @@ func deriveCompare_b(this, that bool) int {
 	return 1
 }
 
+// deriveCompare_s returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
 func deriveCompare_s(this, that string) int {
 	return strings.Compare(this, that)
 }

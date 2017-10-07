@@ -6,6 +6,7 @@ import (
 	"bytes"
 )
 
+// deriveEqualSimple returns whether this and that are equal.
 func deriveEqualSimple(this, that *Simple) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -42,6 +43,7 @@ func deriveEqualSimple(this, that *Simple) bool {
 			bytes.Equal(this.XXX_unrecognized, that.XXX_unrecognized)
 }
 
+// deriveEqualNested returns whether this and that are equal.
 func deriveEqualNested(this, that *Nested) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
@@ -50,6 +52,7 @@ func deriveEqualNested(this, that *Nested) bool {
 			bytes.Equal(this.XXX_unrecognized, that.XXX_unrecognized)
 }
 
+// deriveEqual returns whether this and that are equal.
 func deriveEqual(this, that []float64) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
@@ -65,6 +68,7 @@ func deriveEqual(this, that []float64) bool {
 	return true
 }
 
+// deriveEqual_ returns whether this and that are equal.
 func deriveEqual_(this, that []float32) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
@@ -80,6 +84,7 @@ func deriveEqual_(this, that []float32) bool {
 	return true
 }
 
+// deriveEqual_1 returns whether this and that are equal.
 func deriveEqual_1(this, that []int32) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
@@ -95,6 +100,7 @@ func deriveEqual_1(this, that []int32) bool {
 	return true
 }
 
+// deriveEqual_2 returns whether this and that are equal.
 func deriveEqual_2(this, that []int64) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
@@ -110,6 +116,7 @@ func deriveEqual_2(this, that []int64) bool {
 	return true
 }
 
+// deriveEqual_3 returns whether this and that are equal.
 func deriveEqual_3(this, that []uint32) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
@@ -125,6 +132,7 @@ func deriveEqual_3(this, that []uint32) bool {
 	return true
 }
 
+// deriveEqual_4 returns whether this and that are equal.
 func deriveEqual_4(this, that []uint64) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
@@ -140,6 +148,7 @@ func deriveEqual_4(this, that []uint64) bool {
 	return true
 }
 
+// deriveEqual_5 returns whether this and that are equal.
 func deriveEqual_5(this, that []bool) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
@@ -155,6 +164,7 @@ func deriveEqual_5(this, that []bool) bool {
 	return true
 }
 
+// deriveEqual_6 returns whether this and that are equal.
 func deriveEqual_6(this, that []string) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
@@ -170,6 +180,7 @@ func deriveEqual_6(this, that []string) bool {
 	return true
 }
 
+// deriveEqual_7 returns whether this and that are equal.
 func deriveEqual_7(this, that [][]byte) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
@@ -185,6 +196,7 @@ func deriveEqual_7(this, that [][]byte) bool {
 	return true
 }
 
+// deriveEqual_8 returns whether this and that are equal.
 func deriveEqual_8(this, that []*Simple) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
