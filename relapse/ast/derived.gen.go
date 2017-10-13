@@ -346,33 +346,42 @@ func deriveComparePattern(this, that *Pattern) int {
 	return 0
 }
 
+// deriveEqualGrammar returns whether this and that are equal.
+func deriveEqualGrammar(this, that *Grammar) bool {
+	return (this == nil && that == nil) ||
+		this != nil && that != nil &&
+			this.TopPattern.Equal(that.TopPattern) &&
+			deriveEqual(this.PatternDecls, that.PatternDecls) &&
+			deriveEqual_(this.After, that.After)
+}
+
 // deriveEqualPattern returns whether this and that are equal.
 func deriveEqualPattern(this, that *Pattern) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqual(this.Empty, that.Empty) &&
-			deriveEqual_(this.TreeNode, that.TreeNode) &&
-			deriveEqual_1(this.LeafNode, that.LeafNode) &&
-			deriveEqual_2(this.Concat, that.Concat) &&
-			deriveEqual_3(this.Or, that.Or) &&
-			deriveEqual_4(this.And, that.And) &&
-			deriveEqual_5(this.ZeroOrMore, that.ZeroOrMore) &&
-			deriveEqual_6(this.Reference, that.Reference) &&
-			deriveEqual_7(this.Not, that.Not) &&
-			deriveEqual_8(this.ZAny, that.ZAny) &&
-			deriveEqual_9(this.Contains, that.Contains) &&
-			deriveEqual_10(this.Optional, that.Optional) &&
-			deriveEqual_11(this.Interleave, that.Interleave)
+			deriveEqual_1(this.Empty, that.Empty) &&
+			deriveEqual_2(this.TreeNode, that.TreeNode) &&
+			deriveEqual_3(this.LeafNode, that.LeafNode) &&
+			deriveEqual_4(this.Concat, that.Concat) &&
+			deriveEqual_5(this.Or, that.Or) &&
+			deriveEqual_6(this.And, that.And) &&
+			deriveEqual_7(this.ZeroOrMore, that.ZeroOrMore) &&
+			deriveEqual_8(this.Reference, that.Reference) &&
+			deriveEqual_9(this.Not, that.Not) &&
+			deriveEqual_10(this.ZAny, that.ZAny) &&
+			deriveEqual_11(this.Contains, that.Contains) &&
+			deriveEqual_12(this.Optional, that.Optional) &&
+			deriveEqual_13(this.Interleave, that.Interleave)
 }
 
 // deriveEqualNameExpr returns whether this and that are equal.
 func deriveEqualNameExpr(this, that *NameExpr) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqual_12(this.Name, that.Name) &&
-			deriveEqual_13(this.AnyName, that.AnyName) &&
-			deriveEqual_14(this.AnyNameExcept, that.AnyNameExcept) &&
-			deriveEqual_15(this.NameChoice, that.NameChoice)
+			deriveEqual_14(this.Name, that.Name) &&
+			deriveEqual_15(this.AnyName, that.AnyName) &&
+			deriveEqual_16(this.AnyNameExcept, that.AnyNameExcept) &&
+			deriveEqual_17(this.NameChoice, that.NameChoice)
 }
 
 // deriveGoString returns a recursive representation of this as a valid go string.
@@ -1725,132 +1734,155 @@ func deriveCompare_11(this, that *Interleave) int {
 }
 
 // deriveEqual returns whether this and that are equal.
-func deriveEqual(this, that *Empty) bool {
-	return (this == nil && that == nil) ||
-		this != nil && that != nil &&
-			deriveEqual_16(this.Empty, that.Empty)
+func deriveEqual(this, that []*PatternDecl) bool {
+	if this == nil || that == nil {
+		return this == nil && that == nil
+	}
+	if len(this) != len(that) {
+		return false
+	}
+	for i := 0; i < len(this); i++ {
+		if !(deriveEqual_18(this[i], that[i])) {
+			return false
+		}
+	}
+	return true
 }
 
 // deriveEqual_ returns whether this and that are equal.
-func deriveEqual_(this, that *TreeNode) bool {
+func deriveEqual_(this, that *Space) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			this.Name.Equal(that.Name) &&
-			deriveEqual_16(this.Colon, that.Colon) &&
-			this.Pattern.Equal(that.Pattern)
+			deriveEqual_19(this.Space, that.Space)
 }
 
 // deriveEqual_1 returns whether this and that are equal.
-func deriveEqual_1(this, that *LeafNode) bool {
+func deriveEqual_1(this, that *Empty) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqual_17(this.Expr, that.Expr)
+			deriveEqual_20(this.Empty, that.Empty)
 }
 
 // deriveEqual_2 returns whether this and that are equal.
-func deriveEqual_2(this, that *Concat) bool {
+func deriveEqual_2(this, that *TreeNode) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqual_16(this.OpenBracket, that.OpenBracket) &&
-			this.LeftPattern.Equal(that.LeftPattern) &&
-			deriveEqual_16(this.Comma, that.Comma) &&
-			this.RightPattern.Equal(that.RightPattern) &&
-			deriveEqual_16(this.ExtraComma, that.ExtraComma) &&
-			deriveEqual_16(this.CloseBracket, that.CloseBracket)
-}
-
-// deriveEqual_3 returns whether this and that are equal.
-func deriveEqual_3(this, that *Or) bool {
-	return (this == nil && that == nil) ||
-		this != nil && that != nil &&
-			deriveEqual_16(this.OpenParen, that.OpenParen) &&
-			this.LeftPattern.Equal(that.LeftPattern) &&
-			deriveEqual_16(this.Pipe, that.Pipe) &&
-			this.RightPattern.Equal(that.RightPattern) &&
-			deriveEqual_16(this.CloseParen, that.CloseParen)
-}
-
-// deriveEqual_4 returns whether this and that are equal.
-func deriveEqual_4(this, that *And) bool {
-	return (this == nil && that == nil) ||
-		this != nil && that != nil &&
-			deriveEqual_16(this.OpenParen, that.OpenParen) &&
-			this.LeftPattern.Equal(that.LeftPattern) &&
-			deriveEqual_16(this.Ampersand, that.Ampersand) &&
-			this.RightPattern.Equal(that.RightPattern) &&
-			deriveEqual_16(this.CloseParen, that.CloseParen)
-}
-
-// deriveEqual_5 returns whether this and that are equal.
-func deriveEqual_5(this, that *ZeroOrMore) bool {
-	return (this == nil && that == nil) ||
-		this != nil && that != nil &&
-			deriveEqual_16(this.OpenParen, that.OpenParen) &&
-			this.Pattern.Equal(that.Pattern) &&
-			deriveEqual_16(this.CloseParen, that.CloseParen) &&
-			deriveEqual_16(this.Star, that.Star)
-}
-
-// deriveEqual_6 returns whether this and that are equal.
-func deriveEqual_6(this, that *Reference) bool {
-	return (this == nil && that == nil) ||
-		this != nil && that != nil &&
-			deriveEqual_16(this.At, that.At) &&
-			this.Name == that.Name
-}
-
-// deriveEqual_7 returns whether this and that are equal.
-func deriveEqual_7(this, that *Not) bool {
-	return (this == nil && that == nil) ||
-		this != nil && that != nil &&
-			deriveEqual_16(this.Exclamation, that.Exclamation) &&
-			deriveEqual_16(this.OpenParen, that.OpenParen) &&
-			this.Pattern.Equal(that.Pattern) &&
-			deriveEqual_16(this.CloseParen, that.CloseParen)
-}
-
-// deriveEqual_8 returns whether this and that are equal.
-func deriveEqual_8(this, that *ZAny) bool {
-	return (this == nil && that == nil) ||
-		this != nil && that != nil &&
-			deriveEqual_16(this.Star, that.Star)
-}
-
-// deriveEqual_9 returns whether this and that are equal.
-func deriveEqual_9(this, that *Contains) bool {
-	return (this == nil && that == nil) ||
-		this != nil && that != nil &&
-			deriveEqual_16(this.Dot, that.Dot) &&
+			this.Name.Equal(that.Name) &&
+			deriveEqual_20(this.Colon, that.Colon) &&
 			this.Pattern.Equal(that.Pattern)
 }
 
-// deriveEqual_10 returns whether this and that are equal.
-func deriveEqual_10(this, that *Optional) bool {
+// deriveEqual_3 returns whether this and that are equal.
+func deriveEqual_3(this, that *LeafNode) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqual_16(this.OpenParen, that.OpenParen) &&
+			deriveEqual_21(this.Expr, that.Expr)
+}
+
+// deriveEqual_4 returns whether this and that are equal.
+func deriveEqual_4(this, that *Concat) bool {
+	return (this == nil && that == nil) ||
+		this != nil && that != nil &&
+			deriveEqual_20(this.OpenBracket, that.OpenBracket) &&
+			this.LeftPattern.Equal(that.LeftPattern) &&
+			deriveEqual_20(this.Comma, that.Comma) &&
+			this.RightPattern.Equal(that.RightPattern) &&
+			deriveEqual_20(this.ExtraComma, that.ExtraComma) &&
+			deriveEqual_20(this.CloseBracket, that.CloseBracket)
+}
+
+// deriveEqual_5 returns whether this and that are equal.
+func deriveEqual_5(this, that *Or) bool {
+	return (this == nil && that == nil) ||
+		this != nil && that != nil &&
+			deriveEqual_20(this.OpenParen, that.OpenParen) &&
+			this.LeftPattern.Equal(that.LeftPattern) &&
+			deriveEqual_20(this.Pipe, that.Pipe) &&
+			this.RightPattern.Equal(that.RightPattern) &&
+			deriveEqual_20(this.CloseParen, that.CloseParen)
+}
+
+// deriveEqual_6 returns whether this and that are equal.
+func deriveEqual_6(this, that *And) bool {
+	return (this == nil && that == nil) ||
+		this != nil && that != nil &&
+			deriveEqual_20(this.OpenParen, that.OpenParen) &&
+			this.LeftPattern.Equal(that.LeftPattern) &&
+			deriveEqual_20(this.Ampersand, that.Ampersand) &&
+			this.RightPattern.Equal(that.RightPattern) &&
+			deriveEqual_20(this.CloseParen, that.CloseParen)
+}
+
+// deriveEqual_7 returns whether this and that are equal.
+func deriveEqual_7(this, that *ZeroOrMore) bool {
+	return (this == nil && that == nil) ||
+		this != nil && that != nil &&
+			deriveEqual_20(this.OpenParen, that.OpenParen) &&
 			this.Pattern.Equal(that.Pattern) &&
-			deriveEqual_16(this.CloseParen, that.CloseParen) &&
-			deriveEqual_16(this.QuestionMark, that.QuestionMark)
+			deriveEqual_20(this.CloseParen, that.CloseParen) &&
+			deriveEqual_20(this.Star, that.Star)
+}
+
+// deriveEqual_8 returns whether this and that are equal.
+func deriveEqual_8(this, that *Reference) bool {
+	return (this == nil && that == nil) ||
+		this != nil && that != nil &&
+			deriveEqual_20(this.At, that.At) &&
+			this.Name == that.Name
+}
+
+// deriveEqual_9 returns whether this and that are equal.
+func deriveEqual_9(this, that *Not) bool {
+	return (this == nil && that == nil) ||
+		this != nil && that != nil &&
+			deriveEqual_20(this.Exclamation, that.Exclamation) &&
+			deriveEqual_20(this.OpenParen, that.OpenParen) &&
+			this.Pattern.Equal(that.Pattern) &&
+			deriveEqual_20(this.CloseParen, that.CloseParen)
+}
+
+// deriveEqual_10 returns whether this and that are equal.
+func deriveEqual_10(this, that *ZAny) bool {
+	return (this == nil && that == nil) ||
+		this != nil && that != nil &&
+			deriveEqual_20(this.Star, that.Star)
 }
 
 // deriveEqual_11 returns whether this and that are equal.
-func deriveEqual_11(this, that *Interleave) bool {
+func deriveEqual_11(this, that *Contains) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqual_16(this.OpenCurly, that.OpenCurly) &&
-			this.LeftPattern.Equal(that.LeftPattern) &&
-			deriveEqual_16(this.SemiColon, that.SemiColon) &&
-			this.RightPattern.Equal(that.RightPattern) &&
-			deriveEqual_16(this.ExtraSemiColon, that.ExtraSemiColon) &&
-			deriveEqual_16(this.CloseCurly, that.CloseCurly)
+			deriveEqual_20(this.Dot, that.Dot) &&
+			this.Pattern.Equal(that.Pattern)
 }
 
 // deriveEqual_12 returns whether this and that are equal.
-func deriveEqual_12(this, that *Name) bool {
+func deriveEqual_12(this, that *Optional) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqual_18(this.Before, that.Before) &&
+			deriveEqual_20(this.OpenParen, that.OpenParen) &&
+			this.Pattern.Equal(that.Pattern) &&
+			deriveEqual_20(this.CloseParen, that.CloseParen) &&
+			deriveEqual_20(this.QuestionMark, that.QuestionMark)
+}
+
+// deriveEqual_13 returns whether this and that are equal.
+func deriveEqual_13(this, that *Interleave) bool {
+	return (this == nil && that == nil) ||
+		this != nil && that != nil &&
+			deriveEqual_20(this.OpenCurly, that.OpenCurly) &&
+			this.LeftPattern.Equal(that.LeftPattern) &&
+			deriveEqual_20(this.SemiColon, that.SemiColon) &&
+			this.RightPattern.Equal(that.RightPattern) &&
+			deriveEqual_20(this.ExtraSemiColon, that.ExtraSemiColon) &&
+			deriveEqual_20(this.CloseCurly, that.CloseCurly)
+}
+
+// deriveEqual_14 returns whether this and that are equal.
+func deriveEqual_14(this, that *Name) bool {
+	return (this == nil && that == nil) ||
+		this != nil && that != nil &&
+			deriveEqual_(this.Before, that.Before) &&
 			((this.DoubleValue == nil && that.DoubleValue == nil) || (this.DoubleValue != nil && that.DoubleValue != nil && *(this.DoubleValue) == *(that.DoubleValue))) &&
 			((this.IntValue == nil && that.IntValue == nil) || (this.IntValue != nil && that.IntValue != nil && *(this.IntValue) == *(that.IntValue))) &&
 			((this.UintValue == nil && that.UintValue == nil) || (this.UintValue != nil && that.UintValue != nil && *(this.UintValue) == *(that.UintValue))) &&
@@ -1859,32 +1891,32 @@ func deriveEqual_12(this, that *Name) bool {
 			bytes.Equal(this.BytesValue, that.BytesValue)
 }
 
-// deriveEqual_13 returns whether this and that are equal.
-func deriveEqual_13(this, that *AnyName) bool {
-	return (this == nil && that == nil) ||
-		this != nil && that != nil &&
-			deriveEqual_16(this.Underscore, that.Underscore)
-}
-
-// deriveEqual_14 returns whether this and that are equal.
-func deriveEqual_14(this, that *AnyNameExcept) bool {
-	return (this == nil && that == nil) ||
-		this != nil && that != nil &&
-			deriveEqual_16(this.Exclamation, that.Exclamation) &&
-			deriveEqual_16(this.OpenParen, that.OpenParen) &&
-			this.Except.Equal(that.Except) &&
-			deriveEqual_16(this.CloseParen, that.CloseParen)
-}
-
 // deriveEqual_15 returns whether this and that are equal.
-func deriveEqual_15(this, that *NameChoice) bool {
+func deriveEqual_15(this, that *AnyName) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqual_16(this.OpenParen, that.OpenParen) &&
+			deriveEqual_20(this.Underscore, that.Underscore)
+}
+
+// deriveEqual_16 returns whether this and that are equal.
+func deriveEqual_16(this, that *AnyNameExcept) bool {
+	return (this == nil && that == nil) ||
+		this != nil && that != nil &&
+			deriveEqual_20(this.Exclamation, that.Exclamation) &&
+			deriveEqual_20(this.OpenParen, that.OpenParen) &&
+			this.Except.Equal(that.Except) &&
+			deriveEqual_20(this.CloseParen, that.CloseParen)
+}
+
+// deriveEqual_17 returns whether this and that are equal.
+func deriveEqual_17(this, that *NameChoice) bool {
+	return (this == nil && that == nil) ||
+		this != nil && that != nil &&
+			deriveEqual_20(this.OpenParen, that.OpenParen) &&
 			this.Left.Equal(that.Left) &&
-			deriveEqual_16(this.Pipe, that.Pipe) &&
+			deriveEqual_20(this.Pipe, that.Pipe) &&
 			this.Right.Equal(that.Right) &&
-			deriveEqual_16(this.CloseParen, that.CloseParen)
+			deriveEqual_20(this.CloseParen, that.CloseParen)
 }
 
 // deriveGoString_19 returns a recursive representation of this as a valid go string.
@@ -2128,31 +2160,51 @@ func deriveCompare_14(this, that *Expr) int {
 	return 0
 }
 
-// deriveEqual_16 returns whether this and that are equal.
-func deriveEqual_16(this, that *Keyword) bool {
+// deriveEqual_18 returns whether this and that are equal.
+func deriveEqual_18(this, that *PatternDecl) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqual_18(this.Before, that.Before) &&
+			deriveEqual_20(this.Hash, that.Hash) &&
+			deriveEqual_(this.Before, that.Before) &&
+			this.Name == that.Name &&
+			deriveEqual_20(this.Eq, that.Eq) &&
+			this.Pattern.Equal(that.Pattern)
+}
+
+// deriveEqual_19 returns whether this and that are equal.
+func deriveEqual_19(this, that []string) bool {
+	if this == nil || that == nil {
+		return this == nil && that == nil
+	}
+	if len(this) != len(that) {
+		return false
+	}
+	for i := 0; i < len(this); i++ {
+		if !(this[i] == that[i]) {
+			return false
+		}
+	}
+	return true
+}
+
+// deriveEqual_20 returns whether this and that are equal.
+func deriveEqual_20(this, that *Keyword) bool {
+	return (this == nil && that == nil) ||
+		this != nil && that != nil &&
+			deriveEqual_(this.Before, that.Before) &&
 			this.Value == that.Value
 }
 
-// deriveEqual_17 returns whether this and that are equal.
-func deriveEqual_17(this, that *Expr) bool {
+// deriveEqual_21 returns whether this and that are equal.
+func deriveEqual_21(this, that *Expr) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqual_16(this.RightArrow, that.RightArrow) &&
-			deriveEqual_16(this.Comma, that.Comma) &&
-			deriveEqual_19(this.Terminal, that.Terminal) &&
-			deriveEqual_20(this.List, that.List) &&
-			deriveEqual_21(this.Function, that.Function) &&
-			deriveEqual_22(this.BuiltIn, that.BuiltIn)
-}
-
-// deriveEqual_18 returns whether this and that are equal.
-func deriveEqual_18(this, that *Space) bool {
-	return (this == nil && that == nil) ||
-		this != nil && that != nil &&
-			deriveEqual_23(this.Space, that.Space)
+			deriveEqual_20(this.RightArrow, that.RightArrow) &&
+			deriveEqual_20(this.Comma, that.Comma) &&
+			deriveEqual_22(this.Terminal, that.Terminal) &&
+			deriveEqual_23(this.List, that.List) &&
+			deriveEqual_24(this.Function, that.Function) &&
+			deriveEqual_25(this.BuiltIn, that.BuiltIn)
 }
 
 // deriveGoString_23 returns a recursive representation of this as a valid go string.
@@ -2662,11 +2714,11 @@ func deriveCompare_23(this, that *BuiltIn) int {
 	return 0
 }
 
-// deriveEqual_19 returns whether this and that are equal.
-func deriveEqual_19(this, that *Terminal) bool {
+// deriveEqual_22 returns whether this and that are equal.
+func deriveEqual_22(this, that *Terminal) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
-			deriveEqual_18(this.Before, that.Before) &&
+			deriveEqual_(this.Before, that.Before) &&
 			this.Literal == that.Literal &&
 			((this.DoubleValue == nil && that.DoubleValue == nil) || (this.DoubleValue != nil && that.DoubleValue != nil && *(this.DoubleValue) == *(that.DoubleValue))) &&
 			((this.IntValue == nil && that.IntValue == nil) || (this.IntValue != nil && that.IntValue != nil && *(this.IntValue) == *(that.IntValue))) &&
@@ -2674,53 +2726,37 @@ func deriveEqual_19(this, that *Terminal) bool {
 			((this.BoolValue == nil && that.BoolValue == nil) || (this.BoolValue != nil && that.BoolValue != nil && *(this.BoolValue) == *(that.BoolValue))) &&
 			((this.StringValue == nil && that.StringValue == nil) || (this.StringValue != nil && that.StringValue != nil && *(this.StringValue) == *(that.StringValue))) &&
 			bytes.Equal(this.BytesValue, that.BytesValue) &&
-			deriveEqual_24(this.Variable, that.Variable)
-}
-
-// deriveEqual_20 returns whether this and that are equal.
-func deriveEqual_20(this, that *List) bool {
-	return (this == nil && that == nil) ||
-		this != nil && that != nil &&
-			deriveEqual_18(this.Before, that.Before) &&
-			this.Type == that.Type &&
-			deriveEqual_16(this.OpenCurly, that.OpenCurly) &&
-			deriveEqual_25(this.Elems, that.Elems) &&
-			deriveEqual_16(this.CloseCurly, that.CloseCurly)
-}
-
-// deriveEqual_21 returns whether this and that are equal.
-func deriveEqual_21(this, that *Function) bool {
-	return (this == nil && that == nil) ||
-		this != nil && that != nil &&
-			deriveEqual_18(this.Before, that.Before) &&
-			this.Name == that.Name &&
-			deriveEqual_16(this.OpenParen, that.OpenParen) &&
-			deriveEqual_25(this.Params, that.Params) &&
-			deriveEqual_16(this.CloseParen, that.CloseParen)
-}
-
-// deriveEqual_22 returns whether this and that are equal.
-func deriveEqual_22(this, that *BuiltIn) bool {
-	return (this == nil && that == nil) ||
-		this != nil && that != nil &&
-			deriveEqual_16(this.Symbol, that.Symbol) &&
-			deriveEqual_17(this.Expr, that.Expr)
+			deriveEqual_26(this.Variable, that.Variable)
 }
 
 // deriveEqual_23 returns whether this and that are equal.
-func deriveEqual_23(this, that []string) bool {
-	if this == nil || that == nil {
-		return this == nil && that == nil
-	}
-	if len(this) != len(that) {
-		return false
-	}
-	for i := 0; i < len(this); i++ {
-		if !(this[i] == that[i]) {
-			return false
-		}
-	}
-	return true
+func deriveEqual_23(this, that *List) bool {
+	return (this == nil && that == nil) ||
+		this != nil && that != nil &&
+			deriveEqual_(this.Before, that.Before) &&
+			this.Type == that.Type &&
+			deriveEqual_20(this.OpenCurly, that.OpenCurly) &&
+			deriveEqual_27(this.Elems, that.Elems) &&
+			deriveEqual_20(this.CloseCurly, that.CloseCurly)
+}
+
+// deriveEqual_24 returns whether this and that are equal.
+func deriveEqual_24(this, that *Function) bool {
+	return (this == nil && that == nil) ||
+		this != nil && that != nil &&
+			deriveEqual_(this.Before, that.Before) &&
+			this.Name == that.Name &&
+			deriveEqual_20(this.OpenParen, that.OpenParen) &&
+			deriveEqual_27(this.Params, that.Params) &&
+			deriveEqual_20(this.CloseParen, that.CloseParen)
+}
+
+// deriveEqual_25 returns whether this and that are equal.
+func deriveEqual_25(this, that *BuiltIn) bool {
+	return (this == nil && that == nil) ||
+		this != nil && that != nil &&
+			deriveEqual_20(this.Symbol, that.Symbol) &&
+			deriveEqual_21(this.Expr, that.Expr)
 }
 
 // deriveCompare_24 returns:
@@ -2899,15 +2935,15 @@ func deriveCompare_31(this, that []*Expr) int {
 	return 0
 }
 
-// deriveEqual_24 returns whether this and that are equal.
-func deriveEqual_24(this, that *Variable) bool {
+// deriveEqual_26 returns whether this and that are equal.
+func deriveEqual_26(this, that *Variable) bool {
 	return (this == nil && that == nil) ||
 		this != nil && that != nil &&
 			this.Type == that.Type
 }
 
-// deriveEqual_25 returns whether this and that are equal.
-func deriveEqual_25(this, that []*Expr) bool {
+// deriveEqual_27 returns whether this and that are equal.
+func deriveEqual_27(this, that []*Expr) bool {
 	if this == nil || that == nil {
 		return this == nil && that == nil
 	}
@@ -2915,7 +2951,7 @@ func deriveEqual_25(this, that []*Expr) bool {
 		return false
 	}
 	for i := 0; i < len(this); i++ {
-		if !(deriveEqual_17(this[i], that[i])) {
+		if !(deriveEqual_21(this[i], that[i])) {
 			return false
 		}
 	}

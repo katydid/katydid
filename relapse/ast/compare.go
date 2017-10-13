@@ -18,6 +18,10 @@ import (
 	"sort"
 )
 
+func (this *Grammar) Equal(that *Grammar) bool {
+	return deriveEqualGrammar(this, that)
+}
+
 func (this *Pattern) Compare(that *Pattern) int {
 	return deriveComparePattern(this, that)
 }
