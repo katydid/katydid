@@ -114,7 +114,7 @@ func ReadBenchmarkSuite() ([]Bench, error) {
 	}
 	for codec, folders := range codecs {
 		switch codec {
-		case "pbname", "pbnum", "json":
+		case "pbname", "pbnum", "json", "xml":
 		default:
 			// codec not supported
 			continue
@@ -279,6 +279,12 @@ func readBenchFolder(path string) (*Bench, error) {
 				return nil, err
 			}
 			parsers = append(parsers, p)
+		case "xml":
+			p, err := newXMLParser(filename)
+			if err != nil {
+				return nil, err
+			}
+			parsers = append(parsers, p)
 		default:
 			// unsupported codec
 			continue
@@ -311,7 +317,7 @@ func readGrammar(path string) (*ast.Grammar, error) {
 	return g, nil
 }
 
-func newXMLParser(filename string) (parser.Interface, error) {
+func newXMLParser(filename string) (ResetParser, error) {
 	bytes, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return nil, fmt.Errorf("err <%v> reading file <%s>", err, filename)

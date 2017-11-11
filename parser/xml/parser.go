@@ -18,11 +18,12 @@ package xml
 import (
 	"bytes"
 	"fmt"
-	"github.com/katydid/katydid/parser"
 	"io"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/katydid/katydid/parser"
 )
 
 type xmlParser struct {
@@ -43,6 +44,7 @@ type XMLParser interface {
 	parser.Interface
 	//Init intialises the parser with a byte buffer containing xml.
 	Init([]byte) error
+	Reset() error
 }
 
 //NewXMLParser returns a new xml parser.
@@ -87,6 +89,10 @@ func (p *xmlParser) Init(buf []byte) error {
 	p.dec = NewDecoder(NewBuffer(buf))
 	p.dec.Strict = false
 	return nil
+}
+
+func (s *xmlParser) Reset() error {
+	return s.Init(s.buf)
 }
 
 func hasContent(c CharData) bool {
