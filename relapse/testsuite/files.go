@@ -19,6 +19,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/gogo/protobuf/proto"
@@ -113,7 +114,7 @@ func ReadBenchmarkSuite() ([]Bench, error) {
 	}
 	for codec, folders := range codecs {
 		switch codec {
-		case "pbnum":
+		case "pbnum", "json":
 		default:
 			// codec not supported
 			continue
@@ -235,35 +236,54 @@ func readBenchFolder(path string) (*Bench, error) {
 	}
 	var parsers []ResetParser
 	var pkgName, msgName string
+	var codecName string
 	var desc *descriptor.FileDescriptorSet
 	for _, fileInfo := range fileInfos {
 		if fileInfo.IsDir() {
 			continue
 		}
 		filebase := fileInfo.Name()
-		filename := filepath.Join(path, filebase)
-		if !strings.HasSuffix(filebase, ".pbnum") {
-			// unsupported codec
+		if _, err := strconv.Atoi(strings.Split(filebase, ".")[0]); err != nil {
 			continue
 		}
-		if desc == nil {
-			pkgName, msgName, desc, err = getProtoDesc(filename)
+		filename := filepath.Join(path, filebase)
+		codecName = filepath.Ext(filename)[1:]
+		switch codecName {
+		case "pbnum":
+			if desc == nil {
+				pkgName, msgName, desc, err = getProtoDesc(filename)
+				if err != nil {
+					return nil, err
+				}
+			}
+			p, err := newProtoNumParser(pkgName, msgName, desc, filename)
 			if err != nil {
 				return nil, err
 			}
+			parsers = append(parsers, p)
+		case "json":
+			p, err := newJsonParser(filename)
+			if err != nil {
+				return nil, err
+			}
+			parsers = append(parsers, p)
+		default:
+			// unsupported codec
+			continue
 		}
-		p, err := newProtoNumParser(pkgName, msgName, desc, filename)
-		if err != nil {
-			return nil, err
-		}
-		parsers = append(parsers, p)
 	}
 	return &Bench{
-		Name:    name + "Pbnum",
+		Name:    name + capFirst(codecName),
 		Grammar: g,
 		Parsers: parsers,
 		Record:  true,
 	}, nil
+}
+
+func capFirst(s string) string {
+	b := []byte(s)
+	b[0] ^= ' '
+	return string(b)
 }
 
 func readGrammar(path string) (*ast.Grammar, error) {
@@ -291,7 +311,7 @@ func newXMLParser(filename string) (parser.Interface, error) {
 	return x, nil
 }
 
-func newJsonParser(filename string) (parser.Interface, error) {
+func newJsonParser(filename string) (ResetParser, error) {
 	bytes, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return nil, fmt.Errorf("err <%v> reading file <%s>", err, filename)

@@ -18,9 +18,10 @@ package json
 import (
 	"bytes"
 	"fmt"
-	"github.com/katydid/katydid/parser"
 	"io"
 	"strconv"
+
+	"github.com/katydid/katydid/parser"
 )
 
 //ErrUnquote returns an error that resulted from trying to unquote a string.
@@ -529,6 +530,7 @@ type JsonParser interface {
 	parser.Interface
 	//Init initialises the parser with a byte buffer containing JSON.
 	Init(buf []byte) error
+	Reset() error
 }
 
 //NewJsonParser returns a new JSON parser.
@@ -568,6 +570,13 @@ func (s *jsonParser) Init(buf []byte) error {
 		s.state.firstObjectValue = true
 	}
 	return nil
+}
+
+func (s *jsonParser) Reset() error {
+	if len(s.stack) > 0 {
+		return s.Init(s.stack[0].buf)
+	}
+	return s.Init(s.buf)
 }
 
 type jsonParser struct {
