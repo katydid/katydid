@@ -46,7 +46,7 @@ import math "math"
 import _ "github.com/gogo/protobuf/gogoproto"
 import types "github.com/katydid/katydid/relapse/types"
 
-import encoding_binary "encoding/binary"
+import binary "encoding/binary"
 
 import io "io"
 
@@ -2463,7 +2463,7 @@ func (m *Terminal) MarshalTo(dAtA []byte) (int, error) {
 	if m.DoubleValue != nil {
 		dAtA[i] = 0x19
 		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(*m.DoubleValue))))
+		binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(*m.DoubleValue))))
 		i += 8
 	}
 	if m.IntValue != nil {
@@ -2685,7 +2685,7 @@ func (m *Name) MarshalTo(dAtA []byte) (int, error) {
 	if m.DoubleValue != nil {
 		dAtA[i] = 0x19
 		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(*m.DoubleValue))))
+		binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(*m.DoubleValue))))
 		i += 8
 	}
 	if m.IntValue != nil {
@@ -7438,7 +7438,7 @@ func (m *Terminal) Unmarshal(dAtA []byte) error {
 			if (iNdEx + 8) > l {
 				return io.ErrUnexpectedEOF
 			}
-			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
+			v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
 			iNdEx += 8
 			v2 := float64(math.Float64frombits(v))
 			m.DoubleValue = &v2
@@ -8130,7 +8130,7 @@ func (m *Name) Unmarshal(dAtA []byte) error {
 			if (iNdEx + 8) > l {
 				return io.ErrUnexpectedEOF
 			}
-			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
+			v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
 			iNdEx += 8
 			v2 := float64(math.Float64frombits(v))
 			m.DoubleValue = &v2

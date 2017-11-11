@@ -23,11 +23,10 @@ import fmt "fmt"
 import math "math"
 import _ "github.com/gogo/protobuf/gogoproto"
 
-import github_com_gogo_protobuf_protoc_gen_gogo_descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
-import github_com_gogo_protobuf_proto "github.com/gogo/protobuf/proto"
-import compress_gzip "compress/gzip"
+import descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
+import gzip "compress/gzip"
 import bytes "bytes"
-import io_ioutil "io/ioutil"
+import ioutil "io/ioutil"
 
 import strings "strings"
 import reflect "reflect"
@@ -234,29 +233,29 @@ func init() {
 	proto.RegisterType((*Knot)(nil), "protonum.Knot")
 	proto.RegisterType((*BightKnot)(nil), "protonum.BightKnot")
 }
-func (this *ProtoNum) Description() (desc *github_com_gogo_protobuf_protoc_gen_gogo_descriptor.FileDescriptorSet) {
+func (this *ProtoNum) Description() (desc *descriptor.FileDescriptorSet) {
 	return ProtonumDescription()
 }
-func (this *KeyValue) Description() (desc *github_com_gogo_protobuf_protoc_gen_gogo_descriptor.FileDescriptorSet) {
+func (this *KeyValue) Description() (desc *descriptor.FileDescriptorSet) {
 	return ProtonumDescription()
 }
-func (this *TopsyTurvy) Description() (desc *github_com_gogo_protobuf_protoc_gen_gogo_descriptor.FileDescriptorSet) {
+func (this *TopsyTurvy) Description() (desc *descriptor.FileDescriptorSet) {
 	return ProtonumDescription()
 }
-func (this *Topsy) Description() (desc *github_com_gogo_protobuf_protoc_gen_gogo_descriptor.FileDescriptorSet) {
+func (this *Topsy) Description() (desc *descriptor.FileDescriptorSet) {
 	return ProtonumDescription()
 }
-func (this *Turvy) Description() (desc *github_com_gogo_protobuf_protoc_gen_gogo_descriptor.FileDescriptorSet) {
+func (this *Turvy) Description() (desc *descriptor.FileDescriptorSet) {
 	return ProtonumDescription()
 }
-func (this *Knot) Description() (desc *github_com_gogo_protobuf_protoc_gen_gogo_descriptor.FileDescriptorSet) {
+func (this *Knot) Description() (desc *descriptor.FileDescriptorSet) {
 	return ProtonumDescription()
 }
-func (this *BightKnot) Description() (desc *github_com_gogo_protobuf_protoc_gen_gogo_descriptor.FileDescriptorSet) {
+func (this *BightKnot) Description() (desc *descriptor.FileDescriptorSet) {
 	return ProtonumDescription()
 }
-func ProtonumDescription() (desc *github_com_gogo_protobuf_protoc_gen_gogo_descriptor.FileDescriptorSet) {
-	d := &github_com_gogo_protobuf_protoc_gen_gogo_descriptor.FileDescriptorSet{}
+func ProtonumDescription() (desc *descriptor.FileDescriptorSet) {
+	d := &descriptor.FileDescriptorSet{}
 	var gzipped = []byte{
 		// 3869 bytes of a gzipped FileDescriptorSet
 		0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x5a, 0x5b, 0x70, 0x1b, 0xd7,
@@ -503,15 +502,15 @@ func ProtonumDescription() (desc *github_com_gogo_protobuf_protoc_gen_gogo_descr
 		0x3f, 0x00, 0x00, 0xff, 0xff, 0xd2, 0x40, 0xc2, 0xe3, 0xb4, 0x32, 0x00, 0x00,
 	}
 	r := bytes.NewReader(gzipped)
-	gzipr, err := compress_gzip.NewReader(r)
+	gzipr, err := gzip.NewReader(r)
 	if err != nil {
 		panic(err)
 	}
-	ungzipped, err := io_ioutil.ReadAll(gzipr)
+	ungzipped, err := ioutil.ReadAll(gzipr)
 	if err != nil {
 		panic(err)
 	}
-	if err := github_com_gogo_protobuf_proto.Unmarshal(ungzipped, d); err != nil {
+	if err := proto.Unmarshal(ungzipped, d); err != nil {
 		panic(err)
 	}
 	return d

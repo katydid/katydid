@@ -17,11 +17,10 @@ import fmt "fmt"
 import math "math"
 import _ "github.com/gogo/protobuf/gogoproto"
 
-import github_com_gogo_protobuf_protoc_gen_gogo_descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
-import github_com_gogo_protobuf_proto "github.com/gogo/protobuf/proto"
-import compress_gzip "compress/gzip"
+import descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
+import gzip "compress/gzip"
 import bytes "bytes"
-import io_ioutil "io/ioutil"
+import ioutil "io/ioutil"
 
 import strings "strings"
 import reflect "reflect"
@@ -105,11 +104,11 @@ func (m *Debug) GetG() float64 {
 func init() {
 	proto.RegisterType((*Debug)(nil), "debug.Debug")
 }
-func (this *Debug) Description() (desc *github_com_gogo_protobuf_protoc_gen_gogo_descriptor.FileDescriptorSet) {
+func (this *Debug) Description() (desc *descriptor.FileDescriptorSet) {
 	return DebugDescription()
 }
-func DebugDescription() (desc *github_com_gogo_protobuf_protoc_gen_gogo_descriptor.FileDescriptorSet) {
-	d := &github_com_gogo_protobuf_protoc_gen_gogo_descriptor.FileDescriptorSet{}
+func DebugDescription() (desc *descriptor.FileDescriptorSet) {
+	d := &descriptor.FileDescriptorSet{}
 	var gzipped = []byte{
 		// 3751 bytes of a gzipped FileDescriptorSet
 		0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x5a, 0x6b, 0x6c, 0x23, 0xd7,
@@ -349,15 +348,15 @@ func DebugDescription() (desc *github_com_gogo_protobuf_protoc_gen_gogo_descript
 		0x4b, 0xa5, 0xf2, 0x6a, 0x31, 0x00, 0x00,
 	}
 	r := bytes.NewReader(gzipped)
-	gzipr, err := compress_gzip.NewReader(r)
+	gzipr, err := gzip.NewReader(r)
 	if err != nil {
 		panic(err)
 	}
-	ungzipped, err := io_ioutil.ReadAll(gzipr)
+	ungzipped, err := ioutil.ReadAll(gzipr)
 	if err != nil {
 		panic(err)
 	}
-	if err := github_com_gogo_protobuf_proto.Unmarshal(ungzipped, d); err != nil {
+	if err := proto.Unmarshal(ungzipped, d); err != nil {
 		panic(err)
 	}
 	return d
