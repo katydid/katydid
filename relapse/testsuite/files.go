@@ -114,7 +114,7 @@ func ReadBenchmarkSuite() ([]Bench, error) {
 	}
 	for codec, folders := range codecs {
 		switch codec {
-		case "pbnum", "json":
+		case "pbname", "pbnum", "json":
 		default:
 			// codec not supported
 			continue
@@ -249,6 +249,18 @@ func readBenchFolder(path string) (*Bench, error) {
 		filename := filepath.Join(path, filebase)
 		codecName = filepath.Ext(filename)[1:]
 		switch codecName {
+		case "pbname":
+			if desc == nil {
+				pkgName, msgName, desc, err = getProtoDesc(filename)
+				if err != nil {
+					return nil, err
+				}
+			}
+			p, err := newProtoNameParser(pkgName, msgName, desc, filename)
+			if err != nil {
+				return nil, err
+			}
+			parsers = append(parsers, p)
 		case "pbnum":
 			if desc == nil {
 				pkgName, msgName, desc, err = getProtoDesc(filename)
