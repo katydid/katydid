@@ -15,8 +15,9 @@
 package funcs
 
 import (
-	"github.com/katydid/katydid/relapse/types"
 	"testing"
+
+	"github.com/katydid/katydid/relapse/types"
 )
 
 type which struct {
@@ -26,7 +27,7 @@ type which struct {
 func (this which) test(t *testing.T, name string, params ...types.Type) {
 	uniq, err := funcsMap.which(name, params...)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	if uniq != this.exp {
 		t.Fatalf("expected %v got %v", this.exp, uniq)

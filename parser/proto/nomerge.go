@@ -29,7 +29,7 @@ func NoLatentAppendingOrMerging(parser ProtoParser) error {
 			if err == io.EOF {
 				break
 			} else {
-				panic(err)
+				return fmt.Errorf("expected EOF, but got: %v", err)
 			}
 		}
 		if !parser.IsLeaf() {
@@ -40,7 +40,7 @@ func NoLatentAppendingOrMerging(parser ProtoParser) error {
 					}
 					seen[fieldNum] = true
 				} else {
-					panic("not an index, field or leaf: " + err.Error())
+					return fmt.Errorf("not an index, field or leaf: %v", err)
 				}
 			}
 			parser.Down()

@@ -37,10 +37,13 @@ var packedOutput1 = debug.Nodes{
 }
 
 func TestPacked1(t *testing.T) {
-	p := NewProtoNameParser("prototests", "Packed", packedInput1.Description())
+	p, err := NewProtoNameParser("prototests", "Packed", packedInput1.Description())
+	if err != nil {
+		t.Fatal(err)
+	}
 	data, err := proto.Marshal(packedInput1)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	if err := p.Init(data); err != nil {
 		t.Fatal(err)
@@ -53,10 +56,13 @@ func TestPacked1(t *testing.T) {
 }
 
 func TestRandomPacked1(t *testing.T) {
-	p := NewProtoNameParser("prototests", "Packed", packedInput1.Description())
+	p, err := NewProtoNameParser("prototests", "Packed", packedInput1.Description())
+	if err != nil {
+		t.Fatal(err)
+	}
 	data, err := proto.Marshal(packedInput1)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	for i := 0; i < 10; i++ {
 		if err := p.Init(data); err != nil {
@@ -89,10 +95,13 @@ var packedOutput2 = debug.Nodes{
 }
 
 func TestPacked2(t *testing.T) {
-	p := NewProtoNameParser("prototests", "Packed", packedInput2.Description())
+	p, err := NewProtoNameParser("prototests", "Packed", packedInput2.Description())
+	if err != nil {
+		t.Fatal(err)
+	}
 	data, err := proto.Marshal(packedInput2)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	if err := p.Init(data); err != nil {
 		t.Fatal(err)
@@ -105,10 +114,13 @@ func TestPacked2(t *testing.T) {
 }
 
 func TestRandomPacked2(t *testing.T) {
-	p := NewProtoNameParser("prototests", "Packed", packedInput2.Description())
+	p, err := NewProtoNameParser("prototests", "Packed", packedInput2.Description())
+	if err != nil {
+		t.Fatal(err)
+	}
 	data, err := proto.Marshal(packedInput2)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	for i := 0; i < 10; i++ {
 		if err := p.Init(data); err != nil {

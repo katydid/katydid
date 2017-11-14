@@ -16,21 +16,25 @@ package proto_test
 
 import (
 	"encoding/binary"
+	"math/rand"
+	"strings"
+	"testing"
+	"time"
+
 	"github.com/gogo/protobuf/proto"
 	"github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 	"github.com/katydid/katydid/parser/debug"
 	katydidproto "github.com/katydid/katydid/parser/proto"
 	"github.com/katydid/katydid/parser/proto/prototests"
-	"math/rand"
-	"strings"
-	"testing"
-	"time"
 )
 
 func noMerge(data []byte, desc *descriptor.FileDescriptorSet, pkgName, msgName string) error {
-	parser := katydidproto.NewProtoNumParser(pkgName, msgName, desc)
+	parser, err := katydidproto.NewProtoNumParser(pkgName, msgName, desc)
+	if err != nil {
+		return err
+	}
 	if err := parser.Init(data); err != nil {
-		panic(err)
+		return err
 	}
 	return katydidproto.NoLatentAppendingOrMerging(parser)
 }
@@ -43,7 +47,7 @@ func TestNoMergeNoMerge(t *testing.T) {
 	m := debug.Input
 	data, err := proto.Marshal(m)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	err = noMerge(data, m.Description(), "debug", "Debug")
 	if err != nil {
@@ -56,7 +60,7 @@ func TestNoMergeMerge(t *testing.T) {
 	m.G = proto.Float64(1.1)
 	data, err := proto.Marshal(m)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	key := byte(uint32(7)<<3 | uint32(1))
 	data = append(data, key, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
@@ -72,7 +76,7 @@ func TestNoMergeLatent(t *testing.T) {
 	m.G = proto.Float64(1.1)
 	data, err := proto.Marshal(m)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	key := byte(uint32(6)<<3 | uint32(5))
 	data = append(data, key, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
@@ -86,7 +90,7 @@ func TestNoMergeNestedNoMerge(t *testing.T) {
 	bigm := prototests.NewPopulatedBigMsg(r, true)
 	data, err := proto.Marshal(bigm)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	err = noMerge(data, bigm.Description(), "prototests", "BigMsg")
 	if err != nil {
@@ -99,7 +103,7 @@ func TestNoMergeMessageMerge(t *testing.T) {
 	bigm.Msg = prototests.NewPopulatedSmallMsg(r, true)
 	data, err := proto.Marshal(bigm)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	key := byte(uint32(3)<<3 | uint32(2))
 	fieldkey := byte(uint32(12)<<3 | uint32(5))
@@ -122,7 +126,7 @@ func TestNoMergeNestedMerge(t *testing.T) {
 	bigm.Msg = m
 	data, err := proto.Marshal(bigm)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	err = noMerge(data, bigm.Description(), "prototests", "BigMsg")
 	if err == nil || !strings.Contains(err.Error(), "FlightParachute requires merging") {
@@ -134,11 +138,11 @@ func TestNoMergeExtensionNoMerge(t *testing.T) {
 	bigm := prototests.AContainer
 	data, err := proto.Marshal(bigm)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	err = noMerge(data, bigm.Description(), "prototests", "Container")
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 }
 
@@ -147,11 +151,11 @@ func TestNoMergeExtensionMerge(t *testing.T) {
 	m := &prototests.Small{SmallField: proto.Int64(1)}
 	data, err := proto.Marshal(bigm)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	mdata, err := proto.Marshal(m)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	key := uint32(101)<<3 | uint32(2)
 	datakey := make([]byte, 10)

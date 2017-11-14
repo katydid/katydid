@@ -15,12 +15,13 @@
 package compose
 
 import (
+	"strings"
+	"testing"
+
 	"github.com/gogo/protobuf/proto"
 	"github.com/katydid/katydid/parser/debug"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/funcs"
-	"strings"
-	"testing"
 )
 
 func TestComposeNot(t *testing.T) {
@@ -38,15 +39,15 @@ func TestComposeNot(t *testing.T) {
 	}
 	b, err := NewBool(expr)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	f, err := NewBoolFunc(b)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	r, err := f.Eval(nil)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	if r != true {
 		t.Fatalf("expected true")
@@ -66,22 +67,22 @@ func TestComposeContains(t *testing.T) {
 	)
 	b, err := NewBool(expr)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	f, err := NewBoolFunc(b)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	r, err := f.Eval(debug.NewStringValue("TheStreet"))
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	if r != true {
 		t.Fatalf("expected true")
 	}
 	r, err = f.Eval(debug.NewStringValue("ThatStreet"))
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	if r != false {
 		t.Fatalf("expected false")
@@ -98,15 +99,15 @@ func TestComposeStringEq(t *testing.T) {
 	)
 	b, err := NewBool(expr)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	f, err := NewBoolFunc(b)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	r, err := f.Eval(debug.NewStringValue("TheStreet"))
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	if r != true {
 		t.Fatalf("expected true")
@@ -125,15 +126,15 @@ func TestComposeListBool(t *testing.T) {
 	)
 	b, err := NewBool(expr)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	f, err := NewBoolFunc(b)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	r, err := f.Eval(nil)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	if r != true {
 		t.Fatalf("expected true")
@@ -159,15 +160,15 @@ func TestComposeListInt64(t *testing.T) {
 	)
 	b, err := NewBool(expr)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	f, err := NewBoolFunc(b)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	r, err := f.Eval(nil)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	if r != true {
 		t.Fatalf("expected true")
@@ -182,15 +183,15 @@ func TestComposeRegex(t *testing.T) {
 	)
 	b, err := NewBool(expr)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	f, err := NewBoolFunc(b)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	r, err := f.Eval(debug.NewStringValue("a"))
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	if r != false {
 		t.Fatalf("expected false")
@@ -204,7 +205,7 @@ func TestConst(t *testing.T) {
 	)
 	b, err := NewBool(expr)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	_, err = NewBoolFunc(b)
 	if err == nil {
@@ -222,15 +223,15 @@ func TestTrimInit(t *testing.T) {
 	)
 	b, err := NewBool(expr)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	f, err := NewBoolFunc(b)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	r, err := f.Eval(nil)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	if r != true {
 		t.Fatalf("expected true")
@@ -251,11 +252,11 @@ func TestNoTrim(t *testing.T) {
 	)
 	b, err := NewBool(expr)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	f, err := NewBoolFunc(b)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	str := funcs.Sprint(f.(*composedBool).Func)
 	if str == "false" {
@@ -264,7 +265,7 @@ func TestNoTrim(t *testing.T) {
 	t.Logf("trimmed = %s", str)
 	r, err := f.Eval(debug.NewStringValue("abc"))
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	if r != true {
 		t.Fatalf("expected true")
@@ -283,11 +284,11 @@ func TestList(t *testing.T) {
 	)
 	b, err := NewBool(expr)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	f, err := NewBoolFunc(b)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	str := funcs.Sprint(f.(*composedBool).Func)
 	if str != "->true" {
@@ -295,7 +296,7 @@ func TestList(t *testing.T) {
 	}
 	r, err := f.Eval(nil)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	if r != true {
 		t.Fatalf("expected true")
@@ -308,15 +309,15 @@ func TestComposeBuiltInRegex(t *testing.T) {
 	)
 	b, err := NewBool(expr)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	f, err := NewBoolFunc(b)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	r, err := f.Eval(debug.NewStringValue("ab"))
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	if r != true {
 		t.Fatalf("expected true")
@@ -329,15 +330,15 @@ func TestComposeBuiltInEqual(t *testing.T) {
 	)
 	b, err := NewBool(expr)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	f, err := NewBoolFunc(b)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	r, err := f.Eval(debug.NewIntValue(124))
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	if r != false {
 		t.Fatalf("expected false")

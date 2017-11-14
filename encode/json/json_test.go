@@ -16,16 +16,17 @@ package json
 
 import (
 	"encoding/json"
-	jsonparser "github.com/katydid/katydid/parser/json"
-	reflectparser "github.com/katydid/katydid/parser/reflect"
 	"reflect"
 	"testing"
+
+	jsonparser "github.com/katydid/katydid/parser/json"
+	reflectparser "github.com/katydid/katydid/parser/reflect"
 )
 
 func testTranscode(t *testing.T, input interface{}) {
 	inputData, err := json.Marshal(input)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	t.Logf("testing transcoding: %s", string(inputData))
 	p := jsonparser.NewJsonParser()

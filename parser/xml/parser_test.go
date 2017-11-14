@@ -16,14 +16,15 @@ package xml
 
 import (
 	"encoding/json"
-	"github.com/katydid/katydid/parser/debug"
 	"testing"
+
+	"github.com/katydid/katydid/parser/debug"
 )
 
 func testXML(t *testing.T, s string) {
 	x := NewXMLParser()
 	if err := x.Init([]byte(s)); err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	m := debug.Walk(debug.NewLogger(x, debug.NewLineLogger()))
 	data, err := json.Marshal(m)

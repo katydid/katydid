@@ -23,11 +23,12 @@ package proto
 import (
 	"encoding/binary"
 	"fmt"
-	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
-	"github.com/katydid/katydid/parser"
 	"io"
 	"reflect"
 	"unsafe"
+
+	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
+	"github.com/katydid/katydid/parser"
 )
 
 type errVarint struct {
@@ -120,20 +121,20 @@ type ProtoParser interface {
 
 //NewProtoNameParser returns a new protocol buffer parser the specific root message.
 //When the value of a field name is requested this parser will return the field name using the String method.
-func NewProtoNameParser(rootPackage, rootMessage string, desc *descriptor.FileDescriptorSet) *protoParser {
+func NewProtoNameParser(rootPackage, rootMessage string, desc *descriptor.FileDescriptorSet) (ProtoParser, error) {
 	return newProtoParser(rootPackage, rootMessage, desc, true)
 }
 
 //NewProtoNumParser returns a new protocol buffer parser the specific root message.
 //When the value of a field name is requested this parser will return the field number using the Uint method.
-func NewProtoNumParser(rootPackage, rootMessage string, desc *descriptor.FileDescriptorSet) *protoParser {
+func NewProtoNumParser(rootPackage, rootMessage string, desc *descriptor.FileDescriptorSet) (ProtoParser, error) {
 	return newProtoParser(rootPackage, rootMessage, desc, false)
 }
 
-func newProtoParser(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet, fieldNames bool) *protoParser {
+func newProtoParser(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet, fieldNames bool) (*protoParser, error) {
 	descMap, err := NewDescriptorMap(srcPackage, srcMessage, desc)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	root := descMap.GetRoot()
 	fieldsMap := descMap.LookupFields(root)
@@ -143,7 +144,7 @@ func newProtoParser(srcPackage, srcMessage string, desc *descriptor.FileDescript
 		fieldNames:    fieldNames,
 		initRoot:      root,
 		initFieldsMap: fieldsMap,
-	}
+	}, nil
 }
 
 func (s *protoParser) Reset() error {

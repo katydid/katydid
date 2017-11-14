@@ -30,7 +30,7 @@ func testParseStrErr(t *testing.T, s string) {
 func testParseStr(t *testing.T, in []byte, s string) {
 	out, err := parseBytes(s)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	if !bytes.Equal(in, out) {
 		t.Fatalf("expected %#v got %#v from %s", in, out, s)

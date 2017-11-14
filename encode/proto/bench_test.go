@@ -15,12 +15,13 @@
 package proto
 
 import (
-	"github.com/gogo/protobuf/proto"
-	. "github.com/katydid/katydid/encode/proto/prototests"
-	reflectparser "github.com/katydid/katydid/parser/reflect"
 	"math/rand"
 	"reflect"
 	"testing"
+
+	"github.com/gogo/protobuf/proto"
+	. "github.com/katydid/katydid/encode/proto/prototests"
+	reflectparser "github.com/katydid/katydid/parser/reflect"
 )
 
 func BenchmarkMarshalSimple(b *testing.B) {
@@ -34,7 +35,7 @@ func BenchmarkMarshalSimple(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		data, err := proto.Marshal(pops[i%10000])
 		if err != nil {
-			panic(err)
+			b.Fatal(err)
 		}
 		total += len(data)
 	}
@@ -52,7 +53,7 @@ func BenchmarkMarshalNested(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		data, err := proto.Marshal(pops[i%10000])
 		if err != nil {
-			panic(err)
+			b.Fatal(err)
 		}
 		total += len(data)
 	}
@@ -72,13 +73,13 @@ func BenchmarkEncodeSimple(b *testing.B) {
 	buf := make([]byte, 1<<20)
 	enc, err := NewEncoder((&Simple{}).Description(), "prototests", "Simple")
 	if err != nil {
-		panic(err)
+		b.Fatal(err)
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		data, err := enc.Encode(buf, pops[i%10000])
 		if err != nil {
-			panic(err)
+			b.Fatal(err)
 		}
 		total += len(data)
 	}
@@ -98,13 +99,13 @@ func BenchmarkEncodeNested(b *testing.B) {
 	buf := make([]byte, 1<<20)
 	enc, err := NewEncoder((&Nested{}).Description(), "prototests", "Nested")
 	if err != nil {
-		panic(err)
+		b.Fatal(err)
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		data, err := enc.Encode(buf, pops[i%10000])
 		if err != nil {
-			panic(err)
+			b.Fatal(err)
 		}
 		total += len(data)
 	}

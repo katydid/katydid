@@ -359,7 +359,10 @@ func getProtoDesc(filename string) (pkgName, msgName string, desc *descriptor.Fi
 }
 
 func newProtoNumParser(pkgName, msgName string, desc *descriptor.FileDescriptorSet, filename string) (ResetParser, error) {
-	pp := protoparser.NewProtoNumParser(pkgName, msgName, desc)
+	pp, err := protoparser.NewProtoNumParser(pkgName, msgName, desc)
+	if err != nil {
+		return nil, fmt.Errorf("err <%v> createing proto parser", err)
+	}
 	bytes, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return nil, fmt.Errorf("err <%v> reading file <%s>", err, filename)
@@ -371,7 +374,10 @@ func newProtoNumParser(pkgName, msgName string, desc *descriptor.FileDescriptorS
 }
 
 func newProtoNameParser(pkgName, msgName string, desc *descriptor.FileDescriptorSet, filename string) (ResetParser, error) {
-	pp := protoparser.NewProtoNameParser(pkgName, msgName, desc)
+	pp, err := protoparser.NewProtoNameParser(pkgName, msgName, desc)
+	if err != nil {
+		return nil, fmt.Errorf("err <%v> createing proto parser", err)
+	}
 	bytes, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return nil, fmt.Errorf("err <%v> reading file <%s>", err, filename)

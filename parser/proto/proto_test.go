@@ -25,10 +25,13 @@ import (
 )
 
 func TestDebug(t *testing.T) {
-	p := NewProtoNameParser("debug", "Debug", debug.DebugDescription())
+	p, err := NewProtoNameParser("debug", "Debug", debug.DebugDescription())
+	if err != nil {
+		t.Fatal(err)
+	}
 	data, err := proto.Marshal(debug.Input)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	if err := p.Init(data); err != nil {
 		t.Fatal(err)
@@ -41,10 +44,13 @@ func TestDebug(t *testing.T) {
 }
 
 func TestRandomDebug(t *testing.T) {
-	p := NewProtoNameParser("debug", "Debug", debug.DebugDescription())
+	p, err := NewProtoNameParser("debug", "Debug", debug.DebugDescription())
+	if err != nil {
+		t.Fatal(err)
+	}
 	data, err := proto.Marshal(debug.Input)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	for i := 0; i < 10; i++ {
 		if err := p.Init(data); err != nil {
@@ -65,7 +71,10 @@ func next(t *testing.T, parser parser.Interface) {
 }
 
 func TestSkipRepeated1(t *testing.T) {
-	p := NewProtoNameParser("debug", "Debug", debug.DebugDescription())
+	p, err := NewProtoNameParser("debug", "Debug", debug.DebugDescription())
+	if err != nil {
+		t.Fatal(err)
+	}
 	data, err := proto.Marshal(debug.Input)
 	if err != nil {
 		t.Fatal(err)
@@ -90,10 +99,13 @@ func TestSkipRepeated1(t *testing.T) {
 }
 
 func TestSkipRepeated2(t *testing.T) {
-	p := NewProtoNameParser("debug", "Debug", debug.DebugDescription())
+	p, err := NewProtoNameParser("debug", "Debug", debug.DebugDescription())
+	if err != nil {
+		t.Fatal(err)
+	}
 	data, err := proto.Marshal(debug.Input)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	if err := p.Init(data); err != nil {
 		t.Fatal(err)
@@ -117,10 +129,13 @@ func TestSkipRepeated2(t *testing.T) {
 }
 
 func TestIndexIsNotAString(t *testing.T) {
-	p := NewProtoNameParser("debug", "Debug", debug.DebugDescription())
+	p, err := NewProtoNameParser("debug", "Debug", debug.DebugDescription())
+	if err != nil {
+		t.Fatal(err)
+	}
 	data, err := proto.Marshal(debug.Input)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	if err := p.Init(data); err != nil {
 		t.Fatal(err)
@@ -142,10 +157,13 @@ func TestIndexIsNotAString(t *testing.T) {
 }
 
 func TestExtensionsSmallContainer(t *testing.T) {
-	p := NewProtoNameParser("prototests", "Container", prototests.AContainer.Description())
+	p, err := NewProtoNameParser("prototests", "Container", prototests.AContainer.Description())
+	if err != nil {
+		t.Fatal(err)
+	}
 	data, err := proto.Marshal(prototests.AContainer)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	if err := p.Init(data); err != nil {
 		t.Fatal(err)
@@ -157,10 +175,13 @@ func TestExtensionsSmallContainer(t *testing.T) {
 }
 
 func TestExtensionsBigContainer(t *testing.T) {
-	p := NewProtoNameParser("prototests", "BigContainer", prototests.ABigContainer.Description())
+	p, err := NewProtoNameParser("prototests", "BigContainer", prototests.ABigContainer.Description())
+	if err != nil {
+		t.Fatal(err)
+	}
 	data, err := proto.Marshal(prototests.ABigContainer)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	if err := p.Init(data); err != nil {
 		t.Fatal(err)
