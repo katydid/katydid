@@ -19,7 +19,6 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
 
 	"github.com/gogo/protobuf/proto"
@@ -243,7 +242,10 @@ func readBenchFolder(path string) (*Bench, error) {
 			continue
 		}
 		filebase := fileInfo.Name()
-		if _, err := strconv.Atoi(strings.Split(filebase, ".")[0]); err != nil {
+		names := strings.Split(filebase, "_")
+		valid := names[0] == "valid"
+		invalid := names[0] == "invalid"
+		if !valid && !invalid {
 			continue
 		}
 		filename := filepath.Join(path, filebase)
