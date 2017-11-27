@@ -16,11 +16,13 @@ package interp
 
 import (
 	"fmt"
+	"io"
+
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/compose"
 	nameexpr "github.com/katydid/katydid/relapse/name"
-	"io"
+	"github.com/katydid/katydid/relapse/sets"
 )
 
 //Interpret interprets the grammar given the parser and returns whether the parser is valid given the grammar.
@@ -72,12 +74,12 @@ func deriv(refs ast.RefLookup, patterns []*ast.Pattern, tree parser.Interface) (
 			//do nothing
 		} else {
 			tree.Down()
-			zchild, zi := zip(childPatterns)
+			zchild, zi := sets.Zip(childPatterns)
 			zchild, err = deriv(refs, zchild, tree)
 			if err != nil {
 				return nil, err
 			}
-			childPatterns = unzip(zchild, zi)
+			childPatterns = sets.Unzip(zchild, zi)
 			tree.Up()
 		}
 		resPatterns = derivReturns(refs, resPatterns, childPatterns)
@@ -91,24 +93,6 @@ func simps(refs ast.RefLookup, patterns []*ast.Pattern) []*ast.Pattern {
 		patterns[i] = NewSimplifier(ast.NewGrammar(refs)).Simplify(patterns[i])
 	}
 	return patterns
-}
-
-func zip(patterns []*ast.Pattern) ([]*ast.Pattern, []int) {
-	zipped := ast.Set(patterns)
-	ast.Sort(zipped)
-	indexes := make([]int, len(patterns))
-	for i, pattern := range patterns {
-		indexes[i] = ast.Index(zipped, pattern)
-	}
-	return zipped, indexes
-}
-
-func unzip(patterns []*ast.Pattern, indexes []int) []*ast.Pattern {
-	res := make([]*ast.Pattern, len(indexes))
-	for i, index := range indexes {
-		res[i] = patterns[index]
-	}
-	return res
 }
 
 func derivCalls(refs ast.RefLookup, patterns []*ast.Pattern, label parser.Value) ([]*ast.Pattern, error) {

@@ -63,7 +63,8 @@ func NewPatterns() Patterns {
 
 func (this Patterns) Index(patterns []*ast.Pattern) int {
 	for i, ps := range this {
-		if ast.Equals(ps, patterns) {
+		// TODO maybe we should rather use hashes to do this more efficiently?
+		if deriveEquals(ps, patterns) {
 			return i
 		}
 	}

@@ -49,7 +49,7 @@ func (ps *sortable) Less(i, j int) bool {
 	return ps.list[i].GetTreeNode() == nil
 }
 
-// create a stable order, taking into account treenodes and remove duplicates.
+// orderedSet creates a stable order, while taking into account treenodes and removing duplicates.
 func orderedSet(ps []*ast.Pattern) []*ast.Pattern {
 	if len(ps) == 0 || len(ps) == 1 {
 		return ps
@@ -58,9 +58,9 @@ func orderedSet(ps []*ast.Pattern) []*ast.Pattern {
 	hashes := make([]uint64, len(ps))
 	for i, p := range ps {
 		if p.GetTreeNode() == nil {
-			hashes[i] = deriveHash(p)
+			hashes[i] = p.Hash()
 		} else {
-			hashes[i] = deriveHash(p.GetTreeNode().GetPattern())
+			hashes[i] = p.GetTreeNode().GetPattern().Hash()
 		}
 	}
 

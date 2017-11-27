@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"fmt"
 	types "github.com/katydid/katydid/relapse/types"
+	"math"
 	"strings"
 )
 
@@ -411,6 +412,28 @@ func deriveEqualNameExpr(this, that *NameExpr) bool {
 			deriveEqual_15(this.AnyName, that.AnyName) &&
 			deriveEqual_16(this.AnyNameExcept, that.AnyNameExcept) &&
 			deriveEqual_17(this.NameChoice, that.NameChoice)
+}
+
+// deriveHash returns the hash of the object.
+func deriveHash(object *Pattern) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_(object.Empty)
+	h = 31*h + deriveHash_1(object.TreeNode)
+	h = 31*h + deriveHash_2(object.LeafNode)
+	h = 31*h + deriveHash_3(object.Concat)
+	h = 31*h + deriveHash_4(object.Or)
+	h = 31*h + deriveHash_5(object.And)
+	h = 31*h + deriveHash_6(object.ZeroOrMore)
+	h = 31*h + deriveHash_7(object.Reference)
+	h = 31*h + deriveHash_8(object.Not)
+	h = 31*h + deriveHash_9(object.ZAny)
+	h = 31*h + deriveHash_10(object.Contains)
+	h = 31*h + deriveHash_11(object.Optional)
+	h = 31*h + deriveHash_12(object.Interleave)
+	return h
 }
 
 // deriveGoString returns a recursive representation of this as a valid go string.
@@ -2067,6 +2090,167 @@ func deriveEqual_17(this, that *NameChoice) bool {
 			deriveEqual_20(this.CloseParen, that.CloseParen)
 }
 
+// deriveHash_ returns the hash of the object.
+func deriveHash_(object *Empty) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_13(object.Empty)
+	return h
+}
+
+// deriveHash_1 returns the hash of the object.
+func deriveHash_1(object *TreeNode) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_14(object.Name)
+	h = 31*h + deriveHash_13(object.Colon)
+	h = 31*h + deriveHash(object.Pattern)
+	return h
+}
+
+// deriveHash_2 returns the hash of the object.
+func deriveHash_2(object *LeafNode) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_15(object.Expr)
+	return h
+}
+
+// deriveHash_3 returns the hash of the object.
+func deriveHash_3(object *Concat) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_13(object.OpenBracket)
+	h = 31*h + deriveHash(object.LeftPattern)
+	h = 31*h + deriveHash_13(object.Comma)
+	h = 31*h + deriveHash(object.RightPattern)
+	h = 31*h + deriveHash_13(object.ExtraComma)
+	h = 31*h + deriveHash_13(object.CloseBracket)
+	return h
+}
+
+// deriveHash_4 returns the hash of the object.
+func deriveHash_4(object *Or) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_13(object.OpenParen)
+	h = 31*h + deriveHash(object.LeftPattern)
+	h = 31*h + deriveHash_13(object.Pipe)
+	h = 31*h + deriveHash(object.RightPattern)
+	h = 31*h + deriveHash_13(object.CloseParen)
+	return h
+}
+
+// deriveHash_5 returns the hash of the object.
+func deriveHash_5(object *And) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_13(object.OpenParen)
+	h = 31*h + deriveHash(object.LeftPattern)
+	h = 31*h + deriveHash_13(object.Ampersand)
+	h = 31*h + deriveHash(object.RightPattern)
+	h = 31*h + deriveHash_13(object.CloseParen)
+	return h
+}
+
+// deriveHash_6 returns the hash of the object.
+func deriveHash_6(object *ZeroOrMore) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_13(object.OpenParen)
+	h = 31*h + deriveHash(object.Pattern)
+	h = 31*h + deriveHash_13(object.CloseParen)
+	h = 31*h + deriveHash_13(object.Star)
+	return h
+}
+
+// deriveHash_7 returns the hash of the object.
+func deriveHash_7(object *Reference) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_13(object.At)
+	h = 31*h + deriveHash_s(object.Name)
+	return h
+}
+
+// deriveHash_8 returns the hash of the object.
+func deriveHash_8(object *Not) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_13(object.Exclamation)
+	h = 31*h + deriveHash_13(object.OpenParen)
+	h = 31*h + deriveHash(object.Pattern)
+	h = 31*h + deriveHash_13(object.CloseParen)
+	return h
+}
+
+// deriveHash_9 returns the hash of the object.
+func deriveHash_9(object *ZAny) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_13(object.Star)
+	return h
+}
+
+// deriveHash_10 returns the hash of the object.
+func deriveHash_10(object *Contains) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_13(object.Dot)
+	h = 31*h + deriveHash(object.Pattern)
+	return h
+}
+
+// deriveHash_11 returns the hash of the object.
+func deriveHash_11(object *Optional) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_13(object.OpenParen)
+	h = 31*h + deriveHash(object.Pattern)
+	h = 31*h + deriveHash_13(object.CloseParen)
+	h = 31*h + deriveHash_13(object.QuestionMark)
+	return h
+}
+
+// deriveHash_12 returns the hash of the object.
+func deriveHash_12(object *Interleave) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_13(object.OpenCurly)
+	h = 31*h + deriveHash(object.LeftPattern)
+	h = 31*h + deriveHash_13(object.SemiColon)
+	h = 31*h + deriveHash(object.RightPattern)
+	h = 31*h + deriveHash_13(object.ExtraSemiColon)
+	h = 31*h + deriveHash_13(object.CloseCurly)
+	return h
+}
+
 // deriveGoString_19 returns a recursive representation of this as a valid go string.
 func deriveGoString_19(this *PatternDecl) string {
 	buf := bytes.NewBuffer(nil)
@@ -2429,6 +2613,54 @@ func deriveEqual_21(this, that *Expr) bool {
 			deriveEqual_23(this.List, that.List) &&
 			deriveEqual_24(this.Function, that.Function) &&
 			deriveEqual_25(this.BuiltIn, that.BuiltIn)
+}
+
+// deriveHash_13 returns the hash of the object.
+func deriveHash_13(object *Keyword) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_16(object.Before)
+	h = 31*h + deriveHash_s(object.Value)
+	return h
+}
+
+// deriveHash_14 returns the hash of the object.
+func deriveHash_14(object *NameExpr) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_17(object.Name)
+	h = 31*h + deriveHash_18(object.AnyName)
+	h = 31*h + deriveHash_19(object.AnyNameExcept)
+	h = 31*h + deriveHash_20(object.NameChoice)
+	return h
+}
+
+// deriveHash_15 returns the hash of the object.
+func deriveHash_15(object *Expr) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_13(object.RightArrow)
+	h = 31*h + deriveHash_13(object.Comma)
+	h = 31*h + deriveHash_21(object.Terminal)
+	h = 31*h + deriveHash_22(object.List)
+	h = 31*h + deriveHash_23(object.Function)
+	h = 31*h + deriveHash_24(object.BuiltIn)
+	return h
+}
+
+// deriveHash_s returns the hash of the object.
+func deriveHash_s(object string) uint64 {
+	var h uint64
+	for _, c := range object {
+		h = 31*h + uint64(c)
+	}
+	return h
 }
 
 // deriveGoString_23 returns a recursive representation of this as a valid go string.
@@ -2939,6 +3171,126 @@ func deriveEqual_25(this, that *BuiltIn) bool {
 			deriveEqual_21(this.Expr, that.Expr)
 }
 
+// deriveHash_16 returns the hash of the object.
+func deriveHash_16(object *Space) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_25(object.Space)
+	return h
+}
+
+// deriveHash_17 returns the hash of the object.
+func deriveHash_17(object *Name) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_16(object.Before)
+	h = 31*h + deriveHash_26(object.DoubleValue)
+	h = 31*h + deriveHash_27(object.IntValue)
+	h = 31*h + deriveHash_28(object.UintValue)
+	h = 31*h + deriveHash_29(object.BoolValue)
+	h = 31*h + deriveHash_30(object.StringValue)
+	h = 31*h + deriveHash_31(object.BytesValue)
+	return h
+}
+
+// deriveHash_18 returns the hash of the object.
+func deriveHash_18(object *AnyName) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_13(object.Underscore)
+	return h
+}
+
+// deriveHash_19 returns the hash of the object.
+func deriveHash_19(object *AnyNameExcept) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_13(object.Exclamation)
+	h = 31*h + deriveHash_13(object.OpenParen)
+	h = 31*h + deriveHash_14(object.Except)
+	h = 31*h + deriveHash_13(object.CloseParen)
+	return h
+}
+
+// deriveHash_20 returns the hash of the object.
+func deriveHash_20(object *NameChoice) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_13(object.OpenParen)
+	h = 31*h + deriveHash_14(object.Left)
+	h = 31*h + deriveHash_13(object.Pipe)
+	h = 31*h + deriveHash_14(object.Right)
+	h = 31*h + deriveHash_13(object.CloseParen)
+	return h
+}
+
+// deriveHash_21 returns the hash of the object.
+func deriveHash_21(object *Terminal) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_16(object.Before)
+	h = 31*h + deriveHash_s(object.Literal)
+	h = 31*h + deriveHash_26(object.DoubleValue)
+	h = 31*h + deriveHash_27(object.IntValue)
+	h = 31*h + deriveHash_28(object.UintValue)
+	h = 31*h + deriveHash_29(object.BoolValue)
+	h = 31*h + deriveHash_30(object.StringValue)
+	h = 31*h + deriveHash_31(object.BytesValue)
+	h = 31*h + deriveHash_32(object.Variable)
+	return h
+}
+
+// deriveHash_22 returns the hash of the object.
+func deriveHash_22(object *List) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_16(object.Before)
+	h = 31*h + uint64(object.Type)
+	h = 31*h + deriveHash_13(object.OpenCurly)
+	h = 31*h + deriveHash_33(object.Elems)
+	h = 31*h + deriveHash_13(object.CloseCurly)
+	return h
+}
+
+// deriveHash_23 returns the hash of the object.
+func deriveHash_23(object *Function) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_16(object.Before)
+	h = 31*h + deriveHash_s(object.Name)
+	h = 31*h + deriveHash_13(object.OpenParen)
+	h = 31*h + deriveHash_33(object.Params)
+	h = 31*h + deriveHash_13(object.CloseParen)
+	return h
+}
+
+// deriveHash_24 returns the hash of the object.
+func deriveHash_24(object *BuiltIn) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + deriveHash_13(object.Symbol)
+	h = 31*h + deriveHash_15(object.Expr)
+	return h
+}
+
 // deriveCompare_29 returns:
 //   * 0 if this and that are equal,
 //   * -1 is this is smaller and
@@ -3023,4 +3375,98 @@ func deriveEqual_27(this, that []*Expr) bool {
 		}
 	}
 	return true
+}
+
+// deriveHash_25 returns the hash of the object.
+func deriveHash_25(object []string) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	for i := 0; i < len(object); i++ {
+		h = 31*h + deriveHash_s(object[i])
+	}
+	return h
+}
+
+// deriveHash_26 returns the hash of the object.
+func deriveHash_26(object *float64) uint64 {
+	if object == nil {
+		return 0
+	}
+	return (31 * 17) + math.Float64bits(*object)
+}
+
+// deriveHash_27 returns the hash of the object.
+func deriveHash_27(object *int64) uint64 {
+	if object == nil {
+		return 0
+	}
+	return (31 * 17) + uint64(*object)
+}
+
+// deriveHash_28 returns the hash of the object.
+func deriveHash_28(object *uint64) uint64 {
+	if object == nil {
+		return 0
+	}
+	return (31 * 17) + *object
+}
+
+// deriveHash_29 returns the hash of the object.
+func deriveHash_29(object *bool) uint64 {
+	if object == nil {
+		return 0
+	}
+	return (31 * 17) + deriveHash_b(*object)
+}
+
+// deriveHash_30 returns the hash of the object.
+func deriveHash_30(object *string) uint64 {
+	if object == nil {
+		return 0
+	}
+	return (31 * 17) + deriveHash_s(*object)
+}
+
+// deriveHash_31 returns the hash of the object.
+func deriveHash_31(object []byte) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	for i := 0; i < len(object); i++ {
+		h = 31*h + uint64(object[i])
+	}
+	return h
+}
+
+// deriveHash_32 returns the hash of the object.
+func deriveHash_32(object *Variable) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	h = 31*h + uint64(object.Type)
+	return h
+}
+
+// deriveHash_33 returns the hash of the object.
+func deriveHash_33(object []*Expr) uint64 {
+	if object == nil {
+		return 0
+	}
+	h := uint64(17)
+	for i := 0; i < len(object); i++ {
+		h = 31*h + deriveHash_15(object[i])
+	}
+	return h
+}
+
+// deriveHash_b returns the hash of the object.
+func deriveHash_b(object bool) uint64 {
+	if object {
+		return 1
+	}
+	return 0
 }

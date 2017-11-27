@@ -15,6 +15,8 @@
 package sets
 
 import (
+	"sort"
+
 	"github.com/katydid/katydid/relapse/ast"
 )
 
@@ -30,26 +32,98 @@ var (
 )
 
 func Zip(patterns []*ast.Pattern) ([]*ast.Pattern, []int) {
-	set := ast.Set(patterns)
-	ast.Sort(set)
 
-	if index := ast.Index(set, zipIgnoreSet[0]); index != -1 {
-		set = ast.Remove(set, index)
+	ps := make([]*ast.Pattern, len(patterns))
+	orighashes := make([]uint64, len(patterns))
+	hashes := make([]uint64, len(patterns))
+	for i, p := range patterns {
+		ps[i] = patterns[i]
+		h := p.Hash()
+		hashes[i] = h
+		orighashes[i] = h
 	}
-	if index := ast.Index(set, zipIgnoreSet[1]); index != -1 {
-		set = ast.Remove(set, index)
+
+	// sort
+	sortable := &sortable{hashes, ps}
+	sort.Sort(sortable)
+
+	// remove zany and not zany
+	u := 0
+	for i := 0; i < len(ps); i++ {
+		if ps[i].ZAny != nil {
+			continue
+		}
+		if ps[i].Not != nil && ps[i].Not.Pattern.ZAny != nil {
+			continue
+		}
+		ps[u] = ps[i]
+		hashes[u] = hashes[i]
+		u++
+	}
+	ps = ps[:u]
+	hashes = hashes[:u]
+
+	// remove duplicates
+	if len(ps) > 0 {
+		u = 0
+		for i := 1; i < len(ps); i++ {
+			if hashes[i] == hashes[u] &&
+				ps[i].Equal(ps[u]) {
+				continue
+			}
+			u++
+			if u != i {
+				ps[u] = ps[i]
+				hashes[u] = hashes[i]
+			}
+		}
+		ps = ps[:u+1]
+		hashes = hashes[:u+1]
+	}
+
+	// calculate indexes by doing a reverse lookup using the original hashes and moved hashes.
+	revhashes := make(map[uint64][]int)
+	for i, h := range hashes {
+		revhashes[h] = append(revhashes[h], i)
 	}
 	indexes := make([]int, len(patterns))
-	for i, pattern := range patterns {
-		index := ast.Index(set, pattern)
-		if index == -1 {
-			index = ast.Index(zipIgnoreSet, pattern)
-			index *= -1
-			index -= 1
+	for i := range patterns {
+		if patterns[i].ZAny != nil {
+			indexes[i] = -1
+		} else if patterns[i].Not != nil && patterns[i].Not.Pattern.ZAny != nil {
+			indexes[i] = -2
+		} else {
+			hashindexes, ok := revhashes[orighashes[i]]
+			if !ok {
+				panic("wtf")
+			}
+			if len(hashindexes) == 1 {
+				indexes[i] = hashindexes[0]
+			} else {
+				for _, index := range hashindexes {
+					if ps[index].Equal(patterns[i]) {
+						indexes[i] = index
+					}
+				}
+			}
 		}
-		indexes[i] = index
 	}
-	return set, indexes
+
+	return ps, indexes
+}
+
+func Unzip(patterns []*ast.Pattern, indexes []int) []*ast.Pattern {
+	res := make([]*ast.Pattern, len(indexes))
+	for i, index := range indexes {
+		if index < 0 {
+			index += 1
+			index = index * -1
+			res[i] = zipIgnoreSet[index]
+		} else {
+			res[i] = patterns[index]
+		}
+	}
+	return res
 }
 
 func UnzipBits(bools Bits, indexes []int) []bool {
