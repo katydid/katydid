@@ -15,11 +15,12 @@
 package interp_test
 
 import (
+	"testing"
+
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/combinator"
 	"github.com/katydid/katydid/relapse/funcs"
 	. "github.com/katydid/katydid/relapse/interp"
-	"testing"
 )
 
 func TestSimplify1(t *testing.T) {
@@ -97,10 +98,10 @@ func TestSimplifyTree(t *testing.T) {
 	expected := ast.NewTreeNode(ast.NewStringName("A"),
 		ast.NewTreeNode(ast.NewStringName("B"), ast.NewAnd(
 			ast.NewContains(
-				ast.NewTreeNode(ast.NewStringName("C"), ast.NewZAny()),
+				ast.NewTreeNode(ast.NewStringName("D"), ast.NewZAny()),
 			),
 			ast.NewContains(
-				ast.NewTreeNode(ast.NewStringName("D"), ast.NewZAny()),
+				ast.NewTreeNode(ast.NewStringName("C"), ast.NewZAny()),
 			),
 		)),
 	)
@@ -158,8 +159,8 @@ func TestSimplifyRecordLeaf1(t *testing.T) {
 	)
 	t.Logf("input: %v", input)
 	expected := ast.NewContains(ast.NewTreeNode(ast.NewStringName("A"), combinator.Value(funcs.And(
-		funcs.Contains(funcs.StringVar(), funcs.StringConst("a")),
 		funcs.Contains(funcs.StringVar(), funcs.StringConst("b")),
+		funcs.Contains(funcs.StringVar(), funcs.StringConst("a")),
 	))))
 	output := NewSimplifier(input.Grammar()).OptimizeForRecord().Simplify(input)
 	expected.Format()
@@ -177,8 +178,8 @@ func TestSimplifyRecordLeaf2(t *testing.T) {
 	)
 	t.Logf("input: %v", input)
 	expected := ast.NewContains(ast.NewTreeNode(ast.NewStringName("A"), ast.NewContains(ast.NewTreeNode(ast.NewStringName("B"), combinator.Value(funcs.And(
-		funcs.Contains(funcs.StringVar(), funcs.StringConst("a")),
 		funcs.Contains(funcs.StringVar(), funcs.StringConst("b")),
+		funcs.Contains(funcs.StringVar(), funcs.StringConst("a")),
 	))))))
 	output := NewSimplifier(input.Grammar()).OptimizeForRecord().Simplify(input)
 	expected.Format()

@@ -34,6 +34,10 @@ func (this *NameExpr) Equal(that *NameExpr) bool {
 	return deriveEqualNameExpr(this, that)
 }
 
+func (this *NameExpr) Compare(that *NameExpr) int {
+	return deriveCompareNameExpr(this, that)
+}
+
 //Less returns whether one pattern is smaller than another.
 //What smaller means may change over time, but this function is still useful for deterministic ordering.
 func (p1 *Pattern) Less(p2 *Pattern) bool {

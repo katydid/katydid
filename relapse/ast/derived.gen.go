@@ -346,6 +346,35 @@ func deriveComparePattern(this, that *Pattern) int {
 	return 0
 }
 
+// deriveCompareNameExpr returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
+func deriveCompareNameExpr(this, that *NameExpr) int {
+	if this == nil {
+		if that == nil {
+			return 0
+		}
+		return -1
+	}
+	if that == nil {
+		return 1
+	}
+	if c := deriveCompare_12(this.Name, that.Name); c != 0 {
+		return c
+	}
+	if c := deriveCompare_13(this.AnyName, that.AnyName); c != 0 {
+		return c
+	}
+	if c := deriveCompare_14(this.AnyNameExcept, that.AnyNameExcept); c != 0 {
+		return c
+	}
+	if c := deriveCompare_15(this.NameChoice, that.NameChoice); c != 0 {
+		return c
+	}
+	return 0
+}
+
 // deriveEqualGrammar returns whether this and that are equal.
 func deriveEqualGrammar(this, that *Grammar) bool {
 	return (this == nil && that == nil) ||
@@ -1394,7 +1423,7 @@ func deriveCompare(this, that *Empty) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveCompare_12(this.Empty, that.Empty); c != 0 {
+	if c := deriveCompare_16(this.Empty, that.Empty); c != 0 {
 		return c
 	}
 	return 0
@@ -1414,10 +1443,10 @@ func deriveCompare_(this, that *TreeNode) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveCompare_13(this.Name, that.Name); c != 0 {
+	if c := this.Name.Compare(that.Name); c != 0 {
 		return c
 	}
-	if c := deriveCompare_12(this.Colon, that.Colon); c != 0 {
+	if c := deriveCompare_16(this.Colon, that.Colon); c != 0 {
 		return c
 	}
 	if c := this.Pattern.Compare(that.Pattern); c != 0 {
@@ -1440,7 +1469,7 @@ func deriveCompare_1(this, that *LeafNode) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveCompare_14(this.Expr, that.Expr); c != 0 {
+	if c := deriveCompare_17(this.Expr, that.Expr); c != 0 {
 		return c
 	}
 	return 0
@@ -1460,22 +1489,22 @@ func deriveCompare_2(this, that *Concat) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveCompare_12(this.OpenBracket, that.OpenBracket); c != 0 {
+	if c := deriveCompare_16(this.OpenBracket, that.OpenBracket); c != 0 {
 		return c
 	}
 	if c := this.LeftPattern.Compare(that.LeftPattern); c != 0 {
 		return c
 	}
-	if c := deriveCompare_12(this.Comma, that.Comma); c != 0 {
+	if c := deriveCompare_16(this.Comma, that.Comma); c != 0 {
 		return c
 	}
 	if c := this.RightPattern.Compare(that.RightPattern); c != 0 {
 		return c
 	}
-	if c := deriveCompare_12(this.ExtraComma, that.ExtraComma); c != 0 {
+	if c := deriveCompare_16(this.ExtraComma, that.ExtraComma); c != 0 {
 		return c
 	}
-	if c := deriveCompare_12(this.CloseBracket, that.CloseBracket); c != 0 {
+	if c := deriveCompare_16(this.CloseBracket, that.CloseBracket); c != 0 {
 		return c
 	}
 	return 0
@@ -1495,19 +1524,19 @@ func deriveCompare_3(this, that *Or) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveCompare_12(this.OpenParen, that.OpenParen); c != 0 {
+	if c := deriveCompare_16(this.OpenParen, that.OpenParen); c != 0 {
 		return c
 	}
 	if c := this.LeftPattern.Compare(that.LeftPattern); c != 0 {
 		return c
 	}
-	if c := deriveCompare_12(this.Pipe, that.Pipe); c != 0 {
+	if c := deriveCompare_16(this.Pipe, that.Pipe); c != 0 {
 		return c
 	}
 	if c := this.RightPattern.Compare(that.RightPattern); c != 0 {
 		return c
 	}
-	if c := deriveCompare_12(this.CloseParen, that.CloseParen); c != 0 {
+	if c := deriveCompare_16(this.CloseParen, that.CloseParen); c != 0 {
 		return c
 	}
 	return 0
@@ -1527,19 +1556,19 @@ func deriveCompare_4(this, that *And) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveCompare_12(this.OpenParen, that.OpenParen); c != 0 {
+	if c := deriveCompare_16(this.OpenParen, that.OpenParen); c != 0 {
 		return c
 	}
 	if c := this.LeftPattern.Compare(that.LeftPattern); c != 0 {
 		return c
 	}
-	if c := deriveCompare_12(this.Ampersand, that.Ampersand); c != 0 {
+	if c := deriveCompare_16(this.Ampersand, that.Ampersand); c != 0 {
 		return c
 	}
 	if c := this.RightPattern.Compare(that.RightPattern); c != 0 {
 		return c
 	}
-	if c := deriveCompare_12(this.CloseParen, that.CloseParen); c != 0 {
+	if c := deriveCompare_16(this.CloseParen, that.CloseParen); c != 0 {
 		return c
 	}
 	return 0
@@ -1559,16 +1588,16 @@ func deriveCompare_5(this, that *ZeroOrMore) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveCompare_12(this.OpenParen, that.OpenParen); c != 0 {
+	if c := deriveCompare_16(this.OpenParen, that.OpenParen); c != 0 {
 		return c
 	}
 	if c := this.Pattern.Compare(that.Pattern); c != 0 {
 		return c
 	}
-	if c := deriveCompare_12(this.CloseParen, that.CloseParen); c != 0 {
+	if c := deriveCompare_16(this.CloseParen, that.CloseParen); c != 0 {
 		return c
 	}
-	if c := deriveCompare_12(this.Star, that.Star); c != 0 {
+	if c := deriveCompare_16(this.Star, that.Star); c != 0 {
 		return c
 	}
 	return 0
@@ -1588,7 +1617,7 @@ func deriveCompare_6(this, that *Reference) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveCompare_12(this.At, that.At); c != 0 {
+	if c := deriveCompare_16(this.At, that.At); c != 0 {
 		return c
 	}
 	if c := strings.Compare(this.Name, that.Name); c != 0 {
@@ -1611,16 +1640,16 @@ func deriveCompare_7(this, that *Not) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveCompare_12(this.Exclamation, that.Exclamation); c != 0 {
+	if c := deriveCompare_16(this.Exclamation, that.Exclamation); c != 0 {
 		return c
 	}
-	if c := deriveCompare_12(this.OpenParen, that.OpenParen); c != 0 {
+	if c := deriveCompare_16(this.OpenParen, that.OpenParen); c != 0 {
 		return c
 	}
 	if c := this.Pattern.Compare(that.Pattern); c != 0 {
 		return c
 	}
-	if c := deriveCompare_12(this.CloseParen, that.CloseParen); c != 0 {
+	if c := deriveCompare_16(this.CloseParen, that.CloseParen); c != 0 {
 		return c
 	}
 	return 0
@@ -1640,7 +1669,7 @@ func deriveCompare_8(this, that *ZAny) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveCompare_12(this.Star, that.Star); c != 0 {
+	if c := deriveCompare_16(this.Star, that.Star); c != 0 {
 		return c
 	}
 	return 0
@@ -1660,7 +1689,7 @@ func deriveCompare_9(this, that *Contains) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveCompare_12(this.Dot, that.Dot); c != 0 {
+	if c := deriveCompare_16(this.Dot, that.Dot); c != 0 {
 		return c
 	}
 	if c := this.Pattern.Compare(that.Pattern); c != 0 {
@@ -1683,16 +1712,16 @@ func deriveCompare_10(this, that *Optional) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveCompare_12(this.OpenParen, that.OpenParen); c != 0 {
+	if c := deriveCompare_16(this.OpenParen, that.OpenParen); c != 0 {
 		return c
 	}
 	if c := this.Pattern.Compare(that.Pattern); c != 0 {
 		return c
 	}
-	if c := deriveCompare_12(this.CloseParen, that.CloseParen); c != 0 {
+	if c := deriveCompare_16(this.CloseParen, that.CloseParen); c != 0 {
 		return c
 	}
-	if c := deriveCompare_12(this.QuestionMark, that.QuestionMark); c != 0 {
+	if c := deriveCompare_16(this.QuestionMark, that.QuestionMark); c != 0 {
 		return c
 	}
 	return 0
@@ -1712,22 +1741,141 @@ func deriveCompare_11(this, that *Interleave) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveCompare_12(this.OpenCurly, that.OpenCurly); c != 0 {
+	if c := deriveCompare_16(this.OpenCurly, that.OpenCurly); c != 0 {
 		return c
 	}
 	if c := this.LeftPattern.Compare(that.LeftPattern); c != 0 {
 		return c
 	}
-	if c := deriveCompare_12(this.SemiColon, that.SemiColon); c != 0 {
+	if c := deriveCompare_16(this.SemiColon, that.SemiColon); c != 0 {
 		return c
 	}
 	if c := this.RightPattern.Compare(that.RightPattern); c != 0 {
 		return c
 	}
-	if c := deriveCompare_12(this.ExtraSemiColon, that.ExtraSemiColon); c != 0 {
+	if c := deriveCompare_16(this.ExtraSemiColon, that.ExtraSemiColon); c != 0 {
 		return c
 	}
-	if c := deriveCompare_12(this.CloseCurly, that.CloseCurly); c != 0 {
+	if c := deriveCompare_16(this.CloseCurly, that.CloseCurly); c != 0 {
+		return c
+	}
+	return 0
+}
+
+// deriveCompare_12 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
+func deriveCompare_12(this, that *Name) int {
+	if this == nil {
+		if that == nil {
+			return 0
+		}
+		return -1
+	}
+	if that == nil {
+		return 1
+	}
+	if c := deriveCompare_18(this.Before, that.Before); c != 0 {
+		return c
+	}
+	if c := deriveCompare_19(this.DoubleValue, that.DoubleValue); c != 0 {
+		return c
+	}
+	if c := deriveCompare_20(this.IntValue, that.IntValue); c != 0 {
+		return c
+	}
+	if c := deriveCompare_21(this.UintValue, that.UintValue); c != 0 {
+		return c
+	}
+	if c := deriveCompare_22(this.BoolValue, that.BoolValue); c != 0 {
+		return c
+	}
+	if c := deriveCompare_23(this.StringValue, that.StringValue); c != 0 {
+		return c
+	}
+	if c := bytes.Compare(this.BytesValue, that.BytesValue); c != 0 {
+		return c
+	}
+	return 0
+}
+
+// deriveCompare_13 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
+func deriveCompare_13(this, that *AnyName) int {
+	if this == nil {
+		if that == nil {
+			return 0
+		}
+		return -1
+	}
+	if that == nil {
+		return 1
+	}
+	if c := deriveCompare_16(this.Underscore, that.Underscore); c != 0 {
+		return c
+	}
+	return 0
+}
+
+// deriveCompare_14 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
+func deriveCompare_14(this, that *AnyNameExcept) int {
+	if this == nil {
+		if that == nil {
+			return 0
+		}
+		return -1
+	}
+	if that == nil {
+		return 1
+	}
+	if c := deriveCompare_16(this.Exclamation, that.Exclamation); c != 0 {
+		return c
+	}
+	if c := deriveCompare_16(this.OpenParen, that.OpenParen); c != 0 {
+		return c
+	}
+	if c := this.Except.Compare(that.Except); c != 0 {
+		return c
+	}
+	if c := deriveCompare_16(this.CloseParen, that.CloseParen); c != 0 {
+		return c
+	}
+	return 0
+}
+
+// deriveCompare_15 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
+func deriveCompare_15(this, that *NameChoice) int {
+	if this == nil {
+		if that == nil {
+			return 0
+		}
+		return -1
+	}
+	if that == nil {
+		return 1
+	}
+	if c := deriveCompare_16(this.OpenParen, that.OpenParen); c != 0 {
+		return c
+	}
+	if c := this.Left.Compare(that.Left); c != 0 {
+		return c
+	}
+	if c := deriveCompare_16(this.Pipe, that.Pipe); c != 0 {
+		return c
+	}
+	if c := this.Right.Compare(that.Right); c != 0 {
+		return c
+	}
+	if c := deriveCompare_16(this.CloseParen, that.CloseParen); c != 0 {
 		return c
 	}
 	return 0
@@ -2073,11 +2221,11 @@ func deriveDeepCopy_21(dst, src []*Expr) {
 	}
 }
 
-// deriveCompare_12 returns:
+// deriveCompare_16 returns:
 //   * 0 if this and that are equal,
 //   * -1 is this is smaller and
 //   * +1 is this is bigger.
-func deriveCompare_12(this, that *Keyword) int {
+func deriveCompare_16(this, that *Keyword) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -2087,7 +2235,7 @@ func deriveCompare_12(this, that *Keyword) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveCompare_15(this.Before, that.Before); c != 0 {
+	if c := deriveCompare_18(this.Before, that.Before); c != 0 {
 		return c
 	}
 	if c := strings.Compare(this.Value, that.Value); c != 0 {
@@ -2096,11 +2244,11 @@ func deriveCompare_12(this, that *Keyword) int {
 	return 0
 }
 
-// deriveCompare_13 returns:
+// deriveCompare_17 returns:
 //   * 0 if this and that are equal,
 //   * -1 is this is smaller and
 //   * +1 is this is bigger.
-func deriveCompare_13(this, that *NameExpr) int {
+func deriveCompare_17(this, that *Expr) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -2110,26 +2258,32 @@ func deriveCompare_13(this, that *NameExpr) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveCompare_16(this.Name, that.Name); c != 0 {
+	if c := deriveCompare_16(this.RightArrow, that.RightArrow); c != 0 {
 		return c
 	}
-	if c := deriveCompare_17(this.AnyName, that.AnyName); c != 0 {
+	if c := deriveCompare_16(this.Comma, that.Comma); c != 0 {
 		return c
 	}
-	if c := deriveCompare_18(this.AnyNameExcept, that.AnyNameExcept); c != 0 {
+	if c := deriveCompare_24(this.Terminal, that.Terminal); c != 0 {
 		return c
 	}
-	if c := deriveCompare_19(this.NameChoice, that.NameChoice); c != 0 {
+	if c := deriveCompare_25(this.List, that.List); c != 0 {
+		return c
+	}
+	if c := deriveCompare_26(this.Function, that.Function); c != 0 {
+		return c
+	}
+	if c := deriveCompare_27(this.BuiltIn, that.BuiltIn); c != 0 {
 		return c
 	}
 	return 0
 }
 
-// deriveCompare_14 returns:
+// deriveCompare_18 returns:
 //   * 0 if this and that are equal,
 //   * -1 is this is smaller and
 //   * +1 is this is bigger.
-func deriveCompare_14(this, that *Expr) int {
+func deriveCompare_18(this, that *Space) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -2139,25 +2293,95 @@ func deriveCompare_14(this, that *Expr) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveCompare_12(this.RightArrow, that.RightArrow); c != 0 {
-		return c
-	}
-	if c := deriveCompare_12(this.Comma, that.Comma); c != 0 {
-		return c
-	}
-	if c := deriveCompare_20(this.Terminal, that.Terminal); c != 0 {
-		return c
-	}
-	if c := deriveCompare_21(this.List, that.List); c != 0 {
-		return c
-	}
-	if c := deriveCompare_22(this.Function, that.Function); c != 0 {
-		return c
-	}
-	if c := deriveCompare_23(this.BuiltIn, that.BuiltIn); c != 0 {
+	if c := deriveCompare_28(this.Space, that.Space); c != 0 {
 		return c
 	}
 	return 0
+}
+
+// deriveCompare_19 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
+func deriveCompare_19(this, that *float64) int {
+	if this == nil {
+		if that == nil {
+			return 0
+		}
+		return -1
+	}
+	if that == nil {
+		return 1
+	}
+	return deriveCompare_f(*this, *that)
+}
+
+// deriveCompare_20 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
+func deriveCompare_20(this, that *int64) int {
+	if this == nil {
+		if that == nil {
+			return 0
+		}
+		return -1
+	}
+	if that == nil {
+		return 1
+	}
+	return deriveCompare_i(*this, *that)
+}
+
+// deriveCompare_21 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
+func deriveCompare_21(this, that *uint64) int {
+	if this == nil {
+		if that == nil {
+			return 0
+		}
+		return -1
+	}
+	if that == nil {
+		return 1
+	}
+	return deriveCompare_u(*this, *that)
+}
+
+// deriveCompare_22 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
+func deriveCompare_22(this, that *bool) int {
+	if this == nil {
+		if that == nil {
+			return 0
+		}
+		return -1
+	}
+	if that == nil {
+		return 1
+	}
+	return deriveCompare_b(*this, *that)
+}
+
+// deriveCompare_23 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
+func deriveCompare_23(this, that *string) int {
+	if this == nil {
+		if that == nil {
+			return 0
+		}
+		return -1
+	}
+	if that == nil {
+		return 1
+	}
+	return deriveCompare_s(*this, *that)
 }
 
 // deriveEqual_18 returns whether this and that are equal.
@@ -2444,11 +2668,11 @@ func deriveDeepCopy_25(dst, src *NameChoice) {
 	}
 }
 
-// deriveCompare_15 returns:
+// deriveCompare_24 returns:
 //   * 0 if this and that are equal,
 //   * -1 is this is smaller and
 //   * +1 is this is bigger.
-func deriveCompare_15(this, that *Space) int {
+func deriveCompare_24(this, that *Terminal) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -2458,180 +2682,41 @@ func deriveCompare_15(this, that *Space) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveCompare_24(this.Space, that.Space); c != 0 {
-		return c
-	}
-	return 0
-}
-
-// deriveCompare_16 returns:
-//   * 0 if this and that are equal,
-//   * -1 is this is smaller and
-//   * +1 is this is bigger.
-func deriveCompare_16(this, that *Name) int {
-	if this == nil {
-		if that == nil {
-			return 0
-		}
-		return -1
-	}
-	if that == nil {
-		return 1
-	}
-	if c := deriveCompare_15(this.Before, that.Before); c != 0 {
-		return c
-	}
-	if c := deriveCompare_25(this.DoubleValue, that.DoubleValue); c != 0 {
-		return c
-	}
-	if c := deriveCompare_26(this.IntValue, that.IntValue); c != 0 {
-		return c
-	}
-	if c := deriveCompare_27(this.UintValue, that.UintValue); c != 0 {
-		return c
-	}
-	if c := deriveCompare_28(this.BoolValue, that.BoolValue); c != 0 {
-		return c
-	}
-	if c := deriveCompare_29(this.StringValue, that.StringValue); c != 0 {
-		return c
-	}
-	if c := bytes.Compare(this.BytesValue, that.BytesValue); c != 0 {
-		return c
-	}
-	return 0
-}
-
-// deriveCompare_17 returns:
-//   * 0 if this and that are equal,
-//   * -1 is this is smaller and
-//   * +1 is this is bigger.
-func deriveCompare_17(this, that *AnyName) int {
-	if this == nil {
-		if that == nil {
-			return 0
-		}
-		return -1
-	}
-	if that == nil {
-		return 1
-	}
-	if c := deriveCompare_12(this.Underscore, that.Underscore); c != 0 {
-		return c
-	}
-	return 0
-}
-
-// deriveCompare_18 returns:
-//   * 0 if this and that are equal,
-//   * -1 is this is smaller and
-//   * +1 is this is bigger.
-func deriveCompare_18(this, that *AnyNameExcept) int {
-	if this == nil {
-		if that == nil {
-			return 0
-		}
-		return -1
-	}
-	if that == nil {
-		return 1
-	}
-	if c := deriveCompare_12(this.Exclamation, that.Exclamation); c != 0 {
-		return c
-	}
-	if c := deriveCompare_12(this.OpenParen, that.OpenParen); c != 0 {
-		return c
-	}
-	if c := deriveCompare_13(this.Except, that.Except); c != 0 {
-		return c
-	}
-	if c := deriveCompare_12(this.CloseParen, that.CloseParen); c != 0 {
-		return c
-	}
-	return 0
-}
-
-// deriveCompare_19 returns:
-//   * 0 if this and that are equal,
-//   * -1 is this is smaller and
-//   * +1 is this is bigger.
-func deriveCompare_19(this, that *NameChoice) int {
-	if this == nil {
-		if that == nil {
-			return 0
-		}
-		return -1
-	}
-	if that == nil {
-		return 1
-	}
-	if c := deriveCompare_12(this.OpenParen, that.OpenParen); c != 0 {
-		return c
-	}
-	if c := deriveCompare_13(this.Left, that.Left); c != 0 {
-		return c
-	}
-	if c := deriveCompare_12(this.Pipe, that.Pipe); c != 0 {
-		return c
-	}
-	if c := deriveCompare_13(this.Right, that.Right); c != 0 {
-		return c
-	}
-	if c := deriveCompare_12(this.CloseParen, that.CloseParen); c != 0 {
-		return c
-	}
-	return 0
-}
-
-// deriveCompare_20 returns:
-//   * 0 if this and that are equal,
-//   * -1 is this is smaller and
-//   * +1 is this is bigger.
-func deriveCompare_20(this, that *Terminal) int {
-	if this == nil {
-		if that == nil {
-			return 0
-		}
-		return -1
-	}
-	if that == nil {
-		return 1
-	}
-	if c := deriveCompare_15(this.Before, that.Before); c != 0 {
+	if c := deriveCompare_18(this.Before, that.Before); c != 0 {
 		return c
 	}
 	if c := strings.Compare(this.Literal, that.Literal); c != 0 {
 		return c
 	}
-	if c := deriveCompare_25(this.DoubleValue, that.DoubleValue); c != 0 {
+	if c := deriveCompare_19(this.DoubleValue, that.DoubleValue); c != 0 {
 		return c
 	}
-	if c := deriveCompare_26(this.IntValue, that.IntValue); c != 0 {
+	if c := deriveCompare_20(this.IntValue, that.IntValue); c != 0 {
 		return c
 	}
-	if c := deriveCompare_27(this.UintValue, that.UintValue); c != 0 {
+	if c := deriveCompare_21(this.UintValue, that.UintValue); c != 0 {
 		return c
 	}
-	if c := deriveCompare_28(this.BoolValue, that.BoolValue); c != 0 {
+	if c := deriveCompare_22(this.BoolValue, that.BoolValue); c != 0 {
 		return c
 	}
-	if c := deriveCompare_29(this.StringValue, that.StringValue); c != 0 {
+	if c := deriveCompare_23(this.StringValue, that.StringValue); c != 0 {
 		return c
 	}
 	if c := bytes.Compare(this.BytesValue, that.BytesValue); c != 0 {
 		return c
 	}
-	if c := deriveCompare_30(this.Variable, that.Variable); c != 0 {
+	if c := deriveCompare_29(this.Variable, that.Variable); c != 0 {
 		return c
 	}
 	return 0
 }
 
-// deriveCompare_21 returns:
+// deriveCompare_25 returns:
 //   * 0 if this and that are equal,
 //   * -1 is this is smaller and
 //   * +1 is this is bigger.
-func deriveCompare_21(this, that *List) int {
+func deriveCompare_25(this, that *List) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -2641,29 +2726,29 @@ func deriveCompare_21(this, that *List) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveCompare_15(this.Before, that.Before); c != 0 {
+	if c := deriveCompare_18(this.Before, that.Before); c != 0 {
 		return c
 	}
 	if c := deriveCompare_T(this.Type, that.Type); c != 0 {
 		return c
 	}
-	if c := deriveCompare_12(this.OpenCurly, that.OpenCurly); c != 0 {
+	if c := deriveCompare_16(this.OpenCurly, that.OpenCurly); c != 0 {
 		return c
 	}
-	if c := deriveCompare_31(this.Elems, that.Elems); c != 0 {
+	if c := deriveCompare_30(this.Elems, that.Elems); c != 0 {
 		return c
 	}
-	if c := deriveCompare_12(this.CloseCurly, that.CloseCurly); c != 0 {
+	if c := deriveCompare_16(this.CloseCurly, that.CloseCurly); c != 0 {
 		return c
 	}
 	return 0
 }
 
-// deriveCompare_22 returns:
+// deriveCompare_26 returns:
 //   * 0 if this and that are equal,
 //   * -1 is this is smaller and
 //   * +1 is this is bigger.
-func deriveCompare_22(this, that *Function) int {
+func deriveCompare_26(this, that *Function) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -2673,29 +2758,29 @@ func deriveCompare_22(this, that *Function) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveCompare_15(this.Before, that.Before); c != 0 {
+	if c := deriveCompare_18(this.Before, that.Before); c != 0 {
 		return c
 	}
 	if c := strings.Compare(this.Name, that.Name); c != 0 {
 		return c
 	}
-	if c := deriveCompare_12(this.OpenParen, that.OpenParen); c != 0 {
+	if c := deriveCompare_16(this.OpenParen, that.OpenParen); c != 0 {
 		return c
 	}
-	if c := deriveCompare_31(this.Params, that.Params); c != 0 {
+	if c := deriveCompare_30(this.Params, that.Params); c != 0 {
 		return c
 	}
-	if c := deriveCompare_12(this.CloseParen, that.CloseParen); c != 0 {
+	if c := deriveCompare_16(this.CloseParen, that.CloseParen); c != 0 {
 		return c
 	}
 	return 0
 }
 
-// deriveCompare_23 returns:
+// deriveCompare_27 returns:
 //   * 0 if this and that are equal,
 //   * -1 is this is smaller and
 //   * +1 is this is bigger.
-func deriveCompare_23(this, that *BuiltIn) int {
+func deriveCompare_27(this, that *BuiltIn) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -2705,65 +2790,20 @@ func deriveCompare_23(this, that *BuiltIn) int {
 	if that == nil {
 		return 1
 	}
-	if c := deriveCompare_12(this.Symbol, that.Symbol); c != 0 {
+	if c := deriveCompare_16(this.Symbol, that.Symbol); c != 0 {
 		return c
 	}
-	if c := deriveCompare_14(this.Expr, that.Expr); c != 0 {
+	if c := deriveCompare_17(this.Expr, that.Expr); c != 0 {
 		return c
 	}
 	return 0
 }
 
-// deriveEqual_22 returns whether this and that are equal.
-func deriveEqual_22(this, that *Terminal) bool {
-	return (this == nil && that == nil) ||
-		this != nil && that != nil &&
-			deriveEqual_(this.Before, that.Before) &&
-			this.Literal == that.Literal &&
-			((this.DoubleValue == nil && that.DoubleValue == nil) || (this.DoubleValue != nil && that.DoubleValue != nil && *(this.DoubleValue) == *(that.DoubleValue))) &&
-			((this.IntValue == nil && that.IntValue == nil) || (this.IntValue != nil && that.IntValue != nil && *(this.IntValue) == *(that.IntValue))) &&
-			((this.UintValue == nil && that.UintValue == nil) || (this.UintValue != nil && that.UintValue != nil && *(this.UintValue) == *(that.UintValue))) &&
-			((this.BoolValue == nil && that.BoolValue == nil) || (this.BoolValue != nil && that.BoolValue != nil && *(this.BoolValue) == *(that.BoolValue))) &&
-			((this.StringValue == nil && that.StringValue == nil) || (this.StringValue != nil && that.StringValue != nil && *(this.StringValue) == *(that.StringValue))) &&
-			bytes.Equal(this.BytesValue, that.BytesValue) &&
-			deriveEqual_26(this.Variable, that.Variable)
-}
-
-// deriveEqual_23 returns whether this and that are equal.
-func deriveEqual_23(this, that *List) bool {
-	return (this == nil && that == nil) ||
-		this != nil && that != nil &&
-			deriveEqual_(this.Before, that.Before) &&
-			this.Type == that.Type &&
-			deriveEqual_20(this.OpenCurly, that.OpenCurly) &&
-			deriveEqual_27(this.Elems, that.Elems) &&
-			deriveEqual_20(this.CloseCurly, that.CloseCurly)
-}
-
-// deriveEqual_24 returns whether this and that are equal.
-func deriveEqual_24(this, that *Function) bool {
-	return (this == nil && that == nil) ||
-		this != nil && that != nil &&
-			deriveEqual_(this.Before, that.Before) &&
-			this.Name == that.Name &&
-			deriveEqual_20(this.OpenParen, that.OpenParen) &&
-			deriveEqual_27(this.Params, that.Params) &&
-			deriveEqual_20(this.CloseParen, that.CloseParen)
-}
-
-// deriveEqual_25 returns whether this and that are equal.
-func deriveEqual_25(this, that *BuiltIn) bool {
-	return (this == nil && that == nil) ||
-		this != nil && that != nil &&
-			deriveEqual_20(this.Symbol, that.Symbol) &&
-			deriveEqual_21(this.Expr, that.Expr)
-}
-
-// deriveCompare_24 returns:
+// deriveCompare_28 returns:
 //   * 0 if this and that are equal,
 //   * -1 is this is smaller and
 //   * +1 is this is bigger.
-func deriveCompare_24(this, that []string) int {
+func deriveCompare_28(this, that []string) int {
 	if this == nil {
 		if that == nil {
 			return 0
@@ -2785,177 +2825,6 @@ func deriveCompare_24(this, that []string) int {
 		}
 	}
 	return 0
-}
-
-// deriveCompare_25 returns:
-//   * 0 if this and that are equal,
-//   * -1 is this is smaller and
-//   * +1 is this is bigger.
-func deriveCompare_25(this, that *float64) int {
-	if this == nil {
-		if that == nil {
-			return 0
-		}
-		return -1
-	}
-	if that == nil {
-		return 1
-	}
-	return deriveCompare_f(*this, *that)
-}
-
-// deriveCompare_26 returns:
-//   * 0 if this and that are equal,
-//   * -1 is this is smaller and
-//   * +1 is this is bigger.
-func deriveCompare_26(this, that *int64) int {
-	if this == nil {
-		if that == nil {
-			return 0
-		}
-		return -1
-	}
-	if that == nil {
-		return 1
-	}
-	return deriveCompare_i(*this, *that)
-}
-
-// deriveCompare_27 returns:
-//   * 0 if this and that are equal,
-//   * -1 is this is smaller and
-//   * +1 is this is bigger.
-func deriveCompare_27(this, that *uint64) int {
-	if this == nil {
-		if that == nil {
-			return 0
-		}
-		return -1
-	}
-	if that == nil {
-		return 1
-	}
-	return deriveCompare_u(*this, *that)
-}
-
-// deriveCompare_28 returns:
-//   * 0 if this and that are equal,
-//   * -1 is this is smaller and
-//   * +1 is this is bigger.
-func deriveCompare_28(this, that *bool) int {
-	if this == nil {
-		if that == nil {
-			return 0
-		}
-		return -1
-	}
-	if that == nil {
-		return 1
-	}
-	return deriveCompare_b(*this, *that)
-}
-
-// deriveCompare_29 returns:
-//   * 0 if this and that are equal,
-//   * -1 is this is smaller and
-//   * +1 is this is bigger.
-func deriveCompare_29(this, that *string) int {
-	if this == nil {
-		if that == nil {
-			return 0
-		}
-		return -1
-	}
-	if that == nil {
-		return 1
-	}
-	return deriveCompare_s(*this, *that)
-}
-
-// deriveCompare_30 returns:
-//   * 0 if this and that are equal,
-//   * -1 is this is smaller and
-//   * +1 is this is bigger.
-func deriveCompare_30(this, that *Variable) int {
-	if this == nil {
-		if that == nil {
-			return 0
-		}
-		return -1
-	}
-	if that == nil {
-		return 1
-	}
-	if c := deriveCompare_T(this.Type, that.Type); c != 0 {
-		return c
-	}
-	return 0
-}
-
-// deriveCompare_T returns:
-//   * 0 if this and that are equal,
-//   * -1 is this is smaller and
-//   * +1 is this is bigger.
-func deriveCompare_T(this, that types.Type) int {
-	if this != that {
-		if this < that {
-			return -1
-		} else {
-			return 1
-		}
-	}
-	return 0
-}
-
-// deriveCompare_31 returns:
-//   * 0 if this and that are equal,
-//   * -1 is this is smaller and
-//   * +1 is this is bigger.
-func deriveCompare_31(this, that []*Expr) int {
-	if this == nil {
-		if that == nil {
-			return 0
-		}
-		return -1
-	}
-	if that == nil {
-		return 1
-	}
-	if len(this) != len(that) {
-		if len(this) < len(that) {
-			return -1
-		}
-		return 1
-	}
-	for i := 0; i < len(this); i++ {
-		if c := deriveCompare_14(this[i], that[i]); c != 0 {
-			return c
-		}
-	}
-	return 0
-}
-
-// deriveEqual_26 returns whether this and that are equal.
-func deriveEqual_26(this, that *Variable) bool {
-	return (this == nil && that == nil) ||
-		this != nil && that != nil &&
-			this.Type == that.Type
-}
-
-// deriveEqual_27 returns whether this and that are equal.
-func deriveEqual_27(this, that []*Expr) bool {
-	if this == nil || that == nil {
-		return this == nil && that == nil
-	}
-	if len(this) != len(that) {
-		return false
-	}
-	for i := 0; i < len(this); i++ {
-		if !(deriveEqual_21(this[i], that[i])) {
-			return false
-		}
-	}
-	return true
 }
 
 // deriveCompare_f returns:
@@ -3023,4 +2892,135 @@ func deriveCompare_b(this, that bool) int {
 //   * +1 is this is bigger.
 func deriveCompare_s(this, that string) int {
 	return strings.Compare(this, that)
+}
+
+// deriveEqual_22 returns whether this and that are equal.
+func deriveEqual_22(this, that *Terminal) bool {
+	return (this == nil && that == nil) ||
+		this != nil && that != nil &&
+			deriveEqual_(this.Before, that.Before) &&
+			this.Literal == that.Literal &&
+			((this.DoubleValue == nil && that.DoubleValue == nil) || (this.DoubleValue != nil && that.DoubleValue != nil && *(this.DoubleValue) == *(that.DoubleValue))) &&
+			((this.IntValue == nil && that.IntValue == nil) || (this.IntValue != nil && that.IntValue != nil && *(this.IntValue) == *(that.IntValue))) &&
+			((this.UintValue == nil && that.UintValue == nil) || (this.UintValue != nil && that.UintValue != nil && *(this.UintValue) == *(that.UintValue))) &&
+			((this.BoolValue == nil && that.BoolValue == nil) || (this.BoolValue != nil && that.BoolValue != nil && *(this.BoolValue) == *(that.BoolValue))) &&
+			((this.StringValue == nil && that.StringValue == nil) || (this.StringValue != nil && that.StringValue != nil && *(this.StringValue) == *(that.StringValue))) &&
+			bytes.Equal(this.BytesValue, that.BytesValue) &&
+			deriveEqual_26(this.Variable, that.Variable)
+}
+
+// deriveEqual_23 returns whether this and that are equal.
+func deriveEqual_23(this, that *List) bool {
+	return (this == nil && that == nil) ||
+		this != nil && that != nil &&
+			deriveEqual_(this.Before, that.Before) &&
+			this.Type == that.Type &&
+			deriveEqual_20(this.OpenCurly, that.OpenCurly) &&
+			deriveEqual_27(this.Elems, that.Elems) &&
+			deriveEqual_20(this.CloseCurly, that.CloseCurly)
+}
+
+// deriveEqual_24 returns whether this and that are equal.
+func deriveEqual_24(this, that *Function) bool {
+	return (this == nil && that == nil) ||
+		this != nil && that != nil &&
+			deriveEqual_(this.Before, that.Before) &&
+			this.Name == that.Name &&
+			deriveEqual_20(this.OpenParen, that.OpenParen) &&
+			deriveEqual_27(this.Params, that.Params) &&
+			deriveEqual_20(this.CloseParen, that.CloseParen)
+}
+
+// deriveEqual_25 returns whether this and that are equal.
+func deriveEqual_25(this, that *BuiltIn) bool {
+	return (this == nil && that == nil) ||
+		this != nil && that != nil &&
+			deriveEqual_20(this.Symbol, that.Symbol) &&
+			deriveEqual_21(this.Expr, that.Expr)
+}
+
+// deriveCompare_29 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
+func deriveCompare_29(this, that *Variable) int {
+	if this == nil {
+		if that == nil {
+			return 0
+		}
+		return -1
+	}
+	if that == nil {
+		return 1
+	}
+	if c := deriveCompare_T(this.Type, that.Type); c != 0 {
+		return c
+	}
+	return 0
+}
+
+// deriveCompare_T returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
+func deriveCompare_T(this, that types.Type) int {
+	if this != that {
+		if this < that {
+			return -1
+		} else {
+			return 1
+		}
+	}
+	return 0
+}
+
+// deriveCompare_30 returns:
+//   * 0 if this and that are equal,
+//   * -1 is this is smaller and
+//   * +1 is this is bigger.
+func deriveCompare_30(this, that []*Expr) int {
+	if this == nil {
+		if that == nil {
+			return 0
+		}
+		return -1
+	}
+	if that == nil {
+		return 1
+	}
+	if len(this) != len(that) {
+		if len(this) < len(that) {
+			return -1
+		}
+		return 1
+	}
+	for i := 0; i < len(this); i++ {
+		if c := deriveCompare_17(this[i], that[i]); c != 0 {
+			return c
+		}
+	}
+	return 0
+}
+
+// deriveEqual_26 returns whether this and that are equal.
+func deriveEqual_26(this, that *Variable) bool {
+	return (this == nil && that == nil) ||
+		this != nil && that != nil &&
+			this.Type == that.Type
+}
+
+// deriveEqual_27 returns whether this and that are equal.
+func deriveEqual_27(this, that []*Expr) bool {
+	if this == nil || that == nil {
+		return this == nil && that == nil
+	}
+	if len(this) != len(that) {
+		return false
+	}
+	for i := 0; i < len(this); i++ {
+		if !(deriveEqual_21(this[i], that[i])) {
+			return false
+		}
+	}
+	return true
 }

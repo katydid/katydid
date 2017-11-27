@@ -15,12 +15,12 @@
 package interp_test
 
 import (
+	"testing"
+
 	"github.com/katydid/katydid/parser"
-	"github.com/katydid/katydid/parser/debug"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/interp"
 	"github.com/katydid/katydid/relapse/testsuite"
-	"testing"
 )
 
 func TestSuite(t *testing.T) {
@@ -42,7 +42,6 @@ func test(t *testing.T, g *ast.Grammar, p parser.Interface, expected bool, desc 
 	if interp.HasRecursion(g) {
 		t.Skipf("interp was not designed to handle left recursion")
 	}
-	p = debug.NewLogger(p, debug.NewLineLogger())
 	match, err := interp.Interpret(g, p)
 	if err != nil {
 		t.Fatal(err)

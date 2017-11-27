@@ -241,12 +241,10 @@ func simplifyOr(refs ast.RefLookup, p1, p2 *ast.Pattern, record bool) *ast.Patte
 	}
 	left := getOrs(p1)
 	right := getOrs(p2)
-	list := append(left, right...)
-	list = ast.Set(list)
+	list := orderedSet(append(left, right...))
 	list = simplifyChildren(list, func(left, right *ast.Pattern) *ast.Pattern {
 		return simplifyOr(refs, left, right, record)
 	}, record)
-	ast.Sort(list)
 	var p *ast.Pattern = list[0]
 	for i := range list {
 		if i == 0 {
@@ -327,12 +325,10 @@ func simplifyAnd(refs ast.RefLookup, p1, p2 *ast.Pattern, record bool) *ast.Patt
 	}
 	left := getAnds(p1)
 	right := getAnds(p2)
-	list := append(left, right...)
-	list = ast.Set(list)
+	list := orderedSet(append(left, right...))
 	list = simplifyChildren(list, func(left, right *ast.Pattern) *ast.Pattern {
 		return simplifyAnd(refs, left, right, record)
 	}, record)
-	ast.Sort(list)
 	var p *ast.Pattern = list[0]
 	for i := range list {
 		if i == 0 {
@@ -386,9 +382,7 @@ func simplifyInterleave(refs ast.RefLookup, p1, p2 *ast.Pattern) *ast.Pattern {
 	}
 	left := getInterleaves(p1)
 	right := getInterleaves(p2)
-	list := append(left, right...)
-	list = ast.Set(list)
-	ast.Sort(list)
+	list := orderedSet(append(left, right...))
 	var p *ast.Pattern = list[0]
 	for i := range list {
 		if i == 0 {
