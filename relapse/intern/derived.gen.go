@@ -46,6 +46,22 @@ func deriveFilter(predicate func(*Pattern) bool, list []*Pattern) []*Pattern {
 	return list[:j]
 }
 
+// deriveEquals returns whether this and that are equal.
+func deriveEquals(this, that []*Pattern) bool {
+	if this == nil || that == nil {
+		return this == nil && that == nil
+	}
+	if len(this) != len(that) {
+		return false
+	}
+	for i := 0; i < len(this); i++ {
+		if !(this[i].Equal(that[i])) {
+			return false
+		}
+	}
+	return true
+}
+
 // deriveHashString returns the hash of the object.
 func deriveHashString(object string) uint64 {
 	var h uint64

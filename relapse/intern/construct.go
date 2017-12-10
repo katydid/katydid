@@ -83,6 +83,9 @@ func (c *construct) Deref(name string) *Pattern {
 func (c *construct) AddGrammar(g *ast.Grammar) (*Pattern, error) {
 	ps := g.GetPatternDecls()
 	refs := ast.NewRefLookup(g)
+
+	// nullRefs are useful when constructing references for pattern declarations,
+	// which have not been created yet.
 	c.nullRefs = make(map[string]bool)
 	for name, p := range refs {
 		c.nullRefs[name] = interp.Nullable(refs, p)
@@ -101,6 +104,7 @@ func (c *construct) AddGrammar(g *ast.Grammar) (*Pattern, error) {
 	return main, nil
 }
 
+// TODO use this method more
 func (c *construct) checkRef(p *Pattern) (*Pattern, error) {
 	nn := c.hashRefs[p.hash]
 	for _, name := range nn {
@@ -264,40 +268,62 @@ func (c *construct) NewNotZAny() *Pattern {
 }
 
 func (c *construct) NewNode(b funcs.Bool, child *Pattern) (*Pattern, error) {
-	if child == notzany {
+	if isNotZAny(child) {
 		return notzany, nil
 	}
 	if funcs.IsFalse(b) {
 		return notzany, nil
 	}
-	p := &Pattern{
+	pp := &Pattern{
 		Type:     Node,
 		Func:     b,
 		Patterns: []*Pattern{child},
 		nullable: false,
 	}
-	p.SetHash()
-	return c.checkRef(p)
+	pp.SetHash()
+	return c.checkRef(pp)
+}
+
+func isEmpty(p *Pattern) bool {
+	return p.Type == Empty
 }
 
 func isNotZAny(p *Pattern) bool {
-	return p == notzany
+	return p.Type == Not && p.Patterns[0].Type == ZAny
 }
 
-func isZany(p *Pattern) bool {
-	return p == zany
+func isZAny(p *Pattern) bool {
+	return p.Type == ZAny
 }
 
 func notEmptySet(p *Pattern) bool { return p != notzany }
 
-func removeNotZAny(ps []*Pattern) []*Pattern {
-	return deriveFilter(notEmptySet, ps)
+func removeNotZAnyExceptOne(ps []*Pattern) []*Pattern {
+	pps := deriveFilter(notEmptySet, ps)
+	if len(pps) == 0 {
+		return ps[:1]
+	}
+	return pps
 }
 
 func notEmpty(p *Pattern) bool { return p != empty }
 
-func removeEmpty(ps []*Pattern) []*Pattern {
-	return deriveFilter(notEmpty, ps)
+func removeEmptyExceptOne(ps []*Pattern) []*Pattern {
+	pps := deriveFilter(notEmpty, ps)
+	if len(pps) == 0 {
+		return ps[:1]
+	}
+	return pps
+}
+
+func removeZAnyExceptOne(ps []*Pattern) []*Pattern {
+	pps := deriveFilter(func(p *Pattern) bool {
+		return p.Type != ZAny
+	}, ps)
+	if len(pps) == 0 {
+		return ps[:1]
+	}
+	return pps
 }
 
 func isNullable(p *Pattern) bool {
@@ -321,15 +347,12 @@ func (c *construct) MergeOr(l, r *Pattern) (*Pattern, error) {
 }
 
 func (c *construct) NewOr(ps []*Pattern) (*Pattern, error) {
-	if deriveAny(isZany, ps) {
+	if deriveAny(isZAny, ps) {
 		return zany, nil
 	}
-	ps = removeNotZAny(ps)
+	ps = removeNotZAnyExceptOne(ps)
 	if deriveAll(isNullable, ps) {
-		ps = removeEmpty(ps)
-	}
-	if len(ps) == 0 {
-		return zany, nil
+		ps = removeEmptyExceptOne(ps)
 	}
 	ps = orderedSet(ps)
 	var err error
@@ -346,6 +369,9 @@ func (c *construct) NewOr(ps []*Pattern) (*Pattern, error) {
 	ps, err = c.mergeNodesOr(ps)
 	if err != nil {
 		return nil, err
+	}
+	if len(ps) == 1 {
+		return ps[0], nil
 	}
 	pp := &Pattern{
 		Type:     Or,
@@ -376,8 +402,8 @@ func merge(predicate func(l, r *Pattern) bool, merge func(l, r *Pattern) (*Patte
 }
 
 func areLeaves(l, r *Pattern) bool {
-	return l.Type == Node && l.Patterns[0] == empty &&
-		r.Type == Node && r.Patterns[0] == empty
+	return l.Type == Node && isEmpty(l.Patterns[0]) &&
+		r.Type == Node && isEmpty(r.Patterns[0])
 }
 
 func (c *construct) mergeLeaves(mergeFunc func(l, r funcs.Bool) funcs.Bool, ps []*Pattern) ([]*Pattern, error) {
@@ -394,11 +420,11 @@ func areContainsWithEqualNames(l, r *Pattern) bool {
 
 func (c *construct) mergeContainsOr(ps []*Pattern) ([]*Pattern, error) {
 	return merge(areContainsWithEqualNames, func(l, r *Pattern) (*Pattern, error) {
-		o, err := c.MergeOr(l.Patterns[0], r.Patterns[0])
+		o, err := c.MergeOr(l.Patterns[0].Patterns[0], r.Patterns[0].Patterns[0])
 		if err != nil {
 			return nil, err
 		}
-		pp, err := c.NewNode(l.Func, o)
+		pp, err := c.NewNode(l.Patterns[0].Func, o)
 		if err != nil {
 			return nil, err
 		}
@@ -424,11 +450,14 @@ func (c *construct) NewConcat(ps []*Pattern) *Pattern {
 	if deriveAny(isNotZAny, ps) {
 		return notzany
 	}
-	ps = removeEmpty(ps)
+	ps = removeEmptyExceptOne(ps)
 	if len(ps) == 3 {
-		if ps[0] == zany && ps[2] == zany {
+		if isZAny(ps[0]) && isZAny(ps[2]) {
 			return c.NewContains(ps[1])
 		}
+	}
+	if len(ps) == 1 {
+		return ps[0]
 	}
 	pp := &Pattern{
 		Type:     Concat,
@@ -437,20 +466,6 @@ func (c *construct) NewConcat(ps []*Pattern) *Pattern {
 	}
 	pp.SetHash()
 	return pp
-}
-
-func removeZAny(ps []*Pattern) []*Pattern {
-	return deriveFilter(func(p *Pattern) bool {
-		return p.Type != ZAny
-	}, ps)
-}
-
-func isEmpty(p *Pattern) bool {
-	return p == empty
-}
-
-func isNotZany(p *Pattern) bool {
-	return p == notzany
 }
 
 func (c *construct) MergeAnd(l, r *Pattern) (*Pattern, error) {
@@ -470,18 +485,15 @@ func (c *construct) MergeAnd(l, r *Pattern) (*Pattern, error) {
 }
 
 func (c *construct) NewAnd(ps []*Pattern) (*Pattern, error) {
-	if deriveAny(isNotZany, ps) {
+	if deriveAny(isNotZAny, ps) {
 		return notzany, nil
 	}
-	ps = removeNotZAny(ps)
+	ps = removeNotZAnyExceptOne(ps)
 	if deriveAny(isEmpty, ps) {
 		if deriveAll(isNullable, ps) {
 			return empty, nil
 		}
 		return notzany, nil
-	}
-	if len(ps) == 0 {
-		return zany, nil
 	}
 	ps = orderedSet(ps)
 	var err error
@@ -499,6 +511,9 @@ func (c *construct) NewAnd(ps []*Pattern) (*Pattern, error) {
 	if err != nil {
 		return nil, err
 	}
+	if len(ps) == 1 {
+		return ps[0], nil
+	}
 	pp := &Pattern{
 		Type:     And,
 		Patterns: ps,
@@ -510,11 +525,11 @@ func (c *construct) NewAnd(ps []*Pattern) (*Pattern, error) {
 
 func (c *construct) mergeContainsAnd(ps []*Pattern) ([]*Pattern, error) {
 	return merge(areContainsWithEqualNames, func(l, r *Pattern) (*Pattern, error) {
-		a, err := c.MergeAnd(l.Patterns[0], r.Patterns[0])
+		a, err := c.MergeAnd(l.Patterns[0].Patterns[0], r.Patterns[0].Patterns[0])
 		if err != nil {
 			return nil, err
 		}
-		pp, err := c.NewNode(l.Func, a)
+		pp, err := c.NewNode(l.Patterns[0].Func, a)
 		if err != nil {
 			return nil, err
 		}
@@ -560,7 +575,7 @@ func (c *construct) NewReference(name string) (*Pattern, error) {
 }
 
 func (c *construct) NewNot(p *Pattern) *Pattern {
-	if p == zany {
+	if isZAny(p) {
 		return notzany
 	}
 	if p.Type == Not {
@@ -576,10 +591,10 @@ func (c *construct) NewNot(p *Pattern) *Pattern {
 }
 
 func (c *construct) NewContains(p *Pattern) *Pattern {
-	if p == empty || p == zany {
+	if isEmpty(p) || isZAny(p) {
 		return zany
 	}
-	if p == notzany {
+	if isNotZAny(p) {
 		return notzany
 	}
 	pp := &Pattern{
@@ -592,7 +607,7 @@ func (c *construct) NewContains(p *Pattern) *Pattern {
 }
 
 func (c *construct) NewOptional(p *Pattern) *Pattern {
-	if p == empty {
+	if isEmpty(p) {
 		return empty
 	}
 	pp := &Pattern{
@@ -608,9 +623,11 @@ func (c *construct) NewInterleave(ps []*Pattern) *Pattern {
 	if deriveAny(isNotZAny, ps) {
 		return notzany
 	}
-	ps = removeEmpty(ps)
-	ps = removeZAny(ps)
+	ps = removeEmptyExceptOne(ps)
 	ps = orderedSet(ps)
+	if len(ps) == 1 {
+		return ps[0]
+	}
 	pp := &Pattern{
 		Type:     Interleave,
 		Patterns: ps,

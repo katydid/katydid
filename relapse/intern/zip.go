@@ -25,47 +25,65 @@ var (
 	}
 )
 
+func removeAllNotZAny(ps []*Pattern) []*Pattern {
+	return deriveFilter(notEmptySet, ps)
+}
+
+func removeAllZAny(ps []*Pattern) []*Pattern {
+	return deriveFilter(func(p *Pattern) bool {
+		return p.Type != ZAny
+	}, ps)
+}
+
 func Zip(patterns []*Pattern) ([]*Pattern, []int) {
 
-	ps := make([]*Pattern, len(patterns))
+	zips := make([]*Pattern, len(patterns))
 	for i := range patterns {
-		ps[i] = patterns[i]
+		zips[i] = patterns[i]
 	}
-	ps = orderedSet(ps)
+	zips = orderedSet(zips)
 
 	// remove zany and not zany
-	ps = removeZAny(ps)
-	ps = removeNotZAny(ps)
+	zips = removeAllZAny(zips)
+	zips = removeAllNotZAny(zips)
 
 	// calculate indexes by doing a reverse lookup using the original hashes and moved hashes.
 	revhashes := make(map[uint64][]int)
-	for i, p := range ps {
+	for i, p := range zips {
 		revhashes[p.hash] = append(revhashes[p.hash], i)
 	}
 	indexes := make([]int, len(patterns))
-	for i := range patterns {
-		if patterns[i] == zany {
+	for i := range indexes {
+		if isZAny(patterns[i]) {
 			indexes[i] = -1
-		} else if patterns[i] == notzany {
+			continue
+		}
+		if isNotZAny(patterns[i]) {
 			indexes[i] = -2
-		} else {
-			hashindexes, ok := revhashes[patterns[i].hash]
-			if !ok {
-				panic("unreachable: unknown hash")
+			continue
+		}
+		hashindexes := revhashes[patterns[i].hash]
+		if len(hashindexes) == 0 {
+			panic("unreachable: unknown hash")
+		}
+		if len(hashindexes) == 1 {
+			indexes[i] = hashindexes[0]
+			continue
+		}
+		found := false
+		for _, index := range hashindexes {
+			if zips[index].Equal(patterns[i]) {
+				indexes[i] = index
+				found = true
+				break
 			}
-			if len(hashindexes) == 1 {
-				indexes[i] = hashindexes[0]
-			} else {
-				for _, index := range hashindexes {
-					if ps[index].Equal(patterns[i]) {
-						indexes[i] = index
-					}
-				}
-			}
+		}
+		if !found {
+			panic("wtf")
 		}
 	}
 
-	return ps, indexes
+	return zips, indexes
 }
 
 func Unzip(patterns []*Pattern, indexes []int) []*Pattern {

@@ -47,12 +47,19 @@ type Pattern struct {
 	nullable bool
 }
 
+func (p *Pattern) GoString() string {
+	if p == nil {
+		return "nil"
+	}
+	return fmt.Sprintf("&%#v", *p)
+}
+
 func newASTPattern(p *Pattern) (*ast.Pattern, error) {
 	switch p.Type {
 	case Empty:
 		return ast.NewEmpty(), nil
 	case Node:
-		if p.Patterns[0] == empty {
+		if isEmpty(p.Patterns[0]) {
 			exprStr := funcs.Sprint(p.Func)
 			expr, err := parser.NewParser().ParseExpr(exprStr)
 			if err != nil {
@@ -132,7 +139,7 @@ func (p *Pattern) String() string {
 	}
 	st, err := newASTPattern(p)
 	if err != nil {
-		return fmt.Sprintf("%v", *p)
+		return fmt.Sprintf("could not get ast of: %v", *p)
 	}
 	return st.String()
 }

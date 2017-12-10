@@ -42,7 +42,7 @@ func Interpret(g *ast.Grammar, parser parser.Interface) (bool, error) {
 
 func escapable(patterns []*Pattern) bool {
 	for i := range patterns {
-		if patterns[i] == zany || patterns[i] == notzany {
+		if isZAny(patterns[i]) || isNotZAny(patterns[i]) {
 			return false
 		}
 		return true
@@ -266,7 +266,24 @@ func derivReturn(c Construct, p *Pattern, patterns []*Pattern) (*Pattern, []*Pat
 		o, err := c.NewOr(orPatterns)
 		return o, rest, err
 	case Optional:
-		return derivReturn(c, p.Patterns[0], patterns)
+		rest := patterns
+		orPatterns := make([]*Pattern, 2)
+		var err error
+		orPatterns[0], rest, err = derivReturn(c, c.NewEmpty(), rest)
+		if err != nil {
+			return nil, nil, err
+		}
+		orPatterns[1], rest, err = derivReturn(c, p.Patterns[0], rest)
+		if err != nil {
+			return nil, nil, err
+		}
+		o, err := c.NewOr(orPatterns)
+		return o, rest, err
+
+		// fmt.Printf("optional in: %v\n", p)
+		// r1, r2, r3 := derivReturn(c, p.Patterns[0], patterns)
+		// fmt.Printf("optional out: %v\n", r1)
+		// return r1, r2, r3
 	}
 	panic(fmt.Sprintf("unknown pattern typ %d", p.Type))
 }
