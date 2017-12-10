@@ -61,6 +61,49 @@ func Equal(l, r interface{}) bool {
 	return true
 }
 
+//Compare compares two funtions.
+func Compare(l, r interface{}) int {
+	le := reflect.ValueOf(l).Elem()
+	lUniqName := le.Type().Name()
+	re := reflect.ValueOf(r).Elem()
+	rUniqName := re.Type().Name()
+	if lUniqName != rUniqName {
+		if lUniqName < rUniqName {
+			return -1
+		}
+		return 1
+	}
+	if len(reverse(lUniqName)) == 0 {
+		//TODO maybe this could be done better or we could just always convert functions to strings to compare
+		sl := sprint(l)
+		sr := sprint(r)
+		if sl == sr {
+			return 0
+		}
+		if sl < sr {
+			return -1
+		}
+		return 1
+	}
+	numFields := le.NumField()
+	for i := 0; i < numFields; i++ {
+		if _, ok := le.Field(i).Type().MethodByName("Eval"); !ok {
+			continue
+		}
+		c := Compare(le.Field(i).Interface(), re.Field(i).Interface())
+		if c != 0 {
+			return c
+		}
+	}
+	return 0
+}
+
+//Hash returns the hash of a function.
+func Hash(f interface{}) uint64 {
+	//TODO maybe this could be done better or we could just always convert functions to strings to compare
+	return deriveHash(sprint(f))
+}
+
 //Simplify simplifies a function logically by eliminating impossible ands, ors with constant true values, double nots, etc.
 func Simplify(f Bool) Bool {
 	switch ff := f.(type) {
