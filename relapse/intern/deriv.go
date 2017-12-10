@@ -27,8 +27,11 @@ import (
 //Interpret uses derivatives and simplification to recusively derive the resulting grammar.
 //This resulting grammar's nullability then represents the result of the function.
 //This implementation does not handle immediate recursion, see the HasRecursion function.
-func Interpret(g *ast.Grammar, parser parser.Interface) (bool, error) {
+func Interpret(g *ast.Grammar, record bool, parser parser.Interface) (bool, error) {
 	c := NewConstructor()
+	if record {
+		c = NewConstructorOptimizedForRecords()
+	}
 	main, err := c.AddGrammar(g)
 	if err != nil {
 		return false, err
@@ -41,9 +44,12 @@ func Interpret(g *ast.Grammar, parser parser.Interface) (bool, error) {
 }
 
 func escapable(patterns []*Pattern) bool {
-	for i := range patterns {
-		if isZAny(patterns[i]) || isNotZAny(patterns[i]) {
-			return false
+	for _, p := range patterns {
+		if isZAny(p) {
+			continue
+		}
+		if isNotZAny(p) {
+			continue
 		}
 		return true
 	}
@@ -266,24 +272,7 @@ func derivReturn(c Construct, p *Pattern, patterns []*Pattern) (*Pattern, []*Pat
 		o, err := c.NewOr(orPatterns)
 		return o, rest, err
 	case Optional:
-		rest := patterns
-		orPatterns := make([]*Pattern, 2)
-		var err error
-		orPatterns[0], rest, err = derivReturn(c, c.NewEmpty(), rest)
-		if err != nil {
-			return nil, nil, err
-		}
-		orPatterns[1], rest, err = derivReturn(c, p.Patterns[0], rest)
-		if err != nil {
-			return nil, nil, err
-		}
-		o, err := c.NewOr(orPatterns)
-		return o, rest, err
-
-		// fmt.Printf("optional in: %v\n", p)
-		// r1, r2, r3 := derivReturn(c, p.Patterns[0], patterns)
-		// fmt.Printf("optional out: %v\n", r1)
-		// return r1, r2, r3
+		return derivReturn(c, p.Patterns[0], patterns)
 	}
 	panic(fmt.Sprintf("unknown pattern typ %d", p.Type))
 }

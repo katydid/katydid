@@ -34,17 +34,16 @@ func TestSuite(t *testing.T) {
 	}
 	for _, testCase := range tests {
 		t.Run(testCase.Name, func(t *testing.T) {
-			test(t, testCase.Grammar, testCase.Parser, testCase.Expected)
+			test(t, testCase.Grammar, testCase.Parser, testCase.Expected, testCase.Record)
 		})
 	}
 }
 
-func test(t *testing.T, g *ast.Grammar, p parser.Interface, expected bool) {
-	// p = debug.NewLogger(p, debug.NewLineLogger())
+func test(t *testing.T, g *ast.Grammar, p parser.Interface, expected bool, record bool) {
 	if interp.HasRecursion(g) {
 		t.Skipf("intern was not designed to handle left recursion")
 	}
-	match, err := intern.Interpret(g, p)
+	match, err := intern.Interpret(g, record, p)
 	if err != nil {
 		t.Fatal(err)
 	}

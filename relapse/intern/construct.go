@@ -57,13 +57,9 @@ func NewConstructor() Construct {
 }
 
 func NewConstructorOptimizedForRecords() Construct {
-	return &construct{
-		refs:     make(map[string]*Pattern),
-		hashRefs: make(map[uint64][]string),
-		nullRefs: make(map[string]bool),
-		cache:    make(map[uint64][]*Pattern),
-		record:   true,
-	}
+	c := NewConstructor().(*construct)
+	c.record = true
+	return c
 }
 
 func (c *construct) AddPatternDecl(name string, p *ast.Pattern) (*Pattern, error) {
@@ -470,13 +466,13 @@ func (c *construct) NewConcat(ps []*Pattern) *Pattern {
 
 func (c *construct) MergeAnd(l, r *Pattern) (*Pattern, error) {
 	var left []*Pattern
-	if l.Type == Or {
+	if l.Type == And {
 		left = l.Patterns
 	} else {
 		left = []*Pattern{l}
 	}
 	var right []*Pattern
-	if r.Type == Or {
+	if r.Type == And {
 		right = r.Patterns
 	} else {
 		right = []*Pattern{r}
@@ -488,7 +484,7 @@ func (c *construct) NewAnd(ps []*Pattern) (*Pattern, error) {
 	if deriveAny(isNotZAny, ps) {
 		return notzany, nil
 	}
-	ps = removeNotZAnyExceptOne(ps)
+	ps = removeZAnyExceptOne(ps)
 	if deriveAny(isEmpty, ps) {
 		if deriveAll(isNullable, ps) {
 			return empty, nil
