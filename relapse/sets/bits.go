@@ -14,7 +14,10 @@
 
 package sets
 
-import "math"
+import (
+	"fmt"
+	"math"
+)
 
 type Bits struct {
 	val0 uint64
@@ -23,6 +26,7 @@ type Bits struct {
 }
 
 func NewBits(size int) Bits {
+	fmt.Printf("newbits: %d\n", size)
 	if size < 64 {
 		return Bits{size: size}
 	}
@@ -31,7 +35,7 @@ func NewBits(size int) Bits {
 
 func (bs Bits) Get(i int) bool {
 	if i < 0 || i >= bs.size {
-		panic("range check error")
+		panic(fmt.Sprintf("range check error i:%d, size:%d", i, bs.size))
 	}
 	b := bs.val0
 	if i >= 64 {
@@ -88,7 +92,7 @@ func (bs Bits) list() []bool {
 
 func (bs *Bits) Set(i int, b bool) {
 	if i < 0 || i >= bs.size {
-		panic("range check error")
+		panic(fmt.Sprintf("range check error i:%d, size:%d", i, bs.size))
 	}
 	if i < 64 {
 		if (((bs.val0 >> uint(i)) & 0x1) == 1) == b {

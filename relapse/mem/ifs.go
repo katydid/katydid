@@ -22,6 +22,7 @@ import (
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/compose"
 	"github.com/katydid/katydid/relapse/funcs"
+	"github.com/katydid/katydid/relapse/intern"
 	"github.com/katydid/katydid/relapse/sets"
 )
 
@@ -42,7 +43,7 @@ type ifNode struct {
 	cond               compose.Bool
 	thn                *ifNode
 	els                *ifNode
-	ps                 []*ast.Pattern
+	ps                 []*intern.Pattern
 	ret                bool
 	zippedPatternIndex int
 	stackIndex         int
@@ -110,7 +111,7 @@ func (this *Mem) calcNode(node *ifNode, parentPatterns int, label parser.Value) 
 	if cond {
 		if node.thn == nil {
 			node.thn = &ifNode{}
-			node.thn.ps = make([]*ast.Pattern, 0, len(node.ps)+1)
+			node.thn.ps = make([]*intern.Pattern, 0, len(node.ps)+1)
 			node.thn.ps = append(node.thn.ps, node.ps...)
 			node.thn.ps = append(node.thn.ps, node.ifs[0].thn)
 			node.thn.prev = funcs.Simplify(funcs.And(node.prev, node.f))
@@ -120,7 +121,7 @@ func (this *Mem) calcNode(node *ifNode, parentPatterns int, label parser.Value) 
 	}
 	if node.els == nil {
 		node.els = &ifNode{}
-		node.els.ps = make([]*ast.Pattern, 0, len(node.ps)+1)
+		node.els.ps = make([]*intern.Pattern, 0, len(node.ps)+1)
 		node.els.ps = append(node.els.ps, node.ps...)
 		node.els.ps = append(node.els.ps, node.ifs[0].els)
 		node.els.prev = funcs.Simplify(funcs.And(node.prev, funcs.Not(node.f)))
@@ -129,13 +130,27 @@ func (this *Mem) calcNode(node *ifNode, parentPatterns int, label parser.Value) 
 	return this.calcNode(node.els, parentPatterns, label)
 }
 
-func (this *Mem) zipStackAndPatterns(parentPatterns int, ps []*ast.Pattern) (int, int) {
-	zippedPatterns, zipper := sets.Zip(ps)
+func newasts(ps []*intern.Pattern) []*ast.Pattern {
+	pps := make([]*ast.Pattern, len(ps))
+	for i := range pps {
+		pps[i] = ps[i].NewAst()
+	}
+	return pps
+}
+
+func (this *Mem) zipStackAndPatterns(parentPatterns int, ps []*intern.Pattern) (int, int) {
+	fmt.Printf("ps = %v\n", ps)
+	zippedPatterns, zipper := intern.Zip(ps)
+	fmt.Printf("zipped %v, %v\n", zippedPatterns, zipper)
+	astPatterns := newasts(ps)
+	astzippedPatterns, astzipper := sets.Zip(astPatterns)
+	fmt.Printf("astzipped %v, %v\n", astzippedPatterns, astzipper)
 	zipperIndex := this.zis.Add(zipper)
 	stackElement := sets.Pair{
 		First:  parentPatterns,
 		Second: zipperIndex,
 	}
+	fmt.Printf("stackElement: %v\n", stackElement)
 	stackIndex := this.stackElms.Add(stackElement)
 	zippedPatternIndex := this.patterns.Add(zippedPatterns)
 	return zippedPatternIndex, stackIndex
@@ -150,11 +165,11 @@ func (this *Mem) eval(ifs *ifExprs, label parser.Value) (int, int, error) {
 
 type ifExpr struct {
 	cond funcs.Bool
-	thn  *ast.Pattern
-	els  *ast.Pattern
+	thn  *intern.Pattern
+	els  *intern.Pattern
 }
 
-func (this *ifExpr) eval(label parser.Value) (*ast.Pattern, error) {
+func (this *ifExpr) eval(label parser.Value) (*intern.Pattern, error) {
 	f, err := compose.NewBoolFunc(this.cond)
 	if err != nil {
 		return nil, err

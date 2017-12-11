@@ -18,11 +18,12 @@
 package mem
 
 import (
+	"fmt"
+
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/ast"
-	"github.com/katydid/katydid/relapse/compose"
 	"github.com/katydid/katydid/relapse/funcs"
-	"github.com/katydid/katydid/relapse/interp"
+	"github.com/katydid/katydid/relapse/intern"
 	"github.com/katydid/katydid/relapse/sets"
 )
 
@@ -39,17 +40,18 @@ func NewRecord(g *ast.Grammar) (*Mem, error) {
 }
 
 func new(g *ast.Grammar, record bool) (*Mem, error) {
-	simp := interp.NewSimplifier(g)
+	c := intern.NewConstructor()
 	if record {
-		simp = simp.OptimizeForRecord()
+		c = intern.NewConstructorOptimizedForRecords()
 	}
-	g = simp.Grammar()
-	refs := ast.NewRefLookup(g)
+	main, err := c.AddGrammar(g)
+	if err != nil {
+		return nil, err
+	}
 	m := &Mem{
-		refs:       refs,
-		simplifier: simp,
+		construct: c,
 
-		patterns:  sets.NewPatterns(),
+		patterns:  intern.NewPatterns(),
 		zis:       sets.NewInts(),
 		stackElms: sets.NewPairs(),
 		nullables: sets.NewBitsSet(),
@@ -60,15 +62,8 @@ func new(g *ast.Grammar, record bool) (*Mem, error) {
 		stateToNullable: []int{},
 		accept:          []bool{},
 	}
-	start := m.patterns.Add([]*ast.Pattern{refs["main"]})
-	e := &exprToFunc{m: make(map[*ast.Expr]funcs.Bool)}
-	for _, p := range refs {
-		p.Walk(e)
-		if e.err != nil {
-			return nil, e.err
-		}
-	}
-	m.funcs = e.m
+	start := m.patterns.Add([]*intern.Pattern{main})
+
 	m.start = start
 	return m, nil
 }
@@ -86,20 +81,14 @@ func (mem *Mem) Validate(p parser.Interface) (bool, error) {
 }
 
 func (mem *Mem) SetContext(context *funcs.Context) {
-	mem.context = context
-	for _, f := range mem.funcs {
-		compose.SetContext(f, mem.context)
-	}
+	mem.construct.SetContext(context)
 }
 
 //Mem is the structure containing the memoized grammar.
 type Mem struct {
-	refs       map[string]*ast.Pattern
-	funcs      map[*ast.Expr]funcs.Bool
-	simplifier interp.Simplifier
-	context    *funcs.Context
+	construct intern.Construct
 
-	patterns  sets.Patterns
+	patterns  *intern.Patterns
 	zis       sets.Ints
 	stackElms sets.Pairs
 	nullables sets.BitsSet
@@ -112,25 +101,10 @@ type Mem struct {
 	accept          []bool
 }
 
-func escapable(patterns []*ast.Pattern) bool {
-	for _, pattern := range patterns {
-		if pattern.ZAny != nil {
-			continue
-		}
-		if pattern.Not != nil {
-			if pattern.GetNot().GetPattern().ZAny != nil {
-				continue
-			}
-		}
-		return true
-	}
-	return false
-}
-
 func (this *Mem) calcEscapables(upto int) {
 	for i := len(this.escapables); i <= upto; i++ {
-		patterns := this.patterns[i]
-		this.escapables = append(this.escapables, escapable(patterns))
+		patterns := this.patterns.Get(i)
+		this.escapables = append(this.escapables, intern.Escapable(patterns))
 	}
 }
 
@@ -141,11 +115,11 @@ func (this *Mem) escapable(patterns int) bool {
 
 func (this *Mem) calcAccepts(upto int) {
 	for i := len(this.accept); i <= upto; i++ {
-		patterns := this.patterns[i]
+		patterns := this.patterns.Get(i)
 		if len(patterns) != 1 {
 			this.accept = append(this.accept, false)
 		} else {
-			this.accept = append(this.accept, interp.Nullable(this.refs, patterns[0]))
+			this.accept = append(this.accept, patterns[0].Nullable())
 		}
 	}
 }
@@ -155,22 +129,9 @@ func (this *Mem) getAccept(patterns int) bool {
 	return this.accept[patterns]
 }
 
-func (this *Mem) getFunc(expr *ast.Expr) funcs.Bool {
-	if f, ok := this.funcs[expr]; ok {
-		return f
-	}
-	f, err := compose.NewBool(expr)
-	if err != nil {
-		panic(err)
-	}
-	compose.SetContext(f, this.context)
-	this.funcs[expr] = f
-	return f
-}
-
 func (this *Mem) calcCallTrees(upto int) error {
 	for i := len(this.calls); i <= upto; i++ {
-		listOfIfExpr := derivCalls(this.refs, this.getFunc, this.patterns[i])
+		listOfIfExpr := derivCalls(this.construct, this.patterns.Get(i))
 		ifs := newIfExprs(i, listOfIfExpr)
 		this.calls = append(this.calls, ifs)
 	}
@@ -184,18 +145,18 @@ func (this *Mem) getCallTree(patterns int) (*ifExprs, error) {
 	return this.calls[patterns], nil
 }
 
-func nullables(refs map[string]*ast.Pattern, patterns []*ast.Pattern) sets.Bits {
+func nullables(patterns []*intern.Pattern) sets.Bits {
 	nulls := sets.NewBits(len(patterns))
 	for i, p := range patterns {
-		nulls.Set(i, interp.Nullable(refs, p))
+		nulls.Set(i, p.Nullable())
 	}
 	return nulls
 }
 
 func (this *Mem) calcNullables(upto int) {
 	for i := len(this.stateToNullable); i <= upto; i++ {
-		childPatterns := this.patterns[i]
-		nullable := nullables(this.refs, childPatterns)
+		childPatterns := this.patterns.Get(i)
+		nullable := nullables(childPatterns)
 		nullIndex := this.nullables.Add(nullable)
 		this.stateToNullable = append(this.stateToNullable, nullIndex)
 	}
@@ -206,31 +167,28 @@ func (this *Mem) getNullable(s int) int {
 	return this.stateToNullable[s]
 }
 
-func (this *Mem) simplifyAll(patterns []*ast.Pattern) []*ast.Pattern {
-	for i := range patterns {
-		patterns[i] = this.simplifier.Simplify(patterns[i])
-	}
-	return patterns
-}
-
-func (this *Mem) getReturn(stackIndex int, nullIndex int) int {
+func (this *Mem) getReturn(stackIndex int, nullIndex int) (int, error) {
 	if len(this.returns) <= stackIndex {
 		for i := len(this.returns); i <= stackIndex; i++ {
 			this.returns = append(this.returns, make(map[int]int))
 		}
 	}
 	if ret, ok := this.returns[stackIndex][nullIndex]; ok {
-		return ret
+		return ret, nil
 	}
 	stackElm := this.stackElms[stackIndex]
 	zullable := this.nullables[nullIndex]
 	childrenZipper := stackElm.Second
+	fmt.Printf("zullable = %v\n", zullable)
+	fmt.Printf("this.zis[childZipper] = %v\n", this.zis[childrenZipper])
 	nullable := sets.UnzipBits(zullable, this.zis[childrenZipper])
 	parentPatterns := stackElm.First
-	currentPatterns := this.patterns[parentPatterns]
-	currentPatterns = derivReturns(this.refs, currentPatterns, nullable)
-	simplePatterns := this.simplifyAll(currentPatterns)
-	res := this.patterns.Add(simplePatterns)
+	currentPatterns := this.patterns.Get(parentPatterns)
+	retPatterns, err := derivReturns(this.construct, currentPatterns, nullable)
+	if err != nil {
+		return 0, err
+	}
+	res := this.patterns.Add(retPatterns)
 	this.returns[stackIndex][nullIndex] = res
-	return res
+	return res, nil
 }

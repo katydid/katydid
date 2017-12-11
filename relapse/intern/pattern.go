@@ -54,6 +54,14 @@ func (p *Pattern) GoString() string {
 	return fmt.Sprintf("&%#v", *p)
 }
 
+func (p *Pattern) NewAst() *ast.Pattern {
+	pp, err := newASTPattern(p)
+	if err != nil {
+		panic(err)
+	}
+	return pp
+}
+
 func newASTPattern(p *Pattern) (*ast.Pattern, error) {
 	switch p.Type {
 	case Empty:

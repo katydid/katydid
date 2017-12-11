@@ -14,10 +14,6 @@
 
 package intern
 
-import (
-	"fmt"
-)
-
 func anyNullable(ps []*Pattern) bool {
 	for _, any := range ps {
 		if any.nullable {
@@ -34,32 +30,4 @@ func allNullable(ps []*Pattern) bool {
 		}
 	}
 	return true
-}
-
-func Nullable(refs map[string]*Pattern, p *Pattern) bool {
-	switch p.Type {
-	case Empty:
-		return true
-	case Node:
-		return false
-	case Concat:
-		return allNullable(p.Patterns)
-	case Or:
-		return anyNullable(p.Patterns)
-	case And:
-		return allNullable(p.Patterns)
-	case ZeroOrMore:
-		return true
-	case Reference:
-		return refs[p.Ref].nullable
-	case Not:
-		return !p.Patterns[0].nullable
-	case Contains:
-		return p.Patterns[0].nullable
-	case Optional:
-		return true
-	case Interleave:
-		return allNullable(p.Patterns)
-	}
-	panic(fmt.Sprintf("unknown pattern type %v", p))
 }

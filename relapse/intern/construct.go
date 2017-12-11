@@ -27,6 +27,7 @@ import (
 type Construct interface {
 	AddGrammar(g *ast.Grammar) (*Pattern, error)
 	AddPatternDecl(name string, p *ast.Pattern) (*Pattern, error)
+	SetContext(context *funcs.Context)
 	Deref(name string) *Pattern
 	NewPattern(this *ast.Pattern) (*Pattern, error)
 	NewConcat(ps []*Pattern) *Pattern
@@ -44,6 +45,7 @@ type construct struct {
 	hashRefs map[uint64][]string
 	nullRefs map[string]bool
 	cache    map[uint64][]*Pattern
+	context  *funcs.Context
 	record   bool
 }
 
@@ -269,6 +271,9 @@ func (c *construct) NewNode(b funcs.Bool, child *Pattern) (*Pattern, error) {
 	}
 	if funcs.IsFalse(b) {
 		return notzany, nil
+	}
+	if c.context != nil {
+		compose.SetContext(b, c.context)
 	}
 	pp := &Pattern{
 		Type:     Node,

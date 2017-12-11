@@ -19,10 +19,7 @@ import (
 	"io"
 
 	"github.com/katydid/katydid/parser"
-	"github.com/katydid/katydid/relapse/ast"
-	"github.com/katydid/katydid/relapse/funcs"
-	"github.com/katydid/katydid/relapse/interp"
-	nameexpr "github.com/katydid/katydid/relapse/name"
+	"github.com/katydid/katydid/relapse/intern"
 )
 
 func deriv(mem *Mem, patterns int, tree parser.Interface) (int, error) {
@@ -54,124 +51,174 @@ func deriv(mem *Mem, patterns int, tree parser.Interface) (int, error) {
 			tree.Up()
 		}
 		nullIndex := mem.getNullable(childPatterns)
-		patterns = mem.getReturn(stackElm, nullIndex)
+		patterns, err = mem.getReturn(stackElm, nullIndex)
+		if err != nil {
+			return 0, err
+		}
 	}
 	return patterns, nil
 }
 
-func derivCalls(refs map[string]*ast.Pattern, getFunc func(*ast.Expr) funcs.Bool, patterns []*ast.Pattern) []*ifExpr {
+func derivCalls(construct intern.Construct, patterns []*intern.Pattern) []*ifExpr {
 	res := []*ifExpr{}
 	for _, pattern := range patterns {
-		cs := derivCall(refs, getFunc, pattern)
+		cs := derivCall(construct, pattern)
 		res = append(res, cs...)
 	}
 	return res
 }
 
-func derivCall(refs map[string]*ast.Pattern, getFunc func(*ast.Expr) funcs.Bool, p *ast.Pattern) []*ifExpr {
-	typ := p.GetValue()
-	switch v := typ.(type) {
-	case *ast.Empty:
+func derivCall(c intern.Construct, p *intern.Pattern) []*ifExpr {
+	switch p.Type {
+	case intern.Empty:
 		return []*ifExpr{}
-	case *ast.ZAny:
+	case intern.ZAny:
 		return []*ifExpr{}
-	case *ast.TreeNode:
-		b := nameexpr.NameToFunc(v.GetName())
-		return []*ifExpr{{b, v.GetPattern(), ast.NewNot(ast.NewZAny())}}
-	case *ast.LeafNode:
-		b := getFunc(v.GetExpr())
-		return []*ifExpr{{b, ast.NewEmpty(), ast.NewNot(ast.NewZAny())}}
-	case *ast.Concat:
-		l := derivCall(refs, getFunc, v.GetLeftPattern())
-		if !interp.Nullable(refs, v.GetLeftPattern()) {
-			return l
+	case intern.Node:
+		return []*ifExpr{{p.Func, p.Patterns[0], c.NewNot(c.NewZAny())}}
+	case intern.Concat:
+		res := []*ifExpr{}
+		for i := range p.Patterns {
+			ps := derivCall(c, p.Patterns[i])
+			res = append(res, ps...)
+			if !p.Patterns[i].Nullable() {
+				break
+			}
 		}
-		r := derivCall(refs, getFunc, v.GetRightPattern())
-		return append(l, r...)
-	case *ast.Or:
-		return derivCall2(refs, getFunc, v.GetLeftPattern(), v.GetRightPattern())
-	case *ast.And:
-		return derivCall2(refs, getFunc, v.GetLeftPattern(), v.GetRightPattern())
-	case *ast.Interleave:
-		return derivCall2(refs, getFunc, v.GetLeftPattern(), v.GetRightPattern())
-	case *ast.ZeroOrMore:
-		return derivCall(refs, getFunc, v.GetPattern())
-	case *ast.Reference:
-		return derivCall(refs, getFunc, refs[v.GetName()])
-	case *ast.Not:
-		return derivCall(refs, getFunc, v.GetPattern())
-	case *ast.Contains:
-		return derivCall(refs, getFunc, ast.NewConcat(ast.NewZAny(), ast.NewConcat(v.GetPattern(), ast.NewZAny())))
-	case *ast.Optional:
-		return derivCall(refs, getFunc, ast.NewOr(v.GetPattern(), ast.NewEmpty()))
+		return res
+	case intern.Or:
+		return derivCallAll(c, p.Patterns)
+	case intern.And:
+		return derivCallAll(c, p.Patterns)
+	case intern.Interleave:
+		return derivCallAll(c, p.Patterns)
+	case intern.ZeroOrMore:
+		return derivCall(c, p.Patterns[0])
+	case intern.Reference:
+		return derivCall(c, c.Deref(p.Ref))
+	case intern.Not:
+		return derivCall(c, p.Patterns[0])
+	case intern.Contains:
+		return derivCall(c, p.Patterns[0])
+	case intern.Optional:
+		return derivCall(c, p.Patterns[0])
 	}
-	panic(fmt.Sprintf("unknown pattern typ %T", typ))
+	panic(fmt.Sprintf("unknown pattern typ %d", p.Type))
 }
 
-func derivCall2(refs map[string]*ast.Pattern, getFunc func(*ast.Expr) funcs.Bool, left, right *ast.Pattern) []*ifExpr {
-	l := derivCall(refs, getFunc, left)
-	r := derivCall(refs, getFunc, right)
-	return append(l, r...)
-}
-
-func derivReturns(refs map[string]*ast.Pattern, originals []*ast.Pattern, nullable []bool) []*ast.Pattern {
-	res := make([]*ast.Pattern, len(originals))
-	rest := nullable
-	for i, original := range originals {
-		res[i], rest = derivReturn(refs, original, rest)
+func derivCallAll(c intern.Construct, ps []*intern.Pattern) []*ifExpr {
+	res := []*ifExpr{}
+	for i := range ps {
+		pss := derivCall(c, ps[i])
+		res = append(res, pss...)
 	}
 	return res
 }
 
-func derivReturn(refs map[string]*ast.Pattern, p *ast.Pattern, nullable []bool) (*ast.Pattern, []bool) {
-	typ := p.GetValue()
-	switch v := typ.(type) {
-	case *ast.Empty:
-		return ast.NewNot(ast.NewZAny()), nullable
-	case *ast.ZAny:
-		return ast.NewZAny(), nullable
-	case *ast.TreeNode:
-		if nullable[0] {
-			return ast.NewEmpty(), nullable[1:]
+func derivReturns(c intern.Construct, originals []*intern.Pattern, nullable []bool) ([]*intern.Pattern, error) {
+	res := make([]*intern.Pattern, len(originals))
+	rest := nullable
+	var err error
+	for i, original := range originals {
+		res[i], rest, err = derivReturn(c, original, rest)
+		if err != nil {
+			return nil, err
 		}
-		return ast.NewNot(ast.NewZAny()), nullable[1:]
-	case *ast.LeafNode:
-		if nullable[0] {
-			return ast.NewEmpty(), nullable[1:]
-		}
-		return ast.NewNot(ast.NewZAny()), nullable[1:]
-	case *ast.Concat:
-		l, leftRest := derivReturn(refs, v.GetLeftPattern(), nullable)
-		leftConcat := ast.NewConcat(l, v.GetRightPattern())
-		if !interp.Nullable(refs, v.GetLeftPattern()) {
-			return leftConcat, leftRest
-		}
-		r, rightRest := derivReturn(refs, v.GetRightPattern(), leftRest)
-		return ast.NewOr(leftConcat, r), rightRest
-	case *ast.Or:
-		l, leftRest := derivReturn(refs, v.GetLeftPattern(), nullable)
-		r, rightRest := derivReturn(refs, v.GetRightPattern(), leftRest)
-		return ast.NewOr(l, r), rightRest
-	case *ast.And:
-		l, leftRest := derivReturn(refs, v.GetLeftPattern(), nullable)
-		r, rightRest := derivReturn(refs, v.GetRightPattern(), leftRest)
-		return ast.NewAnd(l, r), rightRest
-	case *ast.Interleave:
-		l, leftRest := derivReturn(refs, v.GetLeftPattern(), nullable)
-		r, rightRest := derivReturn(refs, v.GetRightPattern(), leftRest)
-		return ast.NewOr(ast.NewInterleave(l, v.GetRightPattern()), ast.NewInterleave(r, v.GetLeftPattern())), rightRest
-	case *ast.ZeroOrMore:
-		c, rest := derivReturn(refs, v.GetPattern(), nullable)
-		return ast.NewConcat(c, p), rest
-	case *ast.Reference:
-		return derivReturn(refs, refs[v.GetName()], nullable)
-	case *ast.Not:
-		c, rest := derivReturn(refs, v.GetPattern(), nullable)
-		return ast.NewNot(c), rest
-	case *ast.Contains:
-		return derivReturn(refs, ast.NewConcat(ast.NewZAny(), ast.NewConcat(v.GetPattern(), ast.NewZAny())), nullable)
-	case *ast.Optional:
-		return derivReturn(refs, ast.NewOr(v.GetPattern(), ast.NewEmpty()), nullable)
 	}
-	panic(fmt.Sprintf("unknown pattern typ %T", typ))
+	return res, nil
+}
+
+func derivReturn(c intern.Construct, p *intern.Pattern, nullable []bool) (*intern.Pattern, []bool, error) {
+	switch p.Type {
+	case intern.Empty:
+		return c.NewNot(c.NewZAny()), nullable, nil
+	case intern.ZAny:
+		return c.NewZAny(), nullable, nil
+	case intern.Node:
+		if nullable[0] {
+			return c.NewEmpty(), nullable[1:], nil
+		}
+		return c.NewNot(c.NewZAny()), nullable[1:], nil
+	case intern.Concat:
+		rest := nullable
+		orPatterns := make([]*intern.Pattern, 0, len(p.Patterns))
+		var err error
+		for i := range p.Patterns {
+			var ret *intern.Pattern
+			ret, rest, err = derivReturn(c, p.Patterns[i], rest)
+			if err != nil {
+				return nil, nil, err
+			}
+			concatPat := c.NewConcat(append([]*intern.Pattern{ret}, p.Patterns[i+1:]...))
+			orPatterns = append(orPatterns, concatPat)
+			if !p.Patterns[i].Nullable() {
+				break
+			}
+		}
+		o, err := c.NewOr(orPatterns)
+		return o, rest, err
+	case intern.Or:
+		rest := nullable
+		orPatterns := make([]*intern.Pattern, len(p.Patterns))
+		var err error
+		for i := range p.Patterns {
+			orPatterns[i], rest, err = derivReturn(c, p.Patterns[i], rest)
+			if err != nil {
+				return nil, nil, err
+			}
+		}
+		o, err := c.NewOr(orPatterns)
+		return o, rest, err
+	case intern.And:
+		rest := nullable
+		andPatterns := make([]*intern.Pattern, len(p.Patterns))
+		var err error
+		for i := range p.Patterns {
+			andPatterns[i], rest, err = derivReturn(c, p.Patterns[i], rest)
+			if err != nil {
+				return nil, nil, err
+			}
+		}
+		a, err := c.NewAnd(andPatterns)
+		return a, rest, err
+	case intern.Interleave:
+		rest := nullable
+		orPatterns := make([]*intern.Pattern, len(p.Patterns))
+		var err error
+		for i := range p.Patterns {
+			interleaves := make([]*intern.Pattern, len(p.Patterns))
+			copy(interleaves, p.Patterns)
+			interleaves[i], rest, err = derivReturn(c, p.Patterns[i], rest)
+			if err != nil {
+				return nil, nil, err
+			}
+			orPatterns[i] = c.NewInterleave(interleaves)
+		}
+		o, err := c.NewOr(orPatterns)
+		return o, rest, err
+	case intern.ZeroOrMore:
+		pp, rest, err := derivReturn(c, p.Patterns[0], nullable)
+		return c.NewConcat([]*intern.Pattern{pp, p}), rest, err
+	case intern.Reference:
+		return derivReturn(c, c.Deref(p.Ref), nullable)
+	case intern.Not:
+		pp, rest, err := derivReturn(c, p.Patterns[0], nullable)
+		return c.NewNot(pp), rest, err
+	case intern.Contains:
+		orPatterns := make([]*intern.Pattern, 0, 3)
+		orPatterns = append(orPatterns, p)
+		ret, rest, err := derivReturn(c, p.Patterns[0], nullable)
+		if err != nil {
+			return nil, nil, err
+		}
+		orPatterns = append(orPatterns, c.NewConcat([]*intern.Pattern{ret, c.NewZAny()}))
+		if p.Patterns[0].Nullable() {
+			orPatterns = append(orPatterns, c.NewZAny())
+		}
+		o, err := c.NewOr(orPatterns)
+		return o, rest, err
+	case intern.Optional:
+		return derivReturn(c, p.Patterns[0], nullable)
+	}
+	panic(fmt.Sprintf("unknown pattern typ %d", p.Type))
 }
