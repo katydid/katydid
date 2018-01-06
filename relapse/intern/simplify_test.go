@@ -25,8 +25,15 @@ import (
 
 func TestSimplify1(t *testing.T) {
 	c := NewConstructor()
-	p := c.NewConcat([]*Pattern{c.NewNot(c.NewZAny()), c.NewZAny()})
-	if !p.Equal(c.NewNot(c.NewZAny())) {
+	n, err := c.NewNot(c.NewZAny())
+	if err != nil {
+		t.Fatal(err)
+	}
+	p, err := c.NewConcat([]*Pattern{n, c.NewZAny()})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !p.Equal(c.NewNotZAny()) {
 		t.Fatalf("Expected EmptySet, but got %v", p)
 	}
 }
@@ -58,7 +65,7 @@ func TestSimplify2(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if p.Equal(c.NewNot(c.NewZAny())) {
+	if p.Equal(c.NewNotZAny()) {
 		t.Fatalf("Did not expected EmptySet")
 	}
 }

@@ -26,7 +26,6 @@ type Bits struct {
 }
 
 func NewBits(size int) Bits {
-	fmt.Printf("newbits: %d\n", size)
 	if size < 64 {
 		return Bits{size: size}
 	}

@@ -18,8 +18,6 @@
 package mem
 
 import (
-	"fmt"
-
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/funcs"
@@ -51,18 +49,16 @@ func new(g *ast.Grammar, record bool) (*Mem, error) {
 	m := &Mem{
 		construct: c,
 
-		patterns:  intern.NewPatterns(),
+		states:    intern.NewSetOfPatterns(),
 		zis:       sets.NewInts(),
 		stackElms: sets.NewPairs(),
 		nullables: sets.NewBitsSet(),
 
 		calls:           []*ifExprs{},
 		returns:         []map[int]int{},
-		escapables:      []bool{},
 		stateToNullable: []int{},
-		accept:          []bool{},
 	}
-	start := m.patterns.Add([]*intern.Pattern{main})
+	start := m.states.Add([]*intern.Pattern{main})
 
 	m.start = start
 	return m, nil
@@ -77,7 +73,7 @@ func (mem *Mem) Validate(p parser.Interface) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	return mem.getAccept(final), nil
+	return mem.states.Get(final).Accept, nil
 }
 
 func (mem *Mem) SetContext(context *funcs.Context) {
@@ -88,7 +84,7 @@ func (mem *Mem) SetContext(context *funcs.Context) {
 type Mem struct {
 	construct intern.Construct
 
-	patterns  *intern.Patterns
+	states    *intern.SetOfPatterns
 	zis       sets.Ints
 	stackElms sets.Pairs
 	nullables sets.BitsSet
@@ -96,42 +92,12 @@ type Mem struct {
 	start           int
 	calls           []*ifExprs
 	returns         []map[int]int
-	escapables      []bool
 	stateToNullable []int
-	accept          []bool
-}
-
-func (this *Mem) calcEscapables(upto int) {
-	for i := len(this.escapables); i <= upto; i++ {
-		patterns := this.patterns.Get(i)
-		this.escapables = append(this.escapables, intern.Escapable(patterns))
-	}
-}
-
-func (this *Mem) escapable(patterns int) bool {
-	this.calcEscapables(patterns)
-	return this.escapables[patterns]
-}
-
-func (this *Mem) calcAccepts(upto int) {
-	for i := len(this.accept); i <= upto; i++ {
-		patterns := this.patterns.Get(i)
-		if len(patterns) != 1 {
-			this.accept = append(this.accept, false)
-		} else {
-			this.accept = append(this.accept, patterns[0].Nullable())
-		}
-	}
-}
-
-func (this *Mem) getAccept(patterns int) bool {
-	this.calcAccepts(patterns)
-	return this.accept[patterns]
 }
 
 func (this *Mem) calcCallTrees(upto int) error {
 	for i := len(this.calls); i <= upto; i++ {
-		listOfIfExpr := derivCalls(this.construct, this.patterns.Get(i))
+		listOfIfExpr := derivCalls(this.construct, this.states.Get(i).Patterns)
 		ifs := newIfExprs(i, listOfIfExpr)
 		this.calls = append(this.calls, ifs)
 	}
@@ -145,18 +111,9 @@ func (this *Mem) getCallTree(patterns int) (*ifExprs, error) {
 	return this.calls[patterns], nil
 }
 
-func nullables(patterns []*intern.Pattern) sets.Bits {
-	nulls := sets.NewBits(len(patterns))
-	for i, p := range patterns {
-		nulls.Set(i, p.Nullable())
-	}
-	return nulls
-}
-
 func (this *Mem) calcNullables(upto int) {
 	for i := len(this.stateToNullable); i <= upto; i++ {
-		childPatterns := this.patterns.Get(i)
-		nullable := nullables(childPatterns)
+		nullable := this.states.Get(i).Nullables
 		nullIndex := this.nullables.Add(nullable)
 		this.stateToNullable = append(this.stateToNullable, nullIndex)
 	}
@@ -179,16 +136,14 @@ func (this *Mem) getReturn(stackIndex int, nullIndex int) (int, error) {
 	stackElm := this.stackElms[stackIndex]
 	zullable := this.nullables[nullIndex]
 	childrenZipper := stackElm.Second
-	fmt.Printf("zullable = %v\n", zullable)
-	fmt.Printf("this.zis[childZipper] = %v\n", this.zis[childrenZipper])
 	nullable := sets.UnzipBits(zullable, this.zis[childrenZipper])
 	parentPatterns := stackElm.First
-	currentPatterns := this.patterns.Get(parentPatterns)
+	currentPatterns := this.states.Get(parentPatterns).Patterns
 	retPatterns, err := derivReturns(this.construct, currentPatterns, nullable)
 	if err != nil {
 		return 0, err
 	}
-	res := this.patterns.Add(retPatterns)
+	res := this.states.Add(retPatterns)
 	this.returns[stackIndex][nullIndex] = res
 	return res, nil
 }

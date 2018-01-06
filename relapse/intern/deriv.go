@@ -43,7 +43,7 @@ func Interpret(g *ast.Grammar, record bool, parser parser.Interface) (bool, erro
 	return finals[0].nullable, nil
 }
 
-func Escapable(patterns []*Pattern) bool {
+func escapable(patterns []*Pattern) bool {
 	for _, p := range patterns {
 		if isZAny(p) {
 			continue
@@ -59,7 +59,7 @@ func Escapable(patterns []*Pattern) bool {
 func deriv(c Construct, patterns []*Pattern, tree parser.Interface) ([]*Pattern, error) {
 	var resPatterns []*Pattern = patterns
 	for {
-		if !Escapable(resPatterns) {
+		if !escapable(resPatterns) {
 			return resPatterns, nil
 		}
 		if err := tree.Next(); err != nil {
@@ -123,7 +123,7 @@ func derivCall(c Construct, p *Pattern, label parser.Value) ([]*Pattern, error) 
 		if eval {
 			return []*Pattern{p.Patterns[0]}, nil
 		}
-		return []*Pattern{notzany}, nil
+		return []*Pattern{c.NewNotZAny()}, nil
 	case Concat:
 		res := []*Pattern{}
 		for i := range p.Patterns {
@@ -185,14 +185,14 @@ func derivReturns(c Construct, originals []*Pattern, evaluated []*Pattern) ([]*P
 func derivReturn(c Construct, p *Pattern, patterns []*Pattern) (*Pattern, []*Pattern, error) {
 	switch p.Type {
 	case Empty:
-		return c.NewNot(c.NewZAny()), patterns, nil
+		return c.NewNotZAny(), patterns, nil
 	case ZAny:
 		return c.NewZAny(), patterns, nil
 	case Node:
 		if patterns[0].nullable {
 			return c.NewEmpty(), patterns[1:], nil
 		}
-		return c.NewNot(c.NewZAny()), patterns[1:], nil
+		return c.NewNotZAny(), patterns[1:], nil
 	case Concat:
 		rest := patterns
 		orPatterns := make([]*Pattern, 0, len(p.Patterns))
@@ -203,7 +203,10 @@ func derivReturn(c Construct, p *Pattern, patterns []*Pattern) (*Pattern, []*Pat
 			if err != nil {
 				return nil, nil, err
 			}
-			concatPat := c.NewConcat(append([]*Pattern{ret}, p.Patterns[i+1:]...))
+			concatPat, err := c.NewConcat(append([]*Pattern{ret}, p.Patterns[i+1:]...))
+			if err != nil {
+				return nil, nil, err
+			}
 			orPatterns = append(orPatterns, concatPat)
 			if !p.Patterns[i].nullable {
 				break
@@ -246,18 +249,29 @@ func derivReturn(c Construct, p *Pattern, patterns []*Pattern) (*Pattern, []*Pat
 			if err != nil {
 				return nil, nil, err
 			}
-			orPatterns[i] = c.NewInterleave(interleaves)
+			orPatterns[i], err = c.NewInterleave(interleaves)
+			if err != nil {
+				return nil, nil, err
+			}
 		}
 		o, err := c.NewOr(orPatterns)
 		return o, rest, err
 	case ZeroOrMore:
 		pp, rest, err := derivReturn(c, p.Patterns[0], patterns)
-		return c.NewConcat([]*Pattern{pp, p}), rest, err
+		if err != nil {
+			return nil, nil, err
+		}
+		ppp, err := c.NewConcat([]*Pattern{pp, p})
+		return ppp, rest, err
 	case Reference:
 		return derivReturn(c, c.Deref(p.Ref), patterns)
 	case Not:
 		pp, rest, err := derivReturn(c, p.Patterns[0], patterns)
-		return c.NewNot(pp), rest, err
+		if err != nil {
+			return nil, nil, err
+		}
+		ppp, err := c.NewNot(pp)
+		return ppp, rest, err
 	case Contains:
 		orPatterns := make([]*Pattern, 0, 3)
 		orPatterns = append(orPatterns, p)
@@ -265,9 +279,13 @@ func derivReturn(c Construct, p *Pattern, patterns []*Pattern) (*Pattern, []*Pat
 		if err != nil {
 			return nil, nil, err
 		}
-		orPatterns = append(orPatterns, c.NewConcat([]*Pattern{ret, zany}))
+		cp, err := c.NewConcat([]*Pattern{ret, c.NewZAny()})
+		if err != nil {
+			return nil, nil, err
+		}
+		orPatterns = append(orPatterns, cp)
 		if p.Patterns[0].nullable {
-			orPatterns = append(orPatterns, zany)
+			orPatterns = append(orPatterns, c.NewZAny())
 		}
 		o, err := c.NewOr(orPatterns)
 		return o, rest, err

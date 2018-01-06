@@ -24,7 +24,7 @@ import (
 
 func deriv(mem *Mem, patterns int, tree parser.Interface) (int, error) {
 	for {
-		if !mem.escapable(patterns) {
+		if !mem.states.Get(patterns).Escapable {
 			return patterns, nil
 		}
 		if err := tree.Next(); err != nil {
@@ -75,7 +75,7 @@ func derivCall(c intern.Construct, p *intern.Pattern) []*ifExpr {
 	case intern.ZAny:
 		return []*ifExpr{}
 	case intern.Node:
-		return []*ifExpr{{p.Func, p.Patterns[0], c.NewNot(c.NewZAny())}}
+		return []*ifExpr{{p.Func, p.Patterns[0], c.NewNotZAny()}}
 	case intern.Concat:
 		res := []*ifExpr{}
 		for i := range p.Patterns {
@@ -131,14 +131,14 @@ func derivReturns(c intern.Construct, originals []*intern.Pattern, nullable []bo
 func derivReturn(c intern.Construct, p *intern.Pattern, nullable []bool) (*intern.Pattern, []bool, error) {
 	switch p.Type {
 	case intern.Empty:
-		return c.NewNot(c.NewZAny()), nullable, nil
+		return c.NewNotZAny(), nullable, nil
 	case intern.ZAny:
 		return c.NewZAny(), nullable, nil
 	case intern.Node:
 		if nullable[0] {
 			return c.NewEmpty(), nullable[1:], nil
 		}
-		return c.NewNot(c.NewZAny()), nullable[1:], nil
+		return c.NewNotZAny(), nullable[1:], nil
 	case intern.Concat:
 		rest := nullable
 		orPatterns := make([]*intern.Pattern, 0, len(p.Patterns))
@@ -149,7 +149,10 @@ func derivReturn(c intern.Construct, p *intern.Pattern, nullable []bool) (*inter
 			if err != nil {
 				return nil, nil, err
 			}
-			concatPat := c.NewConcat(append([]*intern.Pattern{ret}, p.Patterns[i+1:]...))
+			concatPat, err := c.NewConcat(append([]*intern.Pattern{ret}, p.Patterns[i+1:]...))
+			if err != nil {
+				return nil, nil, err
+			}
 			orPatterns = append(orPatterns, concatPat)
 			if !p.Patterns[i].Nullable() {
 				break
@@ -192,18 +195,29 @@ func derivReturn(c intern.Construct, p *intern.Pattern, nullable []bool) (*inter
 			if err != nil {
 				return nil, nil, err
 			}
-			orPatterns[i] = c.NewInterleave(interleaves)
+			orPatterns[i], err = c.NewInterleave(interleaves)
+			if err != nil {
+				return nil, nil, err
+			}
 		}
 		o, err := c.NewOr(orPatterns)
 		return o, rest, err
 	case intern.ZeroOrMore:
 		pp, rest, err := derivReturn(c, p.Patterns[0], nullable)
-		return c.NewConcat([]*intern.Pattern{pp, p}), rest, err
+		if err != nil {
+			return nil, nil, err
+		}
+		ppp, err := c.NewConcat([]*intern.Pattern{pp, p})
+		return ppp, rest, err
 	case intern.Reference:
 		return derivReturn(c, c.Deref(p.Ref), nullable)
 	case intern.Not:
 		pp, rest, err := derivReturn(c, p.Patterns[0], nullable)
-		return c.NewNot(pp), rest, err
+		if err != nil {
+			return nil, nil, err
+		}
+		ppp, err := c.NewNot(pp)
+		return ppp, rest, err
 	case intern.Contains:
 		orPatterns := make([]*intern.Pattern, 0, 3)
 		orPatterns = append(orPatterns, p)
@@ -211,7 +225,11 @@ func derivReturn(c intern.Construct, p *intern.Pattern, nullable []bool) (*inter
 		if err != nil {
 			return nil, nil, err
 		}
-		orPatterns = append(orPatterns, c.NewConcat([]*intern.Pattern{ret, c.NewZAny()}))
+		cp, err := c.NewConcat([]*intern.Pattern{ret, c.NewZAny()})
+		if err != nil {
+			return nil, nil, err
+		}
+		orPatterns = append(orPatterns, cp)
 		if p.Patterns[0].Nullable() {
 			orPatterns = append(orPatterns, c.NewZAny())
 		}

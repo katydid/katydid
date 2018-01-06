@@ -14,17 +14,65 @@
 
 package intern
 
-//Patterns represents an indexed list of list of Patterns.
+import (
+	"github.com/katydid/katydid/relapse/sets"
+)
+
+//SetOfPatterns represents an indexed list of list of Patterns.
 //It reverse maps a list of Patterns into a single int.
-type Patterns struct {
-	List   [][]*Pattern
+type SetOfPatterns struct {
+	List   []*Patterns
 	Hashes map[uint64][]int
 }
 
-func NewPatterns() *Patterns {
-	return &Patterns{
-		List:   [][]*Pattern{},
+func NewSetOfPatterns() *SetOfPatterns {
+	return &SetOfPatterns{
+		List:   []*Patterns{},
 		Hashes: make(map[uint64][]int),
+	}
+}
+
+func (this *SetOfPatterns) Get(i int) *Patterns {
+	return this.List[i]
+}
+
+func (this *SetOfPatterns) Index(patterns []*Pattern) int {
+	h := hashes(patterns)
+	pss := this.Hashes[h]
+	for i, index := range pss {
+		ps := this.List[index]
+		if deriveEquals(ps.Patterns, patterns) {
+			return i
+		}
+	}
+	return -1
+}
+
+func (this *SetOfPatterns) Add(ps []*Pattern) int {
+	index := this.Index(ps)
+	if index != -1 {
+		return index
+	}
+	h := hashes(ps)
+	index = len(this.List)
+	this.Hashes[h] = append(this.Hashes[h], index)
+	this.List = append(this.List, NewPatterns(ps))
+	return index
+}
+
+type Patterns struct {
+	Patterns  []*Pattern
+	Escapable bool
+	Nullables sets.Bits
+	Accept    bool
+}
+
+func NewPatterns(ps []*Pattern) *Patterns {
+	return &Patterns{
+		Patterns:  ps,
+		Escapable: escapable(ps),
+		Nullables: nullables(ps),
+		Accept:    len(ps) == 1 && ps[0].nullable,
 	}
 }
 
@@ -36,30 +84,10 @@ func hashes(patterns []*Pattern) uint64 {
 	return h
 }
 
-func (this *Patterns) Get(i int) []*Pattern {
-	return this.List[i]
-}
-
-func (this *Patterns) Index(patterns []*Pattern) int {
-	h := hashes(patterns)
-	pss := this.Hashes[h]
-	for i, index := range pss {
-		ps := this.List[index]
-		if deriveEquals(ps, patterns) {
-			return i
-		}
+func nullables(patterns []*Pattern) sets.Bits {
+	nulls := sets.NewBits(len(patterns))
+	for i, p := range patterns {
+		nulls.Set(i, p.Nullable())
 	}
-	return -1
-}
-
-func (this *Patterns) Add(patterns []*Pattern) int {
-	index := this.Index(patterns)
-	if index != -1 {
-		return index
-	}
-	h := hashes(patterns)
-	index = len(this.List)
-	this.List = append(this.List, patterns)
-	this.Hashes[h] = append(this.Hashes[h], index)
-	return index
+	return nulls
 }

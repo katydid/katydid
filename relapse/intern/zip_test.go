@@ -33,7 +33,7 @@ func TestZip0(t *testing.T) {
 }
 
 func TestZipZAny(t *testing.T) {
-	want := []*Pattern{zany, zany}
+	want := []*Pattern{newZAny(), newZAny()}
 	zips, zipi := Zip(want)
 	if len(zips) != 0 {
 		t.Errorf("wanted zero in my zipped set, but got %d", len(zips))
@@ -45,7 +45,7 @@ func TestZipZAny(t *testing.T) {
 }
 
 func TestZipNotZAny(t *testing.T) {
-	want := []*Pattern{notzany, notzany, notzany}
+	want := []*Pattern{newNotZAny(), newNotZAny(), newNotZAny()}
 	zips, zipi := Zip(want)
 	if len(zips) != 0 {
 		t.Errorf("wanted zero in my zipped set, but got %d", len(zips))
@@ -57,7 +57,7 @@ func TestZipNotZAny(t *testing.T) {
 }
 
 func TestZipNotAndZAny(t *testing.T) {
-	want := []*Pattern{zany, notzany, zany, zany, zany, zany, notzany, notzany, notzany}
+	want := []*Pattern{newZAny(), newNotZAny(), newZAny(), newZAny(), newZAny(), newZAny(), newNotZAny(), newNotZAny(), newNotZAny()}
 	zips, zipi := Zip(want)
 	if len(zips) != 0 {
 		t.Errorf("wanted zero in my zipped set, but got %d", len(zips))
@@ -121,7 +121,7 @@ func TestZipABNotAndZAny(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	want := []*Pattern{ap, bp, ap, zany, bp, zany, bp, bp, notzany}
+	want := []*Pattern{ap, bp, ap, newZAny(), bp, newZAny(), bp, bp, newNotZAny()}
 	zips, zipi := Zip(want)
 	if len(zips) != 2 {
 		t.Errorf("wanted two in my zipped set, but got %d", len(zips))

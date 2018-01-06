@@ -16,8 +16,8 @@ package intern
 
 var (
 	zipIgnoreSet = []*Pattern{
-		zany,
-		notzany,
+		newZAny(),
+		newNotZAny(),
 	}
 	zignoreb = []bool{
 		true,

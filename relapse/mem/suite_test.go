@@ -15,12 +15,13 @@
 package mem_test
 
 import (
+	"testing"
+
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/interp"
 	"github.com/katydid/katydid/relapse/mem"
 	"github.com/katydid/katydid/relapse/testsuite"
-	"testing"
 )
 
 func TestSuite(t *testing.T) {
@@ -32,6 +33,12 @@ func TestSuite(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, testCase := range tests {
+		// if testCase.Name == "DeepLeft811Json" ||
+		// 	testCase.Name == "OneLeftAndTwoRightHashes811Json" ||
+		// 	testCase.Name == "TwoHashes811Json" ||
+		// 	testCase.Name == "TwoLeftAndOneRightHashes811Json" {
+		// 	continue
+		// }
 		t.Run(testCase.Name, func(t *testing.T) {
 			test(t, testCase.Grammar, testCase.Parser, testCase.Expected, "", testCase.Record)
 		})

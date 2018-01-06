@@ -19,7 +19,6 @@ import (
 	"strings"
 
 	"github.com/katydid/katydid/parser"
-	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/compose"
 	"github.com/katydid/katydid/relapse/funcs"
 	"github.com/katydid/katydid/relapse/intern"
@@ -37,12 +36,14 @@ func newIfExprs(parentPatterns int, ifs []*ifExpr) *ifExprs {
 }
 
 type ifNode struct {
-	prev               funcs.Bool
-	f                  funcs.Bool
-	ifs                []*ifExpr
-	cond               compose.Bool
-	thn                *ifNode
-	els                *ifNode
+	prev funcs.Bool
+	f    funcs.Bool
+	ifs  []*ifExpr
+
+	cond compose.Bool
+	thn  *ifNode
+	els  *ifNode
+
 	ps                 []*intern.Pattern
 	ret                bool
 	zippedPatternIndex int
@@ -130,29 +131,15 @@ func (this *Mem) calcNode(node *ifNode, parentPatterns int, label parser.Value) 
 	return this.calcNode(node.els, parentPatterns, label)
 }
 
-func newasts(ps []*intern.Pattern) []*ast.Pattern {
-	pps := make([]*ast.Pattern, len(ps))
-	for i := range pps {
-		pps[i] = ps[i].NewAst()
-	}
-	return pps
-}
-
 func (this *Mem) zipStackAndPatterns(parentPatterns int, ps []*intern.Pattern) (int, int) {
-	fmt.Printf("ps = %v\n", ps)
 	zippedPatterns, zipper := intern.Zip(ps)
-	fmt.Printf("zipped %v, %v\n", zippedPatterns, zipper)
-	astPatterns := newasts(ps)
-	astzippedPatterns, astzipper := sets.Zip(astPatterns)
-	fmt.Printf("astzipped %v, %v\n", astzippedPatterns, astzipper)
 	zipperIndex := this.zis.Add(zipper)
 	stackElement := sets.Pair{
 		First:  parentPatterns,
 		Second: zipperIndex,
 	}
-	fmt.Printf("stackElement: %v\n", stackElement)
 	stackIndex := this.stackElms.Add(stackElement)
-	zippedPatternIndex := this.patterns.Add(zippedPatterns)
+	zippedPatternIndex := this.states.Add(zippedPatterns)
 	return zippedPatternIndex, stackIndex
 }
 
