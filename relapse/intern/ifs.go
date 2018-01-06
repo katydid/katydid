@@ -14,38 +14,29 @@
 
 package intern
 
-import "github.com/katydid/katydid/relapse/sets"
+import (
+	"github.com/katydid/katydid/parser"
+	"github.com/katydid/katydid/relapse/compose"
+	"github.com/katydid/katydid/relapse/funcs"
+)
 
-func anyNullable(ps []*Pattern) bool {
-	for _, any := range ps {
-		if any.nullable {
-			return true
-		}
-	}
-	return false
+type IfExpr struct {
+	Cond funcs.Bool
+	Thn  *Pattern
+	Els  *Pattern
 }
 
-func allNullable(ps []*Pattern) bool {
-	for _, all := range ps {
-		if !all.nullable {
-			return false
-		}
+func (this *IfExpr) eval(label parser.Value) (*Pattern, error) {
+	f, err := compose.NewBoolFunc(this.Cond)
+	if err != nil {
+		return nil, err
 	}
-	return true
-}
-
-func newNullableSet(patterns []*Pattern) sets.Bits {
-	nulls := sets.NewBits(len(patterns))
-	for i, p := range patterns {
-		nulls.Set(i, p.Nullable())
+	cond, err := f.Eval(label)
+	if err != nil {
+		return nil, err
 	}
-	return nulls
-}
-
-func nullables(ps []*Pattern) []bool {
-	nulls := make([]bool, len(ps))
-	for i, p := range ps {
-		nulls[i] = p.nullable
+	if cond {
+		return this.Thn, nil
 	}
-	return nulls
+	return this.Els, nil
 }

@@ -20,7 +20,6 @@ import (
 
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/ast"
-	"github.com/katydid/katydid/relapse/compose"
 )
 
 //Interpret interprets the grammar given the parser and returns whether the parser is valid given the grammar.
@@ -69,10 +68,16 @@ func deriv(c Construct, patterns []*Pattern, tree parser.Interface) ([]*Pattern,
 				return nil, err
 			}
 		}
-		childPatterns, err := derivCalls(c, resPatterns, tree)
-		if err != nil {
-			return nil, err
+		ifs := DeriveCalls(c, resPatterns)
+		childPatterns := make([]*Pattern, len(ifs))
+		for i, ifExpr := range ifs {
+			c, err := ifExpr.eval(tree)
+			if err != nil {
+				return nil, err
+			}
+			childPatterns[i] = c
 		}
+		var err error
 		if tree.IsLeaf() {
 			//do nothing
 		} else {
@@ -85,7 +90,8 @@ func deriv(c Construct, patterns []*Pattern, tree parser.Interface) ([]*Pattern,
 			childPatterns = Unzip(zchild, zi)
 			tree.Up()
 		}
-		resPatterns, err = derivReturns(c, resPatterns, childPatterns)
+		nulls := nullables(childPatterns)
+		resPatterns, err = DeriveReturns(c, resPatterns, nulls)
 		if err != nil {
 			return nil, err
 		}
@@ -93,83 +99,63 @@ func deriv(c Construct, patterns []*Pattern, tree parser.Interface) ([]*Pattern,
 	return resPatterns, nil
 }
 
-func derivCalls(c Construct, patterns []*Pattern, label parser.Value) ([]*Pattern, error) {
-	res := []*Pattern{}
+func DeriveCalls(construct Construct, patterns []*Pattern) []*IfExpr {
+	res := []*IfExpr{}
 	for _, pattern := range patterns {
-		ps, err := derivCall(c, pattern, label)
-		if err != nil {
-			return nil, err
-		}
-		res = append(res, ps...)
+		cs := derivCall(construct, pattern)
+		res = append(res, cs...)
 	}
-	return res, nil
+	return res
 }
 
-func derivCall(c Construct, p *Pattern, label parser.Value) ([]*Pattern, error) {
+func derivCall(c Construct, p *Pattern) []*IfExpr {
 	switch p.Type {
 	case Empty:
-		return []*Pattern{}, nil
+		return []*IfExpr{}
 	case ZAny:
-		return []*Pattern{}, nil
+		return []*IfExpr{}
 	case Node:
-		f, err := compose.NewBoolFunc(p.Func)
-		if err != nil {
-			return nil, err
-		}
-		eval, err := f.Eval(label)
-		if err != nil {
-			return nil, err
-		}
-		if eval {
-			return []*Pattern{p.Patterns[0]}, nil
-		}
-		return []*Pattern{c.NewNotZAny()}, nil
+		return []*IfExpr{{p.Func, p.Patterns[0], c.NewNotZAny()}}
 	case Concat:
-		res := []*Pattern{}
+		res := []*IfExpr{}
 		for i := range p.Patterns {
-			ps, err := derivCall(c, p.Patterns[i], label)
-			if err != nil {
-				return nil, err
-			}
+			ps := derivCall(c, p.Patterns[i])
 			res = append(res, ps...)
-			if !p.Patterns[i].nullable {
+			if !p.Patterns[i].Nullable() {
 				break
 			}
 		}
-		return res, nil
+		return res
 	case Or:
-		return derivCallAll(c, p.Patterns, label)
+		return derivCallAll(c, p.Patterns)
 	case And:
-		return derivCallAll(c, p.Patterns, label)
+		return derivCallAll(c, p.Patterns)
 	case Interleave:
-		return derivCallAll(c, p.Patterns, label)
+		return derivCallAll(c, p.Patterns)
 	case ZeroOrMore:
-		return derivCall(c, p.Patterns[0], label)
+		return derivCall(c, p.Patterns[0])
 	case Reference:
-		return derivCall(c, c.Deref(p.Ref), label)
+		return derivCall(c, c.Deref(p.Ref))
 	case Not:
-		return derivCall(c, p.Patterns[0], label)
+		return derivCall(c, p.Patterns[0])
 	case Contains:
-		return derivCall(c, p.Patterns[0], label)
+		return derivCall(c, p.Patterns[0])
 	case Optional:
-		return derivCall(c, p.Patterns[0], label)
+		return derivCall(c, p.Patterns[0])
 	}
 	panic(fmt.Sprintf("unknown pattern typ %d", p.Type))
 }
 
-func derivCallAll(c Construct, ps []*Pattern, label parser.Value) ([]*Pattern, error) {
-	res := []*Pattern{}
+func derivCallAll(c Construct, ps []*Pattern) []*IfExpr {
+	res := []*IfExpr{}
 	for i := range ps {
-		ps, err := derivCall(c, ps[i], label)
-		if err != nil {
-			return nil, err
-		}
-		res = append(res, ps...)
+		pss := derivCall(c, ps[i])
+		res = append(res, pss...)
 	}
-	return res, nil
+	return res
 }
 
-func derivReturns(c Construct, originals []*Pattern, evaluated []*Pattern) ([]*Pattern, error) {
+func DeriveReturns(c Construct, originals []*Pattern, evaluated []bool) ([]*Pattern, error) {
 	res := make([]*Pattern, len(originals))
 	rest := evaluated
 	var err error
@@ -182,19 +168,19 @@ func derivReturns(c Construct, originals []*Pattern, evaluated []*Pattern) ([]*P
 	return res, nil
 }
 
-func derivReturn(c Construct, p *Pattern, patterns []*Pattern) (*Pattern, []*Pattern, error) {
+func derivReturn(c Construct, p *Pattern, nulls []bool) (*Pattern, []bool, error) {
 	switch p.Type {
 	case Empty:
-		return c.NewNotZAny(), patterns, nil
+		return c.NewNotZAny(), nulls, nil
 	case ZAny:
-		return c.NewZAny(), patterns, nil
+		return c.NewZAny(), nulls, nil
 	case Node:
-		if patterns[0].nullable {
-			return c.NewEmpty(), patterns[1:], nil
+		if nulls[0] {
+			return c.NewEmpty(), nulls[1:], nil
 		}
-		return c.NewNotZAny(), patterns[1:], nil
+		return c.NewNotZAny(), nulls[1:], nil
 	case Concat:
-		rest := patterns
+		rest := nulls
 		orPatterns := make([]*Pattern, 0, len(p.Patterns))
 		var err error
 		for i := range p.Patterns {
@@ -215,7 +201,7 @@ func derivReturn(c Construct, p *Pattern, patterns []*Pattern) (*Pattern, []*Pat
 		o, err := c.NewOr(orPatterns)
 		return o, rest, err
 	case Or:
-		rest := patterns
+		rest := nulls
 		orPatterns := make([]*Pattern, len(p.Patterns))
 		var err error
 		for i := range p.Patterns {
@@ -227,7 +213,7 @@ func derivReturn(c Construct, p *Pattern, patterns []*Pattern) (*Pattern, []*Pat
 		o, err := c.NewOr(orPatterns)
 		return o, rest, err
 	case And:
-		rest := patterns
+		rest := nulls
 		andPatterns := make([]*Pattern, len(p.Patterns))
 		var err error
 		for i := range p.Patterns {
@@ -239,7 +225,7 @@ func derivReturn(c Construct, p *Pattern, patterns []*Pattern) (*Pattern, []*Pat
 		a, err := c.NewAnd(andPatterns)
 		return a, rest, err
 	case Interleave:
-		rest := patterns
+		rest := nulls
 		orPatterns := make([]*Pattern, len(p.Patterns))
 		var err error
 		for i := range p.Patterns {
@@ -257,16 +243,16 @@ func derivReturn(c Construct, p *Pattern, patterns []*Pattern) (*Pattern, []*Pat
 		o, err := c.NewOr(orPatterns)
 		return o, rest, err
 	case ZeroOrMore:
-		pp, rest, err := derivReturn(c, p.Patterns[0], patterns)
+		pp, rest, err := derivReturn(c, p.Patterns[0], nulls)
 		if err != nil {
 			return nil, nil, err
 		}
 		ppp, err := c.NewConcat([]*Pattern{pp, p})
 		return ppp, rest, err
 	case Reference:
-		return derivReturn(c, c.Deref(p.Ref), patterns)
+		return derivReturn(c, c.Deref(p.Ref), nulls)
 	case Not:
-		pp, rest, err := derivReturn(c, p.Patterns[0], patterns)
+		pp, rest, err := derivReturn(c, p.Patterns[0], nulls)
 		if err != nil {
 			return nil, nil, err
 		}
@@ -275,7 +261,7 @@ func derivReturn(c Construct, p *Pattern, patterns []*Pattern) (*Pattern, []*Pat
 	case Contains:
 		orPatterns := make([]*Pattern, 0, 3)
 		orPatterns = append(orPatterns, p)
-		ret, rest, err := derivReturn(c, p.Patterns[0], patterns)
+		ret, rest, err := derivReturn(c, p.Patterns[0], nulls)
 		if err != nil {
 			return nil, nil, err
 		}
@@ -290,7 +276,7 @@ func derivReturn(c Construct, p *Pattern, patterns []*Pattern) (*Pattern, []*Pat
 		o, err := c.NewOr(orPatterns)
 		return o, rest, err
 	case Optional:
-		return derivReturn(c, p.Patterns[0], patterns)
+		return derivReturn(c, p.Patterns[0], nulls)
 	}
 	panic(fmt.Sprintf("unknown pattern typ %d", p.Type))
 }

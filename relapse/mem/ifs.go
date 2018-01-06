@@ -27,18 +27,18 @@ import (
 
 type ifExprs struct {
 	parentPatterns int
-	ifs            []*ifExpr
+	ifs            []*intern.IfExpr
 	node           *ifNode
 }
 
-func newIfExprs(parentPatterns int, ifs []*ifExpr) *ifExprs {
+func newIfExprs(parentPatterns int, ifs []*intern.IfExpr) *ifExprs {
 	return &ifExprs{parentPatterns, ifs, nil}
 }
 
 type ifNode struct {
 	prev funcs.Bool
 	f    funcs.Bool
-	ifs  []*ifExpr
+	ifs  []*intern.IfExpr
 
 	cond compose.Bool
 	thn  *ifNode
@@ -76,7 +76,7 @@ func (this *Mem) calcNode(node *ifNode, parentPatterns int, label parser.Value) 
 		return node.zippedPatternIndex, node.stackIndex, nil
 	}
 	if node.f == nil {
-		node.f = node.ifs[0].cond
+		node.f = node.ifs[0].Cond
 		node.f = funcs.Simplify(node.f)
 		if funcs.Equal(node.prev, node.f) {
 			node.f = funcs.BoolConst(true)
@@ -88,13 +88,13 @@ func (this *Mem) calcNode(node *ifNode, parentPatterns int, label parser.Value) 
 			node.f = funcs.BoolConst(true)
 		}
 		if funcs.IsTrue(node.f) {
-			node.ps = append(node.ps, node.ifs[0].thn)
+			node.ps = append(node.ps, node.ifs[0].Thn)
 			node.ifs = node.ifs[1:]
 			node.f = nil
 			return this.calcNode(node, parentPatterns, label)
 		}
 		if funcs.IsFalse(node.f) {
-			node.ps = append(node.ps, node.ifs[0].els)
+			node.ps = append(node.ps, node.ifs[0].Els)
 			node.ifs = node.ifs[1:]
 			node.f = nil
 			return this.calcNode(node, parentPatterns, label)
@@ -114,7 +114,7 @@ func (this *Mem) calcNode(node *ifNode, parentPatterns int, label parser.Value) 
 			node.thn = &ifNode{}
 			node.thn.ps = make([]*intern.Pattern, 0, len(node.ps)+1)
 			node.thn.ps = append(node.thn.ps, node.ps...)
-			node.thn.ps = append(node.thn.ps, node.ifs[0].thn)
+			node.thn.ps = append(node.thn.ps, node.ifs[0].Thn)
 			node.thn.prev = funcs.Simplify(funcs.And(node.prev, node.f))
 			node.thn.ifs = node.ifs[1:]
 		}
@@ -124,7 +124,7 @@ func (this *Mem) calcNode(node *ifNode, parentPatterns int, label parser.Value) 
 		node.els = &ifNode{}
 		node.els.ps = make([]*intern.Pattern, 0, len(node.ps)+1)
 		node.els.ps = append(node.els.ps, node.ps...)
-		node.els.ps = append(node.els.ps, node.ifs[0].els)
+		node.els.ps = append(node.els.ps, node.ifs[0].Els)
 		node.els.prev = funcs.Simplify(funcs.And(node.prev, funcs.Not(node.f)))
 		node.els.ifs = node.ifs[1:]
 	}
@@ -148,25 +148,4 @@ func (this *Mem) eval(ifs *ifExprs, label parser.Value) (int, int, error) {
 		ifs.node = &ifNode{prev: funcs.BoolConst(true), ifs: ifs.ifs}
 	}
 	return this.calcNode(ifs.node, ifs.parentPatterns, label)
-}
-
-type ifExpr struct {
-	cond funcs.Bool
-	thn  *intern.Pattern
-	els  *intern.Pattern
-}
-
-func (this *ifExpr) eval(label parser.Value) (*intern.Pattern, error) {
-	f, err := compose.NewBoolFunc(this.cond)
-	if err != nil {
-		return nil, err
-	}
-	cond, err := f.Eval(label)
-	if err != nil {
-		return nil, err
-	}
-	if cond {
-		return this.thn, nil
-	}
-	return this.els, nil
 }

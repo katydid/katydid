@@ -97,7 +97,7 @@ type Mem struct {
 
 func (this *Mem) calcCallTrees(upto int) error {
 	for i := len(this.calls); i <= upto; i++ {
-		listOfIfExpr := derivCalls(this.construct, this.states.Get(i).Patterns)
+		listOfIfExpr := intern.DeriveCalls(this.construct, this.states.Get(i).Patterns)
 		ifs := newIfExprs(i, listOfIfExpr)
 		this.calls = append(this.calls, ifs)
 	}
@@ -139,7 +139,7 @@ func (this *Mem) getReturn(stackIndex int, nullIndex int) (int, error) {
 	nullable := sets.UnzipBits(zullable, this.zis[childrenZipper])
 	parentPatterns := stackElm.First
 	currentPatterns := this.states.Get(parentPatterns).Patterns
-	retPatterns, err := derivReturns(this.construct, currentPatterns, nullable)
+	retPatterns, err := intern.DeriveReturns(this.construct, currentPatterns, nullable)
 	if err != nil {
 		return 0, err
 	}

@@ -71,7 +71,7 @@ func NewPatterns(ps []*Pattern) *Patterns {
 	return &Patterns{
 		Patterns:  ps,
 		Escapable: escapable(ps),
-		Nullables: nullables(ps),
+		Nullables: newNullableSet(ps),
 		Accept:    len(ps) == 1 && ps[0].nullable,
 	}
 }
@@ -82,12 +82,4 @@ func hashes(patterns []*Pattern) uint64 {
 		h = 31*h + pattern.hash
 	}
 	return h
-}
-
-func nullables(patterns []*Pattern) sets.Bits {
-	nulls := sets.NewBits(len(patterns))
-	for i, p := range patterns {
-		nulls.Set(i, p.Nullable())
-	}
-	return nulls
 }
