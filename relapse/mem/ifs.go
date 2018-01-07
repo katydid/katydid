@@ -126,22 +126,11 @@ func (node *ifNode) eval(set *intern.SetOfPatterns, label parser.Value) (int, er
 	return node.els.eval(set, label)
 }
 
-func (this *Mem) calcNode(node *ifNode, label parser.Value) (int, int, error) {
-	state, err := node.eval(this.states, label)
+func (this *Mem) eval(ifs *ifExprs, label parser.Value) (int, int, error) {
+	state, err := ifs.ifNode.eval(this.states, label)
 	if err != nil {
 		return 0, 0, err
 	}
-	zippedPatternIndex, stackIndex := this.zipStackAndPatterns(state)
-	return zippedPatternIndex, stackIndex, nil
-}
-
-func (this *Mem) zipStackAndPatterns(state int) (int, int) {
 	p := this.states.Get(state)
-	zipperIndex := p.IndexOfZippedIndexes
-	zippedPatternIndex := p.IndexOfZippedPatterns
-	return zippedPatternIndex, zipperIndex
-}
-
-func (this *Mem) eval(ifs *ifExprs, label parser.Value) (int, int, error) {
-	return this.calcNode(ifs.ifNode, label)
+	return p.IndexOfZippedPatterns, p.IndexOfZippedIndexes, nil
 }

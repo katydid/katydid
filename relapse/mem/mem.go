@@ -96,29 +96,34 @@ func (this *Mem) getCall(state int) (*ifExprs, error) {
 	return this.calls[state], nil
 }
 
-func (this *Mem) getReturn(current int, zipIndex int, nullIndex int) (int, error) {
-	if len(this.returns) <= current {
-		for i := len(this.returns); i <= current; i++ {
-			this.returns = append(this.returns, []map[int]int{})
+func (this *Mem) getReturn(state int, zipIndex int, nullIndex int) (int, error) {
+	// increase slice sizes up to the state and zipIndex
+	if len(this.returns) <= state {
+		for i := len(this.returns); i <= state; i++ {
+			this.returns = append(this.returns, nil)
 		}
 	}
-	if len(this.returns[current]) <= zipIndex {
-		for i := len(this.returns[current]); i <= zipIndex; i++ {
-			this.returns[current] = append(this.returns[current], make(map[int]int))
+	if len(this.returns[state]) <= zipIndex {
+		for i := len(this.returns[state]); i <= zipIndex; i++ {
+			this.returns[state] = append(this.returns[state], make(map[int]int))
 		}
 	}
 
-	if ret, ok := this.returns[current][zipIndex][nullIndex]; ok {
+	// lookup state entry
+	if ret, ok := this.returns[state][zipIndex][nullIndex]; ok {
 		return ret, nil
 	}
-	zullable := this.states.SetOfBits[nullIndex]
-	nullable := sets.UnzipBits(zullable, this.states.SetOfZipIndexes[zipIndex])
-	currentPatterns := this.states.Get(current).Patterns
-	retPatterns, err := intern.DeriveReturns(this.construct, currentPatterns, nullable)
+
+	// create entry
+	nullable := sets.UnzipBits(this.states.SetOfBits[nullIndex], this.states.SetOfZipIndexes[zipIndex])
+	patterns := this.states.Get(state).Patterns
+
+	retPatterns, err := intern.DeriveReturns(this.construct, patterns, nullable)
 	if err != nil {
 		return 0, err
 	}
+
 	res := this.states.Add(retPatterns)
-	this.returns[current][zipIndex][nullIndex] = res
+	this.returns[state][zipIndex][nullIndex] = res
 	return res, nil
 }
