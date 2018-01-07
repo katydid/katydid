@@ -36,7 +36,7 @@ func eval(ifs *ifExprs, value parser.Value) ([]*intern.Pattern, error) {
 	if err != nil {
 		return nil, err
 	}
-	return set.Get(state).Zipped.Unzip(), nil
+	return set.Get(state).Patterns, nil
 }
 
 func TestIfsOneTrue(t *testing.T) {

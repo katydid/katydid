@@ -50,7 +50,6 @@ func new(g *ast.Grammar, record bool) (*Mem, error) {
 		construct: c,
 
 		states:    intern.NewSetOfPatterns(),
-		zis:       sets.NewInts(),
 		stackElms: sets.NewPairs(),
 
 		calls:   []*ifExprs{},
@@ -83,7 +82,6 @@ type Mem struct {
 	construct intern.Construct
 
 	states    *intern.SetOfPatterns
-	zis       sets.Ints
 	stackElms sets.Pairs
 
 	start   int
@@ -112,7 +110,7 @@ func (this *Mem) getReturn(stackIndex int, nullIndex int) (int, error) {
 	stackElm := this.stackElms[stackIndex]
 	zullable := this.states.SetOfBits[nullIndex]
 	childrenZipper := stackElm.Second
-	nullable := sets.UnzipBits(zullable, this.zis[childrenZipper])
+	nullable := sets.UnzipBits(zullable, this.states.SetOfZipIndexes[childrenZipper])
 	parentPatterns := stackElm.First
 	currentPatterns := this.states.Get(parentPatterns).Patterns
 	retPatterns, err := intern.DeriveReturns(this.construct, currentPatterns, nullable)

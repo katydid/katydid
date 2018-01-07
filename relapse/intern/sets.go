@@ -21,16 +21,18 @@ import (
 //SetOfPatterns represents an indexed list of list of Patterns.
 //It reverse maps a list of Patterns into a single int.
 type SetOfPatterns struct {
-	List      []*Patterns
-	Hashes    map[uint64][]int
-	SetOfBits sets.BitsSet
+	List            []*Patterns
+	Hashes          map[uint64][]int
+	SetOfBits       sets.BitsSet
+	SetOfZipIndexes sets.Ints
 }
 
 func NewSetOfPatterns() *SetOfPatterns {
 	return &SetOfPatterns{
-		List:      []*Patterns{},
-		Hashes:    make(map[uint64][]int),
-		SetOfBits: sets.NewBitsSet(),
+		List:            []*Patterns{},
+		Hashes:          make(map[uint64][]int),
+		SetOfBits:       sets.NewBitsSet(),
+		SetOfZipIndexes: sets.NewInts(),
 	}
 }
 
@@ -67,9 +69,10 @@ func (this *SetOfPatterns) Add(ps []*Pattern) int {
 	patterns.Patterns = ps
 	patterns.Escapable = escapable(ps)
 	patterns.Accept = len(ps) == 1 && ps[0].nullable
-	patterns.Zipped = Zip(ps)
+	zipped := Zip(ps)
 	patterns.NullIndex = this.SetOfBits.Add(nulls)
-	patterns.ZippedIndex = this.Add(patterns.Zipped.Patterns)
+	patterns.IndexOfZippedPatterns = this.Add(zipped.Patterns)
+	patterns.IndexOfZippedIndexes = this.SetOfZipIndexes.Add(zipped.Indexes)
 
 	return index
 }
@@ -82,8 +85,8 @@ type Patterns struct {
 	Accept    bool
 	NullIndex int
 
-	Zipped      *ZippedPatterns
-	ZippedIndex int
+	IndexOfZippedPatterns int
+	IndexOfZippedIndexes  int
 }
 
 func hashes(patterns []*Pattern) uint64 {

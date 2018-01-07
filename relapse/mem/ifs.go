@@ -138,14 +138,13 @@ func (this *Mem) calcNode(node *ifNode, parentPatterns int, label parser.Value) 
 
 func (this *Mem) zipStackAndPatterns(parentPatterns int, state int) (int, int) {
 	p := this.states.Get(state)
-	zipped := p.Zipped
-	zipperIndex := this.zis.Add(zipped.Indexes)
+	zipperIndex := p.IndexOfZippedIndexes
 	stackElement := sets.Pair{
 		First:  parentPatterns,
 		Second: zipperIndex,
 	}
 	stackIndex := this.stackElms.Add(stackElement)
-	zippedPatternIndex := p.ZippedIndex
+	zippedPatternIndex := p.IndexOfZippedPatterns
 	return zippedPatternIndex, stackIndex
 }
 
