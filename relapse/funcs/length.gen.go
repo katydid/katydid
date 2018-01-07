@@ -3,6 +3,7 @@ package funcs
 
 type lenDoubles struct {
 	E Doubles
+	hash uint64
 }
 
 func (this *lenDoubles) Eval() (int64, error) {
@@ -13,17 +14,25 @@ func (this *lenDoubles) Eval() (int64, error) {
 	return int64(len(e)), nil
 }
 
+func (this *lenDoubles) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("length", new(lenDoubles))
+	Register("lenDoubles", "length", LenDoubles)
 }
 
 //LenDoubles returns a function that returns the length of a list of type Doubles
 func LenDoubles(e Doubles) Int {
-	return &lenDoubles{E: e}
+	h := uint64(17)
+	h = 31*h + 7
+	h = 31*h + e.Hash()
+	return &lenDoubles{E: e, hash: h}
 }
 
 type lenInts struct {
 	E Ints
+	hash uint64
 }
 
 func (this *lenInts) Eval() (int64, error) {
@@ -34,17 +43,25 @@ func (this *lenInts) Eval() (int64, error) {
 	return int64(len(e)), nil
 }
 
+func (this *lenInts) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("length", new(lenInts))
+	Register("lenInts", "length", LenInts)
 }
 
 //LenInts returns a function that returns the length of a list of type Ints
 func LenInts(e Ints) Int {
-	return &lenInts{E: e}
+	h := uint64(17)
+	h = 31*h + 7
+	h = 31*h + e.Hash()
+	return &lenInts{E: e, hash: h}
 }
 
 type lenUints struct {
 	E Uints
+	hash uint64
 }
 
 func (this *lenUints) Eval() (int64, error) {
@@ -55,17 +72,25 @@ func (this *lenUints) Eval() (int64, error) {
 	return int64(len(e)), nil
 }
 
+func (this *lenUints) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("length", new(lenUints))
+	Register("lenUints", "length", LenUints)
 }
 
 //LenUints returns a function that returns the length of a list of type Uints
 func LenUints(e Uints) Int {
-	return &lenUints{E: e}
+	h := uint64(17)
+	h = 31*h + 7
+	h = 31*h + e.Hash()
+	return &lenUints{E: e, hash: h}
 }
 
 type lenBools struct {
 	E Bools
+	hash uint64
 }
 
 func (this *lenBools) Eval() (int64, error) {
@@ -76,17 +101,25 @@ func (this *lenBools) Eval() (int64, error) {
 	return int64(len(e)), nil
 }
 
+func (this *lenBools) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("length", new(lenBools))
+	Register("lenBools", "length", LenBools)
 }
 
 //LenBools returns a function that returns the length of a list of type Bools
 func LenBools(e Bools) Int {
-	return &lenBools{E: e}
+	h := uint64(17)
+	h = 31*h + 7
+	h = 31*h + e.Hash()
+	return &lenBools{E: e, hash: h}
 }
 
 type lenStrings struct {
 	E Strings
+	hash uint64
 }
 
 func (this *lenStrings) Eval() (int64, error) {
@@ -97,17 +130,25 @@ func (this *lenStrings) Eval() (int64, error) {
 	return int64(len(e)), nil
 }
 
+func (this *lenStrings) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("length", new(lenStrings))
+	Register("lenStrings", "length", LenStrings)
 }
 
 //LenStrings returns a function that returns the length of a list of type Strings
 func LenStrings(e Strings) Int {
-	return &lenStrings{E: e}
+	h := uint64(17)
+	h = 31*h + 7
+	h = 31*h + e.Hash()
+	return &lenStrings{E: e, hash: h}
 }
 
 type lenListOfBytes struct {
 	E ListOfBytes
+	hash uint64
 }
 
 func (this *lenListOfBytes) Eval() (int64, error) {
@@ -118,17 +159,25 @@ func (this *lenListOfBytes) Eval() (int64, error) {
 	return int64(len(e)), nil
 }
 
+func (this *lenListOfBytes) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("length", new(lenListOfBytes))
+	Register("lenListOfBytes", "length", LenListOfBytes)
 }
 
 //LenListOfBytes returns a function that returns the length of a list of type ListOfBytes
 func LenListOfBytes(e ListOfBytes) Int {
-	return &lenListOfBytes{E: e}
+	h := uint64(17)
+	h = 31*h + 7
+	h = 31*h + e.Hash()
+	return &lenListOfBytes{E: e, hash: h}
 }
 
 type lenString struct {
 	E String
+	hash uint64
 }
 
 func (this *lenString) Eval() (int64, error) {
@@ -139,17 +188,25 @@ func (this *lenString) Eval() (int64, error) {
 	return int64(len(e)), nil
 }
 
+func (this *lenString) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("length", new(lenString))
+	Register("lenString", "length", LenString)
 }
 
 //LenString returns a function that returns the length of a list of type String
 func LenString(e String) Int {
-	return &lenString{E: e}
+	h := uint64(17)
+	h = 31*h + 7
+	h = 31*h + e.Hash()
+	return &lenString{E: e, hash: h}
 }
 
 type lenBytes struct {
 	E Bytes
+	hash uint64
 }
 
 func (this *lenBytes) Eval() (int64, error) {
@@ -160,11 +217,18 @@ func (this *lenBytes) Eval() (int64, error) {
 	return int64(len(e)), nil
 }
 
+func (this *lenBytes) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("length", new(lenBytes))
+	Register("lenBytes", "length", LenBytes)
 }
 
 //LenBytes returns a function that returns the length of a list of type Bytes
 func LenBytes(e Bytes) Int {
-	return &lenBytes{E: e}
+	h := uint64(17)
+	h = 31*h + 7
+	h = 31*h + e.Hash()
+	return &lenBytes{E: e, hash: h}
 }

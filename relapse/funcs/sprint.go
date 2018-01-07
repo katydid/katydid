@@ -24,32 +24,51 @@ func Sprint(i interface{}) string {
 	e := reflect.ValueOf(i).Elem()
 	uniqName := e.Type().Name()
 	name := reverse(uniqName)
-	numFields := e.NumField()
-	if numFields == 2 {
+	switch name {
+	case "eq":
 		p1 := e.Field(0).Interface()
 		p2 := e.Field(1).Interface()
 		v, ok := isVarConst(p1, p2)
 		if ok {
-			if name == "eq" {
-				return "== " + v
-			}
-			if name == "ne" {
-				return "!= " + v
-			}
-			if name == "gt" {
-				return "> " + v
-			}
-			if name == "lt" {
-				return "< " + v
-			}
-			if name == "ge" {
-				return ">= " + v
-			}
-			if name == "le" {
-				return "<= " + v
-			}
+			return "== " + v
+		}
+	case "ne":
+		p1 := e.Field(0).Interface()
+		p2 := e.Field(1).Interface()
+		v, ok := isVarConst(p1, p2)
+		if ok {
+			return "!= " + v
+		}
+	case "gt":
+		p1 := e.Field(0).Interface()
+		p2 := e.Field(1).Interface()
+		v, ok := isVarConst(p1, p2)
+		if ok {
+			return "> " + v
+		}
+	case "lt":
+		p1 := e.Field(0).Interface()
+		p2 := e.Field(1).Interface()
+		v, ok := isVarConst(p1, p2)
+		if ok {
+			return "< " + v
+		}
+	case "ge":
+		p1 := e.Field(0).Interface()
+		p2 := e.Field(1).Interface()
+		v, ok := isVarConst(p1, p2)
+		if ok {
+			return ">= " + v
+		}
+	case "le":
+		p1 := e.Field(0).Interface()
+		p2 := e.Field(1).Interface()
+		v, ok := isVarConst(p1, p2)
+		if ok {
+			return "<= " + v
 		}
 	}
+
 	return "->" + sprint(i)
 }
 

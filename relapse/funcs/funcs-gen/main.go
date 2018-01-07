@@ -25,6 +25,7 @@ const compareStr = `
 type {{.Type}}{{.CName}} struct {
 	V1 {{.CType}}
 	V2 {{.CType}}
+	hash uint64
 }
 
 func (this *{{.Type}}{{.CName}}) Eval() (bool, error) {
@@ -39,13 +40,21 @@ func (this *{{.Type}}{{.CName}}) Eval() (bool, error) {
 	{{if .Eval}}{{.Eval}}{{else}}return v1 {{.Operator}} v2, nil{{end}}
 }
 
+func (this *{{.Type}}{{.CName}}) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("{{.Name}}", new({{.Type}}{{.CName}}))
+	Register("{{.Type}}{{.CName}}", "{{.Name}}", {{.CType}}{{.CName}})
 }
 
 // {{.CType}}{{.CName}} returns a new {{.Comment}} function.
 func {{.CType}}{{.CName}}(a, b {{.CType}}) Bool {
-	return &{{.Type}}{{.CName}}{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + {{.Hash}}
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &{{.Type}}{{.CName}}{V1: a, V2: b, hash: h}
 }
 `
 
@@ -64,6 +73,10 @@ func (this *compare) CName() string {
 		return strings.ToUpper(this.Name)
 	}
 	return gen.CapFirst(this.Name)
+}
+
+func (this *compare) Hash() uint64 {
+	return deriveHashStr(this.Name)
 }
 
 const newFuncStr = `
@@ -87,17 +100,25 @@ var typConst{{.CType}} reflect.Type = reflect.TypeOf((*Const{{.CType}})(nil)).El
 
 type const{{.CType}} struct {
 	v {{.GoType}}
+	hash uint64
 }
 
 //{{.CType}}Const returns a new constant function of type {{.CType}}
 func {{.CType}}Const(v {{.GoType}}) Const{{.CType}} {
-	return &const{{.CType}}{v}
+	h := uint64(17)
+	h = 31*h + {{.Hash}}
+	h = 31*h + deriveHash{{.CType}}(v)
+	return &const{{.CType}}{v, h}
 }
 
 func (this *const{{.CType}}) IsConst() {}
 
 func (this *const{{.CType}}) Eval() ({{.GoType}}, error) {
 	return this.v, nil
+}
+
+func (this *const{{.CType}}) Hash() uint64 {
+	return this.hash
 }
 
 func (this *const{{.CType}}) String() string {
@@ -116,14 +137,24 @@ type conster struct {
 	ListType string
 }
 
+func (this *conster) Hash() uint64 {
+	return deriveHashStr(this.CType)
+}
+
 const listStr = `
 type listOf{{.FuncType}} struct {
 	List []{{.FuncType}}
+	hash uint64
 }
 
 //NewListOf{{.FuncType}} returns a new function that when evaluated returns a list of type {{.FuncType}}
 func NewListOf{{.FuncType}}(v []{{.FuncType}}) {{.CType}} {
-	return &listOf{{.FuncType}}{v}
+	h := uint64(17)
+	h = 31*h + {{.Hash}}
+	for i := 0; i < len(v); i++ {
+		h = 31*h + v[i].Hash()
+	}
+	return &listOf{{.FuncType}}{v, h}
 }
 
 func (this *listOf{{.FuncType}}) Eval() ([]{{.GoType}}, error) {
@@ -136,6 +167,10 @@ func (this *listOf{{.FuncType}}) Eval() ([]{{.GoType}}, error) {
 		}
 	}
 	return res, nil
+}
+
+func (this *listOf{{.FuncType}}) Hash() uint64 {
+	return this.hash
 }
 
 func (this *listOf{{.FuncType}}) String() string {
@@ -156,9 +191,14 @@ type list struct {
 	GoType   string
 }
 
+func (this *list) Hash() uint64 {
+	return deriveHashStr(this.CType)
+}
+
 const printStr = `
 type print{{.Name}} struct {
 	E {{.Name}}
+	hash uint64
 }
 
 func (this *print{{.Name}}) Eval() ({{.GoType}}, error) {
@@ -171,15 +211,22 @@ func (this *print{{.Name}}) Eval() ({{.GoType}}, error) {
 	return v, err
 }
 
+func (this *print{{.Name}}) Hash() uint64 {
+	return this.hash
+}
+
 func (this *print{{.Name}}) IsVariable() {}
 
 func init() {
-	Register("print", new(print{{.Name}}))
+	Register("print{{.Name}}", "print", Print{{.Name}})
 }
 
 //Print{{.Name}} returns a function that prints out the value of the argument function and returns its value.
 func Print{{.Name}}(e {{.Name}}) {{.Name}} {
-	return &print{{.Name}}{E: e}
+	h := uint64(17)
+	h = 31*h + 13
+	h = 31*h + e.Hash()
+	return &print{{.Name}}{E: e, hash: h}
 }
 `
 
@@ -188,9 +235,14 @@ type printer struct {
 	GoType string
 }
 
+func (this *printer) Hash() uint64 {
+	return deriveHashStr(this.Name)
+}
+
 const lengthStr = `
 type len{{.}} struct {
 	E {{.}}
+	hash uint64
 }
 
 func (this *len{{.}}) Eval() (int64, error) {
@@ -201,13 +253,20 @@ func (this *len{{.}}) Eval() (int64, error) {
 	return int64(len(e)), nil
 }
 
+func (this *len{{.}}) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("length", new(len{{.}}))
+	Register("len{{.}}", "length", Len{{.}})
 }
 
 //Len{{.}} returns a function that returns the length of a list of type {{.}}
 func Len{{.}}(e {{.}}) Int {
-	return &len{{.}}{E: e}
+	h := uint64(17)
+	h = 31*h + 7
+	h = 31*h + e.Hash()
+	return &len{{.}}{E: e, hash: h}
 }
 `
 
@@ -215,6 +274,7 @@ const elemStr = `
 type elem{{.ListType}} struct {
 	List  {{.ListType}}
 	Index Int
+	hash uint64
 }
 
 func (this *elem{{.ListType}}) Eval() ({{.ReturnType}}, error) {
@@ -239,15 +299,24 @@ func (this *elem{{.ListType}}) Eval() ({{.ReturnType}}, error) {
 	return list[index], nil
 }
 
+func (this *elem{{.ListType}}) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("elem", new(elem{{.ListType}}))
+	Register("elem{{.ListType}}", "elem", Elem{{.ListType}})
 }
 
 //Elem{{.ListType}} returns a function that returns the n'th element of the list.
 func Elem{{.ListType}}(list {{.ListType}}, n Int) {{.ThrowType}} {
+	h := uint64(17)
+	h = 31*h + {{.Hash}}
+	h = 31*h + n.Hash()
+	h = 31*h + list.Hash()
 	return &elem{{.ListType}}{
 		List:  list,
 		Index: n,
+		hash: h,
 	}
 }
 `
@@ -259,11 +328,16 @@ type elemer struct {
 	Default    string
 }
 
+func (this *elemer) Hash() uint64 {
+	return deriveHashStr(this.ListType)
+}
+
 const rangeStr = `
 type range{{.ListType}} struct {
 	List  {{.ListType}}
 	First Int
 	Last  Int
+	hash uint64
 }
 
 func (this *range{{.ListType}}) Eval() ({{.ReturnType}}, error) {
@@ -302,16 +376,26 @@ func (this *range{{.ListType}}) Eval() ({{.ReturnType}}, error) {
 	return list[first:last], nil
 }
 
+func (this *range{{.ListType}}) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("range", new(range{{.ListType}}))
+	Register("range{{.ListType}}", "range", Range{{.ListType}})
 }
 
 //Range{{.ListType}} returns a function that returns a range of elements from a list.
 func Range{{.ListType}}(list {{.ListType}}, from, to Int) {{.ListType}} {
+	h := uint64(17)
+	h = 31*h + {{.Hash}}
+	h = 31*h + from.Hash()
+	h = 31*h + to.Hash()
+	h = 31*h + list.Hash()
 	return &range{{.ListType}}{
 		List:  list,
 		First: from,
 		Last:  to,
+		hash: h,
 	}
 }
 `
@@ -321,9 +405,14 @@ type ranger struct {
 	ReturnType string
 }
 
+func (this *ranger) Hash() uint64 {
+	return deriveHashStr(this.ListType)
+}
+
 const variableStr = `
 type var{{.Name}} struct {
 	Value parser.Value
+	hash uint64
 }
 
 var _ Setter = &var{{.Name}}{}
@@ -335,6 +424,10 @@ func (this *var{{.Name}}) Eval() ({{.GoType}}, error) {
 		return {{.Default}}, err
 	}
 	return v, nil
+}
+
+func (this *var{{.Name}}) Hash() uint64 {
+	return this.hash
 }
 
 func (this *var{{.Name}}) IsVariable() {}
@@ -349,7 +442,9 @@ func (this *var{{.Name}}) String() string {
 
 //{{.Name}}Var returns a variable of type {{.Name}}
 func {{.Name}}Var() *var{{.Name}} {
-	return &var{{.Name}}{}
+	h := uint64(17)
+	h = 31*h + {{.Hash}}
+	return &var{{.Name}}{hash: h}
 }
 `
 
@@ -360,9 +455,14 @@ type varer struct {
 	Default string
 }
 
+func (this *varer) Hash() uint64 {
+	return deriveHashStr(this.Name)
+}
+
 const typStr = `
 type typ{{.Name}} struct {
 	E {{.Name}}
+	hash uint64
 }
 
 func (this *typ{{.Name}}) Eval() (bool, error) {
@@ -370,13 +470,20 @@ func (this *typ{{.Name}}) Eval() (bool, error) {
 	return (err == nil), nil
 }
 
+func (this *typ{{.Name}}) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("type", new(typ{{.Name}}))
+	Register("typ{{.Name}}", "type", Type{{.Name}})
 }
 
 //Type{{.Name}} returns a function that returns true if the error returned by the argument function is nil.
 func Type{{.Name}}(v {{.Name}}) Bool {
-	return &typ{{.Name}}{E: v}
+	h := uint64(17)
+	h = 31*h + {{.Hash}}
+	h = 31*h + v.Hash()
+	return &typ{{.Name}}{E: v, hash: h}
 }
 `
 
@@ -384,11 +491,16 @@ type typer struct {
 	Name string
 }
 
+func (this *typer) Hash() uint64 {
+	return deriveHashStr(this.Name)
+}
+
 const inSetStr = `
 type inSet{{.Name}} struct {
 	Elem {{.Name}}
 	List {{.ConstListType}}
 	set  map[{{.Type}}]struct{}
+	hash uint64
 }
 
 func (this *inSet{{.Name}}) Init() error {
@@ -415,13 +527,21 @@ func (this *inSet{{.Name}}) Eval() (bool, error) {
 	return ok, nil
 }
 
+func (this *inSet{{.Name}}) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("contains", new(inSet{{.Name}}))
+	Register("inSet{{.Name}}", "contains", Contains{{.Name}})
 }
 
 //Contains{{.Name}} returns a function that checks whether the element is contained in the list.
 func Contains{{.Name}}(element {{.Name}}, list {{.ConstListType}}) Bool {
-	return &inSet{{.Name}}{element, list, nil}
+	h := uint64(17)
+	h = 31*h + {{.Hash}}
+	h = 31*h + element.Hash()
+	h = 31*h + list.Hash()
+	return &inSet{{.Name}}{element, list, nil, h}
 }
 `
 
@@ -429,6 +549,10 @@ type inSeter struct {
 	Name          string
 	ConstListType string
 	Type          string
+}
+
+func (this *inSeter) Hash() uint64 {
+	return deriveHashStr(this.Name)
 }
 
 func main() {

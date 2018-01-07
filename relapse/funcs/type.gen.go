@@ -3,6 +3,7 @@ package funcs
 
 type typDouble struct {
 	E Double
+	hash uint64
 }
 
 func (this *typDouble) Eval() (bool, error) {
@@ -10,17 +11,25 @@ func (this *typDouble) Eval() (bool, error) {
 	return (err == nil), nil
 }
 
+func (this *typDouble) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("type", new(typDouble))
+	Register("typDouble", "type", TypeDouble)
 }
 
 //TypeDouble returns a function that returns true if the error returned by the argument function is nil.
 func TypeDouble(v Double) Bool {
-	return &typDouble{E: v}
+	h := uint64(17)
+	h = 31*h + 2052876273
+	h = 31*h + v.Hash()
+	return &typDouble{E: v, hash: h}
 }
 
 type typInt struct {
 	E Int
+	hash uint64
 }
 
 func (this *typInt) Eval() (bool, error) {
@@ -28,17 +37,25 @@ func (this *typInt) Eval() (bool, error) {
 	return (err == nil), nil
 }
 
+func (this *typInt) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("type", new(typInt))
+	Register("typInt", "type", TypeInt)
 }
 
 //TypeInt returns a function that returns true if the error returned by the argument function is nil.
 func TypeInt(v Int) Bool {
-	return &typInt{E: v}
+	h := uint64(17)
+	h = 31*h + 73679
+	h = 31*h + v.Hash()
+	return &typInt{E: v, hash: h}
 }
 
 type typUint struct {
 	E Uint
+	hash uint64
 }
 
 func (this *typUint) Eval() (bool, error) {
@@ -46,17 +63,25 @@ func (this *typUint) Eval() (bool, error) {
 	return (err == nil), nil
 }
 
+func (this *typUint) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("type", new(typUint))
+	Register("typUint", "type", TypeUint)
 }
 
 //TypeUint returns a function that returns true if the error returned by the argument function is nil.
 func TypeUint(v Uint) Bool {
-	return &typUint{E: v}
+	h := uint64(17)
+	h = 31*h + 2636666
+	h = 31*h + v.Hash()
+	return &typUint{E: v, hash: h}
 }
 
 type typBool struct {
 	E Bool
+	hash uint64
 }
 
 func (this *typBool) Eval() (bool, error) {
@@ -64,17 +89,25 @@ func (this *typBool) Eval() (bool, error) {
 	return (err == nil), nil
 }
 
+func (this *typBool) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("type", new(typBool))
+	Register("typBool", "type", TypeBool)
 }
 
 //TypeBool returns a function that returns true if the error returned by the argument function is nil.
 func TypeBool(v Bool) Bool {
-	return &typBool{E: v}
+	h := uint64(17)
+	h = 31*h + 2076426
+	h = 31*h + v.Hash()
+	return &typBool{E: v, hash: h}
 }
 
 type typString struct {
 	E String
+	hash uint64
 }
 
 func (this *typString) Eval() (bool, error) {
@@ -82,17 +115,25 @@ func (this *typString) Eval() (bool, error) {
 	return (err == nil), nil
 }
 
+func (this *typString) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("type", new(typString))
+	Register("typString", "type", TypeString)
 }
 
 //TypeString returns a function that returns true if the error returned by the argument function is nil.
 func TypeString(v String) Bool {
-	return &typString{E: v}
+	h := uint64(17)
+	h = 31*h + 2486848561
+	h = 31*h + v.Hash()
+	return &typString{E: v, hash: h}
 }
 
 type typBytes struct {
 	E Bytes
+	hash uint64
 }
 
 func (this *typBytes) Eval() (bool, error) {
@@ -100,11 +141,18 @@ func (this *typBytes) Eval() (bool, error) {
 	return (err == nil), nil
 }
 
+func (this *typBytes) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("type", new(typBytes))
+	Register("typBytes", "type", TypeBytes)
 }
 
 //TypeBytes returns a function that returns true if the error returned by the argument function is nil.
 func TypeBytes(v Bytes) Bool {
-	return &typBytes{E: v}
+	h := uint64(17)
+	h = 31*h + 64671819
+	h = 31*h + v.Hash()
+	return &typBytes{E: v, hash: h}
 }

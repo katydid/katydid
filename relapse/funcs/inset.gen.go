@@ -5,6 +5,7 @@ type inSetInt struct {
 	Elem Int
 	List ConstInts
 	set  map[int64]struct{}
+	hash uint64
 }
 
 func (this *inSetInt) Init() error {
@@ -31,19 +32,28 @@ func (this *inSetInt) Eval() (bool, error) {
 	return ok, nil
 }
 
+func (this *inSetInt) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("contains", new(inSetInt))
+	Register("inSetInt", "contains", ContainsInt)
 }
 
 //ContainsInt returns a function that checks whether the element is contained in the list.
 func ContainsInt(element Int, list ConstInts) Bool {
-	return &inSetInt{element, list, nil}
+	h := uint64(17)
+	h = 31*h + 73679
+	h = 31*h + element.Hash()
+	h = 31*h + list.Hash()
+	return &inSetInt{element, list, nil, h}
 }
 
 type inSetUint struct {
 	Elem Uint
 	List ConstUints
 	set  map[uint64]struct{}
+	hash uint64
 }
 
 func (this *inSetUint) Init() error {
@@ -70,19 +80,28 @@ func (this *inSetUint) Eval() (bool, error) {
 	return ok, nil
 }
 
+func (this *inSetUint) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("contains", new(inSetUint))
+	Register("inSetUint", "contains", ContainsUint)
 }
 
 //ContainsUint returns a function that checks whether the element is contained in the list.
 func ContainsUint(element Uint, list ConstUints) Bool {
-	return &inSetUint{element, list, nil}
+	h := uint64(17)
+	h = 31*h + 2636666
+	h = 31*h + element.Hash()
+	h = 31*h + list.Hash()
+	return &inSetUint{element, list, nil, h}
 }
 
 type inSetString struct {
 	Elem String
 	List ConstStrings
 	set  map[string]struct{}
+	hash uint64
 }
 
 func (this *inSetString) Init() error {
@@ -109,11 +128,19 @@ func (this *inSetString) Eval() (bool, error) {
 	return ok, nil
 }
 
+func (this *inSetString) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("contains", new(inSetString))
+	Register("inSetString", "contains", ContainsString)
 }
 
 //ContainsString returns a function that checks whether the element is contained in the list.
 func ContainsString(element String, list ConstStrings) Bool {
-	return &inSetString{element, list, nil}
+	h := uint64(17)
+	h = 31*h + 2486848561
+	h = 31*h + element.Hash()
+	h = 31*h + list.Hash()
+	return &inSetString{element, list, nil, h}
 }

@@ -188,7 +188,7 @@ func (p *Pattern) SetHash() {
 	h := uint64(17)
 	h = 31*h + uint64(p.Type)
 	if p.Func != nil {
-		h = 31*h + funcs.Hash(p.Func)
+		h = 31*h + p.Func.Hash()
 	}
 	for _, pattern := range p.Patterns {
 		h = 31*h + pattern.hash

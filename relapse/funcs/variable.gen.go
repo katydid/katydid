@@ -7,6 +7,7 @@ import (
 
 type varDouble struct {
 	Value parser.Value
+	hash uint64
 }
 
 var _ Setter = &varDouble{}
@@ -18,6 +19,10 @@ func (this *varDouble) Eval() (float64, error) {
 		return 0, err
 	}
 	return v, nil
+}
+
+func (this *varDouble) Hash() uint64 {
+	return this.hash
 }
 
 func (this *varDouble) IsVariable() {}
@@ -32,11 +37,14 @@ func (this *varDouble) String() string {
 
 //DoubleVar returns a variable of type Double
 func DoubleVar() *varDouble {
-	return &varDouble{}
+	h := uint64(17)
+	h = 31*h + 2052876273
+	return &varDouble{hash: h}
 }
 
 type varInt struct {
 	Value parser.Value
+	hash uint64
 }
 
 var _ Setter = &varInt{}
@@ -48,6 +56,10 @@ func (this *varInt) Eval() (int64, error) {
 		return 0, err
 	}
 	return v, nil
+}
+
+func (this *varInt) Hash() uint64 {
+	return this.hash
 }
 
 func (this *varInt) IsVariable() {}
@@ -62,11 +74,14 @@ func (this *varInt) String() string {
 
 //IntVar returns a variable of type Int
 func IntVar() *varInt {
-	return &varInt{}
+	h := uint64(17)
+	h = 31*h + 73679
+	return &varInt{hash: h}
 }
 
 type varUint struct {
 	Value parser.Value
+	hash uint64
 }
 
 var _ Setter = &varUint{}
@@ -78,6 +93,10 @@ func (this *varUint) Eval() (uint64, error) {
 		return 0, err
 	}
 	return v, nil
+}
+
+func (this *varUint) Hash() uint64 {
+	return this.hash
 }
 
 func (this *varUint) IsVariable() {}
@@ -92,11 +111,14 @@ func (this *varUint) String() string {
 
 //UintVar returns a variable of type Uint
 func UintVar() *varUint {
-	return &varUint{}
+	h := uint64(17)
+	h = 31*h + 2636666
+	return &varUint{hash: h}
 }
 
 type varBool struct {
 	Value parser.Value
+	hash uint64
 }
 
 var _ Setter = &varBool{}
@@ -108,6 +130,10 @@ func (this *varBool) Eval() (bool, error) {
 		return false, err
 	}
 	return v, nil
+}
+
+func (this *varBool) Hash() uint64 {
+	return this.hash
 }
 
 func (this *varBool) IsVariable() {}
@@ -122,11 +148,14 @@ func (this *varBool) String() string {
 
 //BoolVar returns a variable of type Bool
 func BoolVar() *varBool {
-	return &varBool{}
+	h := uint64(17)
+	h = 31*h + 2076426
+	return &varBool{hash: h}
 }
 
 type varString struct {
 	Value parser.Value
+	hash uint64
 }
 
 var _ Setter = &varString{}
@@ -138,6 +167,10 @@ func (this *varString) Eval() (string, error) {
 		return "", err
 	}
 	return v, nil
+}
+
+func (this *varString) Hash() uint64 {
+	return this.hash
 }
 
 func (this *varString) IsVariable() {}
@@ -152,11 +185,14 @@ func (this *varString) String() string {
 
 //StringVar returns a variable of type String
 func StringVar() *varString {
-	return &varString{}
+	h := uint64(17)
+	h = 31*h + 2486848561
+	return &varString{hash: h}
 }
 
 type varBytes struct {
 	Value parser.Value
+	hash uint64
 }
 
 var _ Setter = &varBytes{}
@@ -168,6 +204,10 @@ func (this *varBytes) Eval() ([]byte, error) {
 		return nil, err
 	}
 	return v, nil
+}
+
+func (this *varBytes) Hash() uint64 {
+	return this.hash
 }
 
 func (this *varBytes) IsVariable() {}
@@ -182,5 +222,7 @@ func (this *varBytes) String() string {
 
 //BytesVar returns a variable of type Bytes
 func BytesVar() *varBytes {
-	return &varBytes{}
+	h := uint64(17)
+	h = 31*h + 64671819
+	return &varBytes{hash: h}
 }

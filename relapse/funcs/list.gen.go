@@ -7,11 +7,17 @@ import (
 
 type listOfDouble struct {
 	List []Double
+	hash uint64
 }
 
 //NewListOfDouble returns a new function that when evaluated returns a list of type Double
 func NewListOfDouble(v []Double) Doubles {
-	return &listOfDouble{v}
+	h := uint64(17)
+	h = 31*h + 63639164578
+	for i := 0; i < len(v); i++ {
+		h = 31*h + v[i].Hash()
+	}
+	return &listOfDouble{v, h}
 }
 
 func (this *listOfDouble) Eval() ([]float64, error) {
@@ -26,6 +32,10 @@ func (this *listOfDouble) Eval() ([]float64, error) {
 	return res, nil
 }
 
+func (this *listOfDouble) Hash() uint64 {
+	return this.hash
+}
+
 func (this *listOfDouble) String() string {
 	ss := make([]string, len(this.List))
 	for i := range this.List {
@@ -38,11 +48,17 @@ func (this *listOfDouble) IsListOf() {}
 
 type listOfInt struct {
 	List []Int
+	hash uint64
 }
 
 //NewListOfInt returns a new function that when evaluated returns a list of type Int
 func NewListOfInt(v []Int) Ints {
-	return &listOfInt{v}
+	h := uint64(17)
+	h = 31*h + 2284164
+	for i := 0; i < len(v); i++ {
+		h = 31*h + v[i].Hash()
+	}
+	return &listOfInt{v, h}
 }
 
 func (this *listOfInt) Eval() ([]int64, error) {
@@ -57,6 +73,10 @@ func (this *listOfInt) Eval() ([]int64, error) {
 	return res, nil
 }
 
+func (this *listOfInt) Hash() uint64 {
+	return this.hash
+}
+
 func (this *listOfInt) String() string {
 	ss := make([]string, len(this.List))
 	for i := range this.List {
@@ -69,11 +89,17 @@ func (this *listOfInt) IsListOf() {}
 
 type listOfUint struct {
 	List []Uint
+	hash uint64
 }
 
 //NewListOfUint returns a new function that when evaluated returns a list of type Uint
 func NewListOfUint(v []Uint) Uints {
-	return &listOfUint{v}
+	h := uint64(17)
+	h = 31*h + 81736761
+	for i := 0; i < len(v); i++ {
+		h = 31*h + v[i].Hash()
+	}
+	return &listOfUint{v, h}
 }
 
 func (this *listOfUint) Eval() ([]uint64, error) {
@@ -88,6 +114,10 @@ func (this *listOfUint) Eval() ([]uint64, error) {
 	return res, nil
 }
 
+func (this *listOfUint) Hash() uint64 {
+	return this.hash
+}
+
 func (this *listOfUint) String() string {
 	ss := make([]string, len(this.List))
 	for i := range this.List {
@@ -100,11 +130,17 @@ func (this *listOfUint) IsListOf() {}
 
 type listOfBool struct {
 	List []Bool
+	hash uint64
 }
 
 //NewListOfBool returns a new function that when evaluated returns a list of type Bool
 func NewListOfBool(v []Bool) Bools {
-	return &listOfBool{v}
+	h := uint64(17)
+	h = 31*h + 64369321
+	for i := 0; i < len(v); i++ {
+		h = 31*h + v[i].Hash()
+	}
+	return &listOfBool{v, h}
 }
 
 func (this *listOfBool) Eval() ([]bool, error) {
@@ -119,6 +155,10 @@ func (this *listOfBool) Eval() ([]bool, error) {
 	return res, nil
 }
 
+func (this *listOfBool) Hash() uint64 {
+	return this.hash
+}
+
 func (this *listOfBool) String() string {
 	ss := make([]string, len(this.List))
 	for i := range this.List {
@@ -131,11 +171,17 @@ func (this *listOfBool) IsListOf() {}
 
 type listOfString struct {
 	List []String
+	hash uint64
 }
 
 //NewListOfString returns a new function that when evaluated returns a list of type String
 func NewListOfString(v []String) Strings {
-	return &listOfString{v}
+	h := uint64(17)
+	h = 31*h + 77092305506
+	for i := 0; i < len(v); i++ {
+		h = 31*h + v[i].Hash()
+	}
+	return &listOfString{v, h}
 }
 
 func (this *listOfString) Eval() ([]string, error) {
@@ -150,6 +196,10 @@ func (this *listOfString) Eval() ([]string, error) {
 	return res, nil
 }
 
+func (this *listOfString) Hash() uint64 {
+	return this.hash
+}
+
 func (this *listOfString) String() string {
 	ss := make([]string, len(this.List))
 	for i := range this.List {
@@ -162,11 +212,17 @@ func (this *listOfString) IsListOf() {}
 
 type listOfBytes struct {
 	List []Bytes
+	hash uint64
 }
 
 //NewListOfBytes returns a new function that when evaluated returns a list of type Bytes
 func NewListOfBytes(v []Bytes) ListOfBytes {
-	return &listOfBytes{v}
+	h := uint64(17)
+	h = 31*h + 65169257167589942
+	for i := 0; i < len(v); i++ {
+		h = 31*h + v[i].Hash()
+	}
+	return &listOfBytes{v, h}
 }
 
 func (this *listOfBytes) Eval() ([][]byte, error) {
@@ -179,6 +235,10 @@ func (this *listOfBytes) Eval() ([][]byte, error) {
 		}
 	}
 	return res, nil
+}
+
+func (this *listOfBytes) Hash() uint64 {
+	return this.hash
 }
 
 func (this *listOfBytes) String() string {

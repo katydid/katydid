@@ -4,6 +4,7 @@ package funcs
 type elemDoubles struct {
 	List  Doubles
 	Index Int
+	hash uint64
 }
 
 func (this *elemDoubles) Eval() (float64, error) {
@@ -28,21 +29,31 @@ func (this *elemDoubles) Eval() (float64, error) {
 	return list[index], nil
 }
 
+func (this *elemDoubles) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("elem", new(elemDoubles))
+	Register("elemDoubles", "elem", ElemDoubles)
 }
 
 //ElemDoubles returns a function that returns the n'th element of the list.
 func ElemDoubles(list Doubles, n Int) Double {
+	h := uint64(17)
+	h = 31*h + 63639164578
+	h = 31*h + n.Hash()
+	h = 31*h + list.Hash()
 	return &elemDoubles{
 		List:  list,
 		Index: n,
+		hash: h,
 	}
 }
 
 type elemInts struct {
 	List  Ints
 	Index Int
+	hash uint64
 }
 
 func (this *elemInts) Eval() (int64, error) {
@@ -67,21 +78,31 @@ func (this *elemInts) Eval() (int64, error) {
 	return list[index], nil
 }
 
+func (this *elemInts) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("elem", new(elemInts))
+	Register("elemInts", "elem", ElemInts)
 }
 
 //ElemInts returns a function that returns the n'th element of the list.
 func ElemInts(list Ints, n Int) Int {
+	h := uint64(17)
+	h = 31*h + 2284164
+	h = 31*h + n.Hash()
+	h = 31*h + list.Hash()
 	return &elemInts{
 		List:  list,
 		Index: n,
+		hash: h,
 	}
 }
 
 type elemUints struct {
 	List  Uints
 	Index Int
+	hash uint64
 }
 
 func (this *elemUints) Eval() (uint64, error) {
@@ -106,21 +127,31 @@ func (this *elemUints) Eval() (uint64, error) {
 	return list[index], nil
 }
 
+func (this *elemUints) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("elem", new(elemUints))
+	Register("elemUints", "elem", ElemUints)
 }
 
 //ElemUints returns a function that returns the n'th element of the list.
 func ElemUints(list Uints, n Int) Uint {
+	h := uint64(17)
+	h = 31*h + 81736761
+	h = 31*h + n.Hash()
+	h = 31*h + list.Hash()
 	return &elemUints{
 		List:  list,
 		Index: n,
+		hash: h,
 	}
 }
 
 type elemBools struct {
 	List  Bools
 	Index Int
+	hash uint64
 }
 
 func (this *elemBools) Eval() (bool, error) {
@@ -145,21 +176,31 @@ func (this *elemBools) Eval() (bool, error) {
 	return list[index], nil
 }
 
+func (this *elemBools) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("elem", new(elemBools))
+	Register("elemBools", "elem", ElemBools)
 }
 
 //ElemBools returns a function that returns the n'th element of the list.
 func ElemBools(list Bools, n Int) Bool {
+	h := uint64(17)
+	h = 31*h + 64369321
+	h = 31*h + n.Hash()
+	h = 31*h + list.Hash()
 	return &elemBools{
 		List:  list,
 		Index: n,
+		hash: h,
 	}
 }
 
 type elemStrings struct {
 	List  Strings
 	Index Int
+	hash uint64
 }
 
 func (this *elemStrings) Eval() (string, error) {
@@ -184,21 +225,31 @@ func (this *elemStrings) Eval() (string, error) {
 	return list[index], nil
 }
 
+func (this *elemStrings) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("elem", new(elemStrings))
+	Register("elemStrings", "elem", ElemStrings)
 }
 
 //ElemStrings returns a function that returns the n'th element of the list.
 func ElemStrings(list Strings, n Int) String {
+	h := uint64(17)
+	h = 31*h + 77092305506
+	h = 31*h + n.Hash()
+	h = 31*h + list.Hash()
 	return &elemStrings{
 		List:  list,
 		Index: n,
+		hash: h,
 	}
 }
 
 type elemListOfBytes struct {
 	List  ListOfBytes
 	Index Int
+	hash uint64
 }
 
 func (this *elemListOfBytes) Eval() ([]byte, error) {
@@ -223,14 +274,23 @@ func (this *elemListOfBytes) Eval() ([]byte, error) {
 	return list[index], nil
 }
 
+func (this *elemListOfBytes) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("elem", new(elemListOfBytes))
+	Register("elemListOfBytes", "elem", ElemListOfBytes)
 }
 
 //ElemListOfBytes returns a function that returns the n'th element of the list.
 func ElemListOfBytes(list ListOfBytes, n Int) Bytes {
+	h := uint64(17)
+	h = 31*h + 65169257167589942
+	h = 31*h + n.Hash()
+	h = 31*h + list.Hash()
 	return &elemListOfBytes{
 		List:  list,
 		Index: n,
+		hash: h,
 	}
 }

@@ -8,6 +8,7 @@ import (
 type doubleGE struct {
 	V1 Double
 	V2 Double
+	hash uint64
 }
 
 func (this *doubleGE) Eval() (bool, error) {
@@ -22,18 +23,27 @@ func (this *doubleGE) Eval() (bool, error) {
 	return v1 >= v2, nil
 }
 
+func (this *doubleGE) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("ge", new(doubleGE))
+	Register("doubleGE", "ge", DoubleGE)
 }
 
 // DoubleGE returns a new greater than or equal function.
 func DoubleGE(a, b Double) Bool {
-	return &doubleGE{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3294
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &doubleGE{V1: a, V2: b, hash: h}
 }
 
 type intGE struct {
 	V1 Int
 	V2 Int
+	hash uint64
 }
 
 func (this *intGE) Eval() (bool, error) {
@@ -48,18 +58,27 @@ func (this *intGE) Eval() (bool, error) {
 	return v1 >= v2, nil
 }
 
+func (this *intGE) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("ge", new(intGE))
+	Register("intGE", "ge", IntGE)
 }
 
 // IntGE returns a new greater than or equal function.
 func IntGE(a, b Int) Bool {
-	return &intGE{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3294
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &intGE{V1: a, V2: b, hash: h}
 }
 
 type uintGE struct {
 	V1 Uint
 	V2 Uint
+	hash uint64
 }
 
 func (this *uintGE) Eval() (bool, error) {
@@ -74,18 +93,27 @@ func (this *uintGE) Eval() (bool, error) {
 	return v1 >= v2, nil
 }
 
+func (this *uintGE) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("ge", new(uintGE))
+	Register("uintGE", "ge", UintGE)
 }
 
 // UintGE returns a new greater than or equal function.
 func UintGE(a, b Uint) Bool {
-	return &uintGE{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3294
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &uintGE{V1: a, V2: b, hash: h}
 }
 
 type bytesGE struct {
 	V1 Bytes
 	V2 Bytes
+	hash uint64
 }
 
 func (this *bytesGE) Eval() (bool, error) {
@@ -100,18 +128,27 @@ func (this *bytesGE) Eval() (bool, error) {
 	return bytes.Compare(v1, v2) >= 0, nil
 }
 
+func (this *bytesGE) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("ge", new(bytesGE))
+	Register("bytesGE", "ge", BytesGE)
 }
 
 // BytesGE returns a new greater than or equal function.
 func BytesGE(a, b Bytes) Bool {
-	return &bytesGE{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3294
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &bytesGE{V1: a, V2: b, hash: h}
 }
 
 type doubleGt struct {
 	V1 Double
 	V2 Double
+	hash uint64
 }
 
 func (this *doubleGt) Eval() (bool, error) {
@@ -126,18 +163,27 @@ func (this *doubleGt) Eval() (bool, error) {
 	return v1 > v2, nil
 }
 
+func (this *doubleGt) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("gt", new(doubleGt))
+	Register("doubleGt", "gt", DoubleGt)
 }
 
 // DoubleGt returns a new greater than function.
 func DoubleGt(a, b Double) Bool {
-	return &doubleGt{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3309
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &doubleGt{V1: a, V2: b, hash: h}
 }
 
 type intGt struct {
 	V1 Int
 	V2 Int
+	hash uint64
 }
 
 func (this *intGt) Eval() (bool, error) {
@@ -152,18 +198,27 @@ func (this *intGt) Eval() (bool, error) {
 	return v1 > v2, nil
 }
 
+func (this *intGt) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("gt", new(intGt))
+	Register("intGt", "gt", IntGt)
 }
 
 // IntGt returns a new greater than function.
 func IntGt(a, b Int) Bool {
-	return &intGt{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3309
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &intGt{V1: a, V2: b, hash: h}
 }
 
 type uintGt struct {
 	V1 Uint
 	V2 Uint
+	hash uint64
 }
 
 func (this *uintGt) Eval() (bool, error) {
@@ -178,18 +233,27 @@ func (this *uintGt) Eval() (bool, error) {
 	return v1 > v2, nil
 }
 
+func (this *uintGt) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("gt", new(uintGt))
+	Register("uintGt", "gt", UintGt)
 }
 
 // UintGt returns a new greater than function.
 func UintGt(a, b Uint) Bool {
-	return &uintGt{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3309
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &uintGt{V1: a, V2: b, hash: h}
 }
 
 type bytesGt struct {
 	V1 Bytes
 	V2 Bytes
+	hash uint64
 }
 
 func (this *bytesGt) Eval() (bool, error) {
@@ -204,18 +268,27 @@ func (this *bytesGt) Eval() (bool, error) {
 	return bytes.Compare(v1, v2) > 0, nil
 }
 
+func (this *bytesGt) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("gt", new(bytesGt))
+	Register("bytesGt", "gt", BytesGt)
 }
 
 // BytesGt returns a new greater than function.
 func BytesGt(a, b Bytes) Bool {
-	return &bytesGt{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3309
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &bytesGt{V1: a, V2: b, hash: h}
 }
 
 type doubleLE struct {
 	V1 Double
 	V2 Double
+	hash uint64
 }
 
 func (this *doubleLE) Eval() (bool, error) {
@@ -230,18 +303,27 @@ func (this *doubleLE) Eval() (bool, error) {
 	return v1 <= v2, nil
 }
 
+func (this *doubleLE) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("le", new(doubleLE))
+	Register("doubleLE", "le", DoubleLE)
 }
 
 // DoubleLE returns a new less than or equal function.
 func DoubleLE(a, b Double) Bool {
-	return &doubleLE{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3449
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &doubleLE{V1: a, V2: b, hash: h}
 }
 
 type intLE struct {
 	V1 Int
 	V2 Int
+	hash uint64
 }
 
 func (this *intLE) Eval() (bool, error) {
@@ -256,18 +338,27 @@ func (this *intLE) Eval() (bool, error) {
 	return v1 <= v2, nil
 }
 
+func (this *intLE) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("le", new(intLE))
+	Register("intLE", "le", IntLE)
 }
 
 // IntLE returns a new less than or equal function.
 func IntLE(a, b Int) Bool {
-	return &intLE{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3449
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &intLE{V1: a, V2: b, hash: h}
 }
 
 type uintLE struct {
 	V1 Uint
 	V2 Uint
+	hash uint64
 }
 
 func (this *uintLE) Eval() (bool, error) {
@@ -282,18 +373,27 @@ func (this *uintLE) Eval() (bool, error) {
 	return v1 <= v2, nil
 }
 
+func (this *uintLE) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("le", new(uintLE))
+	Register("uintLE", "le", UintLE)
 }
 
 // UintLE returns a new less than or equal function.
 func UintLE(a, b Uint) Bool {
-	return &uintLE{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3449
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &uintLE{V1: a, V2: b, hash: h}
 }
 
 type bytesLE struct {
 	V1 Bytes
 	V2 Bytes
+	hash uint64
 }
 
 func (this *bytesLE) Eval() (bool, error) {
@@ -308,18 +408,27 @@ func (this *bytesLE) Eval() (bool, error) {
 	return bytes.Compare(v1, v2) <= 0, nil
 }
 
+func (this *bytesLE) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("le", new(bytesLE))
+	Register("bytesLE", "le", BytesLE)
 }
 
 // BytesLE returns a new less than or equal function.
 func BytesLE(a, b Bytes) Bool {
-	return &bytesLE{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3449
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &bytesLE{V1: a, V2: b, hash: h}
 }
 
 type doubleLt struct {
 	V1 Double
 	V2 Double
+	hash uint64
 }
 
 func (this *doubleLt) Eval() (bool, error) {
@@ -334,18 +443,27 @@ func (this *doubleLt) Eval() (bool, error) {
 	return v1 < v2, nil
 }
 
+func (this *doubleLt) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("lt", new(doubleLt))
+	Register("doubleLt", "lt", DoubleLt)
 }
 
 // DoubleLt returns a new less than function.
 func DoubleLt(a, b Double) Bool {
-	return &doubleLt{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3464
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &doubleLt{V1: a, V2: b, hash: h}
 }
 
 type intLt struct {
 	V1 Int
 	V2 Int
+	hash uint64
 }
 
 func (this *intLt) Eval() (bool, error) {
@@ -360,18 +478,27 @@ func (this *intLt) Eval() (bool, error) {
 	return v1 < v2, nil
 }
 
+func (this *intLt) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("lt", new(intLt))
+	Register("intLt", "lt", IntLt)
 }
 
 // IntLt returns a new less than function.
 func IntLt(a, b Int) Bool {
-	return &intLt{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3464
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &intLt{V1: a, V2: b, hash: h}
 }
 
 type uintLt struct {
 	V1 Uint
 	V2 Uint
+	hash uint64
 }
 
 func (this *uintLt) Eval() (bool, error) {
@@ -386,18 +513,27 @@ func (this *uintLt) Eval() (bool, error) {
 	return v1 < v2, nil
 }
 
+func (this *uintLt) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("lt", new(uintLt))
+	Register("uintLt", "lt", UintLt)
 }
 
 // UintLt returns a new less than function.
 func UintLt(a, b Uint) Bool {
-	return &uintLt{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3464
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &uintLt{V1: a, V2: b, hash: h}
 }
 
 type bytesLt struct {
 	V1 Bytes
 	V2 Bytes
+	hash uint64
 }
 
 func (this *bytesLt) Eval() (bool, error) {
@@ -412,18 +548,27 @@ func (this *bytesLt) Eval() (bool, error) {
 	return bytes.Compare(v1, v2) < 0, nil
 }
 
+func (this *bytesLt) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("lt", new(bytesLt))
+	Register("bytesLt", "lt", BytesLt)
 }
 
 // BytesLt returns a new less than function.
 func BytesLt(a, b Bytes) Bool {
-	return &bytesLt{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3464
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &bytesLt{V1: a, V2: b, hash: h}
 }
 
 type doubleEq struct {
 	V1 Double
 	V2 Double
+	hash uint64
 }
 
 func (this *doubleEq) Eval() (bool, error) {
@@ -438,18 +583,27 @@ func (this *doubleEq) Eval() (bool, error) {
 	return v1 == v2, nil
 }
 
+func (this *doubleEq) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("eq", new(doubleEq))
+	Register("doubleEq", "eq", DoubleEq)
 }
 
 // DoubleEq returns a new equal function.
 func DoubleEq(a, b Double) Bool {
-	return &doubleEq{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3244
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &doubleEq{V1: a, V2: b, hash: h}
 }
 
 type intEq struct {
 	V1 Int
 	V2 Int
+	hash uint64
 }
 
 func (this *intEq) Eval() (bool, error) {
@@ -464,18 +618,27 @@ func (this *intEq) Eval() (bool, error) {
 	return v1 == v2, nil
 }
 
+func (this *intEq) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("eq", new(intEq))
+	Register("intEq", "eq", IntEq)
 }
 
 // IntEq returns a new equal function.
 func IntEq(a, b Int) Bool {
-	return &intEq{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3244
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &intEq{V1: a, V2: b, hash: h}
 }
 
 type uintEq struct {
 	V1 Uint
 	V2 Uint
+	hash uint64
 }
 
 func (this *uintEq) Eval() (bool, error) {
@@ -490,18 +653,27 @@ func (this *uintEq) Eval() (bool, error) {
 	return v1 == v2, nil
 }
 
+func (this *uintEq) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("eq", new(uintEq))
+	Register("uintEq", "eq", UintEq)
 }
 
 // UintEq returns a new equal function.
 func UintEq(a, b Uint) Bool {
-	return &uintEq{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3244
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &uintEq{V1: a, V2: b, hash: h}
 }
 
 type boolEq struct {
 	V1 Bool
 	V2 Bool
+	hash uint64
 }
 
 func (this *boolEq) Eval() (bool, error) {
@@ -516,18 +688,27 @@ func (this *boolEq) Eval() (bool, error) {
 	return v1 == v2, nil
 }
 
+func (this *boolEq) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("eq", new(boolEq))
+	Register("boolEq", "eq", BoolEq)
 }
 
 // BoolEq returns a new equal function.
 func BoolEq(a, b Bool) Bool {
-	return &boolEq{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3244
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &boolEq{V1: a, V2: b, hash: h}
 }
 
 type stringEq struct {
 	V1 String
 	V2 String
+	hash uint64
 }
 
 func (this *stringEq) Eval() (bool, error) {
@@ -542,18 +723,27 @@ func (this *stringEq) Eval() (bool, error) {
 	return v1 == v2, nil
 }
 
+func (this *stringEq) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("eq", new(stringEq))
+	Register("stringEq", "eq", StringEq)
 }
 
 // StringEq returns a new equal function.
 func StringEq(a, b String) Bool {
-	return &stringEq{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3244
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &stringEq{V1: a, V2: b, hash: h}
 }
 
 type bytesEq struct {
 	V1 Bytes
 	V2 Bytes
+	hash uint64
 }
 
 func (this *bytesEq) Eval() (bool, error) {
@@ -568,18 +758,27 @@ func (this *bytesEq) Eval() (bool, error) {
 	return bytes.Equal(v1, v2), nil
 }
 
+func (this *bytesEq) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("eq", new(bytesEq))
+	Register("bytesEq", "eq", BytesEq)
 }
 
 // BytesEq returns a new equal function.
 func BytesEq(a, b Bytes) Bool {
-	return &bytesEq{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3244
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &bytesEq{V1: a, V2: b, hash: h}
 }
 
 type doubleNe struct {
 	V1 Double
 	V2 Double
+	hash uint64
 }
 
 func (this *doubleNe) Eval() (bool, error) {
@@ -594,18 +793,27 @@ func (this *doubleNe) Eval() (bool, error) {
 	return v1 != v2, nil
 }
 
+func (this *doubleNe) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("ne", new(doubleNe))
+	Register("doubleNe", "ne", DoubleNe)
 }
 
 // DoubleNe returns a new not equal function.
 func DoubleNe(a, b Double) Bool {
-	return &doubleNe{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3511
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &doubleNe{V1: a, V2: b, hash: h}
 }
 
 type intNe struct {
 	V1 Int
 	V2 Int
+	hash uint64
 }
 
 func (this *intNe) Eval() (bool, error) {
@@ -620,18 +828,27 @@ func (this *intNe) Eval() (bool, error) {
 	return v1 != v2, nil
 }
 
+func (this *intNe) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("ne", new(intNe))
+	Register("intNe", "ne", IntNe)
 }
 
 // IntNe returns a new not equal function.
 func IntNe(a, b Int) Bool {
-	return &intNe{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3511
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &intNe{V1: a, V2: b, hash: h}
 }
 
 type uintNe struct {
 	V1 Uint
 	V2 Uint
+	hash uint64
 }
 
 func (this *uintNe) Eval() (bool, error) {
@@ -646,18 +863,27 @@ func (this *uintNe) Eval() (bool, error) {
 	return v1 != v2, nil
 }
 
+func (this *uintNe) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("ne", new(uintNe))
+	Register("uintNe", "ne", UintNe)
 }
 
 // UintNe returns a new not equal function.
 func UintNe(a, b Uint) Bool {
-	return &uintNe{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3511
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &uintNe{V1: a, V2: b, hash: h}
 }
 
 type boolNe struct {
 	V1 Bool
 	V2 Bool
+	hash uint64
 }
 
 func (this *boolNe) Eval() (bool, error) {
@@ -672,18 +898,27 @@ func (this *boolNe) Eval() (bool, error) {
 	return v1 != v2, nil
 }
 
+func (this *boolNe) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("ne", new(boolNe))
+	Register("boolNe", "ne", BoolNe)
 }
 
 // BoolNe returns a new not equal function.
 func BoolNe(a, b Bool) Bool {
-	return &boolNe{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3511
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &boolNe{V1: a, V2: b, hash: h}
 }
 
 type stringNe struct {
 	V1 String
 	V2 String
+	hash uint64
 }
 
 func (this *stringNe) Eval() (bool, error) {
@@ -698,18 +933,27 @@ func (this *stringNe) Eval() (bool, error) {
 	return v1 != v2, nil
 }
 
+func (this *stringNe) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("ne", new(stringNe))
+	Register("stringNe", "ne", StringNe)
 }
 
 // StringNe returns a new not equal function.
 func StringNe(a, b String) Bool {
-	return &stringNe{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3511
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &stringNe{V1: a, V2: b, hash: h}
 }
 
 type bytesNe struct {
 	V1 Bytes
 	V2 Bytes
+	hash uint64
 }
 
 func (this *bytesNe) Eval() (bool, error) {
@@ -724,11 +968,19 @@ func (this *bytesNe) Eval() (bool, error) {
 	return !bytes.Equal(v1, v2), nil
 }
 
+func (this *bytesNe) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("ne", new(bytesNe))
+	Register("bytesNe", "ne", BytesNe)
 }
 
 // BytesNe returns a new not equal function.
 func BytesNe(a, b Bytes) Bool {
-	return &bytesNe{V1: a, V2: b}
+	h := uint64(17)
+	h = 31*h + 3511
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &bytesNe{V1: a, V2: b, hash: h}
 }

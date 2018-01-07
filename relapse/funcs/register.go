@@ -16,39 +16,34 @@ package funcs
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/relapse/types"
 	"reflect"
 	"strings"
+
+	"github.com/katydid/katydid/relapse/types"
 )
 
 //Register registers a function as function that can composed.
-//fnc is actually a struct type since structs are the way that functions are implemeneted to allow for dynamic composition.
-func Register(name string, fnc interface{}) {
-	RegisterFactory(name, func() interface{} {
-		return reflect.New(reflect.TypeOf(fnc).Elem()).Interface()
-	})
-}
-
-//RegisterFactory registers a function as function that can be composed, but expects a "new" function that returns the function.
-func RegisterFactory(name string, newFunc func() interface{}) {
-	rfunc := reflect.ValueOf(newFunc())
-	returnType := rfunc.MethodByName("Eval").Type()
-	uniqName := rfunc.Elem().Type().Name()
-	lenFields := rfunc.Elem().NumField()
+func Register(uniqName string, name string, fnc interface{}) {
+	typ := reflect.TypeOf(fnc)
+	eval, ok := typ.Out(0).MethodByName("Eval")
+	if !ok {
+		panic("return type has no eval method")
+	}
+	returnType := eval.Type
+	ins := typ.NumIn()
 	res := &funk{
 		name:     name,
 		uniqName: uniqName,
 		Out:      types.FromGo(returnType.Out(0)),
-		newfnc:   newFunc,
+		newfnc:   fnc,
 	}
-	for i := 0; i < lenFields; i++ {
-		meth, ok := rfunc.Elem().Field(i).Type().MethodByName("Eval")
+	for i := 0; i < ins; i++ {
+		meth, ok := typ.In(i).MethodByName("Eval")
 		if !ok {
 			continue
 		}
-		res.InConst = append(res.InConst, IsConst(rfunc.Elem().Field(i).Type()))
+		res.InConst = append(res.InConst, IsConst(typ.In(i)))
 		res.In = append(res.In, types.FromGo(meth.Type.Out(0)))
-		res.InNames = append(res.InNames, rfunc.Elem().Type().Field(i).Name)
 	}
 	funcsMap.register(res)
 }
@@ -169,10 +164,9 @@ type funk struct {
 	name     string
 	uniqName string
 	In       []types.Type
-	InNames  []string
 	InConst  []bool
 	Out      types.Type
-	newfnc   func() interface{}
+	newfnc   interface{}
 }
 
 func (this *funk) String() string {
@@ -188,14 +182,11 @@ func newFunc(uniq string, values ...interface{}) (interface{}, error) {
 	if !ok {
 		return nil, &errUnknownFunction{uniq, nil}
 	}
-	newf := reflect.ValueOf(f.newfnc()).Elem()
-	j := 0
-	for i := 0; i < newf.NumField(); i++ {
-		if _, ok := newf.Field(i).Type().MethodByName("Eval"); !ok {
-			continue
-		}
-		newf.Field(i).Set(reflect.ValueOf(values[j]))
-		j++
+	newf := reflect.ValueOf(f.newfnc)
+	rvalues := make([]reflect.Value, len(values))
+	for i := range rvalues {
+		rvalues[i] = reflect.ValueOf(values[i])
 	}
-	return newf.Addr().Interface(), nil
+	res := newf.Call(rvalues)
+	return res[0].Interface(), nil
 }

@@ -7,6 +7,7 @@ import (
 
 type printDouble struct {
 	E Double
+	hash uint64
 }
 
 func (this *printDouble) Eval() (float64, error) {
@@ -19,19 +20,27 @@ func (this *printDouble) Eval() (float64, error) {
 	return v, err
 }
 
+func (this *printDouble) Hash() uint64 {
+	return this.hash
+}
+
 func (this *printDouble) IsVariable() {}
 
 func init() {
-	Register("print", new(printDouble))
+	Register("printDouble", "print", PrintDouble)
 }
 
 //PrintDouble returns a function that prints out the value of the argument function and returns its value.
 func PrintDouble(e Double) Double {
-	return &printDouble{E: e}
+	h := uint64(17)
+	h = 31*h + 13
+	h = 31*h + e.Hash()
+	return &printDouble{E: e, hash: h}
 }
 
 type printInt struct {
 	E Int
+	hash uint64
 }
 
 func (this *printInt) Eval() (int64, error) {
@@ -44,19 +53,27 @@ func (this *printInt) Eval() (int64, error) {
 	return v, err
 }
 
+func (this *printInt) Hash() uint64 {
+	return this.hash
+}
+
 func (this *printInt) IsVariable() {}
 
 func init() {
-	Register("print", new(printInt))
+	Register("printInt", "print", PrintInt)
 }
 
 //PrintInt returns a function that prints out the value of the argument function and returns its value.
 func PrintInt(e Int) Int {
-	return &printInt{E: e}
+	h := uint64(17)
+	h = 31*h + 13
+	h = 31*h + e.Hash()
+	return &printInt{E: e, hash: h}
 }
 
 type printUint struct {
 	E Uint
+	hash uint64
 }
 
 func (this *printUint) Eval() (uint64, error) {
@@ -69,19 +86,27 @@ func (this *printUint) Eval() (uint64, error) {
 	return v, err
 }
 
+func (this *printUint) Hash() uint64 {
+	return this.hash
+}
+
 func (this *printUint) IsVariable() {}
 
 func init() {
-	Register("print", new(printUint))
+	Register("printUint", "print", PrintUint)
 }
 
 //PrintUint returns a function that prints out the value of the argument function and returns its value.
 func PrintUint(e Uint) Uint {
-	return &printUint{E: e}
+	h := uint64(17)
+	h = 31*h + 13
+	h = 31*h + e.Hash()
+	return &printUint{E: e, hash: h}
 }
 
 type printBool struct {
 	E Bool
+	hash uint64
 }
 
 func (this *printBool) Eval() (bool, error) {
@@ -94,19 +119,27 @@ func (this *printBool) Eval() (bool, error) {
 	return v, err
 }
 
+func (this *printBool) Hash() uint64 {
+	return this.hash
+}
+
 func (this *printBool) IsVariable() {}
 
 func init() {
-	Register("print", new(printBool))
+	Register("printBool", "print", PrintBool)
 }
 
 //PrintBool returns a function that prints out the value of the argument function and returns its value.
 func PrintBool(e Bool) Bool {
-	return &printBool{E: e}
+	h := uint64(17)
+	h = 31*h + 13
+	h = 31*h + e.Hash()
+	return &printBool{E: e, hash: h}
 }
 
 type printString struct {
 	E String
+	hash uint64
 }
 
 func (this *printString) Eval() (string, error) {
@@ -119,19 +152,27 @@ func (this *printString) Eval() (string, error) {
 	return v, err
 }
 
+func (this *printString) Hash() uint64 {
+	return this.hash
+}
+
 func (this *printString) IsVariable() {}
 
 func init() {
-	Register("print", new(printString))
+	Register("printString", "print", PrintString)
 }
 
 //PrintString returns a function that prints out the value of the argument function and returns its value.
 func PrintString(e String) String {
-	return &printString{E: e}
+	h := uint64(17)
+	h = 31*h + 13
+	h = 31*h + e.Hash()
+	return &printString{E: e, hash: h}
 }
 
 type printBytes struct {
 	E Bytes
+	hash uint64
 }
 
 func (this *printBytes) Eval() ([]byte, error) {
@@ -144,19 +185,27 @@ func (this *printBytes) Eval() ([]byte, error) {
 	return v, err
 }
 
+func (this *printBytes) Hash() uint64 {
+	return this.hash
+}
+
 func (this *printBytes) IsVariable() {}
 
 func init() {
-	Register("print", new(printBytes))
+	Register("printBytes", "print", PrintBytes)
 }
 
 //PrintBytes returns a function that prints out the value of the argument function and returns its value.
 func PrintBytes(e Bytes) Bytes {
-	return &printBytes{E: e}
+	h := uint64(17)
+	h = 31*h + 13
+	h = 31*h + e.Hash()
+	return &printBytes{E: e, hash: h}
 }
 
 type printDoubles struct {
 	E Doubles
+	hash uint64
 }
 
 func (this *printDoubles) Eval() ([]float64, error) {
@@ -169,19 +218,27 @@ func (this *printDoubles) Eval() ([]float64, error) {
 	return v, err
 }
 
+func (this *printDoubles) Hash() uint64 {
+	return this.hash
+}
+
 func (this *printDoubles) IsVariable() {}
 
 func init() {
-	Register("print", new(printDoubles))
+	Register("printDoubles", "print", PrintDoubles)
 }
 
 //PrintDoubles returns a function that prints out the value of the argument function and returns its value.
 func PrintDoubles(e Doubles) Doubles {
-	return &printDoubles{E: e}
+	h := uint64(17)
+	h = 31*h + 13
+	h = 31*h + e.Hash()
+	return &printDoubles{E: e, hash: h}
 }
 
 type printInts struct {
 	E Ints
+	hash uint64
 }
 
 func (this *printInts) Eval() ([]int64, error) {
@@ -194,19 +251,27 @@ func (this *printInts) Eval() ([]int64, error) {
 	return v, err
 }
 
+func (this *printInts) Hash() uint64 {
+	return this.hash
+}
+
 func (this *printInts) IsVariable() {}
 
 func init() {
-	Register("print", new(printInts))
+	Register("printInts", "print", PrintInts)
 }
 
 //PrintInts returns a function that prints out the value of the argument function and returns its value.
 func PrintInts(e Ints) Ints {
-	return &printInts{E: e}
+	h := uint64(17)
+	h = 31*h + 13
+	h = 31*h + e.Hash()
+	return &printInts{E: e, hash: h}
 }
 
 type printUints struct {
 	E Uints
+	hash uint64
 }
 
 func (this *printUints) Eval() ([]uint64, error) {
@@ -219,19 +284,27 @@ func (this *printUints) Eval() ([]uint64, error) {
 	return v, err
 }
 
+func (this *printUints) Hash() uint64 {
+	return this.hash
+}
+
 func (this *printUints) IsVariable() {}
 
 func init() {
-	Register("print", new(printUints))
+	Register("printUints", "print", PrintUints)
 }
 
 //PrintUints returns a function that prints out the value of the argument function and returns its value.
 func PrintUints(e Uints) Uints {
-	return &printUints{E: e}
+	h := uint64(17)
+	h = 31*h + 13
+	h = 31*h + e.Hash()
+	return &printUints{E: e, hash: h}
 }
 
 type printBools struct {
 	E Bools
+	hash uint64
 }
 
 func (this *printBools) Eval() ([]bool, error) {
@@ -244,19 +317,27 @@ func (this *printBools) Eval() ([]bool, error) {
 	return v, err
 }
 
+func (this *printBools) Hash() uint64 {
+	return this.hash
+}
+
 func (this *printBools) IsVariable() {}
 
 func init() {
-	Register("print", new(printBools))
+	Register("printBools", "print", PrintBools)
 }
 
 //PrintBools returns a function that prints out the value of the argument function and returns its value.
 func PrintBools(e Bools) Bools {
-	return &printBools{E: e}
+	h := uint64(17)
+	h = 31*h + 13
+	h = 31*h + e.Hash()
+	return &printBools{E: e, hash: h}
 }
 
 type printStrings struct {
 	E Strings
+	hash uint64
 }
 
 func (this *printStrings) Eval() ([]string, error) {
@@ -269,19 +350,27 @@ func (this *printStrings) Eval() ([]string, error) {
 	return v, err
 }
 
+func (this *printStrings) Hash() uint64 {
+	return this.hash
+}
+
 func (this *printStrings) IsVariable() {}
 
 func init() {
-	Register("print", new(printStrings))
+	Register("printStrings", "print", PrintStrings)
 }
 
 //PrintStrings returns a function that prints out the value of the argument function and returns its value.
 func PrintStrings(e Strings) Strings {
-	return &printStrings{E: e}
+	h := uint64(17)
+	h = 31*h + 13
+	h = 31*h + e.Hash()
+	return &printStrings{E: e, hash: h}
 }
 
 type printListOfBytes struct {
 	E ListOfBytes
+	hash uint64
 }
 
 func (this *printListOfBytes) Eval() ([][]byte, error) {
@@ -294,13 +383,20 @@ func (this *printListOfBytes) Eval() ([][]byte, error) {
 	return v, err
 }
 
+func (this *printListOfBytes) Hash() uint64 {
+	return this.hash
+}
+
 func (this *printListOfBytes) IsVariable() {}
 
 func init() {
-	Register("print", new(printListOfBytes))
+	Register("printListOfBytes", "print", PrintListOfBytes)
 }
 
 //PrintListOfBytes returns a function that prints out the value of the argument function and returns its value.
 func PrintListOfBytes(e ListOfBytes) ListOfBytes {
-	return &printListOfBytes{E: e}
+	h := uint64(17)
+	h = 31*h + 13
+	h = 31*h + e.Hash()
+	return &printListOfBytes{E: e, hash: h}
 }

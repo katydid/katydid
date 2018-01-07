@@ -16,7 +16,6 @@ package funcs
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/gen"
 	"os"
 	"sort"
 	"strings"
@@ -36,9 +35,9 @@ func TestGenFuncList(t *testing.T) {
 			ins := make([]string, len(f.In))
 			for i, in := range f.In {
 				if f.InConst[i] {
-					ins[i] = gen.LowerFirst(f.InNames[i]) + " const " + toString(in.String())
+					ins[i] = "const " + toString(in.String())
 				} else {
-					ins[i] = gen.LowerFirst(f.InNames[i]) + " " + toString(in.String())
+					ins[i] = toString(in.String())
 				}
 			}
 			funcs = append(funcs, fmt.Sprintf("func %v(%v) %v", name, strings.Join(ins, ","), toString(f.Out.String())))

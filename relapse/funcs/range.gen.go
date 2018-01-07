@@ -5,6 +5,7 @@ type rangeDoubles struct {
 	List  Doubles
 	First Int
 	Last  Int
+	hash uint64
 }
 
 func (this *rangeDoubles) Eval() ([]float64, error) {
@@ -43,16 +44,26 @@ func (this *rangeDoubles) Eval() ([]float64, error) {
 	return list[first:last], nil
 }
 
+func (this *rangeDoubles) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("range", new(rangeDoubles))
+	Register("rangeDoubles", "range", RangeDoubles)
 }
 
 //RangeDoubles returns a function that returns a range of elements from a list.
 func RangeDoubles(list Doubles, from, to Int) Doubles {
+	h := uint64(17)
+	h = 31*h + 63639164578
+	h = 31*h + from.Hash()
+	h = 31*h + to.Hash()
+	h = 31*h + list.Hash()
 	return &rangeDoubles{
 		List:  list,
 		First: from,
 		Last:  to,
+		hash: h,
 	}
 }
 
@@ -60,6 +71,7 @@ type rangeInts struct {
 	List  Ints
 	First Int
 	Last  Int
+	hash uint64
 }
 
 func (this *rangeInts) Eval() ([]int64, error) {
@@ -98,16 +110,26 @@ func (this *rangeInts) Eval() ([]int64, error) {
 	return list[first:last], nil
 }
 
+func (this *rangeInts) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("range", new(rangeInts))
+	Register("rangeInts", "range", RangeInts)
 }
 
 //RangeInts returns a function that returns a range of elements from a list.
 func RangeInts(list Ints, from, to Int) Ints {
+	h := uint64(17)
+	h = 31*h + 2284164
+	h = 31*h + from.Hash()
+	h = 31*h + to.Hash()
+	h = 31*h + list.Hash()
 	return &rangeInts{
 		List:  list,
 		First: from,
 		Last:  to,
+		hash: h,
 	}
 }
 
@@ -115,6 +137,7 @@ type rangeUints struct {
 	List  Uints
 	First Int
 	Last  Int
+	hash uint64
 }
 
 func (this *rangeUints) Eval() ([]uint64, error) {
@@ -153,16 +176,26 @@ func (this *rangeUints) Eval() ([]uint64, error) {
 	return list[first:last], nil
 }
 
+func (this *rangeUints) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("range", new(rangeUints))
+	Register("rangeUints", "range", RangeUints)
 }
 
 //RangeUints returns a function that returns a range of elements from a list.
 func RangeUints(list Uints, from, to Int) Uints {
+	h := uint64(17)
+	h = 31*h + 81736761
+	h = 31*h + from.Hash()
+	h = 31*h + to.Hash()
+	h = 31*h + list.Hash()
 	return &rangeUints{
 		List:  list,
 		First: from,
 		Last:  to,
+		hash: h,
 	}
 }
 
@@ -170,6 +203,7 @@ type rangeBools struct {
 	List  Bools
 	First Int
 	Last  Int
+	hash uint64
 }
 
 func (this *rangeBools) Eval() ([]bool, error) {
@@ -208,16 +242,26 @@ func (this *rangeBools) Eval() ([]bool, error) {
 	return list[first:last], nil
 }
 
+func (this *rangeBools) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("range", new(rangeBools))
+	Register("rangeBools", "range", RangeBools)
 }
 
 //RangeBools returns a function that returns a range of elements from a list.
 func RangeBools(list Bools, from, to Int) Bools {
+	h := uint64(17)
+	h = 31*h + 64369321
+	h = 31*h + from.Hash()
+	h = 31*h + to.Hash()
+	h = 31*h + list.Hash()
 	return &rangeBools{
 		List:  list,
 		First: from,
 		Last:  to,
+		hash: h,
 	}
 }
 
@@ -225,6 +269,7 @@ type rangeStrings struct {
 	List  Strings
 	First Int
 	Last  Int
+	hash uint64
 }
 
 func (this *rangeStrings) Eval() ([]string, error) {
@@ -263,16 +308,26 @@ func (this *rangeStrings) Eval() ([]string, error) {
 	return list[first:last], nil
 }
 
+func (this *rangeStrings) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("range", new(rangeStrings))
+	Register("rangeStrings", "range", RangeStrings)
 }
 
 //RangeStrings returns a function that returns a range of elements from a list.
 func RangeStrings(list Strings, from, to Int) Strings {
+	h := uint64(17)
+	h = 31*h + 77092305506
+	h = 31*h + from.Hash()
+	h = 31*h + to.Hash()
+	h = 31*h + list.Hash()
 	return &rangeStrings{
 		List:  list,
 		First: from,
 		Last:  to,
+		hash: h,
 	}
 }
 
@@ -280,6 +335,7 @@ type rangeListOfBytes struct {
 	List  ListOfBytes
 	First Int
 	Last  Int
+	hash uint64
 }
 
 func (this *rangeListOfBytes) Eval() ([][]byte, error) {
@@ -318,15 +374,25 @@ func (this *rangeListOfBytes) Eval() ([][]byte, error) {
 	return list[first:last], nil
 }
 
+func (this *rangeListOfBytes) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("range", new(rangeListOfBytes))
+	Register("rangeListOfBytes", "range", RangeListOfBytes)
 }
 
 //RangeListOfBytes returns a function that returns a range of elements from a list.
 func RangeListOfBytes(list ListOfBytes, from, to Int) ListOfBytes {
+	h := uint64(17)
+	h = 31*h + 65169257167589942
+	h = 31*h + from.Hash()
+	h = 31*h + to.Hash()
+	h = 31*h + list.Hash()
 	return &rangeListOfBytes{
 		List:  list,
 		First: from,
 		Last:  to,
+		hash: h,
 	}
 }

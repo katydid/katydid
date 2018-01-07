@@ -27,8 +27,14 @@ func (this *now) Eval() (int64, error) {
 	return time.Now().UnixNano(), nil
 }
 
+func (this *now) Hash() uint64 {
+	h := uint64(17)
+	h = 31*h + 43
+	return h
+}
+
 func (this *now) IsVariable() {}
 
 func init() {
-	Register("now", new(now))
+	Register("now", "now", Now)
 }

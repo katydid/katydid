@@ -54,11 +54,15 @@ func Not(v1 Bool) Bool {
 	case *uintNe:
 		return UintEq(vv.V1, vv.V2)
 	}
-	return &not{v1}
+	h := uint64(17)
+	h = 31*h + 23
+	h = 31*h + v1.Hash()
+	return &not{v1, h}
 }
 
 type not struct {
-	V1 Bool
+	V1   Bool
+	hash uint64
 }
 
 func (this *not) Eval() (bool, error) {
@@ -69,8 +73,12 @@ func (this *not) Eval() (bool, error) {
 	return !b, nil
 }
 
+func (this *not) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("not", new(not))
+	Register("not", "not", Not)
 }
 
 //And returns a new and function with the two input functions as its parameters.
@@ -203,12 +211,17 @@ func And(v1, v2 Bool) Bool {
 			}
 		}
 	}
-	return &and{v1, v2}
+	h := uint64(17)
+	h = 31*h + 29
+	h = 31*h + v1.Hash()
+	h = 31*h + v2.Hash()
+	return &and{v1, v2, h}
 }
 
 type and struct {
-	V1 Bool
-	V2 Bool
+	V1   Bool
+	V2   Bool
+	hash uint64
 }
 
 func (this *and) Eval() (bool, error) {
@@ -219,8 +232,12 @@ func (this *and) Eval() (bool, error) {
 	return this.V2.Eval()
 }
 
+func (this *and) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("and", new(and))
+	Register("and", "and", And)
 }
 
 //Or returns a new or function with the two input functions as its parameters.
@@ -252,12 +269,17 @@ func Or(v1, v2 Bool) Bool {
 			return BoolConst(true)
 		}
 	}
-	return &or{v1, v2}
+	h := uint64(17)
+	h = 31*h + 37
+	h = 31*h + v1.Hash()
+	h = 31*h + v2.Hash()
+	return &or{v1, v2, h}
 }
 
 type or struct {
-	V1 Bool
-	V2 Bool
+	V1   Bool
+	V2   Bool
+	hash uint64
 }
 
 func (this *or) Eval() (bool, error) {
@@ -268,6 +290,10 @@ func (this *or) Eval() (bool, error) {
 	return this.V2.Eval()
 }
 
+func (this *or) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("or", new(or))
+	Register("or", "or", Or)
 }

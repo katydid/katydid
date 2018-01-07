@@ -20,11 +20,15 @@ import (
 
 //ToLower returns a toLower function with the input function as its parameter.
 func ToLower(s String) String {
-	return &toLower{s}
+	h := uint64(17)
+	h = 31*h + 47
+	h = 31*h + s.Hash()
+	return &toLower{s, h}
 }
 
 type toLower struct {
-	S String
+	S    String
+	hash uint64
 }
 
 func (this *toLower) Eval() (string, error) {
@@ -35,17 +39,25 @@ func (this *toLower) Eval() (string, error) {
 	return strings.ToLower(s), nil
 }
 
+func (this *toLower) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("toLower", new(toLower))
+	Register("toLower", "toLower", ToLower)
 }
 
 //ToUpper returns a toUpper function with the input function as its parameter.
 func ToUpper(s String) String {
-	return &toUpper{s}
+	h := uint64(17)
+	h = 31*h + 53
+	h = 31*h + s.Hash()
+	return &toUpper{s, h}
 }
 
 type toUpper struct {
-	S String
+	S    String
+	hash uint64
 }
 
 func (this *toUpper) Eval() (string, error) {
@@ -56,18 +68,27 @@ func (this *toUpper) Eval() (string, error) {
 	return strings.ToUpper(s), nil
 }
 
+func (this *toUpper) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("toUpper", new(toUpper))
+	Register("toUpper", "toUpper", ToUpper)
 }
 
 //Contains returns a contains function with the two input function as its parameter.
 func Contains(s, sub String) Bool {
-	return &contains{s, sub}
+	h := uint64(17)
+	h = 31*h + 59
+	h = 31*h + s.Hash()
+	h = 31*h + sub.Hash()
+	return &contains{s, sub, h}
 }
 
 type contains struct {
 	S      String
 	Substr String
+	hash   uint64
 }
 
 func (this *contains) Eval() (bool, error) {
@@ -82,18 +103,27 @@ func (this *contains) Eval() (bool, error) {
 	return strings.Contains(s, subStr), nil
 }
 
+func (this *contains) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("contains", new(contains))
+	Register("contains", "contains", Contains)
 }
 
 //EqualFold returns a eqFold function with the two input functions as its parameters.
 func EqualFold(s, t String) Bool {
-	return &equalFold{s, t}
+	h := uint64(17)
+	h = 31*h + 71
+	h = 31*h + s.Hash()
+	h = 31*h + t.Hash()
+	return &equalFold{s, t, h}
 }
 
 type equalFold struct {
-	S String
-	T String
+	S    String
+	T    String
+	hash uint64
 }
 
 func (this *equalFold) Eval() (bool, error) {
@@ -108,18 +138,27 @@ func (this *equalFold) Eval() (bool, error) {
 	return strings.EqualFold(s, t), nil
 }
 
+func (this *equalFold) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("eqFold", new(equalFold))
+	Register("eqFold", "eqFold", EqualFold)
 }
 
 //HasPrefix returns a hasPrefix function with the two input functions as its parameters.
 func HasPrefix(a, b String) Bool {
-	return &hasPrefix{a, b}
+	h := uint64(17)
+	h = 31*h + 73
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &hasPrefix{a, b, h}
 }
 
 type hasPrefix struct {
-	V1 String
-	V2 String
+	V1   String
+	V2   String
+	hash uint64
 }
 
 func (this *hasPrefix) Eval() (bool, error) {
@@ -134,18 +173,27 @@ func (this *hasPrefix) Eval() (bool, error) {
 	return strings.HasPrefix(v1, v2), nil
 }
 
+func (this *hasPrefix) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("hasPrefix", new(hasPrefix))
+	Register("hasPrefix", "hasPrefix", HasPrefix)
 }
 
 //HasSuffix returns a hasSuffix function with the two input functions as its parameters.
 func HasSuffix(a, b String) Bool {
-	return &hasSuffix{a, b}
+	h := uint64(17)
+	h = 31*h + 79
+	h = 31*h + a.Hash()
+	h = 31*h + b.Hash()
+	return &hasSuffix{a, b, h}
 }
 
 type hasSuffix struct {
-	V1 String
-	V2 String
+	V1   String
+	V2   String
+	hash uint64
 }
 
 func (this *hasSuffix) Eval() (bool, error) {
@@ -160,6 +208,10 @@ func (this *hasSuffix) Eval() (bool, error) {
 	return strings.HasSuffix(v1, v2), nil
 }
 
+func (this *hasSuffix) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("hasSuffix", new(hasSuffix))
+	Register("hasSuffix", "hasSuffix", HasSuffix)
 }

@@ -36,6 +36,10 @@ func (this *injectableInt) Eval() (int64, error) {
 	return this.context.Value.(int64), nil
 }
 
+func (this *injectableInt) Hash() uint64 {
+	return 17
+}
+
 func (this *injectableInt) SetContext(context *funcs.Context) {
 	this.context = context
 }
@@ -45,7 +49,7 @@ func (this *injectableInt) IsVariable() {
 }
 
 func init() {
-	funcs.Register("inject", new(injectableInt))
+	funcs.Register("injectableInt", "inject", NewInjectable)
 
 	injectNumber = G{
 		"main": InPath("Num", Value(funcs.IntEq(funcs.IntVar(), NewInjectable()))),

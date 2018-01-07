@@ -20,13 +20,18 @@ import (
 
 //Regex returns a new regex function given the first parameter as the expression string that needs to compiled and the second as the regex that should be matched.
 func Regex(expr ConstString, input String) Bool {
-	return &regex{Expr: expr, S: input}
+	h := uint64(17)
+	h = 31*h + 41
+	h = 31*h + expr.Hash()
+	h = 31*h + input.Hash()
+	return &regex{Expr: expr, S: input, hash: h}
 }
 
 type regex struct {
 	r    *regexp.Regexp
 	Expr ConstString
 	S    String
+	hash uint64
 }
 
 func (this *regex) Init() error {
@@ -50,6 +55,10 @@ func (this *regex) Eval() (bool, error) {
 	return this.r.MatchString(s), nil
 }
 
+func (this *regex) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("regex", new(regex))
+	Register("regex", "regex", Regex)
 }

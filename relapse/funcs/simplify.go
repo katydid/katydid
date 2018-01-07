@@ -18,6 +18,10 @@ import (
 	"reflect"
 )
 
+type Hashable interface {
+	Hash() uint64
+}
+
 //IsFalse returns whether a function is a false constant.
 func IsFalse(fn Bool) bool {
 	v, ok := fn.(*constBool)
@@ -37,7 +41,16 @@ func IsTrue(fn Bool) bool {
 }
 
 //Equal returns whether two functions are equal.
-func Equal(l, r interface{}) bool {
+func Equal(l, r Hashable) bool {
+	hl := l.Hash()
+	hr := r.Hash()
+	if hl != hr {
+		return false
+	}
+	return eq(l, r)
+}
+
+func eq(l, r interface{}) bool {
 	le := reflect.ValueOf(l).Elem()
 	lUniqName := le.Type().Name()
 	re := reflect.ValueOf(r).Elem()
@@ -54,7 +67,7 @@ func Equal(l, r interface{}) bool {
 		if _, ok := le.Field(i).Type().MethodByName("Eval"); !ok {
 			continue
 		}
-		if !Equal(le.Field(i).Interface(), re.Field(i).Interface()) {
+		if !eq(le.Field(i).Interface(), re.Field(i).Interface()) {
 			return false
 		}
 	}
@@ -62,7 +75,19 @@ func Equal(l, r interface{}) bool {
 }
 
 //Compare compares two funtions.
-func Compare(l, r interface{}) int {
+func Compare(l, r Hashable) int {
+	hl := l.Hash()
+	hr := r.Hash()
+	if hl != hr {
+		if hl < hr {
+			return -1
+		}
+		return 1
+	}
+	return cmp(l, r)
+}
+
+func cmp(l, r interface{}) int {
 	le := reflect.ValueOf(l).Elem()
 	lUniqName := le.Type().Name()
 	re := reflect.ValueOf(r).Elem()
@@ -90,16 +115,10 @@ func Compare(l, r interface{}) int {
 		if _, ok := le.Field(i).Type().MethodByName("Eval"); !ok {
 			continue
 		}
-		c := Compare(le.Field(i).Interface(), re.Field(i).Interface())
+		c := cmp(le.Field(i).Interface(), re.Field(i).Interface())
 		if c != 0 {
 			return c
 		}
 	}
 	return 0
-}
-
-//Hash returns the hash of a function.
-func Hash(f interface{}) uint64 {
-	//TODO maybe this could be done better or we could just always convert functions to strings to compare
-	return deriveHash(sprint(f))
 }

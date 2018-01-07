@@ -15,17 +15,25 @@ var typConstDouble reflect.Type = reflect.TypeOf((*ConstDouble)(nil)).Elem()
 
 type constDouble struct {
 	v float64
+	hash uint64
 }
 
 //DoubleConst returns a new constant function of type Double
 func DoubleConst(v float64) ConstDouble {
-	return &constDouble{v}
+	h := uint64(17)
+	h = 31*h + 2052876273
+	h = 31*h + deriveHashDouble(v)
+	return &constDouble{v, h}
 }
 
 func (this *constDouble) IsConst() {}
 
 func (this *constDouble) Eval() (float64, error) {
 	return this.v, nil
+}
+
+func (this *constDouble) Hash() uint64 {
+	return this.hash
 }
 
 func (this *constDouble) String() string {
@@ -40,17 +48,25 @@ var typConstInt reflect.Type = reflect.TypeOf((*ConstInt)(nil)).Elem()
 
 type constInt struct {
 	v int64
+	hash uint64
 }
 
 //IntConst returns a new constant function of type Int
 func IntConst(v int64) ConstInt {
-	return &constInt{v}
+	h := uint64(17)
+	h = 31*h + 73679
+	h = 31*h + deriveHashInt(v)
+	return &constInt{v, h}
 }
 
 func (this *constInt) IsConst() {}
 
 func (this *constInt) Eval() (int64, error) {
 	return this.v, nil
+}
+
+func (this *constInt) Hash() uint64 {
+	return this.hash
 }
 
 func (this *constInt) String() string {
@@ -65,17 +81,25 @@ var typConstUint reflect.Type = reflect.TypeOf((*ConstUint)(nil)).Elem()
 
 type constUint struct {
 	v uint64
+	hash uint64
 }
 
 //UintConst returns a new constant function of type Uint
 func UintConst(v uint64) ConstUint {
-	return &constUint{v}
+	h := uint64(17)
+	h = 31*h + 2636666
+	h = 31*h + deriveHashUint(v)
+	return &constUint{v, h}
 }
 
 func (this *constUint) IsConst() {}
 
 func (this *constUint) Eval() (uint64, error) {
 	return this.v, nil
+}
+
+func (this *constUint) Hash() uint64 {
+	return this.hash
 }
 
 func (this *constUint) String() string {
@@ -90,17 +114,25 @@ var typConstBool reflect.Type = reflect.TypeOf((*ConstBool)(nil)).Elem()
 
 type constBool struct {
 	v bool
+	hash uint64
 }
 
 //BoolConst returns a new constant function of type Bool
 func BoolConst(v bool) ConstBool {
-	return &constBool{v}
+	h := uint64(17)
+	h = 31*h + 2076426
+	h = 31*h + deriveHashBool(v)
+	return &constBool{v, h}
 }
 
 func (this *constBool) IsConst() {}
 
 func (this *constBool) Eval() (bool, error) {
 	return this.v, nil
+}
+
+func (this *constBool) Hash() uint64 {
+	return this.hash
 }
 
 func (this *constBool) String() string {
@@ -115,17 +147,25 @@ var typConstString reflect.Type = reflect.TypeOf((*ConstString)(nil)).Elem()
 
 type constString struct {
 	v string
+	hash uint64
 }
 
 //StringConst returns a new constant function of type String
 func StringConst(v string) ConstString {
-	return &constString{v}
+	h := uint64(17)
+	h = 31*h + 2486848561
+	h = 31*h + deriveHashString(v)
+	return &constString{v, h}
 }
 
 func (this *constString) IsConst() {}
 
 func (this *constString) Eval() (string, error) {
 	return this.v, nil
+}
+
+func (this *constString) Hash() uint64 {
+	return this.hash
 }
 
 func (this *constString) String() string {
@@ -140,17 +180,25 @@ var typConstBytes reflect.Type = reflect.TypeOf((*ConstBytes)(nil)).Elem()
 
 type constBytes struct {
 	v []byte
+	hash uint64
 }
 
 //BytesConst returns a new constant function of type Bytes
 func BytesConst(v []byte) ConstBytes {
-	return &constBytes{v}
+	h := uint64(17)
+	h = 31*h + 64671819
+	h = 31*h + deriveHashBytes(v)
+	return &constBytes{v, h}
 }
 
 func (this *constBytes) IsConst() {}
 
 func (this *constBytes) Eval() ([]byte, error) {
 	return this.v, nil
+}
+
+func (this *constBytes) Hash() uint64 {
+	return this.hash
 }
 
 func (this *constBytes) String() string {
@@ -165,17 +213,25 @@ var typConstDoubles reflect.Type = reflect.TypeOf((*ConstDoubles)(nil)).Elem()
 
 type constDoubles struct {
 	v []float64
+	hash uint64
 }
 
 //DoublesConst returns a new constant function of type Doubles
 func DoublesConst(v []float64) ConstDoubles {
-	return &constDoubles{v}
+	h := uint64(17)
+	h = 31*h + 63639164578
+	h = 31*h + deriveHashDoubles(v)
+	return &constDoubles{v, h}
 }
 
 func (this *constDoubles) IsConst() {}
 
 func (this *constDoubles) Eval() ([]float64, error) {
 	return this.v, nil
+}
+
+func (this *constDoubles) Hash() uint64 {
+	return this.hash
 }
 
 func (this *constDoubles) String() string {
@@ -194,17 +250,25 @@ var typConstInts reflect.Type = reflect.TypeOf((*ConstInts)(nil)).Elem()
 
 type constInts struct {
 	v []int64
+	hash uint64
 }
 
 //IntsConst returns a new constant function of type Ints
 func IntsConst(v []int64) ConstInts {
-	return &constInts{v}
+	h := uint64(17)
+	h = 31*h + 2284164
+	h = 31*h + deriveHashInts(v)
+	return &constInts{v, h}
 }
 
 func (this *constInts) IsConst() {}
 
 func (this *constInts) Eval() ([]int64, error) {
 	return this.v, nil
+}
+
+func (this *constInts) Hash() uint64 {
+	return this.hash
 }
 
 func (this *constInts) String() string {
@@ -223,17 +287,25 @@ var typConstUints reflect.Type = reflect.TypeOf((*ConstUints)(nil)).Elem()
 
 type constUints struct {
 	v []uint64
+	hash uint64
 }
 
 //UintsConst returns a new constant function of type Uints
 func UintsConst(v []uint64) ConstUints {
-	return &constUints{v}
+	h := uint64(17)
+	h = 31*h + 81736761
+	h = 31*h + deriveHashUints(v)
+	return &constUints{v, h}
 }
 
 func (this *constUints) IsConst() {}
 
 func (this *constUints) Eval() ([]uint64, error) {
 	return this.v, nil
+}
+
+func (this *constUints) Hash() uint64 {
+	return this.hash
 }
 
 func (this *constUints) String() string {
@@ -252,17 +324,25 @@ var typConstBools reflect.Type = reflect.TypeOf((*ConstBools)(nil)).Elem()
 
 type constBools struct {
 	v []bool
+	hash uint64
 }
 
 //BoolsConst returns a new constant function of type Bools
 func BoolsConst(v []bool) ConstBools {
-	return &constBools{v}
+	h := uint64(17)
+	h = 31*h + 64369321
+	h = 31*h + deriveHashBools(v)
+	return &constBools{v, h}
 }
 
 func (this *constBools) IsConst() {}
 
 func (this *constBools) Eval() ([]bool, error) {
 	return this.v, nil
+}
+
+func (this *constBools) Hash() uint64 {
+	return this.hash
 }
 
 func (this *constBools) String() string {
@@ -281,17 +361,25 @@ var typConstStrings reflect.Type = reflect.TypeOf((*ConstStrings)(nil)).Elem()
 
 type constStrings struct {
 	v []string
+	hash uint64
 }
 
 //StringsConst returns a new constant function of type Strings
 func StringsConst(v []string) ConstStrings {
-	return &constStrings{v}
+	h := uint64(17)
+	h = 31*h + 77092305506
+	h = 31*h + deriveHashStrings(v)
+	return &constStrings{v, h}
 }
 
 func (this *constStrings) IsConst() {}
 
 func (this *constStrings) Eval() ([]string, error) {
 	return this.v, nil
+}
+
+func (this *constStrings) Hash() uint64 {
+	return this.hash
 }
 
 func (this *constStrings) String() string {
@@ -310,17 +398,25 @@ var typConstListOfBytes reflect.Type = reflect.TypeOf((*ConstListOfBytes)(nil)).
 
 type constListOfBytes struct {
 	v [][]byte
+	hash uint64
 }
 
 //ListOfBytesConst returns a new constant function of type ListOfBytes
 func ListOfBytesConst(v [][]byte) ConstListOfBytes {
-	return &constListOfBytes{v}
+	h := uint64(17)
+	h = 31*h + 65169257167589942
+	h = 31*h + deriveHashListOfBytes(v)
+	return &constListOfBytes{v, h}
 }
 
 func (this *constListOfBytes) IsConst() {}
 
 func (this *constListOfBytes) Eval() ([][]byte, error) {
 	return this.v, nil
+}
+
+func (this *constListOfBytes) Hash() uint64 {
+	return this.hash
 }
 
 func (this *constListOfBytes) String() string {
