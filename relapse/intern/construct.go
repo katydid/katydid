@@ -231,35 +231,30 @@ func getInterleaves(p *ast.Pattern) []*ast.Pattern {
 	return []*ast.Pattern{p}
 }
 
-// var empty = &Pattern{
-// 	Type:     Empty,
-// 	nullable: true,
-// }
+var empty = &Pattern{
+	Type:     Empty,
+	nullable: true,
+}
 
-// var zany = &Pattern{
-// 	Type:     ZAny,
-// 	nullable: true,
-// }
+var zany = &Pattern{
+	Type:     ZAny,
+	nullable: true,
+}
 
-// var notzany = &Pattern{
-// 	Type:     Not,
-// 	Patterns: []*Pattern{zany},
-// 	nullable: false,
-// }
+var notzany = &Pattern{
+	Type:     Not,
+	Patterns: []*Pattern{zany},
+	nullable: false,
+}
 
-// func init() {
-// 	empty.SetHash()
-// 	zany.SetHash()
-// 	notzany.SetHash()
-// }
+func init() {
+	empty.SetHash()
+	zany.SetHash()
+	notzany.SetHash()
+}
 
 func newEmpty() *Pattern {
-	p := &Pattern{
-		Type:     Empty,
-		nullable: true,
-	}
-	p.SetHash()
-	return p
+	return empty
 }
 
 func (c *construct) NewEmpty() *Pattern {
@@ -267,12 +262,7 @@ func (c *construct) NewEmpty() *Pattern {
 }
 
 func newZAny() *Pattern {
-	p := &Pattern{
-		Type:     ZAny,
-		nullable: true,
-	}
-	p.SetHash()
-	return p
+	return zany
 }
 
 func (c *construct) NewZAny() *Pattern {
@@ -280,13 +270,7 @@ func (c *construct) NewZAny() *Pattern {
 }
 
 func newNotZAny() *Pattern {
-	p := &Pattern{
-		Type:     Not,
-		Patterns: []*Pattern{newZAny()},
-		nullable: false,
-	}
-	p.SetHash()
-	return p
+	return notzany
 }
 
 func (c *construct) NewNotZAny() *Pattern {
