@@ -47,3 +47,27 @@ func TestSetsAddIndex(t *testing.T) {
 		t.Fatal("accept")
 	}
 }
+
+func TestSetsLookup(t *testing.T) {
+	s := NewSetOfPatterns()
+	zanys := []*Pattern{newZAny()}
+	want1 := s.Add(zanys)
+	got1 := s.Index(zanys)
+	if got1 != want1 {
+		t.Fatalf("got %d != want %d", got1, want1)
+	}
+	notzanys := []*Pattern{newNotZAny(), newNotZAny()}
+	want2 := s.Add(notzanys)
+	got2 := s.Index(notzanys)
+	if got2 != want2 {
+		t.Fatalf("got %d != want %d", got2, want2)
+	}
+	got1 = s.Add(zanys)
+	if got1 != want1 {
+		t.Fatalf("got %d != want %d", got1, want1)
+	}
+	got2 = s.Index(notzanys)
+	if got2 != want2 {
+		t.Fatalf("got %d != want %d", got2, want2)
+	}
+}
