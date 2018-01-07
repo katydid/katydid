@@ -26,13 +26,11 @@ import (
 )
 
 type ifExprs struct {
-	parentPatterns int
-	ifs            []*intern.IfExpr
-	node           *ifNode
+	*ifNode
 }
 
-func newIfExprs(parentPatterns int, ifs []*intern.IfExpr) *ifExprs {
-	return &ifExprs{parentPatterns, ifs, nil}
+func newIfExprs(ifs []*intern.IfExpr) *ifExprs {
+	return &ifExprs{&ifNode{prev: funcs.BoolConst(true), ifs: ifs}}
 }
 
 type ifNode struct {
@@ -44,17 +42,14 @@ type ifNode struct {
 	thn  *ifNode
 	els  *ifNode
 
-	ps                 []*intern.Pattern
-	ret                bool
-	zippedPatternIndex int
-	stackIndex         int
+	ps []*intern.Pattern
 }
 
 func (this *ifNode) String() string {
 	if this == nil {
 		return "...\n"
 	}
-	if this.ret {
+	if len(this.ifs) == 0 {
 		ss := make([]string, len(this.ps))
 		for i := range this.ps {
 			ss[i] = this.ps[i].String()
@@ -67,13 +62,9 @@ func (this *ifNode) String() string {
 	return "if (" + funcs.Sprint(this.f) + ") then {\n" + this.thn.String() + "} else {\n" + this.els.String() + "}"
 }
 
-func (this *Mem) calcNode(node *ifNode, parentPatterns int, label parser.Value) (int, int, error) {
+func (node *ifNode) eval(label parser.Value) ([]*intern.Pattern, error) {
 	if len(node.ifs) == 0 {
-		if !node.ret {
-			node.zippedPatternIndex, node.stackIndex = this.zipStackAndPatterns(parentPatterns, node.ps)
-			node.ret = true
-		}
-		return node.zippedPatternIndex, node.stackIndex, nil
+		return node.ps, nil
 	}
 	if node.f == nil {
 		node.f = node.ifs[0].Cond
@@ -91,23 +82,23 @@ func (this *Mem) calcNode(node *ifNode, parentPatterns int, label parser.Value) 
 			node.ps = append(node.ps, node.ifs[0].Thn)
 			node.ifs = node.ifs[1:]
 			node.f = nil
-			return this.calcNode(node, parentPatterns, label)
+			return node.eval(label)
 		}
 		if funcs.IsFalse(node.f) {
 			node.ps = append(node.ps, node.ifs[0].Els)
 			node.ifs = node.ifs[1:]
 			node.f = nil
-			return this.calcNode(node, parentPatterns, label)
+			return node.eval(label)
 		}
 		c, err := compose.NewBoolFunc(node.f)
 		if err != nil {
-			return 0, 0, err
+			return nil, err
 		}
 		node.cond = c
 	}
 	cond, err := node.cond.Eval(label)
 	if err != nil {
-		return 0, 0, err
+		return nil, err
 	}
 	if cond {
 		if node.thn == nil {
@@ -118,7 +109,7 @@ func (this *Mem) calcNode(node *ifNode, parentPatterns int, label parser.Value) 
 			node.thn.prev = funcs.Simplify(funcs.And(node.prev, node.f))
 			node.thn.ifs = node.ifs[1:]
 		}
-		return this.calcNode(node.thn, parentPatterns, label)
+		return node.thn.eval(label)
 	}
 	if node.els == nil {
 		node.els = &ifNode{}
@@ -128,7 +119,16 @@ func (this *Mem) calcNode(node *ifNode, parentPatterns int, label parser.Value) 
 		node.els.prev = funcs.Simplify(funcs.And(node.prev, funcs.Not(node.f)))
 		node.els.ifs = node.ifs[1:]
 	}
-	return this.calcNode(node.els, parentPatterns, label)
+	return node.els.eval(label)
+}
+
+func (this *Mem) calcNode(node *ifNode, parentPatterns int, label parser.Value) (int, int, error) {
+	ps, err := node.eval(label)
+	if err != nil {
+		return 0, 0, err
+	}
+	zippedPatternIndex, stackIndex := this.zipStackAndPatterns(parentPatterns, ps)
+	return zippedPatternIndex, stackIndex, nil
 }
 
 func (this *Mem) zipStackAndPatterns(parentPatterns int, ps []*intern.Pattern) (int, int) {
@@ -143,9 +143,6 @@ func (this *Mem) zipStackAndPatterns(parentPatterns int, ps []*intern.Pattern) (
 	return zippedPatternIndex, stackIndex
 }
 
-func (this *Mem) eval(ifs *ifExprs, label parser.Value) (int, int, error) {
-	if ifs.node == nil {
-		ifs.node = &ifNode{prev: funcs.BoolConst(true), ifs: ifs.ifs}
-	}
-	return this.calcNode(ifs.node, ifs.parentPatterns, label)
+func (this *Mem) eval(parentPatterns int, ifs *ifExprs, label parser.Value) (int, int, error) {
+	return this.calcNode(ifs.ifNode, parentPatterns, label)
 }

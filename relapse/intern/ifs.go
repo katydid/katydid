@@ -26,6 +26,10 @@ type IfExpr struct {
 	Els  *Pattern
 }
 
+func NewIfExpr(c funcs.Bool, thn, els *Pattern) *IfExpr {
+	return &IfExpr{c, thn, els}
+}
+
 func (this *IfExpr) eval(label parser.Value) (*Pattern, error) {
 	f, err := compose.NewBoolFunc(this.Cond)
 	if err != nil {

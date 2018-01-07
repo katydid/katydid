@@ -21,14 +21,16 @@ import (
 //SetOfPatterns represents an indexed list of list of Patterns.
 //It reverse maps a list of Patterns into a single int.
 type SetOfPatterns struct {
-	List   []*Patterns
-	Hashes map[uint64][]int
+	List      []*Patterns
+	Hashes    map[uint64][]int
+	SetOfBits sets.BitsSet
 }
 
 func NewSetOfPatterns() *SetOfPatterns {
 	return &SetOfPatterns{
-		List:   []*Patterns{},
-		Hashes: make(map[uint64][]int),
+		List:      []*Patterns{},
+		Hashes:    make(map[uint64][]int),
+		SetOfBits: sets.NewBitsSet(),
 	}
 }
 
@@ -56,7 +58,9 @@ func (this *SetOfPatterns) Add(ps []*Pattern) int {
 	h := hashes(ps)
 	index = len(this.List)
 	this.Hashes[h] = append(this.Hashes[h], index)
-	this.List = append(this.List, NewPatterns(ps))
+	patterns := NewPatterns(ps)
+	this.List = append(this.List, patterns)
+	patterns.NullIndex = this.SetOfBits.Add(patterns.Nullables)
 	return index
 }
 
@@ -65,6 +69,7 @@ type Patterns struct {
 	Escapable bool
 	Nullables sets.Bits
 	Accept    bool
+	NullIndex int
 }
 
 func NewPatterns(ps []*Pattern) *Patterns {

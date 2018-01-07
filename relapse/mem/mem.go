@@ -52,11 +52,9 @@ func new(g *ast.Grammar, record bool) (*Mem, error) {
 		states:    intern.NewSetOfPatterns(),
 		zis:       sets.NewInts(),
 		stackElms: sets.NewPairs(),
-		nullables: sets.NewBitsSet(),
 
-		calls:           []*ifExprs{},
-		returns:         []map[int]int{},
-		stateToNullable: []int{},
+		calls:   []*ifExprs{},
+		returns: []map[int]int{},
 	}
 	start := m.states.Add([]*intern.Pattern{main})
 
@@ -87,41 +85,19 @@ type Mem struct {
 	states    *intern.SetOfPatterns
 	zis       sets.Ints
 	stackElms sets.Pairs
-	nullables sets.BitsSet
 
-	start           int
-	calls           []*ifExprs
-	returns         []map[int]int
-	stateToNullable []int
+	start   int
+	calls   []*ifExprs    // state -> (ifExprs : state -> label -> state)
+	returns []map[int]int // stackIndex -> nullIndex -> state
 }
 
-func (this *Mem) calcCallTrees(upto int) error {
-	for i := len(this.calls); i <= upto; i++ {
+func (this *Mem) getCall(state int) (*ifExprs, error) {
+	for i := len(this.calls); i <= state; i++ {
 		listOfIfExpr := intern.DeriveCalls(this.construct, this.states.Get(i).Patterns)
-		ifs := newIfExprs(i, listOfIfExpr)
+		ifs := newIfExprs(listOfIfExpr)
 		this.calls = append(this.calls, ifs)
 	}
-	return nil
-}
-
-func (this *Mem) getCallTree(patterns int) (*ifExprs, error) {
-	if err := this.calcCallTrees(patterns); err != nil {
-		return nil, err
-	}
-	return this.calls[patterns], nil
-}
-
-func (this *Mem) calcNullables(upto int) {
-	for i := len(this.stateToNullable); i <= upto; i++ {
-		nullable := this.states.Get(i).Nullables
-		nullIndex := this.nullables.Add(nullable)
-		this.stateToNullable = append(this.stateToNullable, nullIndex)
-	}
-}
-
-func (this *Mem) getNullable(s int) int {
-	this.calcNullables(s)
-	return this.stateToNullable[s]
+	return this.calls[state], nil
 }
 
 func (this *Mem) getReturn(stackIndex int, nullIndex int) (int, error) {
@@ -134,7 +110,7 @@ func (this *Mem) getReturn(stackIndex int, nullIndex int) (int, error) {
 		return ret, nil
 	}
 	stackElm := this.stackElms[stackIndex]
-	zullable := this.nullables[nullIndex]
+	zullable := this.states.SetOfBits[nullIndex]
 	childrenZipper := stackElm.Second
 	nullable := sets.UnzipBits(zullable, this.zis[childrenZipper])
 	parentPatterns := stackElm.First
