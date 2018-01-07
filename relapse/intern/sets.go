@@ -38,7 +38,7 @@ func (this *SetOfPatterns) Get(i int) *Patterns {
 	return this.List[i]
 }
 
-func (this *SetOfPatterns) Index(patterns []*Pattern) int {
+func (this *SetOfPatterns) indexOf(patterns []*Pattern) int {
 	h := hashes(patterns)
 	pss := this.Hashes[h]
 	for _, index := range pss {
@@ -51,7 +51,7 @@ func (this *SetOfPatterns) Index(patterns []*Pattern) int {
 }
 
 func (this *SetOfPatterns) Add(ps []*Pattern) int {
-	index := this.Index(ps)
+	index := this.indexOf(ps)
 	if index != -1 {
 		return index
 	}

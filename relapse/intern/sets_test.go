@@ -22,7 +22,7 @@ func TestSetsAddIndex(t *testing.T) {
 	s := NewSetOfPatterns()
 	zanys := []*Pattern{newZAny()}
 	want := s.Add(zanys)
-	got := s.Index(zanys)
+	got := s.indexOf(zanys)
 	if got != want {
 		t.Fatalf("got %d != want %d", got, want)
 	}
@@ -33,7 +33,7 @@ func TestSetsAddIndex(t *testing.T) {
 		t.Fatal("not accept")
 	}
 	notzanys := []*Pattern{newNotZAny(), newNotZAny()}
-	if s.Index(notzanys) != -1 {
+	if s.indexOf(notzanys) != -1 {
 		t.Fatal("not found")
 	}
 	state := s.Add(notzanys)
@@ -52,13 +52,13 @@ func TestSetsLookup(t *testing.T) {
 	s := NewSetOfPatterns()
 	zanys := []*Pattern{newZAny()}
 	want1 := s.Add(zanys)
-	got1 := s.Index(zanys)
+	got1 := s.indexOf(zanys)
 	if got1 != want1 {
 		t.Fatalf("got %d != want %d", got1, want1)
 	}
 	notzanys := []*Pattern{newNotZAny(), newNotZAny()}
 	want2 := s.Add(notzanys)
-	got2 := s.Index(notzanys)
+	got2 := s.indexOf(notzanys)
 	if got2 != want2 {
 		t.Fatalf("got %d != want %d", got2, want2)
 	}
@@ -66,7 +66,7 @@ func TestSetsLookup(t *testing.T) {
 	if got1 != want1 {
 		t.Fatalf("got %d != want %d", got1, want1)
 	}
-	got2 = s.Index(notzanys)
+	got2 = s.indexOf(notzanys)
 	if got2 != want2 {
 		t.Fatalf("got %d != want %d", got2, want2)
 	}
