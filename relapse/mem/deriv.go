@@ -36,7 +36,7 @@ func deriv(mem *Mem, patterns int, tree parser.Interface) (int, error) {
 		if err != nil {
 			return 0, err
 		}
-		childPatterns, stackElm, err := mem.eval(patterns, callTree, tree)
+		childPatterns, zipIndex, err := mem.eval(callTree, tree)
 		if err != nil {
 			return 0, err
 		}
@@ -49,7 +49,7 @@ func deriv(mem *Mem, patterns int, tree parser.Interface) (int, error) {
 			tree.Up()
 		}
 		nullIndex := mem.states.Get(childPatterns).NullIndex
-		patterns, err = mem.getReturn(stackElm, nullIndex)
+		patterns, err = mem.getReturn(patterns, zipIndex, nullIndex)
 		if err != nil {
 			return 0, err
 		}

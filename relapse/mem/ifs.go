@@ -22,7 +22,6 @@ import (
 	"github.com/katydid/katydid/relapse/compose"
 	"github.com/katydid/katydid/relapse/funcs"
 	"github.com/katydid/katydid/relapse/intern"
-	"github.com/katydid/katydid/relapse/sets"
 )
 
 type ifExprs struct {
@@ -127,27 +126,22 @@ func (node *ifNode) eval(set *intern.SetOfPatterns, label parser.Value) (int, er
 	return node.els.eval(set, label)
 }
 
-func (this *Mem) calcNode(node *ifNode, parentPatterns int, label parser.Value) (int, int, error) {
+func (this *Mem) calcNode(node *ifNode, label parser.Value) (int, int, error) {
 	state, err := node.eval(this.states, label)
 	if err != nil {
 		return 0, 0, err
 	}
-	zippedPatternIndex, stackIndex := this.zipStackAndPatterns(parentPatterns, state)
+	zippedPatternIndex, stackIndex := this.zipStackAndPatterns(state)
 	return zippedPatternIndex, stackIndex, nil
 }
 
-func (this *Mem) zipStackAndPatterns(parentPatterns int, state int) (int, int) {
+func (this *Mem) zipStackAndPatterns(state int) (int, int) {
 	p := this.states.Get(state)
 	zipperIndex := p.IndexOfZippedIndexes
-	stackElement := sets.Pair{
-		First:  parentPatterns,
-		Second: zipperIndex,
-	}
-	stackIndex := this.stackElms.Add(stackElement)
 	zippedPatternIndex := p.IndexOfZippedPatterns
-	return zippedPatternIndex, stackIndex
+	return zippedPatternIndex, zipperIndex
 }
 
-func (this *Mem) eval(parentPatterns int, ifs *ifExprs, label parser.Value) (int, int, error) {
-	return this.calcNode(ifs.ifNode, parentPatterns, label)
+func (this *Mem) eval(ifs *ifExprs, label parser.Value) (int, int, error) {
+	return this.calcNode(ifs.ifNode, label)
 }

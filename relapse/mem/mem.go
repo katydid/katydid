@@ -49,11 +49,10 @@ func new(g *ast.Grammar, record bool) (*Mem, error) {
 	m := &Mem{
 		construct: c,
 
-		states:    intern.NewSetOfPatterns(),
-		stackElms: sets.NewPairs(),
+		states: intern.NewSetOfPatterns(),
 
 		calls:   []*ifExprs{},
-		returns: []map[int]int{},
+		returns: [][]map[int]int{},
 	}
 	start := m.states.Add([]*intern.Pattern{main})
 
@@ -81,12 +80,11 @@ func (mem *Mem) SetContext(context *funcs.Context) {
 type Mem struct {
 	construct intern.Construct
 
-	states    *intern.SetOfPatterns
-	stackElms sets.Pairs
+	states *intern.SetOfPatterns
 
 	start   int
-	calls   []*ifExprs    // state -> (ifExprs : state -> label -> state)
-	returns []map[int]int // stackIndex -> nullIndex -> state
+	calls   []*ifExprs      // state -> (ifExprs : state -> label -> state)
+	returns [][]map[int]int // state -> zipIndex -> nullIndex -> state
 }
 
 func (this *Mem) getCall(state int) (*ifExprs, error) {
@@ -98,26 +96,29 @@ func (this *Mem) getCall(state int) (*ifExprs, error) {
 	return this.calls[state], nil
 }
 
-func (this *Mem) getReturn(stackIndex int, nullIndex int) (int, error) {
-	if len(this.returns) <= stackIndex {
-		for i := len(this.returns); i <= stackIndex; i++ {
-			this.returns = append(this.returns, make(map[int]int))
+func (this *Mem) getReturn(current int, zipIndex int, nullIndex int) (int, error) {
+	if len(this.returns) <= current {
+		for i := len(this.returns); i <= current; i++ {
+			this.returns = append(this.returns, []map[int]int{})
 		}
 	}
-	if ret, ok := this.returns[stackIndex][nullIndex]; ok {
+	if len(this.returns[current]) <= zipIndex {
+		for i := len(this.returns[current]); i <= zipIndex; i++ {
+			this.returns[current] = append(this.returns[current], make(map[int]int))
+		}
+	}
+
+	if ret, ok := this.returns[current][zipIndex][nullIndex]; ok {
 		return ret, nil
 	}
-	stackElm := this.stackElms[stackIndex]
 	zullable := this.states.SetOfBits[nullIndex]
-	childrenZipper := stackElm.Second
-	nullable := sets.UnzipBits(zullable, this.states.SetOfZipIndexes[childrenZipper])
-	parentPatterns := stackElm.First
-	currentPatterns := this.states.Get(parentPatterns).Patterns
+	nullable := sets.UnzipBits(zullable, this.states.SetOfZipIndexes[zipIndex])
+	currentPatterns := this.states.Get(current).Patterns
 	retPatterns, err := intern.DeriveReturns(this.construct, currentPatterns, nullable)
 	if err != nil {
 		return 0, err
 	}
 	res := this.states.Add(retPatterns)
-	this.returns[stackIndex][nullIndex] = res
+	this.returns[current][zipIndex][nullIndex] = res
 	return res, nil
 }
