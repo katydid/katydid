@@ -37,7 +37,7 @@ func allNullable(ps []*Pattern) bool {
 func newNullableSet(patterns []*Pattern) sets.Bits {
 	nulls := sets.NewBits(len(patterns))
 	for i, p := range patterns {
-		nulls.Set(i, p.Nullable())
+		nulls.Set(i, p.nullable)
 	}
 	return nulls
 }

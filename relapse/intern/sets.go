@@ -40,8 +40,7 @@ func (this *SetOfPatterns) Get(i int) *Patterns {
 	return this.List[i]
 }
 
-func (this *SetOfPatterns) indexOf(hash uint64, patterns []*Pattern) int {
-	h := hashes(patterns)
+func (this *SetOfPatterns) indexOf(h uint64, patterns []*Pattern) int {
 	pss := this.Hashes[h]
 	for _, index := range pss {
 		ps := this.List[index]
@@ -58,19 +57,22 @@ func (this *SetOfPatterns) Add(ps []*Pattern) int {
 	if index != -1 {
 		return index
 	}
+
 	index = len(this.List)
 	patterns := &Patterns{}
 	this.List = append(this.List, patterns)
 	patterns.Index = index
-
 	this.Hashes[h] = append(this.Hashes[h], index)
 
-	nulls := newNullableSet(ps)
 	patterns.Patterns = ps
+
+	nulls := newNullableSet(ps)
+	patterns.NullIndex = this.SetOfBits.Add(nulls)
+
 	patterns.Escapable = escapable(ps)
 	patterns.Accept = len(ps) == 1 && ps[0].nullable
+
 	zipped := Zip(ps)
-	patterns.NullIndex = this.SetOfBits.Add(nulls)
 	patterns.IndexOfZippedPatterns = this.Add(zipped.Patterns)
 	patterns.IndexOfZippedIndexes = this.SetOfZipIndexes.Add(zipped.Indexes)
 

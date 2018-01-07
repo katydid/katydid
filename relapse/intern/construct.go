@@ -119,7 +119,6 @@ func (c *construct) NewPattern(this *ast.Pattern) (*Pattern, error) {
 	}
 	if this.TreeNode != nil {
 		b := nameexpr.NameToFunc(this.TreeNode.GetName())
-		b = funcs.Simplify(b)
 		p, err := c.NewPattern(this.TreeNode.GetPattern())
 		if err != nil {
 			return nil, err
@@ -131,7 +130,6 @@ func (c *construct) NewPattern(this *ast.Pattern) (*Pattern, error) {
 		if err != nil {
 			return nil, err
 		}
-		b = funcs.Simplify(b)
 		return c.NewNode(b, c.NewEmpty())
 	}
 	if this.Concat != nil {

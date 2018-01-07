@@ -48,15 +48,11 @@ func new(g *ast.Grammar, record bool) (*Mem, error) {
 	}
 	m := &Mem{
 		construct: c,
-
-		states: intern.NewSetOfPatterns(),
-
-		calls:   []*ifExprs{},
-		returns: [][]map[int]int{},
+		states:    intern.NewSetOfPatterns(),
+		calls:     []*ifExprs{},
+		returns:   [][]map[int]int{},
 	}
-	start := m.states.Add([]*intern.Pattern{main})
-
-	m.start = start
+	m.start = m.states.Add([]*intern.Pattern{main})
 	return m, nil
 }
 
@@ -79,12 +75,10 @@ func (mem *Mem) SetContext(context *funcs.Context) {
 //Mem is the structure containing the memoized grammar.
 type Mem struct {
 	construct intern.Construct
-
-	states *intern.SetOfPatterns
-
-	start   int
-	calls   []*ifExprs      // state -> (ifExprs : state -> label -> state)
-	returns [][]map[int]int // state -> zipIndex -> nullIndex -> state
+	states    *intern.SetOfPatterns
+	start     int
+	calls     []*ifExprs      // state -> (ifExprs : state -> label -> state)
+	returns   [][]map[int]int // state -> zipIndex -> nullIndex -> state
 }
 
 func (this *Mem) getCall(state int) (*ifExprs, error) {

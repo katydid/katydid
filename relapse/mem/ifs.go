@@ -62,6 +62,9 @@ func (this *ifNode) String() string {
 	return "if (" + funcs.Sprint(this.f) + ") then {\n" + this.thn.String() + "} else {\n" + this.els.String() + "}"
 }
 
+var falseConst = funcs.BoolConst(false)
+var trueConst = funcs.BoolConst(true)
+
 func (node *ifNode) eval(set *intern.SetOfPatterns, label parser.Value) (int, error) {
 	if len(node.ifs) == 0 {
 		if node.ps != nil {
@@ -72,15 +75,12 @@ func (node *ifNode) eval(set *intern.SetOfPatterns, label parser.Value) (int, er
 	}
 	if node.f == nil {
 		node.f = node.ifs[0].Cond
-		node.f = funcs.Simplify(node.f)
 		if funcs.Equal(node.prev, node.f) {
-			node.f = funcs.BoolConst(true)
-		}
-		if funcs.IsFalse(funcs.Simplify(funcs.And(node.prev, node.f))) {
-			node.f = funcs.BoolConst(false)
-		}
-		if funcs.IsFalse(funcs.Simplify(funcs.And(node.prev, funcs.Not(node.f)))) {
-			node.f = funcs.BoolConst(true)
+			node.f = trueConst
+		} else if funcs.IsFalse(funcs.And(node.prev, node.f)) {
+			node.f = falseConst
+		} else if funcs.IsFalse(funcs.And(node.prev, funcs.Not(node.f))) {
+			node.f = trueConst
 		}
 		if funcs.IsTrue(node.f) {
 			node.ps = append(node.ps, node.ifs[0].Thn)
@@ -110,7 +110,7 @@ func (node *ifNode) eval(set *intern.SetOfPatterns, label parser.Value) (int, er
 			node.thn.ps = make([]*intern.Pattern, 0, len(node.ps)+1)
 			node.thn.ps = append(node.thn.ps, node.ps...)
 			node.thn.ps = append(node.thn.ps, node.ifs[0].Thn)
-			node.thn.prev = funcs.Simplify(funcs.And(node.prev, node.f))
+			node.thn.prev = funcs.And(node.prev, node.f)
 			node.thn.ifs = node.ifs[1:]
 		}
 		return node.thn.eval(set, label)
@@ -120,7 +120,7 @@ func (node *ifNode) eval(set *intern.SetOfPatterns, label parser.Value) (int, er
 		node.els.ps = make([]*intern.Pattern, 0, len(node.ps)+1)
 		node.els.ps = append(node.els.ps, node.ps...)
 		node.els.ps = append(node.els.ps, node.ifs[0].Els)
-		node.els.prev = funcs.Simplify(funcs.And(node.prev, funcs.Not(node.f)))
+		node.els.prev = funcs.And(node.prev, funcs.Not(node.f))
 		node.els.ifs = node.ifs[1:]
 	}
 	return node.els.eval(set, label)
