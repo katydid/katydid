@@ -35,8 +35,12 @@ func removeAllZAny(ps []*Pattern) []*Pattern {
 	}, ps)
 }
 
-func Zip(patterns []*Pattern) ([]*Pattern, []int) {
+type ZippedPatterns struct {
+	Patterns []*Pattern
+	Indexes  []int
+}
 
+func Zip(patterns []*Pattern) *ZippedPatterns {
 	zips := make([]*Pattern, len(patterns))
 	for i := range patterns {
 		zips[i] = patterns[i]
@@ -83,18 +87,18 @@ func Zip(patterns []*Pattern) ([]*Pattern, []int) {
 		}
 	}
 
-	return zips, indexes
+	return &ZippedPatterns{zips, indexes}
 }
 
-func Unzip(patterns []*Pattern, indexes []int) []*Pattern {
-	res := make([]*Pattern, len(indexes))
-	for i, index := range indexes {
+func (z *ZippedPatterns) Unzip() []*Pattern {
+	res := make([]*Pattern, len(z.Indexes))
+	for i, index := range z.Indexes {
 		if index < 0 {
 			index += 1
 			index = index * -1
 			res[i] = zipIgnoreSet[index]
 		} else {
-			res[i] = patterns[index]
+			res[i] = z.Patterns[index]
 		}
 	}
 	return res

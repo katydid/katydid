@@ -41,10 +41,10 @@ func (this *SetOfPatterns) Get(i int) *Patterns {
 func (this *SetOfPatterns) Index(patterns []*Pattern) int {
 	h := hashes(patterns)
 	pss := this.Hashes[h]
-	for i, index := range pss {
+	for _, index := range pss {
 		ps := this.List[index]
 		if deriveEquals(ps.Patterns, patterns) {
-			return i
+			return index
 		}
 	}
 	return -1
@@ -70,6 +70,7 @@ type Patterns struct {
 	Nullables sets.Bits
 	Accept    bool
 	NullIndex int
+	Zipped    *ZippedPatterns
 }
 
 func NewPatterns(ps []*Pattern) *Patterns {
@@ -78,6 +79,7 @@ func NewPatterns(ps []*Pattern) *Patterns {
 		Escapable: escapable(ps),
 		Nullables: newNullableSet(ps),
 		Accept:    len(ps) == 1 && ps[0].nullable,
+		Zipped:    Zip(ps),
 	}
 }
 

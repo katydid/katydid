@@ -82,12 +82,12 @@ func deriv(c Construct, patterns []*Pattern, tree parser.Interface) ([]*Pattern,
 			//do nothing
 		} else {
 			tree.Down()
-			zchild, zi := Zip(childPatterns)
-			zchild, err = deriv(c, zchild, tree)
+			z := Zip(childPatterns)
+			z.Patterns, err = deriv(c, z.Patterns, tree)
 			if err != nil {
 				return nil, err
 			}
-			childPatterns = Unzip(zchild, zi)
+			childPatterns = z.Unzip()
 			tree.Up()
 		}
 		nulls := nullables(childPatterns)

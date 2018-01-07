@@ -132,7 +132,8 @@ func (this *Mem) calcNode(node *ifNode, parentPatterns int, label parser.Value) 
 }
 
 func (this *Mem) zipStackAndPatterns(parentPatterns int, ps []*intern.Pattern) (int, int) {
-	zippedPatterns, zipper := intern.Zip(ps)
+	z := intern.Zip(ps)
+	zippedPatterns, zipper := z.Patterns, z.Indexes
 	zipperIndex := this.zis.Add(zipper)
 	stackElement := sets.Pair{
 		First:  parentPatterns,
