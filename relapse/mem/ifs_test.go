@@ -28,14 +28,15 @@ var (
 	zany    = c.NewZAny()
 	notzany = c.NewNotZAny()
 	empty   = c.NewEmpty()
+	set     = intern.NewSetOfPatterns()
 )
 
 func eval(ifs *ifExprs, value parser.Value) ([]*intern.Pattern, error) {
-	zipped, err := ifs.eval(value)
+	state, err := ifs.eval(set, value)
 	if err != nil {
 		return nil, err
 	}
-	return zipped.Unzip(), nil
+	return set.Get(state).Zipped.Unzip(), nil
 }
 
 func TestIfsOneTrue(t *testing.T) {

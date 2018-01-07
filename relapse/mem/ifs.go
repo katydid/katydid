@@ -43,7 +43,7 @@ type ifNode struct {
 	els  *ifNode
 
 	ps  []*intern.Pattern
-	zip *intern.ZippedPatterns
+	res int
 }
 
 func (this *ifNode) String() string {
@@ -63,12 +63,13 @@ func (this *ifNode) String() string {
 	return "if (" + funcs.Sprint(this.f) + ") then {\n" + this.thn.String() + "} else {\n" + this.els.String() + "}"
 }
 
-func (node *ifNode) eval(label parser.Value) (*intern.ZippedPatterns, error) {
+func (node *ifNode) eval(set *intern.SetOfPatterns, label parser.Value) (int, error) {
 	if len(node.ifs) == 0 {
-		if node.zip == nil {
-			node.zip = intern.Zip(node.ps)
+		if node.ps != nil {
+			node.res = set.Add(node.ps)
+			node.ps = nil
 		}
-		return node.zip, nil
+		return node.res, nil
 	}
 	if node.f == nil {
 		node.f = node.ifs[0].Cond
@@ -86,23 +87,23 @@ func (node *ifNode) eval(label parser.Value) (*intern.ZippedPatterns, error) {
 			node.ps = append(node.ps, node.ifs[0].Thn)
 			node.ifs = node.ifs[1:]
 			node.f = nil
-			return node.eval(label)
+			return node.eval(set, label)
 		}
 		if funcs.IsFalse(node.f) {
 			node.ps = append(node.ps, node.ifs[0].Els)
 			node.ifs = node.ifs[1:]
 			node.f = nil
-			return node.eval(label)
+			return node.eval(set, label)
 		}
 		c, err := compose.NewBoolFunc(node.f)
 		if err != nil {
-			return nil, err
+			return 0, err
 		}
 		node.cond = c
 	}
 	cond, err := node.cond.Eval(label)
 	if err != nil {
-		return nil, err
+		return 0, err
 	}
 	if cond {
 		if node.thn == nil {
@@ -113,7 +114,7 @@ func (node *ifNode) eval(label parser.Value) (*intern.ZippedPatterns, error) {
 			node.thn.prev = funcs.Simplify(funcs.And(node.prev, node.f))
 			node.thn.ifs = node.ifs[1:]
 		}
-		return node.thn.eval(label)
+		return node.thn.eval(set, label)
 	}
 	if node.els == nil {
 		node.els = &ifNode{}
@@ -123,15 +124,15 @@ func (node *ifNode) eval(label parser.Value) (*intern.ZippedPatterns, error) {
 		node.els.prev = funcs.Simplify(funcs.And(node.prev, funcs.Not(node.f)))
 		node.els.ifs = node.ifs[1:]
 	}
-	return node.els.eval(label)
+	return node.els.eval(set, label)
 }
 
 func (this *Mem) calcNode(node *ifNode, parentPatterns int, label parser.Value) (int, int, error) {
-	zipped, err := node.eval(label)
+	state, err := node.eval(this.states, label)
 	if err != nil {
 		return 0, 0, err
 	}
-	zippedPatternIndex, stackIndex := this.zipStackAndPatterns(parentPatterns, zipped)
+	zippedPatternIndex, stackIndex := this.zipStackAndPatterns(parentPatterns, this.states.Get(state).Zipped)
 	return zippedPatternIndex, stackIndex, nil
 }
 
