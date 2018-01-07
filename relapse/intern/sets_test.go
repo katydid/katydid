@@ -70,4 +70,10 @@ func TestSetsLookup(t *testing.T) {
 	if got2 != want2 {
 		t.Fatalf("got %d != want %d", got2, want2)
 	}
+	if s.Get(got1).Index != got1 {
+		t.Fatal("inconsistent index")
+	}
+	if s.Get(got2).Index != got2 {
+		t.Fatal("inconsistent index")
+	}
 }

@@ -55,32 +55,31 @@ func (this *SetOfPatterns) Add(ps []*Pattern) int {
 	if index != -1 {
 		return index
 	}
-	h := hashes(ps)
 	index = len(this.List)
-	this.Hashes[h] = append(this.Hashes[h], index)
-	patterns := NewPatterns(ps)
+	patterns := &Patterns{}
 	this.List = append(this.List, patterns)
+	patterns.Index = index
+	h := hashes(ps)
+	this.Hashes[h] = append(this.Hashes[h], index)
+
+	patterns.Patterns = ps
+	patterns.Escapable = escapable(ps)
+	patterns.Nullables = newNullableSet(ps)
+	patterns.Accept = len(ps) == 1 && ps[0].nullable
+	patterns.Zipped = Zip(ps)
+
 	patterns.NullIndex = this.SetOfBits.Add(patterns.Nullables)
 	return index
 }
 
 type Patterns struct {
 	Patterns  []*Pattern
+	Index     int
 	Escapable bool
 	Nullables sets.Bits
 	Accept    bool
 	NullIndex int
 	Zipped    *ZippedPatterns
-}
-
-func NewPatterns(ps []*Pattern) *Patterns {
-	return &Patterns{
-		Patterns:  ps,
-		Escapable: escapable(ps),
-		Nullables: newNullableSet(ps),
-		Accept:    len(ps) == 1 && ps[0].nullable,
-		Zipped:    Zip(ps),
-	}
 }
 
 func hashes(patterns []*Pattern) uint64 {
