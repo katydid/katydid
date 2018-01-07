@@ -68,8 +68,9 @@ func (this *SetOfPatterns) Add(ps []*Pattern) int {
 	patterns.Escapable = escapable(ps)
 	patterns.Accept = len(ps) == 1 && ps[0].nullable
 	patterns.Zipped = Zip(ps)
-
 	patterns.NullIndex = this.SetOfBits.Add(nulls)
+	patterns.ZippedIndex = this.Add(patterns.Zipped.Patterns)
+
 	return index
 }
 
@@ -81,7 +82,8 @@ type Patterns struct {
 	Accept    bool
 	NullIndex int
 
-	Zipped *ZippedPatterns
+	Zipped      *ZippedPatterns
+	ZippedIndex int
 }
 
 func hashes(patterns []*Pattern) uint64 {

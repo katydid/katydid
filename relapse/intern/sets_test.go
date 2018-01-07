@@ -44,8 +44,8 @@ func TestSetsAddIndex(t *testing.T) {
 		t.Fatal("not found")
 	}
 	state := s.Add(notzanys)
-	if s.Get(state).NullIndex != 1 {
-		t.Fatal("nullindex != 1")
+	if s.Get(state).NullIndex != 2 {
+		t.Fatalf("nullindex != 2, but %d", s.Get(state).NullIndex)
 	}
 	if s.SetOfBits.Index(sets.NewBits(2)) != s.Get(state).NullIndex {
 		t.Fatal("wrong nullindex")
