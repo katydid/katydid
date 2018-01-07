@@ -16,13 +16,20 @@ package intern
 
 import (
 	"testing"
+
+	"github.com/katydid/katydid/relapse/sets"
 )
+
+func indexOf(set *SetOfPatterns, ps []*Pattern) int {
+	h := hashes(ps)
+	return set.indexOf(h, ps)
+}
 
 func TestSetsAddIndex(t *testing.T) {
 	s := NewSetOfPatterns()
 	zanys := []*Pattern{newZAny()}
 	want := s.Add(zanys)
-	got := s.indexOf(zanys)
+	got := indexOf(s, zanys)
 	if got != want {
 		t.Fatalf("got %d != want %d", got, want)
 	}
@@ -33,14 +40,14 @@ func TestSetsAddIndex(t *testing.T) {
 		t.Fatal("not accept")
 	}
 	notzanys := []*Pattern{newNotZAny(), newNotZAny()}
-	if s.indexOf(notzanys) != -1 {
+	if indexOf(s, notzanys) != -1 {
 		t.Fatal("not found")
 	}
 	state := s.Add(notzanys)
 	if s.Get(state).NullIndex != 1 {
 		t.Fatal("nullindex != 1")
 	}
-	if s.SetOfBits.Index(s.Get(state).Nullables) != s.Get(state).NullIndex {
+	if s.SetOfBits.Index(sets.NewBits(2)) != s.Get(state).NullIndex {
 		t.Fatal("wrong nullindex")
 	}
 	if s.Get(state).Accept {
@@ -52,13 +59,13 @@ func TestSetsLookup(t *testing.T) {
 	s := NewSetOfPatterns()
 	zanys := []*Pattern{newZAny()}
 	want1 := s.Add(zanys)
-	got1 := s.indexOf(zanys)
+	got1 := indexOf(s, zanys)
 	if got1 != want1 {
 		t.Fatalf("got %d != want %d", got1, want1)
 	}
 	notzanys := []*Pattern{newNotZAny(), newNotZAny()}
 	want2 := s.Add(notzanys)
-	got2 := s.indexOf(notzanys)
+	got2 := indexOf(s, notzanys)
 	if got2 != want2 {
 		t.Fatalf("got %d != want %d", got2, want2)
 	}
@@ -66,7 +73,7 @@ func TestSetsLookup(t *testing.T) {
 	if got1 != want1 {
 		t.Fatalf("got %d != want %d", got1, want1)
 	}
-	got2 = s.indexOf(notzanys)
+	got2 = indexOf(s, notzanys)
 	if got2 != want2 {
 		t.Fatalf("got %d != want %d", got2, want2)
 	}

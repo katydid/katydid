@@ -38,7 +38,7 @@ func (this *SetOfPatterns) Get(i int) *Patterns {
 	return this.List[i]
 }
 
-func (this *SetOfPatterns) indexOf(patterns []*Pattern) int {
+func (this *SetOfPatterns) indexOf(hash uint64, patterns []*Pattern) int {
 	h := hashes(patterns)
 	pss := this.Hashes[h]
 	for _, index := range pss {
@@ -51,7 +51,8 @@ func (this *SetOfPatterns) indexOf(patterns []*Pattern) int {
 }
 
 func (this *SetOfPatterns) Add(ps []*Pattern) int {
-	index := this.indexOf(ps)
+	h := hashes(ps)
+	index := this.indexOf(h, ps)
 	if index != -1 {
 		return index
 	}
@@ -59,27 +60,28 @@ func (this *SetOfPatterns) Add(ps []*Pattern) int {
 	patterns := &Patterns{}
 	this.List = append(this.List, patterns)
 	patterns.Index = index
-	h := hashes(ps)
+
 	this.Hashes[h] = append(this.Hashes[h], index)
 
+	nulls := newNullableSet(ps)
 	patterns.Patterns = ps
 	patterns.Escapable = escapable(ps)
-	patterns.Nullables = newNullableSet(ps)
 	patterns.Accept = len(ps) == 1 && ps[0].nullable
 	patterns.Zipped = Zip(ps)
 
-	patterns.NullIndex = this.SetOfBits.Add(patterns.Nullables)
+	patterns.NullIndex = this.SetOfBits.Add(nulls)
 	return index
 }
 
 type Patterns struct {
-	Patterns  []*Pattern
-	Index     int
+	Patterns []*Pattern
+	Index    int
+
 	Escapable bool
-	Nullables sets.Bits
 	Accept    bool
 	NullIndex int
-	Zipped    *ZippedPatterns
+
+	Zipped *ZippedPatterns
 }
 
 func hashes(patterns []*Pattern) uint64 {
