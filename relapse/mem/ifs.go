@@ -42,7 +42,8 @@ type ifNode struct {
 	thn  *ifNode
 	els  *ifNode
 
-	ps []*intern.Pattern
+	ps  []*intern.Pattern
+	zip *intern.ZippedPatterns
 }
 
 func (this *ifNode) String() string {
@@ -62,9 +63,12 @@ func (this *ifNode) String() string {
 	return "if (" + funcs.Sprint(this.f) + ") then {\n" + this.thn.String() + "} else {\n" + this.els.String() + "}"
 }
 
-func (node *ifNode) eval(label parser.Value) ([]*intern.Pattern, error) {
+func (node *ifNode) eval(label parser.Value) (*intern.ZippedPatterns, error) {
 	if len(node.ifs) == 0 {
-		return node.ps, nil
+		if node.zip == nil {
+			node.zip = intern.Zip(node.ps)
+		}
+		return node.zip, nil
 	}
 	if node.f == nil {
 		node.f = node.ifs[0].Cond
@@ -123,24 +127,22 @@ func (node *ifNode) eval(label parser.Value) ([]*intern.Pattern, error) {
 }
 
 func (this *Mem) calcNode(node *ifNode, parentPatterns int, label parser.Value) (int, int, error) {
-	ps, err := node.eval(label)
+	zipped, err := node.eval(label)
 	if err != nil {
 		return 0, 0, err
 	}
-	zippedPatternIndex, stackIndex := this.zipStackAndPatterns(parentPatterns, ps)
+	zippedPatternIndex, stackIndex := this.zipStackAndPatterns(parentPatterns, zipped)
 	return zippedPatternIndex, stackIndex, nil
 }
 
-func (this *Mem) zipStackAndPatterns(parentPatterns int, ps []*intern.Pattern) (int, int) {
-	z := intern.Zip(ps)
-	zippedPatterns, zipper := z.Patterns, z.Indexes
-	zipperIndex := this.zis.Add(zipper)
+func (this *Mem) zipStackAndPatterns(parentPatterns int, zipped *intern.ZippedPatterns) (int, int) {
+	zipperIndex := this.zis.Add(zipped.Indexes)
 	stackElement := sets.Pair{
 		First:  parentPatterns,
 		Second: zipperIndex,
 	}
 	stackIndex := this.stackElms.Add(stackElement)
-	zippedPatternIndex := this.states.Add(zippedPatterns)
+	zippedPatternIndex := this.states.Add(zipped.Patterns)
 	return zippedPatternIndex, stackIndex
 }
 

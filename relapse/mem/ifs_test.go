@@ -17,6 +17,7 @@ package mem
 import (
 	"testing"
 
+	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/parser/debug"
 	"github.com/katydid/katydid/relapse/funcs"
 	"github.com/katydid/katydid/relapse/intern"
@@ -29,10 +30,18 @@ var (
 	empty   = c.NewEmpty()
 )
 
+func eval(ifs *ifExprs, value parser.Value) ([]*intern.Pattern, error) {
+	zipped, err := ifs.eval(value)
+	if err != nil {
+		return nil, err
+	}
+	return zipped.Unzip(), nil
+}
+
 func TestIfsOneTrue(t *testing.T) {
 	allTrue := intern.NewIfExpr(funcs.BoolConst(true), zany, notzany)
 	ifs := newIfExprs([]*intern.IfExpr{allTrue})
-	gots, err := ifs.eval(debug.NewStringValue("a"))
+	gots, err := eval(ifs, debug.NewStringValue("a"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -45,7 +54,7 @@ func TestIfsOneTrue(t *testing.T) {
 func TestIfsOneFalse(t *testing.T) {
 	allFalse := intern.NewIfExpr(funcs.BoolConst(false), zany, notzany)
 	ifs := newIfExprs([]*intern.IfExpr{allFalse})
-	gots, err := ifs.eval(debug.NewStringValue("a"))
+	gots, err := eval(ifs, debug.NewStringValue("a"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -58,7 +67,7 @@ func TestIfsOneFalse(t *testing.T) {
 func TestIfsTwoTrues(t *testing.T) {
 	allTrue := intern.NewIfExpr(funcs.BoolConst(true), zany, notzany)
 	ifs := newIfExprs([]*intern.IfExpr{allTrue, allTrue})
-	gots, err := ifs.eval(debug.NewStringValue("a"))
+	gots, err := eval(ifs, debug.NewStringValue("a"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -71,7 +80,7 @@ func TestIfsTwoTrues(t *testing.T) {
 func TestIfs10Trues(t *testing.T) {
 	allTrue := intern.NewIfExpr(funcs.BoolConst(true), zany, notzany)
 	ifs := newIfExprs([]*intern.IfExpr{allTrue, allTrue, allTrue, allTrue, allTrue, allTrue, allTrue, allTrue, allTrue, allTrue})
-	gots, err := ifs.eval(debug.NewStringValue("a"))
+	gots, err := eval(ifs, debug.NewStringValue("a"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -85,7 +94,7 @@ func TestIfs10Mixed(t *testing.T) {
 	allTrue := intern.NewIfExpr(funcs.BoolConst(true), zany, notzany)
 	allFalse := intern.NewIfExpr(funcs.BoolConst(false), zany, notzany)
 	ifs := newIfExprs([]*intern.IfExpr{allTrue, allFalse, allTrue, allFalse, allTrue, allFalse, allTrue, allFalse, allFalse, allTrue})
-	gots, err := ifs.eval(debug.NewStringValue("a"))
+	gots, err := eval(ifs, debug.NewStringValue("a"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -99,7 +108,7 @@ func TestIfsOneStringVar(t *testing.T) {
 	eqa := funcs.StringEq(funcs.StringConst("a"), funcs.StringVar())
 	emptyIfA := intern.NewIfExpr(eqa, empty, notzany)
 	ifs := newIfExprs([]*intern.IfExpr{emptyIfA})
-	gots, err := ifs.eval(debug.NewStringValue("a"))
+	gots, err := eval(ifs, debug.NewStringValue("a"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -117,7 +126,7 @@ func TestIfsABC(t *testing.T) {
 	notzanyIfB := intern.NewIfExpr(eqb, notzany, zany)
 	zanyIfC := intern.NewIfExpr(eqc, zany, empty)
 	ifs := newIfExprs([]*intern.IfExpr{emptyIfA, zanyIfC, zanyIfC, notzanyIfB, emptyIfA, notzanyIfB, zanyIfC})
-	gots, err := ifs.eval(debug.NewStringValue("a"))
+	gots, err := eval(ifs, debug.NewStringValue("a"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -135,7 +144,7 @@ func TestIfsContainsABC(t *testing.T) {
 	notzanyIfB := intern.NewIfExpr(containsB, notzany, zany)
 	zanyIfC := intern.NewIfExpr(containsC, zany, empty)
 	ifs := newIfExprs([]*intern.IfExpr{emptyIfA, zanyIfC, zanyIfC, notzanyIfB, emptyIfA, notzanyIfB, zanyIfC})
-	gots, err := ifs.eval(debug.NewStringValue("a"))
+	gots, err := eval(ifs, debug.NewStringValue("a"))
 	if err != nil {
 		t.Fatal(err)
 	}
