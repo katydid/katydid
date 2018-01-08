@@ -14,6 +14,8 @@
 
 package funcs
 
+import "strings"
+
 //Not returns a new not function with the input function as its parameter.
 func Not(v1 Bool) Bool {
 	if vv, ok := v1.(*not); ok {
@@ -71,6 +73,22 @@ func (this *not) Eval() (bool, error) {
 		return true, nil
 	}
 	return !b, nil
+}
+
+func (this *not) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*not); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("not", nameOfStruct(that))
 }
 
 func (this *not) Hash() uint64 {
@@ -232,6 +250,25 @@ func (this *and) Eval() (bool, error) {
 	return this.V2.Eval()
 }
 
+func (this *and) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*and); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("and", nameOfStruct(that))
+}
+
 func (this *and) Hash() uint64 {
 	return this.hash
 }
@@ -288,6 +325,25 @@ func (this *or) Eval() (bool, error) {
 		return true, nil
 	}
 	return this.V2.Eval()
+}
+
+func (this *or) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*or); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("or", nameOfStruct(that))
 }
 
 func (this *or) Hash() uint64 {

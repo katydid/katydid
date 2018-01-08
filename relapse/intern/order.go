@@ -16,8 +16,6 @@ package intern
 
 import (
 	"sort"
-
-	"github.com/katydid/katydid/relapse/funcs"
 )
 
 type sortable []*Pattern
@@ -32,7 +30,7 @@ func (s sortable) Less(i, j int) bool {
 		return s[i].hash < s[j].hash
 	}
 	if s[i].Type == Node && s[j].Type == Node {
-		c := funcs.Compare(s[i].Func, s[j].Func)
+		c := s[i].Func.Compare(s[j].Func)
 		if c == 0 {
 			return s[i].hash < s[j].hash
 		}

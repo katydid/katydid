@@ -72,9 +72,14 @@ func Sprint(i interface{}) string {
 	return "->" + sprint(i)
 }
 
-func sprint(i interface{}) string {
+func nameOfStruct(i interface{}) string {
 	e := reflect.ValueOf(i).Elem()
 	uniqName := e.Type().Name()
+	return uniqName
+}
+
+func sprint(i interface{}) string {
+	uniqName := nameOfStruct(i)
 	name := reverse(uniqName)
 	if len(name) == 0 {
 		strer, ok := i.(stringer)
@@ -91,6 +96,7 @@ func sprint(i interface{}) string {
 	case ListOf:
 		return name
 	}
+	e := reflect.ValueOf(i).Elem()
 	numFields := e.NumField()
 	ss := make([]string, 0, numFields)
 	for i := 0; i < numFields; i++ {

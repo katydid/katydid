@@ -14,7 +14,10 @@
 
 package funcs
 
-import "time"
+import (
+	"strings"
+	"time"
+)
 
 //Now returns a new now function.
 func Now() Int {
@@ -31,6 +34,19 @@ func (this *now) Hash() uint64 {
 	h := uint64(17)
 	h = 31*h + 43
 	return h
+}
+
+func (this *now) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if _, ok := that.(*now); ok {
+		return 0
+	}
+	return strings.Compare("now", nameOfStruct(that))
 }
 
 func (this *now) IsVariable() {}

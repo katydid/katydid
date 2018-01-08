@@ -39,6 +39,22 @@ func (this *toLower) Eval() (string, error) {
 	return strings.ToLower(s), nil
 }
 
+func (this *toLower) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*toLower); ok {
+		if c := this.S.Compare(other.S); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("toLower", nameOfStruct(that))
+}
+
 func (this *toLower) Hash() uint64 {
 	return this.hash
 }
@@ -66,6 +82,22 @@ func (this *toUpper) Eval() (string, error) {
 		return "", err
 	}
 	return strings.ToUpper(s), nil
+}
+
+func (this *toUpper) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*toUpper); ok {
+		if c := this.S.Compare(other.S); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("toUpper", nameOfStruct(that))
 }
 
 func (this *toUpper) Hash() uint64 {
@@ -103,6 +135,25 @@ func (this *contains) Eval() (bool, error) {
 	return strings.Contains(s, subStr), nil
 }
 
+func (this *contains) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*contains); ok {
+		if c := this.S.Compare(other.S); c != 0 {
+			return c
+		}
+		if c := this.Substr.Compare(other.Substr); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("contains", nameOfStruct(that))
+}
+
 func (this *contains) Hash() uint64 {
 	return this.hash
 }
@@ -136,6 +187,25 @@ func (this *equalFold) Eval() (bool, error) {
 		return false, err
 	}
 	return strings.EqualFold(s, t), nil
+}
+
+func (this *equalFold) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*equalFold); ok {
+		if c := this.S.Compare(other.S); c != 0 {
+			return c
+		}
+		if c := this.T.Compare(other.T); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("equalFold", nameOfStruct(that))
 }
 
 func (this *equalFold) Hash() uint64 {
@@ -173,6 +243,25 @@ func (this *hasPrefix) Eval() (bool, error) {
 	return strings.HasPrefix(v1, v2), nil
 }
 
+func (this *hasPrefix) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*hasPrefix); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("hasPrefix", nameOfStruct(that))
+}
+
 func (this *hasPrefix) Hash() uint64 {
 	return this.hash
 }
@@ -206,6 +295,25 @@ func (this *hasSuffix) Eval() (bool, error) {
 		return false, err
 	}
 	return strings.HasSuffix(v1, v2), nil
+}
+
+func (this *hasSuffix) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*hasSuffix); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("hasSuffix", nameOfStruct(that))
 }
 
 func (this *hasSuffix) Hash() uint64 {

@@ -3,6 +3,7 @@ package funcs
 
 import (
 	"fmt"
+	"strings"
 )
 
 type printDouble struct {
@@ -18,6 +19,22 @@ func (this *printDouble) Eval() (float64, error) {
 		fmt.Printf("value: %#v\n", v)
 	}
 	return v, err
+}
+
+func (this *printDouble) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printDouble); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("printDouble", nameOfStruct(that))
 }
 
 func (this *printDouble) Hash() uint64 {
@@ -53,6 +70,22 @@ func (this *printInt) Eval() (int64, error) {
 	return v, err
 }
 
+func (this *printInt) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printInt); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("printInt", nameOfStruct(that))
+}
+
 func (this *printInt) Hash() uint64 {
 	return this.hash
 }
@@ -84,6 +117,22 @@ func (this *printUint) Eval() (uint64, error) {
 		fmt.Printf("value: %#v\n", v)
 	}
 	return v, err
+}
+
+func (this *printUint) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printUint); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("printUint", nameOfStruct(that))
 }
 
 func (this *printUint) Hash() uint64 {
@@ -119,6 +168,22 @@ func (this *printBool) Eval() (bool, error) {
 	return v, err
 }
 
+func (this *printBool) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printBool); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("printBool", nameOfStruct(that))
+}
+
 func (this *printBool) Hash() uint64 {
 	return this.hash
 }
@@ -150,6 +215,22 @@ func (this *printString) Eval() (string, error) {
 		fmt.Printf("value: %#v\n", v)
 	}
 	return v, err
+}
+
+func (this *printString) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printString); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("printString", nameOfStruct(that))
 }
 
 func (this *printString) Hash() uint64 {
@@ -185,6 +266,22 @@ func (this *printBytes) Eval() ([]byte, error) {
 	return v, err
 }
 
+func (this *printBytes) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printBytes); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("printBytes", nameOfStruct(that))
+}
+
 func (this *printBytes) Hash() uint64 {
 	return this.hash
 }
@@ -216,6 +313,22 @@ func (this *printDoubles) Eval() ([]float64, error) {
 		fmt.Printf("value: %#v\n", v)
 	}
 	return v, err
+}
+
+func (this *printDoubles) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printDoubles); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("printDoubles", nameOfStruct(that))
 }
 
 func (this *printDoubles) Hash() uint64 {
@@ -251,6 +364,22 @@ func (this *printInts) Eval() ([]int64, error) {
 	return v, err
 }
 
+func (this *printInts) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printInts); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("printInts", nameOfStruct(that))
+}
+
 func (this *printInts) Hash() uint64 {
 	return this.hash
 }
@@ -282,6 +411,22 @@ func (this *printUints) Eval() ([]uint64, error) {
 		fmt.Printf("value: %#v\n", v)
 	}
 	return v, err
+}
+
+func (this *printUints) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printUints); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("printUints", nameOfStruct(that))
 }
 
 func (this *printUints) Hash() uint64 {
@@ -317,6 +462,22 @@ func (this *printBools) Eval() ([]bool, error) {
 	return v, err
 }
 
+func (this *printBools) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printBools); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("printBools", nameOfStruct(that))
+}
+
 func (this *printBools) Hash() uint64 {
 	return this.hash
 }
@@ -350,6 +511,22 @@ func (this *printStrings) Eval() ([]string, error) {
 	return v, err
 }
 
+func (this *printStrings) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printStrings); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("printStrings", nameOfStruct(that))
+}
+
 func (this *printStrings) Hash() uint64 {
 	return this.hash
 }
@@ -381,6 +558,22 @@ func (this *printListOfBytes) Eval() ([][]byte, error) {
 		fmt.Printf("value: %#v\n", v)
 	}
 	return v, err
+}
+
+func (this *printListOfBytes) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printListOfBytes); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("printListOfBytes", nameOfStruct(that))
 }
 
 func (this *printListOfBytes) Hash() uint64 {

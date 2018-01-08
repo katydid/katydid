@@ -32,6 +32,30 @@ func (this *listOfDouble) Eval() ([]float64, error) {
 	return res, nil
 }
 
+func (this *listOfDouble) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*listOfDouble); ok {
+		if len(this.List) != len(other.List) {
+			if len(this.List) < len(other.List) {
+				return -1
+			}
+			return 1
+		}
+		for i := range this.List {
+			if c := this.List[i].Compare(other.List[i]); c != 0 {
+				return c
+			}
+		}
+		return 0
+	}
+	return strings.Compare("listOfDouble", nameOfStruct(that))
+}
+
 func (this *listOfDouble) Hash() uint64 {
 	return this.hash
 }
@@ -71,6 +95,30 @@ func (this *listOfInt) Eval() ([]int64, error) {
 		}
 	}
 	return res, nil
+}
+
+func (this *listOfInt) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*listOfInt); ok {
+		if len(this.List) != len(other.List) {
+			if len(this.List) < len(other.List) {
+				return -1
+			}
+			return 1
+		}
+		for i := range this.List {
+			if c := this.List[i].Compare(other.List[i]); c != 0 {
+				return c
+			}
+		}
+		return 0
+	}
+	return strings.Compare("listOfInt", nameOfStruct(that))
 }
 
 func (this *listOfInt) Hash() uint64 {
@@ -114,6 +162,30 @@ func (this *listOfUint) Eval() ([]uint64, error) {
 	return res, nil
 }
 
+func (this *listOfUint) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*listOfUint); ok {
+		if len(this.List) != len(other.List) {
+			if len(this.List) < len(other.List) {
+				return -1
+			}
+			return 1
+		}
+		for i := range this.List {
+			if c := this.List[i].Compare(other.List[i]); c != 0 {
+				return c
+			}
+		}
+		return 0
+	}
+	return strings.Compare("listOfUint", nameOfStruct(that))
+}
+
 func (this *listOfUint) Hash() uint64 {
 	return this.hash
 }
@@ -153,6 +225,30 @@ func (this *listOfBool) Eval() ([]bool, error) {
 		}
 	}
 	return res, nil
+}
+
+func (this *listOfBool) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*listOfBool); ok {
+		if len(this.List) != len(other.List) {
+			if len(this.List) < len(other.List) {
+				return -1
+			}
+			return 1
+		}
+		for i := range this.List {
+			if c := this.List[i].Compare(other.List[i]); c != 0 {
+				return c
+			}
+		}
+		return 0
+	}
+	return strings.Compare("listOfBool", nameOfStruct(that))
 }
 
 func (this *listOfBool) Hash() uint64 {
@@ -196,6 +292,30 @@ func (this *listOfString) Eval() ([]string, error) {
 	return res, nil
 }
 
+func (this *listOfString) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*listOfString); ok {
+		if len(this.List) != len(other.List) {
+			if len(this.List) < len(other.List) {
+				return -1
+			}
+			return 1
+		}
+		for i := range this.List {
+			if c := this.List[i].Compare(other.List[i]); c != 0 {
+				return c
+			}
+		}
+		return 0
+	}
+	return strings.Compare("listOfString", nameOfStruct(that))
+}
+
 func (this *listOfString) Hash() uint64 {
 	return this.hash
 }
@@ -235,6 +355,30 @@ func (this *listOfBytes) Eval() ([][]byte, error) {
 		}
 	}
 	return res, nil
+}
+
+func (this *listOfBytes) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*listOfBytes); ok {
+		if len(this.List) != len(other.List) {
+			if len(this.List) < len(other.List) {
+				return -1
+			}
+			return 1
+		}
+		for i := range this.List {
+			if c := this.List[i].Compare(other.List[i]); c != 0 {
+				return c
+			}
+		}
+		return 0
+	}
+	return strings.Compare("listOfBytes", nameOfStruct(that))
 }
 
 func (this *listOfBytes) Hash() uint64 {

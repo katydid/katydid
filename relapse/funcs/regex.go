@@ -16,6 +16,7 @@ package funcs
 
 import (
 	"regexp"
+	"strings"
 )
 
 //Regex returns a new regex function given the first parameter as the expression string that needs to compiled and the second as the regex that should be matched.
@@ -53,6 +54,25 @@ func (this *regex) Eval() (bool, error) {
 		return false, err
 	}
 	return this.r.MatchString(s), nil
+}
+
+func (this *regex) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*regex); ok {
+		if c := this.Expr.Compare(other.Expr); c != 0 {
+			return c
+		}
+		if c := this.S.Compare(other.S); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("regex", nameOfStruct(that))
 }
 
 func (this *regex) Hash() uint64 {

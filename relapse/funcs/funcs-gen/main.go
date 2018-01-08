@@ -40,6 +40,25 @@ func (this *{{.Type}}{{.CName}}) Eval() (bool, error) {
 	{{if .Eval}}{{.Eval}}{{else}}return v1 {{.Operator}} v2, nil{{end}}
 }
 
+func (this *{{.Type}}{{.CName}}) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*{{.Type}}{{.CName}}); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("{{.Type}}{{.CName}}", nameOfStruct(that))
+}
+
 func (this *{{.Type}}{{.CName}}) Hash() uint64 {
 	return this.hash
 }
@@ -169,6 +188,30 @@ func (this *listOf{{.FuncType}}) Eval() ([]{{.GoType}}, error) {
 	return res, nil
 }
 
+func (this *listOf{{.FuncType}}) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*listOf{{.FuncType}}); ok {
+		if len(this.List) != len(other.List) {
+			if len(this.List) < len(other.List) {
+				return -1
+			}
+			return 1
+		}
+		for i := range this.List {
+			if c := this.List[i].Compare(other.List[i]); c != 0 {
+				return c
+			}
+		}
+		return 0
+	}
+	return strings.Compare("listOf{{.FuncType}}", nameOfStruct(that))
+}
+
 func (this *listOf{{.FuncType}}) Hash() uint64 {
 	return this.hash
 }
@@ -211,6 +254,22 @@ func (this *print{{.Name}}) Eval() ({{.GoType}}, error) {
 	return v, err
 }
 
+func (this *print{{.Name}}) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*print{{.Name}}); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("print{{.Name}}", nameOfStruct(that))
+}
+
 func (this *print{{.Name}}) Hash() uint64 {
 	return this.hash
 }
@@ -251,6 +310,22 @@ func (this *len{{.}}) Eval() (int64, error) {
 		return 0, err
 	}
 	return int64(len(e)), nil
+}
+
+func (this *len{{.}}) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*len{{.}}); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("len{{.}}", nameOfStruct(that))
 }
 
 func (this *len{{.}}) Hash() uint64 {
@@ -297,6 +372,25 @@ func (this *elem{{.ListType}}) Eval() ({{.ReturnType}}, error) {
 		return {{.Default}}, NewRangeCheckErr(index, len(list))
 	}
 	return list[index], nil
+}
+
+func (this *elem{{.ListType}}) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*elem{{.ListType}}); ok {
+		if c := this.List.Compare(other.List); c != 0 {
+			return c
+		}
+		if c := this.Index.Compare(other.Index); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("elem{{.ListType}}", nameOfStruct(that))
 }
 
 func (this *elem{{.ListType}}) Hash() uint64 {
@@ -376,6 +470,28 @@ func (this *range{{.ListType}}) Eval() ({{.ReturnType}}, error) {
 	return list[first:last], nil
 }
 
+func (this *range{{.ListType}}) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*range{{.ListType}}); ok {
+		if c := this.List.Compare(other.List); c != 0 {
+			return c
+		}
+		if c := this.First.Compare(other.First); c != 0 {
+			return c
+		}
+		if c := this.Last.Compare(other.Last); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("range{{.ListType}}", nameOfStruct(that))
+}
+
 func (this *range{{.ListType}}) Hash() uint64 {
 	return this.hash
 }
@@ -426,6 +542,19 @@ func (this *var{{.Name}}) Eval() ({{.GoType}}, error) {
 	return v, nil
 }
 
+func (this *var{{.Name}}) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if _, ok := that.(*var{{.Name}}); ok {
+		return 0
+	}
+	return strings.Compare("var{{.Name}}", nameOfStruct(that))
+}
+
 func (this *var{{.Name}}) Hash() uint64 {
 	return this.hash
 }
@@ -468,6 +597,22 @@ type typ{{.Name}} struct {
 func (this *typ{{.Name}}) Eval() (bool, error) {
 	_, err := this.E.Eval()
 	return (err == nil), nil
+}
+
+func (this *typ{{.Name}}) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*typ{{.Name}}); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("typ{{.Name}}", nameOfStruct(that))
 }
 
 func (this *typ{{.Name}}) Hash() uint64 {
@@ -525,6 +670,25 @@ func (this *inSet{{.Name}}) Eval() (bool, error) {
 	}
 	_, ok := this.set[v]
 	return ok, nil
+}
+
+func (this *inSet{{.Name}}) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*inSet{{.Name}}); ok {
+		if c := this.Elem.Compare(other.Elem); c != 0 {
+			return c
+		}
+		if c := this.List.Compare(other.List); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("inSet{{.Name}}", nameOfStruct(that))
 }
 
 func (this *inSet{{.Name}}) Hash() uint64 {
@@ -586,7 +750,7 @@ func main() {
 		&compare{"ne", "!=", "bool", "", "Bool", "false", "not equal"},
 		&compare{"ne", "!=", "string", "", "String", "false", "not equal"},
 		&compare{"ne", "", "bytes", "return !bytes.Equal(v1, v2), nil", "Bytes", "false", "not equal"},
-	}, `"bytes"`)
+	}, `"bytes"`, `"strings"`)
 	gen(newFuncStr, "newfunc.gen.go", []interface{}{
 		"Double",
 		"Int",
@@ -636,7 +800,7 @@ func main() {
 		&printer{"Bools", "[]bool"},
 		&printer{"Strings", "[]string"},
 		&printer{"ListOfBytes", "[][]byte"},
-	}, `"fmt"`)
+	}, `"fmt"`, `"strings"`)
 	gen(lengthStr, "length.gen.go", []interface{}{
 		"Doubles",
 		"Ints",
@@ -646,7 +810,7 @@ func main() {
 		"ListOfBytes",
 		"String",
 		"Bytes",
-	})
+	}, `"strings"`)
 	gen(elemStr, "elem.gen.go", []interface{}{
 		&elemer{"Doubles", "float64", "Double", "0"},
 		&elemer{"Ints", "int64", "Int", "0"},
@@ -654,7 +818,7 @@ func main() {
 		&elemer{"Bools", "bool", "Bool", "false"},
 		&elemer{"Strings", "string", "String", `""`},
 		&elemer{"ListOfBytes", "[]byte", "Bytes", "nil"},
-	})
+	}, `"strings"`)
 	gen(rangeStr, "range.gen.go", []interface{}{
 		&ranger{"Doubles", "[]float64"},
 		&ranger{"Ints", "[]int64"},
@@ -662,7 +826,7 @@ func main() {
 		&ranger{"Bools", "[]bool"},
 		&ranger{"Strings", "[]string"},
 		&ranger{"ListOfBytes", "[][]byte"},
-	})
+	}, `"strings"`)
 	gen(variableStr, "variable.gen.go", []interface{}{
 		&varer{"Double", "double", "float64", "0"},
 		&varer{"Int", "int", "int64", "0"},
@@ -670,7 +834,7 @@ func main() {
 		&varer{"Bool", "bool", "bool", "false"},
 		&varer{"String", "string", "string", `""`},
 		&varer{"Bytes", "[]byte", "[]byte", "nil"},
-	}, `"github.com/katydid/katydid/parser"`)
+	}, `"strings"`, `"github.com/katydid/katydid/parser"`)
 	gen(typStr, "type.gen.go", []interface{}{
 		&typer{"Double"},
 		&typer{"Int"},
@@ -678,10 +842,10 @@ func main() {
 		&typer{"Bool"},
 		&typer{"String"},
 		&typer{"Bytes"},
-	})
+	}, `"strings"`)
 	gen(inSetStr, "inset.gen.go", []interface{}{
 		&inSeter{"Int", "ConstInts", "int64"},
 		&inSeter{"Uint", "ConstUints", "uint64"},
 		&inSeter{"String", "ConstStrings", "string"},
-	})
+	}, `"strings"`)
 }

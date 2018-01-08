@@ -3,6 +3,7 @@ package funcs
 
 import (
 	"bytes"
+	"strings"
 )
 
 type doubleGE struct {
@@ -21,6 +22,25 @@ func (this *doubleGE) Eval() (bool, error) {
 		return false, nil
 	}
 	return v1 >= v2, nil
+}
+
+func (this *doubleGE) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*doubleGE); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("doubleGE", nameOfStruct(that))
 }
 
 func (this *doubleGE) Hash() uint64 {
@@ -58,6 +78,25 @@ func (this *intGE) Eval() (bool, error) {
 	return v1 >= v2, nil
 }
 
+func (this *intGE) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*intGE); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("intGE", nameOfStruct(that))
+}
+
 func (this *intGE) Hash() uint64 {
 	return this.hash
 }
@@ -91,6 +130,25 @@ func (this *uintGE) Eval() (bool, error) {
 		return false, nil
 	}
 	return v1 >= v2, nil
+}
+
+func (this *uintGE) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*uintGE); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("uintGE", nameOfStruct(that))
 }
 
 func (this *uintGE) Hash() uint64 {
@@ -128,6 +186,25 @@ func (this *bytesGE) Eval() (bool, error) {
 	return bytes.Compare(v1, v2) >= 0, nil
 }
 
+func (this *bytesGE) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*bytesGE); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("bytesGE", nameOfStruct(that))
+}
+
 func (this *bytesGE) Hash() uint64 {
 	return this.hash
 }
@@ -161,6 +238,25 @@ func (this *doubleGt) Eval() (bool, error) {
 		return false, nil
 	}
 	return v1 > v2, nil
+}
+
+func (this *doubleGt) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*doubleGt); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("doubleGt", nameOfStruct(that))
 }
 
 func (this *doubleGt) Hash() uint64 {
@@ -198,6 +294,25 @@ func (this *intGt) Eval() (bool, error) {
 	return v1 > v2, nil
 }
 
+func (this *intGt) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*intGt); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("intGt", nameOfStruct(that))
+}
+
 func (this *intGt) Hash() uint64 {
 	return this.hash
 }
@@ -231,6 +346,25 @@ func (this *uintGt) Eval() (bool, error) {
 		return false, nil
 	}
 	return v1 > v2, nil
+}
+
+func (this *uintGt) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*uintGt); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("uintGt", nameOfStruct(that))
 }
 
 func (this *uintGt) Hash() uint64 {
@@ -268,6 +402,25 @@ func (this *bytesGt) Eval() (bool, error) {
 	return bytes.Compare(v1, v2) > 0, nil
 }
 
+func (this *bytesGt) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*bytesGt); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("bytesGt", nameOfStruct(that))
+}
+
 func (this *bytesGt) Hash() uint64 {
 	return this.hash
 }
@@ -301,6 +454,25 @@ func (this *doubleLE) Eval() (bool, error) {
 		return false, nil
 	}
 	return v1 <= v2, nil
+}
+
+func (this *doubleLE) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*doubleLE); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("doubleLE", nameOfStruct(that))
 }
 
 func (this *doubleLE) Hash() uint64 {
@@ -338,6 +510,25 @@ func (this *intLE) Eval() (bool, error) {
 	return v1 <= v2, nil
 }
 
+func (this *intLE) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*intLE); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("intLE", nameOfStruct(that))
+}
+
 func (this *intLE) Hash() uint64 {
 	return this.hash
 }
@@ -371,6 +562,25 @@ func (this *uintLE) Eval() (bool, error) {
 		return false, nil
 	}
 	return v1 <= v2, nil
+}
+
+func (this *uintLE) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*uintLE); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("uintLE", nameOfStruct(that))
 }
 
 func (this *uintLE) Hash() uint64 {
@@ -408,6 +618,25 @@ func (this *bytesLE) Eval() (bool, error) {
 	return bytes.Compare(v1, v2) <= 0, nil
 }
 
+func (this *bytesLE) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*bytesLE); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("bytesLE", nameOfStruct(that))
+}
+
 func (this *bytesLE) Hash() uint64 {
 	return this.hash
 }
@@ -441,6 +670,25 @@ func (this *doubleLt) Eval() (bool, error) {
 		return false, nil
 	}
 	return v1 < v2, nil
+}
+
+func (this *doubleLt) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*doubleLt); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("doubleLt", nameOfStruct(that))
 }
 
 func (this *doubleLt) Hash() uint64 {
@@ -478,6 +726,25 @@ func (this *intLt) Eval() (bool, error) {
 	return v1 < v2, nil
 }
 
+func (this *intLt) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*intLt); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("intLt", nameOfStruct(that))
+}
+
 func (this *intLt) Hash() uint64 {
 	return this.hash
 }
@@ -511,6 +778,25 @@ func (this *uintLt) Eval() (bool, error) {
 		return false, nil
 	}
 	return v1 < v2, nil
+}
+
+func (this *uintLt) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*uintLt); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("uintLt", nameOfStruct(that))
 }
 
 func (this *uintLt) Hash() uint64 {
@@ -548,6 +834,25 @@ func (this *bytesLt) Eval() (bool, error) {
 	return bytes.Compare(v1, v2) < 0, nil
 }
 
+func (this *bytesLt) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*bytesLt); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("bytesLt", nameOfStruct(that))
+}
+
 func (this *bytesLt) Hash() uint64 {
 	return this.hash
 }
@@ -581,6 +886,25 @@ func (this *doubleEq) Eval() (bool, error) {
 		return false, nil
 	}
 	return v1 == v2, nil
+}
+
+func (this *doubleEq) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*doubleEq); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("doubleEq", nameOfStruct(that))
 }
 
 func (this *doubleEq) Hash() uint64 {
@@ -618,6 +942,25 @@ func (this *intEq) Eval() (bool, error) {
 	return v1 == v2, nil
 }
 
+func (this *intEq) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*intEq); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("intEq", nameOfStruct(that))
+}
+
 func (this *intEq) Hash() uint64 {
 	return this.hash
 }
@@ -651,6 +994,25 @@ func (this *uintEq) Eval() (bool, error) {
 		return false, nil
 	}
 	return v1 == v2, nil
+}
+
+func (this *uintEq) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*uintEq); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("uintEq", nameOfStruct(that))
 }
 
 func (this *uintEq) Hash() uint64 {
@@ -688,6 +1050,25 @@ func (this *boolEq) Eval() (bool, error) {
 	return v1 == v2, nil
 }
 
+func (this *boolEq) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*boolEq); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("boolEq", nameOfStruct(that))
+}
+
 func (this *boolEq) Hash() uint64 {
 	return this.hash
 }
@@ -721,6 +1102,25 @@ func (this *stringEq) Eval() (bool, error) {
 		return false, nil
 	}
 	return v1 == v2, nil
+}
+
+func (this *stringEq) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*stringEq); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("stringEq", nameOfStruct(that))
 }
 
 func (this *stringEq) Hash() uint64 {
@@ -758,6 +1158,25 @@ func (this *bytesEq) Eval() (bool, error) {
 	return bytes.Equal(v1, v2), nil
 }
 
+func (this *bytesEq) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*bytesEq); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("bytesEq", nameOfStruct(that))
+}
+
 func (this *bytesEq) Hash() uint64 {
 	return this.hash
 }
@@ -791,6 +1210,25 @@ func (this *doubleNe) Eval() (bool, error) {
 		return false, nil
 	}
 	return v1 != v2, nil
+}
+
+func (this *doubleNe) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*doubleNe); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("doubleNe", nameOfStruct(that))
 }
 
 func (this *doubleNe) Hash() uint64 {
@@ -828,6 +1266,25 @@ func (this *intNe) Eval() (bool, error) {
 	return v1 != v2, nil
 }
 
+func (this *intNe) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*intNe); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("intNe", nameOfStruct(that))
+}
+
 func (this *intNe) Hash() uint64 {
 	return this.hash
 }
@@ -861,6 +1318,25 @@ func (this *uintNe) Eval() (bool, error) {
 		return false, nil
 	}
 	return v1 != v2, nil
+}
+
+func (this *uintNe) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*uintNe); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("uintNe", nameOfStruct(that))
 }
 
 func (this *uintNe) Hash() uint64 {
@@ -898,6 +1374,25 @@ func (this *boolNe) Eval() (bool, error) {
 	return v1 != v2, nil
 }
 
+func (this *boolNe) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*boolNe); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("boolNe", nameOfStruct(that))
+}
+
 func (this *boolNe) Hash() uint64 {
 	return this.hash
 }
@@ -933,6 +1428,25 @@ func (this *stringNe) Eval() (bool, error) {
 	return v1 != v2, nil
 }
 
+func (this *stringNe) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*stringNe); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("stringNe", nameOfStruct(that))
+}
+
 func (this *stringNe) Hash() uint64 {
 	return this.hash
 }
@@ -966,6 +1480,25 @@ func (this *bytesNe) Eval() (bool, error) {
 		return false, nil
 	}
 	return !bytes.Equal(v1, v2), nil
+}
+
+func (this *bytesNe) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*bytesNe); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare("bytesNe", nameOfStruct(that))
 }
 
 func (this *bytesNe) Hash() uint64 {

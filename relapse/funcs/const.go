@@ -14,6 +14,11 @@
 
 package funcs
 
+import (
+	"bytes"
+	"strings"
+)
+
 //Const is an interface that when implemented implies that the function is actually a constant value.
 type Const interface {
 	IsConst()
@@ -48,4 +53,226 @@ func NewConst(value interface{}) interface{} {
 		return ListOfBytesConst(v)
 	}
 	panic("unreachable")
+}
+
+func (this *constDouble) Compare(that Comparable) int {
+	if other, ok := that.(*constDouble); ok {
+		if this.v != other.v {
+			if this.v < other.v {
+				return -1
+			}
+			return 1
+		}
+		return 0
+	}
+	return strings.Compare("constDouble", nameOfStruct(that))
+}
+
+func (this *constInt) Compare(that Comparable) int {
+	if other, ok := that.(*constInt); ok {
+		if this.v != other.v {
+			if this.v < other.v {
+				return -1
+			}
+			return 1
+		}
+		return 0
+	}
+	return strings.Compare("constInt", nameOfStruct(that))
+}
+
+func (this *constUint) Compare(that Comparable) int {
+	if other, ok := that.(*constUint); ok {
+		if this.v != other.v {
+			if this.v < other.v {
+				return -1
+			}
+			return 1
+		}
+		return 0
+	}
+	return strings.Compare("constUint", nameOfStruct(that))
+}
+
+func (this *constBool) Compare(that Comparable) int {
+	if other, ok := that.(*constBool); ok {
+		if this.v != other.v {
+			if !this.v {
+				return -1
+			}
+			return 1
+		}
+		return 0
+	}
+	return strings.Compare("constBool", nameOfStruct(that))
+}
+
+func (this *constString) Compare(that Comparable) int {
+	if other, ok := that.(*constString); ok {
+		return strings.Compare(this.v, other.v)
+	}
+	return strings.Compare("constString", nameOfStruct(that))
+}
+
+func (this *constBytes) Compare(that Comparable) int {
+	if other, ok := that.(*constBytes); ok {
+		return bytes.Compare(this.v, other.v)
+	}
+	return strings.Compare("constBytes", nameOfStruct(that))
+}
+
+func (this *constDoubles) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*constDoubles); ok {
+		if len(this.v) != len(other.v) {
+			if len(this.v) < len(other.v) {
+				return -1
+			}
+			return 1
+		}
+		for i := range this.v {
+			if this.v[i] != other.v[i] {
+				if this.v[i] < other.v[i] {
+					return -1
+				}
+				return 1
+			}
+		}
+		return 0
+	}
+	return strings.Compare("constDoubles", nameOfStruct(that))
+}
+
+func (this *constInts) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*constInts); ok {
+		if len(this.v) != len(other.v) {
+			if len(this.v) < len(other.v) {
+				return -1
+			}
+			return 1
+		}
+		for i := range this.v {
+			if this.v[i] != other.v[i] {
+				if this.v[i] < other.v[i] {
+					return -1
+				}
+				return 1
+			}
+		}
+		return 0
+	}
+	return strings.Compare("constInts", nameOfStruct(that))
+}
+
+func (this *constUints) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*constUints); ok {
+		if len(this.v) != len(other.v) {
+			if len(this.v) < len(other.v) {
+				return -1
+			}
+			return 1
+		}
+		for i := range this.v {
+			if this.v[i] != other.v[i] {
+				if this.v[i] < other.v[i] {
+					return -1
+				}
+				return 1
+			}
+		}
+		return 0
+	}
+	return strings.Compare("constUints", nameOfStruct(that))
+}
+
+func (this *constBools) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*constBools); ok {
+		if len(this.v) != len(other.v) {
+			if len(this.v) < len(other.v) {
+				return -1
+			}
+			return 1
+		}
+		for i := range this.v {
+			if this.v[i] != other.v[i] {
+				if !this.v[i] {
+					return -1
+				}
+				return 1
+			}
+		}
+		return 0
+	}
+	return strings.Compare("constBools", nameOfStruct(that))
+}
+
+func (this *constStrings) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*constStrings); ok {
+		if len(this.v) != len(other.v) {
+			if len(this.v) < len(other.v) {
+				return -1
+			}
+			return 1
+		}
+		for i := range this.v {
+			if c := strings.Compare(this.v[i], other.v[i]); c != 0 {
+				return c
+			}
+		}
+		return 0
+	}
+	return strings.Compare("constStrings", nameOfStruct(that))
+}
+
+func (this *constListOfBytes) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*constListOfBytes); ok {
+		if len(this.v) != len(other.v) {
+			if len(this.v) < len(other.v) {
+				return -1
+			}
+			return 1
+		}
+		for i := range this.v {
+			if c := bytes.Compare(this.v[i], other.v[i]); c != 0 {
+				return c
+			}
+		}
+		return 0
+	}
+	return strings.Compare("constListOfBytes", nameOfStruct(that))
 }

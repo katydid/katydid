@@ -16,6 +16,7 @@ package mem_test
 
 import (
 	"reflect"
+	"strings"
 	"testing"
 
 	reflectparser "github.com/katydid/katydid/parser/reflect"
@@ -34,6 +35,21 @@ type injectableInt struct {
 
 func (this *injectableInt) Eval() (int64, error) {
 	return this.context.Value.(int64), nil
+}
+
+func (this *injectableInt) Compare(that funcs.Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if _, ok := that.(*injectableInt); ok {
+		return 0
+	}
+	e := reflect.ValueOf(that).Elem()
+	nameOfOther := e.Type().Name()
+	return strings.Compare("injectableInt", nameOfOther)
 }
 
 func (this *injectableInt) Hash() uint64 {

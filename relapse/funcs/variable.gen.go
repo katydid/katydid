@@ -3,6 +3,7 @@ package funcs
 
 import (
 	"github.com/katydid/katydid/parser"
+	"strings"
 )
 
 type varDouble struct {
@@ -19,6 +20,19 @@ func (this *varDouble) Eval() (float64, error) {
 		return 0, err
 	}
 	return v, nil
+}
+
+func (this *varDouble) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if _, ok := that.(*varDouble); ok {
+		return 0
+	}
+	return strings.Compare("varDouble", nameOfStruct(that))
 }
 
 func (this *varDouble) Hash() uint64 {
@@ -58,6 +72,19 @@ func (this *varInt) Eval() (int64, error) {
 	return v, nil
 }
 
+func (this *varInt) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if _, ok := that.(*varInt); ok {
+		return 0
+	}
+	return strings.Compare("varInt", nameOfStruct(that))
+}
+
 func (this *varInt) Hash() uint64 {
 	return this.hash
 }
@@ -93,6 +120,19 @@ func (this *varUint) Eval() (uint64, error) {
 		return 0, err
 	}
 	return v, nil
+}
+
+func (this *varUint) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if _, ok := that.(*varUint); ok {
+		return 0
+	}
+	return strings.Compare("varUint", nameOfStruct(that))
 }
 
 func (this *varUint) Hash() uint64 {
@@ -132,6 +172,19 @@ func (this *varBool) Eval() (bool, error) {
 	return v, nil
 }
 
+func (this *varBool) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if _, ok := that.(*varBool); ok {
+		return 0
+	}
+	return strings.Compare("varBool", nameOfStruct(that))
+}
+
 func (this *varBool) Hash() uint64 {
 	return this.hash
 }
@@ -169,6 +222,19 @@ func (this *varString) Eval() (string, error) {
 	return v, nil
 }
 
+func (this *varString) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if _, ok := that.(*varString); ok {
+		return 0
+	}
+	return strings.Compare("varString", nameOfStruct(that))
+}
+
 func (this *varString) Hash() uint64 {
 	return this.hash
 }
@@ -204,6 +270,19 @@ func (this *varBytes) Eval() ([]byte, error) {
 		return nil, err
 	}
 	return v, nil
+}
+
+func (this *varBytes) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if _, ok := that.(*varBytes); ok {
+		return 0
+	}
+	return strings.Compare("varBytes", nameOfStruct(that))
 }
 
 func (this *varBytes) Hash() uint64 {

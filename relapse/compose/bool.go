@@ -16,10 +16,11 @@ package compose
 
 import (
 	"fmt"
+	"reflect"
+
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/funcs"
-	"reflect"
 )
 
 //Bool is an interface that represents a function, that given a value for a variable returns a boolean or an error.

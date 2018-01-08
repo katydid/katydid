@@ -14,14 +14,6 @@
 
 package funcs
 
-import (
-	"reflect"
-)
-
-type Hashable interface {
-	Hash() uint64
-}
-
 //IsFalse returns whether a function is a false constant.
 func IsFalse(fn Bool) bool {
 	v, ok := fn.(*constBool)
@@ -41,84 +33,11 @@ func IsTrue(fn Bool) bool {
 }
 
 //Equal returns whether two functions are equal.
-func Equal(l, r Hashable) bool {
+func Equal(l, r Comparable) bool {
 	hl := l.Hash()
 	hr := r.Hash()
 	if hl != hr {
 		return false
 	}
-	return eq(l, r)
-}
-
-func eq(l, r interface{}) bool {
-	le := reflect.ValueOf(l).Elem()
-	lUniqName := le.Type().Name()
-	re := reflect.ValueOf(r).Elem()
-	rUniqName := re.Type().Name()
-	if lUniqName != rUniqName {
-		return false
-	}
-	if len(reverse(lUniqName)) == 0 {
-		//TODO maybe this could be done better or we could just always convert functions to strings to compare
-		return sprint(l) == sprint(r)
-	}
-	numFields := le.NumField()
-	for i := 0; i < numFields; i++ {
-		if _, ok := le.Field(i).Type().MethodByName("Eval"); !ok {
-			continue
-		}
-		if !eq(le.Field(i).Interface(), re.Field(i).Interface()) {
-			return false
-		}
-	}
-	return true
-}
-
-//Compare compares two funtions.
-func Compare(l, r Hashable) int {
-	hl := l.Hash()
-	hr := r.Hash()
-	if hl != hr {
-		if hl < hr {
-			return -1
-		}
-		return 1
-	}
-	return cmp(l, r)
-}
-
-func cmp(l, r interface{}) int {
-	le := reflect.ValueOf(l).Elem()
-	lUniqName := le.Type().Name()
-	re := reflect.ValueOf(r).Elem()
-	rUniqName := re.Type().Name()
-	if lUniqName != rUniqName {
-		if lUniqName < rUniqName {
-			return -1
-		}
-		return 1
-	}
-	if len(reverse(lUniqName)) == 0 {
-		//TODO maybe this could be done better or we could just always convert functions to strings to compare
-		sl := sprint(l)
-		sr := sprint(r)
-		if sl == sr {
-			return 0
-		}
-		if sl < sr {
-			return -1
-		}
-		return 1
-	}
-	numFields := le.NumField()
-	for i := 0; i < numFields; i++ {
-		if _, ok := le.Field(i).Type().MethodByName("Eval"); !ok {
-			continue
-		}
-		c := cmp(le.Field(i).Interface(), re.Field(i).Interface())
-		if c != 0 {
-			return c
-		}
-	}
-	return 0
+	return l.Compare(r) == 0
 }
