@@ -213,7 +213,7 @@ func (this *equalFold) Hash() uint64 {
 }
 
 func init() {
-	Register("eqFold", "eqFold", EqualFold)
+	Register("equalFold", "eqFold", EqualFold)
 }
 
 //HasPrefix returns a hasPrefix function with the two input functions as its parameters.
