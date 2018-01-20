@@ -117,14 +117,14 @@ func (this *compare) Hash() uint64 {
 }
 
 const newFuncStr = `
-//New{{.}}Func dynamically creates and asserts the returning function is of type {{.}}.
+//New{{.}} dynamically creates and asserts the returning function is of type {{.}}.
 //This function is used by the compose library to compile functions together.
-func New{{.}}Func(uniq string, values ...interface{}) ({{.}}, error) {
-	f, err := newFunc(uniq, values...)
+func (f *Funk) New{{.}}(values ...interface{}) ({{.}}, error) {
+	v, err := f.New(values...)
 	if err != nil {
 		return nil, err
 	}
-	return f.({{.}}), nil
+	return v.({{.}}), nil
 }
 `
 

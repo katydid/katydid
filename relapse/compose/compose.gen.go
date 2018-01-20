@@ -8,7 +8,7 @@ import (
 )
 
 func composeDouble(expr *ast.Expr) (funcs.Double, error) {
-	uniq, err := prep(expr, types.SINGLE_DOUBLE)
+	f, err := prep(expr, types.SINGLE_DOUBLE)
 	if err != nil {
 		return nil, err
 	}
@@ -23,11 +23,11 @@ func composeDouble(expr *ast.Expr) (funcs.Double, error) {
 	if err != nil {
 		return nil, err
 	}
-	return funcs.NewDoubleFunc(uniq, values...)
+	return f.NewDouble(values...)
 }
 
 func composeDoubles(expr *ast.Expr) (funcs.Doubles, error) {
-	uniq, err := prep(expr, types.LIST_DOUBLE)
+	f, err := prep(expr, types.LIST_DOUBLE)
 	if err != nil {
 		return nil, err
 	}
@@ -50,11 +50,11 @@ func composeDoubles(expr *ast.Expr) (funcs.Doubles, error) {
 	if err != nil {
 		return nil, err
 	}
-	return funcs.NewDoublesFunc(uniq, values...)
+	return f.NewDoubles(values...)
 }
 
 func composeInt(expr *ast.Expr) (funcs.Int, error) {
-	uniq, err := prep(expr, types.SINGLE_INT)
+	f, err := prep(expr, types.SINGLE_INT)
 	if err != nil {
 		return nil, err
 	}
@@ -69,11 +69,11 @@ func composeInt(expr *ast.Expr) (funcs.Int, error) {
 	if err != nil {
 		return nil, err
 	}
-	return funcs.NewIntFunc(uniq, values...)
+	return f.NewInt(values...)
 }
 
 func composeInts(expr *ast.Expr) (funcs.Ints, error) {
-	uniq, err := prep(expr, types.LIST_INT)
+	f, err := prep(expr, types.LIST_INT)
 	if err != nil {
 		return nil, err
 	}
@@ -96,11 +96,11 @@ func composeInts(expr *ast.Expr) (funcs.Ints, error) {
 	if err != nil {
 		return nil, err
 	}
-	return funcs.NewIntsFunc(uniq, values...)
+	return f.NewInts(values...)
 }
 
 func composeUint(expr *ast.Expr) (funcs.Uint, error) {
-	uniq, err := prep(expr, types.SINGLE_UINT)
+	f, err := prep(expr, types.SINGLE_UINT)
 	if err != nil {
 		return nil, err
 	}
@@ -115,11 +115,11 @@ func composeUint(expr *ast.Expr) (funcs.Uint, error) {
 	if err != nil {
 		return nil, err
 	}
-	return funcs.NewUintFunc(uniq, values...)
+	return f.NewUint(values...)
 }
 
 func composeUints(expr *ast.Expr) (funcs.Uints, error) {
-	uniq, err := prep(expr, types.LIST_UINT)
+	f, err := prep(expr, types.LIST_UINT)
 	if err != nil {
 		return nil, err
 	}
@@ -142,11 +142,11 @@ func composeUints(expr *ast.Expr) (funcs.Uints, error) {
 	if err != nil {
 		return nil, err
 	}
-	return funcs.NewUintsFunc(uniq, values...)
+	return f.NewUints(values...)
 }
 
 func composeBool(expr *ast.Expr) (funcs.Bool, error) {
-	uniq, err := prep(expr, types.SINGLE_BOOL)
+	f, err := prep(expr, types.SINGLE_BOOL)
 	if err != nil {
 		return nil, err
 	}
@@ -161,11 +161,11 @@ func composeBool(expr *ast.Expr) (funcs.Bool, error) {
 	if err != nil {
 		return nil, err
 	}
-	return funcs.NewBoolFunc(uniq, values...)
+	return f.NewBool(values...)
 }
 
 func composeBools(expr *ast.Expr) (funcs.Bools, error) {
-	uniq, err := prep(expr, types.LIST_BOOL)
+	f, err := prep(expr, types.LIST_BOOL)
 	if err != nil {
 		return nil, err
 	}
@@ -188,11 +188,11 @@ func composeBools(expr *ast.Expr) (funcs.Bools, error) {
 	if err != nil {
 		return nil, err
 	}
-	return funcs.NewBoolsFunc(uniq, values...)
+	return f.NewBools(values...)
 }
 
 func composeString(expr *ast.Expr) (funcs.String, error) {
-	uniq, err := prep(expr, types.SINGLE_STRING)
+	f, err := prep(expr, types.SINGLE_STRING)
 	if err != nil {
 		return nil, err
 	}
@@ -207,11 +207,11 @@ func composeString(expr *ast.Expr) (funcs.String, error) {
 	if err != nil {
 		return nil, err
 	}
-	return funcs.NewStringFunc(uniq, values...)
+	return f.NewString(values...)
 }
 
 func composeStrings(expr *ast.Expr) (funcs.Strings, error) {
-	uniq, err := prep(expr, types.LIST_STRING)
+	f, err := prep(expr, types.LIST_STRING)
 	if err != nil {
 		return nil, err
 	}
@@ -234,11 +234,11 @@ func composeStrings(expr *ast.Expr) (funcs.Strings, error) {
 	if err != nil {
 		return nil, err
 	}
-	return funcs.NewStringsFunc(uniq, values...)
+	return f.NewStrings(values...)
 }
 
 func composeBytes(expr *ast.Expr) (funcs.Bytes, error) {
-	uniq, err := prep(expr, types.SINGLE_BYTES)
+	f, err := prep(expr, types.SINGLE_BYTES)
 	if err != nil {
 		return nil, err
 	}
@@ -253,11 +253,11 @@ func composeBytes(expr *ast.Expr) (funcs.Bytes, error) {
 	if err != nil {
 		return nil, err
 	}
-	return funcs.NewBytesFunc(uniq, values...)
+	return f.NewBytes(values...)
 }
 
 func composeListOfBytes(expr *ast.Expr) (funcs.ListOfBytes, error) {
-	uniq, err := prep(expr, types.LIST_BYTES)
+	f, err := prep(expr, types.LIST_BYTES)
 	if err != nil {
 		return nil, err
 	}
@@ -280,5 +280,5 @@ func composeListOfBytes(expr *ast.Expr) (funcs.ListOfBytes, error) {
 	if err != nil {
 		return nil, err
 	}
-	return funcs.NewListOfBytesFunc(uniq, values...)
+	return f.NewListOfBytes(values...)
 }

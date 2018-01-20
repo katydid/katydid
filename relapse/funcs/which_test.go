@@ -20,32 +20,28 @@ import (
 	"github.com/katydid/katydid/relapse/types"
 )
 
-type which struct {
-	exp string
-}
-
-func (this which) test(t *testing.T, name string, params ...types.Type) {
-	uniq, err := funcsMap.which(name, params...)
+func whichtest(t *testing.T, name string, params ...types.Type) {
+	f, err := funcsMap.which(name, params...)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if uniq != this.exp {
-		t.Fatalf("expected %v got %v", this.exp, uniq)
+	if f.Name != name {
+		t.Fatalf("name: want %s got %s", name, f.Name)
 	}
 }
 
 func TestWhichStringEq(t *testing.T) {
-	which{"eq_SINGLE_STRING_SINGLE_STRING_SINGLE_BOOL"}.test(t, "eq", types.SINGLE_STRING, types.SINGLE_STRING)
+	whichtest(t, "eq", types.SINGLE_STRING, types.SINGLE_STRING)
 }
 
 func TestWhichInt64Eq(t *testing.T) {
-	which{"eq_SINGLE_INT_SINGLE_INT_SINGLE_BOOL"}.test(t, "eq", types.SINGLE_INT, types.SINGLE_INT)
+	whichtest(t, "eq", types.SINGLE_INT, types.SINGLE_INT)
 }
 
 func TestWhichInt64Ge(t *testing.T) {
-	which{"ge_SINGLE_INT_SINGLE_INT_SINGLE_BOOL"}.test(t, "ge", types.SINGLE_INT, types.SINGLE_INT)
+	whichtest(t, "ge", types.SINGLE_INT, types.SINGLE_INT)
 }
 
 func TestWhichElem(t *testing.T) {
-	which{"elem_LIST_UINT_SINGLE_INT_SINGLE_UINT"}.test(t, "elem", types.LIST_UINT, types.SINGLE_INT)
+	whichtest(t, "elem", types.LIST_UINT, types.SINGLE_INT)
 }

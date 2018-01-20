@@ -31,12 +31,11 @@ func Register(name string, fnc interface{}) {
 	}
 	returnType := eval.Type
 	ins := typ.NumIn()
-	res := &funk{
-		name:   name,
+	res := &Funk{
+		Name:   name,
 		Out:    types.FromGo(returnType.Out(0)),
 		newfnc: fnc,
 	}
-	uniqName := name
 	for i := 0; i < ins; i++ {
 		meth, ok := typ.In(i).MethodByName("Eval")
 		if !ok {
@@ -45,10 +44,7 @@ func Register(name string, fnc interface{}) {
 		res.InConst = append(res.InConst, IsConst(typ.In(i)))
 		inType := types.FromGo(meth.Type.Out(0))
 		res.In = append(res.In, inType)
-		uniqName += "_" + inType.String()
 	}
-	uniqName += "_" + res.Out.String()
-	res.uniqName = uniqName
 	funcsMap.register(res)
 }
 
@@ -73,18 +69,9 @@ func IsConst(typ reflect.Type) bool {
 	return true
 }
 
-//Which returns the unique name of the function given the function name and parameter types.
-func Which(name string, ins ...types.Type) (string, error) {
+//Which returns the Funk (function creator) of the function given the function name and parameter types.
+func Which(name string, ins ...types.Type) (*Funk, error) {
 	return funcsMap.which(name, ins...)
-}
-
-//Out returns the output type given the unique function name.
-func Out(uniq string) (types.Type, error) {
-	u, ok := funcsMap.uniqToFunc[uniq]
-	if !ok {
-		return 0, &errUnknownFunction{uniq, nil}
-	}
-	return u.Out, nil
 }
 
 type errUnknownFunction struct {
@@ -106,42 +93,31 @@ func (this *errUnknownFunction) Error() string {
 
 var funcsMap = newFunksMap()
 
-type funksMap struct {
-	nameToUniq map[string][]string
-	uniqToFunc map[string]*funk
+type funksMap map[string][]*Funk
+
+func newFunksMap() funksMap {
+	return make(map[string][]*Funk)
 }
 
-func newFunksMap() *funksMap {
-	return &funksMap{
-		nameToUniq: make(map[string][]string),
-		uniqToFunc: make(map[string]*funk),
+func (this funksMap) register(f *Funk) {
+	if _, ok := this[f.Name]; !ok {
+		this[f.Name] = []*Funk{}
 	}
+	this[f.Name] = append(this[f.Name], f)
 }
 
-func (this *funksMap) register(f *funk) {
-	if _, ok := this.uniqToFunc[f.uniqName]; ok {
-		panic("func already registered " + f.uniqName)
-	}
-	if this.nameToUniq[f.name] == nil {
-		this.nameToUniq[f.name] = make([]string, 0, 1)
-	}
-	this.nameToUniq[f.name] = append(this.nameToUniq[f.name], f.uniqName)
-	this.uniqToFunc[f.uniqName] = f
-}
-
-func (this *funksMap) which(name string, ins ...types.Type) (string, error) {
-	uniqs, ok := this.nameToUniq[name]
+func (this funksMap) which(name string, ins ...types.Type) (*Funk, error) {
+	funks, ok := this[name]
 	if !ok {
-		return "", newErrUnknownFunction(name, ins)
+		return nil, newErrUnknownFunction(name, ins)
 	}
-	for _, uniq := range uniqs {
-		u := this.uniqToFunc[uniq]
-		if len(u.In) != len(ins) {
+	for _, f := range funks {
+		if len(f.In) != len(ins) {
 			continue
 		}
 		eq := true
-		for i := range u.In {
-			if u.In[i] != ins[i] {
+		for i := range f.In {
+			if f.In[i] != ins[i] {
 				eq = false
 				break
 			}
@@ -149,43 +125,28 @@ func (this *funksMap) which(name string, ins ...types.Type) (string, error) {
 		if !eq {
 			continue
 		}
-		return u.uniqName, nil
+		return f, nil
 	}
-	return "", newErrUnknownFunction(name, ins)
+	return nil, newErrUnknownFunction(name, ins)
 }
 
-func (this *funksMap) String() string {
-	funcs := make([]string, len(this.uniqToFunc))
-	i := 0
-	for _, f := range this.uniqToFunc {
-		funcs[i] = f.String()
-		i++
-	}
-	return strings.Join(funcs, "\n")
+type Funk struct {
+	Name    string
+	In      []types.Type
+	InConst []bool
+	Out     types.Type
+	newfnc  interface{}
 }
 
-type funk struct {
-	name     string
-	uniqName string
-	In       []types.Type
-	InConst  []bool
-	Out      types.Type
-	newfnc   interface{}
-}
-
-func (this *funk) String() string {
+func (this *Funk) String() string {
 	ins := make([]string, len(this.In))
 	for i, in := range this.In {
 		ins[i] = in.String()
 	}
-	return fmt.Sprintf("func %v as %v(%v) %v", this.uniqName, this.name, strings.Join(ins, ","), this.Out.String())
+	return fmt.Sprintf("func %v(%v) %v", this.Name, strings.Join(ins, ","), this.Out.String())
 }
 
-func newFunc(uniq string, values ...interface{}) (interface{}, error) {
-	f, ok := funcsMap.uniqToFunc[uniq]
-	if !ok {
-		return nil, &errUnknownFunction{uniq, nil}
-	}
+func (f *Funk) New(values ...interface{}) (interface{}, error) {
 	newf := reflect.ValueOf(f.newfnc)
 	rvalues := make([]reflect.Value, len(values))
 	for i := range rvalues {

@@ -29,9 +29,8 @@ func toString(s string) string {
 //TestGenFunList generates the current list of functions.
 func TestGenFuncList(t *testing.T) {
 	funcs := []string{}
-	for name, us := range funcsMap.nameToUniq {
-		for _, u := range us {
-			f := funcsMap.uniqToFunc[u]
+	for name, us := range funcsMap {
+		for _, f := range us {
 			ins := make([]string, len(f.In))
 			for i, in := range f.In {
 				if f.InConst[i] {
