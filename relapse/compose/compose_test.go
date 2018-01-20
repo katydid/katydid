@@ -58,8 +58,6 @@ func TestComposeNot(t *testing.T) {
 	}
 }
 
-//contains(toLower(decString(test.Address.Street.value)), toLower("TheStreet"))
-
 func TestComposeContains(t *testing.T) {
 	expr := ast.NewNestedFunction("contains",
 		ast.NewNestedFunction("toLower", ast.NewStringVar()),

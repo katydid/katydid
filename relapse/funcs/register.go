@@ -190,3 +190,31 @@ func newFunc(uniq string, values ...interface{}) (interface{}, error) {
 	res := newf.Call(rvalues)
 	return res[0].Interface(), nil
 }
+
+//IsFalse returns whether a function is a false constant.
+func IsFalse(fn Bool) bool {
+	v, ok := fn.(*constBool)
+	if !ok {
+		return false
+	}
+	return v.v == false
+}
+
+//IsTrue returns whether a function is a true constant.
+func IsTrue(fn Bool) bool {
+	v, ok := fn.(*constBool)
+	if !ok {
+		return false
+	}
+	return v.v == true
+}
+
+//Equal returns whether two functions are equal.
+func Equal(l, r Comparable) bool {
+	hl := l.Hash()
+	hr := r.Hash()
+	if hl != hr {
+		return false
+	}
+	return l.Compare(r) == 0
+}
