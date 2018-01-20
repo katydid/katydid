@@ -52,7 +52,11 @@ func (this *toLower) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("toLower", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *toLower) String() string {
+	return "toLower(" + this.S.String() + ")"
 }
 
 func (this *toLower) Hash() uint64 {
@@ -60,7 +64,7 @@ func (this *toLower) Hash() uint64 {
 }
 
 func init() {
-	Register("toLower", "toLower", ToLower)
+	Register("toLower", ToLower)
 }
 
 //ToUpper returns a toUpper function with the input function as its parameter.
@@ -97,7 +101,11 @@ func (this *toUpper) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("toUpper", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *toUpper) String() string {
+	return "toUpper(" + this.S.String() + ")"
 }
 
 func (this *toUpper) Hash() uint64 {
@@ -105,7 +113,7 @@ func (this *toUpper) Hash() uint64 {
 }
 
 func init() {
-	Register("toUpper", "toUpper", ToUpper)
+	Register("toUpper", ToUpper)
 }
 
 //Contains returns a contains function with the two input function as its parameter.
@@ -151,7 +159,11 @@ func (this *contains) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("contains", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *contains) String() string {
+	return "contains(" + sjoin(this.S, this.Substr) + ")"
 }
 
 func (this *contains) Hash() uint64 {
@@ -159,7 +171,7 @@ func (this *contains) Hash() uint64 {
 }
 
 func init() {
-	Register("contains", "contains", Contains)
+	Register("contains", Contains)
 }
 
 //EqualFold returns a eqFold function with the two input functions as its parameters.
@@ -205,7 +217,11 @@ func (this *equalFold) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("equalFold", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *equalFold) String() string {
+	return "eqFold(" + sjoin(this.S, this.T) + ")"
 }
 
 func (this *equalFold) Hash() uint64 {
@@ -213,7 +229,7 @@ func (this *equalFold) Hash() uint64 {
 }
 
 func init() {
-	Register("equalFold", "eqFold", EqualFold)
+	Register("eqFold", EqualFold)
 }
 
 //HasPrefix returns a hasPrefix function with the two input functions as its parameters.
@@ -259,7 +275,11 @@ func (this *hasPrefix) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("hasPrefix", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *hasPrefix) String() string {
+	return "hasPrefix(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *hasPrefix) Hash() uint64 {
@@ -267,7 +287,7 @@ func (this *hasPrefix) Hash() uint64 {
 }
 
 func init() {
-	Register("hasPrefix", "hasPrefix", HasPrefix)
+	Register("hasPrefix", HasPrefix)
 }
 
 //HasSuffix returns a hasSuffix function with the two input functions as its parameters.
@@ -313,7 +333,11 @@ func (this *hasSuffix) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("hasSuffix", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *hasSuffix) String() string {
+	return "hasSuffix(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *hasSuffix) Hash() uint64 {
@@ -321,5 +345,5 @@ func (this *hasSuffix) Hash() uint64 {
 }
 
 func init() {
-	Register("hasSuffix", "hasSuffix", HasSuffix)
+	Register("hasSuffix", HasSuffix)
 }

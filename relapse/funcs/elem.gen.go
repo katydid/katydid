@@ -49,7 +49,11 @@ func (this *elemDoubles) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("elemDoubles", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *elemDoubles) String() string {
+	return "elem(" + sjoin(this.List, this.Index) + ")"
 }
 
 func (this *elemDoubles) Hash() uint64 {
@@ -57,7 +61,7 @@ func (this *elemDoubles) Hash() uint64 {
 }
 
 func init() {
-	Register("elemDoubles", "elem", ElemDoubles)
+	Register("elem", ElemDoubles)
 }
 
 //ElemDoubles returns a function that returns the n'th element of the list.
@@ -117,7 +121,11 @@ func (this *elemInts) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("elemInts", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *elemInts) String() string {
+	return "elem(" + sjoin(this.List, this.Index) + ")"
 }
 
 func (this *elemInts) Hash() uint64 {
@@ -125,7 +133,7 @@ func (this *elemInts) Hash() uint64 {
 }
 
 func init() {
-	Register("elemInts", "elem", ElemInts)
+	Register("elem", ElemInts)
 }
 
 //ElemInts returns a function that returns the n'th element of the list.
@@ -185,7 +193,11 @@ func (this *elemUints) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("elemUints", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *elemUints) String() string {
+	return "elem(" + sjoin(this.List, this.Index) + ")"
 }
 
 func (this *elemUints) Hash() uint64 {
@@ -193,7 +205,7 @@ func (this *elemUints) Hash() uint64 {
 }
 
 func init() {
-	Register("elemUints", "elem", ElemUints)
+	Register("elem", ElemUints)
 }
 
 //ElemUints returns a function that returns the n'th element of the list.
@@ -253,7 +265,11 @@ func (this *elemBools) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("elemBools", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *elemBools) String() string {
+	return "elem(" + sjoin(this.List, this.Index) + ")"
 }
 
 func (this *elemBools) Hash() uint64 {
@@ -261,7 +277,7 @@ func (this *elemBools) Hash() uint64 {
 }
 
 func init() {
-	Register("elemBools", "elem", ElemBools)
+	Register("elem", ElemBools)
 }
 
 //ElemBools returns a function that returns the n'th element of the list.
@@ -321,7 +337,11 @@ func (this *elemStrings) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("elemStrings", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *elemStrings) String() string {
+	return "elem(" + sjoin(this.List, this.Index) + ")"
 }
 
 func (this *elemStrings) Hash() uint64 {
@@ -329,7 +349,7 @@ func (this *elemStrings) Hash() uint64 {
 }
 
 func init() {
-	Register("elemStrings", "elem", ElemStrings)
+	Register("elem", ElemStrings)
 }
 
 //ElemStrings returns a function that returns the n'th element of the list.
@@ -389,7 +409,11 @@ func (this *elemListOfBytes) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("elemListOfBytes", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *elemListOfBytes) String() string {
+	return "elem(" + sjoin(this.List, this.Index) + ")"
 }
 
 func (this *elemListOfBytes) Hash() uint64 {
@@ -397,7 +421,7 @@ func (this *elemListOfBytes) Hash() uint64 {
 }
 
 func init() {
-	Register("elemListOfBytes", "elem", ElemListOfBytes)
+	Register("elem", ElemListOfBytes)
 }
 
 //ElemListOfBytes returns a function that returns the n'th element of the list.

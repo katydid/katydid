@@ -31,7 +31,11 @@ func (this *lenDoubles) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("lenDoubles", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *lenDoubles) String() string {
+	return "length(" + this.E.String() + ")"
 }
 
 func (this *lenDoubles) Hash() uint64 {
@@ -39,7 +43,7 @@ func (this *lenDoubles) Hash() uint64 {
 }
 
 func init() {
-	Register("lenDoubles", "length", LenDoubles)
+	Register("length", LenDoubles)
 }
 
 //LenDoubles returns a function that returns the length of a list of type Doubles
@@ -76,7 +80,11 @@ func (this *lenInts) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("lenInts", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *lenInts) String() string {
+	return "length(" + this.E.String() + ")"
 }
 
 func (this *lenInts) Hash() uint64 {
@@ -84,7 +92,7 @@ func (this *lenInts) Hash() uint64 {
 }
 
 func init() {
-	Register("lenInts", "length", LenInts)
+	Register("length", LenInts)
 }
 
 //LenInts returns a function that returns the length of a list of type Ints
@@ -121,7 +129,11 @@ func (this *lenUints) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("lenUints", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *lenUints) String() string {
+	return "length(" + this.E.String() + ")"
 }
 
 func (this *lenUints) Hash() uint64 {
@@ -129,7 +141,7 @@ func (this *lenUints) Hash() uint64 {
 }
 
 func init() {
-	Register("lenUints", "length", LenUints)
+	Register("length", LenUints)
 }
 
 //LenUints returns a function that returns the length of a list of type Uints
@@ -166,7 +178,11 @@ func (this *lenBools) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("lenBools", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *lenBools) String() string {
+	return "length(" + this.E.String() + ")"
 }
 
 func (this *lenBools) Hash() uint64 {
@@ -174,7 +190,7 @@ func (this *lenBools) Hash() uint64 {
 }
 
 func init() {
-	Register("lenBools", "length", LenBools)
+	Register("length", LenBools)
 }
 
 //LenBools returns a function that returns the length of a list of type Bools
@@ -211,7 +227,11 @@ func (this *lenStrings) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("lenStrings", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *lenStrings) String() string {
+	return "length(" + this.E.String() + ")"
 }
 
 func (this *lenStrings) Hash() uint64 {
@@ -219,7 +239,7 @@ func (this *lenStrings) Hash() uint64 {
 }
 
 func init() {
-	Register("lenStrings", "length", LenStrings)
+	Register("length", LenStrings)
 }
 
 //LenStrings returns a function that returns the length of a list of type Strings
@@ -256,7 +276,11 @@ func (this *lenListOfBytes) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("lenListOfBytes", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *lenListOfBytes) String() string {
+	return "length(" + this.E.String() + ")"
 }
 
 func (this *lenListOfBytes) Hash() uint64 {
@@ -264,7 +288,7 @@ func (this *lenListOfBytes) Hash() uint64 {
 }
 
 func init() {
-	Register("lenListOfBytes", "length", LenListOfBytes)
+	Register("length", LenListOfBytes)
 }
 
 //LenListOfBytes returns a function that returns the length of a list of type ListOfBytes
@@ -301,7 +325,11 @@ func (this *lenString) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("lenString", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *lenString) String() string {
+	return "length(" + this.E.String() + ")"
 }
 
 func (this *lenString) Hash() uint64 {
@@ -309,7 +337,7 @@ func (this *lenString) Hash() uint64 {
 }
 
 func init() {
-	Register("lenString", "length", LenString)
+	Register("length", LenString)
 }
 
 //LenString returns a function that returns the length of a list of type String
@@ -346,7 +374,11 @@ func (this *lenBytes) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("lenBytes", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *lenBytes) String() string {
+	return "length(" + this.E.String() + ")"
 }
 
 func (this *lenBytes) Hash() uint64 {
@@ -354,7 +386,7 @@ func (this *lenBytes) Hash() uint64 {
 }
 
 func init() {
-	Register("lenBytes", "length", LenBytes)
+	Register("length", LenBytes)
 }
 
 //LenBytes returns a function that returns the length of a list of type Bytes

@@ -28,7 +28,11 @@ func (this *typDouble) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("typDouble", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *typDouble) String() string {
+	return "type(" + this.E.String() + ")"
 }
 
 func (this *typDouble) Hash() uint64 {
@@ -36,7 +40,7 @@ func (this *typDouble) Hash() uint64 {
 }
 
 func init() {
-	Register("typDouble", "type", TypeDouble)
+	Register("type", TypeDouble)
 }
 
 //TypeDouble returns a function that returns true if the error returned by the argument function is nil.
@@ -70,7 +74,11 @@ func (this *typInt) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("typInt", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *typInt) String() string {
+	return "type(" + this.E.String() + ")"
 }
 
 func (this *typInt) Hash() uint64 {
@@ -78,7 +86,7 @@ func (this *typInt) Hash() uint64 {
 }
 
 func init() {
-	Register("typInt", "type", TypeInt)
+	Register("type", TypeInt)
 }
 
 //TypeInt returns a function that returns true if the error returned by the argument function is nil.
@@ -112,7 +120,11 @@ func (this *typUint) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("typUint", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *typUint) String() string {
+	return "type(" + this.E.String() + ")"
 }
 
 func (this *typUint) Hash() uint64 {
@@ -120,7 +132,7 @@ func (this *typUint) Hash() uint64 {
 }
 
 func init() {
-	Register("typUint", "type", TypeUint)
+	Register("type", TypeUint)
 }
 
 //TypeUint returns a function that returns true if the error returned by the argument function is nil.
@@ -154,7 +166,11 @@ func (this *typBool) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("typBool", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *typBool) String() string {
+	return "type(" + this.E.String() + ")"
 }
 
 func (this *typBool) Hash() uint64 {
@@ -162,7 +178,7 @@ func (this *typBool) Hash() uint64 {
 }
 
 func init() {
-	Register("typBool", "type", TypeBool)
+	Register("type", TypeBool)
 }
 
 //TypeBool returns a function that returns true if the error returned by the argument function is nil.
@@ -196,7 +212,11 @@ func (this *typString) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("typString", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *typString) String() string {
+	return "type(" + this.E.String() + ")"
 }
 
 func (this *typString) Hash() uint64 {
@@ -204,7 +224,7 @@ func (this *typString) Hash() uint64 {
 }
 
 func init() {
-	Register("typString", "type", TypeString)
+	Register("type", TypeString)
 }
 
 //TypeString returns a function that returns true if the error returned by the argument function is nil.
@@ -238,7 +258,11 @@ func (this *typBytes) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("typBytes", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *typBytes) String() string {
+	return "type(" + this.E.String() + ")"
 }
 
 func (this *typBytes) Hash() uint64 {
@@ -246,7 +270,7 @@ func (this *typBytes) Hash() uint64 {
 }
 
 func init() {
-	Register("typBytes", "type", TypeBytes)
+	Register("type", TypeBytes)
 }
 
 //TypeBytes returns a function that returns true if the error returned by the argument function is nil.

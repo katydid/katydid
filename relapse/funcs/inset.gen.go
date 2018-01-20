@@ -52,7 +52,11 @@ func (this *inSetInt) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("inSetInt", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *inSetInt) String() string {
+	return "contains(" + sjoin(this.Elem, this.List) + ")"
 }
 
 func (this *inSetInt) Hash() uint64 {
@@ -60,7 +64,7 @@ func (this *inSetInt) Hash() uint64 {
 }
 
 func init() {
-	Register("inSetInt", "contains", ContainsInt)
+	Register("contains", ContainsInt)
 }
 
 //ContainsInt returns a function that checks whether the element is contained in the list.
@@ -119,7 +123,11 @@ func (this *inSetUint) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("inSetUint", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *inSetUint) String() string {
+	return "contains(" + sjoin(this.Elem, this.List) + ")"
 }
 
 func (this *inSetUint) Hash() uint64 {
@@ -127,7 +135,7 @@ func (this *inSetUint) Hash() uint64 {
 }
 
 func init() {
-	Register("inSetUint", "contains", ContainsUint)
+	Register("contains", ContainsUint)
 }
 
 //ContainsUint returns a function that checks whether the element is contained in the list.
@@ -186,7 +194,11 @@ func (this *inSetString) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("inSetString", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *inSetString) String() string {
+	return "contains(" + sjoin(this.Elem, this.List) + ")"
 }
 
 func (this *inSetString) Hash() uint64 {
@@ -194,7 +206,7 @@ func (this *inSetString) Hash() uint64 {
 }
 
 func init() {
-	Register("inSetString", "contains", ContainsString)
+	Register("contains", ContainsString)
 }
 
 //ContainsString returns a function that checks whether the element is contained in the list.

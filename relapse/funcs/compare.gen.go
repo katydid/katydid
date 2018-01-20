@@ -40,7 +40,25 @@ func (this *doubleGE) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("doubleGE", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *doubleGE) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return ">= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return ">= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *doubleGE) String() string {
+	return "ge" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *doubleGE) Hash() uint64 {
@@ -48,7 +66,7 @@ func (this *doubleGE) Hash() uint64 {
 }
 
 func init() {
-	Register("doubleGE", "ge", DoubleGE)
+	Register("ge", DoubleGE)
 }
 
 // DoubleGE returns a new greater than or equal function.
@@ -94,7 +112,25 @@ func (this *intGE) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("intGE", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *intGE) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return ">= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return ">= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *intGE) String() string {
+	return "ge" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *intGE) Hash() uint64 {
@@ -102,7 +138,7 @@ func (this *intGE) Hash() uint64 {
 }
 
 func init() {
-	Register("intGE", "ge", IntGE)
+	Register("ge", IntGE)
 }
 
 // IntGE returns a new greater than or equal function.
@@ -148,7 +184,25 @@ func (this *uintGE) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("uintGE", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *uintGE) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return ">= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return ">= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *uintGE) String() string {
+	return "ge" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *uintGE) Hash() uint64 {
@@ -156,7 +210,7 @@ func (this *uintGE) Hash() uint64 {
 }
 
 func init() {
-	Register("uintGE", "ge", UintGE)
+	Register("ge", UintGE)
 }
 
 // UintGE returns a new greater than or equal function.
@@ -202,7 +256,25 @@ func (this *bytesGE) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("bytesGE", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *bytesGE) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return ">= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return ">= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *bytesGE) String() string {
+	return "ge" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *bytesGE) Hash() uint64 {
@@ -210,7 +282,7 @@ func (this *bytesGE) Hash() uint64 {
 }
 
 func init() {
-	Register("bytesGE", "ge", BytesGE)
+	Register("ge", BytesGE)
 }
 
 // BytesGE returns a new greater than or equal function.
@@ -256,7 +328,25 @@ func (this *doubleGt) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("doubleGt", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *doubleGt) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "> " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "> " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *doubleGt) String() string {
+	return "gt" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *doubleGt) Hash() uint64 {
@@ -264,7 +354,7 @@ func (this *doubleGt) Hash() uint64 {
 }
 
 func init() {
-	Register("doubleGt", "gt", DoubleGt)
+	Register("gt", DoubleGt)
 }
 
 // DoubleGt returns a new greater than function.
@@ -310,7 +400,25 @@ func (this *intGt) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("intGt", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *intGt) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "> " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "> " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *intGt) String() string {
+	return "gt" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *intGt) Hash() uint64 {
@@ -318,7 +426,7 @@ func (this *intGt) Hash() uint64 {
 }
 
 func init() {
-	Register("intGt", "gt", IntGt)
+	Register("gt", IntGt)
 }
 
 // IntGt returns a new greater than function.
@@ -364,7 +472,25 @@ func (this *uintGt) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("uintGt", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *uintGt) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "> " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "> " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *uintGt) String() string {
+	return "gt" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *uintGt) Hash() uint64 {
@@ -372,7 +498,7 @@ func (this *uintGt) Hash() uint64 {
 }
 
 func init() {
-	Register("uintGt", "gt", UintGt)
+	Register("gt", UintGt)
 }
 
 // UintGt returns a new greater than function.
@@ -418,7 +544,25 @@ func (this *bytesGt) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("bytesGt", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *bytesGt) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "> " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "> " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *bytesGt) String() string {
+	return "gt" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *bytesGt) Hash() uint64 {
@@ -426,7 +570,7 @@ func (this *bytesGt) Hash() uint64 {
 }
 
 func init() {
-	Register("bytesGt", "gt", BytesGt)
+	Register("gt", BytesGt)
 }
 
 // BytesGt returns a new greater than function.
@@ -472,7 +616,25 @@ func (this *doubleLE) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("doubleLE", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *doubleLE) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "<= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "<= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *doubleLE) String() string {
+	return "le" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *doubleLE) Hash() uint64 {
@@ -480,7 +642,7 @@ func (this *doubleLE) Hash() uint64 {
 }
 
 func init() {
-	Register("doubleLE", "le", DoubleLE)
+	Register("le", DoubleLE)
 }
 
 // DoubleLE returns a new less than or equal function.
@@ -526,7 +688,25 @@ func (this *intLE) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("intLE", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *intLE) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "<= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "<= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *intLE) String() string {
+	return "le" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *intLE) Hash() uint64 {
@@ -534,7 +714,7 @@ func (this *intLE) Hash() uint64 {
 }
 
 func init() {
-	Register("intLE", "le", IntLE)
+	Register("le", IntLE)
 }
 
 // IntLE returns a new less than or equal function.
@@ -580,7 +760,25 @@ func (this *uintLE) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("uintLE", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *uintLE) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "<= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "<= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *uintLE) String() string {
+	return "le" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *uintLE) Hash() uint64 {
@@ -588,7 +786,7 @@ func (this *uintLE) Hash() uint64 {
 }
 
 func init() {
-	Register("uintLE", "le", UintLE)
+	Register("le", UintLE)
 }
 
 // UintLE returns a new less than or equal function.
@@ -634,7 +832,25 @@ func (this *bytesLE) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("bytesLE", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *bytesLE) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "<= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "<= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *bytesLE) String() string {
+	return "le" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *bytesLE) Hash() uint64 {
@@ -642,7 +858,7 @@ func (this *bytesLE) Hash() uint64 {
 }
 
 func init() {
-	Register("bytesLE", "le", BytesLE)
+	Register("le", BytesLE)
 }
 
 // BytesLE returns a new less than or equal function.
@@ -688,7 +904,25 @@ func (this *doubleLt) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("doubleLt", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *doubleLt) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "< " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "< " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *doubleLt) String() string {
+	return "lt" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *doubleLt) Hash() uint64 {
@@ -696,7 +930,7 @@ func (this *doubleLt) Hash() uint64 {
 }
 
 func init() {
-	Register("doubleLt", "lt", DoubleLt)
+	Register("lt", DoubleLt)
 }
 
 // DoubleLt returns a new less than function.
@@ -742,7 +976,25 @@ func (this *intLt) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("intLt", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *intLt) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "< " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "< " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *intLt) String() string {
+	return "lt" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *intLt) Hash() uint64 {
@@ -750,7 +1002,7 @@ func (this *intLt) Hash() uint64 {
 }
 
 func init() {
-	Register("intLt", "lt", IntLt)
+	Register("lt", IntLt)
 }
 
 // IntLt returns a new less than function.
@@ -796,7 +1048,25 @@ func (this *uintLt) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("uintLt", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *uintLt) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "< " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "< " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *uintLt) String() string {
+	return "lt" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *uintLt) Hash() uint64 {
@@ -804,7 +1074,7 @@ func (this *uintLt) Hash() uint64 {
 }
 
 func init() {
-	Register("uintLt", "lt", UintLt)
+	Register("lt", UintLt)
 }
 
 // UintLt returns a new less than function.
@@ -850,7 +1120,25 @@ func (this *bytesLt) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("bytesLt", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *bytesLt) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "< " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "< " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *bytesLt) String() string {
+	return "lt" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *bytesLt) Hash() uint64 {
@@ -858,7 +1146,7 @@ func (this *bytesLt) Hash() uint64 {
 }
 
 func init() {
-	Register("bytesLt", "lt", BytesLt)
+	Register("lt", BytesLt)
 }
 
 // BytesLt returns a new less than function.
@@ -904,7 +1192,25 @@ func (this *doubleEq) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("doubleEq", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *doubleEq) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "== " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "== " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *doubleEq) String() string {
+	return "eq" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *doubleEq) Hash() uint64 {
@@ -912,7 +1218,7 @@ func (this *doubleEq) Hash() uint64 {
 }
 
 func init() {
-	Register("doubleEq", "eq", DoubleEq)
+	Register("eq", DoubleEq)
 }
 
 // DoubleEq returns a new equal function.
@@ -958,7 +1264,25 @@ func (this *intEq) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("intEq", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *intEq) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "== " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "== " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *intEq) String() string {
+	return "eq" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *intEq) Hash() uint64 {
@@ -966,7 +1290,7 @@ func (this *intEq) Hash() uint64 {
 }
 
 func init() {
-	Register("intEq", "eq", IntEq)
+	Register("eq", IntEq)
 }
 
 // IntEq returns a new equal function.
@@ -1012,7 +1336,25 @@ func (this *uintEq) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("uintEq", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *uintEq) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "== " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "== " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *uintEq) String() string {
+	return "eq" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *uintEq) Hash() uint64 {
@@ -1020,7 +1362,7 @@ func (this *uintEq) Hash() uint64 {
 }
 
 func init() {
-	Register("uintEq", "eq", UintEq)
+	Register("eq", UintEq)
 }
 
 // UintEq returns a new equal function.
@@ -1066,7 +1408,25 @@ func (this *boolEq) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("boolEq", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *boolEq) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "== " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "== " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *boolEq) String() string {
+	return "eq" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *boolEq) Hash() uint64 {
@@ -1074,7 +1434,7 @@ func (this *boolEq) Hash() uint64 {
 }
 
 func init() {
-	Register("boolEq", "eq", BoolEq)
+	Register("eq", BoolEq)
 }
 
 // BoolEq returns a new equal function.
@@ -1120,7 +1480,25 @@ func (this *stringEq) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("stringEq", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *stringEq) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "== " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "== " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *stringEq) String() string {
+	return "eq" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *stringEq) Hash() uint64 {
@@ -1128,7 +1506,7 @@ func (this *stringEq) Hash() uint64 {
 }
 
 func init() {
-	Register("stringEq", "eq", StringEq)
+	Register("eq", StringEq)
 }
 
 // StringEq returns a new equal function.
@@ -1174,7 +1552,25 @@ func (this *bytesEq) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("bytesEq", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *bytesEq) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "== " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "== " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *bytesEq) String() string {
+	return "eq" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *bytesEq) Hash() uint64 {
@@ -1182,7 +1578,7 @@ func (this *bytesEq) Hash() uint64 {
 }
 
 func init() {
-	Register("bytesEq", "eq", BytesEq)
+	Register("eq", BytesEq)
 }
 
 // BytesEq returns a new equal function.
@@ -1228,7 +1624,25 @@ func (this *doubleNe) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("doubleNe", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *doubleNe) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "!= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "!= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *doubleNe) String() string {
+	return "ne" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *doubleNe) Hash() uint64 {
@@ -1236,7 +1650,7 @@ func (this *doubleNe) Hash() uint64 {
 }
 
 func init() {
-	Register("doubleNe", "ne", DoubleNe)
+	Register("ne", DoubleNe)
 }
 
 // DoubleNe returns a new not equal function.
@@ -1282,7 +1696,25 @@ func (this *intNe) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("intNe", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *intNe) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "!= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "!= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *intNe) String() string {
+	return "ne" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *intNe) Hash() uint64 {
@@ -1290,7 +1722,7 @@ func (this *intNe) Hash() uint64 {
 }
 
 func init() {
-	Register("intNe", "ne", IntNe)
+	Register("ne", IntNe)
 }
 
 // IntNe returns a new not equal function.
@@ -1336,7 +1768,25 @@ func (this *uintNe) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("uintNe", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *uintNe) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "!= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "!= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *uintNe) String() string {
+	return "ne" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *uintNe) Hash() uint64 {
@@ -1344,7 +1794,7 @@ func (this *uintNe) Hash() uint64 {
 }
 
 func init() {
-	Register("uintNe", "ne", UintNe)
+	Register("ne", UintNe)
 }
 
 // UintNe returns a new not equal function.
@@ -1390,7 +1840,25 @@ func (this *boolNe) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("boolNe", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *boolNe) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "!= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "!= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *boolNe) String() string {
+	return "ne" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *boolNe) Hash() uint64 {
@@ -1398,7 +1866,7 @@ func (this *boolNe) Hash() uint64 {
 }
 
 func init() {
-	Register("boolNe", "ne", BoolNe)
+	Register("ne", BoolNe)
 }
 
 // BoolNe returns a new not equal function.
@@ -1444,7 +1912,25 @@ func (this *stringNe) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("stringNe", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *stringNe) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "!= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "!= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *stringNe) String() string {
+	return "ne" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *stringNe) Hash() uint64 {
@@ -1452,7 +1938,7 @@ func (this *stringNe) Hash() uint64 {
 }
 
 func init() {
-	Register("stringNe", "ne", StringNe)
+	Register("ne", StringNe)
 }
 
 // StringNe returns a new not equal function.
@@ -1498,7 +1984,25 @@ func (this *bytesNe) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("bytesNe", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *bytesNe) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "!= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "!= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *bytesNe) String() string {
+	return "ne" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *bytesNe) Hash() uint64 {
@@ -1506,7 +2010,7 @@ func (this *bytesNe) Hash() uint64 {
 }
 
 func init() {
-	Register("bytesNe", "ne", BytesNe)
+	Register("ne", BytesNe)
 }
 
 // BytesNe returns a new not equal function.

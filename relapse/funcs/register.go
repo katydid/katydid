@@ -23,7 +23,7 @@ import (
 )
 
 //Register registers a function as function that can composed.
-func Register(uniqName string, name string, fnc interface{}) {
+func Register(name string, fnc interface{}) {
 	typ := reflect.TypeOf(fnc)
 	eval, ok := typ.Out(0).MethodByName("Eval")
 	if !ok {
@@ -32,19 +32,23 @@ func Register(uniqName string, name string, fnc interface{}) {
 	returnType := eval.Type
 	ins := typ.NumIn()
 	res := &funk{
-		name:     name,
-		uniqName: uniqName,
-		Out:      types.FromGo(returnType.Out(0)),
-		newfnc:   fnc,
+		name:   name,
+		Out:    types.FromGo(returnType.Out(0)),
+		newfnc: fnc,
 	}
+	uniqName := name
 	for i := 0; i < ins; i++ {
 		meth, ok := typ.In(i).MethodByName("Eval")
 		if !ok {
 			continue
 		}
 		res.InConst = append(res.InConst, IsConst(typ.In(i)))
-		res.In = append(res.In, types.FromGo(meth.Type.Out(0)))
+		inType := types.FromGo(meth.Type.Out(0))
+		res.In = append(res.In, inType)
+		uniqName += "_" + inType.String()
 	}
+	uniqName += "_" + res.Out.String()
+	res.uniqName = uniqName
 	funcsMap.register(res)
 }
 
@@ -217,4 +221,17 @@ func Equal(l, r Comparable) bool {
 		return false
 	}
 	return l.Compare(r) == 0
+}
+
+func isVarConst(a, b interface{}) (string, bool) {
+	if c, aok := a.(aConst); aok {
+		if _, bok := b.(aVariable); bok {
+			return c.String(), true
+		}
+	} else if c, bok := b.(aConst); bok {
+		if _, aok := a.(aVariable); aok {
+			return c.String(), true
+		}
+	}
+	return "", false
 }

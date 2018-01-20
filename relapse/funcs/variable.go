@@ -23,6 +23,10 @@ type Variable interface {
 	IsVariable()
 }
 
+type aVariable interface {
+	isVariable()
+}
+
 //Setter is an interface that represents a variable of which the value must be set.
 type Setter interface {
 	SetValue(parser.Value)

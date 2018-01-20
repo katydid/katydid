@@ -32,7 +32,7 @@ func (this *varDouble) Compare(that Comparable) int {
 	if _, ok := that.(*varDouble); ok {
 		return 0
 	}
-	return strings.Compare("varDouble", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *varDouble) Hash() uint64 {
@@ -40,6 +40,8 @@ func (this *varDouble) Hash() uint64 {
 }
 
 func (this *varDouble) IsVariable() {}
+
+func (this *varDouble) isVariable() {}
 
 func (this *varDouble) SetValue(v parser.Value) {
 	this.Value = v
@@ -82,7 +84,7 @@ func (this *varInt) Compare(that Comparable) int {
 	if _, ok := that.(*varInt); ok {
 		return 0
 	}
-	return strings.Compare("varInt", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *varInt) Hash() uint64 {
@@ -90,6 +92,8 @@ func (this *varInt) Hash() uint64 {
 }
 
 func (this *varInt) IsVariable() {}
+
+func (this *varInt) isVariable() {}
 
 func (this *varInt) SetValue(v parser.Value) {
 	this.Value = v
@@ -132,7 +136,7 @@ func (this *varUint) Compare(that Comparable) int {
 	if _, ok := that.(*varUint); ok {
 		return 0
 	}
-	return strings.Compare("varUint", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *varUint) Hash() uint64 {
@@ -140,6 +144,8 @@ func (this *varUint) Hash() uint64 {
 }
 
 func (this *varUint) IsVariable() {}
+
+func (this *varUint) isVariable() {}
 
 func (this *varUint) SetValue(v parser.Value) {
 	this.Value = v
@@ -182,7 +188,7 @@ func (this *varBool) Compare(that Comparable) int {
 	if _, ok := that.(*varBool); ok {
 		return 0
 	}
-	return strings.Compare("varBool", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *varBool) Hash() uint64 {
@@ -190,6 +196,8 @@ func (this *varBool) Hash() uint64 {
 }
 
 func (this *varBool) IsVariable() {}
+
+func (this *varBool) isVariable() {}
 
 func (this *varBool) SetValue(v parser.Value) {
 	this.Value = v
@@ -232,7 +240,7 @@ func (this *varString) Compare(that Comparable) int {
 	if _, ok := that.(*varString); ok {
 		return 0
 	}
-	return strings.Compare("varString", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *varString) Hash() uint64 {
@@ -240,6 +248,8 @@ func (this *varString) Hash() uint64 {
 }
 
 func (this *varString) IsVariable() {}
+
+func (this *varString) isVariable() {}
 
 func (this *varString) SetValue(v parser.Value) {
 	this.Value = v
@@ -282,7 +292,7 @@ func (this *varBytes) Compare(that Comparable) int {
 	if _, ok := that.(*varBytes); ok {
 		return 0
 	}
-	return strings.Compare("varBytes", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *varBytes) Hash() uint64 {
@@ -290,6 +300,8 @@ func (this *varBytes) Hash() uint64 {
 }
 
 func (this *varBytes) IsVariable() {}
+
+func (this *varBytes) isVariable() {}
 
 func (this *varBytes) SetValue(v parser.Value) {
 	this.Value = v

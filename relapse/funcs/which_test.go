@@ -35,17 +35,17 @@ func (this which) test(t *testing.T, name string, params ...types.Type) {
 }
 
 func TestWhichStringEq(t *testing.T) {
-	which{"stringEq"}.test(t, "eq", types.SINGLE_STRING, types.SINGLE_STRING)
+	which{"eq_SINGLE_STRING_SINGLE_STRING_SINGLE_BOOL"}.test(t, "eq", types.SINGLE_STRING, types.SINGLE_STRING)
 }
 
 func TestWhichInt64Eq(t *testing.T) {
-	which{"intEq"}.test(t, "eq", types.SINGLE_INT, types.SINGLE_INT)
+	which{"eq_SINGLE_INT_SINGLE_INT_SINGLE_BOOL"}.test(t, "eq", types.SINGLE_INT, types.SINGLE_INT)
 }
 
 func TestWhichInt64Ge(t *testing.T) {
-	which{"intGE"}.test(t, "ge", types.SINGLE_INT, types.SINGLE_INT)
+	which{"ge_SINGLE_INT_SINGLE_INT_SINGLE_BOOL"}.test(t, "ge", types.SINGLE_INT, types.SINGLE_INT)
 }
 
 func TestWhichElem(t *testing.T) {
-	which{"elemUints"}.test(t, "elem", types.LIST_UINT, types.SINGLE_INT)
+	which{"elem_LIST_UINT_SINGLE_INT_SINGLE_UINT"}.test(t, "elem", types.LIST_UINT, types.SINGLE_INT)
 }

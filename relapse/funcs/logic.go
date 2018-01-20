@@ -88,7 +88,11 @@ func (this *not) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("not", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *not) String() string {
+	return "not(" + this.V1.String() + ")"
 }
 
 func (this *not) Hash() uint64 {
@@ -96,7 +100,7 @@ func (this *not) Hash() uint64 {
 }
 
 func init() {
-	Register("not", "not", Not)
+	Register("not", Not)
 }
 
 //And returns a new and function with the two input functions as its parameters.
@@ -266,7 +270,11 @@ func (this *and) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("and", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *and) String() string {
+	return "and(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *and) Hash() uint64 {
@@ -274,7 +282,7 @@ func (this *and) Hash() uint64 {
 }
 
 func init() {
-	Register("and", "and", And)
+	Register("and", And)
 }
 
 //Or returns a new or function with the two input functions as its parameters.
@@ -343,7 +351,11 @@ func (this *or) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("or", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *or) String() string {
+	return "or(" + sjoin(this.V1, this.V2) + ")"
 }
 
 func (this *or) Hash() uint64 {
@@ -351,5 +363,5 @@ func (this *or) Hash() uint64 {
 }
 
 func init() {
-	Register("or", "or", Or)
+	Register("or", Or)
 }

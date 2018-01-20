@@ -48,6 +48,10 @@ func (this *regex) Init() error {
 	return nil
 }
 
+func (this *regex) String() string {
+	return "regex(" + sjoin(this.Expr, this.S) + ")"
+}
+
 func (this *regex) Eval() (bool, error) {
 	s, err := this.S.Eval()
 	if err != nil {
@@ -72,7 +76,7 @@ func (this *regex) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("regex", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *regex) Hash() uint64 {
@@ -80,5 +84,5 @@ func (this *regex) Hash() uint64 {
 }
 
 func init() {
-	Register("regex", "regex", Regex)
+	Register("regex", Regex)
 }

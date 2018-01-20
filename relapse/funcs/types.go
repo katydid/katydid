@@ -14,9 +14,14 @@
 
 package funcs
 
+type Stringer interface {
+	String() string
+}
+
 type Comparable interface {
 	Hash() uint64
 	Compare(Comparable) int
+	Stringer
 }
 
 //Double is an interface that represents a function that returns a double or an error.

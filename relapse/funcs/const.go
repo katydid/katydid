@@ -24,6 +24,11 @@ type Const interface {
 	IsConst()
 }
 
+type aConst interface {
+	Stringer
+	isConst()
+}
+
 //NewConst returns the appropriate constant function given a native go type or list of native go types.
 func NewConst(value interface{}) interface{} {
 	switch v := value.(type) {
@@ -55,6 +60,13 @@ func NewConst(value interface{}) interface{} {
 	panic("unreachable")
 }
 
+func (this *constBool) isConst()   {}
+func (this *constBytes) isConst()  {}
+func (this *constDouble) isConst() {}
+func (this *constInt) isConst()    {}
+func (this *constString) isConst() {}
+func (this *constUint) isConst()   {}
+
 func (this *constDouble) Compare(that Comparable) int {
 	if other, ok := that.(*constDouble); ok {
 		if this.v != other.v {
@@ -65,7 +77,7 @@ func (this *constDouble) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("constDouble", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *constInt) Compare(that Comparable) int {
@@ -78,7 +90,7 @@ func (this *constInt) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("constInt", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *constUint) Compare(that Comparable) int {
@@ -91,7 +103,7 @@ func (this *constUint) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("constUint", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *constBool) Compare(that Comparable) int {
@@ -104,21 +116,21 @@ func (this *constBool) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("constBool", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *constString) Compare(that Comparable) int {
 	if other, ok := that.(*constString); ok {
 		return strings.Compare(this.v, other.v)
 	}
-	return strings.Compare("constString", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *constBytes) Compare(that Comparable) int {
 	if other, ok := that.(*constBytes); ok {
 		return bytes.Compare(this.v, other.v)
 	}
-	return strings.Compare("constBytes", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *constDoubles) Compare(that Comparable) int {
@@ -145,7 +157,7 @@ func (this *constDoubles) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("constDoubles", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *constInts) Compare(that Comparable) int {
@@ -172,7 +184,7 @@ func (this *constInts) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("constInts", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *constUints) Compare(that Comparable) int {
@@ -199,7 +211,7 @@ func (this *constUints) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("constUints", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *constBools) Compare(that Comparable) int {
@@ -226,7 +238,7 @@ func (this *constBools) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("constBools", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *constStrings) Compare(that Comparable) int {
@@ -250,7 +262,7 @@ func (this *constStrings) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("constStrings", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *constListOfBytes) Compare(that Comparable) int {
@@ -274,5 +286,5 @@ func (this *constListOfBytes) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("constListOfBytes", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }

@@ -53,7 +53,7 @@ func (this *listOfDouble) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("listOfDouble", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *listOfDouble) Hash() uint64 {
@@ -63,7 +63,7 @@ func (this *listOfDouble) Hash() uint64 {
 func (this *listOfDouble) String() string {
 	ss := make([]string, len(this.List))
 	for i := range this.List {
-		ss[i] = sprint(this.List[i])
+		ss[i] = this.List[i].String()
 	}
 	return "[]double{" + strings.Join(ss, ",") + "}"
 }
@@ -118,7 +118,7 @@ func (this *listOfInt) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("listOfInt", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *listOfInt) Hash() uint64 {
@@ -128,7 +128,7 @@ func (this *listOfInt) Hash() uint64 {
 func (this *listOfInt) String() string {
 	ss := make([]string, len(this.List))
 	for i := range this.List {
-		ss[i] = sprint(this.List[i])
+		ss[i] = this.List[i].String()
 	}
 	return "[]int{" + strings.Join(ss, ",") + "}"
 }
@@ -183,7 +183,7 @@ func (this *listOfUint) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("listOfUint", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *listOfUint) Hash() uint64 {
@@ -193,7 +193,7 @@ func (this *listOfUint) Hash() uint64 {
 func (this *listOfUint) String() string {
 	ss := make([]string, len(this.List))
 	for i := range this.List {
-		ss[i] = sprint(this.List[i])
+		ss[i] = this.List[i].String()
 	}
 	return "[]uint{" + strings.Join(ss, ",") + "}"
 }
@@ -248,7 +248,7 @@ func (this *listOfBool) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("listOfBool", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *listOfBool) Hash() uint64 {
@@ -258,7 +258,7 @@ func (this *listOfBool) Hash() uint64 {
 func (this *listOfBool) String() string {
 	ss := make([]string, len(this.List))
 	for i := range this.List {
-		ss[i] = sprint(this.List[i])
+		ss[i] = this.List[i].String()
 	}
 	return "[]bool{" + strings.Join(ss, ",") + "}"
 }
@@ -313,7 +313,7 @@ func (this *listOfString) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("listOfString", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *listOfString) Hash() uint64 {
@@ -323,7 +323,7 @@ func (this *listOfString) Hash() uint64 {
 func (this *listOfString) String() string {
 	ss := make([]string, len(this.List))
 	for i := range this.List {
-		ss[i] = sprint(this.List[i])
+		ss[i] = this.List[i].String()
 	}
 	return "[]string{" + strings.Join(ss, ",") + "}"
 }
@@ -378,7 +378,7 @@ func (this *listOfBytes) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("listOfBytes", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
 }
 
 func (this *listOfBytes) Hash() uint64 {
@@ -388,7 +388,7 @@ func (this *listOfBytes) Hash() uint64 {
 func (this *listOfBytes) String() string {
 	ss := make([]string, len(this.List))
 	for i := range this.List {
-		ss[i] = sprint(this.List[i])
+		ss[i] = this.List[i].String()
 	}
 	return "[][]byte{" + strings.Join(ss, ",") + "}"
 }

@@ -46,11 +46,15 @@ func (this *now) Compare(that Comparable) int {
 	if _, ok := that.(*now); ok {
 		return 0
 	}
-	return strings.Compare("now", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *now) String() string {
+	return "now"
 }
 
 func (this *now) IsVariable() {}
 
 func init() {
-	Register("now", "now", Now)
+	Register("now", Now)
 }

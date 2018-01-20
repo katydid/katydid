@@ -47,9 +47,11 @@ func (this *injectableInt) Compare(that funcs.Comparable) int {
 	if _, ok := that.(*injectableInt); ok {
 		return 0
 	}
-	e := reflect.ValueOf(that).Elem()
-	nameOfOther := e.Type().Name()
-	return strings.Compare("injectableInt", nameOfOther)
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *injectableInt) String() string {
+	return "inject()"
 }
 
 func (this *injectableInt) Hash() uint64 {
@@ -65,7 +67,7 @@ func (this *injectableInt) IsVariable() {
 }
 
 func init() {
-	funcs.Register("injectableInt", "inject", NewInjectable)
+	funcs.Register("inject", NewInjectable)
 
 	injectNumber = G{
 		"main": InPath("Num", Value(funcs.IntEq(funcs.IntVar(), NewInjectable()))),

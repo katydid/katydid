@@ -34,7 +34,11 @@ func (this *printDouble) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("printDouble", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printDouble) String() string {
+	return "print(" + this.E.String() +")"
 }
 
 func (this *printDouble) Hash() uint64 {
@@ -44,7 +48,7 @@ func (this *printDouble) Hash() uint64 {
 func (this *printDouble) IsVariable() {}
 
 func init() {
-	Register("printDouble", "print", PrintDouble)
+	Register("print", PrintDouble)
 }
 
 //PrintDouble returns a function that prints out the value of the argument function and returns its value.
@@ -83,7 +87,11 @@ func (this *printInt) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("printInt", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printInt) String() string {
+	return "print(" + this.E.String() +")"
 }
 
 func (this *printInt) Hash() uint64 {
@@ -93,7 +101,7 @@ func (this *printInt) Hash() uint64 {
 func (this *printInt) IsVariable() {}
 
 func init() {
-	Register("printInt", "print", PrintInt)
+	Register("print", PrintInt)
 }
 
 //PrintInt returns a function that prints out the value of the argument function and returns its value.
@@ -132,7 +140,11 @@ func (this *printUint) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("printUint", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printUint) String() string {
+	return "print(" + this.E.String() +")"
 }
 
 func (this *printUint) Hash() uint64 {
@@ -142,7 +154,7 @@ func (this *printUint) Hash() uint64 {
 func (this *printUint) IsVariable() {}
 
 func init() {
-	Register("printUint", "print", PrintUint)
+	Register("print", PrintUint)
 }
 
 //PrintUint returns a function that prints out the value of the argument function and returns its value.
@@ -181,7 +193,11 @@ func (this *printBool) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("printBool", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printBool) String() string {
+	return "print(" + this.E.String() +")"
 }
 
 func (this *printBool) Hash() uint64 {
@@ -191,7 +207,7 @@ func (this *printBool) Hash() uint64 {
 func (this *printBool) IsVariable() {}
 
 func init() {
-	Register("printBool", "print", PrintBool)
+	Register("print", PrintBool)
 }
 
 //PrintBool returns a function that prints out the value of the argument function and returns its value.
@@ -230,7 +246,11 @@ func (this *printString) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("printString", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printString) String() string {
+	return "print(" + this.E.String() +")"
 }
 
 func (this *printString) Hash() uint64 {
@@ -240,7 +260,7 @@ func (this *printString) Hash() uint64 {
 func (this *printString) IsVariable() {}
 
 func init() {
-	Register("printString", "print", PrintString)
+	Register("print", PrintString)
 }
 
 //PrintString returns a function that prints out the value of the argument function and returns its value.
@@ -279,7 +299,11 @@ func (this *printBytes) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("printBytes", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printBytes) String() string {
+	return "print(" + this.E.String() +")"
 }
 
 func (this *printBytes) Hash() uint64 {
@@ -289,7 +313,7 @@ func (this *printBytes) Hash() uint64 {
 func (this *printBytes) IsVariable() {}
 
 func init() {
-	Register("printBytes", "print", PrintBytes)
+	Register("print", PrintBytes)
 }
 
 //PrintBytes returns a function that prints out the value of the argument function and returns its value.
@@ -328,7 +352,11 @@ func (this *printDoubles) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("printDoubles", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printDoubles) String() string {
+	return "print(" + this.E.String() +")"
 }
 
 func (this *printDoubles) Hash() uint64 {
@@ -338,7 +366,7 @@ func (this *printDoubles) Hash() uint64 {
 func (this *printDoubles) IsVariable() {}
 
 func init() {
-	Register("printDoubles", "print", PrintDoubles)
+	Register("print", PrintDoubles)
 }
 
 //PrintDoubles returns a function that prints out the value of the argument function and returns its value.
@@ -377,7 +405,11 @@ func (this *printInts) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("printInts", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printInts) String() string {
+	return "print(" + this.E.String() +")"
 }
 
 func (this *printInts) Hash() uint64 {
@@ -387,7 +419,7 @@ func (this *printInts) Hash() uint64 {
 func (this *printInts) IsVariable() {}
 
 func init() {
-	Register("printInts", "print", PrintInts)
+	Register("print", PrintInts)
 }
 
 //PrintInts returns a function that prints out the value of the argument function and returns its value.
@@ -426,7 +458,11 @@ func (this *printUints) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("printUints", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printUints) String() string {
+	return "print(" + this.E.String() +")"
 }
 
 func (this *printUints) Hash() uint64 {
@@ -436,7 +472,7 @@ func (this *printUints) Hash() uint64 {
 func (this *printUints) IsVariable() {}
 
 func init() {
-	Register("printUints", "print", PrintUints)
+	Register("print", PrintUints)
 }
 
 //PrintUints returns a function that prints out the value of the argument function and returns its value.
@@ -475,7 +511,11 @@ func (this *printBools) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("printBools", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printBools) String() string {
+	return "print(" + this.E.String() +")"
 }
 
 func (this *printBools) Hash() uint64 {
@@ -485,7 +525,7 @@ func (this *printBools) Hash() uint64 {
 func (this *printBools) IsVariable() {}
 
 func init() {
-	Register("printBools", "print", PrintBools)
+	Register("print", PrintBools)
 }
 
 //PrintBools returns a function that prints out the value of the argument function and returns its value.
@@ -524,7 +564,11 @@ func (this *printStrings) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("printStrings", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printStrings) String() string {
+	return "print(" + this.E.String() +")"
 }
 
 func (this *printStrings) Hash() uint64 {
@@ -534,7 +578,7 @@ func (this *printStrings) Hash() uint64 {
 func (this *printStrings) IsVariable() {}
 
 func init() {
-	Register("printStrings", "print", PrintStrings)
+	Register("print", PrintStrings)
 }
 
 //PrintStrings returns a function that prints out the value of the argument function and returns its value.
@@ -573,7 +617,11 @@ func (this *printListOfBytes) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("printListOfBytes", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printListOfBytes) String() string {
+	return "print(" + this.E.String() +")"
 }
 
 func (this *printListOfBytes) Hash() uint64 {
@@ -583,7 +631,7 @@ func (this *printListOfBytes) Hash() uint64 {
 func (this *printListOfBytes) IsVariable() {}
 
 func init() {
-	Register("printListOfBytes", "print", PrintListOfBytes)
+	Register("print", PrintListOfBytes)
 }
 
 //PrintListOfBytes returns a function that prints out the value of the argument function and returns its value.

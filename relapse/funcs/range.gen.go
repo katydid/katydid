@@ -67,7 +67,11 @@ func (this *rangeDoubles) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("rangeDoubles", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *rangeDoubles) String() string {
+	return "range(" + sjoin(this.List, this.First, this.Last) +")"
 }
 
 func (this *rangeDoubles) Hash() uint64 {
@@ -75,7 +79,7 @@ func (this *rangeDoubles) Hash() uint64 {
 }
 
 func init() {
-	Register("rangeDoubles", "range", RangeDoubles)
+	Register("range", RangeDoubles)
 }
 
 //RangeDoubles returns a function that returns a range of elements from a list.
@@ -155,7 +159,11 @@ func (this *rangeInts) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("rangeInts", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *rangeInts) String() string {
+	return "range(" + sjoin(this.List, this.First, this.Last) +")"
 }
 
 func (this *rangeInts) Hash() uint64 {
@@ -163,7 +171,7 @@ func (this *rangeInts) Hash() uint64 {
 }
 
 func init() {
-	Register("rangeInts", "range", RangeInts)
+	Register("range", RangeInts)
 }
 
 //RangeInts returns a function that returns a range of elements from a list.
@@ -243,7 +251,11 @@ func (this *rangeUints) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("rangeUints", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *rangeUints) String() string {
+	return "range(" + sjoin(this.List, this.First, this.Last) +")"
 }
 
 func (this *rangeUints) Hash() uint64 {
@@ -251,7 +263,7 @@ func (this *rangeUints) Hash() uint64 {
 }
 
 func init() {
-	Register("rangeUints", "range", RangeUints)
+	Register("range", RangeUints)
 }
 
 //RangeUints returns a function that returns a range of elements from a list.
@@ -331,7 +343,11 @@ func (this *rangeBools) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("rangeBools", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *rangeBools) String() string {
+	return "range(" + sjoin(this.List, this.First, this.Last) +")"
 }
 
 func (this *rangeBools) Hash() uint64 {
@@ -339,7 +355,7 @@ func (this *rangeBools) Hash() uint64 {
 }
 
 func init() {
-	Register("rangeBools", "range", RangeBools)
+	Register("range", RangeBools)
 }
 
 //RangeBools returns a function that returns a range of elements from a list.
@@ -419,7 +435,11 @@ func (this *rangeStrings) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("rangeStrings", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *rangeStrings) String() string {
+	return "range(" + sjoin(this.List, this.First, this.Last) +")"
 }
 
 func (this *rangeStrings) Hash() uint64 {
@@ -427,7 +447,7 @@ func (this *rangeStrings) Hash() uint64 {
 }
 
 func init() {
-	Register("rangeStrings", "range", RangeStrings)
+	Register("range", RangeStrings)
 }
 
 //RangeStrings returns a function that returns a range of elements from a list.
@@ -507,7 +527,11 @@ func (this *rangeListOfBytes) Compare(that Comparable) int {
 		}
 		return 0
 	}
-	return strings.Compare("rangeListOfBytes", nameOfStruct(that))
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *rangeListOfBytes) String() string {
+	return "range(" + sjoin(this.List, this.First, this.Last) +")"
 }
 
 func (this *rangeListOfBytes) Hash() uint64 {
@@ -515,7 +539,7 @@ func (this *rangeListOfBytes) Hash() uint64 {
 }
 
 func init() {
-	Register("rangeListOfBytes", "range", RangeListOfBytes)
+	Register("range", RangeListOfBytes)
 }
 
 //RangeListOfBytes returns a function that returns a range of elements from a list.
