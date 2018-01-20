@@ -137,7 +137,7 @@ func newValues(params []*ast.Expr) ([]interface{}, error) {
 	return values, nil
 }
 
-func composeVariable(v *ast.Variable) funcs.Variable {
+func composeVariable(v *ast.Variable) funcs.Comparable {
 	switch v.Type {
 	case types.SINGLE_DOUBLE:
 		return funcs.DoubleVar()

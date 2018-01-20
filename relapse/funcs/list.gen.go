@@ -17,7 +17,7 @@ func NewListOfDouble(v []Double) Doubles {
 	for i := 0; i < len(v); i++ {
 		h = 31*h + v[i].Hash()
 	}
-	return &listOfDouble{v, h}
+	return TrimDoubles(&listOfDouble{v, h})
 }
 
 func (this *listOfDouble) Eval() ([]float64, error) {
@@ -56,6 +56,15 @@ func (this *listOfDouble) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *listOfDouble) HasVariable() bool {
+	for i := range this.List {
+		if this.List[i].HasVariable() {
+			return true
+		}
+	}
+	return false
+}
+
 func (this *listOfDouble) Hash() uint64 {
 	return this.hash
 }
@@ -82,7 +91,7 @@ func NewListOfInt(v []Int) Ints {
 	for i := 0; i < len(v); i++ {
 		h = 31*h + v[i].Hash()
 	}
-	return &listOfInt{v, h}
+	return TrimInts(&listOfInt{v, h})
 }
 
 func (this *listOfInt) Eval() ([]int64, error) {
@@ -121,6 +130,15 @@ func (this *listOfInt) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *listOfInt) HasVariable() bool {
+	for i := range this.List {
+		if this.List[i].HasVariable() {
+			return true
+		}
+	}
+	return false
+}
+
 func (this *listOfInt) Hash() uint64 {
 	return this.hash
 }
@@ -147,7 +165,7 @@ func NewListOfUint(v []Uint) Uints {
 	for i := 0; i < len(v); i++ {
 		h = 31*h + v[i].Hash()
 	}
-	return &listOfUint{v, h}
+	return TrimUints(&listOfUint{v, h})
 }
 
 func (this *listOfUint) Eval() ([]uint64, error) {
@@ -186,6 +204,15 @@ func (this *listOfUint) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *listOfUint) HasVariable() bool {
+	for i := range this.List {
+		if this.List[i].HasVariable() {
+			return true
+		}
+	}
+	return false
+}
+
 func (this *listOfUint) Hash() uint64 {
 	return this.hash
 }
@@ -212,7 +239,7 @@ func NewListOfBool(v []Bool) Bools {
 	for i := 0; i < len(v); i++ {
 		h = 31*h + v[i].Hash()
 	}
-	return &listOfBool{v, h}
+	return TrimBools(&listOfBool{v, h})
 }
 
 func (this *listOfBool) Eval() ([]bool, error) {
@@ -251,6 +278,15 @@ func (this *listOfBool) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *listOfBool) HasVariable() bool {
+	for i := range this.List {
+		if this.List[i].HasVariable() {
+			return true
+		}
+	}
+	return false
+}
+
 func (this *listOfBool) Hash() uint64 {
 	return this.hash
 }
@@ -277,7 +313,7 @@ func NewListOfString(v []String) Strings {
 	for i := 0; i < len(v); i++ {
 		h = 31*h + v[i].Hash()
 	}
-	return &listOfString{v, h}
+	return TrimStrings(&listOfString{v, h})
 }
 
 func (this *listOfString) Eval() ([]string, error) {
@@ -316,6 +352,15 @@ func (this *listOfString) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *listOfString) HasVariable() bool {
+	for i := range this.List {
+		if this.List[i].HasVariable() {
+			return true
+		}
+	}
+	return false
+}
+
 func (this *listOfString) Hash() uint64 {
 	return this.hash
 }
@@ -342,7 +387,7 @@ func NewListOfBytes(v []Bytes) ListOfBytes {
 	for i := 0; i < len(v); i++ {
 		h = 31*h + v[i].Hash()
 	}
-	return &listOfBytes{v, h}
+	return TrimListOfBytes(&listOfBytes{v, h})
 }
 
 func (this *listOfBytes) Eval() ([][]byte, error) {
@@ -379,6 +424,15 @@ func (this *listOfBytes) Compare(that Comparable) int {
 		return 0
 	}
 	return strings.Compare(this.String(), that.String())
+}
+
+func (this *listOfBytes) HasVariable() bool {
+	for i := range this.List {
+		if this.List[i].HasVariable() {
+			return true
+		}
+	}
+	return false
 }
 
 func (this *listOfBytes) Hash() uint64 {

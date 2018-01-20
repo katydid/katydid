@@ -12,9 +12,18 @@ type varDouble struct {
 }
 
 var _ Setter = &varDouble{}
-var _ Variable = &varDouble{}
+var _ aVariable = &varDouble{}
+
+type ErrNotDoubleConst struct {}
+
+func (this ErrNotDoubleConst) Error() string {
+	return "$double is not a const"
+}
 
 func (this *varDouble) Eval() (float64, error) {
+	if this.Value == nil {
+		return 0, ErrNotDoubleConst{}
+	}
 	v, err := this.Value.Double()
 	if err != nil {
 		return 0, err
@@ -39,7 +48,7 @@ func (this *varDouble) Hash() uint64 {
 	return this.hash
 }
 
-func (this *varDouble) IsVariable() {}
+func (this *varDouble) HasVariable() bool { return true }
 
 func (this *varDouble) isVariable() {}
 
@@ -64,9 +73,18 @@ type varInt struct {
 }
 
 var _ Setter = &varInt{}
-var _ Variable = &varInt{}
+var _ aVariable = &varInt{}
+
+type ErrNotIntConst struct {}
+
+func (this ErrNotIntConst) Error() string {
+	return "$int is not a const"
+}
 
 func (this *varInt) Eval() (int64, error) {
+	if this.Value == nil {
+		return 0, ErrNotIntConst{}
+	}
 	v, err := this.Value.Int()
 	if err != nil {
 		return 0, err
@@ -91,7 +109,7 @@ func (this *varInt) Hash() uint64 {
 	return this.hash
 }
 
-func (this *varInt) IsVariable() {}
+func (this *varInt) HasVariable() bool { return true }
 
 func (this *varInt) isVariable() {}
 
@@ -116,9 +134,18 @@ type varUint struct {
 }
 
 var _ Setter = &varUint{}
-var _ Variable = &varUint{}
+var _ aVariable = &varUint{}
+
+type ErrNotUintConst struct {}
+
+func (this ErrNotUintConst) Error() string {
+	return "$uint is not a const"
+}
 
 func (this *varUint) Eval() (uint64, error) {
+	if this.Value == nil {
+		return 0, ErrNotUintConst{}
+	}
 	v, err := this.Value.Uint()
 	if err != nil {
 		return 0, err
@@ -143,7 +170,7 @@ func (this *varUint) Hash() uint64 {
 	return this.hash
 }
 
-func (this *varUint) IsVariable() {}
+func (this *varUint) HasVariable() bool { return true }
 
 func (this *varUint) isVariable() {}
 
@@ -168,9 +195,18 @@ type varBool struct {
 }
 
 var _ Setter = &varBool{}
-var _ Variable = &varBool{}
+var _ aVariable = &varBool{}
+
+type ErrNotBoolConst struct {}
+
+func (this ErrNotBoolConst) Error() string {
+	return "$bool is not a const"
+}
 
 func (this *varBool) Eval() (bool, error) {
+	if this.Value == nil {
+		return false, ErrNotBoolConst{}
+	}
 	v, err := this.Value.Bool()
 	if err != nil {
 		return false, err
@@ -195,7 +231,7 @@ func (this *varBool) Hash() uint64 {
 	return this.hash
 }
 
-func (this *varBool) IsVariable() {}
+func (this *varBool) HasVariable() bool { return true }
 
 func (this *varBool) isVariable() {}
 
@@ -220,9 +256,18 @@ type varString struct {
 }
 
 var _ Setter = &varString{}
-var _ Variable = &varString{}
+var _ aVariable = &varString{}
+
+type ErrNotStringConst struct {}
+
+func (this ErrNotStringConst) Error() string {
+	return "$string is not a const"
+}
 
 func (this *varString) Eval() (string, error) {
+	if this.Value == nil {
+		return "", ErrNotStringConst{}
+	}
 	v, err := this.Value.String()
 	if err != nil {
 		return "", err
@@ -247,7 +292,7 @@ func (this *varString) Hash() uint64 {
 	return this.hash
 }
 
-func (this *varString) IsVariable() {}
+func (this *varString) HasVariable() bool { return true }
 
 func (this *varString) isVariable() {}
 
@@ -272,9 +317,18 @@ type varBytes struct {
 }
 
 var _ Setter = &varBytes{}
-var _ Variable = &varBytes{}
+var _ aVariable = &varBytes{}
+
+type ErrNotBytesConst struct {}
+
+func (this ErrNotBytesConst) Error() string {
+	return "$[]byte is not a const"
+}
 
 func (this *varBytes) Eval() ([]byte, error) {
+	if this.Value == nil {
+		return nil, ErrNotBytesConst{}
+	}
 	v, err := this.Value.Bytes()
 	if err != nil {
 		return nil, err
@@ -299,7 +353,7 @@ func (this *varBytes) Hash() uint64 {
 	return this.hash
 }
 
-func (this *varBytes) IsVariable() {}
+func (this *varBytes) HasVariable() bool { return true }
 
 func (this *varBytes) isVariable() {}
 

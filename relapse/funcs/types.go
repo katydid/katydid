@@ -24,74 +24,79 @@ type Comparable interface {
 	Stringer
 }
 
-//Double is an interface that represents a function that returns a double or an error.
-type Double interface {
+type Func interface {
 	Comparable
+	HasVariable() bool
+}
+
+//Double is an interface that represents a function that returns a double.
+type Double interface {
+	Func
 	Eval() (float64, error)
 }
 
-//Int is an interface that represents a function that returns an int or an error.
+//Int is an interface that represents a function that returns an int.
 type Int interface {
-	Comparable
+	Func
 	Eval() (int64, error)
 }
 
-//Uint is an interface that represents a function that returns a uint or an error.
+//Uint is an interface that represents a function that returns a uint.
 type Uint interface {
-	Comparable
+	Func
 	Eval() (uint64, error)
 }
 
-//Bool is an interface that represents a function that returns a bool or an error.
+//Bool is an interface that represents a function that returns a bool.
 type Bool interface {
-	Comparable
+	Func
 	Eval() (bool, error)
 }
 
-//String is an interface that represents a function that returns a string or an error.
+//String is an interface that represents a function that returns a string.
 type String interface {
-	Comparable
+	Func
 	Eval() (string, error)
 }
 
-//Bytes is an interface that represents a function that returns []byte or an error.
+//Bytes is an interface that represents a function that returns []byte.
 type Bytes interface {
-	Comparable
+	Func
 	Eval() ([]byte, error)
 }
 
-//Doubles is an interface that represents a function that returns a list of doubles or an error.
+//Doubles is an interface that represents a function that returns a list of doubles.
 type Doubles interface {
-	Comparable
+	Func
 	Eval() ([]float64, error)
 }
 
-//Ints is an interface that represents a function that returns a list of ints or an error.
+//Ints is an interface that represents a function that returns a list of ints.
 type Ints interface {
-	Comparable
+	Func
 	Eval() ([]int64, error)
 }
 
-//Uints is an interface that represents a function that returns a list of uints or an error.
+//Uints is an interface that represents a function that returns a list of uints.
 type Uints interface {
-	Comparable
+	Func
 	Eval() ([]uint64, error)
 }
 
-//Bools is an interface that represents a function that returns a list of bools or an error.
+//Bools is an interface that represents a function that returns a list of bools.
 type Bools interface {
-	Comparable
+	Func
 	Eval() ([]bool, error)
 }
 
-//Strings is an interface that represents a function that returns a list of strings or an error.
+//Strings is an interface that represents a function that returns a list of strings.
 type Strings interface {
-	Comparable
+	Func
 	Eval() ([]string, error)
 }
 
-//ListOfBytes is an interface that represents a function that returns a list of []byte or an error.
+//ListOfBytes is an interface that represents a function that returns a list of []byte.
 type ListOfBytes interface {
-	Comparable
+	Func
 	Eval() ([][]byte, error)
 }

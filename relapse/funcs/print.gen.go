@@ -45,7 +45,7 @@ func (this *printDouble) Hash() uint64 {
 	return this.hash
 }
 
-func (this *printDouble) IsVariable() {}
+func (this *printDouble) HasVariable() bool { return true }
 
 func init() {
 	Register("print", PrintDouble)
@@ -98,7 +98,7 @@ func (this *printInt) Hash() uint64 {
 	return this.hash
 }
 
-func (this *printInt) IsVariable() {}
+func (this *printInt) HasVariable() bool { return true }
 
 func init() {
 	Register("print", PrintInt)
@@ -151,7 +151,7 @@ func (this *printUint) Hash() uint64 {
 	return this.hash
 }
 
-func (this *printUint) IsVariable() {}
+func (this *printUint) HasVariable() bool { return true }
 
 func init() {
 	Register("print", PrintUint)
@@ -204,7 +204,7 @@ func (this *printBool) Hash() uint64 {
 	return this.hash
 }
 
-func (this *printBool) IsVariable() {}
+func (this *printBool) HasVariable() bool { return true }
 
 func init() {
 	Register("print", PrintBool)
@@ -257,7 +257,7 @@ func (this *printString) Hash() uint64 {
 	return this.hash
 }
 
-func (this *printString) IsVariable() {}
+func (this *printString) HasVariable() bool { return true }
 
 func init() {
 	Register("print", PrintString)
@@ -310,7 +310,7 @@ func (this *printBytes) Hash() uint64 {
 	return this.hash
 }
 
-func (this *printBytes) IsVariable() {}
+func (this *printBytes) HasVariable() bool { return true }
 
 func init() {
 	Register("print", PrintBytes)
@@ -363,7 +363,7 @@ func (this *printDoubles) Hash() uint64 {
 	return this.hash
 }
 
-func (this *printDoubles) IsVariable() {}
+func (this *printDoubles) HasVariable() bool { return true }
 
 func init() {
 	Register("print", PrintDoubles)
@@ -416,7 +416,7 @@ func (this *printInts) Hash() uint64 {
 	return this.hash
 }
 
-func (this *printInts) IsVariable() {}
+func (this *printInts) HasVariable() bool { return true }
 
 func init() {
 	Register("print", PrintInts)
@@ -469,7 +469,7 @@ func (this *printUints) Hash() uint64 {
 	return this.hash
 }
 
-func (this *printUints) IsVariable() {}
+func (this *printUints) HasVariable() bool { return true }
 
 func init() {
 	Register("print", PrintUints)
@@ -522,7 +522,7 @@ func (this *printBools) Hash() uint64 {
 	return this.hash
 }
 
-func (this *printBools) IsVariable() {}
+func (this *printBools) HasVariable() bool { return true }
 
 func init() {
 	Register("print", PrintBools)
@@ -575,7 +575,7 @@ func (this *printStrings) Hash() uint64 {
 	return this.hash
 }
 
-func (this *printStrings) IsVariable() {}
+func (this *printStrings) HasVariable() bool { return true }
 
 func init() {
 	Register("print", PrintStrings)
@@ -628,7 +628,7 @@ func (this *printListOfBytes) Hash() uint64 {
 	return this.hash
 }
 
-func (this *printListOfBytes) IsVariable() {}
+func (this *printListOfBytes) HasVariable() bool { return true }
 
 func init() {
 	Register("print", PrintListOfBytes)

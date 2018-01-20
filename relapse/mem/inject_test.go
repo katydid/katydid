@@ -62,8 +62,8 @@ func (this *injectableInt) SetContext(context *funcs.Context) {
 	this.context = context
 }
 
-func (this *injectableInt) IsVariable() {
-	//If this method is not implemented this function will probably be trimmed
+func (this *injectableInt) HasVariable() bool {
+	return true
 }
 
 func init() {

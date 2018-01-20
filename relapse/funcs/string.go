@@ -23,7 +23,7 @@ func ToLower(s String) String {
 	h := uint64(17)
 	h = 31*h + 47
 	h = 31*h + s.Hash()
-	return &toLower{s, h}
+	return TrimString(&toLower{s, h})
 }
 
 type toLower struct {
@@ -55,6 +55,10 @@ func (this *toLower) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *toLower) HasVariable() bool {
+	return this.S.HasVariable()
+}
+
 func (this *toLower) String() string {
 	return "toLower(" + this.S.String() + ")"
 }
@@ -72,7 +76,7 @@ func ToUpper(s String) String {
 	h := uint64(17)
 	h = 31*h + 53
 	h = 31*h + s.Hash()
-	return &toUpper{s, h}
+	return TrimString(&toUpper{s, h})
 }
 
 type toUpper struct {
@@ -104,6 +108,10 @@ func (this *toUpper) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *toUpper) HasVariable() bool {
+	return this.S.HasVariable()
+}
+
 func (this *toUpper) String() string {
 	return "toUpper(" + this.S.String() + ")"
 }
@@ -122,7 +130,7 @@ func Contains(s, sub String) Bool {
 	h = 31*h + 59
 	h = 31*h + s.Hash()
 	h = 31*h + sub.Hash()
-	return &contains{s, sub, h}
+	return TrimBool(&contains{s, sub, h})
 }
 
 type contains struct {
@@ -162,6 +170,10 @@ func (this *contains) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *contains) HasVariable() bool {
+	return this.S.HasVariable() || this.Substr.HasVariable()
+}
+
 func (this *contains) String() string {
 	return "contains(" + sjoin(this.S, this.Substr) + ")"
 }
@@ -180,7 +192,7 @@ func EqualFold(s, t String) Bool {
 	h = 31*h + 71
 	h = 31*h + s.Hash()
 	h = 31*h + t.Hash()
-	return &equalFold{s, t, h}
+	return TrimBool(&equalFold{s, t, h})
 }
 
 type equalFold struct {
@@ -220,6 +232,10 @@ func (this *equalFold) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *equalFold) HasVariable() bool {
+	return this.S.HasVariable() || this.T.HasVariable()
+}
+
 func (this *equalFold) String() string {
 	return "eqFold(" + sjoin(this.S, this.T) + ")"
 }
@@ -238,7 +254,7 @@ func HasPrefix(a, b String) Bool {
 	h = 31*h + 73
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &hasPrefix{a, b, h}
+	return TrimBool(&hasPrefix{a, b, h})
 }
 
 type hasPrefix struct {
@@ -278,6 +294,10 @@ func (this *hasPrefix) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *hasPrefix) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *hasPrefix) String() string {
 	return "hasPrefix(" + sjoin(this.V1, this.V2) + ")"
 }
@@ -296,7 +316,7 @@ func HasSuffix(a, b String) Bool {
 	h = 31*h + 79
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &hasSuffix{a, b, h}
+	return TrimBool(&hasSuffix{a, b, h})
 }
 
 type hasSuffix struct {
@@ -334,6 +354,10 @@ func (this *hasSuffix) Compare(that Comparable) int {
 		return 0
 	}
 	return strings.Compare(this.String(), that.String())
+}
+
+func (this *hasSuffix) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
 }
 
 func (this *hasSuffix) String() string {

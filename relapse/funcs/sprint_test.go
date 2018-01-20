@@ -27,8 +27,8 @@ func TestString1(t *testing.T) {
 }
 
 func TestString2(t *testing.T) {
-	out := Sprint(IntGE(ElemInts(IntsConst([]int64{1, 2}), IntConst(1)), IntVar()))
-	exp := "->ge(elem([]int{int(1),int(2)},int(1)),$int)"
+	out := Sprint(IntGE(ElemInts(IntsConst([]int64{1, 2}), IntVar()), IntVar()))
+	exp := "->ge(elem([]int{int(1),int(2)},$int),$int)"
 	if out != exp {
 		t.Fatalf("expected %s, but got %s", exp, out)
 	}

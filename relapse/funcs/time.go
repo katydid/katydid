@@ -53,7 +53,7 @@ func (this *now) String() string {
 	return "now"
 }
 
-func (this *now) IsVariable() {}
+func (this *now) HasVariable() bool { return true }
 
 func init() {
 	Register("now", Now)

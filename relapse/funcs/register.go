@@ -22,12 +22,32 @@ import (
 	"github.com/katydid/katydid/relapse/types"
 )
 
+var errTyp = reflect.TypeOf((*error)(nil)).Elem()
+var funcTyp = reflect.TypeOf((*Func)(nil)).Elem()
+
 //Register registers a function as function that can composed.
 func Register(name string, fnc interface{}) {
 	typ := reflect.TypeOf(fnc)
+	if typ.Kind() != reflect.Func {
+		panic(fmt.Sprintf("expecting constructor function for %s, but got %T", name, fnc))
+	}
+	if typ.NumOut() == 2 {
+		if !typ.Out(1).Implements(errTyp) {
+			panic(fmt.Sprintf("the second return type of the constructor for %s is not an error", name))
+		}
+	}
+	if typ.NumOut() > 2 {
+		panic(fmt.Sprintf("the constructor for %s has more than 2 return values", name))
+	}
+	if typ.NumOut() == 0 {
+		panic(fmt.Sprintf("the constructor for %s has no return values", name))
+	}
 	eval, ok := typ.Out(0).MethodByName("Eval")
 	if !ok {
-		panic("return type has no eval method")
+		panic(fmt.Sprintf("the constructor for %s returns a type without an Eval method", name))
+	}
+	if !typ.Out(0).Implements(funcTyp) {
+		panic(fmt.Sprintf("the constructor for %s returns a type that does not implement funcs.Func", name))
 	}
 	returnType := eval.Type
 	ins := typ.NumIn()
@@ -40,6 +60,9 @@ func Register(name string, fnc interface{}) {
 		meth, ok := typ.In(i).MethodByName("Eval")
 		if !ok {
 			continue
+		}
+		if !typ.In(i).Implements(funcTyp) {
+			panic(fmt.Sprintf("the constructor for %s has an input parameter (number %d) that does not implement funcs.Func", name, i))
 		}
 		res.InConst = append(res.InConst, IsConst(typ.In(i)))
 		inType := types.FromGo(meth.Type.Out(0))
@@ -153,6 +176,11 @@ func (f *Funk) New(values ...interface{}) (interface{}, error) {
 		rvalues[i] = reflect.ValueOf(values[i])
 	}
 	res := newf.Call(rvalues)
+	if len(res) == 2 {
+		if !res[1].IsNil() {
+			return res[0].Interface(), res[1].Interface().(error)
+		}
+	}
 	return res[0].Interface(), nil
 }
 

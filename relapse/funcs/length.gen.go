@@ -38,6 +38,10 @@ func (this *lenDoubles) String() string {
 	return "length(" + this.E.String() + ")"
 }
 
+func (this *lenDoubles) HasVariable() bool {
+	return this.E.HasVariable()
+}
+
 func (this *lenDoubles) Hash() uint64 {
 	return this.hash
 }
@@ -51,7 +55,7 @@ func LenDoubles(e Doubles) Int {
 	h := uint64(17)
 	h = 31*h + 7
 	h = 31*h + e.Hash()
-	return &lenDoubles{E: e, hash: h}
+	return TrimInt(&lenDoubles{E: e, hash: h})
 }
 
 type lenInts struct {
@@ -87,6 +91,10 @@ func (this *lenInts) String() string {
 	return "length(" + this.E.String() + ")"
 }
 
+func (this *lenInts) HasVariable() bool {
+	return this.E.HasVariable()
+}
+
 func (this *lenInts) Hash() uint64 {
 	return this.hash
 }
@@ -100,7 +108,7 @@ func LenInts(e Ints) Int {
 	h := uint64(17)
 	h = 31*h + 7
 	h = 31*h + e.Hash()
-	return &lenInts{E: e, hash: h}
+	return TrimInt(&lenInts{E: e, hash: h})
 }
 
 type lenUints struct {
@@ -136,6 +144,10 @@ func (this *lenUints) String() string {
 	return "length(" + this.E.String() + ")"
 }
 
+func (this *lenUints) HasVariable() bool {
+	return this.E.HasVariable()
+}
+
 func (this *lenUints) Hash() uint64 {
 	return this.hash
 }
@@ -149,7 +161,7 @@ func LenUints(e Uints) Int {
 	h := uint64(17)
 	h = 31*h + 7
 	h = 31*h + e.Hash()
-	return &lenUints{E: e, hash: h}
+	return TrimInt(&lenUints{E: e, hash: h})
 }
 
 type lenBools struct {
@@ -185,6 +197,10 @@ func (this *lenBools) String() string {
 	return "length(" + this.E.String() + ")"
 }
 
+func (this *lenBools) HasVariable() bool {
+	return this.E.HasVariable()
+}
+
 func (this *lenBools) Hash() uint64 {
 	return this.hash
 }
@@ -198,7 +214,7 @@ func LenBools(e Bools) Int {
 	h := uint64(17)
 	h = 31*h + 7
 	h = 31*h + e.Hash()
-	return &lenBools{E: e, hash: h}
+	return TrimInt(&lenBools{E: e, hash: h})
 }
 
 type lenStrings struct {
@@ -234,6 +250,10 @@ func (this *lenStrings) String() string {
 	return "length(" + this.E.String() + ")"
 }
 
+func (this *lenStrings) HasVariable() bool {
+	return this.E.HasVariable()
+}
+
 func (this *lenStrings) Hash() uint64 {
 	return this.hash
 }
@@ -247,7 +267,7 @@ func LenStrings(e Strings) Int {
 	h := uint64(17)
 	h = 31*h + 7
 	h = 31*h + e.Hash()
-	return &lenStrings{E: e, hash: h}
+	return TrimInt(&lenStrings{E: e, hash: h})
 }
 
 type lenListOfBytes struct {
@@ -283,6 +303,10 @@ func (this *lenListOfBytes) String() string {
 	return "length(" + this.E.String() + ")"
 }
 
+func (this *lenListOfBytes) HasVariable() bool {
+	return this.E.HasVariable()
+}
+
 func (this *lenListOfBytes) Hash() uint64 {
 	return this.hash
 }
@@ -296,7 +320,7 @@ func LenListOfBytes(e ListOfBytes) Int {
 	h := uint64(17)
 	h = 31*h + 7
 	h = 31*h + e.Hash()
-	return &lenListOfBytes{E: e, hash: h}
+	return TrimInt(&lenListOfBytes{E: e, hash: h})
 }
 
 type lenString struct {
@@ -332,6 +356,10 @@ func (this *lenString) String() string {
 	return "length(" + this.E.String() + ")"
 }
 
+func (this *lenString) HasVariable() bool {
+	return this.E.HasVariable()
+}
+
 func (this *lenString) Hash() uint64 {
 	return this.hash
 }
@@ -345,7 +373,7 @@ func LenString(e String) Int {
 	h := uint64(17)
 	h = 31*h + 7
 	h = 31*h + e.Hash()
-	return &lenString{E: e, hash: h}
+	return TrimInt(&lenString{E: e, hash: h})
 }
 
 type lenBytes struct {
@@ -381,6 +409,10 @@ func (this *lenBytes) String() string {
 	return "length(" + this.E.String() + ")"
 }
 
+func (this *lenBytes) HasVariable() bool {
+	return this.E.HasVariable()
+}
+
 func (this *lenBytes) Hash() uint64 {
 	return this.hash
 }
@@ -394,5 +426,5 @@ func LenBytes(e Bytes) Int {
 	h := uint64(17)
 	h = 31*h + 7
 	h = 31*h + e.Hash()
-	return &lenBytes{E: e, hash: h}
+	return TrimInt(&lenBytes{E: e, hash: h})
 }

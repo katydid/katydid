@@ -70,6 +70,10 @@ func (this *rangeDoubles) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *rangeDoubles) HasVariable() bool {
+	return this.List.HasVariable() || this.First.HasVariable() || this.Last.HasVariable()
+}
+
 func (this *rangeDoubles) String() string {
 	return "range(" + sjoin(this.List, this.First, this.Last) +")"
 }
@@ -89,12 +93,12 @@ func RangeDoubles(list Doubles, from, to Int) Doubles {
 	h = 31*h + from.Hash()
 	h = 31*h + to.Hash()
 	h = 31*h + list.Hash()
-	return &rangeDoubles{
+	return TrimDoubles(&rangeDoubles{
 		List:  list,
 		First: from,
 		Last:  to,
 		hash: h,
-	}
+	})
 }
 
 type rangeInts struct {
@@ -162,6 +166,10 @@ func (this *rangeInts) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *rangeInts) HasVariable() bool {
+	return this.List.HasVariable() || this.First.HasVariable() || this.Last.HasVariable()
+}
+
 func (this *rangeInts) String() string {
 	return "range(" + sjoin(this.List, this.First, this.Last) +")"
 }
@@ -181,12 +189,12 @@ func RangeInts(list Ints, from, to Int) Ints {
 	h = 31*h + from.Hash()
 	h = 31*h + to.Hash()
 	h = 31*h + list.Hash()
-	return &rangeInts{
+	return TrimInts(&rangeInts{
 		List:  list,
 		First: from,
 		Last:  to,
 		hash: h,
-	}
+	})
 }
 
 type rangeUints struct {
@@ -254,6 +262,10 @@ func (this *rangeUints) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *rangeUints) HasVariable() bool {
+	return this.List.HasVariable() || this.First.HasVariable() || this.Last.HasVariable()
+}
+
 func (this *rangeUints) String() string {
 	return "range(" + sjoin(this.List, this.First, this.Last) +")"
 }
@@ -273,12 +285,12 @@ func RangeUints(list Uints, from, to Int) Uints {
 	h = 31*h + from.Hash()
 	h = 31*h + to.Hash()
 	h = 31*h + list.Hash()
-	return &rangeUints{
+	return TrimUints(&rangeUints{
 		List:  list,
 		First: from,
 		Last:  to,
 		hash: h,
-	}
+	})
 }
 
 type rangeBools struct {
@@ -346,6 +358,10 @@ func (this *rangeBools) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *rangeBools) HasVariable() bool {
+	return this.List.HasVariable() || this.First.HasVariable() || this.Last.HasVariable()
+}
+
 func (this *rangeBools) String() string {
 	return "range(" + sjoin(this.List, this.First, this.Last) +")"
 }
@@ -365,12 +381,12 @@ func RangeBools(list Bools, from, to Int) Bools {
 	h = 31*h + from.Hash()
 	h = 31*h + to.Hash()
 	h = 31*h + list.Hash()
-	return &rangeBools{
+	return TrimBools(&rangeBools{
 		List:  list,
 		First: from,
 		Last:  to,
 		hash: h,
-	}
+	})
 }
 
 type rangeStrings struct {
@@ -438,6 +454,10 @@ func (this *rangeStrings) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *rangeStrings) HasVariable() bool {
+	return this.List.HasVariable() || this.First.HasVariable() || this.Last.HasVariable()
+}
+
 func (this *rangeStrings) String() string {
 	return "range(" + sjoin(this.List, this.First, this.Last) +")"
 }
@@ -457,12 +477,12 @@ func RangeStrings(list Strings, from, to Int) Strings {
 	h = 31*h + from.Hash()
 	h = 31*h + to.Hash()
 	h = 31*h + list.Hash()
-	return &rangeStrings{
+	return TrimStrings(&rangeStrings{
 		List:  list,
 		First: from,
 		Last:  to,
 		hash: h,
-	}
+	})
 }
 
 type rangeListOfBytes struct {
@@ -530,6 +550,10 @@ func (this *rangeListOfBytes) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *rangeListOfBytes) HasVariable() bool {
+	return this.List.HasVariable() || this.First.HasVariable() || this.Last.HasVariable()
+}
+
 func (this *rangeListOfBytes) String() string {
 	return "range(" + sjoin(this.List, this.First, this.Last) +")"
 }
@@ -549,10 +573,10 @@ func RangeListOfBytes(list ListOfBytes, from, to Int) ListOfBytes {
 	h = 31*h + from.Hash()
 	h = 31*h + to.Hash()
 	h = 31*h + list.Hash()
-	return &rangeListOfBytes{
+	return TrimListOfBytes(&rangeListOfBytes{
 		List:  list,
 		First: from,
 		Last:  to,
 		hash: h,
-	}
+	})
 }

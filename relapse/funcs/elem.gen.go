@@ -52,6 +52,10 @@ func (this *elemDoubles) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *elemDoubles) HasVariable() bool {
+	return this.List.HasVariable() || this.Index.HasVariable()
+}
+
 func (this *elemDoubles) String() string {
 	return "elem(" + sjoin(this.List, this.Index) + ")"
 }
@@ -70,11 +74,11 @@ func ElemDoubles(list Doubles, n Int) Double {
 	h = 31*h + 63639164578
 	h = 31*h + n.Hash()
 	h = 31*h + list.Hash()
-	return &elemDoubles{
+	return TrimDouble(&elemDoubles{
 		List:  list,
 		Index: n,
 		hash: h,
-	}
+	})
 }
 
 type elemInts struct {
@@ -124,6 +128,10 @@ func (this *elemInts) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *elemInts) HasVariable() bool {
+	return this.List.HasVariable() || this.Index.HasVariable()
+}
+
 func (this *elemInts) String() string {
 	return "elem(" + sjoin(this.List, this.Index) + ")"
 }
@@ -142,11 +150,11 @@ func ElemInts(list Ints, n Int) Int {
 	h = 31*h + 2284164
 	h = 31*h + n.Hash()
 	h = 31*h + list.Hash()
-	return &elemInts{
+	return TrimInt(&elemInts{
 		List:  list,
 		Index: n,
 		hash: h,
-	}
+	})
 }
 
 type elemUints struct {
@@ -196,6 +204,10 @@ func (this *elemUints) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *elemUints) HasVariable() bool {
+	return this.List.HasVariable() || this.Index.HasVariable()
+}
+
 func (this *elemUints) String() string {
 	return "elem(" + sjoin(this.List, this.Index) + ")"
 }
@@ -214,11 +226,11 @@ func ElemUints(list Uints, n Int) Uint {
 	h = 31*h + 81736761
 	h = 31*h + n.Hash()
 	h = 31*h + list.Hash()
-	return &elemUints{
+	return TrimUint(&elemUints{
 		List:  list,
 		Index: n,
 		hash: h,
-	}
+	})
 }
 
 type elemBools struct {
@@ -268,6 +280,10 @@ func (this *elemBools) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *elemBools) HasVariable() bool {
+	return this.List.HasVariable() || this.Index.HasVariable()
+}
+
 func (this *elemBools) String() string {
 	return "elem(" + sjoin(this.List, this.Index) + ")"
 }
@@ -286,11 +302,11 @@ func ElemBools(list Bools, n Int) Bool {
 	h = 31*h + 64369321
 	h = 31*h + n.Hash()
 	h = 31*h + list.Hash()
-	return &elemBools{
+	return TrimBool(&elemBools{
 		List:  list,
 		Index: n,
 		hash: h,
-	}
+	})
 }
 
 type elemStrings struct {
@@ -340,6 +356,10 @@ func (this *elemStrings) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *elemStrings) HasVariable() bool {
+	return this.List.HasVariable() || this.Index.HasVariable()
+}
+
 func (this *elemStrings) String() string {
 	return "elem(" + sjoin(this.List, this.Index) + ")"
 }
@@ -358,11 +378,11 @@ func ElemStrings(list Strings, n Int) String {
 	h = 31*h + 77092305506
 	h = 31*h + n.Hash()
 	h = 31*h + list.Hash()
-	return &elemStrings{
+	return TrimString(&elemStrings{
 		List:  list,
 		Index: n,
 		hash: h,
-	}
+	})
 }
 
 type elemListOfBytes struct {
@@ -412,6 +432,10 @@ func (this *elemListOfBytes) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *elemListOfBytes) HasVariable() bool {
+	return this.List.HasVariable() || this.Index.HasVariable()
+}
+
 func (this *elemListOfBytes) String() string {
 	return "elem(" + sjoin(this.List, this.Index) + ")"
 }
@@ -430,9 +454,9 @@ func ElemListOfBytes(list ListOfBytes, n Int) Bytes {
 	h = 31*h + 65169257167589942
 	h = 31*h + n.Hash()
 	h = 31*h + list.Hash()
-	return &elemListOfBytes{
+	return TrimBytes(&elemListOfBytes{
 		List:  list,
 		Index: n,
 		hash: h,
-	}
+	})
 }

@@ -32,12 +32,29 @@ func (this *constDouble) Eval() (float64, error) {
 	return this.v, nil
 }
 
+func (this *constDouble) HasVariable() bool { return false }
+
 func (this *constDouble) Hash() uint64 {
 	return this.hash
 }
 
 func (this *constDouble) String() string {
 	return fmt.Sprintf("double(%f)", this.v)
+}
+
+// TrimDouble turns functions into constants, if they can be evaluated at compile time.
+func TrimDouble(f Double) Double {
+	if _, ok := f.(aConst); ok {
+		return f
+	}
+	if f.HasVariable() {
+		return f
+	}
+	v, err := f.Eval()
+	if err != nil {
+		return f
+	}
+	return DoubleConst(v)
 }
 
 type ConstInt interface {
@@ -65,12 +82,29 @@ func (this *constInt) Eval() (int64, error) {
 	return this.v, nil
 }
 
+func (this *constInt) HasVariable() bool { return false }
+
 func (this *constInt) Hash() uint64 {
 	return this.hash
 }
 
 func (this *constInt) String() string {
 	return fmt.Sprintf("int(%d)", this.v)
+}
+
+// TrimInt turns functions into constants, if they can be evaluated at compile time.
+func TrimInt(f Int) Int {
+	if _, ok := f.(aConst); ok {
+		return f
+	}
+	if f.HasVariable() {
+		return f
+	}
+	v, err := f.Eval()
+	if err != nil {
+		return f
+	}
+	return IntConst(v)
 }
 
 type ConstUint interface {
@@ -98,12 +132,29 @@ func (this *constUint) Eval() (uint64, error) {
 	return this.v, nil
 }
 
+func (this *constUint) HasVariable() bool { return false }
+
 func (this *constUint) Hash() uint64 {
 	return this.hash
 }
 
 func (this *constUint) String() string {
 	return fmt.Sprintf("uint(%d)", this.v)
+}
+
+// TrimUint turns functions into constants, if they can be evaluated at compile time.
+func TrimUint(f Uint) Uint {
+	if _, ok := f.(aConst); ok {
+		return f
+	}
+	if f.HasVariable() {
+		return f
+	}
+	v, err := f.Eval()
+	if err != nil {
+		return f
+	}
+	return UintConst(v)
 }
 
 type ConstBool interface {
@@ -131,12 +182,29 @@ func (this *constBool) Eval() (bool, error) {
 	return this.v, nil
 }
 
+func (this *constBool) HasVariable() bool { return false }
+
 func (this *constBool) Hash() uint64 {
 	return this.hash
 }
 
 func (this *constBool) String() string {
 	return fmt.Sprintf("%v", this.v)
+}
+
+// TrimBool turns functions into constants, if they can be evaluated at compile time.
+func TrimBool(f Bool) Bool {
+	if _, ok := f.(aConst); ok {
+		return f
+	}
+	if f.HasVariable() {
+		return f
+	}
+	v, err := f.Eval()
+	if err != nil {
+		return f
+	}
+	return BoolConst(v)
 }
 
 type ConstString interface {
@@ -164,12 +232,29 @@ func (this *constString) Eval() (string, error) {
 	return this.v, nil
 }
 
+func (this *constString) HasVariable() bool { return false }
+
 func (this *constString) Hash() uint64 {
 	return this.hash
 }
 
 func (this *constString) String() string {
 	return fmt.Sprintf("`%s`", this.v)
+}
+
+// TrimString turns functions into constants, if they can be evaluated at compile time.
+func TrimString(f String) String {
+	if _, ok := f.(aConst); ok {
+		return f
+	}
+	if f.HasVariable() {
+		return f
+	}
+	v, err := f.Eval()
+	if err != nil {
+		return f
+	}
+	return StringConst(v)
 }
 
 type ConstBytes interface {
@@ -197,12 +282,29 @@ func (this *constBytes) Eval() ([]byte, error) {
 	return this.v, nil
 }
 
+func (this *constBytes) HasVariable() bool { return false }
+
 func (this *constBytes) Hash() uint64 {
 	return this.hash
 }
 
 func (this *constBytes) String() string {
 	return fmt.Sprintf("%#v", this.v)
+}
+
+// TrimBytes turns functions into constants, if they can be evaluated at compile time.
+func TrimBytes(f Bytes) Bytes {
+	if _, ok := f.(aConst); ok {
+		return f
+	}
+	if f.HasVariable() {
+		return f
+	}
+	v, err := f.Eval()
+	if err != nil {
+		return f
+	}
+	return BytesConst(v)
 }
 
 type ConstDoubles interface {
@@ -230,6 +332,8 @@ func (this *constDoubles) Eval() ([]float64, error) {
 	return this.v, nil
 }
 
+func (this *constDoubles) HasVariable() bool { return false }
+
 func (this *constDoubles) Hash() uint64 {
 	return this.hash
 }
@@ -240,6 +344,21 @@ func (this *constDoubles) String() string {
 		ss[i] = fmt.Sprintf("double(%f)", this.v[i])
 	}
 	return "[]double{" + strings.Join(ss, ",") + "}"
+}
+
+// TrimDoubles turns functions into constants, if they can be evaluated at compile time.
+func TrimDoubles(f Doubles) Doubles {
+	if _, ok := f.(aConst); ok {
+		return f
+	}
+	if f.HasVariable() {
+		return f
+	}
+	v, err := f.Eval()
+	if err != nil {
+		return f
+	}
+	return DoublesConst(v)
 }
 
 type ConstInts interface {
@@ -267,6 +386,8 @@ func (this *constInts) Eval() ([]int64, error) {
 	return this.v, nil
 }
 
+func (this *constInts) HasVariable() bool { return false }
+
 func (this *constInts) Hash() uint64 {
 	return this.hash
 }
@@ -277,6 +398,21 @@ func (this *constInts) String() string {
 		ss[i] = fmt.Sprintf("int(%d)", this.v[i])
 	}
 	return "[]int{" + strings.Join(ss, ",") + "}"
+}
+
+// TrimInts turns functions into constants, if they can be evaluated at compile time.
+func TrimInts(f Ints) Ints {
+	if _, ok := f.(aConst); ok {
+		return f
+	}
+	if f.HasVariable() {
+		return f
+	}
+	v, err := f.Eval()
+	if err != nil {
+		return f
+	}
+	return IntsConst(v)
 }
 
 type ConstUints interface {
@@ -304,6 +440,8 @@ func (this *constUints) Eval() ([]uint64, error) {
 	return this.v, nil
 }
 
+func (this *constUints) HasVariable() bool { return false }
+
 func (this *constUints) Hash() uint64 {
 	return this.hash
 }
@@ -314,6 +452,21 @@ func (this *constUints) String() string {
 		ss[i] = fmt.Sprintf("uint(%d)", this.v[i])
 	}
 	return "[]uint{" + strings.Join(ss, ",") + "}"
+}
+
+// TrimUints turns functions into constants, if they can be evaluated at compile time.
+func TrimUints(f Uints) Uints {
+	if _, ok := f.(aConst); ok {
+		return f
+	}
+	if f.HasVariable() {
+		return f
+	}
+	v, err := f.Eval()
+	if err != nil {
+		return f
+	}
+	return UintsConst(v)
 }
 
 type ConstBools interface {
@@ -341,6 +494,8 @@ func (this *constBools) Eval() ([]bool, error) {
 	return this.v, nil
 }
 
+func (this *constBools) HasVariable() bool { return false }
+
 func (this *constBools) Hash() uint64 {
 	return this.hash
 }
@@ -351,6 +506,21 @@ func (this *constBools) String() string {
 		ss[i] = fmt.Sprintf("%v", this.v[i])
 	}
 	return "[]bool{" + strings.Join(ss, ",") + "}"
+}
+
+// TrimBools turns functions into constants, if they can be evaluated at compile time.
+func TrimBools(f Bools) Bools {
+	if _, ok := f.(aConst); ok {
+		return f
+	}
+	if f.HasVariable() {
+		return f
+	}
+	v, err := f.Eval()
+	if err != nil {
+		return f
+	}
+	return BoolsConst(v)
 }
 
 type ConstStrings interface {
@@ -378,6 +548,8 @@ func (this *constStrings) Eval() ([]string, error) {
 	return this.v, nil
 }
 
+func (this *constStrings) HasVariable() bool { return false }
+
 func (this *constStrings) Hash() uint64 {
 	return this.hash
 }
@@ -388,6 +560,21 @@ func (this *constStrings) String() string {
 		ss[i] = fmt.Sprintf("`%s`", this.v[i])
 	}
 	return "[]string{" + strings.Join(ss, ",") + "}"
+}
+
+// TrimStrings turns functions into constants, if they can be evaluated at compile time.
+func TrimStrings(f Strings) Strings {
+	if _, ok := f.(aConst); ok {
+		return f
+	}
+	if f.HasVariable() {
+		return f
+	}
+	v, err := f.Eval()
+	if err != nil {
+		return f
+	}
+	return StringsConst(v)
 }
 
 type ConstListOfBytes interface {
@@ -415,6 +602,8 @@ func (this *constListOfBytes) Eval() ([][]byte, error) {
 	return this.v, nil
 }
 
+func (this *constListOfBytes) HasVariable() bool { return false }
+
 func (this *constListOfBytes) Hash() uint64 {
 	return this.hash
 }
@@ -425,4 +614,19 @@ func (this *constListOfBytes) String() string {
 		ss[i] = fmt.Sprintf("%#v", this.v[i])
 	}
 	return "[][]byte{" + strings.Join(ss, ",") + "}"
+}
+
+// TrimListOfBytes turns functions into constants, if they can be evaluated at compile time.
+func TrimListOfBytes(f ListOfBytes) ListOfBytes {
+	if _, ok := f.(aConst); ok {
+		return f
+	}
+	if f.HasVariable() {
+		return f
+	}
+	v, err := f.Eval()
+	if err != nil {
+		return f
+	}
+	return ListOfBytesConst(v)
 }

@@ -15,7 +15,6 @@
 package compose
 
 import (
-	"fmt"
 	"reflect"
 
 	"github.com/katydid/katydid/parser"
@@ -38,20 +37,8 @@ type composedBool struct {
 	Func    funcs.Bool
 }
 
-type errInit struct {
-	i   interface{}
-	err error
-}
-
-func (this *errInit) Error() string {
-	return fmt.Sprintf("relapse/compose: %#v err: %s", this.i, this.err)
-}
-
 var (
-	varTyp        = reflect.TypeOf((*funcs.Variable)(nil)).Elem()
 	setterTyp     = reflect.TypeOf((*funcs.Setter)(nil)).Elem()
-	constTyp      = reflect.TypeOf((*funcs.Const)(nil)).Elem()
-	initTyp       = reflect.TypeOf((*funcs.Init)(nil)).Elem()
 	listOfTyp     = reflect.TypeOf((*funcs.ListOf)(nil)).Elem()
 	setContextTyp = reflect.TypeOf((*funcs.SetContext)(nil)).Elem()
 )
@@ -74,23 +61,12 @@ func SetContext(f funcs.Bool, context *funcs.Context) {
 
 //NewBoolFunc returns the same function that it was given, but that has been trimmed and which is ready for variable values and evaluation.
 func NewBoolFunc(f funcs.Bool) (Bool, error) {
-	e, err := TrimBool(f)
-	if err != nil {
-		return nil, err
-	}
-	initImpls := FuncImplements(e, initTyp)
-	for _, i := range initImpls {
-		err := i.(funcs.Init).Init()
-		if err != nil {
-			return nil, &errInit{i, err}
-		}
-	}
-	impls := FuncImplements(e, setterTyp)
+	impls := FuncImplements(f, setterTyp)
 	setters := make([]Setter, len(impls))
 	for i := range impls {
 		setters[i] = impls[i].(Setter)
 	}
-	return &composedBool{setters, e}, nil
+	return &composedBool{setters, f}, nil
 }
 
 //Eval evaluates the function given a value.

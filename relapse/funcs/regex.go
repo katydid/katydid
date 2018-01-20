@@ -15,41 +15,44 @@
 package funcs
 
 import (
+	"fmt"
 	"regexp"
 	"strings"
 )
 
 //Regex returns a new regex function given the first parameter as the expression string that needs to compiled and the second as the regex that should be matched.
-func Regex(expr ConstString, input String) Bool {
+func Regex(expr ConstString, input String) (Bool, error) {
 	h := uint64(17)
 	h = 31*h + 41
 	h = 31*h + expr.Hash()
 	h = 31*h + input.Hash()
-	return &regex{Expr: expr, S: input, hash: h}
+	if expr.HasVariable() {
+		return nil, fmt.Errorf("regex requires a constant expression as its first parameter, but it has a variable parameter")
+	}
+	e, err := expr.Eval()
+	if err != nil {
+		return nil, err
+	}
+	r, err := regexp.Compile(e)
+	if err != nil {
+		return nil, err
+	}
+	return TrimBool(&regex{expr: e, S: input, hash: h, r: r}), nil
 }
 
 type regex struct {
 	r    *regexp.Regexp
-	Expr ConstString
+	expr string
 	S    String
 	hash uint64
 }
 
-func (this *regex) Init() error {
-	e, err := this.Expr.Eval()
-	if err != nil {
-		return err
-	}
-	r, err := regexp.Compile(e)
-	if err != nil {
-		return err
-	}
-	this.r = r
-	return nil
+func (this *regex) HasVariable() bool {
+	return this.S.HasVariable()
 }
 
 func (this *regex) String() string {
-	return "regex(" + sjoin(this.Expr, this.S) + ")"
+	return "regex(" + this.expr + "," + this.S.String() + ")"
 }
 
 func (this *regex) Eval() (bool, error) {
@@ -68,7 +71,7 @@ func (this *regex) Compare(that Comparable) int {
 		return 1
 	}
 	if other, ok := that.(*regex); ok {
-		if c := this.Expr.Compare(other.Expr); c != 0 {
+		if c := strings.Compare(this.expr, other.expr); c != 0 {
 			return c
 		}
 		if c := this.S.Compare(other.S); c != 0 {

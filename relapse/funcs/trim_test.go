@@ -1,4 +1,4 @@
-//  Copyright 2013 Walter Schulze
+//  Copyright 2018 Walter Schulze
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -14,7 +14,14 @@
 
 package funcs
 
-//Init is an interface that when implemented lets the function composition know that this function needs to be initialized.
-type Init interface {
-	Init() error
+import (
+	"testing"
+)
+
+func TestTrim(t *testing.T) {
+	out := Sprint(IntGE(ElemInts(IntsConst([]int64{1, 2}), IntConst(1)), IntVar()))
+	exp := ">= int(2)"
+	if out != exp {
+		t.Fatalf("expected %s, but got %s", exp, out)
+	}
 }

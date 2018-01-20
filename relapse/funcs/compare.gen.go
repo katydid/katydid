@@ -61,6 +61,10 @@ func (this *doubleGE) String() string {
 	return "ge" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *doubleGE) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *doubleGE) Hash() uint64 {
 	return this.hash
 }
@@ -75,7 +79,7 @@ func DoubleGE(a, b Double) Bool {
 	h = 31*h + 3294
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &doubleGE{V1: a, V2: b, hash: h}
+	return TrimBool(&doubleGE{V1: a, V2: b, hash: h})
 }
 
 type intGE struct {
@@ -133,6 +137,10 @@ func (this *intGE) String() string {
 	return "ge" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *intGE) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *intGE) Hash() uint64 {
 	return this.hash
 }
@@ -147,7 +155,7 @@ func IntGE(a, b Int) Bool {
 	h = 31*h + 3294
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &intGE{V1: a, V2: b, hash: h}
+	return TrimBool(&intGE{V1: a, V2: b, hash: h})
 }
 
 type uintGE struct {
@@ -205,6 +213,10 @@ func (this *uintGE) String() string {
 	return "ge" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *uintGE) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *uintGE) Hash() uint64 {
 	return this.hash
 }
@@ -219,7 +231,7 @@ func UintGE(a, b Uint) Bool {
 	h = 31*h + 3294
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &uintGE{V1: a, V2: b, hash: h}
+	return TrimBool(&uintGE{V1: a, V2: b, hash: h})
 }
 
 type bytesGE struct {
@@ -277,6 +289,10 @@ func (this *bytesGE) String() string {
 	return "ge" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *bytesGE) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *bytesGE) Hash() uint64 {
 	return this.hash
 }
@@ -291,7 +307,7 @@ func BytesGE(a, b Bytes) Bool {
 	h = 31*h + 3294
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &bytesGE{V1: a, V2: b, hash: h}
+	return TrimBool(&bytesGE{V1: a, V2: b, hash: h})
 }
 
 type doubleGt struct {
@@ -349,6 +365,10 @@ func (this *doubleGt) String() string {
 	return "gt" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *doubleGt) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *doubleGt) Hash() uint64 {
 	return this.hash
 }
@@ -363,7 +383,7 @@ func DoubleGt(a, b Double) Bool {
 	h = 31*h + 3309
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &doubleGt{V1: a, V2: b, hash: h}
+	return TrimBool(&doubleGt{V1: a, V2: b, hash: h})
 }
 
 type intGt struct {
@@ -421,6 +441,10 @@ func (this *intGt) String() string {
 	return "gt" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *intGt) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *intGt) Hash() uint64 {
 	return this.hash
 }
@@ -435,7 +459,7 @@ func IntGt(a, b Int) Bool {
 	h = 31*h + 3309
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &intGt{V1: a, V2: b, hash: h}
+	return TrimBool(&intGt{V1: a, V2: b, hash: h})
 }
 
 type uintGt struct {
@@ -493,6 +517,10 @@ func (this *uintGt) String() string {
 	return "gt" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *uintGt) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *uintGt) Hash() uint64 {
 	return this.hash
 }
@@ -507,7 +535,7 @@ func UintGt(a, b Uint) Bool {
 	h = 31*h + 3309
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &uintGt{V1: a, V2: b, hash: h}
+	return TrimBool(&uintGt{V1: a, V2: b, hash: h})
 }
 
 type bytesGt struct {
@@ -565,6 +593,10 @@ func (this *bytesGt) String() string {
 	return "gt" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *bytesGt) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *bytesGt) Hash() uint64 {
 	return this.hash
 }
@@ -579,7 +611,7 @@ func BytesGt(a, b Bytes) Bool {
 	h = 31*h + 3309
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &bytesGt{V1: a, V2: b, hash: h}
+	return TrimBool(&bytesGt{V1: a, V2: b, hash: h})
 }
 
 type doubleLE struct {
@@ -637,6 +669,10 @@ func (this *doubleLE) String() string {
 	return "le" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *doubleLE) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *doubleLE) Hash() uint64 {
 	return this.hash
 }
@@ -651,7 +687,7 @@ func DoubleLE(a, b Double) Bool {
 	h = 31*h + 3449
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &doubleLE{V1: a, V2: b, hash: h}
+	return TrimBool(&doubleLE{V1: a, V2: b, hash: h})
 }
 
 type intLE struct {
@@ -709,6 +745,10 @@ func (this *intLE) String() string {
 	return "le" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *intLE) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *intLE) Hash() uint64 {
 	return this.hash
 }
@@ -723,7 +763,7 @@ func IntLE(a, b Int) Bool {
 	h = 31*h + 3449
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &intLE{V1: a, V2: b, hash: h}
+	return TrimBool(&intLE{V1: a, V2: b, hash: h})
 }
 
 type uintLE struct {
@@ -781,6 +821,10 @@ func (this *uintLE) String() string {
 	return "le" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *uintLE) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *uintLE) Hash() uint64 {
 	return this.hash
 }
@@ -795,7 +839,7 @@ func UintLE(a, b Uint) Bool {
 	h = 31*h + 3449
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &uintLE{V1: a, V2: b, hash: h}
+	return TrimBool(&uintLE{V1: a, V2: b, hash: h})
 }
 
 type bytesLE struct {
@@ -853,6 +897,10 @@ func (this *bytesLE) String() string {
 	return "le" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *bytesLE) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *bytesLE) Hash() uint64 {
 	return this.hash
 }
@@ -867,7 +915,7 @@ func BytesLE(a, b Bytes) Bool {
 	h = 31*h + 3449
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &bytesLE{V1: a, V2: b, hash: h}
+	return TrimBool(&bytesLE{V1: a, V2: b, hash: h})
 }
 
 type doubleLt struct {
@@ -925,6 +973,10 @@ func (this *doubleLt) String() string {
 	return "lt" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *doubleLt) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *doubleLt) Hash() uint64 {
 	return this.hash
 }
@@ -939,7 +991,7 @@ func DoubleLt(a, b Double) Bool {
 	h = 31*h + 3464
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &doubleLt{V1: a, V2: b, hash: h}
+	return TrimBool(&doubleLt{V1: a, V2: b, hash: h})
 }
 
 type intLt struct {
@@ -997,6 +1049,10 @@ func (this *intLt) String() string {
 	return "lt" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *intLt) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *intLt) Hash() uint64 {
 	return this.hash
 }
@@ -1011,7 +1067,7 @@ func IntLt(a, b Int) Bool {
 	h = 31*h + 3464
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &intLt{V1: a, V2: b, hash: h}
+	return TrimBool(&intLt{V1: a, V2: b, hash: h})
 }
 
 type uintLt struct {
@@ -1069,6 +1125,10 @@ func (this *uintLt) String() string {
 	return "lt" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *uintLt) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *uintLt) Hash() uint64 {
 	return this.hash
 }
@@ -1083,7 +1143,7 @@ func UintLt(a, b Uint) Bool {
 	h = 31*h + 3464
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &uintLt{V1: a, V2: b, hash: h}
+	return TrimBool(&uintLt{V1: a, V2: b, hash: h})
 }
 
 type bytesLt struct {
@@ -1141,6 +1201,10 @@ func (this *bytesLt) String() string {
 	return "lt" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *bytesLt) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *bytesLt) Hash() uint64 {
 	return this.hash
 }
@@ -1155,7 +1219,7 @@ func BytesLt(a, b Bytes) Bool {
 	h = 31*h + 3464
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &bytesLt{V1: a, V2: b, hash: h}
+	return TrimBool(&bytesLt{V1: a, V2: b, hash: h})
 }
 
 type doubleEq struct {
@@ -1213,6 +1277,10 @@ func (this *doubleEq) String() string {
 	return "eq" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *doubleEq) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *doubleEq) Hash() uint64 {
 	return this.hash
 }
@@ -1227,7 +1295,7 @@ func DoubleEq(a, b Double) Bool {
 	h = 31*h + 3244
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &doubleEq{V1: a, V2: b, hash: h}
+	return TrimBool(&doubleEq{V1: a, V2: b, hash: h})
 }
 
 type intEq struct {
@@ -1285,6 +1353,10 @@ func (this *intEq) String() string {
 	return "eq" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *intEq) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *intEq) Hash() uint64 {
 	return this.hash
 }
@@ -1299,7 +1371,7 @@ func IntEq(a, b Int) Bool {
 	h = 31*h + 3244
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &intEq{V1: a, V2: b, hash: h}
+	return TrimBool(&intEq{V1: a, V2: b, hash: h})
 }
 
 type uintEq struct {
@@ -1357,6 +1429,10 @@ func (this *uintEq) String() string {
 	return "eq" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *uintEq) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *uintEq) Hash() uint64 {
 	return this.hash
 }
@@ -1371,7 +1447,7 @@ func UintEq(a, b Uint) Bool {
 	h = 31*h + 3244
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &uintEq{V1: a, V2: b, hash: h}
+	return TrimBool(&uintEq{V1: a, V2: b, hash: h})
 }
 
 type boolEq struct {
@@ -1429,6 +1505,10 @@ func (this *boolEq) String() string {
 	return "eq" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *boolEq) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *boolEq) Hash() uint64 {
 	return this.hash
 }
@@ -1443,7 +1523,7 @@ func BoolEq(a, b Bool) Bool {
 	h = 31*h + 3244
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &boolEq{V1: a, V2: b, hash: h}
+	return TrimBool(&boolEq{V1: a, V2: b, hash: h})
 }
 
 type stringEq struct {
@@ -1501,6 +1581,10 @@ func (this *stringEq) String() string {
 	return "eq" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *stringEq) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *stringEq) Hash() uint64 {
 	return this.hash
 }
@@ -1515,7 +1599,7 @@ func StringEq(a, b String) Bool {
 	h = 31*h + 3244
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &stringEq{V1: a, V2: b, hash: h}
+	return TrimBool(&stringEq{V1: a, V2: b, hash: h})
 }
 
 type bytesEq struct {
@@ -1573,6 +1657,10 @@ func (this *bytesEq) String() string {
 	return "eq" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *bytesEq) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *bytesEq) Hash() uint64 {
 	return this.hash
 }
@@ -1587,7 +1675,7 @@ func BytesEq(a, b Bytes) Bool {
 	h = 31*h + 3244
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &bytesEq{V1: a, V2: b, hash: h}
+	return TrimBool(&bytesEq{V1: a, V2: b, hash: h})
 }
 
 type doubleNe struct {
@@ -1645,6 +1733,10 @@ func (this *doubleNe) String() string {
 	return "ne" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *doubleNe) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *doubleNe) Hash() uint64 {
 	return this.hash
 }
@@ -1659,7 +1751,7 @@ func DoubleNe(a, b Double) Bool {
 	h = 31*h + 3511
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &doubleNe{V1: a, V2: b, hash: h}
+	return TrimBool(&doubleNe{V1: a, V2: b, hash: h})
 }
 
 type intNe struct {
@@ -1717,6 +1809,10 @@ func (this *intNe) String() string {
 	return "ne" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *intNe) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *intNe) Hash() uint64 {
 	return this.hash
 }
@@ -1731,7 +1827,7 @@ func IntNe(a, b Int) Bool {
 	h = 31*h + 3511
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &intNe{V1: a, V2: b, hash: h}
+	return TrimBool(&intNe{V1: a, V2: b, hash: h})
 }
 
 type uintNe struct {
@@ -1789,6 +1885,10 @@ func (this *uintNe) String() string {
 	return "ne" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *uintNe) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *uintNe) Hash() uint64 {
 	return this.hash
 }
@@ -1803,7 +1903,7 @@ func UintNe(a, b Uint) Bool {
 	h = 31*h + 3511
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &uintNe{V1: a, V2: b, hash: h}
+	return TrimBool(&uintNe{V1: a, V2: b, hash: h})
 }
 
 type boolNe struct {
@@ -1861,6 +1961,10 @@ func (this *boolNe) String() string {
 	return "ne" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *boolNe) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *boolNe) Hash() uint64 {
 	return this.hash
 }
@@ -1875,7 +1979,7 @@ func BoolNe(a, b Bool) Bool {
 	h = 31*h + 3511
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &boolNe{V1: a, V2: b, hash: h}
+	return TrimBool(&boolNe{V1: a, V2: b, hash: h})
 }
 
 type stringNe struct {
@@ -1933,6 +2037,10 @@ func (this *stringNe) String() string {
 	return "ne" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *stringNe) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *stringNe) Hash() uint64 {
 	return this.hash
 }
@@ -1947,7 +2055,7 @@ func StringNe(a, b String) Bool {
 	h = 31*h + 3511
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &stringNe{V1: a, V2: b, hash: h}
+	return TrimBool(&stringNe{V1: a, V2: b, hash: h})
 }
 
 type bytesNe struct {
@@ -2005,6 +2113,10 @@ func (this *bytesNe) String() string {
 	return "ne" + "(" + sjoin(this.V1, this.V2) + ")"
 }
 
+func (this *bytesNe) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
+}
+
 func (this *bytesNe) Hash() uint64 {
 	return this.hash
 }
@@ -2019,5 +2131,5 @@ func BytesNe(a, b Bytes) Bool {
 	h = 31*h + 3511
 	h = 31*h + a.Hash()
 	h = 31*h + b.Hash()
-	return &bytesNe{V1: a, V2: b, hash: h}
+	return TrimBool(&bytesNe{V1: a, V2: b, hash: h})
 }

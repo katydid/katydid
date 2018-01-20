@@ -31,6 +31,10 @@ func (this *typDouble) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *typDouble) HasVariable() bool {
+	return this.E.HasVariable()
+}
+
 func (this *typDouble) String() string {
 	return "type(" + this.E.String() + ")"
 }
@@ -48,7 +52,7 @@ func TypeDouble(v Double) Bool {
 	h := uint64(17)
 	h = 31*h + 2052876273
 	h = 31*h + v.Hash()
-	return &typDouble{E: v, hash: h}
+	return TrimBool(&typDouble{E: v, hash: h})
 }
 
 type typInt struct {
@@ -77,6 +81,10 @@ func (this *typInt) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *typInt) HasVariable() bool {
+	return this.E.HasVariable()
+}
+
 func (this *typInt) String() string {
 	return "type(" + this.E.String() + ")"
 }
@@ -94,7 +102,7 @@ func TypeInt(v Int) Bool {
 	h := uint64(17)
 	h = 31*h + 73679
 	h = 31*h + v.Hash()
-	return &typInt{E: v, hash: h}
+	return TrimBool(&typInt{E: v, hash: h})
 }
 
 type typUint struct {
@@ -123,6 +131,10 @@ func (this *typUint) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *typUint) HasVariable() bool {
+	return this.E.HasVariable()
+}
+
 func (this *typUint) String() string {
 	return "type(" + this.E.String() + ")"
 }
@@ -140,7 +152,7 @@ func TypeUint(v Uint) Bool {
 	h := uint64(17)
 	h = 31*h + 2636666
 	h = 31*h + v.Hash()
-	return &typUint{E: v, hash: h}
+	return TrimBool(&typUint{E: v, hash: h})
 }
 
 type typBool struct {
@@ -169,6 +181,10 @@ func (this *typBool) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *typBool) HasVariable() bool {
+	return this.E.HasVariable()
+}
+
 func (this *typBool) String() string {
 	return "type(" + this.E.String() + ")"
 }
@@ -186,7 +202,7 @@ func TypeBool(v Bool) Bool {
 	h := uint64(17)
 	h = 31*h + 2076426
 	h = 31*h + v.Hash()
-	return &typBool{E: v, hash: h}
+	return TrimBool(&typBool{E: v, hash: h})
 }
 
 type typString struct {
@@ -215,6 +231,10 @@ func (this *typString) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *typString) HasVariable() bool {
+	return this.E.HasVariable()
+}
+
 func (this *typString) String() string {
 	return "type(" + this.E.String() + ")"
 }
@@ -232,7 +252,7 @@ func TypeString(v String) Bool {
 	h := uint64(17)
 	h = 31*h + 2486848561
 	h = 31*h + v.Hash()
-	return &typString{E: v, hash: h}
+	return TrimBool(&typString{E: v, hash: h})
 }
 
 type typBytes struct {
@@ -261,6 +281,10 @@ func (this *typBytes) Compare(that Comparable) int {
 	return strings.Compare(this.String(), that.String())
 }
 
+func (this *typBytes) HasVariable() bool {
+	return this.E.HasVariable()
+}
+
 func (this *typBytes) String() string {
 	return "type(" + this.E.String() + ")"
 }
@@ -278,5 +302,5 @@ func TypeBytes(v Bytes) Bool {
 	h := uint64(17)
 	h = 31*h + 64671819
 	h = 31*h + v.Hash()
-	return &typBytes{E: v, hash: h}
+	return TrimBool(&typBytes{E: v, hash: h})
 }

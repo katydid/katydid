@@ -59,7 +59,7 @@ func Not(v1 Bool) Bool {
 	h := uint64(17)
 	h = 31*h + 23
 	h = 31*h + v1.Hash()
-	return &not{v1, h}
+	return TrimBool(&not{v1, h})
 }
 
 type not struct {
@@ -89,6 +89,10 @@ func (this *not) Compare(that Comparable) int {
 		return 0
 	}
 	return strings.Compare(this.String(), that.String())
+}
+
+func (this *not) HasVariable() bool {
+	return this.V1.HasVariable()
 }
 
 func (this *not) String() string {
@@ -237,7 +241,7 @@ func And(v1, v2 Bool) Bool {
 	h = 31*h + 29
 	h = 31*h + v1.Hash()
 	h = 31*h + v2.Hash()
-	return &and{v1, v2, h}
+	return TrimBool(&and{v1, v2, h})
 }
 
 type and struct {
@@ -271,6 +275,10 @@ func (this *and) Compare(that Comparable) int {
 		return 0
 	}
 	return strings.Compare(this.String(), that.String())
+}
+
+func (this *and) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
 }
 
 func (this *and) String() string {
@@ -318,7 +326,7 @@ func Or(v1, v2 Bool) Bool {
 	h = 31*h + 37
 	h = 31*h + v1.Hash()
 	h = 31*h + v2.Hash()
-	return &or{v1, v2, h}
+	return TrimBool(&or{v1, v2, h})
 }
 
 type or struct {
@@ -352,6 +360,10 @@ func (this *or) Compare(that Comparable) int {
 		return 0
 	}
 	return strings.Compare(this.String(), that.String())
+}
+
+func (this *or) HasVariable() bool {
+	return this.V1.HasVariable() || this.V2.HasVariable()
 }
 
 func (this *or) String() string {
