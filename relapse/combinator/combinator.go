@@ -18,11 +18,7 @@
 package combinator
 
 import (
-	"fmt"
-
 	"github.com/katydid/katydid/relapse/ast"
-	"github.com/katydid/katydid/relapse/funcs"
-	exprparser "github.com/katydid/katydid/relapse/parser"
 )
 
 //G represents the relapse Grammar.
@@ -90,16 +86,6 @@ func InAnyOf(names []string, child *ast.Pattern, children ...*ast.Pattern) *ast.
 		panic("less than two names is not really a choice, is it?")
 	}
 	return ast.NewTreeNode(nameChoice(names[0], names[1:]...), concat(child, children...))
-}
-
-//Value represents a field value.
-func Value(f funcs.Bool) *ast.Pattern {
-	exprStr := funcs.Sprint(f)
-	expr, err := exprparser.NewParser().ParseExpr(exprStr)
-	if err != nil {
-		panic(fmt.Sprintf("parse error: %v, given input: %s", err, exprStr))
-	}
-	return ast.NewLeafNode(expr)
 }
 
 //None represents no possible match.

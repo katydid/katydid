@@ -19,7 +19,6 @@ import (
 
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/combinator"
-	"github.com/katydid/katydid/relapse/funcs"
 	. "github.com/katydid/katydid/relapse/interp"
 )
 
@@ -37,14 +36,14 @@ var andNameTelephonePerson = combinator.G{
 			combinator.InOrder(
 				combinator.Any(),
 				combinator.In("Name", combinator.Value(
-					funcs.StringEq(funcs.StringVar(), funcs.StringConst("David"))),
+					combinator.Eq(combinator.StringVar(), combinator.StringConst("David"))),
 				),
 				combinator.Any(),
 			),
 			combinator.InOrder(
 				combinator.Any(),
 				combinator.In("Telephone", combinator.Value(
-					funcs.StringEq(funcs.StringVar(), funcs.StringConst("0123456789"))),
+					combinator.Eq(combinator.StringVar(), combinator.StringConst("0123456789"))),
 				),
 				combinator.Any(),
 			),
@@ -113,7 +112,7 @@ func TestSimplifyTree(t *testing.T) {
 }
 
 func TestSimplifyFalseLeaf(t *testing.T) {
-	input := combinator.Value(funcs.And(funcs.StringEq(funcs.StringVar(), funcs.StringConst("a")), funcs.StringEq(funcs.StringVar(), funcs.StringConst("b"))))
+	input := combinator.Value(combinator.And(combinator.Eq(combinator.StringVar(), combinator.StringConst("a")), combinator.Eq(combinator.StringVar(), combinator.StringConst("b"))))
 	expected := ast.NewNot(ast.NewZAny())
 	output := NewSimplifier(input.Grammar()).Simplify(input)
 	t.Logf("%v", output)
@@ -154,38 +153,38 @@ func TestSimplifyContainsFalseTreeNode(t *testing.T) {
 
 func TestSimplifyRecordLeaf1(t *testing.T) {
 	input := ast.NewAnd(
-		ast.NewContains(ast.NewTreeNode(ast.NewStringName("A"), combinator.Value(funcs.Contains(funcs.StringVar(), funcs.StringConst("a"))))),
-		ast.NewContains(ast.NewTreeNode(ast.NewStringName("A"), combinator.Value(funcs.Contains(funcs.StringVar(), funcs.StringConst("b"))))),
+		ast.NewContains(ast.NewTreeNode(ast.NewStringName("A"), combinator.Value(combinator.Contains(combinator.StringVar(), combinator.StringConst("a"))))),
+		ast.NewContains(ast.NewTreeNode(ast.NewStringName("A"), combinator.Value(combinator.Contains(combinator.StringVar(), combinator.StringConst("b"))))),
 	)
 	t.Logf("input: %v", input)
-	expected := ast.NewContains(ast.NewTreeNode(ast.NewStringName("A"), combinator.Value(funcs.And(
-		funcs.Contains(funcs.StringVar(), funcs.StringConst("b")),
-		funcs.Contains(funcs.StringVar(), funcs.StringConst("a")),
+	expected := ast.NewContains(ast.NewTreeNode(ast.NewStringName("A"), combinator.Value(combinator.And(
+		combinator.Contains(combinator.StringVar(), combinator.StringConst("b")),
+		combinator.Contains(combinator.StringVar(), combinator.StringConst("a")),
 	))))
 	output := NewSimplifier(input.Grammar()).OptimizeForRecord().Simplify(input)
 	expected.Format()
 	output.Format()
 	t.Logf("%v", output)
 	if !expected.Equal(output) {
-		t.Fatalf("expected %v, but got %v", expected, output)
+		t.Fatalf("want <%#v>, but got <%#v>", expected, output)
 	}
 }
 
 func TestSimplifyRecordLeaf2(t *testing.T) {
 	input := ast.NewAnd(
-		ast.NewContains(ast.NewTreeNode(ast.NewStringName("A"), ast.NewContains(ast.NewTreeNode(ast.NewStringName("B"), combinator.Value(funcs.Contains(funcs.StringVar(), funcs.StringConst("a"))))))),
-		ast.NewContains(ast.NewTreeNode(ast.NewStringName("A"), ast.NewContains(ast.NewTreeNode(ast.NewStringName("B"), combinator.Value(funcs.Contains(funcs.StringVar(), funcs.StringConst("b"))))))),
+		ast.NewContains(ast.NewTreeNode(ast.NewStringName("A"), ast.NewContains(ast.NewTreeNode(ast.NewStringName("B"), combinator.Value(combinator.Contains(combinator.StringVar(), combinator.StringConst("a"))))))),
+		ast.NewContains(ast.NewTreeNode(ast.NewStringName("A"), ast.NewContains(ast.NewTreeNode(ast.NewStringName("B"), combinator.Value(combinator.Contains(combinator.StringVar(), combinator.StringConst("b"))))))),
 	)
 	t.Logf("input: %v", input)
-	expected := ast.NewContains(ast.NewTreeNode(ast.NewStringName("A"), ast.NewContains(ast.NewTreeNode(ast.NewStringName("B"), combinator.Value(funcs.And(
-		funcs.Contains(funcs.StringVar(), funcs.StringConst("b")),
-		funcs.Contains(funcs.StringVar(), funcs.StringConst("a")),
+	expected := ast.NewContains(ast.NewTreeNode(ast.NewStringName("A"), ast.NewContains(ast.NewTreeNode(ast.NewStringName("B"), combinator.Value(combinator.And(
+		combinator.Contains(combinator.StringVar(), combinator.StringConst("b")),
+		combinator.Contains(combinator.StringVar(), combinator.StringConst("a")),
 	))))))
 	output := NewSimplifier(input.Grammar()).OptimizeForRecord().Simplify(input)
 	expected.Format()
 	output.Format()
 	t.Logf("%v", output)
 	if !expected.Equal(output) {
-		t.Fatalf("expected %v, but got %v", expected, output)
+		t.Fatalf("want <%v>, but got <%v>", expected, output)
 	}
 }
