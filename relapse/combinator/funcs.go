@@ -16,12 +16,33 @@ package combinator
 
 import (
 	"github.com/katydid/katydid/relapse/ast"
+	"github.com/katydid/katydid/relapse/parser"
 	"github.com/katydid/katydid/relapse/types"
 )
 
 //Value represents a field value.
 func Value(expr *ast.Expr) *ast.Pattern {
-	return ast.NewLeafNode(expr)
+	if expr.Function != nil && len(expr.Function.Params) == 2 {
+		constructor := ast.FunctionNameToBuiltIn(expr.Function.Name)
+		if constructor != nil {
+			p1 := expr.Function.Params[0]
+			p2 := expr.Function.Params[1]
+			if p1.Terminal != nil && p1.Terminal.Variable != nil &&
+				p2.Terminal != nil && p2.Terminal.Variable == nil {
+				p2.Comma = nil
+				expr = constructor(p2)
+			} else if p2.Terminal != nil && p2.Terminal.Variable != nil &&
+				p1.Terminal != nil && p1.Terminal.Variable == nil {
+				p1.Comma = nil
+				expr = constructor(p1)
+			}
+		}
+	}
+	e, err := parser.ParseExpr(expr.String())
+	if err != nil {
+		panic(err)
+	}
+	return ast.NewLeafNode(e)
 }
 
 func Eq(left, right *ast.Expr) *ast.Expr {
