@@ -26,46 +26,15 @@ type Const interface {
 
 type aConst interface {
 	Stringer
-	isConst()
+	aConst()
 }
 
-//NewConst returns the appropriate constant function given a native go type or list of native go types.
-func NewConst(value interface{}) interface{} {
-	switch v := value.(type) {
-	case float64:
-		return DoubleConst(v)
-	case int64:
-		return IntConst(v)
-	case uint64:
-		return UintConst(v)
-	case bool:
-		return BoolConst(v)
-	case string:
-		return StringConst(v)
-	case []byte:
-		return BytesConst(v)
-	case []float64:
-		return DoublesConst(v)
-	case []int64:
-		return IntsConst(v)
-	case []uint64:
-		return UintsConst(v)
-	case []bool:
-		return BoolsConst(v)
-	case []string:
-		return StringsConst(v)
-	case [][]byte:
-		return ListOfBytesConst(v)
-	}
-	panic("unreachable")
-}
-
-func (this *constBool) isConst()   {}
-func (this *constBytes) isConst()  {}
-func (this *constDouble) isConst() {}
-func (this *constInt) isConst()    {}
-func (this *constString) isConst() {}
-func (this *constUint) isConst()   {}
+func (this *constBool) aConst()   {}
+func (this *constBytes) aConst()  {}
+func (this *constDouble) aConst() {}
+func (this *constInt) aConst()    {}
+func (this *constString) aConst() {}
+func (this *constUint) aConst()   {}
 
 func (this *constDouble) Compare(that Comparable) int {
 	if other, ok := that.(*constDouble); ok {
