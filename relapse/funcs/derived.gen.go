@@ -29,15 +29,6 @@ func deriveHashBool(object bool) uint64 {
 	return 0
 }
 
-// deriveHashString returns the hash of the object.
-func deriveHashString(object string) uint64 {
-	var h uint64
-	for _, c := range object {
-		h = 31*h + uint64(c)
-	}
-	return h
-}
-
 // deriveHashBytes returns the hash of the object.
 func deriveHashBytes(object []byte) uint64 {
 	if object == nil {
@@ -118,6 +109,15 @@ func deriveHashListOfBytes(object [][]byte) uint64 {
 	h := uint64(17)
 	for i := 0; i < len(object); i++ {
 		h = 31*h + deriveHashBytes(object[i])
+	}
+	return h
+}
+
+// deriveHashString returns the hash of the object.
+func deriveHashString(object string) uint64 {
+	var h uint64
+	for _, c := range object {
+		h = 31*h + uint64(c)
 	}
 	return h
 }

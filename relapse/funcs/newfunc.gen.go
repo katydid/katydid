@@ -3,7 +3,7 @@ package funcs
 
 //NewDouble dynamically creates and asserts the returning function is of type Double.
 //This function is used by the compose library to compile functions together.
-func (f *Funk) NewDouble(values ...interface{}) (Double, error) {
+func (f *Maker) NewDouble(values ...interface{}) (Double, error) {
 	v, err := f.New(values...)
 	if err != nil {
 		return nil, err
@@ -13,7 +13,7 @@ func (f *Funk) NewDouble(values ...interface{}) (Double, error) {
 
 //NewInt dynamically creates and asserts the returning function is of type Int.
 //This function is used by the compose library to compile functions together.
-func (f *Funk) NewInt(values ...interface{}) (Int, error) {
+func (f *Maker) NewInt(values ...interface{}) (Int, error) {
 	v, err := f.New(values...)
 	if err != nil {
 		return nil, err
@@ -23,7 +23,7 @@ func (f *Funk) NewInt(values ...interface{}) (Int, error) {
 
 //NewUint dynamically creates and asserts the returning function is of type Uint.
 //This function is used by the compose library to compile functions together.
-func (f *Funk) NewUint(values ...interface{}) (Uint, error) {
+func (f *Maker) NewUint(values ...interface{}) (Uint, error) {
 	v, err := f.New(values...)
 	if err != nil {
 		return nil, err
@@ -33,7 +33,7 @@ func (f *Funk) NewUint(values ...interface{}) (Uint, error) {
 
 //NewBool dynamically creates and asserts the returning function is of type Bool.
 //This function is used by the compose library to compile functions together.
-func (f *Funk) NewBool(values ...interface{}) (Bool, error) {
+func (f *Maker) NewBool(values ...interface{}) (Bool, error) {
 	v, err := f.New(values...)
 	if err != nil {
 		return nil, err
@@ -43,7 +43,7 @@ func (f *Funk) NewBool(values ...interface{}) (Bool, error) {
 
 //NewString dynamically creates and asserts the returning function is of type String.
 //This function is used by the compose library to compile functions together.
-func (f *Funk) NewString(values ...interface{}) (String, error) {
+func (f *Maker) NewString(values ...interface{}) (String, error) {
 	v, err := f.New(values...)
 	if err != nil {
 		return nil, err
@@ -53,7 +53,7 @@ func (f *Funk) NewString(values ...interface{}) (String, error) {
 
 //NewBytes dynamically creates and asserts the returning function is of type Bytes.
 //This function is used by the compose library to compile functions together.
-func (f *Funk) NewBytes(values ...interface{}) (Bytes, error) {
+func (f *Maker) NewBytes(values ...interface{}) (Bytes, error) {
 	v, err := f.New(values...)
 	if err != nil {
 		return nil, err
@@ -63,7 +63,7 @@ func (f *Funk) NewBytes(values ...interface{}) (Bytes, error) {
 
 //NewDoubles dynamically creates and asserts the returning function is of type Doubles.
 //This function is used by the compose library to compile functions together.
-func (f *Funk) NewDoubles(values ...interface{}) (Doubles, error) {
+func (f *Maker) NewDoubles(values ...interface{}) (Doubles, error) {
 	v, err := f.New(values...)
 	if err != nil {
 		return nil, err
@@ -73,7 +73,7 @@ func (f *Funk) NewDoubles(values ...interface{}) (Doubles, error) {
 
 //NewInts dynamically creates and asserts the returning function is of type Ints.
 //This function is used by the compose library to compile functions together.
-func (f *Funk) NewInts(values ...interface{}) (Ints, error) {
+func (f *Maker) NewInts(values ...interface{}) (Ints, error) {
 	v, err := f.New(values...)
 	if err != nil {
 		return nil, err
@@ -83,7 +83,7 @@ func (f *Funk) NewInts(values ...interface{}) (Ints, error) {
 
 //NewUints dynamically creates and asserts the returning function is of type Uints.
 //This function is used by the compose library to compile functions together.
-func (f *Funk) NewUints(values ...interface{}) (Uints, error) {
+func (f *Maker) NewUints(values ...interface{}) (Uints, error) {
 	v, err := f.New(values...)
 	if err != nil {
 		return nil, err
@@ -93,7 +93,7 @@ func (f *Funk) NewUints(values ...interface{}) (Uints, error) {
 
 //NewBools dynamically creates and asserts the returning function is of type Bools.
 //This function is used by the compose library to compile functions together.
-func (f *Funk) NewBools(values ...interface{}) (Bools, error) {
+func (f *Maker) NewBools(values ...interface{}) (Bools, error) {
 	v, err := f.New(values...)
 	if err != nil {
 		return nil, err
@@ -103,7 +103,7 @@ func (f *Funk) NewBools(values ...interface{}) (Bools, error) {
 
 //NewStrings dynamically creates and asserts the returning function is of type Strings.
 //This function is used by the compose library to compile functions together.
-func (f *Funk) NewStrings(values ...interface{}) (Strings, error) {
+func (f *Maker) NewStrings(values ...interface{}) (Strings, error) {
 	v, err := f.New(values...)
 	if err != nil {
 		return nil, err
@@ -113,7 +113,7 @@ func (f *Funk) NewStrings(values ...interface{}) (Strings, error) {
 
 //NewListOfBytes dynamically creates and asserts the returning function is of type ListOfBytes.
 //This function is used by the compose library to compile functions together.
-func (f *Funk) NewListOfBytes(values ...interface{}) (ListOfBytes, error) {
+func (f *Maker) NewListOfBytes(values ...interface{}) (ListOfBytes, error) {
 	v, err := f.New(values...)
 	if err != nil {
 		return nil, err

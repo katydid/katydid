@@ -54,7 +54,7 @@ func Which(expr *ast.Expr) (types.Type, error) {
 	}
 	if expr.Function != nil {
 		fnc := expr.GetFunction()
-		f, err := WhichFunc(fnc)
+		f, err := GetMaker(fnc)
 		if err != nil {
 			return 0, err
 		}
@@ -63,9 +63,8 @@ func Which(expr *ast.Expr) (types.Type, error) {
 	return 0, &errUnknownType{expr}
 }
 
-//WhichFunc returns the unique name of the function, given the types of the parameters.
-//For example, a function named eq could have a unique name of intEq, doubleEq, etc.
-func WhichFunc(fnc *ast.Function) (*funcs.Funk, error) {
+//GetMaker returns the function maker, given the function name and types of the parameters.
+func GetMaker(fnc *ast.Function) (*funcs.Maker, error) {
 	types := make([]types.Type, 0, len(fnc.GetParams()))
 	for _, p := range fnc.GetParams() {
 		typ, err := Which(p)
@@ -76,7 +75,7 @@ func WhichFunc(fnc *ast.Function) (*funcs.Funk, error) {
 			types = append(types, typ)
 		}
 	}
-	return funcs.Which(fnc.GetName(), types...)
+	return funcs.GetMaker(fnc.GetName(), types...)
 }
 
 type errExpected struct {
@@ -96,10 +95,10 @@ func (this *errUnknownType) Error() string {
 	return "relapse/compose: expr type is unknown: " + this.expr.String()
 }
 
-func prep(expr *ast.Expr, expType types.Type) (*funcs.Funk, error) {
+func prep(expr *ast.Expr, expType types.Type) (*funcs.Maker, error) {
 	if expr.Function != nil {
 		fnc := expr.GetFunction()
-		f, err := WhichFunc(fnc)
+		f, err := GetMaker(fnc)
 		if err != nil {
 			return nil, err
 		}

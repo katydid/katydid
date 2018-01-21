@@ -51,7 +51,7 @@ func Register(name string, fnc interface{}) {
 	}
 	returnType := eval.Type
 	ins := typ.NumIn()
-	res := &Funk{
+	fMaker := &Maker{
 		Name:   name,
 		Out:    types.FromGo(returnType.Out(0)),
 		newfnc: fnc,
@@ -64,11 +64,11 @@ func Register(name string, fnc interface{}) {
 		if !typ.In(i).Implements(funcTyp) {
 			panic(fmt.Sprintf("the constructor for %s has an input parameter (number %d) that does not implement funcs.Func", name, i))
 		}
-		res.InConst = append(res.InConst, IsConst(typ.In(i)))
+		fMaker.InConst = append(fMaker.InConst, IsConst(typ.In(i)))
 		inType := types.FromGo(meth.Type.Out(0))
-		res.In = append(res.In, inType)
+		fMaker.In = append(fMaker.In, inType)
 	}
-	funcsMap.register(res)
+	globalFactory.register(fMaker)
 }
 
 //IsConst returns whether a reflected type is a function that is actually a constant value.
@@ -93,8 +93,8 @@ func IsConst(typ reflect.Type) bool {
 }
 
 //Which returns the Funk (function creator) of the function given the function name and parameter types.
-func Which(name string, ins ...types.Type) (*Funk, error) {
-	return funcsMap.which(name, ins...)
+func GetMaker(name string, ins ...types.Type) (*Maker, error) {
+	return globalFactory.getMaker(name, ins...)
 }
 
 type errUnknownFunction struct {
@@ -114,22 +114,22 @@ func (this *errUnknownFunction) Error() string {
 	return "relapse/funcs: unknown function: " + this.f + "(" + strings.Join(this.ins, ", ") + ")"
 }
 
-var funcsMap = newFunksMap()
+var globalFactory = newFactory()
 
-type funksMap map[string][]*Funk
+type Factory map[string][]*Maker
 
-func newFunksMap() funksMap {
-	return make(map[string][]*Funk)
+func newFactory() Factory {
+	return make(map[string][]*Maker)
 }
 
-func (this funksMap) register(f *Funk) {
+func (this Factory) register(f *Maker) {
 	if _, ok := this[f.Name]; !ok {
-		this[f.Name] = []*Funk{}
+		this[f.Name] = []*Maker{}
 	}
 	this[f.Name] = append(this[f.Name], f)
 }
 
-func (this funksMap) which(name string, ins ...types.Type) (*Funk, error) {
+func (this Factory) getMaker(name string, ins ...types.Type) (*Maker, error) {
 	funks, ok := this[name]
 	if !ok {
 		return nil, newErrUnknownFunction(name, ins)
@@ -153,7 +153,7 @@ func (this funksMap) which(name string, ins ...types.Type) (*Funk, error) {
 	return nil, newErrUnknownFunction(name, ins)
 }
 
-type Funk struct {
+type Maker struct {
 	Name    string
 	In      []types.Type
 	InConst []bool
@@ -161,7 +161,7 @@ type Funk struct {
 	newfnc  interface{}
 }
 
-func (this *Funk) String() string {
+func (this *Maker) String() string {
 	ins := make([]string, len(this.In))
 	for i, in := range this.In {
 		ins[i] = in.String()
@@ -169,7 +169,7 @@ func (this *Funk) String() string {
 	return fmt.Sprintf("func %v(%v) %v", this.Name, strings.Join(ins, ","), this.Out.String())
 }
 
-func (f *Funk) New(values ...interface{}) (interface{}, error) {
+func (f *Maker) New(values ...interface{}) (interface{}, error) {
 	newf := reflect.ValueOf(f.newfnc)
 	rvalues := make([]reflect.Value, len(values))
 	for i := range rvalues {

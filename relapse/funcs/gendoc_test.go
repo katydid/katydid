@@ -29,7 +29,7 @@ func toString(s string) string {
 //TestGenFunList generates the current list of functions.
 func TestGenFuncList(t *testing.T) {
 	funcs := []string{}
-	for name, us := range funcsMap {
+	for name, us := range globalFactory {
 		for _, f := range us {
 			ins := make([]string, len(f.In))
 			for i, in := range f.In {
