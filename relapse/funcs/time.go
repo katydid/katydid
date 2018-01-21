@@ -48,7 +48,7 @@ func (this *now) Compare(that Comparable) int {
 }
 
 func (this *now) String() string {
-	return "now"
+	return "now()"
 }
 
 func (this *now) HasVariable() bool { return true }
