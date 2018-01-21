@@ -15,6 +15,7 @@
 package interp_test
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/katydid/katydid/parser"
@@ -41,6 +42,9 @@ func TestSuite(t *testing.T) {
 func test(t *testing.T, g *ast.Grammar, p parser.Interface, expected bool, desc string) {
 	if interp.HasRecursion(g) {
 		t.Skipf("interp was not designed to handle left recursion")
+	}
+	if !strings.Contains(desc, "Larger") {
+		t.Skipf("cannot handle Larger tests")
 	}
 	match, err := interp.Interpret(g, p)
 	if err != nil {
