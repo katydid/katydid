@@ -7,7 +7,7 @@ import (
 )
 
 type printDouble struct {
-	E Double
+	E    Double
 	hash uint64
 }
 
@@ -38,7 +38,7 @@ func (this *printDouble) Compare(that Comparable) int {
 }
 
 func (this *printDouble) String() string {
-	return "print(" + this.E.String() +")"
+	return "print(" + this.E.String() + ")"
 }
 
 func (this *printDouble) Hash() uint64 {
@@ -53,14 +53,14 @@ func init() {
 
 //PrintDouble returns a function that prints out the value of the argument function and returns its value.
 func PrintDouble(e Double) Double {
-	h := uint64(17)
-	h = 31*h + 13
-	h = 31*h + e.Hash()
-	return &printDouble{E: e, hash: h}
+	return &printDouble{
+		E:    e,
+		hash: hashWithId(2052876273, e),
+	}
 }
 
 type printInt struct {
-	E Int
+	E    Int
 	hash uint64
 }
 
@@ -91,7 +91,7 @@ func (this *printInt) Compare(that Comparable) int {
 }
 
 func (this *printInt) String() string {
-	return "print(" + this.E.String() +")"
+	return "print(" + this.E.String() + ")"
 }
 
 func (this *printInt) Hash() uint64 {
@@ -106,14 +106,14 @@ func init() {
 
 //PrintInt returns a function that prints out the value of the argument function and returns its value.
 func PrintInt(e Int) Int {
-	h := uint64(17)
-	h = 31*h + 13
-	h = 31*h + e.Hash()
-	return &printInt{E: e, hash: h}
+	return &printInt{
+		E:    e,
+		hash: hashWithId(73679, e),
+	}
 }
 
 type printUint struct {
-	E Uint
+	E    Uint
 	hash uint64
 }
 
@@ -144,7 +144,7 @@ func (this *printUint) Compare(that Comparable) int {
 }
 
 func (this *printUint) String() string {
-	return "print(" + this.E.String() +")"
+	return "print(" + this.E.String() + ")"
 }
 
 func (this *printUint) Hash() uint64 {
@@ -159,14 +159,14 @@ func init() {
 
 //PrintUint returns a function that prints out the value of the argument function and returns its value.
 func PrintUint(e Uint) Uint {
-	h := uint64(17)
-	h = 31*h + 13
-	h = 31*h + e.Hash()
-	return &printUint{E: e, hash: h}
+	return &printUint{
+		E:    e,
+		hash: hashWithId(2636666, e),
+	}
 }
 
 type printBool struct {
-	E Bool
+	E    Bool
 	hash uint64
 }
 
@@ -197,7 +197,7 @@ func (this *printBool) Compare(that Comparable) int {
 }
 
 func (this *printBool) String() string {
-	return "print(" + this.E.String() +")"
+	return "print(" + this.E.String() + ")"
 }
 
 func (this *printBool) Hash() uint64 {
@@ -212,14 +212,14 @@ func init() {
 
 //PrintBool returns a function that prints out the value of the argument function and returns its value.
 func PrintBool(e Bool) Bool {
-	h := uint64(17)
-	h = 31*h + 13
-	h = 31*h + e.Hash()
-	return &printBool{E: e, hash: h}
+	return &printBool{
+		E:    e,
+		hash: hashWithId(2076426, e),
+	}
 }
 
 type printString struct {
-	E String
+	E    String
 	hash uint64
 }
 
@@ -250,7 +250,7 @@ func (this *printString) Compare(that Comparable) int {
 }
 
 func (this *printString) String() string {
-	return "print(" + this.E.String() +")"
+	return "print(" + this.E.String() + ")"
 }
 
 func (this *printString) Hash() uint64 {
@@ -265,14 +265,14 @@ func init() {
 
 //PrintString returns a function that prints out the value of the argument function and returns its value.
 func PrintString(e String) String {
-	h := uint64(17)
-	h = 31*h + 13
-	h = 31*h + e.Hash()
-	return &printString{E: e, hash: h}
+	return &printString{
+		E:    e,
+		hash: hashWithId(2486848561, e),
+	}
 }
 
 type printBytes struct {
-	E Bytes
+	E    Bytes
 	hash uint64
 }
 
@@ -303,7 +303,7 @@ func (this *printBytes) Compare(that Comparable) int {
 }
 
 func (this *printBytes) String() string {
-	return "print(" + this.E.String() +")"
+	return "print(" + this.E.String() + ")"
 }
 
 func (this *printBytes) Hash() uint64 {
@@ -318,14 +318,14 @@ func init() {
 
 //PrintBytes returns a function that prints out the value of the argument function and returns its value.
 func PrintBytes(e Bytes) Bytes {
-	h := uint64(17)
-	h = 31*h + 13
-	h = 31*h + e.Hash()
-	return &printBytes{E: e, hash: h}
+	return &printBytes{
+		E:    e,
+		hash: hashWithId(64671819, e),
+	}
 }
 
 type printDoubles struct {
-	E Doubles
+	E    Doubles
 	hash uint64
 }
 
@@ -356,7 +356,7 @@ func (this *printDoubles) Compare(that Comparable) int {
 }
 
 func (this *printDoubles) String() string {
-	return "print(" + this.E.String() +")"
+	return "print(" + this.E.String() + ")"
 }
 
 func (this *printDoubles) Hash() uint64 {
@@ -371,14 +371,14 @@ func init() {
 
 //PrintDoubles returns a function that prints out the value of the argument function and returns its value.
 func PrintDoubles(e Doubles) Doubles {
-	h := uint64(17)
-	h = 31*h + 13
-	h = 31*h + e.Hash()
-	return &printDoubles{E: e, hash: h}
+	return &printDoubles{
+		E:    e,
+		hash: hashWithId(63639164578, e),
+	}
 }
 
 type printInts struct {
-	E Ints
+	E    Ints
 	hash uint64
 }
 
@@ -409,7 +409,7 @@ func (this *printInts) Compare(that Comparable) int {
 }
 
 func (this *printInts) String() string {
-	return "print(" + this.E.String() +")"
+	return "print(" + this.E.String() + ")"
 }
 
 func (this *printInts) Hash() uint64 {
@@ -424,14 +424,14 @@ func init() {
 
 //PrintInts returns a function that prints out the value of the argument function and returns its value.
 func PrintInts(e Ints) Ints {
-	h := uint64(17)
-	h = 31*h + 13
-	h = 31*h + e.Hash()
-	return &printInts{E: e, hash: h}
+	return &printInts{
+		E:    e,
+		hash: hashWithId(2284164, e),
+	}
 }
 
 type printUints struct {
-	E Uints
+	E    Uints
 	hash uint64
 }
 
@@ -462,7 +462,7 @@ func (this *printUints) Compare(that Comparable) int {
 }
 
 func (this *printUints) String() string {
-	return "print(" + this.E.String() +")"
+	return "print(" + this.E.String() + ")"
 }
 
 func (this *printUints) Hash() uint64 {
@@ -477,14 +477,14 @@ func init() {
 
 //PrintUints returns a function that prints out the value of the argument function and returns its value.
 func PrintUints(e Uints) Uints {
-	h := uint64(17)
-	h = 31*h + 13
-	h = 31*h + e.Hash()
-	return &printUints{E: e, hash: h}
+	return &printUints{
+		E:    e,
+		hash: hashWithId(81736761, e),
+	}
 }
 
 type printBools struct {
-	E Bools
+	E    Bools
 	hash uint64
 }
 
@@ -515,7 +515,7 @@ func (this *printBools) Compare(that Comparable) int {
 }
 
 func (this *printBools) String() string {
-	return "print(" + this.E.String() +")"
+	return "print(" + this.E.String() + ")"
 }
 
 func (this *printBools) Hash() uint64 {
@@ -530,14 +530,14 @@ func init() {
 
 //PrintBools returns a function that prints out the value of the argument function and returns its value.
 func PrintBools(e Bools) Bools {
-	h := uint64(17)
-	h = 31*h + 13
-	h = 31*h + e.Hash()
-	return &printBools{E: e, hash: h}
+	return &printBools{
+		E:    e,
+		hash: hashWithId(64369321, e),
+	}
 }
 
 type printStrings struct {
-	E Strings
+	E    Strings
 	hash uint64
 }
 
@@ -568,7 +568,7 @@ func (this *printStrings) Compare(that Comparable) int {
 }
 
 func (this *printStrings) String() string {
-	return "print(" + this.E.String() +")"
+	return "print(" + this.E.String() + ")"
 }
 
 func (this *printStrings) Hash() uint64 {
@@ -583,14 +583,14 @@ func init() {
 
 //PrintStrings returns a function that prints out the value of the argument function and returns its value.
 func PrintStrings(e Strings) Strings {
-	h := uint64(17)
-	h = 31*h + 13
-	h = 31*h + e.Hash()
-	return &printStrings{E: e, hash: h}
+	return &printStrings{
+		E:    e,
+		hash: hashWithId(77092305506, e),
+	}
 }
 
 type printListOfBytes struct {
-	E ListOfBytes
+	E    ListOfBytes
 	hash uint64
 }
 
@@ -621,7 +621,7 @@ func (this *printListOfBytes) Compare(that Comparable) int {
 }
 
 func (this *printListOfBytes) String() string {
-	return "print(" + this.E.String() +")"
+	return "print(" + this.E.String() + ")"
 }
 
 func (this *printListOfBytes) Hash() uint64 {
@@ -636,8 +636,8 @@ func init() {
 
 //PrintListOfBytes returns a function that prints out the value of the argument function and returns its value.
 func PrintListOfBytes(e ListOfBytes) ListOfBytes {
-	h := uint64(17)
-	h = 31*h + 13
-	h = 31*h + e.Hash()
-	return &printListOfBytes{E: e, hash: h}
+	return &printListOfBytes{
+		E:    e,
+		hash: hashWithId(65169257167589942, e),
+	}
 }

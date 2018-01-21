@@ -6,9 +6,10 @@ import (
 )
 
 type elemDoubles struct {
-	List  Doubles
-	Index Int
-	hash uint64
+	List        Doubles
+	Index       Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *elemDoubles) Eval() (float64, error) {
@@ -53,7 +54,7 @@ func (this *elemDoubles) Compare(that Comparable) int {
 }
 
 func (this *elemDoubles) HasVariable() bool {
-	return this.List.HasVariable() || this.Index.HasVariable()
+	return this.hasVariable
 }
 
 func (this *elemDoubles) String() string {
@@ -70,21 +71,19 @@ func init() {
 
 //ElemDoubles returns a function that returns the n'th element of the list.
 func ElemDoubles(list Doubles, n Int) Double {
-	h := uint64(17)
-	h = 31*h + 63639164578
-	h = 31*h + n.Hash()
-	h = 31*h + list.Hash()
 	return TrimDouble(&elemDoubles{
-		List:  list,
-		Index: n,
-		hash: h,
+		List:        list,
+		Index:       n,
+		hash:        hashWithId(63639164578, n, list),
+		hasVariable: n.HasVariable() || list.HasVariable(),
 	})
 }
 
 type elemInts struct {
-	List  Ints
-	Index Int
-	hash uint64
+	List        Ints
+	Index       Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *elemInts) Eval() (int64, error) {
@@ -129,7 +128,7 @@ func (this *elemInts) Compare(that Comparable) int {
 }
 
 func (this *elemInts) HasVariable() bool {
-	return this.List.HasVariable() || this.Index.HasVariable()
+	return this.hasVariable
 }
 
 func (this *elemInts) String() string {
@@ -146,21 +145,19 @@ func init() {
 
 //ElemInts returns a function that returns the n'th element of the list.
 func ElemInts(list Ints, n Int) Int {
-	h := uint64(17)
-	h = 31*h + 2284164
-	h = 31*h + n.Hash()
-	h = 31*h + list.Hash()
 	return TrimInt(&elemInts{
-		List:  list,
-		Index: n,
-		hash: h,
+		List:        list,
+		Index:       n,
+		hash:        hashWithId(2284164, n, list),
+		hasVariable: n.HasVariable() || list.HasVariable(),
 	})
 }
 
 type elemUints struct {
-	List  Uints
-	Index Int
-	hash uint64
+	List        Uints
+	Index       Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *elemUints) Eval() (uint64, error) {
@@ -205,7 +202,7 @@ func (this *elemUints) Compare(that Comparable) int {
 }
 
 func (this *elemUints) HasVariable() bool {
-	return this.List.HasVariable() || this.Index.HasVariable()
+	return this.hasVariable
 }
 
 func (this *elemUints) String() string {
@@ -222,21 +219,19 @@ func init() {
 
 //ElemUints returns a function that returns the n'th element of the list.
 func ElemUints(list Uints, n Int) Uint {
-	h := uint64(17)
-	h = 31*h + 81736761
-	h = 31*h + n.Hash()
-	h = 31*h + list.Hash()
 	return TrimUint(&elemUints{
-		List:  list,
-		Index: n,
-		hash: h,
+		List:        list,
+		Index:       n,
+		hash:        hashWithId(81736761, n, list),
+		hasVariable: n.HasVariable() || list.HasVariable(),
 	})
 }
 
 type elemBools struct {
-	List  Bools
-	Index Int
-	hash uint64
+	List        Bools
+	Index       Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *elemBools) Eval() (bool, error) {
@@ -281,7 +276,7 @@ func (this *elemBools) Compare(that Comparable) int {
 }
 
 func (this *elemBools) HasVariable() bool {
-	return this.List.HasVariable() || this.Index.HasVariable()
+	return this.hasVariable
 }
 
 func (this *elemBools) String() string {
@@ -298,21 +293,19 @@ func init() {
 
 //ElemBools returns a function that returns the n'th element of the list.
 func ElemBools(list Bools, n Int) Bool {
-	h := uint64(17)
-	h = 31*h + 64369321
-	h = 31*h + n.Hash()
-	h = 31*h + list.Hash()
 	return TrimBool(&elemBools{
-		List:  list,
-		Index: n,
-		hash: h,
+		List:        list,
+		Index:       n,
+		hash:        hashWithId(64369321, n, list),
+		hasVariable: n.HasVariable() || list.HasVariable(),
 	})
 }
 
 type elemStrings struct {
-	List  Strings
-	Index Int
-	hash uint64
+	List        Strings
+	Index       Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *elemStrings) Eval() (string, error) {
@@ -357,7 +350,7 @@ func (this *elemStrings) Compare(that Comparable) int {
 }
 
 func (this *elemStrings) HasVariable() bool {
-	return this.List.HasVariable() || this.Index.HasVariable()
+	return this.hasVariable
 }
 
 func (this *elemStrings) String() string {
@@ -374,21 +367,19 @@ func init() {
 
 //ElemStrings returns a function that returns the n'th element of the list.
 func ElemStrings(list Strings, n Int) String {
-	h := uint64(17)
-	h = 31*h + 77092305506
-	h = 31*h + n.Hash()
-	h = 31*h + list.Hash()
 	return TrimString(&elemStrings{
-		List:  list,
-		Index: n,
-		hash: h,
+		List:        list,
+		Index:       n,
+		hash:        hashWithId(77092305506, n, list),
+		hasVariable: n.HasVariable() || list.HasVariable(),
 	})
 }
 
 type elemListOfBytes struct {
-	List  ListOfBytes
-	Index Int
-	hash uint64
+	List        ListOfBytes
+	Index       Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *elemListOfBytes) Eval() ([]byte, error) {
@@ -433,7 +424,7 @@ func (this *elemListOfBytes) Compare(that Comparable) int {
 }
 
 func (this *elemListOfBytes) HasVariable() bool {
-	return this.List.HasVariable() || this.Index.HasVariable()
+	return this.hasVariable
 }
 
 func (this *elemListOfBytes) String() string {
@@ -450,13 +441,10 @@ func init() {
 
 //ElemListOfBytes returns a function that returns the n'th element of the list.
 func ElemListOfBytes(list ListOfBytes, n Int) Bytes {
-	h := uint64(17)
-	h = 31*h + 65169257167589942
-	h = 31*h + n.Hash()
-	h = 31*h + list.Hash()
 	return TrimBytes(&elemListOfBytes{
-		List:  list,
-		Index: n,
-		hash: h,
+		List:        list,
+		Index:       n,
+		hash:        hashWithId(65169257167589942, n, list),
+		hasVariable: n.HasVariable() || list.HasVariable(),
 	})
 }

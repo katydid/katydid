@@ -7,9 +7,10 @@ import (
 )
 
 type doubleGE struct {
-	V1 Double
-	V2 Double
-	hash uint64
+	V1          Double
+	V2          Double
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *doubleGE) Eval() (bool, error) {
@@ -62,7 +63,7 @@ func (this *doubleGE) String() string {
 }
 
 func (this *doubleGE) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *doubleGE) Hash() uint64 {
@@ -75,17 +76,19 @@ func init() {
 
 // DoubleGE returns a new greater than or equal function.
 func DoubleGE(a, b Double) Bool {
-	h := uint64(17)
-	h = 31*h + 3294
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&doubleGE{V1: a, V2: b, hash: h})
+	return TrimBool(&doubleGE{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3294, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type intGE struct {
-	V1 Int
-	V2 Int
-	hash uint64
+	V1          Int
+	V2          Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *intGE) Eval() (bool, error) {
@@ -138,7 +141,7 @@ func (this *intGE) String() string {
 }
 
 func (this *intGE) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *intGE) Hash() uint64 {
@@ -151,17 +154,19 @@ func init() {
 
 // IntGE returns a new greater than or equal function.
 func IntGE(a, b Int) Bool {
-	h := uint64(17)
-	h = 31*h + 3294
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&intGE{V1: a, V2: b, hash: h})
+	return TrimBool(&intGE{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3294, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type uintGE struct {
-	V1 Uint
-	V2 Uint
-	hash uint64
+	V1          Uint
+	V2          Uint
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *uintGE) Eval() (bool, error) {
@@ -214,7 +219,7 @@ func (this *uintGE) String() string {
 }
 
 func (this *uintGE) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *uintGE) Hash() uint64 {
@@ -227,17 +232,19 @@ func init() {
 
 // UintGE returns a new greater than or equal function.
 func UintGE(a, b Uint) Bool {
-	h := uint64(17)
-	h = 31*h + 3294
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&uintGE{V1: a, V2: b, hash: h})
+	return TrimBool(&uintGE{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3294, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type bytesGE struct {
-	V1 Bytes
-	V2 Bytes
-	hash uint64
+	V1          Bytes
+	V2          Bytes
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *bytesGE) Eval() (bool, error) {
@@ -290,7 +297,7 @@ func (this *bytesGE) String() string {
 }
 
 func (this *bytesGE) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *bytesGE) Hash() uint64 {
@@ -303,17 +310,19 @@ func init() {
 
 // BytesGE returns a new greater than or equal function.
 func BytesGE(a, b Bytes) Bool {
-	h := uint64(17)
-	h = 31*h + 3294
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&bytesGE{V1: a, V2: b, hash: h})
+	return TrimBool(&bytesGE{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3294, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type doubleGt struct {
-	V1 Double
-	V2 Double
-	hash uint64
+	V1          Double
+	V2          Double
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *doubleGt) Eval() (bool, error) {
@@ -366,7 +375,7 @@ func (this *doubleGt) String() string {
 }
 
 func (this *doubleGt) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *doubleGt) Hash() uint64 {
@@ -379,17 +388,19 @@ func init() {
 
 // DoubleGt returns a new greater than function.
 func DoubleGt(a, b Double) Bool {
-	h := uint64(17)
-	h = 31*h + 3309
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&doubleGt{V1: a, V2: b, hash: h})
+	return TrimBool(&doubleGt{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3309, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type intGt struct {
-	V1 Int
-	V2 Int
-	hash uint64
+	V1          Int
+	V2          Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *intGt) Eval() (bool, error) {
@@ -442,7 +453,7 @@ func (this *intGt) String() string {
 }
 
 func (this *intGt) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *intGt) Hash() uint64 {
@@ -455,17 +466,19 @@ func init() {
 
 // IntGt returns a new greater than function.
 func IntGt(a, b Int) Bool {
-	h := uint64(17)
-	h = 31*h + 3309
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&intGt{V1: a, V2: b, hash: h})
+	return TrimBool(&intGt{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3309, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type uintGt struct {
-	V1 Uint
-	V2 Uint
-	hash uint64
+	V1          Uint
+	V2          Uint
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *uintGt) Eval() (bool, error) {
@@ -518,7 +531,7 @@ func (this *uintGt) String() string {
 }
 
 func (this *uintGt) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *uintGt) Hash() uint64 {
@@ -531,17 +544,19 @@ func init() {
 
 // UintGt returns a new greater than function.
 func UintGt(a, b Uint) Bool {
-	h := uint64(17)
-	h = 31*h + 3309
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&uintGt{V1: a, V2: b, hash: h})
+	return TrimBool(&uintGt{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3309, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type bytesGt struct {
-	V1 Bytes
-	V2 Bytes
-	hash uint64
+	V1          Bytes
+	V2          Bytes
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *bytesGt) Eval() (bool, error) {
@@ -594,7 +609,7 @@ func (this *bytesGt) String() string {
 }
 
 func (this *bytesGt) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *bytesGt) Hash() uint64 {
@@ -607,17 +622,19 @@ func init() {
 
 // BytesGt returns a new greater than function.
 func BytesGt(a, b Bytes) Bool {
-	h := uint64(17)
-	h = 31*h + 3309
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&bytesGt{V1: a, V2: b, hash: h})
+	return TrimBool(&bytesGt{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3309, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type doubleLE struct {
-	V1 Double
-	V2 Double
-	hash uint64
+	V1          Double
+	V2          Double
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *doubleLE) Eval() (bool, error) {
@@ -670,7 +687,7 @@ func (this *doubleLE) String() string {
 }
 
 func (this *doubleLE) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *doubleLE) Hash() uint64 {
@@ -683,17 +700,19 @@ func init() {
 
 // DoubleLE returns a new less than or equal function.
 func DoubleLE(a, b Double) Bool {
-	h := uint64(17)
-	h = 31*h + 3449
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&doubleLE{V1: a, V2: b, hash: h})
+	return TrimBool(&doubleLE{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3449, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type intLE struct {
-	V1 Int
-	V2 Int
-	hash uint64
+	V1          Int
+	V2          Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *intLE) Eval() (bool, error) {
@@ -746,7 +765,7 @@ func (this *intLE) String() string {
 }
 
 func (this *intLE) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *intLE) Hash() uint64 {
@@ -759,17 +778,19 @@ func init() {
 
 // IntLE returns a new less than or equal function.
 func IntLE(a, b Int) Bool {
-	h := uint64(17)
-	h = 31*h + 3449
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&intLE{V1: a, V2: b, hash: h})
+	return TrimBool(&intLE{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3449, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type uintLE struct {
-	V1 Uint
-	V2 Uint
-	hash uint64
+	V1          Uint
+	V2          Uint
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *uintLE) Eval() (bool, error) {
@@ -822,7 +843,7 @@ func (this *uintLE) String() string {
 }
 
 func (this *uintLE) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *uintLE) Hash() uint64 {
@@ -835,17 +856,19 @@ func init() {
 
 // UintLE returns a new less than or equal function.
 func UintLE(a, b Uint) Bool {
-	h := uint64(17)
-	h = 31*h + 3449
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&uintLE{V1: a, V2: b, hash: h})
+	return TrimBool(&uintLE{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3449, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type bytesLE struct {
-	V1 Bytes
-	V2 Bytes
-	hash uint64
+	V1          Bytes
+	V2          Bytes
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *bytesLE) Eval() (bool, error) {
@@ -898,7 +921,7 @@ func (this *bytesLE) String() string {
 }
 
 func (this *bytesLE) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *bytesLE) Hash() uint64 {
@@ -911,17 +934,19 @@ func init() {
 
 // BytesLE returns a new less than or equal function.
 func BytesLE(a, b Bytes) Bool {
-	h := uint64(17)
-	h = 31*h + 3449
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&bytesLE{V1: a, V2: b, hash: h})
+	return TrimBool(&bytesLE{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3449, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type doubleLt struct {
-	V1 Double
-	V2 Double
-	hash uint64
+	V1          Double
+	V2          Double
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *doubleLt) Eval() (bool, error) {
@@ -974,7 +999,7 @@ func (this *doubleLt) String() string {
 }
 
 func (this *doubleLt) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *doubleLt) Hash() uint64 {
@@ -987,17 +1012,19 @@ func init() {
 
 // DoubleLt returns a new less than function.
 func DoubleLt(a, b Double) Bool {
-	h := uint64(17)
-	h = 31*h + 3464
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&doubleLt{V1: a, V2: b, hash: h})
+	return TrimBool(&doubleLt{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3464, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type intLt struct {
-	V1 Int
-	V2 Int
-	hash uint64
+	V1          Int
+	V2          Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *intLt) Eval() (bool, error) {
@@ -1050,7 +1077,7 @@ func (this *intLt) String() string {
 }
 
 func (this *intLt) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *intLt) Hash() uint64 {
@@ -1063,17 +1090,19 @@ func init() {
 
 // IntLt returns a new less than function.
 func IntLt(a, b Int) Bool {
-	h := uint64(17)
-	h = 31*h + 3464
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&intLt{V1: a, V2: b, hash: h})
+	return TrimBool(&intLt{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3464, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type uintLt struct {
-	V1 Uint
-	V2 Uint
-	hash uint64
+	V1          Uint
+	V2          Uint
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *uintLt) Eval() (bool, error) {
@@ -1126,7 +1155,7 @@ func (this *uintLt) String() string {
 }
 
 func (this *uintLt) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *uintLt) Hash() uint64 {
@@ -1139,17 +1168,19 @@ func init() {
 
 // UintLt returns a new less than function.
 func UintLt(a, b Uint) Bool {
-	h := uint64(17)
-	h = 31*h + 3464
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&uintLt{V1: a, V2: b, hash: h})
+	return TrimBool(&uintLt{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3464, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type bytesLt struct {
-	V1 Bytes
-	V2 Bytes
-	hash uint64
+	V1          Bytes
+	V2          Bytes
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *bytesLt) Eval() (bool, error) {
@@ -1202,7 +1233,7 @@ func (this *bytesLt) String() string {
 }
 
 func (this *bytesLt) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *bytesLt) Hash() uint64 {
@@ -1215,17 +1246,19 @@ func init() {
 
 // BytesLt returns a new less than function.
 func BytesLt(a, b Bytes) Bool {
-	h := uint64(17)
-	h = 31*h + 3464
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&bytesLt{V1: a, V2: b, hash: h})
+	return TrimBool(&bytesLt{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3464, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type doubleEq struct {
-	V1 Double
-	V2 Double
-	hash uint64
+	V1          Double
+	V2          Double
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *doubleEq) Eval() (bool, error) {
@@ -1278,7 +1311,7 @@ func (this *doubleEq) String() string {
 }
 
 func (this *doubleEq) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *doubleEq) Hash() uint64 {
@@ -1291,17 +1324,19 @@ func init() {
 
 // DoubleEq returns a new equal function.
 func DoubleEq(a, b Double) Bool {
-	h := uint64(17)
-	h = 31*h + 3244
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&doubleEq{V1: a, V2: b, hash: h})
+	return TrimBool(&doubleEq{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3244, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type intEq struct {
-	V1 Int
-	V2 Int
-	hash uint64
+	V1          Int
+	V2          Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *intEq) Eval() (bool, error) {
@@ -1354,7 +1389,7 @@ func (this *intEq) String() string {
 }
 
 func (this *intEq) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *intEq) Hash() uint64 {
@@ -1367,17 +1402,19 @@ func init() {
 
 // IntEq returns a new equal function.
 func IntEq(a, b Int) Bool {
-	h := uint64(17)
-	h = 31*h + 3244
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&intEq{V1: a, V2: b, hash: h})
+	return TrimBool(&intEq{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3244, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type uintEq struct {
-	V1 Uint
-	V2 Uint
-	hash uint64
+	V1          Uint
+	V2          Uint
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *uintEq) Eval() (bool, error) {
@@ -1430,7 +1467,7 @@ func (this *uintEq) String() string {
 }
 
 func (this *uintEq) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *uintEq) Hash() uint64 {
@@ -1443,17 +1480,19 @@ func init() {
 
 // UintEq returns a new equal function.
 func UintEq(a, b Uint) Bool {
-	h := uint64(17)
-	h = 31*h + 3244
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&uintEq{V1: a, V2: b, hash: h})
+	return TrimBool(&uintEq{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3244, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type boolEq struct {
-	V1 Bool
-	V2 Bool
-	hash uint64
+	V1          Bool
+	V2          Bool
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *boolEq) Eval() (bool, error) {
@@ -1506,7 +1545,7 @@ func (this *boolEq) String() string {
 }
 
 func (this *boolEq) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *boolEq) Hash() uint64 {
@@ -1519,17 +1558,19 @@ func init() {
 
 // BoolEq returns a new equal function.
 func BoolEq(a, b Bool) Bool {
-	h := uint64(17)
-	h = 31*h + 3244
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&boolEq{V1: a, V2: b, hash: h})
+	return TrimBool(&boolEq{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3244, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type stringEq struct {
-	V1 String
-	V2 String
-	hash uint64
+	V1          String
+	V2          String
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *stringEq) Eval() (bool, error) {
@@ -1582,7 +1623,7 @@ func (this *stringEq) String() string {
 }
 
 func (this *stringEq) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *stringEq) Hash() uint64 {
@@ -1595,17 +1636,19 @@ func init() {
 
 // StringEq returns a new equal function.
 func StringEq(a, b String) Bool {
-	h := uint64(17)
-	h = 31*h + 3244
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&stringEq{V1: a, V2: b, hash: h})
+	return TrimBool(&stringEq{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3244, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type bytesEq struct {
-	V1 Bytes
-	V2 Bytes
-	hash uint64
+	V1          Bytes
+	V2          Bytes
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *bytesEq) Eval() (bool, error) {
@@ -1658,7 +1701,7 @@ func (this *bytesEq) String() string {
 }
 
 func (this *bytesEq) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *bytesEq) Hash() uint64 {
@@ -1671,17 +1714,19 @@ func init() {
 
 // BytesEq returns a new equal function.
 func BytesEq(a, b Bytes) Bool {
-	h := uint64(17)
-	h = 31*h + 3244
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&bytesEq{V1: a, V2: b, hash: h})
+	return TrimBool(&bytesEq{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3244, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type doubleNe struct {
-	V1 Double
-	V2 Double
-	hash uint64
+	V1          Double
+	V2          Double
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *doubleNe) Eval() (bool, error) {
@@ -1734,7 +1779,7 @@ func (this *doubleNe) String() string {
 }
 
 func (this *doubleNe) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *doubleNe) Hash() uint64 {
@@ -1747,17 +1792,19 @@ func init() {
 
 // DoubleNe returns a new not equal function.
 func DoubleNe(a, b Double) Bool {
-	h := uint64(17)
-	h = 31*h + 3511
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&doubleNe{V1: a, V2: b, hash: h})
+	return TrimBool(&doubleNe{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3511, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type intNe struct {
-	V1 Int
-	V2 Int
-	hash uint64
+	V1          Int
+	V2          Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *intNe) Eval() (bool, error) {
@@ -1810,7 +1857,7 @@ func (this *intNe) String() string {
 }
 
 func (this *intNe) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *intNe) Hash() uint64 {
@@ -1823,17 +1870,19 @@ func init() {
 
 // IntNe returns a new not equal function.
 func IntNe(a, b Int) Bool {
-	h := uint64(17)
-	h = 31*h + 3511
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&intNe{V1: a, V2: b, hash: h})
+	return TrimBool(&intNe{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3511, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type uintNe struct {
-	V1 Uint
-	V2 Uint
-	hash uint64
+	V1          Uint
+	V2          Uint
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *uintNe) Eval() (bool, error) {
@@ -1886,7 +1935,7 @@ func (this *uintNe) String() string {
 }
 
 func (this *uintNe) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *uintNe) Hash() uint64 {
@@ -1899,17 +1948,19 @@ func init() {
 
 // UintNe returns a new not equal function.
 func UintNe(a, b Uint) Bool {
-	h := uint64(17)
-	h = 31*h + 3511
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&uintNe{V1: a, V2: b, hash: h})
+	return TrimBool(&uintNe{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3511, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type boolNe struct {
-	V1 Bool
-	V2 Bool
-	hash uint64
+	V1          Bool
+	V2          Bool
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *boolNe) Eval() (bool, error) {
@@ -1962,7 +2013,7 @@ func (this *boolNe) String() string {
 }
 
 func (this *boolNe) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *boolNe) Hash() uint64 {
@@ -1975,17 +2026,19 @@ func init() {
 
 // BoolNe returns a new not equal function.
 func BoolNe(a, b Bool) Bool {
-	h := uint64(17)
-	h = 31*h + 3511
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&boolNe{V1: a, V2: b, hash: h})
+	return TrimBool(&boolNe{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3511, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type stringNe struct {
-	V1 String
-	V2 String
-	hash uint64
+	V1          String
+	V2          String
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *stringNe) Eval() (bool, error) {
@@ -2038,7 +2091,7 @@ func (this *stringNe) String() string {
 }
 
 func (this *stringNe) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *stringNe) Hash() uint64 {
@@ -2051,17 +2104,19 @@ func init() {
 
 // StringNe returns a new not equal function.
 func StringNe(a, b String) Bool {
-	h := uint64(17)
-	h = 31*h + 3511
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&stringNe{V1: a, V2: b, hash: h})
+	return TrimBool(&stringNe{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3511, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type bytesNe struct {
-	V1 Bytes
-	V2 Bytes
-	hash uint64
+	V1          Bytes
+	V2          Bytes
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *bytesNe) Eval() (bool, error) {
@@ -2114,7 +2169,7 @@ func (this *bytesNe) String() string {
 }
 
 func (this *bytesNe) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *bytesNe) Hash() uint64 {
@@ -2127,9 +2182,10 @@ func init() {
 
 // BytesNe returns a new not equal function.
 func BytesNe(a, b Bytes) Bool {
-	h := uint64(17)
-	h = 31*h + 3511
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&bytesNe{V1: a, V2: b, hash: h})
+	return TrimBool(&bytesNe{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3511, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }

@@ -6,10 +6,11 @@ import (
 )
 
 type inSetInt struct {
-	Elem Int
-	List ConstInts
-	set  map[int64]struct{}
-	hash uint64
+	Elem        Int
+	List        ConstInts
+	set         map[int64]struct{}
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *inSetInt) Eval() (bool, error) {
@@ -45,7 +46,7 @@ func (this *inSetInt) String() string {
 }
 
 func (this *inSetInt) HasVariable() bool {
-	return this.Elem.HasVariable() || this.List.HasVariable()
+	return this.hasVariable
 }
 
 func (this *inSetInt) Hash() uint64 {
@@ -58,10 +59,9 @@ func init() {
 
 //ContainsInt returns a function that checks whether the element is contained in the list.
 func ContainsInt(element Int, list ConstInts) (Bool, error) {
-	h := uint64(17)
-	h = 31*h + 73679
-	h = 31*h + element.Hash()
-	h = 31*h + list.Hash()
+	if list.HasVariable() {
+		return nil, ErrContainsListNotConst{}
+	}
 	l, err := list.Eval()
 	if err != nil {
 		return nil, err
@@ -70,14 +70,21 @@ func ContainsInt(element Int, list ConstInts) (Bool, error) {
 	for i := range l {
 		set[l[i]] = struct{}{}
 	}
-	return TrimBool(&inSetInt{element, list, set, h}), nil
+	return TrimBool(&inSetInt{
+		Elem:        element,
+		List:        list,
+		set:         set,
+		hash:        hashWithId(73679, element, list),
+		hasVariable: element.HasVariable() || list.HasVariable(),
+	}), nil
 }
 
 type inSetUint struct {
-	Elem Uint
-	List ConstUints
-	set  map[uint64]struct{}
-	hash uint64
+	Elem        Uint
+	List        ConstUints
+	set         map[uint64]struct{}
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *inSetUint) Eval() (bool, error) {
@@ -113,7 +120,7 @@ func (this *inSetUint) String() string {
 }
 
 func (this *inSetUint) HasVariable() bool {
-	return this.Elem.HasVariable() || this.List.HasVariable()
+	return this.hasVariable
 }
 
 func (this *inSetUint) Hash() uint64 {
@@ -126,10 +133,9 @@ func init() {
 
 //ContainsUint returns a function that checks whether the element is contained in the list.
 func ContainsUint(element Uint, list ConstUints) (Bool, error) {
-	h := uint64(17)
-	h = 31*h + 2636666
-	h = 31*h + element.Hash()
-	h = 31*h + list.Hash()
+	if list.HasVariable() {
+		return nil, ErrContainsListNotConst{}
+	}
 	l, err := list.Eval()
 	if err != nil {
 		return nil, err
@@ -138,14 +144,21 @@ func ContainsUint(element Uint, list ConstUints) (Bool, error) {
 	for i := range l {
 		set[l[i]] = struct{}{}
 	}
-	return TrimBool(&inSetUint{element, list, set, h}), nil
+	return TrimBool(&inSetUint{
+		Elem:        element,
+		List:        list,
+		set:         set,
+		hash:        hashWithId(2636666, element, list),
+		hasVariable: element.HasVariable() || list.HasVariable(),
+	}), nil
 }
 
 type inSetString struct {
-	Elem String
-	List ConstStrings
-	set  map[string]struct{}
-	hash uint64
+	Elem        String
+	List        ConstStrings
+	set         map[string]struct{}
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *inSetString) Eval() (bool, error) {
@@ -181,7 +194,7 @@ func (this *inSetString) String() string {
 }
 
 func (this *inSetString) HasVariable() bool {
-	return this.Elem.HasVariable() || this.List.HasVariable()
+	return this.hasVariable
 }
 
 func (this *inSetString) Hash() uint64 {
@@ -194,10 +207,9 @@ func init() {
 
 //ContainsString returns a function that checks whether the element is contained in the list.
 func ContainsString(element String, list ConstStrings) (Bool, error) {
-	h := uint64(17)
-	h = 31*h + 2486848561
-	h = 31*h + element.Hash()
-	h = 31*h + list.Hash()
+	if list.HasVariable() {
+		return nil, ErrContainsListNotConst{}
+	}
 	l, err := list.Eval()
 	if err != nil {
 		return nil, err
@@ -206,5 +218,11 @@ func ContainsString(element String, list ConstStrings) (Bool, error) {
 	for i := range l {
 		set[l[i]] = struct{}{}
 	}
-	return TrimBool(&inSetString{element, list, set, h}), nil
+	return TrimBool(&inSetString{
+		Elem:        element,
+		List:        list,
+		set:         set,
+		hash:        hashWithId(2486848561, element, list),
+		hasVariable: element.HasVariable() || list.HasVariable(),
+	}), nil
 }

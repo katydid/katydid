@@ -224,3 +224,22 @@ func isVarConst(a, b interface{}) (string, bool) {
 	}
 	return "", false
 }
+
+// Hash calculates a hash for a function, given a name and its parameters.
+func Hash(name string, hs ...Hashable) uint64 {
+	h := uint64(17)
+	h = 31*h + deriveHashString(name)
+	for _, hashable := range hs {
+		h = 31*h + hashable.Hash()
+	}
+	return h
+}
+
+func hashWithId(id uint64, hs ...Hashable) uint64 {
+	h := uint64(17)
+	h = 31*h + id
+	for _, hashable := range hs {
+		h = 31*h + hashable.Hash()
+	}
+	return h
+}

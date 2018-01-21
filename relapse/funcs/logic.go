@@ -56,15 +56,17 @@ func Not(v1 Bool) Bool {
 	case *uintNe:
 		return UintEq(vv.V1, vv.V2)
 	}
-	h := uint64(17)
-	h = 31*h + 23
-	h = 31*h + v1.Hash()
-	return TrimBool(&not{v1, h})
+	return TrimBool(&not{
+		V1:          v1,
+		hash:        hashWithId(23, v1),
+		hasVariable: v1.HasVariable(),
+	})
 }
 
 type not struct {
-	V1   Bool
-	hash uint64
+	V1          Bool
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *not) Eval() (bool, error) {
@@ -92,7 +94,7 @@ func (this *not) Compare(that Comparable) int {
 }
 
 func (this *not) HasVariable() bool {
-	return this.V1.HasVariable()
+	return this.hasVariable
 }
 
 func (this *not) String() string {
@@ -237,17 +239,19 @@ func And(v1, v2 Bool) Bool {
 			}
 		}
 	}
-	h := uint64(17)
-	h = 31*h + 29
-	h = 31*h + v1.Hash()
-	h = 31*h + v2.Hash()
-	return TrimBool(&and{v1, v2, h})
+	return TrimBool(&and{
+		V1:          v1,
+		V2:          v2,
+		hash:        hashWithId(29, v1, v2),
+		hasVariable: v1.HasVariable() || v2.HasVariable(),
+	})
 }
 
 type and struct {
-	V1   Bool
-	V2   Bool
-	hash uint64
+	V1          Bool
+	V2          Bool
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *and) Eval() (bool, error) {
@@ -278,7 +282,7 @@ func (this *and) Compare(that Comparable) int {
 }
 
 func (this *and) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *and) String() string {
@@ -322,17 +326,19 @@ func Or(v1, v2 Bool) Bool {
 			return BoolConst(true)
 		}
 	}
-	h := uint64(17)
-	h = 31*h + 37
-	h = 31*h + v1.Hash()
-	h = 31*h + v2.Hash()
-	return TrimBool(&or{v1, v2, h})
+	return TrimBool(&or{
+		V1:          v1,
+		V2:          v2,
+		hash:        hashWithId(37, v1, v2),
+		hasVariable: v1.HasVariable() || v2.HasVariable(),
+	})
 }
 
 type or struct {
-	V1   Bool
-	V2   Bool
-	hash uint64
+	V1          Bool
+	V2          Bool
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *or) Eval() (bool, error) {
@@ -363,7 +369,7 @@ func (this *or) Compare(that Comparable) int {
 }
 
 func (this *or) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *or) String() string {

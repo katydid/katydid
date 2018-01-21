@@ -6,10 +6,11 @@ import (
 )
 
 type rangeDoubles struct {
-	List  Doubles
-	First Int
-	Last  Int
-	hash uint64
+	List        Doubles
+	First       Int
+	Last        Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *rangeDoubles) Eval() ([]float64, error) {
@@ -71,11 +72,11 @@ func (this *rangeDoubles) Compare(that Comparable) int {
 }
 
 func (this *rangeDoubles) HasVariable() bool {
-	return this.List.HasVariable() || this.First.HasVariable() || this.Last.HasVariable()
+	return this.hasVariable
 }
 
 func (this *rangeDoubles) String() string {
-	return "range(" + sjoin(this.List, this.First, this.Last) +")"
+	return "range(" + sjoin(this.List, this.First, this.Last) + ")"
 }
 
 func (this *rangeDoubles) Hash() uint64 {
@@ -88,24 +89,21 @@ func init() {
 
 //RangeDoubles returns a function that returns a range of elements from a list.
 func RangeDoubles(list Doubles, from, to Int) Doubles {
-	h := uint64(17)
-	h = 31*h + 63639164578
-	h = 31*h + from.Hash()
-	h = 31*h + to.Hash()
-	h = 31*h + list.Hash()
 	return TrimDoubles(&rangeDoubles{
-		List:  list,
-		First: from,
-		Last:  to,
-		hash: h,
+		List:        list,
+		First:       from,
+		Last:        to,
+		hash:        hashWithId(63639164578, from, to, list),
+		hasVariable: from.HasVariable() || to.HasVariable() || list.HasVariable(),
 	})
 }
 
 type rangeInts struct {
-	List  Ints
-	First Int
-	Last  Int
-	hash uint64
+	List        Ints
+	First       Int
+	Last        Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *rangeInts) Eval() ([]int64, error) {
@@ -167,11 +165,11 @@ func (this *rangeInts) Compare(that Comparable) int {
 }
 
 func (this *rangeInts) HasVariable() bool {
-	return this.List.HasVariable() || this.First.HasVariable() || this.Last.HasVariable()
+	return this.hasVariable
 }
 
 func (this *rangeInts) String() string {
-	return "range(" + sjoin(this.List, this.First, this.Last) +")"
+	return "range(" + sjoin(this.List, this.First, this.Last) + ")"
 }
 
 func (this *rangeInts) Hash() uint64 {
@@ -184,24 +182,21 @@ func init() {
 
 //RangeInts returns a function that returns a range of elements from a list.
 func RangeInts(list Ints, from, to Int) Ints {
-	h := uint64(17)
-	h = 31*h + 2284164
-	h = 31*h + from.Hash()
-	h = 31*h + to.Hash()
-	h = 31*h + list.Hash()
 	return TrimInts(&rangeInts{
-		List:  list,
-		First: from,
-		Last:  to,
-		hash: h,
+		List:        list,
+		First:       from,
+		Last:        to,
+		hash:        hashWithId(2284164, from, to, list),
+		hasVariable: from.HasVariable() || to.HasVariable() || list.HasVariable(),
 	})
 }
 
 type rangeUints struct {
-	List  Uints
-	First Int
-	Last  Int
-	hash uint64
+	List        Uints
+	First       Int
+	Last        Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *rangeUints) Eval() ([]uint64, error) {
@@ -263,11 +258,11 @@ func (this *rangeUints) Compare(that Comparable) int {
 }
 
 func (this *rangeUints) HasVariable() bool {
-	return this.List.HasVariable() || this.First.HasVariable() || this.Last.HasVariable()
+	return this.hasVariable
 }
 
 func (this *rangeUints) String() string {
-	return "range(" + sjoin(this.List, this.First, this.Last) +")"
+	return "range(" + sjoin(this.List, this.First, this.Last) + ")"
 }
 
 func (this *rangeUints) Hash() uint64 {
@@ -280,24 +275,21 @@ func init() {
 
 //RangeUints returns a function that returns a range of elements from a list.
 func RangeUints(list Uints, from, to Int) Uints {
-	h := uint64(17)
-	h = 31*h + 81736761
-	h = 31*h + from.Hash()
-	h = 31*h + to.Hash()
-	h = 31*h + list.Hash()
 	return TrimUints(&rangeUints{
-		List:  list,
-		First: from,
-		Last:  to,
-		hash: h,
+		List:        list,
+		First:       from,
+		Last:        to,
+		hash:        hashWithId(81736761, from, to, list),
+		hasVariable: from.HasVariable() || to.HasVariable() || list.HasVariable(),
 	})
 }
 
 type rangeBools struct {
-	List  Bools
-	First Int
-	Last  Int
-	hash uint64
+	List        Bools
+	First       Int
+	Last        Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *rangeBools) Eval() ([]bool, error) {
@@ -359,11 +351,11 @@ func (this *rangeBools) Compare(that Comparable) int {
 }
 
 func (this *rangeBools) HasVariable() bool {
-	return this.List.HasVariable() || this.First.HasVariable() || this.Last.HasVariable()
+	return this.hasVariable
 }
 
 func (this *rangeBools) String() string {
-	return "range(" + sjoin(this.List, this.First, this.Last) +")"
+	return "range(" + sjoin(this.List, this.First, this.Last) + ")"
 }
 
 func (this *rangeBools) Hash() uint64 {
@@ -376,24 +368,21 @@ func init() {
 
 //RangeBools returns a function that returns a range of elements from a list.
 func RangeBools(list Bools, from, to Int) Bools {
-	h := uint64(17)
-	h = 31*h + 64369321
-	h = 31*h + from.Hash()
-	h = 31*h + to.Hash()
-	h = 31*h + list.Hash()
 	return TrimBools(&rangeBools{
-		List:  list,
-		First: from,
-		Last:  to,
-		hash: h,
+		List:        list,
+		First:       from,
+		Last:        to,
+		hash:        hashWithId(64369321, from, to, list),
+		hasVariable: from.HasVariable() || to.HasVariable() || list.HasVariable(),
 	})
 }
 
 type rangeStrings struct {
-	List  Strings
-	First Int
-	Last  Int
-	hash uint64
+	List        Strings
+	First       Int
+	Last        Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *rangeStrings) Eval() ([]string, error) {
@@ -455,11 +444,11 @@ func (this *rangeStrings) Compare(that Comparable) int {
 }
 
 func (this *rangeStrings) HasVariable() bool {
-	return this.List.HasVariable() || this.First.HasVariable() || this.Last.HasVariable()
+	return this.hasVariable
 }
 
 func (this *rangeStrings) String() string {
-	return "range(" + sjoin(this.List, this.First, this.Last) +")"
+	return "range(" + sjoin(this.List, this.First, this.Last) + ")"
 }
 
 func (this *rangeStrings) Hash() uint64 {
@@ -472,24 +461,21 @@ func init() {
 
 //RangeStrings returns a function that returns a range of elements from a list.
 func RangeStrings(list Strings, from, to Int) Strings {
-	h := uint64(17)
-	h = 31*h + 77092305506
-	h = 31*h + from.Hash()
-	h = 31*h + to.Hash()
-	h = 31*h + list.Hash()
 	return TrimStrings(&rangeStrings{
-		List:  list,
-		First: from,
-		Last:  to,
-		hash: h,
+		List:        list,
+		First:       from,
+		Last:        to,
+		hash:        hashWithId(77092305506, from, to, list),
+		hasVariable: from.HasVariable() || to.HasVariable() || list.HasVariable(),
 	})
 }
 
 type rangeListOfBytes struct {
-	List  ListOfBytes
-	First Int
-	Last  Int
-	hash uint64
+	List        ListOfBytes
+	First       Int
+	Last        Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *rangeListOfBytes) Eval() ([][]byte, error) {
@@ -551,11 +537,11 @@ func (this *rangeListOfBytes) Compare(that Comparable) int {
 }
 
 func (this *rangeListOfBytes) HasVariable() bool {
-	return this.List.HasVariable() || this.First.HasVariable() || this.Last.HasVariable()
+	return this.hasVariable
 }
 
 func (this *rangeListOfBytes) String() string {
-	return "range(" + sjoin(this.List, this.First, this.Last) +")"
+	return "range(" + sjoin(this.List, this.First, this.Last) + ")"
 }
 
 func (this *rangeListOfBytes) Hash() uint64 {
@@ -568,15 +554,11 @@ func init() {
 
 //RangeListOfBytes returns a function that returns a range of elements from a list.
 func RangeListOfBytes(list ListOfBytes, from, to Int) ListOfBytes {
-	h := uint64(17)
-	h = 31*h + 65169257167589942
-	h = 31*h + from.Hash()
-	h = 31*h + to.Hash()
-	h = 31*h + list.Hash()
 	return TrimListOfBytes(&rangeListOfBytes{
-		List:  list,
-		First: from,
-		Last:  to,
-		hash: h,
+		List:        list,
+		First:       from,
+		Last:        to,
+		hash:        hashWithId(65169257167589942, from, to, list),
+		hasVariable: from.HasVariable() || to.HasVariable() || list.HasVariable(),
 	})
 }

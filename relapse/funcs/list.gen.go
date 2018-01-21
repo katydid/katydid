@@ -6,8 +6,9 @@ import (
 )
 
 type listOfDouble struct {
-	List []Double
-	hash uint64
+	List        []Double
+	hash        uint64
+	hasVariable bool
 }
 
 //NewListOfDouble returns a new function that when evaluated returns a list of type Double
@@ -17,7 +18,18 @@ func NewListOfDouble(v []Double) Doubles {
 	for i := 0; i < len(v); i++ {
 		h = 31*h + v[i].Hash()
 	}
-	return TrimDoubles(&listOfDouble{v, h})
+	hasVariable := false
+	for _, vv := range v {
+		if vv.HasVariable() {
+			hasVariable = true
+			break
+		}
+	}
+	return TrimDoubles(&listOfDouble{
+		List:        v,
+		hash:        h,
+		hasVariable: hasVariable,
+	})
 }
 
 func (this *listOfDouble) Eval() ([]float64, error) {
@@ -57,12 +69,7 @@ func (this *listOfDouble) Compare(that Comparable) int {
 }
 
 func (this *listOfDouble) HasVariable() bool {
-	for i := range this.List {
-		if this.List[i].HasVariable() {
-			return true
-		}
-	}
-	return false
+	return this.hasVariable
 }
 
 func (this *listOfDouble) Hash() uint64 {
@@ -80,8 +87,9 @@ func (this *listOfDouble) String() string {
 func (this *listOfDouble) IsListOf() {}
 
 type listOfInt struct {
-	List []Int
-	hash uint64
+	List        []Int
+	hash        uint64
+	hasVariable bool
 }
 
 //NewListOfInt returns a new function that when evaluated returns a list of type Int
@@ -91,7 +99,18 @@ func NewListOfInt(v []Int) Ints {
 	for i := 0; i < len(v); i++ {
 		h = 31*h + v[i].Hash()
 	}
-	return TrimInts(&listOfInt{v, h})
+	hasVariable := false
+	for _, vv := range v {
+		if vv.HasVariable() {
+			hasVariable = true
+			break
+		}
+	}
+	return TrimInts(&listOfInt{
+		List:        v,
+		hash:        h,
+		hasVariable: hasVariable,
+	})
 }
 
 func (this *listOfInt) Eval() ([]int64, error) {
@@ -131,12 +150,7 @@ func (this *listOfInt) Compare(that Comparable) int {
 }
 
 func (this *listOfInt) HasVariable() bool {
-	for i := range this.List {
-		if this.List[i].HasVariable() {
-			return true
-		}
-	}
-	return false
+	return this.hasVariable
 }
 
 func (this *listOfInt) Hash() uint64 {
@@ -154,8 +168,9 @@ func (this *listOfInt) String() string {
 func (this *listOfInt) IsListOf() {}
 
 type listOfUint struct {
-	List []Uint
-	hash uint64
+	List        []Uint
+	hash        uint64
+	hasVariable bool
 }
 
 //NewListOfUint returns a new function that when evaluated returns a list of type Uint
@@ -165,7 +180,18 @@ func NewListOfUint(v []Uint) Uints {
 	for i := 0; i < len(v); i++ {
 		h = 31*h + v[i].Hash()
 	}
-	return TrimUints(&listOfUint{v, h})
+	hasVariable := false
+	for _, vv := range v {
+		if vv.HasVariable() {
+			hasVariable = true
+			break
+		}
+	}
+	return TrimUints(&listOfUint{
+		List:        v,
+		hash:        h,
+		hasVariable: hasVariable,
+	})
 }
 
 func (this *listOfUint) Eval() ([]uint64, error) {
@@ -205,12 +231,7 @@ func (this *listOfUint) Compare(that Comparable) int {
 }
 
 func (this *listOfUint) HasVariable() bool {
-	for i := range this.List {
-		if this.List[i].HasVariable() {
-			return true
-		}
-	}
-	return false
+	return this.hasVariable
 }
 
 func (this *listOfUint) Hash() uint64 {
@@ -228,8 +249,9 @@ func (this *listOfUint) String() string {
 func (this *listOfUint) IsListOf() {}
 
 type listOfBool struct {
-	List []Bool
-	hash uint64
+	List        []Bool
+	hash        uint64
+	hasVariable bool
 }
 
 //NewListOfBool returns a new function that when evaluated returns a list of type Bool
@@ -239,7 +261,18 @@ func NewListOfBool(v []Bool) Bools {
 	for i := 0; i < len(v); i++ {
 		h = 31*h + v[i].Hash()
 	}
-	return TrimBools(&listOfBool{v, h})
+	hasVariable := false
+	for _, vv := range v {
+		if vv.HasVariable() {
+			hasVariable = true
+			break
+		}
+	}
+	return TrimBools(&listOfBool{
+		List:        v,
+		hash:        h,
+		hasVariable: hasVariable,
+	})
 }
 
 func (this *listOfBool) Eval() ([]bool, error) {
@@ -279,12 +312,7 @@ func (this *listOfBool) Compare(that Comparable) int {
 }
 
 func (this *listOfBool) HasVariable() bool {
-	for i := range this.List {
-		if this.List[i].HasVariable() {
-			return true
-		}
-	}
-	return false
+	return this.hasVariable
 }
 
 func (this *listOfBool) Hash() uint64 {
@@ -302,8 +330,9 @@ func (this *listOfBool) String() string {
 func (this *listOfBool) IsListOf() {}
 
 type listOfString struct {
-	List []String
-	hash uint64
+	List        []String
+	hash        uint64
+	hasVariable bool
 }
 
 //NewListOfString returns a new function that when evaluated returns a list of type String
@@ -313,7 +342,18 @@ func NewListOfString(v []String) Strings {
 	for i := 0; i < len(v); i++ {
 		h = 31*h + v[i].Hash()
 	}
-	return TrimStrings(&listOfString{v, h})
+	hasVariable := false
+	for _, vv := range v {
+		if vv.HasVariable() {
+			hasVariable = true
+			break
+		}
+	}
+	return TrimStrings(&listOfString{
+		List:        v,
+		hash:        h,
+		hasVariable: hasVariable,
+	})
 }
 
 func (this *listOfString) Eval() ([]string, error) {
@@ -353,12 +393,7 @@ func (this *listOfString) Compare(that Comparable) int {
 }
 
 func (this *listOfString) HasVariable() bool {
-	for i := range this.List {
-		if this.List[i].HasVariable() {
-			return true
-		}
-	}
-	return false
+	return this.hasVariable
 }
 
 func (this *listOfString) Hash() uint64 {
@@ -376,8 +411,9 @@ func (this *listOfString) String() string {
 func (this *listOfString) IsListOf() {}
 
 type listOfBytes struct {
-	List []Bytes
-	hash uint64
+	List        []Bytes
+	hash        uint64
+	hasVariable bool
 }
 
 //NewListOfBytes returns a new function that when evaluated returns a list of type Bytes
@@ -387,7 +423,18 @@ func NewListOfBytes(v []Bytes) ListOfBytes {
 	for i := 0; i < len(v); i++ {
 		h = 31*h + v[i].Hash()
 	}
-	return TrimListOfBytes(&listOfBytes{v, h})
+	hasVariable := false
+	for _, vv := range v {
+		if vv.HasVariable() {
+			hasVariable = true
+			break
+		}
+	}
+	return TrimListOfBytes(&listOfBytes{
+		List:        v,
+		hash:        h,
+		hasVariable: hasVariable,
+	})
 }
 
 func (this *listOfBytes) Eval() ([][]byte, error) {
@@ -427,12 +474,7 @@ func (this *listOfBytes) Compare(that Comparable) int {
 }
 
 func (this *listOfBytes) HasVariable() bool {
-	for i := range this.List {
-		if this.List[i].HasVariable() {
-			return true
-		}
-	}
-	return false
+	return this.hasVariable
 }
 
 func (this *listOfBytes) Hash() uint64 {

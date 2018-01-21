@@ -14,7 +14,7 @@ type ConstDouble interface {
 var typConstDouble reflect.Type = reflect.TypeOf((*ConstDouble)(nil)).Elem()
 
 type constDouble struct {
-	v float64
+	v    float64
 	hash uint64
 }
 
@@ -44,7 +44,7 @@ func (this *constDouble) String() string {
 
 // TrimDouble turns functions into constants, if they can be evaluated at compile time.
 func TrimDouble(f Double) Double {
-	if _, ok := f.(aConst); ok {
+	if _, ok := f.(Const); ok {
 		return f
 	}
 	if f.HasVariable() {
@@ -64,7 +64,7 @@ type ConstInt interface {
 var typConstInt reflect.Type = reflect.TypeOf((*ConstInt)(nil)).Elem()
 
 type constInt struct {
-	v int64
+	v    int64
 	hash uint64
 }
 
@@ -94,7 +94,7 @@ func (this *constInt) String() string {
 
 // TrimInt turns functions into constants, if they can be evaluated at compile time.
 func TrimInt(f Int) Int {
-	if _, ok := f.(aConst); ok {
+	if _, ok := f.(Const); ok {
 		return f
 	}
 	if f.HasVariable() {
@@ -114,7 +114,7 @@ type ConstUint interface {
 var typConstUint reflect.Type = reflect.TypeOf((*ConstUint)(nil)).Elem()
 
 type constUint struct {
-	v uint64
+	v    uint64
 	hash uint64
 }
 
@@ -144,7 +144,7 @@ func (this *constUint) String() string {
 
 // TrimUint turns functions into constants, if they can be evaluated at compile time.
 func TrimUint(f Uint) Uint {
-	if _, ok := f.(aConst); ok {
+	if _, ok := f.(Const); ok {
 		return f
 	}
 	if f.HasVariable() {
@@ -164,7 +164,7 @@ type ConstBool interface {
 var typConstBool reflect.Type = reflect.TypeOf((*ConstBool)(nil)).Elem()
 
 type constBool struct {
-	v bool
+	v    bool
 	hash uint64
 }
 
@@ -194,7 +194,7 @@ func (this *constBool) String() string {
 
 // TrimBool turns functions into constants, if they can be evaluated at compile time.
 func TrimBool(f Bool) Bool {
-	if _, ok := f.(aConst); ok {
+	if _, ok := f.(Const); ok {
 		return f
 	}
 	if f.HasVariable() {
@@ -214,7 +214,7 @@ type ConstString interface {
 var typConstString reflect.Type = reflect.TypeOf((*ConstString)(nil)).Elem()
 
 type constString struct {
-	v string
+	v    string
 	hash uint64
 }
 
@@ -244,7 +244,7 @@ func (this *constString) String() string {
 
 // TrimString turns functions into constants, if they can be evaluated at compile time.
 func TrimString(f String) String {
-	if _, ok := f.(aConst); ok {
+	if _, ok := f.(Const); ok {
 		return f
 	}
 	if f.HasVariable() {
@@ -264,7 +264,7 @@ type ConstBytes interface {
 var typConstBytes reflect.Type = reflect.TypeOf((*ConstBytes)(nil)).Elem()
 
 type constBytes struct {
-	v []byte
+	v    []byte
 	hash uint64
 }
 
@@ -294,7 +294,7 @@ func (this *constBytes) String() string {
 
 // TrimBytes turns functions into constants, if they can be evaluated at compile time.
 func TrimBytes(f Bytes) Bytes {
-	if _, ok := f.(aConst); ok {
+	if _, ok := f.(Const); ok {
 		return f
 	}
 	if f.HasVariable() {
@@ -314,7 +314,7 @@ type ConstDoubles interface {
 var typConstDoubles reflect.Type = reflect.TypeOf((*ConstDoubles)(nil)).Elem()
 
 type constDoubles struct {
-	v []float64
+	v    []float64
 	hash uint64
 }
 
@@ -348,7 +348,7 @@ func (this *constDoubles) String() string {
 
 // TrimDoubles turns functions into constants, if they can be evaluated at compile time.
 func TrimDoubles(f Doubles) Doubles {
-	if _, ok := f.(aConst); ok {
+	if _, ok := f.(Const); ok {
 		return f
 	}
 	if f.HasVariable() {
@@ -368,7 +368,7 @@ type ConstInts interface {
 var typConstInts reflect.Type = reflect.TypeOf((*ConstInts)(nil)).Elem()
 
 type constInts struct {
-	v []int64
+	v    []int64
 	hash uint64
 }
 
@@ -402,7 +402,7 @@ func (this *constInts) String() string {
 
 // TrimInts turns functions into constants, if they can be evaluated at compile time.
 func TrimInts(f Ints) Ints {
-	if _, ok := f.(aConst); ok {
+	if _, ok := f.(Const); ok {
 		return f
 	}
 	if f.HasVariable() {
@@ -422,7 +422,7 @@ type ConstUints interface {
 var typConstUints reflect.Type = reflect.TypeOf((*ConstUints)(nil)).Elem()
 
 type constUints struct {
-	v []uint64
+	v    []uint64
 	hash uint64
 }
 
@@ -456,7 +456,7 @@ func (this *constUints) String() string {
 
 // TrimUints turns functions into constants, if they can be evaluated at compile time.
 func TrimUints(f Uints) Uints {
-	if _, ok := f.(aConst); ok {
+	if _, ok := f.(Const); ok {
 		return f
 	}
 	if f.HasVariable() {
@@ -476,7 +476,7 @@ type ConstBools interface {
 var typConstBools reflect.Type = reflect.TypeOf((*ConstBools)(nil)).Elem()
 
 type constBools struct {
-	v []bool
+	v    []bool
 	hash uint64
 }
 
@@ -510,7 +510,7 @@ func (this *constBools) String() string {
 
 // TrimBools turns functions into constants, if they can be evaluated at compile time.
 func TrimBools(f Bools) Bools {
-	if _, ok := f.(aConst); ok {
+	if _, ok := f.(Const); ok {
 		return f
 	}
 	if f.HasVariable() {
@@ -530,7 +530,7 @@ type ConstStrings interface {
 var typConstStrings reflect.Type = reflect.TypeOf((*ConstStrings)(nil)).Elem()
 
 type constStrings struct {
-	v []string
+	v    []string
 	hash uint64
 }
 
@@ -564,7 +564,7 @@ func (this *constStrings) String() string {
 
 // TrimStrings turns functions into constants, if they can be evaluated at compile time.
 func TrimStrings(f Strings) Strings {
-	if _, ok := f.(aConst); ok {
+	if _, ok := f.(Const); ok {
 		return f
 	}
 	if f.HasVariable() {
@@ -584,7 +584,7 @@ type ConstListOfBytes interface {
 var typConstListOfBytes reflect.Type = reflect.TypeOf((*ConstListOfBytes)(nil)).Elem()
 
 type constListOfBytes struct {
-	v [][]byte
+	v    [][]byte
 	hash uint64
 }
 
@@ -618,7 +618,7 @@ func (this *constListOfBytes) String() string {
 
 // TrimListOfBytes turns functions into constants, if they can be evaluated at compile time.
 func TrimListOfBytes(f ListOfBytes) ListOfBytes {
-	if _, ok := f.(aConst); ok {
+	if _, ok := f.(Const); ok {
 		return f
 	}
 	if f.HasVariable() {

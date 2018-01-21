@@ -16,6 +16,7 @@ regenerate:
 	go install github.com/katydid/katydid/relapse/funcs/funcs-gen
 	funcs-gen ./
 	goderive .
+	gofmt -l -s -w *.gen.go
 
 nuke:
 	find . -name "*.gen.go" | xargs rm

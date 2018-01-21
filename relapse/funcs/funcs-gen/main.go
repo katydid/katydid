@@ -26,6 +26,7 @@ type {{.Type}}{{.CName}} struct {
 	V1 {{.CType}}
 	V2 {{.CType}}
 	hash uint64
+	hasVariable bool
 }
 
 func (this *{{.Type}}{{.CName}}) Eval() (bool, error) {
@@ -78,7 +79,7 @@ func (this *{{.Type}}{{.CName}}) String() string {
 }
 
 func (this *{{.Type}}{{.CName}}) HasVariable() bool {
-	return this.V1.HasVariable() || this.V2.HasVariable()
+	return this.hasVariable
 }
 
 func (this *{{.Type}}{{.CName}}) Hash() uint64 {
@@ -91,11 +92,12 @@ func init() {
 
 // {{.CType}}{{.CName}} returns a new {{.Comment}} function.
 func {{.CType}}{{.CName}}(a, b {{.CType}}) Bool {
-	h := uint64(17)
-	h = 31*h + {{.Hash}}
-	h = 31*h + a.Hash()
-	h = 31*h + b.Hash()
-	return TrimBool(&{{.Type}}{{.CName}}{V1: a, V2: b, hash: h})
+	return TrimBool(&{{.Type}}{{.CName}}{
+		V1: a, 
+		V2: b, 
+		hash: hashWithId({{.Hash}}, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 `
 
@@ -174,7 +176,7 @@ func (this *const{{.CType}}) String() string {
 
 // Trim{{.CType}} turns functions into constants, if they can be evaluated at compile time.
 func Trim{{.CType}}(f {{.CType}}) {{.CType}} {
-	if _, ok := f.(aConst); ok {
+	if _, ok := f.(Const); ok {
 		return f
 	}
 	if f.HasVariable() {
@@ -203,6 +205,7 @@ const listStr = `
 type listOf{{.FuncType}} struct {
 	List []{{.FuncType}}
 	hash uint64
+	hasVariable bool
 }
 
 //NewListOf{{.FuncType}} returns a new function that when evaluated returns a list of type {{.FuncType}}
@@ -210,9 +213,20 @@ func NewListOf{{.FuncType}}(v []{{.FuncType}}) {{.CType}} {
 	h := uint64(17)
 	h = 31*h + {{.Hash}}
 	for i := 0; i < len(v); i++ {
-		h = 31*h + v[i].Hash()
+		h = 31*h + v[i].Hash()	
 	}
-	return Trim{{.CType}}(&listOf{{.FuncType}}{v, h})
+	hasVariable := false
+	for _, vv := range v {
+		if vv.HasVariable() {
+			hasVariable = true
+			break
+		}
+	}
+	return Trim{{.CType}}(&listOf{{.FuncType}}{
+		List: v, 
+		hash: h,
+		hasVariable: hasVariable,
+	})
 }
 
 func (this *listOf{{.FuncType}}) Eval() ([]{{.GoType}}, error) {
@@ -252,12 +266,7 @@ func (this *listOf{{.FuncType}}) Compare(that Comparable) int {
 }
 
 func (this *listOf{{.FuncType}}) HasVariable() bool {
-	for i := range this.List {
-		if this.List[i].HasVariable() {
-			return true
-		}
-	}
-	return false
+	return this.hasVariable
 }
 
 func (this *listOf{{.FuncType}}) Hash() uint64 {
@@ -334,10 +343,10 @@ func init() {
 
 //Print{{.Name}} returns a function that prints out the value of the argument function and returns its value.
 func Print{{.Name}}(e {{.Name}}) {{.Name}} {
-	h := uint64(17)
-	h = 31*h + 13
-	h = 31*h + e.Hash()
-	return &print{{.Name}}{E: e, hash: h}
+	return &print{{.Name}}{
+		E: e, 
+		hash: hashWithId({{.Hash}}, e),
+	}
 }
 `
 
@@ -354,6 +363,7 @@ const lengthStr = `
 type len{{.}} struct {
 	E {{.}}
 	hash uint64
+	hasVariable bool
 }
 
 func (this *len{{.}}) Eval() (int64, error) {
@@ -385,7 +395,7 @@ func (this *len{{.}}) String() string {
 }
 
 func (this *len{{.}}) HasVariable() bool {
-	return this.E.HasVariable()
+	return this.hasVariable
 }
 
 func (this *len{{.}}) Hash() uint64 {
@@ -398,10 +408,11 @@ func init() {
 
 //Len{{.}} returns a function that returns the length of a list of type {{.}}
 func Len{{.}}(e {{.}}) Int {
-	h := uint64(17)
-	h = 31*h + 7
-	h = 31*h + e.Hash()
-	return TrimInt(&len{{.}}{E: e, hash: h})
+	return TrimInt(&len{{.}}{
+		E: e, 
+		hash: Hash("length", e),
+		hasVariable: e.HasVariable(),
+	})
 }
 `
 
@@ -410,6 +421,7 @@ type elem{{.ListType}} struct {
 	List  {{.ListType}}
 	Index Int
 	hash uint64
+	hasVariable bool
 }
 
 func (this *elem{{.ListType}}) Eval() ({{.ReturnType}}, error) {
@@ -454,7 +466,7 @@ func (this *elem{{.ListType}}) Compare(that Comparable) int {
 }
 
 func (this *elem{{.ListType}}) HasVariable() bool {
-	return this.List.HasVariable() || this.Index.HasVariable()
+	return this.hasVariable
 }
 
 func (this *elem{{.ListType}}) String() string {
@@ -471,14 +483,11 @@ func init() {
 
 //Elem{{.ListType}} returns a function that returns the n'th element of the list.
 func Elem{{.ListType}}(list {{.ListType}}, n Int) {{.ThrowType}} {
-	h := uint64(17)
-	h = 31*h + {{.Hash}}
-	h = 31*h + n.Hash()
-	h = 31*h + list.Hash()
 	return Trim{{.ThrowType}}(&elem{{.ListType}}{
 		List:  list,
 		Index: n,
-		hash: h,
+		hash: hashWithId({{.Hash}}, n, list),
+		hasVariable: n.HasVariable() || list.HasVariable(),
 	})
 }
 `
@@ -500,6 +509,7 @@ type range{{.ListType}} struct {
 	First Int
 	Last  Int
 	hash uint64
+	hasVariable bool
 }
 
 func (this *range{{.ListType}}) Eval() ({{.ReturnType}}, error) {
@@ -561,7 +571,7 @@ func (this *range{{.ListType}}) Compare(that Comparable) int {
 }
 
 func (this *range{{.ListType}}) HasVariable() bool {
-	return this.List.HasVariable() || this.First.HasVariable() || this.Last.HasVariable()
+	return this.hasVariable
 }
 
 func (this *range{{.ListType}}) String() string {
@@ -578,16 +588,12 @@ func init() {
 
 //Range{{.ListType}} returns a function that returns a range of elements from a list.
 func Range{{.ListType}}(list {{.ListType}}, from, to Int) {{.ListType}} {
-	h := uint64(17)
-	h = 31*h + {{.Hash}}
-	h = 31*h + from.Hash()
-	h = 31*h + to.Hash()
-	h = 31*h + list.Hash()
 	return Trim{{.ListType}}(&range{{.ListType}}{
 		List:  list,
 		First: from,
 		Last:  to,
-		hash: h,
+		hash: hashWithId({{.Hash}}, from, to, list),
+		hasVariable: from.HasVariable() || to.HasVariable() || list.HasVariable(),
 	})
 }
 `
@@ -679,6 +685,7 @@ const typStr = `
 type typ{{.Name}} struct {
 	E {{.Name}}
 	hash uint64
+	hasVariable bool
 }
 
 func (this *typ{{.Name}}) Eval() (bool, error) {
@@ -703,7 +710,7 @@ func (this *typ{{.Name}}) Compare(that Comparable) int {
 }
 
 func (this *typ{{.Name}}) HasVariable() bool {
-	return this.E.HasVariable()
+	return this.hasVariable
 }
 
 func (this *typ{{.Name}}) String() string {
@@ -720,10 +727,11 @@ func init() {
 
 //Type{{.Name}} returns a function that returns true if the error returned by the argument function is nil.
 func Type{{.Name}}(v {{.Name}}) Bool {
-	h := uint64(17)
-	h = 31*h + {{.Hash}}
-	h = 31*h + v.Hash()
-	return TrimBool(&typ{{.Name}}{E: v, hash: h})
+	return TrimBool(&typ{{.Name}}{
+		E: v, 
+		hash: hashWithId({{.Hash}}, v),
+		hasVariable: v.HasVariable(),
+	})
 }
 `
 
@@ -741,6 +749,7 @@ type inSet{{.Name}} struct {
 	List {{.ConstListType}}
 	set  map[{{.Type}}]struct{}
 	hash uint64
+	hasVariable bool
 }
 
 func (this *inSet{{.Name}}) Eval() (bool, error) {
@@ -776,7 +785,7 @@ func (this *inSet{{.Name}}) String() string {
 }
 
 func (this *inSet{{.Name}}) HasVariable() bool {
-	return this.Elem.HasVariable() || this.List.HasVariable()
+	return this.hasVariable
 }
 
 func (this *inSet{{.Name}}) Hash() uint64 {
@@ -789,10 +798,9 @@ func init() {
 
 //Contains{{.Name}} returns a function that checks whether the element is contained in the list.
 func Contains{{.Name}}(element {{.Name}}, list {{.ConstListType}}) (Bool, error) {
-	h := uint64(17)
-	h = 31*h + {{.Hash}}
-	h = 31*h + element.Hash()
-	h = 31*h + list.Hash()
+	if list.HasVariable() {
+		return nil, ErrContainsListNotConst{}
+	}
 	l, err := list.Eval()
 	if err != nil {
 		return nil, err
@@ -801,7 +809,13 @@ func Contains{{.Name}}(element {{.Name}}, list {{.ConstListType}}) (Bool, error)
 	for i := range l {
 		set[l[i]] = struct{}{}
 	}
-	return TrimBool(&inSet{{.Name}}{element, list, set, h}), nil
+	return TrimBool(&inSet{{.Name}}{
+		Elem: element,
+		List: list,
+		set: set,
+		hash: hashWithId({{.Hash}}, element, list),
+		hasVariable: element.HasVariable() || list.HasVariable(),
+	}), nil
 }
 `
 

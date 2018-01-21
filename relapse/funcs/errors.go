@@ -47,3 +47,9 @@ func (this ErrRange) Error() string {
 func NewRangeErr(first, last int) ErrRange {
 	return ErrRange{first, last}
 }
+
+type ErrContainsListNotConst struct{}
+
+func (ErrContainsListNotConst) Error() string {
+	return fmt.Sprintf("relapse/funcs: list passed to contains is not a constant")
+}

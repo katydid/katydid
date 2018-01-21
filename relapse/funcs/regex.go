@@ -22,10 +22,6 @@ import (
 
 //Regex returns a new regex function given the first parameter as the expression string that needs to compiled and the second as the regex that should be matched.
 func Regex(expr ConstString, input String) (Bool, error) {
-	h := uint64(17)
-	h = 31*h + 41
-	h = 31*h + expr.Hash()
-	h = 31*h + input.Hash()
 	if expr.HasVariable() {
 		return nil, fmt.Errorf("regex requires a constant expression as its first parameter, but it has a variable parameter")
 	}
@@ -37,18 +33,25 @@ func Regex(expr ConstString, input String) (Bool, error) {
 	if err != nil {
 		return nil, err
 	}
-	return TrimBool(&regex{expr: e, S: input, hash: h, r: r}), nil
+	return TrimBool(&regex{
+		r:           r,
+		S:           input,
+		expr:        e,
+		hash:        Hash("regex", expr, input),
+		hasVariable: input.HasVariable(),
+	}), nil
 }
 
 type regex struct {
-	r    *regexp.Regexp
-	expr string
-	S    String
-	hash uint64
+	r           *regexp.Regexp
+	expr        string
+	S           String
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *regex) HasVariable() bool {
-	return this.S.HasVariable()
+	return this.hasVariable
 }
 
 func (this *regex) String() string {

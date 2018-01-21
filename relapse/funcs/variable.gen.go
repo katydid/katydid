@@ -8,13 +8,13 @@ import (
 
 type varDouble struct {
 	Value parser.Value
-	hash uint64
+	hash  uint64
 }
 
 var _ Setter = &varDouble{}
 var _ aVariable = &varDouble{}
 
-type ErrNotDoubleConst struct {}
+type ErrNotDoubleConst struct{}
 
 func (this ErrNotDoubleConst) Error() string {
 	return "$double is not a const"
@@ -69,13 +69,13 @@ func DoubleVar() *varDouble {
 
 type varInt struct {
 	Value parser.Value
-	hash uint64
+	hash  uint64
 }
 
 var _ Setter = &varInt{}
 var _ aVariable = &varInt{}
 
-type ErrNotIntConst struct {}
+type ErrNotIntConst struct{}
 
 func (this ErrNotIntConst) Error() string {
 	return "$int is not a const"
@@ -130,13 +130,13 @@ func IntVar() *varInt {
 
 type varUint struct {
 	Value parser.Value
-	hash uint64
+	hash  uint64
 }
 
 var _ Setter = &varUint{}
 var _ aVariable = &varUint{}
 
-type ErrNotUintConst struct {}
+type ErrNotUintConst struct{}
 
 func (this ErrNotUintConst) Error() string {
 	return "$uint is not a const"
@@ -191,13 +191,13 @@ func UintVar() *varUint {
 
 type varBool struct {
 	Value parser.Value
-	hash uint64
+	hash  uint64
 }
 
 var _ Setter = &varBool{}
 var _ aVariable = &varBool{}
 
-type ErrNotBoolConst struct {}
+type ErrNotBoolConst struct{}
 
 func (this ErrNotBoolConst) Error() string {
 	return "$bool is not a const"
@@ -252,13 +252,13 @@ func BoolVar() *varBool {
 
 type varString struct {
 	Value parser.Value
-	hash uint64
+	hash  uint64
 }
 
 var _ Setter = &varString{}
 var _ aVariable = &varString{}
 
-type ErrNotStringConst struct {}
+type ErrNotStringConst struct{}
 
 func (this ErrNotStringConst) Error() string {
 	return "$string is not a const"
@@ -313,13 +313,13 @@ func StringVar() *varString {
 
 type varBytes struct {
 	Value parser.Value
-	hash uint64
+	hash  uint64
 }
 
 var _ Setter = &varBytes{}
 var _ aVariable = &varBytes{}
 
-type ErrNotBytesConst struct {}
+type ErrNotBytesConst struct{}
 
 func (this ErrNotBytesConst) Error() string {
 	return "$[]byte is not a const"

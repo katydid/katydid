@@ -6,8 +6,9 @@ import (
 )
 
 type typDouble struct {
-	E Double
-	hash uint64
+	E           Double
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *typDouble) Eval() (bool, error) {
@@ -32,7 +33,7 @@ func (this *typDouble) Compare(that Comparable) int {
 }
 
 func (this *typDouble) HasVariable() bool {
-	return this.E.HasVariable()
+	return this.hasVariable
 }
 
 func (this *typDouble) String() string {
@@ -49,15 +50,17 @@ func init() {
 
 //TypeDouble returns a function that returns true if the error returned by the argument function is nil.
 func TypeDouble(v Double) Bool {
-	h := uint64(17)
-	h = 31*h + 2052876273
-	h = 31*h + v.Hash()
-	return TrimBool(&typDouble{E: v, hash: h})
+	return TrimBool(&typDouble{
+		E:           v,
+		hash:        hashWithId(2052876273, v),
+		hasVariable: v.HasVariable(),
+	})
 }
 
 type typInt struct {
-	E Int
-	hash uint64
+	E           Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *typInt) Eval() (bool, error) {
@@ -82,7 +85,7 @@ func (this *typInt) Compare(that Comparable) int {
 }
 
 func (this *typInt) HasVariable() bool {
-	return this.E.HasVariable()
+	return this.hasVariable
 }
 
 func (this *typInt) String() string {
@@ -99,15 +102,17 @@ func init() {
 
 //TypeInt returns a function that returns true if the error returned by the argument function is nil.
 func TypeInt(v Int) Bool {
-	h := uint64(17)
-	h = 31*h + 73679
-	h = 31*h + v.Hash()
-	return TrimBool(&typInt{E: v, hash: h})
+	return TrimBool(&typInt{
+		E:           v,
+		hash:        hashWithId(73679, v),
+		hasVariable: v.HasVariable(),
+	})
 }
 
 type typUint struct {
-	E Uint
-	hash uint64
+	E           Uint
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *typUint) Eval() (bool, error) {
@@ -132,7 +137,7 @@ func (this *typUint) Compare(that Comparable) int {
 }
 
 func (this *typUint) HasVariable() bool {
-	return this.E.HasVariable()
+	return this.hasVariable
 }
 
 func (this *typUint) String() string {
@@ -149,15 +154,17 @@ func init() {
 
 //TypeUint returns a function that returns true if the error returned by the argument function is nil.
 func TypeUint(v Uint) Bool {
-	h := uint64(17)
-	h = 31*h + 2636666
-	h = 31*h + v.Hash()
-	return TrimBool(&typUint{E: v, hash: h})
+	return TrimBool(&typUint{
+		E:           v,
+		hash:        hashWithId(2636666, v),
+		hasVariable: v.HasVariable(),
+	})
 }
 
 type typBool struct {
-	E Bool
-	hash uint64
+	E           Bool
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *typBool) Eval() (bool, error) {
@@ -182,7 +189,7 @@ func (this *typBool) Compare(that Comparable) int {
 }
 
 func (this *typBool) HasVariable() bool {
-	return this.E.HasVariable()
+	return this.hasVariable
 }
 
 func (this *typBool) String() string {
@@ -199,15 +206,17 @@ func init() {
 
 //TypeBool returns a function that returns true if the error returned by the argument function is nil.
 func TypeBool(v Bool) Bool {
-	h := uint64(17)
-	h = 31*h + 2076426
-	h = 31*h + v.Hash()
-	return TrimBool(&typBool{E: v, hash: h})
+	return TrimBool(&typBool{
+		E:           v,
+		hash:        hashWithId(2076426, v),
+		hasVariable: v.HasVariable(),
+	})
 }
 
 type typString struct {
-	E String
-	hash uint64
+	E           String
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *typString) Eval() (bool, error) {
@@ -232,7 +241,7 @@ func (this *typString) Compare(that Comparable) int {
 }
 
 func (this *typString) HasVariable() bool {
-	return this.E.HasVariable()
+	return this.hasVariable
 }
 
 func (this *typString) String() string {
@@ -249,15 +258,17 @@ func init() {
 
 //TypeString returns a function that returns true if the error returned by the argument function is nil.
 func TypeString(v String) Bool {
-	h := uint64(17)
-	h = 31*h + 2486848561
-	h = 31*h + v.Hash()
-	return TrimBool(&typString{E: v, hash: h})
+	return TrimBool(&typString{
+		E:           v,
+		hash:        hashWithId(2486848561, v),
+		hasVariable: v.HasVariable(),
+	})
 }
 
 type typBytes struct {
-	E Bytes
-	hash uint64
+	E           Bytes
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *typBytes) Eval() (bool, error) {
@@ -282,7 +293,7 @@ func (this *typBytes) Compare(that Comparable) int {
 }
 
 func (this *typBytes) HasVariable() bool {
-	return this.E.HasVariable()
+	return this.hasVariable
 }
 
 func (this *typBytes) String() string {
@@ -299,8 +310,9 @@ func init() {
 
 //TypeBytes returns a function that returns true if the error returned by the argument function is nil.
 func TypeBytes(v Bytes) Bool {
-	h := uint64(17)
-	h = 31*h + 64671819
-	h = 31*h + v.Hash()
-	return TrimBool(&typBytes{E: v, hash: h})
+	return TrimBool(&typBytes{
+		E:           v,
+		hash:        hashWithId(64671819, v),
+		hasVariable: v.HasVariable(),
+	})
 }

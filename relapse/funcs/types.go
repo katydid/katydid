@@ -18,9 +18,13 @@ type Stringer interface {
 	String() string
 }
 
-type Comparable interface {
+type Hashable interface {
 	Hash() uint64
+}
+
+type Comparable interface {
 	Compare(Comparable) int
+	Hashable
 	Stringer
 }
 

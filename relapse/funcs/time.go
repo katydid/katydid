@@ -31,9 +31,7 @@ func (this *now) Eval() (int64, error) {
 }
 
 func (this *now) Hash() uint64 {
-	h := uint64(17)
-	h = 31*h + 43
-	return h
+	return Hash("now")
 }
 
 func (this *now) Compare(that Comparable) int {
