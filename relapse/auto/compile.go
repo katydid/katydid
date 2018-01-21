@@ -44,21 +44,13 @@ func compileAuto(g *ast.Grammar, record bool) (*Auto, error) {
 	}
 	a := &Auto{
 		calls:           c.calls,
-		returns:         newReturns(c.returns),
+		returns:         c.returns,
 		escapables:      c.escapables,
 		start:           c.start,
 		stateToNullable: c.stateToNullable,
 		accept:          c.accept,
 	}
 	return a, nil
-}
-
-func newReturns(m []map[int]int) []intmap {
-	returns := make([]intmap, len(m))
-	for k := range m {
-		returns[k] = newIntMap(m[k])
-	}
-	return returns
 }
 
 //Compile memoizes the full state space, all possible things that can be memoized.

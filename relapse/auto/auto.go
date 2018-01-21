@@ -27,7 +27,7 @@ import (
 //Auto is the structure that represents the automaton.
 type Auto struct {
 	calls           []*callNode
-	returns         []intmap
+	returns         []map[int]int
 	escapables      []bool
 	start           int
 	stateToNullable []int
@@ -69,7 +69,7 @@ func deriv(auto *Auto, current int, tree parser.Interface) (int, error) {
 			tree.Up()
 		}
 		nullIndex := auto.stateToNullable[childState]
-		current = auto.returns[stackElm].lookup(nullIndex)
+		current = auto.returns[stackElm][nullIndex]
 	}
 	return current, nil
 }
