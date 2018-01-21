@@ -1,4 +1,4 @@
-//  Copyright 2013 Walter Schulze
+//  Copyright 2017 Walter Schulze
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -12,9 +12,28 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package funcs
+package intern
 
-//Init is an interface that when implemented lets the function composition know that this function needs to be initialized.
-type Init interface {
-	Init() error
+import (
+	"testing"
+
+	"github.com/katydid/katydid/relapse/ast"
+)
+
+func TestInterningEmpty(t *testing.T) {
+	c := NewConstructor()
+	e, err := c.NewPattern(ast.NewEmpty())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if e != empty {
+		t.Fatalf("wrong empty")
+	}
+	n, err := c.NewPattern(ast.NewNot(ast.NewEmpty()))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if n.Patterns[0] != empty {
+		t.Fatalf("wrong empty")
+	}
 }

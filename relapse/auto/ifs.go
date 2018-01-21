@@ -106,13 +106,13 @@ func (this *ifExprs) addIfExpr(cond funcs.Bool, then, els *ast.Pattern) {
 		return
 	}
 	// remove impossible (always false) then condition
-	if funcs.IsFalse(funcs.Simplify(funcs.And(this.cond, cond))) {
+	if funcs.IsFalse(funcs.And(this.cond, cond)) {
 		this.then.addReturn(els)
 		this.els.addIfExpr(cond, then, els)
 		return
 	}
 	// remove impossible (always false) else condition
-	if funcs.IsFalse(funcs.Simplify(funcs.And(this.cond, funcs.Not(cond)))) {
+	if funcs.IsFalse(funcs.And(this.cond, funcs.Not(cond))) {
 		this.then.addIfExpr(cond, then, els)
 		this.els.addReturn(then)
 		return

@@ -525,10 +525,20 @@ func NewBytesConst(buf []byte) *Expr {
 //NewList returns a typed list of expressions.
 //  []typ{elems}
 func NewList(typ types.Type, elems ...*Expr) *Expr {
+	for i, e := range elems {
+		e.RightArrow = nil
+		if i == 0 {
+			e.Comma = nil
+		} else if e.Comma == nil {
+			e.Comma = newComma()
+		}
+	}
 	return &Expr{
 		List: &List{
-			Type:  typ,
-			Elems: elems,
+			Type:       typ,
+			OpenCurly:  newOpenCurly(),
+			Elems:      elems,
+			CloseCurly: newCloseCurly(),
 		},
 	}
 }

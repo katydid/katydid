@@ -58,8 +58,6 @@ func TestComposeNot(t *testing.T) {
 	}
 }
 
-//contains(toLower(decString(test.Address.Street.value)), toLower("TheStreet"))
-
 func TestComposeContains(t *testing.T) {
 	expr := ast.NewNestedFunction("contains",
 		ast.NewNestedFunction("toLower", ast.NewStringVar()),
@@ -203,15 +201,11 @@ func TestConst(t *testing.T) {
 		ast.NewStringVar(),
 		ast.NewStringConst("ab"),
 	)
-	b, err := NewBool(expr)
-	if err != nil {
-		t.Fatal(err)
-	}
-	_, err = NewBoolFunc(b)
+	_, err := NewBool(expr)
 	if err == nil {
 		t.Fatalf("expected error")
 	}
-	if !strings.Contains(err.Error(), "regex has constant") || !strings.Contains(err.Error(), "has a variable parameter") {
+	if !strings.Contains(err.Error(), "regex") || !strings.Contains(err.Error(), "variable") {
 		t.Fatalf("expected more specific error %s", err.Error())
 	}
 }

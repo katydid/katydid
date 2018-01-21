@@ -20,11 +20,17 @@ import (
 
 //ToLower returns a toLower function with the input function as its parameter.
 func ToLower(s String) String {
-	return &toLower{s}
+	return TrimString(&toLower{
+		S:           s,
+		hash:        Hash("toLower", s),
+		hasVariable: s.HasVariable(),
+	})
 }
 
 type toLower struct {
-	S String
+	S           String
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *toLower) Eval() (string, error) {
@@ -35,17 +41,51 @@ func (this *toLower) Eval() (string, error) {
 	return strings.ToLower(s), nil
 }
 
+func (this *toLower) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*toLower); ok {
+		if c := this.S.Compare(other.S); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *toLower) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *toLower) String() string {
+	return "toLower(" + this.S.String() + ")"
+}
+
+func (this *toLower) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("toLower", new(toLower))
+	Register("toLower", ToLower)
 }
 
 //ToUpper returns a toUpper function with the input function as its parameter.
 func ToUpper(s String) String {
-	return &toUpper{s}
+	return TrimString(&toUpper{
+		S:           s,
+		hash:        Hash("toUpper", s),
+		hasVariable: s.HasVariable(),
+	})
 }
 
 type toUpper struct {
-	S String
+	S           String
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *toUpper) Eval() (string, error) {
@@ -56,18 +96,53 @@ func (this *toUpper) Eval() (string, error) {
 	return strings.ToUpper(s), nil
 }
 
+func (this *toUpper) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*toUpper); ok {
+		if c := this.S.Compare(other.S); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *toUpper) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *toUpper) String() string {
+	return "toUpper(" + this.S.String() + ")"
+}
+
+func (this *toUpper) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("toUpper", new(toUpper))
+	Register("toUpper", ToUpper)
 }
 
 //Contains returns a contains function with the two input function as its parameter.
 func Contains(s, sub String) Bool {
-	return &contains{s, sub}
+	return TrimBool(&contains{
+		S:           s,
+		Substr:      sub,
+		hash:        Hash("contains", s, sub),
+		hasVariable: s.HasVariable() || sub.HasVariable(),
+	})
 }
 
 type contains struct {
-	S      String
-	Substr String
+	S           String
+	Substr      String
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *contains) Eval() (bool, error) {
@@ -82,18 +157,56 @@ func (this *contains) Eval() (bool, error) {
 	return strings.Contains(s, subStr), nil
 }
 
+func (this *contains) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*contains); ok {
+		if c := this.S.Compare(other.S); c != 0 {
+			return c
+		}
+		if c := this.Substr.Compare(other.Substr); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *contains) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *contains) String() string {
+	return "contains(" + sjoin(this.S, this.Substr) + ")"
+}
+
+func (this *contains) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("contains", new(contains))
+	Register("contains", Contains)
 }
 
 //EqualFold returns a eqFold function with the two input functions as its parameters.
 func EqualFold(s, t String) Bool {
-	return &equalFold{s, t}
+	return TrimBool(&equalFold{
+		S:           s,
+		T:           t,
+		hash:        Hash("eqFold", s, t),
+		hasVariable: s.HasVariable() || t.HasVariable(),
+	})
 }
 
 type equalFold struct {
-	S String
-	T String
+	S           String
+	T           String
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *equalFold) Eval() (bool, error) {
@@ -108,18 +221,56 @@ func (this *equalFold) Eval() (bool, error) {
 	return strings.EqualFold(s, t), nil
 }
 
+func (this *equalFold) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*equalFold); ok {
+		if c := this.S.Compare(other.S); c != 0 {
+			return c
+		}
+		if c := this.T.Compare(other.T); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *equalFold) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *equalFold) String() string {
+	return "eqFold(" + sjoin(this.S, this.T) + ")"
+}
+
+func (this *equalFold) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("eqFold", new(equalFold))
+	Register("eqFold", EqualFold)
 }
 
 //HasPrefix returns a hasPrefix function with the two input functions as its parameters.
 func HasPrefix(a, b String) Bool {
-	return &hasPrefix{a, b}
+	return TrimBool(&hasPrefix{
+		V1:          a,
+		V2:          b,
+		hash:        Hash("hasPrefix", a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type hasPrefix struct {
-	V1 String
-	V2 String
+	V1          String
+	V2          String
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *hasPrefix) Eval() (bool, error) {
@@ -134,18 +285,56 @@ func (this *hasPrefix) Eval() (bool, error) {
 	return strings.HasPrefix(v1, v2), nil
 }
 
+func (this *hasPrefix) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*hasPrefix); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *hasPrefix) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *hasPrefix) String() string {
+	return "hasPrefix(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *hasPrefix) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("hasPrefix", new(hasPrefix))
+	Register("hasPrefix", HasPrefix)
 }
 
 //HasSuffix returns a hasSuffix function with the two input functions as its parameters.
 func HasSuffix(a, b String) Bool {
-	return &hasSuffix{a, b}
+	return TrimBool(&hasSuffix{
+		V1:          a,
+		V2:          b,
+		hash:        Hash("hasSuffix", a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type hasSuffix struct {
-	V1 String
-	V2 String
+	V1          String
+	V2          String
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *hasSuffix) Eval() (bool, error) {
@@ -160,6 +349,37 @@ func (this *hasSuffix) Eval() (bool, error) {
 	return strings.HasSuffix(v1, v2), nil
 }
 
+func (this *hasSuffix) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*hasSuffix); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *hasSuffix) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *hasSuffix) String() string {
+	return "hasSuffix(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *hasSuffix) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("hasSuffix", new(hasSuffix))
+	Register("hasSuffix", HasSuffix)
 }

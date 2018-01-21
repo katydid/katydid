@@ -6,12 +6,30 @@ import (
 )
 
 type listOfDouble struct {
-	List []Double
+	List        []Double
+	hash        uint64
+	hasVariable bool
 }
 
 //NewListOfDouble returns a new function that when evaluated returns a list of type Double
 func NewListOfDouble(v []Double) Doubles {
-	return &listOfDouble{v}
+	h := uint64(17)
+	h = 31*h + 63639164578
+	for i := 0; i < len(v); i++ {
+		h = 31*h + v[i].Hash()
+	}
+	hasVariable := false
+	for _, vv := range v {
+		if vv.HasVariable() {
+			hasVariable = true
+			break
+		}
+	}
+	return TrimDoubles(&listOfDouble{
+		List:        v,
+		hash:        h,
+		hasVariable: hasVariable,
+	})
 }
 
 func (this *listOfDouble) Eval() ([]float64, error) {
@@ -26,10 +44,42 @@ func (this *listOfDouble) Eval() ([]float64, error) {
 	return res, nil
 }
 
+func (this *listOfDouble) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*listOfDouble); ok {
+		if len(this.List) != len(other.List) {
+			if len(this.List) < len(other.List) {
+				return -1
+			}
+			return 1
+		}
+		for i := range this.List {
+			if c := this.List[i].Compare(other.List[i]); c != 0 {
+				return c
+			}
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *listOfDouble) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *listOfDouble) Hash() uint64 {
+	return this.hash
+}
+
 func (this *listOfDouble) String() string {
 	ss := make([]string, len(this.List))
 	for i := range this.List {
-		ss[i] = sprint(this.List[i])
+		ss[i] = this.List[i].String()
 	}
 	return "[]double{" + strings.Join(ss, ",") + "}"
 }
@@ -37,12 +87,30 @@ func (this *listOfDouble) String() string {
 func (this *listOfDouble) IsListOf() {}
 
 type listOfInt struct {
-	List []Int
+	List        []Int
+	hash        uint64
+	hasVariable bool
 }
 
 //NewListOfInt returns a new function that when evaluated returns a list of type Int
 func NewListOfInt(v []Int) Ints {
-	return &listOfInt{v}
+	h := uint64(17)
+	h = 31*h + 2284164
+	for i := 0; i < len(v); i++ {
+		h = 31*h + v[i].Hash()
+	}
+	hasVariable := false
+	for _, vv := range v {
+		if vv.HasVariable() {
+			hasVariable = true
+			break
+		}
+	}
+	return TrimInts(&listOfInt{
+		List:        v,
+		hash:        h,
+		hasVariable: hasVariable,
+	})
 }
 
 func (this *listOfInt) Eval() ([]int64, error) {
@@ -57,10 +125,42 @@ func (this *listOfInt) Eval() ([]int64, error) {
 	return res, nil
 }
 
+func (this *listOfInt) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*listOfInt); ok {
+		if len(this.List) != len(other.List) {
+			if len(this.List) < len(other.List) {
+				return -1
+			}
+			return 1
+		}
+		for i := range this.List {
+			if c := this.List[i].Compare(other.List[i]); c != 0 {
+				return c
+			}
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *listOfInt) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *listOfInt) Hash() uint64 {
+	return this.hash
+}
+
 func (this *listOfInt) String() string {
 	ss := make([]string, len(this.List))
 	for i := range this.List {
-		ss[i] = sprint(this.List[i])
+		ss[i] = this.List[i].String()
 	}
 	return "[]int{" + strings.Join(ss, ",") + "}"
 }
@@ -68,12 +168,30 @@ func (this *listOfInt) String() string {
 func (this *listOfInt) IsListOf() {}
 
 type listOfUint struct {
-	List []Uint
+	List        []Uint
+	hash        uint64
+	hasVariable bool
 }
 
 //NewListOfUint returns a new function that when evaluated returns a list of type Uint
 func NewListOfUint(v []Uint) Uints {
-	return &listOfUint{v}
+	h := uint64(17)
+	h = 31*h + 81736761
+	for i := 0; i < len(v); i++ {
+		h = 31*h + v[i].Hash()
+	}
+	hasVariable := false
+	for _, vv := range v {
+		if vv.HasVariable() {
+			hasVariable = true
+			break
+		}
+	}
+	return TrimUints(&listOfUint{
+		List:        v,
+		hash:        h,
+		hasVariable: hasVariable,
+	})
 }
 
 func (this *listOfUint) Eval() ([]uint64, error) {
@@ -88,10 +206,42 @@ func (this *listOfUint) Eval() ([]uint64, error) {
 	return res, nil
 }
 
+func (this *listOfUint) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*listOfUint); ok {
+		if len(this.List) != len(other.List) {
+			if len(this.List) < len(other.List) {
+				return -1
+			}
+			return 1
+		}
+		for i := range this.List {
+			if c := this.List[i].Compare(other.List[i]); c != 0 {
+				return c
+			}
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *listOfUint) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *listOfUint) Hash() uint64 {
+	return this.hash
+}
+
 func (this *listOfUint) String() string {
 	ss := make([]string, len(this.List))
 	for i := range this.List {
-		ss[i] = sprint(this.List[i])
+		ss[i] = this.List[i].String()
 	}
 	return "[]uint{" + strings.Join(ss, ",") + "}"
 }
@@ -99,12 +249,30 @@ func (this *listOfUint) String() string {
 func (this *listOfUint) IsListOf() {}
 
 type listOfBool struct {
-	List []Bool
+	List        []Bool
+	hash        uint64
+	hasVariable bool
 }
 
 //NewListOfBool returns a new function that when evaluated returns a list of type Bool
 func NewListOfBool(v []Bool) Bools {
-	return &listOfBool{v}
+	h := uint64(17)
+	h = 31*h + 64369321
+	for i := 0; i < len(v); i++ {
+		h = 31*h + v[i].Hash()
+	}
+	hasVariable := false
+	for _, vv := range v {
+		if vv.HasVariable() {
+			hasVariable = true
+			break
+		}
+	}
+	return TrimBools(&listOfBool{
+		List:        v,
+		hash:        h,
+		hasVariable: hasVariable,
+	})
 }
 
 func (this *listOfBool) Eval() ([]bool, error) {
@@ -119,10 +287,42 @@ func (this *listOfBool) Eval() ([]bool, error) {
 	return res, nil
 }
 
+func (this *listOfBool) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*listOfBool); ok {
+		if len(this.List) != len(other.List) {
+			if len(this.List) < len(other.List) {
+				return -1
+			}
+			return 1
+		}
+		for i := range this.List {
+			if c := this.List[i].Compare(other.List[i]); c != 0 {
+				return c
+			}
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *listOfBool) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *listOfBool) Hash() uint64 {
+	return this.hash
+}
+
 func (this *listOfBool) String() string {
 	ss := make([]string, len(this.List))
 	for i := range this.List {
-		ss[i] = sprint(this.List[i])
+		ss[i] = this.List[i].String()
 	}
 	return "[]bool{" + strings.Join(ss, ",") + "}"
 }
@@ -130,12 +330,30 @@ func (this *listOfBool) String() string {
 func (this *listOfBool) IsListOf() {}
 
 type listOfString struct {
-	List []String
+	List        []String
+	hash        uint64
+	hasVariable bool
 }
 
 //NewListOfString returns a new function that when evaluated returns a list of type String
 func NewListOfString(v []String) Strings {
-	return &listOfString{v}
+	h := uint64(17)
+	h = 31*h + 77092305506
+	for i := 0; i < len(v); i++ {
+		h = 31*h + v[i].Hash()
+	}
+	hasVariable := false
+	for _, vv := range v {
+		if vv.HasVariable() {
+			hasVariable = true
+			break
+		}
+	}
+	return TrimStrings(&listOfString{
+		List:        v,
+		hash:        h,
+		hasVariable: hasVariable,
+	})
 }
 
 func (this *listOfString) Eval() ([]string, error) {
@@ -150,10 +368,42 @@ func (this *listOfString) Eval() ([]string, error) {
 	return res, nil
 }
 
+func (this *listOfString) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*listOfString); ok {
+		if len(this.List) != len(other.List) {
+			if len(this.List) < len(other.List) {
+				return -1
+			}
+			return 1
+		}
+		for i := range this.List {
+			if c := this.List[i].Compare(other.List[i]); c != 0 {
+				return c
+			}
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *listOfString) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *listOfString) Hash() uint64 {
+	return this.hash
+}
+
 func (this *listOfString) String() string {
 	ss := make([]string, len(this.List))
 	for i := range this.List {
-		ss[i] = sprint(this.List[i])
+		ss[i] = this.List[i].String()
 	}
 	return "[]string{" + strings.Join(ss, ",") + "}"
 }
@@ -161,12 +411,30 @@ func (this *listOfString) String() string {
 func (this *listOfString) IsListOf() {}
 
 type listOfBytes struct {
-	List []Bytes
+	List        []Bytes
+	hash        uint64
+	hasVariable bool
 }
 
 //NewListOfBytes returns a new function that when evaluated returns a list of type Bytes
 func NewListOfBytes(v []Bytes) ListOfBytes {
-	return &listOfBytes{v}
+	h := uint64(17)
+	h = 31*h + 65169257167589942
+	for i := 0; i < len(v); i++ {
+		h = 31*h + v[i].Hash()
+	}
+	hasVariable := false
+	for _, vv := range v {
+		if vv.HasVariable() {
+			hasVariable = true
+			break
+		}
+	}
+	return TrimListOfBytes(&listOfBytes{
+		List:        v,
+		hash:        h,
+		hasVariable: hasVariable,
+	})
 }
 
 func (this *listOfBytes) Eval() ([][]byte, error) {
@@ -181,10 +449,42 @@ func (this *listOfBytes) Eval() ([][]byte, error) {
 	return res, nil
 }
 
+func (this *listOfBytes) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*listOfBytes); ok {
+		if len(this.List) != len(other.List) {
+			if len(this.List) < len(other.List) {
+				return -1
+			}
+			return 1
+		}
+		for i := range this.List {
+			if c := this.List[i].Compare(other.List[i]); c != 0 {
+				return c
+			}
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *listOfBytes) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *listOfBytes) Hash() uint64 {
+	return this.hash
+}
+
 func (this *listOfBytes) String() string {
 	ss := make([]string, len(this.List))
 	for i := range this.List {
-		ss[i] = sprint(this.List[i])
+		ss[i] = this.List[i].String()
 	}
 	return "[][]byte{" + strings.Join(ss, ",") + "}"
 }

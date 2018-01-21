@@ -15,12 +15,13 @@
 package mem_test
 
 import (
+	"testing"
+
 	"github.com/katydid/katydid/parser"
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/interp"
 	"github.com/katydid/katydid/relapse/mem"
 	"github.com/katydid/katydid/relapse/testsuite"
-	"testing"
 )
 
 func TestSuite(t *testing.T) {

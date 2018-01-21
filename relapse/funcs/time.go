@@ -14,7 +14,10 @@
 
 package funcs
 
-import "time"
+import (
+	"strings"
+	"time"
+)
 
 //Now returns a new now function.
 func Now() Int {
@@ -27,8 +30,29 @@ func (this *now) Eval() (int64, error) {
 	return time.Now().UnixNano(), nil
 }
 
-func (this *now) IsVariable() {}
+func (this *now) Hash() uint64 {
+	return Hash("now")
+}
+
+func (this *now) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if _, ok := that.(*now); ok {
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *now) String() string {
+	return "now"
+}
+
+func (this *now) HasVariable() bool { return true }
 
 func init() {
-	Register("now", new(now))
+	Register("now", Now)
 }

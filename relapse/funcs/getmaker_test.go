@@ -20,32 +20,28 @@ import (
 	"github.com/katydid/katydid/relapse/types"
 )
 
-type which struct {
-	exp string
-}
-
-func (this which) test(t *testing.T, name string, params ...types.Type) {
-	uniq, err := funcsMap.which(name, params...)
+func testGetMaker(t *testing.T, name string, params ...types.Type) {
+	f, err := globalFactory.getMaker(name, params...)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if uniq != this.exp {
-		t.Fatalf("expected %v got %v", this.exp, uniq)
+	if f.Name != name {
+		t.Fatalf("name: want %s got %s", name, f.Name)
 	}
 }
 
-func TestWhichStringEq(t *testing.T) {
-	which{"stringEq"}.test(t, "eq", types.SINGLE_STRING, types.SINGLE_STRING)
+func TestGetMakerStringEq(t *testing.T) {
+	testGetMaker(t, "eq", types.SINGLE_STRING, types.SINGLE_STRING)
 }
 
-func TestWhichInt64Eq(t *testing.T) {
-	which{"intEq"}.test(t, "eq", types.SINGLE_INT, types.SINGLE_INT)
+func TestGetMakerInt64Eq(t *testing.T) {
+	testGetMaker(t, "eq", types.SINGLE_INT, types.SINGLE_INT)
 }
 
-func TestWhichInt64Ge(t *testing.T) {
-	which{"intGE"}.test(t, "ge", types.SINGLE_INT, types.SINGLE_INT)
+func TestGetMakerInt64Ge(t *testing.T) {
+	testGetMaker(t, "ge", types.SINGLE_INT, types.SINGLE_INT)
 }
 
-func TestWhichElem(t *testing.T) {
-	which{"elemUints"}.test(t, "elem", types.LIST_UINT, types.SINGLE_INT)
+func TestGetMakerElem(t *testing.T) {
+	testGetMaker(t, "elem", types.LIST_UINT, types.SINGLE_INT)
 }

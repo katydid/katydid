@@ -44,6 +44,36 @@ func BuiltInFunctionName(symbol string) string {
 	return ""
 }
 
+// FunctionNameToBuiltIn returns the builtin constructor for a given function name.
+// If a symbol does not exist, nil is returned.
+func FunctionNameToBuiltIn(symbol string) func(*Expr) *Expr {
+	switch symbol {
+	case "eq":
+		return NewEqual
+	case "ne":
+		return NewNotEqual
+	case "lt":
+		return NewLessThan
+	case "gt":
+		return NewGreaterThan
+	case "le":
+		return NewLessEqual
+	case "ge":
+		return NewGreaterEqual
+	case "regex":
+		return NewRegex
+	case "contains":
+		return NewHasElem
+	case "hasPrefix":
+		return NewHasPrefix
+	case "hasSuffix":
+		return NewHasSuffix
+	case "type":
+		return NewType
+	}
+	return nil
+}
+
 //NewEqual returns an builtin equal expression.
 //  == e
 func NewEqual(e *Expr) *Expr {

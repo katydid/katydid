@@ -15,16 +15,21 @@
 package mem_test
 
 import (
+	"fmt"
 	"reflect"
+	"strings"
 	"testing"
 
 	reflectparser "github.com/katydid/katydid/parser/reflect"
+	"github.com/katydid/katydid/relapse/ast"
 	. "github.com/katydid/katydid/relapse/combinator"
 	"github.com/katydid/katydid/relapse/funcs"
 	"github.com/katydid/katydid/relapse/mem"
+	relapseparser "github.com/katydid/katydid/relapse/parser"
 )
 
 func NewInjectable() *injectableInt {
+	fmt.Printf("NewInjectable\n")
 	return &injectableInt{}
 }
 
@@ -33,23 +38,49 @@ type injectableInt struct {
 }
 
 func (this *injectableInt) Eval() (int64, error) {
-	return this.context.Value.(int64), nil
+	v := this.context.Value.(int64)
+	fmt.Printf("eval = %d\n", v)
+	return v, nil
+}
+
+func (this *injectableInt) Compare(that funcs.Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if _, ok := that.(*injectableInt); ok {
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *injectableInt) String() string {
+	return "inject()"
+}
+
+func (this *injectableInt) Hash() uint64 {
+	return 17
 }
 
 func (this *injectableInt) SetContext(context *funcs.Context) {
 	this.context = context
+	fmt.Printf("context set\n")
 }
 
-func (this *injectableInt) IsVariable() {
-	//If this method is not implemented this function will probably be trimmed
+func (this *injectableInt) HasVariable() bool {
+	return true
 }
 
 func init() {
-	funcs.Register("inject", new(injectableInt))
+	funcs.Register("inject", NewInjectable)
 
-	injectNumber = G{
-		"main": InPath("Num", Value(funcs.IntEq(funcs.IntVar(), NewInjectable()))),
+	parsedGrammar, err := relapseparser.ParseGrammar("Num:->eq($int, inject())")
+	if err != nil {
+		panic(err)
 	}
+	injectNumber = G(ast.NewRefLookup(parsedGrammar))
 }
 
 var injectNumber = G{}
@@ -70,12 +101,15 @@ func testInject(t *testing.T, m *mem.Mem) bool {
 
 func TestInject(t *testing.T) {
 	grammar := injectNumber.Grammar()
+	fmt.Printf("parsed Grammar: %s\n", grammar)
 	m, err := mem.New(grammar)
 	if err != nil {
 		t.Fatal(err)
 	}
+	fmt.Printf("trying to set context...\n")
 	c := &funcs.Context{Value: int64(0)}
 	m.SetContext(c)
+	fmt.Printf("hopefully context was set\n")
 	c.Value = int64(456)
 	if !testInject(t, m) {
 		t.Fatalf("expected match")

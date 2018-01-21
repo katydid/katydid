@@ -15,100 +15,26 @@
 package funcs
 
 import (
-	"reflect"
 	"strings"
 )
 
+// sjoin calls the String method of all parameters and joins them with a comma as a separator.
+func sjoin(s ...Stringer) string {
+	ss := make([]string, len(s))
+	for i := range s {
+		ss[i] = s[i].String()
+	}
+	return strings.Join(ss, ",")
+}
+
 //Sprint returns the string printout of the function.
-func Sprint(i interface{}) string {
-	e := reflect.ValueOf(i).Elem()
-	uniqName := e.Type().Name()
-	name := reverse(uniqName)
-	numFields := e.NumField()
-	if numFields == 2 {
-		p1 := e.Field(0).Interface()
-		p2 := e.Field(1).Interface()
-		v, ok := isVarConst(p1, p2)
-		if ok {
-			if name == "eq" {
-				return "== " + v
-			}
-			if name == "ne" {
-				return "!= " + v
-			}
-			if name == "gt" {
-				return "> " + v
-			}
-			if name == "lt" {
-				return "< " + v
-			}
-			if name == "ge" {
-				return ">= " + v
-			}
-			if name == "le" {
-				return "<= " + v
-			}
+func Sprint(s Stringer) string {
+	if shorthand, ok := s.(interface {
+		Shorthand() (string, bool)
+	}); ok {
+		if short, sok := shorthand.Shorthand(); sok {
+			return short
 		}
 	}
-	return "->" + sprint(i)
-}
-
-func sprint(i interface{}) string {
-	e := reflect.ValueOf(i).Elem()
-	uniqName := e.Type().Name()
-	name := reverse(uniqName)
-	if len(name) == 0 {
-		strer, ok := i.(stringer)
-		if !ok {
-			panic("unknown function without String() string method")
-		}
-		name = strer.String()
-	}
-	switch i.(type) {
-	case Const:
-		return name
-	case Setter:
-		return name
-	case ListOf:
-		return name
-	}
-	numFields := e.NumField()
-	ss := make([]string, 0, numFields)
-	for i := 0; i < numFields; i++ {
-		if _, ok := e.Field(i).Type().MethodByName("Eval"); !ok {
-			continue
-		}
-		ss = append(ss, sprint(e.Field(i).Interface()))
-	}
-	return name + "(" + strings.Join(ss, ",") + ")"
-}
-
-func reverse(uniq string) (name string) {
-	f, ok := funcsMap.uniqToFunc[uniq]
-	if !ok {
-		return ""
-	}
-	return f.name
-}
-
-type stringer interface {
-	String() string
-}
-
-func isVarConst(p1, p2 interface{}) (string, bool) {
-	switch p1.(type) {
-	case *varBool, *varBytes, *varDouble, *varInt, *varString, *varUint:
-		switch p2.(type) {
-		case *constBool, *constBytes, *constDouble, *constInt, *constString, *constUint:
-			return sprint(p2), true
-		}
-	}
-	switch p2.(type) {
-	case *varBool, *varBytes, *varDouble, *varInt, *varString, *varUint:
-		switch p1.(type) {
-		case *constBool, *constBytes, *constDouble, *constInt, *constString, *constUint:
-			return sprint(p1), true
-		}
-	}
-	return "", false
+	return "->" + s.String()
 }

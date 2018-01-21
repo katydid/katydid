@@ -17,6 +17,7 @@ package compose
 
 import (
 	"fmt"
+
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/funcs"
 	"github.com/katydid/katydid/relapse/types"
@@ -53,29 +54,28 @@ func Which(expr *ast.Expr) (types.Type, error) {
 	}
 	if expr.Function != nil {
 		fnc := expr.GetFunction()
-		uniq, err := WhichFunc(fnc)
+		f, err := GetMaker(fnc)
 		if err != nil {
 			return 0, err
 		}
-		return funcs.Out(uniq)
+		return f.Out, nil
 	}
 	return 0, &errUnknownType{expr}
 }
 
-//WhichFunc returns the unique name of the function, given the types of the parameters.
-//For example, a function named eq could have a unique name of intEq, doubleEq, etc.
-func WhichFunc(fnc *ast.Function) (string, error) {
+//GetMaker returns the function maker, given the function name and types of the parameters.
+func GetMaker(fnc *ast.Function) (*funcs.Maker, error) {
 	types := make([]types.Type, 0, len(fnc.GetParams()))
 	for _, p := range fnc.GetParams() {
 		typ, err := Which(p)
 		if err != nil {
-			return "", err
+			return nil, err
 		}
 		if typ > 0 {
 			types = append(types, typ)
 		}
 	}
-	return funcs.Which(fnc.GetName(), types...)
+	return funcs.GetMaker(fnc.GetName(), types...)
 }
 
 type errExpected struct {
@@ -95,35 +95,31 @@ func (this *errUnknownType) Error() string {
 	return "relapse/compose: expr type is unknown: " + this.expr.String()
 }
 
-func prep(expr *ast.Expr, expType types.Type) (uniq string, err error) {
+func prep(expr *ast.Expr, expType types.Type) (*funcs.Maker, error) {
 	if expr.Function != nil {
 		fnc := expr.GetFunction()
-		uniq, err = WhichFunc(fnc)
+		f, err := GetMaker(fnc)
 		if err != nil {
-			return "", err
+			return nil, err
 		}
-		typ, err := funcs.Out(uniq)
-		if err != nil {
-			return "", err
+		if f.Out != expType {
+			return nil, &errExpected{expType.String(), expr.String()}
 		}
-		if typ != expType {
-			return "", &errExpected{expType.String(), expr.String()}
-		}
-		return uniq, err
+		return f, err
 	}
 	if expr.List != nil {
 		if !types.IsList(expType) {
-			return "", &errExpected{expType.String(), expr.String()}
+			return nil, &errExpected{expType.String(), expr.String()}
 		}
 	}
 	typ, err := Which(expr)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	if typ != expType {
-		return "", &errExpected{expType.String(), expr.String()}
+		return nil, &errExpected{expType.String(), expr.String()}
 	}
-	return "", nil
+	return nil, nil
 }
 
 func newValues(params []*ast.Expr) ([]interface{}, error) {
@@ -140,7 +136,7 @@ func newValues(params []*ast.Expr) ([]interface{}, error) {
 	return values, nil
 }
 
-func composeVariable(v *ast.Variable) funcs.Variable {
+func composeVariable(v *ast.Variable) funcs.Comparable {
 	switch v.Type {
 	case types.SINGLE_DOUBLE:
 		return funcs.DoubleVar()

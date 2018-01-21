@@ -25,6 +25,8 @@ const compareStr = `
 type {{.Type}}{{.CName}} struct {
 	V1 {{.CType}}
 	V2 {{.CType}}
+	hash uint64
+	hasVariable bool
 }
 
 func (this *{{.Type}}{{.CName}}) Eval() (bool, error) {
@@ -39,13 +41,63 @@ func (this *{{.Type}}{{.CName}}) Eval() (bool, error) {
 	{{if .Eval}}{{.Eval}}{{else}}return v1 {{.Operator}} v2, nil{{end}}
 }
 
+func (this *{{.Type}}{{.CName}}) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*{{.Type}}{{.CName}}); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *{{.Type}}{{.CName}}) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "{{.Operator}} " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "{{.Operator}} " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *{{.Type}}{{.CName}}) String() string {
+	return "{{.Name}}" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *{{.Type}}{{.CName}}) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *{{.Type}}{{.CName}}) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("{{.Name}}", new({{.Type}}{{.CName}}))
+	Register("{{.Name}}", {{.CType}}{{.CName}})
 }
 
 // {{.CType}}{{.CName}} returns a new {{.Comment}} function.
 func {{.CType}}{{.CName}}(a, b {{.CType}}) Bool {
-	return &{{.Type}}{{.CName}}{V1: a, V2: b}
+	return TrimBool(&{{.Type}}{{.CName}}{
+		V1: a, 
+		V2: b, 
+		hash: hashWithId({{.Hash}}, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 `
 
@@ -66,15 +118,19 @@ func (this *compare) CName() string {
 	return gen.CapFirst(this.Name)
 }
 
+func (this *compare) Hash() uint64 {
+	return deriveHashStr(this.Name)
+}
+
 const newFuncStr = `
-//New{{.}}Func dynamically creates and asserts the returning function is of type {{.}}.
+//New{{.}} dynamically creates and asserts the returning function is of type {{.}}.
 //This function is used by the compose library to compile functions together.
-func New{{.}}Func(uniq string, values ...interface{}) ({{.}}, error) {
-	f, err := newFunc(uniq, values...)
+func (f *Maker) New{{.}}(values ...interface{}) ({{.}}, error) {
+	v, err := f.New(values...)
 	if err != nil {
 		return nil, err
 	}
-	return f.({{.}}), nil
+	return v.({{.}}), nil
 }
 `
 
@@ -87,11 +143,15 @@ var typConst{{.CType}} reflect.Type = reflect.TypeOf((*Const{{.CType}})(nil)).El
 
 type const{{.CType}} struct {
 	v {{.GoType}}
+	hash uint64
 }
 
 //{{.CType}}Const returns a new constant function of type {{.CType}}
 func {{.CType}}Const(v {{.GoType}}) Const{{.CType}} {
-	return &const{{.CType}}{v}
+	h := uint64(17)
+	h = 31*h + {{.Hash}}
+	h = 31*h + deriveHash{{.CType}}(v)
+	return &const{{.CType}}{v, h}
 }
 
 func (this *const{{.CType}}) IsConst() {}
@@ -100,12 +160,33 @@ func (this *const{{.CType}}) Eval() ({{.GoType}}, error) {
 	return this.v, nil
 }
 
+func (this *const{{.CType}}) HasVariable() bool { return false }
+
+func (this *const{{.CType}}) Hash() uint64 {
+	return this.hash
+}
+
 func (this *const{{.CType}}) String() string {
 	{{if .ListType}}ss := make([]string, len(this.v))
 	for i := range this.v {
 		ss[i] = fmt.Sprintf("{{.String}}", this.v[i])
 	}
 	return "[]{{.ListType}}{" + strings.Join(ss, ",") + "}"{{else}}return fmt.Sprintf("{{.String}}", this.v){{end}}
+}
+
+// Trim{{.CType}} turns functions into constants, if they can be evaluated at compile time.
+func Trim{{.CType}}(f {{.CType}}) {{.CType}} {
+	if _, ok := f.(Const); ok {
+		return f
+	}
+	if f.HasVariable() {
+		return f
+	}
+	v, err := f.Eval()
+	if err != nil {
+		return f
+	}
+	return {{.CType}}Const(v)
 }
 `
 
@@ -116,14 +197,36 @@ type conster struct {
 	ListType string
 }
 
+func (this *conster) Hash() uint64 {
+	return deriveHashStr(this.CType)
+}
+
 const listStr = `
 type listOf{{.FuncType}} struct {
 	List []{{.FuncType}}
+	hash uint64
+	hasVariable bool
 }
 
 //NewListOf{{.FuncType}} returns a new function that when evaluated returns a list of type {{.FuncType}}
 func NewListOf{{.FuncType}}(v []{{.FuncType}}) {{.CType}} {
-	return &listOf{{.FuncType}}{v}
+	h := uint64(17)
+	h = 31*h + {{.Hash}}
+	for i := 0; i < len(v); i++ {
+		h = 31*h + v[i].Hash()	
+	}
+	hasVariable := false
+	for _, vv := range v {
+		if vv.HasVariable() {
+			hasVariable = true
+			break
+		}
+	}
+	return Trim{{.CType}}(&listOf{{.FuncType}}{
+		List: v, 
+		hash: h,
+		hasVariable: hasVariable,
+	})
 }
 
 func (this *listOf{{.FuncType}}) Eval() ([]{{.GoType}}, error) {
@@ -138,10 +241,42 @@ func (this *listOf{{.FuncType}}) Eval() ([]{{.GoType}}, error) {
 	return res, nil
 }
 
+func (this *listOf{{.FuncType}}) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*listOf{{.FuncType}}); ok {
+		if len(this.List) != len(other.List) {
+			if len(this.List) < len(other.List) {
+				return -1
+			}
+			return 1
+		}
+		for i := range this.List {
+			if c := this.List[i].Compare(other.List[i]); c != 0 {
+				return c
+			}
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *listOf{{.FuncType}}) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *listOf{{.FuncType}}) Hash() uint64 {
+	return this.hash
+}
+
 func (this *listOf{{.FuncType}}) String() string {
 	ss := make([]string, len(this.List))
 	for i := range this.List {
-		ss[i] = sprint(this.List[i])
+		ss[i] = this.List[i].String()
 	}
 	return "[]{{.Type}}{" + strings.Join(ss, ",") + "}"
 }
@@ -156,9 +291,14 @@ type list struct {
 	GoType   string
 }
 
+func (this *list) Hash() uint64 {
+	return deriveHashStr(this.CType)
+}
+
 const printStr = `
 type print{{.Name}} struct {
 	E {{.Name}}
+	hash uint64
 }
 
 func (this *print{{.Name}}) Eval() ({{.GoType}}, error) {
@@ -171,15 +311,42 @@ func (this *print{{.Name}}) Eval() ({{.GoType}}, error) {
 	return v, err
 }
 
-func (this *print{{.Name}}) IsVariable() {}
+func (this *print{{.Name}}) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*print{{.Name}}); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *print{{.Name}}) String() string {
+	return "print(" + this.E.String() +")"
+}
+
+func (this *print{{.Name}}) Hash() uint64 {
+	return this.hash
+}
+
+func (this *print{{.Name}}) HasVariable() bool { return true }
 
 func init() {
-	Register("print", new(print{{.Name}}))
+	Register("print", Print{{.Name}})
 }
 
 //Print{{.Name}} returns a function that prints out the value of the argument function and returns its value.
 func Print{{.Name}}(e {{.Name}}) {{.Name}} {
-	return &print{{.Name}}{E: e}
+	return &print{{.Name}}{
+		E: e, 
+		hash: hashWithId({{.Hash}}, e),
+	}
 }
 `
 
@@ -188,9 +355,15 @@ type printer struct {
 	GoType string
 }
 
+func (this *printer) Hash() uint64 {
+	return deriveHashStr(this.Name)
+}
+
 const lengthStr = `
 type len{{.}} struct {
 	E {{.}}
+	hash uint64
+	hasVariable bool
 }
 
 func (this *len{{.}}) Eval() (int64, error) {
@@ -201,13 +374,45 @@ func (this *len{{.}}) Eval() (int64, error) {
 	return int64(len(e)), nil
 }
 
+func (this *len{{.}}) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*len{{.}}); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *len{{.}}) String() string {
+	return "length(" + this.E.String() + ")"
+}
+
+func (this *len{{.}}) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *len{{.}}) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("length", new(len{{.}}))
+	Register("length", Len{{.}})
 }
 
 //Len{{.}} returns a function that returns the length of a list of type {{.}}
 func Len{{.}}(e {{.}}) Int {
-	return &len{{.}}{E: e}
+	return TrimInt(&len{{.}}{
+		E: e, 
+		hash: Hash("length", e),
+		hasVariable: e.HasVariable(),
+	})
 }
 `
 
@@ -215,6 +420,8 @@ const elemStr = `
 type elem{{.ListType}} struct {
 	List  {{.ListType}}
 	Index Int
+	hash uint64
+	hasVariable bool
 }
 
 func (this *elem{{.ListType}}) Eval() ({{.ReturnType}}, error) {
@@ -239,16 +446,49 @@ func (this *elem{{.ListType}}) Eval() ({{.ReturnType}}, error) {
 	return list[index], nil
 }
 
+func (this *elem{{.ListType}}) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*elem{{.ListType}}); ok {
+		if c := this.List.Compare(other.List); c != 0 {
+			return c
+		}
+		if c := this.Index.Compare(other.Index); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *elem{{.ListType}}) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *elem{{.ListType}}) String() string {
+	return "elem(" + sjoin(this.List, this.Index) + ")"
+}
+
+func (this *elem{{.ListType}}) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("elem", new(elem{{.ListType}}))
+	Register("elem", Elem{{.ListType}})
 }
 
 //Elem{{.ListType}} returns a function that returns the n'th element of the list.
 func Elem{{.ListType}}(list {{.ListType}}, n Int) {{.ThrowType}} {
-	return &elem{{.ListType}}{
+	return Trim{{.ThrowType}}(&elem{{.ListType}}{
 		List:  list,
 		Index: n,
-	}
+		hash: hashWithId({{.Hash}}, n, list),
+		hasVariable: n.HasVariable() || list.HasVariable(),
+	})
 }
 `
 
@@ -259,11 +499,17 @@ type elemer struct {
 	Default    string
 }
 
+func (this *elemer) Hash() uint64 {
+	return deriveHashStr(this.ListType)
+}
+
 const rangeStr = `
 type range{{.ListType}} struct {
 	List  {{.ListType}}
 	First Int
 	Last  Int
+	hash uint64
+	hasVariable bool
 }
 
 func (this *range{{.ListType}}) Eval() ({{.ReturnType}}, error) {
@@ -302,17 +548,53 @@ func (this *range{{.ListType}}) Eval() ({{.ReturnType}}, error) {
 	return list[first:last], nil
 }
 
+func (this *range{{.ListType}}) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*range{{.ListType}}); ok {
+		if c := this.List.Compare(other.List); c != 0 {
+			return c
+		}
+		if c := this.First.Compare(other.First); c != 0 {
+			return c
+		}
+		if c := this.Last.Compare(other.Last); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *range{{.ListType}}) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *range{{.ListType}}) String() string {
+	return "range(" + sjoin(this.List, this.First, this.Last) +")"
+}
+
+func (this *range{{.ListType}}) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("range", new(range{{.ListType}}))
+	Register("range", Range{{.ListType}})
 }
 
 //Range{{.ListType}} returns a function that returns a range of elements from a list.
 func Range{{.ListType}}(list {{.ListType}}, from, to Int) {{.ListType}} {
-	return &range{{.ListType}}{
+	return Trim{{.ListType}}(&range{{.ListType}}{
 		List:  list,
 		First: from,
 		Last:  to,
-	}
+		hash: hashWithId({{.Hash}}, from, to, list),
+		hasVariable: from.HasVariable() || to.HasVariable() || list.HasVariable(),
+	})
 }
 `
 
@@ -321,15 +603,29 @@ type ranger struct {
 	ReturnType string
 }
 
+func (this *ranger) Hash() uint64 {
+	return deriveHashStr(this.ListType)
+}
+
 const variableStr = `
 type var{{.Name}} struct {
 	Value parser.Value
+	hash uint64
 }
 
 var _ Setter = &var{{.Name}}{}
-var _ Variable = &var{{.Name}}{}
+var _ aVariable = &var{{.Name}}{}
+
+type ErrNot{{.Name}}Const struct {}
+
+func (this ErrNot{{.Name}}Const) Error() string {
+	return "${{.Decode}} is not a const"
+}
 
 func (this *var{{.Name}}) Eval() ({{.GoType}}, error) {
+	if this.Value == nil {
+		return {{.Default}}, ErrNot{{.Name}}Const{}
+	}
 	v, err := this.Value.{{.Name}}()
 	if err != nil {
 		return {{.Default}}, err
@@ -337,7 +633,26 @@ func (this *var{{.Name}}) Eval() ({{.GoType}}, error) {
 	return v, nil
 }
 
-func (this *var{{.Name}}) IsVariable() {}
+func (this *var{{.Name}}) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if _, ok := that.(*var{{.Name}}); ok {
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *var{{.Name}}) Hash() uint64 {
+	return this.hash
+}
+
+func (this *var{{.Name}}) HasVariable() bool { return true }
+
+func (this *var{{.Name}}) isVariable() {}
 
 func (this *var{{.Name}}) SetValue(v parser.Value) {
 	this.Value = v
@@ -349,7 +664,9 @@ func (this *var{{.Name}}) String() string {
 
 //{{.Name}}Var returns a variable of type {{.Name}}
 func {{.Name}}Var() *var{{.Name}} {
-	return &var{{.Name}}{}
+	h := uint64(17)
+	h = 31*h + {{.Hash}}
+	return &var{{.Name}}{hash: h}
 }
 `
 
@@ -360,9 +677,15 @@ type varer struct {
 	Default string
 }
 
+func (this *varer) Hash() uint64 {
+	return deriveHashStr(this.Name)
+}
+
 const typStr = `
 type typ{{.Name}} struct {
 	E {{.Name}}
+	hash uint64
+	hasVariable bool
 }
 
 func (this *typ{{.Name}}) Eval() (bool, error) {
@@ -370,13 +693,45 @@ func (this *typ{{.Name}}) Eval() (bool, error) {
 	return (err == nil), nil
 }
 
+func (this *typ{{.Name}}) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*typ{{.Name}}); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *typ{{.Name}}) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *typ{{.Name}}) String() string {
+	return "type(" + this.E.String() + ")"
+}
+
+func (this *typ{{.Name}}) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("type", new(typ{{.Name}}))
+	Register("type", Type{{.Name}})
 }
 
 //Type{{.Name}} returns a function that returns true if the error returned by the argument function is nil.
 func Type{{.Name}}(v {{.Name}}) Bool {
-	return &typ{{.Name}}{E: v}
+	return TrimBool(&typ{{.Name}}{
+		E: v, 
+		hash: hashWithId({{.Hash}}, v),
+		hasVariable: v.HasVariable(),
+	})
 }
 `
 
@@ -384,26 +739,17 @@ type typer struct {
 	Name string
 }
 
+func (this *typer) Hash() uint64 {
+	return deriveHashStr(this.Name)
+}
+
 const inSetStr = `
 type inSet{{.Name}} struct {
 	Elem {{.Name}}
 	List {{.ConstListType}}
 	set  map[{{.Type}}]struct{}
-}
-
-func (this *inSet{{.Name}}) Init() error {
-	if this.set != nil {
-		return nil
-	}
-	l, err := this.List.Eval()
-	if err != nil {
-		return err
-	}
-	this.set = make(map[{{.Type}}]struct{})
-	for i := range l {
-		this.set[l[i]] = struct{}{}
-	}
-	return nil
+	hash uint64
+	hasVariable bool
 }
 
 func (this *inSet{{.Name}}) Eval() (bool, error) {
@@ -415,13 +761,61 @@ func (this *inSet{{.Name}}) Eval() (bool, error) {
 	return ok, nil
 }
 
+func (this *inSet{{.Name}}) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*inSet{{.Name}}); ok {
+		if c := this.Elem.Compare(other.Elem); c != 0 {
+			return c
+		}
+		if c := this.List.Compare(other.List); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *inSet{{.Name}}) String() string {
+	return "contains(" + sjoin(this.Elem, this.List) + ")"
+}
+
+func (this *inSet{{.Name}}) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *inSet{{.Name}}) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("contains", new(inSet{{.Name}}))
+	Register("contains", Contains{{.Name}})
 }
 
 //Contains{{.Name}} returns a function that checks whether the element is contained in the list.
-func Contains{{.Name}}(element {{.Name}}, list {{.ConstListType}}) Bool {
-	return &inSet{{.Name}}{element, list, nil}
+func Contains{{.Name}}(element {{.Name}}, list {{.ConstListType}}) (Bool, error) {
+	if list.HasVariable() {
+		return nil, ErrContainsListNotConst{}
+	}
+	l, err := list.Eval()
+	if err != nil {
+		return nil, err
+	}
+	set := make(map[{{.Type}}]struct{})
+	for i := range l {
+		set[l[i]] = struct{}{}
+	}
+	return TrimBool(&inSet{{.Name}}{
+		Elem: element,
+		List: list,
+		set: set,
+		hash: hashWithId({{.Hash}}, element, list),
+		hasVariable: element.HasVariable() || list.HasVariable(),
+	}), nil
 }
 `
 
@@ -431,38 +825,42 @@ type inSeter struct {
 	Type          string
 }
 
+func (this *inSeter) Hash() uint64 {
+	return deriveHashStr(this.Name)
+}
+
 func main() {
 	gen := gen.NewPackage("funcs")
 	gen(compareStr, "compare.gen.go", []interface{}{
 		&compare{"ge", ">=", "double", "", "Double", "false", "greater than or equal"},
 		&compare{"ge", ">=", "int", "", "Int", "false", "greater than or equal"},
 		&compare{"ge", ">=", "uint", "", "Uint", "false", "greater than or equal"},
-		&compare{"ge", "", "bytes", "return bytes.Compare(v1, v2) >= 0, nil", "Bytes", "false", "greater than or equal"},
+		&compare{"ge", ">=", "bytes", "return bytes.Compare(v1, v2) >= 0, nil", "Bytes", "false", "greater than or equal"},
 		&compare{"gt", ">", "double", "", "Double", "false", "greater than"},
 		&compare{"gt", ">", "int", "", "Int", "false", "greater than"},
 		&compare{"gt", ">", "uint", "", "Uint", "false", "greater than"},
-		&compare{"gt", "", "bytes", "return bytes.Compare(v1, v2) > 0, nil", "Bytes", "false", "greater than"},
+		&compare{"gt", ">", "bytes", "return bytes.Compare(v1, v2) > 0, nil", "Bytes", "false", "greater than"},
 		&compare{"le", "<=", "double", "", "Double", "false", "less than or equal"},
 		&compare{"le", "<=", "int", "", "Int", "false", "less than or equal"},
 		&compare{"le", "<=", "uint", "", "Uint", "false", "less than or equal"},
-		&compare{"le", "", "bytes", "return bytes.Compare(v1, v2) <= 0, nil", "Bytes", "false", "less than or equal"},
+		&compare{"le", "<=", "bytes", "return bytes.Compare(v1, v2) <= 0, nil", "Bytes", "false", "less than or equal"},
 		&compare{"lt", "<", "double", "", "Double", "false", "less than"},
 		&compare{"lt", "<", "int", "", "Int", "false", "less than"},
 		&compare{"lt", "<", "uint", "", "Uint", "false", "less than"},
-		&compare{"lt", "", "bytes", "return bytes.Compare(v1, v2) < 0, nil", "Bytes", "false", "less than"},
+		&compare{"lt", "<", "bytes", "return bytes.Compare(v1, v2) < 0, nil", "Bytes", "false", "less than"},
 		&compare{"eq", "==", "double", "", "Double", "false", "equal"},
 		&compare{"eq", "==", "int", "", "Int", "false", "equal"},
 		&compare{"eq", "==", "uint", "", "Uint", "false", "equal"},
 		&compare{"eq", "==", "bool", "", "Bool", "false", "equal"},
 		&compare{"eq", "==", "string", "", "String", "false", "equal"},
-		&compare{"eq", "", "bytes", "return bytes.Equal(v1, v2), nil", "Bytes", "false", "equal"},
+		&compare{"eq", "==", "bytes", "return bytes.Equal(v1, v2), nil", "Bytes", "false", "equal"},
 		&compare{"ne", "!=", "double", "", "Double", "false", "not equal"},
 		&compare{"ne", "!=", "int", "", "Int", "false", "not equal"},
 		&compare{"ne", "!=", "uint", "", "Uint", "false", "not equal"},
 		&compare{"ne", "!=", "bool", "", "Bool", "false", "not equal"},
 		&compare{"ne", "!=", "string", "", "String", "false", "not equal"},
-		&compare{"ne", "", "bytes", "return !bytes.Equal(v1, v2), nil", "Bytes", "false", "not equal"},
-	}, `"bytes"`)
+		&compare{"ne", "!=", "bytes", "return !bytes.Equal(v1, v2), nil", "Bytes", "false", "not equal"},
+	}, `"bytes"`, `"strings"`)
 	gen(newFuncStr, "newfunc.gen.go", []interface{}{
 		"Double",
 		"Int",
@@ -512,7 +910,7 @@ func main() {
 		&printer{"Bools", "[]bool"},
 		&printer{"Strings", "[]string"},
 		&printer{"ListOfBytes", "[][]byte"},
-	}, `"fmt"`)
+	}, `"fmt"`, `"strings"`)
 	gen(lengthStr, "length.gen.go", []interface{}{
 		"Doubles",
 		"Ints",
@@ -522,7 +920,7 @@ func main() {
 		"ListOfBytes",
 		"String",
 		"Bytes",
-	})
+	}, `"strings"`)
 	gen(elemStr, "elem.gen.go", []interface{}{
 		&elemer{"Doubles", "float64", "Double", "0"},
 		&elemer{"Ints", "int64", "Int", "0"},
@@ -530,7 +928,7 @@ func main() {
 		&elemer{"Bools", "bool", "Bool", "false"},
 		&elemer{"Strings", "string", "String", `""`},
 		&elemer{"ListOfBytes", "[]byte", "Bytes", "nil"},
-	})
+	}, `"strings"`)
 	gen(rangeStr, "range.gen.go", []interface{}{
 		&ranger{"Doubles", "[]float64"},
 		&ranger{"Ints", "[]int64"},
@@ -538,7 +936,7 @@ func main() {
 		&ranger{"Bools", "[]bool"},
 		&ranger{"Strings", "[]string"},
 		&ranger{"ListOfBytes", "[][]byte"},
-	})
+	}, `"strings"`)
 	gen(variableStr, "variable.gen.go", []interface{}{
 		&varer{"Double", "double", "float64", "0"},
 		&varer{"Int", "int", "int64", "0"},
@@ -546,7 +944,7 @@ func main() {
 		&varer{"Bool", "bool", "bool", "false"},
 		&varer{"String", "string", "string", `""`},
 		&varer{"Bytes", "[]byte", "[]byte", "nil"},
-	}, `"github.com/katydid/katydid/parser"`)
+	}, `"strings"`, `"github.com/katydid/katydid/parser"`)
 	gen(typStr, "type.gen.go", []interface{}{
 		&typer{"Double"},
 		&typer{"Int"},
@@ -554,10 +952,10 @@ func main() {
 		&typer{"Bool"},
 		&typer{"String"},
 		&typer{"Bytes"},
-	})
+	}, `"strings"`)
 	gen(inSetStr, "inset.gen.go", []interface{}{
 		&inSeter{"Int", "ConstInts", "int64"},
 		&inSeter{"Uint", "ConstUints", "uint64"},
 		&inSeter{"String", "ConstStrings", "string"},
-	})
+	}, `"strings"`)
 }

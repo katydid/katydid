@@ -15,11 +15,12 @@
 package compose_test
 
 import (
+	"testing"
+
 	"github.com/katydid/katydid/parser/debug"
 	"github.com/katydid/katydid/relapse/compose"
 	. "github.com/katydid/katydid/relapse/funcs"
 	"github.com/katydid/katydid/relapse/parser"
-	"testing"
 )
 
 func TestNoEqualError(t *testing.T) {

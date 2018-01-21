@@ -1,80 +1,80 @@
-func and(v1 bool,v2 bool) bool
-func contains(elem int,list const []int) bool
-func contains(elem string,list const []string) bool
-func contains(elem uint,list const []uint) bool
-func contains(s string,substr string) bool
-func elem(list [][]byte,index int) []byte
-func elem(list []bool,index int) bool
-func elem(list []double,index int) double
-func elem(list []int,index int) int
-func elem(list []string,index int) string
-func elem(list []uint,index int) uint
-func eq(v1 []byte,v2 []byte) bool
-func eq(v1 bool,v2 bool) bool
-func eq(v1 double,v2 double) bool
-func eq(v1 int,v2 int) bool
-func eq(v1 string,v2 string) bool
-func eq(v1 uint,v2 uint) bool
-func eqFold(s string,t string) bool
-func ge(v1 []byte,v2 []byte) bool
-func ge(v1 double,v2 double) bool
-func ge(v1 int,v2 int) bool
-func ge(v1 uint,v2 uint) bool
-func gt(v1 []byte,v2 []byte) bool
-func gt(v1 double,v2 double) bool
-func gt(v1 int,v2 int) bool
-func gt(v1 uint,v2 uint) bool
-func hasPrefix(v1 string,v2 string) bool
-func hasSuffix(v1 string,v2 string) bool
-func le(v1 []byte,v2 []byte) bool
-func le(v1 double,v2 double) bool
-func le(v1 int,v2 int) bool
-func le(v1 uint,v2 uint) bool
-func length(e [][]byte) int
-func length(e []bool) int
-func length(e []byte) int
-func length(e []double) int
-func length(e []int) int
-func length(e []string) int
-func length(e []uint) int
-func length(e string) int
-func lt(v1 []byte,v2 []byte) bool
-func lt(v1 double,v2 double) bool
-func lt(v1 int,v2 int) bool
-func lt(v1 uint,v2 uint) bool
-func ne(v1 []byte,v2 []byte) bool
-func ne(v1 bool,v2 bool) bool
-func ne(v1 double,v2 double) bool
-func ne(v1 int,v2 int) bool
-func ne(v1 string,v2 string) bool
-func ne(v1 uint,v2 uint) bool
-func not(v1 bool) bool
+func and(bool,bool) bool
+func contains(int,const []int) bool
+func contains(string,const []string) bool
+func contains(string,string) bool
+func contains(uint,const []uint) bool
+func elem([][]byte,int) []byte
+func elem([]bool,int) bool
+func elem([]double,int) double
+func elem([]int,int) int
+func elem([]string,int) string
+func elem([]uint,int) uint
+func eq([]byte,[]byte) bool
+func eq(bool,bool) bool
+func eq(double,double) bool
+func eq(int,int) bool
+func eq(string,string) bool
+func eq(uint,uint) bool
+func eqFold(string,string) bool
+func ge([]byte,[]byte) bool
+func ge(double,double) bool
+func ge(int,int) bool
+func ge(uint,uint) bool
+func gt([]byte,[]byte) bool
+func gt(double,double) bool
+func gt(int,int) bool
+func gt(uint,uint) bool
+func hasPrefix(string,string) bool
+func hasSuffix(string,string) bool
+func le([]byte,[]byte) bool
+func le(double,double) bool
+func le(int,int) bool
+func le(uint,uint) bool
+func length([][]byte) int
+func length([]bool) int
+func length([]byte) int
+func length([]double) int
+func length([]int) int
+func length([]string) int
+func length([]uint) int
+func length(string) int
+func lt([]byte,[]byte) bool
+func lt(double,double) bool
+func lt(int,int) bool
+func lt(uint,uint) bool
+func ne([]byte,[]byte) bool
+func ne(bool,bool) bool
+func ne(double,double) bool
+func ne(int,int) bool
+func ne(string,string) bool
+func ne(uint,uint) bool
+func not(bool) bool
 func now() int
-func or(v1 bool,v2 bool) bool
-func print(e [][]byte) [][]byte
-func print(e []bool) []bool
-func print(e []byte) []byte
-func print(e []double) []double
-func print(e []int) []int
-func print(e []string) []string
-func print(e []uint) []uint
-func print(e bool) bool
-func print(e double) double
-func print(e int) int
-func print(e string) string
-func print(e uint) uint
-func range(list [][]byte,first int,last int) [][]byte
-func range(list []bool,first int,last int) []bool
-func range(list []double,first int,last int) []double
-func range(list []int,first int,last int) []int
-func range(list []string,first int,last int) []string
-func range(list []uint,first int,last int) []uint
-func regex(expr const string,s string) bool
-func toLower(s string) string
-func toUpper(s string) string
-func type(e []byte) bool
-func type(e bool) bool
-func type(e double) bool
-func type(e int) bool
-func type(e string) bool
-func type(e uint) bool
+func or(bool,bool) bool
+func print([][]byte) [][]byte
+func print([]bool) []bool
+func print([]byte) []byte
+func print([]double) []double
+func print([]int) []int
+func print([]string) []string
+func print([]uint) []uint
+func print(bool) bool
+func print(double) double
+func print(int) int
+func print(string) string
+func print(uint) uint
+func range([][]byte,int,int) [][]byte
+func range([]bool,int,int) []bool
+func range([]double,int,int) []double
+func range([]int,int,int) []int
+func range([]string,int,int) []string
+func range([]uint,int,int) []uint
+func regex(const string,string) bool
+func toLower(string) string
+func toUpper(string) string
+func type([]byte) bool
+func type(bool) bool
+func type(double) bool
+func type(int) bool
+func type(string) bool
+func type(uint) bool

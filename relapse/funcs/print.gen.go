@@ -3,10 +3,12 @@ package funcs
 
 import (
 	"fmt"
+	"strings"
 )
 
 type printDouble struct {
-	E Double
+	E    Double
+	hash uint64
 }
 
 func (this *printDouble) Eval() (float64, error) {
@@ -19,19 +21,47 @@ func (this *printDouble) Eval() (float64, error) {
 	return v, err
 }
 
-func (this *printDouble) IsVariable() {}
+func (this *printDouble) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printDouble); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printDouble) String() string {
+	return "print(" + this.E.String() + ")"
+}
+
+func (this *printDouble) Hash() uint64 {
+	return this.hash
+}
+
+func (this *printDouble) HasVariable() bool { return true }
 
 func init() {
-	Register("print", new(printDouble))
+	Register("print", PrintDouble)
 }
 
 //PrintDouble returns a function that prints out the value of the argument function and returns its value.
 func PrintDouble(e Double) Double {
-	return &printDouble{E: e}
+	return &printDouble{
+		E:    e,
+		hash: hashWithId(2052876273, e),
+	}
 }
 
 type printInt struct {
-	E Int
+	E    Int
+	hash uint64
 }
 
 func (this *printInt) Eval() (int64, error) {
@@ -44,19 +74,47 @@ func (this *printInt) Eval() (int64, error) {
 	return v, err
 }
 
-func (this *printInt) IsVariable() {}
+func (this *printInt) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printInt); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printInt) String() string {
+	return "print(" + this.E.String() + ")"
+}
+
+func (this *printInt) Hash() uint64 {
+	return this.hash
+}
+
+func (this *printInt) HasVariable() bool { return true }
 
 func init() {
-	Register("print", new(printInt))
+	Register("print", PrintInt)
 }
 
 //PrintInt returns a function that prints out the value of the argument function and returns its value.
 func PrintInt(e Int) Int {
-	return &printInt{E: e}
+	return &printInt{
+		E:    e,
+		hash: hashWithId(73679, e),
+	}
 }
 
 type printUint struct {
-	E Uint
+	E    Uint
+	hash uint64
 }
 
 func (this *printUint) Eval() (uint64, error) {
@@ -69,19 +127,47 @@ func (this *printUint) Eval() (uint64, error) {
 	return v, err
 }
 
-func (this *printUint) IsVariable() {}
+func (this *printUint) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printUint); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printUint) String() string {
+	return "print(" + this.E.String() + ")"
+}
+
+func (this *printUint) Hash() uint64 {
+	return this.hash
+}
+
+func (this *printUint) HasVariable() bool { return true }
 
 func init() {
-	Register("print", new(printUint))
+	Register("print", PrintUint)
 }
 
 //PrintUint returns a function that prints out the value of the argument function and returns its value.
 func PrintUint(e Uint) Uint {
-	return &printUint{E: e}
+	return &printUint{
+		E:    e,
+		hash: hashWithId(2636666, e),
+	}
 }
 
 type printBool struct {
-	E Bool
+	E    Bool
+	hash uint64
 }
 
 func (this *printBool) Eval() (bool, error) {
@@ -94,19 +180,47 @@ func (this *printBool) Eval() (bool, error) {
 	return v, err
 }
 
-func (this *printBool) IsVariable() {}
+func (this *printBool) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printBool); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printBool) String() string {
+	return "print(" + this.E.String() + ")"
+}
+
+func (this *printBool) Hash() uint64 {
+	return this.hash
+}
+
+func (this *printBool) HasVariable() bool { return true }
 
 func init() {
-	Register("print", new(printBool))
+	Register("print", PrintBool)
 }
 
 //PrintBool returns a function that prints out the value of the argument function and returns its value.
 func PrintBool(e Bool) Bool {
-	return &printBool{E: e}
+	return &printBool{
+		E:    e,
+		hash: hashWithId(2076426, e),
+	}
 }
 
 type printString struct {
-	E String
+	E    String
+	hash uint64
 }
 
 func (this *printString) Eval() (string, error) {
@@ -119,19 +233,47 @@ func (this *printString) Eval() (string, error) {
 	return v, err
 }
 
-func (this *printString) IsVariable() {}
+func (this *printString) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printString); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printString) String() string {
+	return "print(" + this.E.String() + ")"
+}
+
+func (this *printString) Hash() uint64 {
+	return this.hash
+}
+
+func (this *printString) HasVariable() bool { return true }
 
 func init() {
-	Register("print", new(printString))
+	Register("print", PrintString)
 }
 
 //PrintString returns a function that prints out the value of the argument function and returns its value.
 func PrintString(e String) String {
-	return &printString{E: e}
+	return &printString{
+		E:    e,
+		hash: hashWithId(2486848561, e),
+	}
 }
 
 type printBytes struct {
-	E Bytes
+	E    Bytes
+	hash uint64
 }
 
 func (this *printBytes) Eval() ([]byte, error) {
@@ -144,19 +286,47 @@ func (this *printBytes) Eval() ([]byte, error) {
 	return v, err
 }
 
-func (this *printBytes) IsVariable() {}
+func (this *printBytes) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printBytes); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printBytes) String() string {
+	return "print(" + this.E.String() + ")"
+}
+
+func (this *printBytes) Hash() uint64 {
+	return this.hash
+}
+
+func (this *printBytes) HasVariable() bool { return true }
 
 func init() {
-	Register("print", new(printBytes))
+	Register("print", PrintBytes)
 }
 
 //PrintBytes returns a function that prints out the value of the argument function and returns its value.
 func PrintBytes(e Bytes) Bytes {
-	return &printBytes{E: e}
+	return &printBytes{
+		E:    e,
+		hash: hashWithId(64671819, e),
+	}
 }
 
 type printDoubles struct {
-	E Doubles
+	E    Doubles
+	hash uint64
 }
 
 func (this *printDoubles) Eval() ([]float64, error) {
@@ -169,19 +339,47 @@ func (this *printDoubles) Eval() ([]float64, error) {
 	return v, err
 }
 
-func (this *printDoubles) IsVariable() {}
+func (this *printDoubles) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printDoubles); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printDoubles) String() string {
+	return "print(" + this.E.String() + ")"
+}
+
+func (this *printDoubles) Hash() uint64 {
+	return this.hash
+}
+
+func (this *printDoubles) HasVariable() bool { return true }
 
 func init() {
-	Register("print", new(printDoubles))
+	Register("print", PrintDoubles)
 }
 
 //PrintDoubles returns a function that prints out the value of the argument function and returns its value.
 func PrintDoubles(e Doubles) Doubles {
-	return &printDoubles{E: e}
+	return &printDoubles{
+		E:    e,
+		hash: hashWithId(63639164578, e),
+	}
 }
 
 type printInts struct {
-	E Ints
+	E    Ints
+	hash uint64
 }
 
 func (this *printInts) Eval() ([]int64, error) {
@@ -194,19 +392,47 @@ func (this *printInts) Eval() ([]int64, error) {
 	return v, err
 }
 
-func (this *printInts) IsVariable() {}
+func (this *printInts) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printInts); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printInts) String() string {
+	return "print(" + this.E.String() + ")"
+}
+
+func (this *printInts) Hash() uint64 {
+	return this.hash
+}
+
+func (this *printInts) HasVariable() bool { return true }
 
 func init() {
-	Register("print", new(printInts))
+	Register("print", PrintInts)
 }
 
 //PrintInts returns a function that prints out the value of the argument function and returns its value.
 func PrintInts(e Ints) Ints {
-	return &printInts{E: e}
+	return &printInts{
+		E:    e,
+		hash: hashWithId(2284164, e),
+	}
 }
 
 type printUints struct {
-	E Uints
+	E    Uints
+	hash uint64
 }
 
 func (this *printUints) Eval() ([]uint64, error) {
@@ -219,19 +445,47 @@ func (this *printUints) Eval() ([]uint64, error) {
 	return v, err
 }
 
-func (this *printUints) IsVariable() {}
+func (this *printUints) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printUints); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printUints) String() string {
+	return "print(" + this.E.String() + ")"
+}
+
+func (this *printUints) Hash() uint64 {
+	return this.hash
+}
+
+func (this *printUints) HasVariable() bool { return true }
 
 func init() {
-	Register("print", new(printUints))
+	Register("print", PrintUints)
 }
 
 //PrintUints returns a function that prints out the value of the argument function and returns its value.
 func PrintUints(e Uints) Uints {
-	return &printUints{E: e}
+	return &printUints{
+		E:    e,
+		hash: hashWithId(81736761, e),
+	}
 }
 
 type printBools struct {
-	E Bools
+	E    Bools
+	hash uint64
 }
 
 func (this *printBools) Eval() ([]bool, error) {
@@ -244,19 +498,47 @@ func (this *printBools) Eval() ([]bool, error) {
 	return v, err
 }
 
-func (this *printBools) IsVariable() {}
+func (this *printBools) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printBools); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printBools) String() string {
+	return "print(" + this.E.String() + ")"
+}
+
+func (this *printBools) Hash() uint64 {
+	return this.hash
+}
+
+func (this *printBools) HasVariable() bool { return true }
 
 func init() {
-	Register("print", new(printBools))
+	Register("print", PrintBools)
 }
 
 //PrintBools returns a function that prints out the value of the argument function and returns its value.
 func PrintBools(e Bools) Bools {
-	return &printBools{E: e}
+	return &printBools{
+		E:    e,
+		hash: hashWithId(64369321, e),
+	}
 }
 
 type printStrings struct {
-	E Strings
+	E    Strings
+	hash uint64
 }
 
 func (this *printStrings) Eval() ([]string, error) {
@@ -269,19 +551,47 @@ func (this *printStrings) Eval() ([]string, error) {
 	return v, err
 }
 
-func (this *printStrings) IsVariable() {}
+func (this *printStrings) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printStrings); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printStrings) String() string {
+	return "print(" + this.E.String() + ")"
+}
+
+func (this *printStrings) Hash() uint64 {
+	return this.hash
+}
+
+func (this *printStrings) HasVariable() bool { return true }
 
 func init() {
-	Register("print", new(printStrings))
+	Register("print", PrintStrings)
 }
 
 //PrintStrings returns a function that prints out the value of the argument function and returns its value.
 func PrintStrings(e Strings) Strings {
-	return &printStrings{E: e}
+	return &printStrings{
+		E:    e,
+		hash: hashWithId(77092305506, e),
+	}
 }
 
 type printListOfBytes struct {
-	E ListOfBytes
+	E    ListOfBytes
+	hash uint64
 }
 
 func (this *printListOfBytes) Eval() ([][]byte, error) {
@@ -294,13 +604,40 @@ func (this *printListOfBytes) Eval() ([][]byte, error) {
 	return v, err
 }
 
-func (this *printListOfBytes) IsVariable() {}
+func (this *printListOfBytes) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*printListOfBytes); ok {
+		if c := this.E.Compare(other.E); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *printListOfBytes) String() string {
+	return "print(" + this.E.String() + ")"
+}
+
+func (this *printListOfBytes) Hash() uint64 {
+	return this.hash
+}
+
+func (this *printListOfBytes) HasVariable() bool { return true }
 
 func init() {
-	Register("print", new(printListOfBytes))
+	Register("print", PrintListOfBytes)
 }
 
 //PrintListOfBytes returns a function that prints out the value of the argument function and returns its value.
 func PrintListOfBytes(e ListOfBytes) ListOfBytes {
-	return &printListOfBytes{E: e}
+	return &printListOfBytes{
+		E:    e,
+		hash: hashWithId(65169257167589942, e),
+	}
 }

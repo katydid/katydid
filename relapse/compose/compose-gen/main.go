@@ -21,7 +21,7 @@ import (
 
 const composeStr = `
 func compose{{.SingleName}}(expr *ast.Expr) (funcs.{{.SingleName}}, error) {
-	uniq, err := prep(expr, types.{{.SingleType}})
+	f, err := prep(expr, types.{{.SingleType}})
 	if err != nil {
 		return nil, err
 	}
@@ -36,11 +36,11 @@ func compose{{.SingleName}}(expr *ast.Expr) (funcs.{{.SingleName}}, error) {
 	if err != nil {
 		return nil, err
 	}
-	return funcs.New{{.SingleName}}Func(uniq, values...)
+	return f.New{{.SingleName}}(values...)
 }
 
 func compose{{.ListName}}(expr *ast.Expr) (funcs.{{.ListName}}, error) {
-	uniq, err := prep(expr, types.{{.ListType}})
+	f, err := prep(expr, types.{{.ListType}})
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +63,7 @@ func compose{{.ListName}}(expr *ast.Expr) (funcs.{{.ListName}}, error) {
 	if err != nil {
 		return nil, err
 	}
-	return funcs.New{{.ListName}}Func(uniq, values...)
+	return f.New{{.ListName}}(values...)
 }
 `
 

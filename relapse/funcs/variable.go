@@ -18,9 +18,8 @@ import (
 	"github.com/katydid/katydid/parser"
 )
 
-//Variable is an interface that when implemented represents a value that can change between different executions of the same function.
-type Variable interface {
-	IsVariable()
+type aVariable interface {
+	isVariable()
 }
 
 //Setter is an interface that represents a variable of which the value must be set.

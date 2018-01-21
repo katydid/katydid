@@ -3,11 +3,14 @@ package funcs
 
 import (
 	"bytes"
+	"strings"
 )
 
 type doubleGE struct {
-	V1 Double
-	V2 Double
+	V1          Double
+	V2          Double
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *doubleGE) Eval() (bool, error) {
@@ -22,18 +25,70 @@ func (this *doubleGE) Eval() (bool, error) {
 	return v1 >= v2, nil
 }
 
+func (this *doubleGE) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*doubleGE); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *doubleGE) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return ">= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return ">= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *doubleGE) String() string {
+	return "ge" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *doubleGE) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *doubleGE) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("ge", new(doubleGE))
+	Register("ge", DoubleGE)
 }
 
 // DoubleGE returns a new greater than or equal function.
 func DoubleGE(a, b Double) Bool {
-	return &doubleGE{V1: a, V2: b}
+	return TrimBool(&doubleGE{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3294, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type intGE struct {
-	V1 Int
-	V2 Int
+	V1          Int
+	V2          Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *intGE) Eval() (bool, error) {
@@ -48,18 +103,70 @@ func (this *intGE) Eval() (bool, error) {
 	return v1 >= v2, nil
 }
 
+func (this *intGE) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*intGE); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *intGE) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return ">= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return ">= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *intGE) String() string {
+	return "ge" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *intGE) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *intGE) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("ge", new(intGE))
+	Register("ge", IntGE)
 }
 
 // IntGE returns a new greater than or equal function.
 func IntGE(a, b Int) Bool {
-	return &intGE{V1: a, V2: b}
+	return TrimBool(&intGE{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3294, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type uintGE struct {
-	V1 Uint
-	V2 Uint
+	V1          Uint
+	V2          Uint
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *uintGE) Eval() (bool, error) {
@@ -74,18 +181,70 @@ func (this *uintGE) Eval() (bool, error) {
 	return v1 >= v2, nil
 }
 
+func (this *uintGE) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*uintGE); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *uintGE) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return ">= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return ">= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *uintGE) String() string {
+	return "ge" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *uintGE) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *uintGE) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("ge", new(uintGE))
+	Register("ge", UintGE)
 }
 
 // UintGE returns a new greater than or equal function.
 func UintGE(a, b Uint) Bool {
-	return &uintGE{V1: a, V2: b}
+	return TrimBool(&uintGE{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3294, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type bytesGE struct {
-	V1 Bytes
-	V2 Bytes
+	V1          Bytes
+	V2          Bytes
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *bytesGE) Eval() (bool, error) {
@@ -100,18 +259,70 @@ func (this *bytesGE) Eval() (bool, error) {
 	return bytes.Compare(v1, v2) >= 0, nil
 }
 
+func (this *bytesGE) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*bytesGE); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *bytesGE) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return ">= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return ">= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *bytesGE) String() string {
+	return "ge" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *bytesGE) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *bytesGE) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("ge", new(bytesGE))
+	Register("ge", BytesGE)
 }
 
 // BytesGE returns a new greater than or equal function.
 func BytesGE(a, b Bytes) Bool {
-	return &bytesGE{V1: a, V2: b}
+	return TrimBool(&bytesGE{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3294, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type doubleGt struct {
-	V1 Double
-	V2 Double
+	V1          Double
+	V2          Double
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *doubleGt) Eval() (bool, error) {
@@ -126,18 +337,70 @@ func (this *doubleGt) Eval() (bool, error) {
 	return v1 > v2, nil
 }
 
+func (this *doubleGt) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*doubleGt); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *doubleGt) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "> " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "> " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *doubleGt) String() string {
+	return "gt" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *doubleGt) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *doubleGt) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("gt", new(doubleGt))
+	Register("gt", DoubleGt)
 }
 
 // DoubleGt returns a new greater than function.
 func DoubleGt(a, b Double) Bool {
-	return &doubleGt{V1: a, V2: b}
+	return TrimBool(&doubleGt{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3309, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type intGt struct {
-	V1 Int
-	V2 Int
+	V1          Int
+	V2          Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *intGt) Eval() (bool, error) {
@@ -152,18 +415,70 @@ func (this *intGt) Eval() (bool, error) {
 	return v1 > v2, nil
 }
 
+func (this *intGt) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*intGt); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *intGt) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "> " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "> " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *intGt) String() string {
+	return "gt" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *intGt) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *intGt) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("gt", new(intGt))
+	Register("gt", IntGt)
 }
 
 // IntGt returns a new greater than function.
 func IntGt(a, b Int) Bool {
-	return &intGt{V1: a, V2: b}
+	return TrimBool(&intGt{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3309, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type uintGt struct {
-	V1 Uint
-	V2 Uint
+	V1          Uint
+	V2          Uint
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *uintGt) Eval() (bool, error) {
@@ -178,18 +493,70 @@ func (this *uintGt) Eval() (bool, error) {
 	return v1 > v2, nil
 }
 
+func (this *uintGt) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*uintGt); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *uintGt) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "> " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "> " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *uintGt) String() string {
+	return "gt" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *uintGt) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *uintGt) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("gt", new(uintGt))
+	Register("gt", UintGt)
 }
 
 // UintGt returns a new greater than function.
 func UintGt(a, b Uint) Bool {
-	return &uintGt{V1: a, V2: b}
+	return TrimBool(&uintGt{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3309, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type bytesGt struct {
-	V1 Bytes
-	V2 Bytes
+	V1          Bytes
+	V2          Bytes
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *bytesGt) Eval() (bool, error) {
@@ -204,18 +571,70 @@ func (this *bytesGt) Eval() (bool, error) {
 	return bytes.Compare(v1, v2) > 0, nil
 }
 
+func (this *bytesGt) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*bytesGt); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *bytesGt) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "> " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "> " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *bytesGt) String() string {
+	return "gt" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *bytesGt) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *bytesGt) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("gt", new(bytesGt))
+	Register("gt", BytesGt)
 }
 
 // BytesGt returns a new greater than function.
 func BytesGt(a, b Bytes) Bool {
-	return &bytesGt{V1: a, V2: b}
+	return TrimBool(&bytesGt{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3309, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type doubleLE struct {
-	V1 Double
-	V2 Double
+	V1          Double
+	V2          Double
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *doubleLE) Eval() (bool, error) {
@@ -230,18 +649,70 @@ func (this *doubleLE) Eval() (bool, error) {
 	return v1 <= v2, nil
 }
 
+func (this *doubleLE) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*doubleLE); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *doubleLE) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "<= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "<= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *doubleLE) String() string {
+	return "le" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *doubleLE) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *doubleLE) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("le", new(doubleLE))
+	Register("le", DoubleLE)
 }
 
 // DoubleLE returns a new less than or equal function.
 func DoubleLE(a, b Double) Bool {
-	return &doubleLE{V1: a, V2: b}
+	return TrimBool(&doubleLE{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3449, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type intLE struct {
-	V1 Int
-	V2 Int
+	V1          Int
+	V2          Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *intLE) Eval() (bool, error) {
@@ -256,18 +727,70 @@ func (this *intLE) Eval() (bool, error) {
 	return v1 <= v2, nil
 }
 
+func (this *intLE) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*intLE); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *intLE) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "<= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "<= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *intLE) String() string {
+	return "le" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *intLE) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *intLE) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("le", new(intLE))
+	Register("le", IntLE)
 }
 
 // IntLE returns a new less than or equal function.
 func IntLE(a, b Int) Bool {
-	return &intLE{V1: a, V2: b}
+	return TrimBool(&intLE{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3449, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type uintLE struct {
-	V1 Uint
-	V2 Uint
+	V1          Uint
+	V2          Uint
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *uintLE) Eval() (bool, error) {
@@ -282,18 +805,70 @@ func (this *uintLE) Eval() (bool, error) {
 	return v1 <= v2, nil
 }
 
+func (this *uintLE) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*uintLE); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *uintLE) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "<= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "<= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *uintLE) String() string {
+	return "le" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *uintLE) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *uintLE) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("le", new(uintLE))
+	Register("le", UintLE)
 }
 
 // UintLE returns a new less than or equal function.
 func UintLE(a, b Uint) Bool {
-	return &uintLE{V1: a, V2: b}
+	return TrimBool(&uintLE{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3449, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type bytesLE struct {
-	V1 Bytes
-	V2 Bytes
+	V1          Bytes
+	V2          Bytes
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *bytesLE) Eval() (bool, error) {
@@ -308,18 +883,70 @@ func (this *bytesLE) Eval() (bool, error) {
 	return bytes.Compare(v1, v2) <= 0, nil
 }
 
+func (this *bytesLE) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*bytesLE); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *bytesLE) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "<= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "<= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *bytesLE) String() string {
+	return "le" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *bytesLE) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *bytesLE) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("le", new(bytesLE))
+	Register("le", BytesLE)
 }
 
 // BytesLE returns a new less than or equal function.
 func BytesLE(a, b Bytes) Bool {
-	return &bytesLE{V1: a, V2: b}
+	return TrimBool(&bytesLE{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3449, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type doubleLt struct {
-	V1 Double
-	V2 Double
+	V1          Double
+	V2          Double
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *doubleLt) Eval() (bool, error) {
@@ -334,18 +961,70 @@ func (this *doubleLt) Eval() (bool, error) {
 	return v1 < v2, nil
 }
 
+func (this *doubleLt) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*doubleLt); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *doubleLt) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "< " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "< " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *doubleLt) String() string {
+	return "lt" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *doubleLt) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *doubleLt) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("lt", new(doubleLt))
+	Register("lt", DoubleLt)
 }
 
 // DoubleLt returns a new less than function.
 func DoubleLt(a, b Double) Bool {
-	return &doubleLt{V1: a, V2: b}
+	return TrimBool(&doubleLt{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3464, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type intLt struct {
-	V1 Int
-	V2 Int
+	V1          Int
+	V2          Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *intLt) Eval() (bool, error) {
@@ -360,18 +1039,70 @@ func (this *intLt) Eval() (bool, error) {
 	return v1 < v2, nil
 }
 
+func (this *intLt) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*intLt); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *intLt) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "< " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "< " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *intLt) String() string {
+	return "lt" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *intLt) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *intLt) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("lt", new(intLt))
+	Register("lt", IntLt)
 }
 
 // IntLt returns a new less than function.
 func IntLt(a, b Int) Bool {
-	return &intLt{V1: a, V2: b}
+	return TrimBool(&intLt{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3464, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type uintLt struct {
-	V1 Uint
-	V2 Uint
+	V1          Uint
+	V2          Uint
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *uintLt) Eval() (bool, error) {
@@ -386,18 +1117,70 @@ func (this *uintLt) Eval() (bool, error) {
 	return v1 < v2, nil
 }
 
+func (this *uintLt) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*uintLt); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *uintLt) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "< " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "< " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *uintLt) String() string {
+	return "lt" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *uintLt) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *uintLt) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("lt", new(uintLt))
+	Register("lt", UintLt)
 }
 
 // UintLt returns a new less than function.
 func UintLt(a, b Uint) Bool {
-	return &uintLt{V1: a, V2: b}
+	return TrimBool(&uintLt{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3464, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type bytesLt struct {
-	V1 Bytes
-	V2 Bytes
+	V1          Bytes
+	V2          Bytes
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *bytesLt) Eval() (bool, error) {
@@ -412,18 +1195,70 @@ func (this *bytesLt) Eval() (bool, error) {
 	return bytes.Compare(v1, v2) < 0, nil
 }
 
+func (this *bytesLt) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*bytesLt); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *bytesLt) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "< " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "< " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *bytesLt) String() string {
+	return "lt" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *bytesLt) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *bytesLt) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("lt", new(bytesLt))
+	Register("lt", BytesLt)
 }
 
 // BytesLt returns a new less than function.
 func BytesLt(a, b Bytes) Bool {
-	return &bytesLt{V1: a, V2: b}
+	return TrimBool(&bytesLt{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3464, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type doubleEq struct {
-	V1 Double
-	V2 Double
+	V1          Double
+	V2          Double
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *doubleEq) Eval() (bool, error) {
@@ -438,18 +1273,70 @@ func (this *doubleEq) Eval() (bool, error) {
 	return v1 == v2, nil
 }
 
+func (this *doubleEq) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*doubleEq); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *doubleEq) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "== " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "== " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *doubleEq) String() string {
+	return "eq" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *doubleEq) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *doubleEq) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("eq", new(doubleEq))
+	Register("eq", DoubleEq)
 }
 
 // DoubleEq returns a new equal function.
 func DoubleEq(a, b Double) Bool {
-	return &doubleEq{V1: a, V2: b}
+	return TrimBool(&doubleEq{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3244, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type intEq struct {
-	V1 Int
-	V2 Int
+	V1          Int
+	V2          Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *intEq) Eval() (bool, error) {
@@ -464,18 +1351,70 @@ func (this *intEq) Eval() (bool, error) {
 	return v1 == v2, nil
 }
 
+func (this *intEq) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*intEq); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *intEq) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "== " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "== " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *intEq) String() string {
+	return "eq" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *intEq) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *intEq) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("eq", new(intEq))
+	Register("eq", IntEq)
 }
 
 // IntEq returns a new equal function.
 func IntEq(a, b Int) Bool {
-	return &intEq{V1: a, V2: b}
+	return TrimBool(&intEq{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3244, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type uintEq struct {
-	V1 Uint
-	V2 Uint
+	V1          Uint
+	V2          Uint
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *uintEq) Eval() (bool, error) {
@@ -490,18 +1429,70 @@ func (this *uintEq) Eval() (bool, error) {
 	return v1 == v2, nil
 }
 
+func (this *uintEq) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*uintEq); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *uintEq) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "== " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "== " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *uintEq) String() string {
+	return "eq" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *uintEq) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *uintEq) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("eq", new(uintEq))
+	Register("eq", UintEq)
 }
 
 // UintEq returns a new equal function.
 func UintEq(a, b Uint) Bool {
-	return &uintEq{V1: a, V2: b}
+	return TrimBool(&uintEq{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3244, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type boolEq struct {
-	V1 Bool
-	V2 Bool
+	V1          Bool
+	V2          Bool
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *boolEq) Eval() (bool, error) {
@@ -516,18 +1507,70 @@ func (this *boolEq) Eval() (bool, error) {
 	return v1 == v2, nil
 }
 
+func (this *boolEq) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*boolEq); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *boolEq) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "== " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "== " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *boolEq) String() string {
+	return "eq" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *boolEq) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *boolEq) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("eq", new(boolEq))
+	Register("eq", BoolEq)
 }
 
 // BoolEq returns a new equal function.
 func BoolEq(a, b Bool) Bool {
-	return &boolEq{V1: a, V2: b}
+	return TrimBool(&boolEq{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3244, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type stringEq struct {
-	V1 String
-	V2 String
+	V1          String
+	V2          String
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *stringEq) Eval() (bool, error) {
@@ -542,18 +1585,70 @@ func (this *stringEq) Eval() (bool, error) {
 	return v1 == v2, nil
 }
 
+func (this *stringEq) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*stringEq); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *stringEq) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "== " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "== " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *stringEq) String() string {
+	return "eq" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *stringEq) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *stringEq) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("eq", new(stringEq))
+	Register("eq", StringEq)
 }
 
 // StringEq returns a new equal function.
 func StringEq(a, b String) Bool {
-	return &stringEq{V1: a, V2: b}
+	return TrimBool(&stringEq{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3244, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type bytesEq struct {
-	V1 Bytes
-	V2 Bytes
+	V1          Bytes
+	V2          Bytes
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *bytesEq) Eval() (bool, error) {
@@ -568,18 +1663,70 @@ func (this *bytesEq) Eval() (bool, error) {
 	return bytes.Equal(v1, v2), nil
 }
 
+func (this *bytesEq) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*bytesEq); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *bytesEq) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "== " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "== " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *bytesEq) String() string {
+	return "eq" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *bytesEq) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *bytesEq) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("eq", new(bytesEq))
+	Register("eq", BytesEq)
 }
 
 // BytesEq returns a new equal function.
 func BytesEq(a, b Bytes) Bool {
-	return &bytesEq{V1: a, V2: b}
+	return TrimBool(&bytesEq{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3244, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type doubleNe struct {
-	V1 Double
-	V2 Double
+	V1          Double
+	V2          Double
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *doubleNe) Eval() (bool, error) {
@@ -594,18 +1741,70 @@ func (this *doubleNe) Eval() (bool, error) {
 	return v1 != v2, nil
 }
 
+func (this *doubleNe) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*doubleNe); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *doubleNe) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "!= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "!= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *doubleNe) String() string {
+	return "ne" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *doubleNe) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *doubleNe) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("ne", new(doubleNe))
+	Register("ne", DoubleNe)
 }
 
 // DoubleNe returns a new not equal function.
 func DoubleNe(a, b Double) Bool {
-	return &doubleNe{V1: a, V2: b}
+	return TrimBool(&doubleNe{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3511, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type intNe struct {
-	V1 Int
-	V2 Int
+	V1          Int
+	V2          Int
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *intNe) Eval() (bool, error) {
@@ -620,18 +1819,70 @@ func (this *intNe) Eval() (bool, error) {
 	return v1 != v2, nil
 }
 
+func (this *intNe) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*intNe); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *intNe) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "!= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "!= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *intNe) String() string {
+	return "ne" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *intNe) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *intNe) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("ne", new(intNe))
+	Register("ne", IntNe)
 }
 
 // IntNe returns a new not equal function.
 func IntNe(a, b Int) Bool {
-	return &intNe{V1: a, V2: b}
+	return TrimBool(&intNe{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3511, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type uintNe struct {
-	V1 Uint
-	V2 Uint
+	V1          Uint
+	V2          Uint
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *uintNe) Eval() (bool, error) {
@@ -646,18 +1897,70 @@ func (this *uintNe) Eval() (bool, error) {
 	return v1 != v2, nil
 }
 
+func (this *uintNe) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*uintNe); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *uintNe) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "!= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "!= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *uintNe) String() string {
+	return "ne" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *uintNe) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *uintNe) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("ne", new(uintNe))
+	Register("ne", UintNe)
 }
 
 // UintNe returns a new not equal function.
 func UintNe(a, b Uint) Bool {
-	return &uintNe{V1: a, V2: b}
+	return TrimBool(&uintNe{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3511, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type boolNe struct {
-	V1 Bool
-	V2 Bool
+	V1          Bool
+	V2          Bool
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *boolNe) Eval() (bool, error) {
@@ -672,18 +1975,70 @@ func (this *boolNe) Eval() (bool, error) {
 	return v1 != v2, nil
 }
 
+func (this *boolNe) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*boolNe); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *boolNe) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "!= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "!= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *boolNe) String() string {
+	return "ne" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *boolNe) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *boolNe) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("ne", new(boolNe))
+	Register("ne", BoolNe)
 }
 
 // BoolNe returns a new not equal function.
 func BoolNe(a, b Bool) Bool {
-	return &boolNe{V1: a, V2: b}
+	return TrimBool(&boolNe{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3511, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type stringNe struct {
-	V1 String
-	V2 String
+	V1          String
+	V2          String
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *stringNe) Eval() (bool, error) {
@@ -698,18 +2053,70 @@ func (this *stringNe) Eval() (bool, error) {
 	return v1 != v2, nil
 }
 
+func (this *stringNe) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*stringNe); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *stringNe) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "!= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "!= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *stringNe) String() string {
+	return "ne" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *stringNe) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *stringNe) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("ne", new(stringNe))
+	Register("ne", StringNe)
 }
 
 // StringNe returns a new not equal function.
 func StringNe(a, b String) Bool {
-	return &stringNe{V1: a, V2: b}
+	return TrimBool(&stringNe{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3511, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }
 
 type bytesNe struct {
-	V1 Bytes
-	V2 Bytes
+	V1          Bytes
+	V2          Bytes
+	hash        uint64
+	hasVariable bool
 }
 
 func (this *bytesNe) Eval() (bool, error) {
@@ -724,11 +2131,61 @@ func (this *bytesNe) Eval() (bool, error) {
 	return !bytes.Equal(v1, v2), nil
 }
 
+func (this *bytesNe) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if other, ok := that.(*bytesNe); ok {
+		if c := this.V1.Compare(other.V1); c != 0 {
+			return c
+		}
+		if c := this.V2.Compare(other.V2); c != 0 {
+			return c
+		}
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *bytesNe) Shorthand() (string, bool) {
+	if _, ok1 := this.V1.(aVariable); ok1 {
+		if _, ok2 := this.V2.(aConst); ok2 {
+			return "!= " + this.V2.String(), true
+		}
+	}
+	if _, ok2 := this.V2.(aVariable); ok2 {
+		if _, ok1 := this.V1.(aConst); ok1 {
+			return "!= " + this.V1.String(), true
+		}
+	}
+	return "", false
+}
+
+func (this *bytesNe) String() string {
+	return "ne" + "(" + sjoin(this.V1, this.V2) + ")"
+}
+
+func (this *bytesNe) HasVariable() bool {
+	return this.hasVariable
+}
+
+func (this *bytesNe) Hash() uint64 {
+	return this.hash
+}
+
 func init() {
-	Register("ne", new(bytesNe))
+	Register("ne", BytesNe)
 }
 
 // BytesNe returns a new not equal function.
 func BytesNe(a, b Bytes) Bool {
-	return &bytesNe{V1: a, V2: b}
+	return TrimBool(&bytesNe{
+		V1:          a,
+		V2:          b,
+		hash:        hashWithId(3511, a, b),
+		hasVariable: a.HasVariable() || b.HasVariable(),
+	})
 }

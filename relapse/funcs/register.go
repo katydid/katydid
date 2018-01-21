@@ -16,41 +16,59 @@ package funcs
 
 import (
 	"fmt"
-	"github.com/katydid/katydid/relapse/types"
 	"reflect"
 	"strings"
+
+	"github.com/katydid/katydid/relapse/types"
 )
 
-//Register registers a function as function that can composed.
-//fnc is actually a struct type since structs are the way that functions are implemeneted to allow for dynamic composition.
-func Register(name string, fnc interface{}) {
-	RegisterFactory(name, func() interface{} {
-		return reflect.New(reflect.TypeOf(fnc).Elem()).Interface()
-	})
-}
+var errTyp = reflect.TypeOf((*error)(nil)).Elem()
+var funcTyp = reflect.TypeOf((*Func)(nil)).Elem()
 
-//RegisterFactory registers a function as function that can be composed, but expects a "new" function that returns the function.
-func RegisterFactory(name string, newFunc func() interface{}) {
-	rfunc := reflect.ValueOf(newFunc())
-	returnType := rfunc.MethodByName("Eval").Type()
-	uniqName := rfunc.Elem().Type().Name()
-	lenFields := rfunc.Elem().NumField()
-	res := &funk{
-		name:     name,
-		uniqName: uniqName,
-		Out:      types.FromGo(returnType.Out(0)),
-		newfnc:   newFunc,
+//Register registers a function as function that can composed.
+func Register(name string, fnc interface{}) {
+	typ := reflect.TypeOf(fnc)
+	if typ.Kind() != reflect.Func {
+		panic(fmt.Sprintf("expecting constructor function for %s, but got %T", name, fnc))
 	}
-	for i := 0; i < lenFields; i++ {
-		meth, ok := rfunc.Elem().Field(i).Type().MethodByName("Eval")
+	if typ.NumOut() == 2 {
+		if !typ.Out(1).Implements(errTyp) {
+			panic(fmt.Sprintf("the second return type of the constructor for %s is not an error", name))
+		}
+	}
+	if typ.NumOut() > 2 {
+		panic(fmt.Sprintf("the constructor for %s has more than 2 return values", name))
+	}
+	if typ.NumOut() == 0 {
+		panic(fmt.Sprintf("the constructor for %s has no return values", name))
+	}
+	eval, ok := typ.Out(0).MethodByName("Eval")
+	if !ok {
+		panic(fmt.Sprintf("the constructor for %s returns a type without an Eval method", name))
+	}
+	if !typ.Out(0).Implements(funcTyp) {
+		panic(fmt.Sprintf("the constructor for %s returns a type that does not implement funcs.Func", name))
+	}
+	returnType := eval.Type
+	ins := typ.NumIn()
+	fMaker := &Maker{
+		Name:   name,
+		Out:    types.FromGo(returnType.Out(0)),
+		newfnc: fnc,
+	}
+	for i := 0; i < ins; i++ {
+		meth, ok := typ.In(i).MethodByName("Eval")
 		if !ok {
 			continue
 		}
-		res.InConst = append(res.InConst, IsConst(rfunc.Elem().Field(i).Type()))
-		res.In = append(res.In, types.FromGo(meth.Type.Out(0)))
-		res.InNames = append(res.InNames, rfunc.Elem().Type().Field(i).Name)
+		if !typ.In(i).Implements(funcTyp) {
+			panic(fmt.Sprintf("the constructor for %s has an input parameter (number %d) that does not implement funcs.Func", name, i))
+		}
+		fMaker.InConst = append(fMaker.InConst, IsConst(typ.In(i)))
+		inType := types.FromGo(meth.Type.Out(0))
+		fMaker.In = append(fMaker.In, inType)
 	}
-	funcsMap.register(res)
+	globalFactory.register(fMaker)
 }
 
 //IsConst returns whether a reflected type is a function that is actually a constant value.
@@ -74,18 +92,9 @@ func IsConst(typ reflect.Type) bool {
 	return true
 }
 
-//Which returns the unique name of the function given the function name and parameter types.
-func Which(name string, ins ...types.Type) (string, error) {
-	return funcsMap.which(name, ins...)
-}
-
-//Out returns the output type given the unique function name.
-func Out(uniq string) (types.Type, error) {
-	u, ok := funcsMap.uniqToFunc[uniq]
-	if !ok {
-		return 0, &errUnknownFunction{uniq, nil}
-	}
-	return u.Out, nil
+//Which returns the Funk (function creator) of the function given the function name and parameter types.
+func GetMaker(name string, ins ...types.Type) (*Maker, error) {
+	return globalFactory.getMaker(name, ins...)
 }
 
 type errUnknownFunction struct {
@@ -105,44 +114,33 @@ func (this *errUnknownFunction) Error() string {
 	return "relapse/funcs: unknown function: " + this.f + "(" + strings.Join(this.ins, ", ") + ")"
 }
 
-var funcsMap = newFunksMap()
+var globalFactory = newFactory()
 
-type funksMap struct {
-	nameToUniq map[string][]string
-	uniqToFunc map[string]*funk
+type Factory map[string][]*Maker
+
+func newFactory() Factory {
+	return make(map[string][]*Maker)
 }
 
-func newFunksMap() *funksMap {
-	return &funksMap{
-		nameToUniq: make(map[string][]string),
-		uniqToFunc: make(map[string]*funk),
+func (this Factory) register(f *Maker) {
+	if _, ok := this[f.Name]; !ok {
+		this[f.Name] = []*Maker{}
 	}
+	this[f.Name] = append(this[f.Name], f)
 }
 
-func (this *funksMap) register(f *funk) {
-	if _, ok := this.uniqToFunc[f.uniqName]; ok {
-		panic("func already registered " + f.uniqName)
-	}
-	if this.nameToUniq[f.name] == nil {
-		this.nameToUniq[f.name] = make([]string, 0, 1)
-	}
-	this.nameToUniq[f.name] = append(this.nameToUniq[f.name], f.uniqName)
-	this.uniqToFunc[f.uniqName] = f
-}
-
-func (this *funksMap) which(name string, ins ...types.Type) (string, error) {
-	uniqs, ok := this.nameToUniq[name]
+func (this Factory) getMaker(name string, ins ...types.Type) (*Maker, error) {
+	funks, ok := this[name]
 	if !ok {
-		return "", newErrUnknownFunction(name, ins)
+		return nil, newErrUnknownFunction(name, ins)
 	}
-	for _, uniq := range uniqs {
-		u := this.uniqToFunc[uniq]
-		if len(u.In) != len(ins) {
+	for _, f := range funks {
+		if len(f.In) != len(ins) {
 			continue
 		}
 		eq := true
-		for i := range u.In {
-			if u.In[i] != ins[i] {
+		for i := range f.In {
+			if f.In[i] != ins[i] {
 				eq = false
 				break
 			}
@@ -150,52 +148,98 @@ func (this *funksMap) which(name string, ins ...types.Type) (string, error) {
 		if !eq {
 			continue
 		}
-		return u.uniqName, nil
+		return f, nil
 	}
-	return "", newErrUnknownFunction(name, ins)
+	return nil, newErrUnknownFunction(name, ins)
 }
 
-func (this *funksMap) String() string {
-	funcs := make([]string, len(this.uniqToFunc))
-	i := 0
-	for _, f := range this.uniqToFunc {
-		funcs[i] = f.String()
-		i++
-	}
-	return strings.Join(funcs, "\n")
+type Maker struct {
+	Name    string
+	In      []types.Type
+	InConst []bool
+	Out     types.Type
+	newfnc  interface{}
 }
 
-type funk struct {
-	name     string
-	uniqName string
-	In       []types.Type
-	InNames  []string
-	InConst  []bool
-	Out      types.Type
-	newfnc   func() interface{}
-}
-
-func (this *funk) String() string {
+func (this *Maker) String() string {
 	ins := make([]string, len(this.In))
 	for i, in := range this.In {
 		ins[i] = in.String()
 	}
-	return fmt.Sprintf("func %v as %v(%v) %v", this.uniqName, this.name, strings.Join(ins, ","), this.Out.String())
+	return fmt.Sprintf("func %v(%v) %v", this.Name, strings.Join(ins, ","), this.Out.String())
 }
 
-func newFunc(uniq string, values ...interface{}) (interface{}, error) {
-	f, ok := funcsMap.uniqToFunc[uniq]
-	if !ok {
-		return nil, &errUnknownFunction{uniq, nil}
+func (f *Maker) New(values ...interface{}) (interface{}, error) {
+	newf := reflect.ValueOf(f.newfnc)
+	rvalues := make([]reflect.Value, len(values))
+	for i := range rvalues {
+		rvalues[i] = reflect.ValueOf(values[i])
 	}
-	newf := reflect.ValueOf(f.newfnc()).Elem()
-	j := 0
-	for i := 0; i < newf.NumField(); i++ {
-		if _, ok := newf.Field(i).Type().MethodByName("Eval"); !ok {
-			continue
+	res := newf.Call(rvalues)
+	if len(res) == 2 {
+		if !res[1].IsNil() {
+			return res[0].Interface(), res[1].Interface().(error)
 		}
-		newf.Field(i).Set(reflect.ValueOf(values[j]))
-		j++
 	}
-	return newf.Addr().Interface(), nil
+	return res[0].Interface(), nil
+}
+
+//IsFalse returns whether a function is a false constant.
+func IsFalse(fn Bool) bool {
+	v, ok := fn.(*constBool)
+	if !ok {
+		return false
+	}
+	return v.v == false
+}
+
+//IsTrue returns whether a function is a true constant.
+func IsTrue(fn Bool) bool {
+	v, ok := fn.(*constBool)
+	if !ok {
+		return false
+	}
+	return v.v == true
+}
+
+//Equal returns whether two functions are equal.
+func Equal(l, r Comparable) bool {
+	hl := l.Hash()
+	hr := r.Hash()
+	if hl != hr {
+		return false
+	}
+	return l.Compare(r) == 0
+}
+
+func isVarConst(a, b interface{}) (string, bool) {
+	if c, aok := a.(aConst); aok {
+		if _, bok := b.(aVariable); bok {
+			return c.String(), true
+		}
+	} else if c, bok := b.(aConst); bok {
+		if _, aok := a.(aVariable); aok {
+			return c.String(), true
+		}
+	}
+	return "", false
+}
+
+// Hash calculates a hash for a function, given a name and its parameters.
+func Hash(name string, hs ...Hashable) uint64 {
+	h := uint64(17)
+	h = 31*h + deriveHashString(name)
+	for _, hashable := range hs {
+		h = 31*h + hashable.Hash()
+	}
+	return h
+}
+
+func hashWithId(id uint64, hs ...Hashable) uint64 {
+	h := uint64(17)
+	h = 31*h + id
+	for _, hashable := range hs {
+		h = 31*h + hashable.Hash()
+	}
+	return h
 }

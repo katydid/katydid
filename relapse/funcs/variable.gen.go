@@ -3,16 +3,27 @@ package funcs
 
 import (
 	"github.com/katydid/katydid/parser"
+	"strings"
 )
 
 type varDouble struct {
 	Value parser.Value
+	hash  uint64
 }
 
 var _ Setter = &varDouble{}
-var _ Variable = &varDouble{}
+var _ aVariable = &varDouble{}
+
+type ErrNotDoubleConst struct{}
+
+func (this ErrNotDoubleConst) Error() string {
+	return "$double is not a const"
+}
 
 func (this *varDouble) Eval() (float64, error) {
+	if this.Value == nil {
+		return 0, ErrNotDoubleConst{}
+	}
 	v, err := this.Value.Double()
 	if err != nil {
 		return 0, err
@@ -20,7 +31,26 @@ func (this *varDouble) Eval() (float64, error) {
 	return v, nil
 }
 
-func (this *varDouble) IsVariable() {}
+func (this *varDouble) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if _, ok := that.(*varDouble); ok {
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *varDouble) Hash() uint64 {
+	return this.hash
+}
+
+func (this *varDouble) HasVariable() bool { return true }
+
+func (this *varDouble) isVariable() {}
 
 func (this *varDouble) SetValue(v parser.Value) {
 	this.Value = v
@@ -32,17 +62,29 @@ func (this *varDouble) String() string {
 
 //DoubleVar returns a variable of type Double
 func DoubleVar() *varDouble {
-	return &varDouble{}
+	h := uint64(17)
+	h = 31*h + 2052876273
+	return &varDouble{hash: h}
 }
 
 type varInt struct {
 	Value parser.Value
+	hash  uint64
 }
 
 var _ Setter = &varInt{}
-var _ Variable = &varInt{}
+var _ aVariable = &varInt{}
+
+type ErrNotIntConst struct{}
+
+func (this ErrNotIntConst) Error() string {
+	return "$int is not a const"
+}
 
 func (this *varInt) Eval() (int64, error) {
+	if this.Value == nil {
+		return 0, ErrNotIntConst{}
+	}
 	v, err := this.Value.Int()
 	if err != nil {
 		return 0, err
@@ -50,7 +92,26 @@ func (this *varInt) Eval() (int64, error) {
 	return v, nil
 }
 
-func (this *varInt) IsVariable() {}
+func (this *varInt) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if _, ok := that.(*varInt); ok {
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *varInt) Hash() uint64 {
+	return this.hash
+}
+
+func (this *varInt) HasVariable() bool { return true }
+
+func (this *varInt) isVariable() {}
 
 func (this *varInt) SetValue(v parser.Value) {
 	this.Value = v
@@ -62,17 +123,29 @@ func (this *varInt) String() string {
 
 //IntVar returns a variable of type Int
 func IntVar() *varInt {
-	return &varInt{}
+	h := uint64(17)
+	h = 31*h + 73679
+	return &varInt{hash: h}
 }
 
 type varUint struct {
 	Value parser.Value
+	hash  uint64
 }
 
 var _ Setter = &varUint{}
-var _ Variable = &varUint{}
+var _ aVariable = &varUint{}
+
+type ErrNotUintConst struct{}
+
+func (this ErrNotUintConst) Error() string {
+	return "$uint is not a const"
+}
 
 func (this *varUint) Eval() (uint64, error) {
+	if this.Value == nil {
+		return 0, ErrNotUintConst{}
+	}
 	v, err := this.Value.Uint()
 	if err != nil {
 		return 0, err
@@ -80,7 +153,26 @@ func (this *varUint) Eval() (uint64, error) {
 	return v, nil
 }
 
-func (this *varUint) IsVariable() {}
+func (this *varUint) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if _, ok := that.(*varUint); ok {
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *varUint) Hash() uint64 {
+	return this.hash
+}
+
+func (this *varUint) HasVariable() bool { return true }
+
+func (this *varUint) isVariable() {}
 
 func (this *varUint) SetValue(v parser.Value) {
 	this.Value = v
@@ -92,17 +184,29 @@ func (this *varUint) String() string {
 
 //UintVar returns a variable of type Uint
 func UintVar() *varUint {
-	return &varUint{}
+	h := uint64(17)
+	h = 31*h + 2636666
+	return &varUint{hash: h}
 }
 
 type varBool struct {
 	Value parser.Value
+	hash  uint64
 }
 
 var _ Setter = &varBool{}
-var _ Variable = &varBool{}
+var _ aVariable = &varBool{}
+
+type ErrNotBoolConst struct{}
+
+func (this ErrNotBoolConst) Error() string {
+	return "$bool is not a const"
+}
 
 func (this *varBool) Eval() (bool, error) {
+	if this.Value == nil {
+		return false, ErrNotBoolConst{}
+	}
 	v, err := this.Value.Bool()
 	if err != nil {
 		return false, err
@@ -110,7 +214,26 @@ func (this *varBool) Eval() (bool, error) {
 	return v, nil
 }
 
-func (this *varBool) IsVariable() {}
+func (this *varBool) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if _, ok := that.(*varBool); ok {
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *varBool) Hash() uint64 {
+	return this.hash
+}
+
+func (this *varBool) HasVariable() bool { return true }
+
+func (this *varBool) isVariable() {}
 
 func (this *varBool) SetValue(v parser.Value) {
 	this.Value = v
@@ -122,17 +245,29 @@ func (this *varBool) String() string {
 
 //BoolVar returns a variable of type Bool
 func BoolVar() *varBool {
-	return &varBool{}
+	h := uint64(17)
+	h = 31*h + 2076426
+	return &varBool{hash: h}
 }
 
 type varString struct {
 	Value parser.Value
+	hash  uint64
 }
 
 var _ Setter = &varString{}
-var _ Variable = &varString{}
+var _ aVariable = &varString{}
+
+type ErrNotStringConst struct{}
+
+func (this ErrNotStringConst) Error() string {
+	return "$string is not a const"
+}
 
 func (this *varString) Eval() (string, error) {
+	if this.Value == nil {
+		return "", ErrNotStringConst{}
+	}
 	v, err := this.Value.String()
 	if err != nil {
 		return "", err
@@ -140,7 +275,26 @@ func (this *varString) Eval() (string, error) {
 	return v, nil
 }
 
-func (this *varString) IsVariable() {}
+func (this *varString) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if _, ok := that.(*varString); ok {
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *varString) Hash() uint64 {
+	return this.hash
+}
+
+func (this *varString) HasVariable() bool { return true }
+
+func (this *varString) isVariable() {}
 
 func (this *varString) SetValue(v parser.Value) {
 	this.Value = v
@@ -152,17 +306,29 @@ func (this *varString) String() string {
 
 //StringVar returns a variable of type String
 func StringVar() *varString {
-	return &varString{}
+	h := uint64(17)
+	h = 31*h + 2486848561
+	return &varString{hash: h}
 }
 
 type varBytes struct {
 	Value parser.Value
+	hash  uint64
 }
 
 var _ Setter = &varBytes{}
-var _ Variable = &varBytes{}
+var _ aVariable = &varBytes{}
+
+type ErrNotBytesConst struct{}
+
+func (this ErrNotBytesConst) Error() string {
+	return "$[]byte is not a const"
+}
 
 func (this *varBytes) Eval() ([]byte, error) {
+	if this.Value == nil {
+		return nil, ErrNotBytesConst{}
+	}
 	v, err := this.Value.Bytes()
 	if err != nil {
 		return nil, err
@@ -170,7 +336,26 @@ func (this *varBytes) Eval() ([]byte, error) {
 	return v, nil
 }
 
-func (this *varBytes) IsVariable() {}
+func (this *varBytes) Compare(that Comparable) int {
+	if this.Hash() != that.Hash() {
+		if this.Hash() < that.Hash() {
+			return -1
+		}
+		return 1
+	}
+	if _, ok := that.(*varBytes); ok {
+		return 0
+	}
+	return strings.Compare(this.String(), that.String())
+}
+
+func (this *varBytes) Hash() uint64 {
+	return this.hash
+}
+
+func (this *varBytes) HasVariable() bool { return true }
+
+func (this *varBytes) isVariable() {}
 
 func (this *varBytes) SetValue(v parser.Value) {
 	this.Value = v
@@ -182,5 +367,7 @@ func (this *varBytes) String() string {
 
 //BytesVar returns a variable of type Bytes
 func BytesVar() *varBytes {
-	return &varBytes{}
+	h := uint64(17)
+	h = 31*h + 64671819
+	return &varBytes{hash: h}
 }

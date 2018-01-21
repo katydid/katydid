@@ -1,4 +1,4 @@
-//  Copyright 2016 Walter Schulze
+//  Copyright 2018 Walter Schulze
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -12,31 +12,16 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package mem
+package funcs
 
 import (
-	"github.com/katydid/katydid/relapse/ast"
-	"github.com/katydid/katydid/relapse/compose"
-	"github.com/katydid/katydid/relapse/funcs"
+	"testing"
 )
 
-type exprToFunc struct {
-	m   map[*ast.Expr]funcs.Bool
-	err error
-}
-
-func (this *exprToFunc) Visit(node interface{}) interface{} {
-	if this.err != nil {
-		return this
+func TestTrim(t *testing.T) {
+	out := Sprint(IntGE(ElemInts(IntsConst([]int64{1, 2}), IntConst(1)), IntVar()))
+	exp := ">= int(2)"
+	if out != exp {
+		t.Fatalf("expected %s, but got %s", exp, out)
 	}
-	leaf, ok := node.(*ast.LeafNode)
-	if ok {
-		f, err := compose.NewBool(leaf.Expr)
-		if err != nil {
-			this.err = err
-			return this
-		}
-		this.m[leaf.Expr] = f
-	}
-	return this
 }
