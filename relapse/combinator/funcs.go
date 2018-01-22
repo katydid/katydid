@@ -72,6 +72,16 @@ func BoolConst(b bool) *ast.Expr {
 	return ast.NewFalse()
 }
 
+func BytesConst(b []byte) *ast.Expr {
+	return ast.NewBytesConst(b)
+}
+
+func BytesVar() *ast.Expr {
+	v := ast.NewVar(types.SINGLE_BYTES)
+	v.RightArrow = &ast.Keyword{Value: "->"}
+	return v
+}
+
 func IntVar() *ast.Expr {
 	v := ast.NewVar(types.SINGLE_INT)
 	v.RightArrow = &ast.Keyword{Value: "->"}
