@@ -156,12 +156,52 @@ func Type(expr *ast.Expr) *ast.Expr {
 	return ast.NewFunction("type", expr)
 }
 
-func StringsConst(ss []string) *ast.Expr {
-	es := make([]*ast.Expr, len(ss))
-	for i := range ss {
-		es[i] = StringConst(ss[i])
+func StringsConst(is []string) *ast.Expr {
+	es := make([]*ast.Expr, len(is))
+	for i := range is {
+		es[i] = StringConst(is[i])
 	}
 	return ast.NewStringList(es...)
+}
+
+func IntsConst(is []int64) *ast.Expr {
+	es := make([]*ast.Expr, len(is))
+	for i := range is {
+		es[i] = IntConst(is[i])
+	}
+	return ast.NewIntList(es...)
+}
+
+func UintsConst(is []uint64) *ast.Expr {
+	es := make([]*ast.Expr, len(is))
+	for i := range is {
+		es[i] = UintConst(is[i])
+	}
+	return ast.NewUintList(es...)
+}
+
+func DoublesConst(is []float64) *ast.Expr {
+	es := make([]*ast.Expr, len(is))
+	for i := range is {
+		es[i] = DoubleConst(is[i])
+	}
+	return ast.NewDoubleList(es...)
+}
+
+func BoolsConst(is []bool) *ast.Expr {
+	es := make([]*ast.Expr, len(is))
+	for i := range is {
+		es[i] = BoolConst(is[i])
+	}
+	return ast.NewBoolList(es...)
+}
+
+func ListOfBytesConst(is [][]byte) *ast.Expr {
+	es := make([]*ast.Expr, len(is))
+	for i := range is {
+		es[i] = BytesConst(is[i])
+	}
+	return ast.NewBytesList(es...)
 }
 
 func EqualFold(s, t *ast.Expr) *ast.Expr {
