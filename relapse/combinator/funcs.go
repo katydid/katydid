@@ -163,3 +163,15 @@ func StringsConst(ss []string) *ast.Expr {
 	}
 	return ast.NewStringList(es...)
 }
+
+func EqualFold(s, t *ast.Expr) *ast.Expr {
+	return ast.NewFunction("eqFold", s, t)
+}
+
+func HasPrefix(a, b *ast.Expr) *ast.Expr {
+	return ast.NewFunction("hasPrefix", a, b)
+}
+
+func HasSuffix(a, b *ast.Expr) *ast.Expr {
+	return ast.NewFunction("hasSuffix", a, b)
+}
