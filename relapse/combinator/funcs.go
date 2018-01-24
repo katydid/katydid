@@ -56,7 +56,9 @@ func StringVar() *ast.Expr {
 }
 
 func StringConst(s string) *ast.Expr {
-	return ast.NewStringConst(s)
+	c := ast.NewStringConst(s)
+	c.RightArrow = &ast.Keyword{Value: "->"}
+	return c
 }
 
 func BoolVar() *ast.Expr {
