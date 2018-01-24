@@ -68,14 +68,18 @@ func BoolVar() *ast.Expr {
 }
 
 func BoolConst(b bool) *ast.Expr {
+	c := ast.NewFalse()
 	if b {
-		return ast.NewTrue()
+		c = ast.NewTrue()
 	}
-	return ast.NewFalse()
+	c.RightArrow = &ast.Keyword{Value: "->"}
+	return c
 }
 
 func BytesConst(b []byte) *ast.Expr {
-	return ast.NewBytesConst(b)
+	c := ast.NewBytesConst(b)
+	c.RightArrow = &ast.Keyword{Value: "->"}
+	return c
 }
 
 func BytesVar() *ast.Expr {
@@ -91,7 +95,9 @@ func IntVar() *ast.Expr {
 }
 
 func IntConst(i int64) *ast.Expr {
-	return ast.NewIntConst(i)
+	c := ast.NewIntConst(i)
+	c.RightArrow = &ast.Keyword{Value: "->"}
+	return c
 }
 
 func UintVar() *ast.Expr {
@@ -101,7 +107,9 @@ func UintVar() *ast.Expr {
 }
 
 func UintConst(u uint64) *ast.Expr {
-	return ast.NewUintConst(u)
+	c := ast.NewUintConst(u)
+	c.RightArrow = &ast.Keyword{Value: "->"}
+	return c
 }
 
 func DoubleVar() *ast.Expr {
@@ -111,7 +119,9 @@ func DoubleVar() *ast.Expr {
 }
 
 func DoubleConst(d float64) *ast.Expr {
-	return ast.NewDoubleConst(d)
+	c := ast.NewDoubleConst(d)
+	c.RightArrow = &ast.Keyword{Value: "->"}
+	return c
 }
 
 func And(left, right *ast.Expr) *ast.Expr {
@@ -163,7 +173,9 @@ func StringsConst(is []string) *ast.Expr {
 	for i := range is {
 		es[i] = StringConst(is[i])
 	}
-	return ast.NewStringList(es...)
+	c := ast.NewStringList(es...)
+	c.RightArrow = &ast.Keyword{Value: "->"}
+	return c
 }
 
 func IntsConst(is []int64) *ast.Expr {
@@ -171,7 +183,9 @@ func IntsConst(is []int64) *ast.Expr {
 	for i := range is {
 		es[i] = IntConst(is[i])
 	}
-	return ast.NewIntList(es...)
+	c := ast.NewIntList(es...)
+	c.RightArrow = &ast.Keyword{Value: "->"}
+	return c
 }
 
 func UintsConst(is []uint64) *ast.Expr {
@@ -179,7 +193,9 @@ func UintsConst(is []uint64) *ast.Expr {
 	for i := range is {
 		es[i] = UintConst(is[i])
 	}
-	return ast.NewUintList(es...)
+	c := ast.NewUintList(es...)
+	c.RightArrow = &ast.Keyword{Value: "->"}
+	return c
 }
 
 func DoublesConst(is []float64) *ast.Expr {
@@ -187,7 +203,9 @@ func DoublesConst(is []float64) *ast.Expr {
 	for i := range is {
 		es[i] = DoubleConst(is[i])
 	}
-	return ast.NewDoubleList(es...)
+	c := ast.NewDoubleList(es...)
+	c.RightArrow = &ast.Keyword{Value: "->"}
+	return c
 }
 
 func BoolsConst(is []bool) *ast.Expr {
@@ -195,7 +213,9 @@ func BoolsConst(is []bool) *ast.Expr {
 	for i := range is {
 		es[i] = BoolConst(is[i])
 	}
-	return ast.NewBoolList(es...)
+	c := ast.NewBoolList(es...)
+	c.RightArrow = &ast.Keyword{Value: "->"}
+	return c
 }
 
 func ListOfBytesConst(is [][]byte) *ast.Expr {
@@ -203,7 +223,9 @@ func ListOfBytesConst(is [][]byte) *ast.Expr {
 	for i := range is {
 		es[i] = BytesConst(is[i])
 	}
-	return ast.NewBytesList(es...)
+	c := ast.NewBytesList(es...)
+	c.RightArrow = &ast.Keyword{Value: "->"}
+	return c
 }
 
 func EqualFold(s, t *ast.Expr) *ast.Expr {
