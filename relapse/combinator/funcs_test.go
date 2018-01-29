@@ -14,7 +14,13 @@
 
 package combinator
 
-import "testing"
+import (
+	"math/rand"
+	"testing"
+	"time"
+
+	"github.com/katydid/katydid/relapse/ast"
+)
 
 func TestConst(t *testing.T) {
 	v := Value(BoolConst(true))
@@ -25,5 +31,30 @@ func TestConst(t *testing.T) {
 	vs := Value(BoolsConst([]bool{true}))
 	if !vs.GetLeafNode().GetExpr().GetList().GetElems()[0].GetTerminal().GetBoolValue() {
 		t.Fatalf("expected true")
+	}
+}
+
+func TestInt(t *testing.T) {
+	rand.Seed(time.Now().UnixNano())
+	var intFunc func(*ast.Expr, *ast.Expr) *ast.Expr
+	switch rand.Intn(3) {
+	case 0:
+		intFunc = Eq
+	case 1:
+		intFunc = GE
+	case 2:
+		intFunc = LE
+	}
+	t.Log(Value(ast.NewFunction("print", intFunc(IntVar(), IntConst(rand.Int63())))).String())
+}
+
+// TestImmutability tests that the `Value` function does not change the input expression and remove a comma.
+func TestImmutability(t *testing.T) {
+	eq := Eq(UintVar(), UintConst(10))
+	s1 := eq.String()
+	_ = Value(eq)
+	s2 := eq.String()
+	if s1 != s2 {
+		t.Fatalf("s1: %v, s2:%v\n", s1, s2)
 	}
 }

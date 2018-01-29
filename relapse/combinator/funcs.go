@@ -29,12 +29,14 @@ func Value(expr *ast.Expr) *ast.Pattern {
 			p2 := expr.Function.Params[1]
 			if p1.Terminal != nil && p1.Terminal.Variable != nil &&
 				p2.Terminal != nil && p2.Terminal.Variable == nil {
-				p2.Comma = nil
-				expr = constructor(p2)
+				p := p2.Clone()
+				p.Comma = nil
+				expr = constructor(p)
 			} else if p2.Terminal != nil && p2.Terminal.Variable != nil &&
 				p1.Terminal != nil && p1.Terminal.Variable == nil {
-				p1.Comma = nil
-				expr = constructor(p1)
+				p := p1.Clone()
+				p.Comma = nil
+				expr = constructor(p)
 			}
 		}
 	}
