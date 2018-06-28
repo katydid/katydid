@@ -37,6 +37,35 @@ func TestSimplify1(t *testing.T) {
 	}
 }
 
+func TestSimplifyAndAnyName(t *testing.T) {
+	var andAnyName1 = combinator.G{"main": combinator.AllOf(
+		combinator.InAnyPath(combinator.Value(
+			combinator.Eq(combinator.StringVar(), combinator.StringConst("0123456789"))),
+		),
+		combinator.InAnyPath(combinator.Value(
+			combinator.Eq(combinator.StringVar(), combinator.StringConst("David"))),
+		),
+	)}.Grammar()
+	andAnyName2 := andAnyName1.Clone()
+
+	c1 := NewConstructorOptimizedForRecords()
+	p1, err := c1.NewPattern(andAnyName1.TopPattern)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	c2 := NewConstructor()
+	p2, err := c2.NewPattern(andAnyName2.TopPattern)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Logf("%v", p1)
+	if !p1.Equal(p2) {
+		t.Fatalf("expected equal but got record simplified to %s and normal simplified to %s", p1.String(), p2.String())
+	}
+}
+
 var andNameTelephonePerson = combinator.G{
 	"main": combinator.InOrder(
 		combinator.AllOf(

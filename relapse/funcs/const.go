@@ -19,13 +19,15 @@ import (
 	"strings"
 )
 
-//Const is an interface that when implemented implies that the function is actually a constant value.
+// Const is an interface that when implemented implies that the function is actually a constant value.
 type Const interface {
 	IsConst()
 }
 
+// aConst is a constant, but also for a single value and not a list.
 type aConst interface {
-	Stringer
+	Const
+	Comparable
 	aConst()
 }
 

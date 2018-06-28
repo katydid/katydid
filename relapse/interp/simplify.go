@@ -269,7 +269,7 @@ func simplifyChildren(children []*ast.Pattern, op func(left, right *ast.Pattern)
 		c0 := children[0].GetContains().GetPattern().GetTreeNode()
 		c1 := children[1].GetContains().GetPattern().GetTreeNode()
 		if c0 != nil && c1 != nil {
-			if c0.GetName().Equal(c1.GetName()) {
+			if c0.GetName().GetName() != nil && c1.GetName().GetName() != nil && c0.GetName().Equal(c1.GetName()) {
 				newchild := ast.NewContains(ast.NewTreeNode(c0.GetName(), op(c0.GetPattern(), c1.GetPattern())))
 				children[1] = newchild
 				return simplifyChildren(children[1:], op, record)

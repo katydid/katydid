@@ -16,6 +16,7 @@ package intern
 
 import (
 	"fmt"
+	"sort"
 
 	"github.com/katydid/katydid/relapse/ast"
 	"github.com/katydid/katydid/relapse/compose"
@@ -430,6 +431,8 @@ func (c *construct) mergeLeaves(mergeFunc func(l, r funcs.Bool) funcs.Bool, ps [
 func areContainsWithEqualNames(l, r *Pattern) bool {
 	return l.Type == Contains && r.Type == Contains &&
 		l.Patterns[0].Type == Node && r.Patterns[0].Type == Node &&
+		funcs.IsSimpleEqual(l.Patterns[0].Func) &&
+		funcs.IsSimpleEqual(r.Patterns[0].Func) &&
 		funcs.Equal(l.Patterns[0].Func, r.Patterns[0].Func)
 }
 
@@ -639,7 +642,7 @@ func (c *construct) NewInterleave(ps []*Pattern) (*Pattern, error) {
 		return c.NewNotZAny(), nil
 	}
 	ps = removeEmptyExceptOne(ps)
-	ps = orderedSet(ps)
+	sort.Sort(sortable(ps))
 	if len(ps) == 1 {
 		return ps[0], nil
 	}

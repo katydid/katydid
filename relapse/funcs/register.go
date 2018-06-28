@@ -25,7 +25,7 @@ import (
 var errTyp = reflect.TypeOf((*error)(nil)).Elem()
 var funcTyp = reflect.TypeOf((*Func)(nil)).Elem()
 
-//Register registers a function as function that can composed.
+// Register registers a function as function that can composed.
 func Register(name string, fnc interface{}) {
 	typ := reflect.TypeOf(fnc)
 	if typ.Kind() != reflect.Func {
@@ -71,7 +71,7 @@ func Register(name string, fnc interface{}) {
 	globalFactory.register(fMaker)
 }
 
-//IsConst returns whether a reflected type is a function that is actually a constant value.
+// IsConst returns whether a reflected type is a function that is actually a constant value.
 func IsConst(typ reflect.Type) bool {
 	switch typ {
 	case typConstDouble:
@@ -92,7 +92,7 @@ func IsConst(typ reflect.Type) bool {
 	return true
 }
 
-//Which returns the Funk (function creator) of the function given the function name and parameter types.
+// Which returns the Funk (function creator) of the function given the function name and parameter types.
 func GetMaker(name string, ins ...types.Type) (*Maker, error) {
 	return globalFactory.getMaker(name, ins...)
 }
@@ -184,7 +184,7 @@ func (f *Maker) New(values ...interface{}) (interface{}, error) {
 	return res[0].Interface(), nil
 }
 
-//IsFalse returns whether a function is a false constant.
+// IsFalse returns whether a function is a false constant.
 func IsFalse(fn Bool) bool {
 	v, ok := fn.(*constBool)
 	if !ok {
@@ -193,7 +193,7 @@ func IsFalse(fn Bool) bool {
 	return v.v == false
 }
 
-//IsTrue returns whether a function is a true constant.
+// IsTrue returns whether a function is a true constant.
 func IsTrue(fn Bool) bool {
 	v, ok := fn.(*constBool)
 	if !ok {
@@ -202,7 +202,7 @@ func IsTrue(fn Bool) bool {
 	return v.v == true
 }
 
-//Equal returns whether two functions are equal.
+// Equal returns whether two functions are equal.
 func Equal(l, r Comparable) bool {
 	hl := l.Hash()
 	hr := r.Hash()
@@ -212,17 +212,34 @@ func Equal(l, r Comparable) bool {
 	return l.Compare(r) == 0
 }
 
-func isVarConst(a, b interface{}) (string, bool) {
+// IsSimpleEqual returns whether the input function is a simple equal expression,
+// where one argument is a constant and the other is a variable.
+func IsSimpleEqual(f Bool) bool {
+	switch eq := f.(type) {
+	case *stringEq:
+		_, v := isVarConst(eq.V1, eq.V2)
+		return v
+	case *intEq:
+		_, v := isVarConst(eq.V1, eq.V2)
+		return v
+	case *uintEq:
+		_, v := isVarConst(eq.V1, eq.V2)
+		return v
+	}
+	return false
+}
+
+func isVarConst(a, b interface{}) (aConst, bool) {
 	if c, aok := a.(aConst); aok {
 		if _, bok := b.(aVariable); bok {
-			return c.String(), true
+			return c, true
 		}
 	} else if c, bok := b.(aConst); bok {
 		if _, aok := a.(aVariable); aok {
-			return c.String(), true
+			return c, true
 		}
 	}
-	return "", false
+	return nil, false
 }
 
 // Hash calculates a hash for a function, given a name and its parameters.
