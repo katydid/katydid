@@ -16,7 +16,6 @@ package funcs
 
 import (
 	"fmt"
-	"os"
 	"sort"
 	"strings"
 	"testing"
@@ -43,5 +42,7 @@ func TestGenFuncList(t *testing.T) {
 		}
 	}
 	sort.Strings(funcs)
-	fmt.Fprintf(os.Stderr, "%v\n", strings.Join(funcs, "\n"))
+	for _, f := range funcs {
+		fmt.Printf("%v\n", f)
+	}
 }

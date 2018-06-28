@@ -62,7 +62,7 @@ regenerate:
 	goderive ./...
 	(cd parser && make regenerate)
 	(cd relapse && make regenerate)
-	(cd relapse/funcs && go test -test.run=GenFuncList 2>../../list_of_functions.txt)
+	(cd relapse/funcs && go test -test.run=GenFuncList | grep "func\ " >../../list_of_functions.txt)
 	(cd encode && make regenerate)
 
 clean:
