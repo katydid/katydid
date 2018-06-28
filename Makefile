@@ -86,7 +86,7 @@ travis:
 
 errcheck:
 	go get github.com/kisielk/errcheck
-	errcheck ./...
+	errcheck -ignore 'fmt:[FS]?[Pp]rint*' ./...
 
 diff:
 	git diff --exit-code .
