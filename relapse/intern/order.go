@@ -26,17 +26,23 @@ func (s sortable) Swap(i, j int) { s[i], s[j] = s[j], s[i] }
 
 // Less says Node patterns are the largest and then falls back to comparing hashes.
 func (s sortable) Less(i, j int) bool {
-	if s[i].Type != Node && s[j].Type != Node {
+	if s[i].Type != Node || s[j].Type != Node {
+		if s[i].Type == Node {
+			// Nodes are larger
+			return false
+		}
+		if s[j].Type == Node {
+			// Nodes are larger
+			return true
+		}
 		return s[i].hash < s[j].hash
 	}
-	if s[i].Type == Node && s[j].Type == Node {
-		c := s[i].Func.Compare(s[j].Func)
-		if c == 0 {
-			return s[i].hash < s[j].hash
-		}
-		return c < 0
+	// if both are nodes
+	c := s[i].Func.Compare(s[j].Func)
+	if c == 0 {
+		return s[i].hash < s[j].hash
 	}
-	return s[i].Type != Node
+	return c < 0
 }
 
 // orderedSet creates a stable order, while taking into account treenodes and removing duplicates.

@@ -406,6 +406,7 @@ func merge(predicate func(l, r *Pattern) bool, merge func(l, r *Pattern) (*Patte
 	for i := 1; i < len(ps); i++ {
 		if !predicate(ps[last], ps[i]) {
 			last++
+			ps[last] = ps[i]
 			continue
 		}
 		var err error
