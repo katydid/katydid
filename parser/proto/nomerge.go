@@ -23,7 +23,7 @@ import (
 //Latent fields are those fields you have already seen on your walk, but then after seeing a different field you see this field again.
 //This typically happens when the protocol buffer user created an object marshaled it and then merged it with another value.
 func NoLatentAppendingOrMerging(parser ProtoParser) error {
-	seen := make(map[uint64]bool)
+	seen := make(map[string]bool)
 	for {
 		if err := parser.Next(); err != nil {
 			if err == io.EOF {
@@ -34,11 +34,11 @@ func NoLatentAppendingOrMerging(parser ProtoParser) error {
 		}
 		if !parser.IsLeaf() {
 			if _, err := parser.Int(); err != nil {
-				if fieldNum, err := parser.Uint(); err == nil {
-					if _, ok := seen[fieldNum]; ok {
+				if fieldName, err := parser.String(); err == nil {
+					if _, ok := seen[fieldName]; ok {
 						return fmt.Errorf("%s requires merging", parser.Field().GetName())
 					}
-					seen[fieldNum] = true
+					seen[fieldName] = true
 				} else {
 					return fmt.Errorf("not an index, field or leaf: %v", err)
 				}

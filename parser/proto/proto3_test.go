@@ -49,7 +49,7 @@ var proto3Output1 = debug.Nodes{
 }
 
 func TestProto31(t *testing.T) {
-	p, err := NewProtoNameParser("prototests", "Proto3", proto3Input1.Description())
+	p, err := NewProtoParser("prototests", "Proto3", proto3Input1.Description())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -68,7 +68,7 @@ func TestProto31(t *testing.T) {
 }
 
 func TestRandomProto31(t *testing.T) {
-	p, err := NewProtoNameParser("prototests", "Proto3", proto3Input1.Description())
+	p, err := NewProtoParser("prototests", "Proto3", proto3Input1.Description())
 	if err != nil {
 		t.Fatal(err)
 	}

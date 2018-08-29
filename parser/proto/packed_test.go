@@ -37,7 +37,7 @@ var packedOutput1 = debug.Nodes{
 }
 
 func TestPacked1(t *testing.T) {
-	p, err := NewProtoNameParser("prototests", "Packed", packedInput1.Description())
+	p, err := NewProtoParser("prototests", "Packed", packedInput1.Description())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -56,7 +56,7 @@ func TestPacked1(t *testing.T) {
 }
 
 func TestRandomPacked1(t *testing.T) {
-	p, err := NewProtoNameParser("prototests", "Packed", packedInput1.Description())
+	p, err := NewProtoParser("prototests", "Packed", packedInput1.Description())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -95,7 +95,7 @@ var packedOutput2 = debug.Nodes{
 }
 
 func TestPacked2(t *testing.T) {
-	p, err := NewProtoNameParser("prototests", "Packed", packedInput2.Description())
+	p, err := NewProtoParser("prototests", "Packed", packedInput2.Description())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -114,7 +114,7 @@ func TestPacked2(t *testing.T) {
 }
 
 func TestRandomPacked2(t *testing.T) {
-	p, err := NewProtoNameParser("prototests", "Packed", packedInput2.Description())
+	p, err := NewProtoParser("prototests", "Packed", packedInput2.Description())
 	if err != nil {
 		t.Fatal(err)
 	}

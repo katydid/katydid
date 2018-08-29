@@ -25,7 +25,7 @@ import (
 )
 
 func TestDebug(t *testing.T) {
-	p, err := NewProtoNameParser("debug", "Debug", debug.DebugDescription())
+	p, err := NewProtoParser("debug", "Debug", debug.DebugDescription())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -44,7 +44,7 @@ func TestDebug(t *testing.T) {
 }
 
 func TestRandomDebug(t *testing.T) {
-	p, err := NewProtoNameParser("debug", "Debug", debug.DebugDescription())
+	p, err := NewProtoParser("debug", "Debug", debug.DebugDescription())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -71,7 +71,7 @@ func next(t *testing.T, parser parser.Interface) {
 }
 
 func TestSkipRepeated1(t *testing.T) {
-	p, err := NewProtoNameParser("debug", "Debug", debug.DebugDescription())
+	p, err := NewProtoParser("debug", "Debug", debug.DebugDescription())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -99,7 +99,7 @@ func TestSkipRepeated1(t *testing.T) {
 }
 
 func TestSkipRepeated2(t *testing.T) {
-	p, err := NewProtoNameParser("debug", "Debug", debug.DebugDescription())
+	p, err := NewProtoParser("debug", "Debug", debug.DebugDescription())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -129,7 +129,7 @@ func TestSkipRepeated2(t *testing.T) {
 }
 
 func TestIndexIsNotAString(t *testing.T) {
-	p, err := NewProtoNameParser("debug", "Debug", debug.DebugDescription())
+	p, err := NewProtoParser("debug", "Debug", debug.DebugDescription())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -157,7 +157,7 @@ func TestIndexIsNotAString(t *testing.T) {
 }
 
 func TestExtensionsSmallContainer(t *testing.T) {
-	p, err := NewProtoNameParser("prototests", "Container", prototests.AContainer.Description())
+	p, err := NewProtoParser("prototests", "Container", prototests.AContainer.Description())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -175,7 +175,7 @@ func TestExtensionsSmallContainer(t *testing.T) {
 }
 
 func TestExtensionsBigContainer(t *testing.T) {
-	p, err := NewProtoNameParser("prototests", "BigContainer", prototests.ABigContainer.Description())
+	p, err := NewProtoParser("prototests", "BigContainer", prototests.ABigContainer.Description())
 	if err != nil {
 		t.Fatal(err)
 	}

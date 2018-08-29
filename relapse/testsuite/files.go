@@ -89,7 +89,7 @@ func ReadTestSuite() ([]Test, error) {
 	}
 	for codec, folders := range codecs {
 		switch codec {
-		case "pbname", "pbnum", "json", "xml":
+		case "pb", "json", "xml":
 		default:
 			// codec not supported
 			continue
@@ -113,7 +113,7 @@ func ReadBenchmarkSuite() ([]Bench, error) {
 	}
 	for codec, folders := range codecs {
 		switch codec {
-		case "pbname", "pbnum", "json", "xml":
+		case "pb", "json", "xml":
 		default:
 			// codec not supported
 			continue
@@ -165,21 +165,12 @@ func readTestFolder(path string) (*Test, error) {
 		expected = valid
 		codecName = names[len(names)-1]
 		switch codecName {
-		case "pbname":
+		case "pb":
 			pkgName, msgName, desc, err := getProtoDesc(filename)
 			if err != nil {
 				return nil, err
 			}
-			p, err = newProtoNameParser(pkgName, msgName, desc, filename)
-			if err != nil {
-				return nil, err
-			}
-		case "pbnum":
-			pkgName, msgName, desc, err := getProtoDesc(filename)
-			if err != nil {
-				return nil, err
-			}
-			p, err = newProtoNumParser(pkgName, msgName, desc, filename)
+			p, err = newProtoParser(pkgName, msgName, desc, filename)
 			if err != nil {
 				return nil, err
 			}
@@ -251,26 +242,14 @@ func readBenchFolder(path string) (*Bench, error) {
 		filename := filepath.Join(path, filebase)
 		codecName = filepath.Ext(filename)[1:]
 		switch codecName {
-		case "pbname":
+		case "pb":
 			if desc == nil {
 				pkgName, msgName, desc, err = getProtoDesc(filename)
 				if err != nil {
 					return nil, err
 				}
 			}
-			p, err := newProtoNameParser(pkgName, msgName, desc, filename)
-			if err != nil {
-				return nil, err
-			}
-			parsers = append(parsers, p)
-		case "pbnum":
-			if desc == nil {
-				pkgName, msgName, desc, err = getProtoDesc(filename)
-				if err != nil {
-					return nil, err
-				}
-			}
-			p, err := newProtoNumParser(pkgName, msgName, desc, filename)
+			p, err := newProtoParser(pkgName, msgName, desc, filename)
 			if err != nil {
 				return nil, err
 			}
@@ -360,23 +339,8 @@ func getProtoDesc(filename string) (pkgName, msgName string, desc *descriptor.Fi
 	return pkgName, msgName, desc, nil
 }
 
-func newProtoNumParser(pkgName, msgName string, desc *descriptor.FileDescriptorSet, filename string) (ResetParser, error) {
-	pp, err := protoparser.NewProtoNumParser(pkgName, msgName, desc)
-	if err != nil {
-		return nil, fmt.Errorf("err <%v> createing proto parser", err)
-	}
-	bytes, err := ioutil.ReadFile(filename)
-	if err != nil {
-		return nil, fmt.Errorf("err <%v> reading file <%s>", err, filename)
-	}
-	if err := pp.Init(bytes); err != nil {
-		return nil, fmt.Errorf("err <%v> parser.Init with bytes from filename <%s>", err, filename)
-	}
-	return pp, nil
-}
-
-func newProtoNameParser(pkgName, msgName string, desc *descriptor.FileDescriptorSet, filename string) (ResetParser, error) {
-	pp, err := protoparser.NewProtoNameParser(pkgName, msgName, desc)
+func newProtoParser(pkgName, msgName string, desc *descriptor.FileDescriptorSet, filename string) (ResetParser, error) {
+	pp, err := protoparser.NewProtoParser(pkgName, msgName, desc)
 	if err != nil {
 		return nil, fmt.Errorf("err <%v> createing proto parser", err)
 	}

@@ -119,16 +119,10 @@ type ProtoParser interface {
 	Field() *descriptor.FieldDescriptorProto
 }
 
-//NewProtoNameParser returns a new protocol buffer parser the specific root message.
+//NewProtoParser returns a new protocol buffer parser the specific root message.
 //When the value of a field name is requested this parser will return the field name using the String method.
-func NewProtoNameParser(rootPackage, rootMessage string, desc *descriptor.FileDescriptorSet) (ProtoParser, error) {
+func NewProtoParser(rootPackage, rootMessage string, desc *descriptor.FileDescriptorSet) (ProtoParser, error) {
 	return newProtoParser(rootPackage, rootMessage, desc, true)
-}
-
-//NewProtoNumParser returns a new protocol buffer parser the specific root message.
-//When the value of a field name is requested this parser will return the field number using the Uint method.
-func NewProtoNumParser(rootPackage, rootMessage string, desc *descriptor.FileDescriptorSet) (ProtoParser, error) {
-	return newProtoParser(rootPackage, rootMessage, desc, false)
 }
 
 func newProtoParser(srcPackage, srcMessage string, desc *descriptor.FileDescriptorSet, fieldNames bool) (*protoParser, error) {

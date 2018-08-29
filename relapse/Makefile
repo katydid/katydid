@@ -21,7 +21,6 @@ regenerate:
 	rmdir util
 	(cd funcs && make regenerate)
 	(cd compose && make regenerate)
-	(cd protonum && make regenerate)
 
 clean:
 	rm *.txt || true
