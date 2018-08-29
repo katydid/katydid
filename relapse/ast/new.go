@@ -86,7 +86,7 @@ func NewPatternDecl(name string, pattern *Pattern) *PatternDecl {
 //  <empty>
 func NewEmpty() *Pattern {
 	return &Pattern{
-		Empty: &Empty{&Keyword{Value: "<empty>"}},
+		Empty: &Empty{Empty: &Keyword{Value: "<empty>"}},
 	}
 }
 

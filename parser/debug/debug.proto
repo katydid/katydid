@@ -6,6 +6,8 @@ import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
 option (gogoproto.gostring_all) = true;
 option (gogoproto.description_all) = true;
+option (gogoproto.goproto_unkeyed_all) = false;
+option (gogoproto.goproto_sizecache_all) = false;
 
 message Debug {
   optional int64 A = 1 [(gogoproto.nullable) = false];
