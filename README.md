@@ -2,7 +2,7 @@
 
 [Katydid](http://katydid.github.io) is a toolkit for trees.
 
-[![GoDoc](https://godoc.org/github.com/katydid/katydid?status.svg)](https://godoc.org/github.com/katydid/katydid) [![Build Status](https://travis-ci.org/katydid/katydid.svg?branch=master)](https://travis-ci.org/katydid/katydid) Version 0.2 Beta.
+[![GoDoc](https://godoc.org/github.com/katydid/katydid?status.svg)](https://godoc.org/github.com/katydid/katydid) [![Build Status](https://travis-ci.org/katydid/katydid.svg?branch=master)](https://travis-ci.org/katydid/katydid)
 
 ![Katydid Logo](https://cdn.rawgit.com/katydid/katydid.github.io/master/logo.png)
 
