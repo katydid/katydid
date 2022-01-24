@@ -79,7 +79,7 @@ func (s *yamlParser) scanValue() error {
 		return s.scanArray()
 	}
 
-	if line.hasValue { // tighten this condition
+	if line.hasValue {
 		value := []byte(strings.TrimSpace(string(line.value)))
 		if len(value) > 0 {
 			return s.scanString()
@@ -87,7 +87,6 @@ func (s *yamlParser) scanValue() error {
 	}
 
 	return s.scanString()
-	// return s.expected("objects not supported")
 }
 
 func (s *yamlParser) expected(expected string) error {
@@ -204,12 +203,6 @@ func (s *yamlParser) nextValueInArray() error {
 	if err != nil {
 		return io.EOF
 	}
-
-	// check if this is last element of array
-	// inadequate
-	// if !line.isArray {
-	// 	return io.EOF
-	// }
 
 	if !line.hasValue { // and its end of line
 		s.startValueOffset = line.nameStart
@@ -508,7 +501,7 @@ func (s *yamlParser) peekNextLine() (*Line, error) {
 	j := i
 	for ; j < len(buf); j++ {
 		if buf[j] == '\n' {
-			name = buf[i:j] // and remember to trim
+			name = buf[i:j]
 			return &Line{
 				name:      name,
 				isArray:   isArray,
@@ -517,12 +510,12 @@ func (s *yamlParser) peekNextLine() (*Line, error) {
 			}, nil
 		}
 		if buf[j] == ':' {
-			name = buf[i:j] // and remember to trim
+			name = buf[i:j]
 			break
 		}
 		if j == len(buf)-1 {
 			j++
-			name = buf[i:j] // and remember to trim
+			name = buf[i:j]
 			return &Line{
 				name:      name,
 				isArray:   isArray,
@@ -542,7 +535,7 @@ func (s *yamlParser) peekNextLine() (*Line, error) {
 			return &Line{
 					name:      name,
 					isArray:   isArray,
-					value:     buf[j:k], // trim this
+					value:     buf[j:k],
 					indent:    indent,
 					hasValue:  true,
 					nameStart: nameStart,
@@ -554,7 +547,7 @@ func (s *yamlParser) peekNextLine() (*Line, error) {
 	return &Line{
 			name:      name,
 			isArray:   isArray,
-			value:     buf[j:k], // trim this
+			value:     buf[j:k],
 			indent:    indent,
 			hasValue:  true,
 			nameStart: nameStart,
@@ -687,7 +680,7 @@ func (s *yamlParser) scanLine() (*Line, error) {
 	j := i
 	for ; j < len(buf); j++ {
 		if buf[j] == '\n' {
-			name = buf[i:j] // and remember to trim
+			name = buf[i:j]
 			s.offset += j
 			return &Line{
 				name:      name,
@@ -698,12 +691,12 @@ func (s *yamlParser) scanLine() (*Line, error) {
 			}, nil
 		}
 		if buf[j] == ':' {
-			name = buf[i:j] // and remember to trim
+			name = buf[i:j]
 			break
 		}
 		if j == len(buf)-1 {
 			j++
-			name = buf[i:j] // and remember to trim
+			name = buf[i:j]
 			s.offset += j
 			return &Line{
 				name:      name,
@@ -726,7 +719,7 @@ func (s *yamlParser) scanLine() (*Line, error) {
 			return &Line{
 					name:        name,
 					isArray:     isArray,
-					value:       buf[j:k], // trim this
+					value:       buf[j:k],
 					indent:      indent,
 					hasValue:    true,
 					valueOffset: valueOffset,
@@ -740,7 +733,7 @@ func (s *yamlParser) scanLine() (*Line, error) {
 	return &Line{
 			name:        name,
 			isArray:     isArray,
-			value:       buf[j:k], // trim this
+			value:       buf[j:k],
 			indent:      indent,
 			hasValue:    true,
 			valueOffset: valueOffset,
@@ -768,7 +761,6 @@ func (s *yamlParser) scanArray() error {
 	indent := line.indent
 
 	for {
-		// increment?
 		s.endValueOffset = s.offset
 
 		nextLine, err := s.peekNextLine()
@@ -784,7 +776,7 @@ func (s *yamlParser) scanArray() error {
 			return nil
 		}
 		if len(nextLine.indent) == len(indent) && !nextLine.isArray {
-			return errors.New("Cannot have non array object") // this is also an error
+			return errors.New("Cannot have non array object")
 		}
 		_, err = s.scanLine()
 		if err != nil {
@@ -804,7 +796,6 @@ func (s *yamlParser) scanObjectValue() error {
 	indent := line.indent
 
 	for {
-		// increment?
 		s.endValueOffset = s.offset
 
 		nextLine, err := s.peekNextLine()
@@ -821,7 +812,7 @@ func (s *yamlParser) scanObjectValue() error {
 			return nil
 		}
 		if len(nextLine.indent) == len(indent) && nextLine.isArray {
-			return errors.New("Not implemented same line array children") // this is also an error
+			return errors.New("Not implemented same line array children")
 		}
 		_, err = s.scanLine()
 		if err != nil {
