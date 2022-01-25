@@ -39,7 +39,8 @@ checklicense:
 	COPIED_FROM_GO \
 	.travis.yml \
 	install-protobuf.sh \
-	install-godeps.sh
+	install-godeps.sh \
+	parser/yaml/issues.md
 
 test:
 	go test ./...
